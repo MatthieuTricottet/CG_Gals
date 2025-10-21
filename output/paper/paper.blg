@@ -1,0 +1,20 @@
+This is 8-bit Big BibTeX version 0.99d-x4.02 (TeX Live 2024)
+Implementation:  C for Unix
+Release version: 4.02 (16 dec 2023)
+
+Error: cannot open CS file: utf8c.csf
+The top-level auxiliary file: paper.aux
+The style file: aa.bst
+Reallocated glb_str_ptr (elt_size=8) to 10 items from 0.
+Reallocated global_strs (elt_size=200001) to 10 items from 0.
+Reallocated glb_str_end (elt_size=8) to 10 items from 0.
+Database file #1: paper.bib
+Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
+
+Here's how much of BibTeX's memory you used:
+ Cites:                 5 out of 750
+ Fields:              114 out of 5000
+ Hash table:        29767 out of 30000
+ Strings:             706 out of 30000
+ Free string pool:   5969 out of 65000
+ Wizard functions:   3039 out of 6000

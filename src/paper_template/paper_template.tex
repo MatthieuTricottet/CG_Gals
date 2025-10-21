@@ -1,0 +1,349 @@
+\documentclass{aa}  
+%
+\usepackage{graphicx}
+\usepackage[varg]{txfonts}
+\usepackage{natbib,twoopt}
+\usepackage[breaklinks=true]{hyperref} %% to avoid \citeads line fills
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    citecolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+\bibpunct{(}{)}{;}{a}{}{,}             %% natbib format for A&A and ApJ
+
+\makeatletter
+  \newcommandtwoopt{\citeads}[3][][]{\href{http://adsabs.harvard.edu/abs/#3}%
+    {\def\hyper@linkstart##1##2{}%
+     \let\hyper@linkend\@empty\citealp[#1][#2]{#3}}}
+  \newcommandtwoopt{\citepads}[3][][]{\href{http://adsabs.harvard.edu/abs/#3}%
+    {\def\hyper@linkstart##1##2{}%
+     \let\hyper@linkend\@empty\citep[#1][#2]{#3}}}
+  \newcommandtwoopt{\citetads}[3][][]{\href{http://adsabs.harvard.edu/abs/#3}%
+    {\def\hyper@linkstart##1##2{}%
+     \let\hyper@linkend\@empty\citet[#1][#2]{#3}}}
+  \newcommandtwoopt{\citeyearads}[3][][]%
+    {\href{http://adsabs.harvard.edu/abs/#3}
+    {\def\hyper@linkstart##1##2{}%
+     \let\hyper@linkend\@empty\citeyear[#1][#2]{#3}}}
+\makeatother
+
+% To add links in your PDF file, use the package "hyperref"
+% with options according to your LaTeX or PDFLaTeX drivers.
+%
+
+\usepackage{graphicx}	% Including figure files
+\usepackage{color}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{ae,aecompl}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+% \usepackage{autonum} % only cited equations are numbered
+
+\usepackage{booktabs}
+\usepackage{amsmath}
+
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\newcommand{\diazg}{D\'{\i}az-Gim\'enez}
+
+\newcommand{\Quenched}{Quenched}
+\newcommand{\Passive}{Passive}
+\newcommand{\Starforming}{Star forming}
+
+
+\newcommand{\CB}{Control\textsubscript{4B}} 
+\newcommand{\CC}{Control\textsubscript{4C}} 
+\newcommand{\CG}{CG\textsubscript{4}} 
+\newcommand{\RG}{RG\textsubscript{4}} 
+\newcommand{\kms}{\,\mathrm{km\,s}^{-1}}
+\newcommand{\gap}{$\Delta R_{1,2}$}
+\newcommand{\msun}{\mathrm{M}_\odot}
+
+\usepackage{color}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{ae,aecompl}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+% \usepackage{autonum} % only cited equations are numbered
+
+\definecolor{darkgreen}{rgb}{0.0,0.5,0.0}
+\definecolor{darkred}{rgb}{0.75,0.,0.2}
+\definecolor{magenta}{rgb}{0.8,0,0.8}
+\definecolor{purple}{rgb}{0.5,0,0.5}
+\definecolor{gray}{rgb}{0.5,0.6,0.7}
+\newcommand{\hide}[1]{\textcolor{gray}{#1}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand\boldblue[1]{\textcolor{blue}{\mathbf{#1}}}
+\newcommand\boldred[1]{\textcolor{darkred}{\mathbf{#1}}}
+\newcommand{\gam}[1]{\textcolor{darkred}{\bf Gary: #1}}
+\newcommand{\gm}[1]{\textcolor{darkred}{#1}}
+\newcommand{\referee}[1]{\textcolor{red}{\bf Referee: #1}}
+\newcommand{\MT}[1]{\textcolor{darkgreen}{\bf Matthieu: #1}}
+\newcommand{\mt}[1]{\textcolor{darkgreen}{#1}}
+
+
+
+\lstset{
+  language=SQL,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue}\bfseries,
+  stringstyle=\color{red},
+  commentstyle=\color{gray}\itshape,
+  morekeywords={SpecObj,PhotoObj,galSpecExtra,galSpecLine},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  showstringspaces=false,
+  tabsize=4,
+  breaklines=true,
+  frame=single,
+  captionpos=b
+}
+
+\graphicspath{{<<SUBFIGURES_PATH>>}}
+
+
+\begin{document}
+\nolinenumbers
+\title{Are galaxies in compact groups special?}
+
+   \author{Matthieu Tricottet\inst{1} \thanks{matthieu.tricottet@gmail.com}
+           \and Gary A. Mamon\inst{2}
+           \and Eugenia \diazg\inst{3,4}}
+
+   \institute{  
+                80, rue d'Al\'esia, 75014 Paris, France
+                \and Institut d'Astrophysique de Paris (UMR 7095: CNRS \& Sorbonne Universit\'e), 98 bis boulevard Arago, 75014 Paris, France
+                \and CONICET. Instituto de Astronom\'ia Te\'orica y Experimental (IATE), Laprida 854, X5000BGR, C\'ordoba, Argentina
+                \and Universidad Nacional de C\'ordoba (UNC). Observatorio Astron\'omico de C\'ordoba (OAC), Laprida 854, X5000BGR, C\'ordoba, Argentina
+            }
+
+   \date{Received XXX; accepted YYY}
+
+  \abstract{
+    We investigate the properties of galaxies in compact groups (CGs) and compare them to a control sample of galaxies.  
+   }
+
+   \keywords{galaxies: clusters: general -- catalogs}
+
+   \maketitle
+
+\section{Introduction}\label{sec:intro}
+
+\section{Data}
+\subsection{Samples}
+We use the compact groups and control samples we built in our previous article \cite{Tricottet+25}. 
+We neververtheless briefly recall here how they were built. \mt{Explain.} 
+Contrarily to our previous article, though, we remove CGs that we classified as \emph{split} following \cite{Zheng&Shen21}.
+In this process, our initial compact group sample of <<CG4_Groups_withsplit_N>> groups reduced to 
+<<CG4_Groups_nonsplit_N>>.
+
+We use the SDSS DR <<DATA_RELEASE>> to retrieve masses, star formation rates (SFRs) and morphologies of galaxies 
+assessed in Galaxy Zoo \cite{GalaxyZoo1}. We specifically extracted fields \texttt{sfr\_tot\_p50}, 
+\texttt{specsfr\_tot\_p50} and \texttt{lgm\_tot\_p50} from the \texttt{galSpecExtra} table, and
+\texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} from the \texttt{zooSpec} table.
+       
+
+\subsection{sSFR}
+To build a general star formation classification that could be uniformly applied to all our samples, we extracted
+ galaxies from the SDSS DR <<DATA_RELEASE>>  
+through the query displayed in listing \ref{lst:query}. 
+% The number of galaxies in each sample is shown in table \ref{tab:sample_sizes}.
+
+\begin{lstlisting}[caption={Query used for selecting spectral \& photometric data from the SDSS},label={lst:query}]
+    <<SDSS_query>>
+\end{lstlisting}
+
+% \begin{table} \label{tab:sample_sizes}
+%     \centering
+%     \begin{tabular}{lccc}
+%         \toprule
+%         \textbf{Sample} & \textbf{$N_{AGN}$} & \textbf{$N_{AGN,(z,R)}$} & \textbf{$N_{(z,R)}$ }\\
+%         \midrule
+%         \CG &  <<CG3_500_Ngal>>  &  <<CG3_500_Rzcut_Ngal>>  &  <<CG3_1000_Ngal>>  \\
+%         $CG_{3,1000}$ &  <<CG3_1000_Ngal>>  &  <<CG3_1000_Rzcut_Ngal>>  &  <<CG3_1000_Ngal>>  \\
+%         $CG_{4,500}$ &  <<CG4_500_Ngal>>  &  <<CG4_500_Rzcut_Ngal>>  &  <<CG4_500_Ngal>>  \\
+%         $CG_{4,1000}$ &  <<CG4_1000_Ngal>>  &  <<CG4_1000_Rzcut_Ngal>>  &  <<CG4_1000_Ngal>>  \\
+%         Control &  <<SDSS_init_Ngal>>   &  <<SDSS_init_Ngal>>  &  <<Control_Ngal>>  \\
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Number of galaxies in each sample.}
+% \end{table}    
+
+
+We select non-AGN galaxies by first placing them on the classical BPT diagnostic of \cite{Veilleux87} :contentReference[oaicite:0]{index=0} and requiring measured values of both emission-line ratios
+\[
+\log_{10}\!\bigl([\mathrm{N\,II}]\lambda6584/\mathrm{H}\alpha\bigr)
+\quad\text{and}\quad
+\log_{10}\!\bigl([\mathrm{O\,III}]\lambda5007/\mathrm{H}\beta\bigr).
+\]
+A galaxy is flagged as an AGN if it satisfies either  
+\[
+\log_{10}\frac{[\mathrm{N\,II}]}{\mathrm{H}\alpha} > 0,
+\]  
+or if it lies above the empirical demarcation of \cite{Kauffmann+03a}:  
+\[
+\log_{10}\frac{[\mathrm{O\,III}]}{\mathrm{H}\beta}
+> \frac{0.61}{\log_{10}([\mathrm{N\,II}]/\mathrm{H}\alpha)-0.05} \;+\; 1.3,
+\]
+in which case it is removed from the non-AGN sample :contentReference[oaicite:1]{index=1}.  All remaining galaxies—including those with missing line ratios—are retained as non-AGN :contentReference[oaicite:2]{index=2}.
+The non-AGN selection process is shown on figure \ref{fig:BTP}.
+
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{BPT_diagram.pdf}
+     \caption{BPT diagram showing our separation of ordinary and AGN galaxies.}
+     \label{fig:BPT}
+\end{figure}
+
+
+% We identify the galaxies having a \texttt{specsf\_tot\_p50} of -9999 in the SDSS as quenched. We then consider the other ones and sort them between the 
+% star-forming and passive populations using a two‐component Gaussian Mixture Model (GMM) in the \(\log M_*\)–\(\log\mathrm{sSFR}\) plane.
+% Its parameters determined by minimizing the Kullback–Leibler divergence between the empirical and model densities 
+% \cite{Kullback1951,McLachlanPeel2000}. For any trial parameter vector \(\boldsymbol{\theta}\), we reconstruct the mixture means 
+% \(\{\boldsymbol{\mu}_i\}\), covariances \(\{\mathbf{\Sigma}_i\}\), and weights \(\{w_i\}\) via a Cholesky‐like decomposition and 
+% logistic mapping, optionally constraining the second component’s mean to isolate the passive population \cite{Dempster1977}. 
+% The KL divergence is estimated by constructing a 2D histogram of the data and summing \(p_\mathrm{data}\ln(p_\mathrm{data}/p_\mathrm{GMM})\), 
+% with a small regularization \(\epsilon\) to avoid singularities \cite{Tojeiro2009,Bisigello2018}. We optimize \(\boldsymbol{\theta}\) 
+% via L-BFGS-B (with fallback to Nelder–Mead) over multiple guided and random initializations, selecting the solution with lowest divergence 
+% \cite{Pedregosa2011,Bishop2006}. Initial means are seeded by a median split in \(\log\mathrm{sSFR}\) to improve convergence and robustness 
+% against local minima \cite{Rousseeuw1987}. In the final fit, one component naturally aligns with the high-\(\mathrm{sSFR}\) “star‐forming 
+% sequence,” while the other captures the low-\(\mathrm{sSFR}\) “passive” cloud, providing a data‐driven division that agrees with previous 
+% multi‐Gaussian decompositions of the SFR–\(M_*\) plane \cite{Wuyts2011,Hahn2019}. The decision boundaries, defined as the 
+% loci where the posterior probabilities of adjacent components are equal, provide an objective criterion for 
+% delineating star‐forming from passive galaxies.
+
+% \mt{Add relevant GM parameters found by the algorithm.}
+
+% The sSFR status for each sample is shown in table \ref{tab:sSFR_status}. The probability for \<<sSFR_status[2]>> {} proportion to be different form the control sample's 
+% one is, estimated using Fisher exact test, is  <<pval_3_1000_StarformingvsControl>>  for the \CGto{} sample, 
+%  <<pval_3_500_StarformingvsControl>>  for \CGtf,  <<pval_4_1000_StarformingvsControl>>  for \CGfo{} and  <<pval_3_500_StarformingvsControl>>  for \CGff.
+
+% \begin{table}
+%     \centering
+%     \begin{tabular}{lccc}
+%         \toprule
+%             \textbf{Sample} & \textbf{  <<sSFR_status[0]>>  } & \textbf{  <<sSFR_status[1]>>  } & \textbf{  <<sSFR_status[2]>>  } \\
+%             $CG_{3,1000}$ &  <<CG3_1000_NQuenched>>  (<<CG3_1000_NQuenched_pc>> \%) &  <<CG3_1000_NPassive>>  (<<CG3_1000_NPassive_pc>> \%)&  <<CG3_1000_NStarforming>>  (<<CG3_1000_NStarforming_pc>> \%) \\
+%             $CG_{3,500}$ &  <<CG3_500_NQuenched>>  (<<CG3_500_NQuenched_pc>> \%) &  <<CG3_500_NPassive>>  (<<CG3_500_NPassive_pc>> \%) &  <<CG3_500_NStarforming>>  (<<CG3_500_NStarforming_pc>> \%) \\
+%             $CG_{4,1000}$ &  <<CG4_1000_NQuenched>>  (<<CG4_1000_NQuenched_pc>> \%) &  <<CG4_1000_NPassive>>  (<<CG4_1000_NPassive_pc>> \%) &  <<CG4_1000_NStarforming>>  (<<CG4_1000_NStarforming_pc>> \%) \\
+%             $CG_{4,500}$ &  <<CG4_500_NQuenched>>  (<<CG4_500_NQuenched_pc>> \%) &  <<CG4_500_NPassive>>  (<<CG4_500_NPassive_pc>> \%) &  <<CG4_500_NStarforming>>  (<<CG4_500_NStarforming_pc>> \%)\\
+%             Control &  <<Control_NQuenched>>  (<<Control_NQuenched_pc>> \%) &  <<Control_NPassive>>  <<Control_NPassive_pc>> \%) &  <<Control_NStarforming>>   (<<Control_NStarforming_pc>> \%) \\
+%          \midrule
+%         \bottomrule
+%     \end{tabular}
+%     \caption{Number of galaxies in each sSFR status for each sample.}
+%     \label{tab:sSFR_status}
+% \end{table}
+
+        
+    
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{density_original_vs_GMMfit.pdf}
+     \caption{}
+     \label{fig:density_original_vs_GMMfit}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{sSFR_classification.pdf}
+     \caption{sSFR vs mass, star-forming/passive limit and morphologies for the SDSS control sample.}
+     \label{fig:sSFR_classification}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{galaxies_sfr.pdf}
+     \caption{}
+     \label{fig:galaxies_sfr}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{residual_sSFR_histogram.pdf}
+     \caption{}
+     \label{fig:Residual_sSFR}
+\end{figure}
+
+% \begin{figure}
+%     \centering
+%      \includegraphics[width=\columnwidth]{residual_sSFR_histogram.pdf}
+%      \caption{}
+%      \label{fig:residual_sSFR_histogram}
+% \end{figure}
+
+% \subsection{Morphology}
+% Morphologies are determined via the Galaxy Zoo citizen‐science decision tree, in which each galaxy image receives multiple 
+% independent volunteer classifications that are aggregated into debiaised vote fractions \cite{GalaxyZoo1}. Those fractions are provided in the 
+% \texttt{zooSpecz} table of the SDSS databasethrough the \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} columns. We attribute to galaxies the
+% morphology ``elliptical'' if the \texttt{p\_el\_debiased} value is greater than 0.5, and ``spiral'' if the \texttt{p\_cs\_debiased} value is greater than 0.5. 
+% Other cases are considered as ``uncertain''. 
+
+% Once galaxies having uncertain morphology removed, \CG{} have <<Nb_S_CG>> (<<fraction_S_CG_pc>>) of their galaxies classified as spiral and 
+% <<Nb_E_CG>> (<<fraction_E_CG_pc>>) elliptical,
+% while the control sample has <<Nb_S_Control>> (<<fraction_S_Control_pc>>) and <<Nb_E_Control>> (<<fraction_E_Control_pc>>), respectively. 
+% The probability that those fractions come from 
+% the same distribution is astimated as <<pval_morphologies_CGvsControl_pc>> from the Fisher two-sided exact test.
+
+% % \begin{figure}
+% %     \centering
+% %      \includegraphics[width=\columnwidth]{.pdf}
+% %      \caption{}
+% %      \label{fig:}
+% % \end{figure}
+
+% \subsection{Dominance}
+% We split groups into two categories: the dominated, for which the BGG has a luminosity fraction greater than the median of \RG.
+
+\begin{appendix} %First appendix
+\section*{Interpolation points for sSFR classification}
+
+% \begin{table}[t]
+% \centering
+% \caption{Interpolation points for sSFR classification curve}
+% \begin{tabular}{rr}
+% \toprule
+% $x$ & $y$ \\
+% \midrule
+% {%- if data.my_interp.points and (data.my_interp.points|length > 0) -%}
+% {%- for p in data.my_interp.points %}
+% {{ "%.6g"|format(p.x) }} & {{ "%.6g"|format(p.y) }}{% if not loop.last %} \\{% endif %}
+% {%- endfor %}
+% \\
+% {%- else %}
+% \multicolumn{2}{c}{\rule{0pt}{0pt}}\\
+% \multicolumn{2}{c}{No interpolation points available} \\
+% {%- endif %}
+% \bottomrule
+% \end{tabular}
+% \end{table}
+
+
+
+
+
+\end{appendix}
+
+\begin{acknowledgements}
+We thank ... 
+\end{acknowledgements}
+
+\bibliographystyle{aa}
+\bibliography{<<BIB_FILE>>}
+
+\end{document}

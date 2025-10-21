@@ -1,0 +1,26 @@
+\begin{thebibliography}{5}
+\expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{{Zheng} \& {Shen}(2021)}]{Zheng&Shen21}
+{Zheng}, Y.-L. \& {Shen}, S.-Y. 2021, \apj, 911, 105
+
+\bibitem[{{Lintott} {et~al.}(2011){Lintott}, {Schawinski}, {Bamford}, {Slosar},
+  {Land}, {Thomas}, {Edmondson}, {Masters}, {Nichol}, {Raddick}, {Szalay},
+  {Andreescu}, {Murray}, \& {Vandenberg}}]{GalaxyZoo1}
+{Lintott}, C., {Schawinski}, K., {Bamford}, S., {et~al.} 2011, \mnras, 410, 166
+
+\bibitem[{Veilleux \& Osterbrock(1987)}]{Veilleux87}
+Veilleux, S. \& Osterbrock, D.~E. 1987, Astrophysical Journal Supplement
+  Series, 63, 295
+
+\bibitem[{{Tricottet} {et~al.}(2025){Tricottet}, {Mamon}, \&
+  {D{\'\i}az-Gim{\'e}nez}}]{Tricottet+25}
+{Tricottet}, M., {Mamon}, G.~A., \& {D{\'\i}az-Gim{\'e}nez}, E. 2025, \aap,
+  699, A329
+
+\bibitem[{Kauffmann {et~al.}(2003)Kauffmann, Heckman, Tremonti, Brinchmann,
+  Charlot, White, Reichard, \& Brinkmann}]{Kauffmann+03a}
+Kauffmann, G., Heckman, T.~M., Tremonti, C., {et~al.} 2003, Monthly Notices of
+  the Royal Astronomical Society, 346, 1055
+
+\end{thebibliography}
