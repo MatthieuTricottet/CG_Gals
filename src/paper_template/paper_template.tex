@@ -166,24 +166,7 @@ through the query displayed in listing \ref{lst:query}.
     <<SDSS_query>>
 \end{lstlisting}
 
-% \begin{table} \label{tab:sample_sizes}
-%     \centering
-%     \begin{tabular}{lccc}
-%         \toprule
-%         \textbf{Sample} & \textbf{$N_{AGN}$} & \textbf{$N_{AGN,(z,R)}$} & \textbf{$N_{(z,R)}$ }\\
-%         \midrule
-%         \CG &  <<CG3_500_Ngal>>  &  <<CG3_500_Rzcut_Ngal>>  &  <<CG3_1000_Ngal>>  \\
-%         $CG_{3,1000}$ &  <<CG3_1000_Ngal>>  &  <<CG3_1000_Rzcut_Ngal>>  &  <<CG3_1000_Ngal>>  \\
-%         $CG_{4,500}$ &  <<CG4_500_Ngal>>  &  <<CG4_500_Rzcut_Ngal>>  &  <<CG4_500_Ngal>>  \\
-%         $CG_{4,1000}$ &  <<CG4_1000_Ngal>>  &  <<CG4_1000_Rzcut_Ngal>>  &  <<CG4_1000_Ngal>>  \\
-%         Control &  <<SDSS_init_Ngal>>   &  <<SDSS_init_Ngal>>  &  <<Control_Ngal>>  \\
-%         \bottomrule
-%     \end{tabular}
-%     \caption{Number of galaxies in each sample.}
-% \end{table}    
-
-
-We select non-AGN galaxies by first placing them on the classical BPT diagnostic of \cite{Veilleux87} :contentReference[oaicite:0]{index=0} and requiring measured values of both emission-line ratios
+We select non-AGN galaxies by first placing them on the classical BPT diagnostic of \cite{Veilleux87} and requiring measured values of both emission-line ratios
 \[
 \log_{10}\!\bigl([\mathrm{N\,II}]\lambda6584/\mathrm{H}\alpha\bigr)
 \quad\text{and}\quad
@@ -198,56 +181,59 @@ or if it lies above the empirical demarcation of \cite{Kauffmann+03a}:
 \log_{10}\frac{[\mathrm{O\,III}]}{\mathrm{H}\beta}
 > \frac{0.61}{\log_{10}([\mathrm{N\,II}]/\mathrm{H}\alpha)-0.05} \;+\; 1.3,
 \]
-in which case it is removed from the non-AGN sample :contentReference[oaicite:1]{index=1}.  All remaining galaxies—including those with missing line ratios—are retained as non-AGN :contentReference[oaicite:2]{index=2}.
-The non-AGN selection process is shown on figure \ref{fig:BTP}.
+in which case it is removed from the non-AGN sample.  All remaining galaxies—including those with missing line ratios—are retained as non-AGN.
+The non-AGN selection process is shown on figure \ref{fig:BPT}.
 
 
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{BPT_diagram.pdf}
-     \caption{BPT diagram showing our separation of ordinary and AGN galaxies.}
+     \caption{BPT diagram showing our separation between ordinary and AGN galaxies}
      \label{fig:BPT}
 \end{figure}
 
 
-% We identify the galaxies having a \texttt{specsf\_tot\_p50} of -9999 in the SDSS as quenched. We then consider the other ones and sort them between the 
-% star-forming and passive populations using a two‐component Gaussian Mixture Model (GMM) in the \(\log M_*\)–\(\log\mathrm{sSFR}\) plane.
-% Its parameters determined by minimizing the Kullback–Leibler divergence between the empirical and model densities 
-% \cite{Kullback1951,McLachlanPeel2000}. For any trial parameter vector \(\boldsymbol{\theta}\), we reconstruct the mixture means 
-% \(\{\boldsymbol{\mu}_i\}\), covariances \(\{\mathbf{\Sigma}_i\}\), and weights \(\{w_i\}\) via a Cholesky‐like decomposition and 
-% logistic mapping, optionally constraining the second component’s mean to isolate the passive population \cite{Dempster1977}. 
-% The KL divergence is estimated by constructing a 2D histogram of the data and summing \(p_\mathrm{data}\ln(p_\mathrm{data}/p_\mathrm{GMM})\), 
-% with a small regularization \(\epsilon\) to avoid singularities \cite{Tojeiro2009,Bisigello2018}. We optimize \(\boldsymbol{\theta}\) 
-% via L-BFGS-B (with fallback to Nelder–Mead) over multiple guided and random initializations, selecting the solution with lowest divergence 
-% \cite{Pedregosa2011,Bishop2006}. Initial means are seeded by a median split in \(\log\mathrm{sSFR}\) to improve convergence and robustness 
-% against local minima \cite{Rousseeuw1987}. In the final fit, one component naturally aligns with the high-\(\mathrm{sSFR}\) “star‐forming 
-% sequence,” while the other captures the low-\(\mathrm{sSFR}\) “passive” cloud, providing a data‐driven division that agrees with previous 
-% multi‐Gaussian decompositions of the SFR–\(M_*\) plane \cite{Wuyts2011,Hahn2019}. The decision boundaries, defined as the 
-% loci where the posterior probabilities of adjacent components are equal, provide an objective criterion for 
-% delineating star‐forming from passive galaxies.
+We identify the galaxies having a \texttt{specsf\_tot\_p50} of -9999 in the SDSS as quenched 
+(for graphic representation purposes, we give it here an arbitrary low value of $10^{<<sSFR_QUENCHED>>}$ Gyr\(^{-1}\)).
+We then consider the other ones and sort them between the 
+star-forming and passive populations using a two‐component Gaussian Mixture Model (GMM) in the \(\log M_*\)–\(\log\mathrm{sSFR}\) plane.
+Its parameters determined by minimizing the Kullback–Leibler divergence between the empirical and model densities 
+\cite{Kullback1951,McLachlanPeel2000}. For any trial parameter vector \(\boldsymbol{\theta}\), we reconstruct the mixture means 
+\(\{\boldsymbol{\mu}_i\}\), covariances \(\{\mathbf{\Sigma}_i\}\), and weights \(\{w_i\}\) via a Cholesky‐like decomposition and 
+logistic mapping, optionally constraining the second component’s mean to isolate the passive population \cite{Dempster1977}. 
+The KL divergence is estimated by constructing a 2D histogram of the data and summing \(p_\mathrm{data}\ln(p_\mathrm{data}/p_\mathrm{GMM})\), 
+with a small regularization \(\epsilon\) to avoid singularities \cite{Tojeiro2009,Bisigello2018}. We optimize \(\boldsymbol{\theta}\) 
+via L-BFGS-B (with fallback to Nelder–Mead) over multiple guided and random initializations, selecting the solution with lowest divergence 
+\cite{Pedregosa2011,Bishop2006}. Initial means are seeded by a median split in \(\log\mathrm{sSFR}\) to improve convergence and robustness 
+against local minima \cite{Rousseeuw1987}. In the final fit, one component naturally aligns with the high-\(\mathrm{sSFR}\) “star‐forming 
+sequence,” while the other captures the low-\(\mathrm{sSFR}\) “passive” cloud, providing a data‐driven division that agrees with previous 
+multi‐Gaussian decompositions of the SFR–\(M_*\) plane \cite{Wuyts2011,Hahn2019}. The decision boundaries, defined as the 
+loci where the posterior probabilities of adjacent components are equal, provide an objective criterion for 
+delineating star‐forming from passive galaxies.
 
-% \mt{Add relevant GM parameters found by the algorithm.}
+\mt{Add relevant GM parameters found by the algorithm.}
 
-% The sSFR status for each sample is shown in table \ref{tab:sSFR_status}. The probability for \<<sSFR_status[2]>> {} proportion to be different form the control sample's 
-% one is, estimated using Fisher exact test, is  <<pval_3_1000_StarformingvsControl>>  for the \CGto{} sample, 
-%  <<pval_3_500_StarformingvsControl>>  for \CGtf,  <<pval_4_1000_StarformingvsControl>>  for \CGfo{} and  <<pval_3_500_StarformingvsControl>>  for \CGff.
+The sSFR status for each sample is shown in table \ref{tab:sSFR_status}. The probability for \<<sSFR_status[2]>>{} proportion 
+between \CG{} and each control sample to actually come from the same underlying distribution are, estimated using Fisher exact test, 
+<<pval_Control4B_Starforming_vs_CG>>  versus \CB{} sample, 
+ <<pval_Control4C_Starforming_vs_CG>>  versus \CC{} and  <<pval_RG4_Starforming_vs_CG>>  versus \RG.
 
-% \begin{table}
-%     \centering
-%     \begin{tabular}{lccc}
-%         \toprule
-%             \textbf{Sample} & \textbf{  <<sSFR_status[0]>>  } & \textbf{  <<sSFR_status[1]>>  } & \textbf{  <<sSFR_status[2]>>  } \\
-%             $CG_{3,1000}$ &  <<CG3_1000_NQuenched>>  (<<CG3_1000_NQuenched_pc>> \%) &  <<CG3_1000_NPassive>>  (<<CG3_1000_NPassive_pc>> \%)&  <<CG3_1000_NStarforming>>  (<<CG3_1000_NStarforming_pc>> \%) \\
-%             $CG_{3,500}$ &  <<CG3_500_NQuenched>>  (<<CG3_500_NQuenched_pc>> \%) &  <<CG3_500_NPassive>>  (<<CG3_500_NPassive_pc>> \%) &  <<CG3_500_NStarforming>>  (<<CG3_500_NStarforming_pc>> \%) \\
-%             $CG_{4,1000}$ &  <<CG4_1000_NQuenched>>  (<<CG4_1000_NQuenched_pc>> \%) &  <<CG4_1000_NPassive>>  (<<CG4_1000_NPassive_pc>> \%) &  <<CG4_1000_NStarforming>>  (<<CG4_1000_NStarforming_pc>> \%) \\
-%             $CG_{4,500}$ &  <<CG4_500_NQuenched>>  (<<CG4_500_NQuenched_pc>> \%) &  <<CG4_500_NPassive>>  (<<CG4_500_NPassive_pc>> \%) &  <<CG4_500_NStarforming>>  (<<CG4_500_NStarforming_pc>> \%)\\
-%             Control &  <<Control_NQuenched>>  (<<Control_NQuenched_pc>> \%) &  <<Control_NPassive>>  <<Control_NPassive_pc>> \%) &  <<Control_NStarforming>>   (<<Control_NStarforming_pc>> \%) \\
-%          \midrule
-%         \bottomrule
-%     \end{tabular}
-%     \caption{Number of galaxies in each sSFR status for each sample.}
-%     \label{tab:sSFR_status}
-% \end{table}
+\begin{table}
+    \centering
+    \begin{tabular}{lccc}
+        \toprule
+            \textbf{Sample} & \textbf{  <<sSFR_status[0]>>  } & \textbf{  <<sSFR_status[1]>>  } & \textbf{  <<sSFR_status[2]>>  } \\
+            \CG &  <<CG4_Gals_NQuenched>>  (<<CG4_Gals_NQuenched_pc>> \%) &  <<CG4_Gals_NPassive>>  (<<CG4_Gals_NPassive_pc>> \%)&  <<CG4_Gals_NStarforming>>  (<<CG4_Gals_NStarforming_pc>> \%) \\
+            \CB &  <<Control4B_Gals_NQuenched>>  (<<Control4B_Gals_NQuenched_pc>> \%) &  <<Control4B_Gals_NPassive>>  (<<Control4B_Gals_NPassive_pc>> \%) &  <<Control4B_Gals_NStarforming>>  (<<Control4B_Gals_NStarforming_pc>> \%) \\
+            \CC &  <<Control4C_Gals_NQuenched>>  (<<Control4C_Gals_NQuenched_pc>> \%) &  <<Control4C_Gals_NPassive>>  (<<Control4C_Gals_NPassive_pc>> \%) &  <<Control4C_Gals_NStarforming>>  (<<Control4C_Gals_NStarforming_pc>> \%) \\
+            \RG &  <<RG4_Gals_NQuenched>>  (<<RG4_Gals_NQuenched_pc>> \%) &  <<RG4_Gals_NPassive>>  (<<RG4_Gals_NPassive_pc>> \%) &  <<RG4_Gals_NStarforming>>  (<<RG4_Gals_NStarforming_pc>> \%)\\
+            \emph{SDSS selection} &  \emph{<<SDSS_NQuenched>> (<<SDSS_NQuenched_pc>> \%)} &  \emph{<<SDSS_NPassive>>  (<<SDSS_NPassive_pc>> \%)} &  \emph{<<SDSS_NStarforming>>  (<<SDSS_NStarforming_pc>> \%)}\\
+         \midrule
+        \bottomrule
+    \end{tabular}
+    \caption{Number of galaxies in each sSFR status for each sample.}
+    \label{tab:sSFR_status}
+\end{table}
 
         
     
@@ -262,15 +248,9 @@ The non-AGN selection process is shown on figure \ref{fig:BTP}.
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{sSFR_classification.pdf}
-     \caption{sSFR vs mass, star-forming/passive limit and morphologies for the SDSS control sample.}
+     \caption{sSFR vs mass, star-forming/passive limit and Zoo morphologies for the SDSS control sample, 
+     excluding quenched galaxies.}
      \label{fig:sSFR_classification}
-\end{figure}
-
-\begin{figure}
-    \centering
-     \includegraphics[width=\columnwidth]{galaxies_sfr.pdf}
-     \caption{}
-     \label{fig:galaxies_sfr}
 \end{figure}
 
 \begin{figure}
@@ -280,19 +260,45 @@ The non-AGN selection process is shown on figure \ref{fig:BTP}.
      \label{fig:Residual_sSFR}
 \end{figure}
 
-% \begin{figure}
-%     \centering
-%      \includegraphics[width=\columnwidth]{residual_sSFR_histogram.pdf}
-%      \caption{}
-%      \label{fig:residual_sSFR_histogram}
-% \end{figure}
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{galaxies_sfr.pdf}
+     \caption{sSFR and morphologies of galaxies in \CG{} and our SDSS selection. 
+     Quenched galaxies are represented at an arbitrary low value of $10^{<<sSFR_QUENCHED>>}$ Gyr\(^{-1}\).}
+     \label{fig:galaxies_sfr}
+\end{figure}
 
-% \subsection{Morphology}
-% Morphologies are determined via the Galaxy Zoo citizen‐science decision tree, in which each galaxy image receives multiple 
-% independent volunteer classifications that are aggregated into debiaised vote fractions \cite{GalaxyZoo1}. Those fractions are provided in the 
-% \texttt{zooSpecz} table of the SDSS databasethrough the \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} columns. We attribute to galaxies the
-% morphology ``elliptical'' if the \texttt{p\_el\_debiased} value is greater than 0.5, and ``spiral'' if the \texttt{p\_cs\_debiased} value is greater than 0.5. 
-% Other cases are considered as ``uncertain''. 
+
+
+\subsection{Morphology}
+Morphologies are determined via the Galaxy Zoo citizen‐science decision tree, in which each galaxy image receives multiple 
+independent volunteer classifications that are aggregated into debiaised vote fractions \cite{GalaxyZoo1}. Those fractions are provided in the 
+\texttt{zooSpecz} table of the SDSS databasethrough the \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} columns. We attribute to galaxies the
+morphology ``elliptical'' if the \texttt{p\_el\_debiased} value is greater than 0.5, and ``spiral'' if the \texttt{p\_cs\_debiased} value is greater than 0.5. 
+Other cases are considered as ``uncertain''. The morphologies found for each sample are shown in table \ref{tab:morphologies}.
+Barnard two-sided exact tests were performed to compare the fraction of each morphology between \CG{} and each control sample. The p-values found are 
+<<pval_Control4B_Elliptical_vs_CG_pc>> for ellipticals and <<pval_Control4B_Spiral_vs_CG_pc>> for spirals versus \CB{} sample, 
+ <<pval_Control4C_Elliptical_vs_CG_pc>>  and <<pval_Control4C_Spiral_vs_CG_pc>>  versus \CC{} and  <<pval_RG4_Elliptical_vs_CG_pc>>  
+ and <<pval_RG4_Spiral_vs_CG_pc>>  versus \RG.
+\begin{table}
+    \centering
+    \begin{tabular}{lccc}
+        \toprule
+            \textbf{Sample} & \textbf{  <<Morphologies[0]>>  } & \textbf{  <<Morphologies[1]>>  } & \textbf{  <<Morphologies[2]>>  } \\
+            \CG &  <<CG4_Gals_N_Elliptical>>  (<<CG4_Gals_fraction_Elliptical_pc>> \%) &  <<CG4_Gals_N_Spiral>>  (<<CG4_Gals_fraction_Spiral_pc>> \%)&  <<CG4_Gals_N_Uncertain>>  (<<CG4_Gals_fraction_Uncertain_pc>> \%) \\
+            \CB &  <<Control4B_Gals_N_Elliptical>>  (<<Control4B_Gals_fraction_Elliptical_pc>> \%) &  <<Control4B_Gals_N_Spiral>>  (<<Control4B_Gals_fraction_Spiral_pc>> \%) &  <<Control4B_Gals_N_Uncertain>>  (<<Control4B_Gals_fraction_Uncertain_pc>> \%) \\
+            \CC &  <<Control4C_Gals_N_Elliptical>>  (<<Control4C_Gals_fraction_Elliptical_pc>> \%) &  <<Control4C_Gals_N_Spiral>>  (<<Control4C_Gals_fraction_Spiral_pc>> \%) &  <<Control4C_Gals_N_Uncertain>>  (<<Control4C_Gals_fraction_Uncertain_pc>> \%) \\
+            \RG &  <<RG4_Gals_N_Elliptical>>  (<<RG4_Gals_fraction_Elliptical_pc>> \%) &  <<RG4_Gals_N_Spiral>>  (<<RG4_Gals_fraction_Spiral_pc>> \%) &  <<RG4_Gals_N_Uncertain>>  (<<RG4_Gals_fraction_Uncertain_pc>> \%)\\
+            \emph{SDSS selection} &  \emph{<<SDSS_N_Elliptical>> (<<SDSS_fraction_Elliptical_pc>> \%)} &  \emph{<<SDSS_N_Spiral>>  (<<SDSS_fraction_Spiral_pc>> \%)} &  \emph{<<SDSS_N_Uncertain>>  (<<SDSS_fraction_Uncertain_pc>> \%)}\\
+         \midrule
+        \bottomrule
+    \end{tabular}
+    \caption{Number of galaxies of each morphology for each sample.}
+    \label{tab:morphologies}
+\end{table}
+
+\subsection{Morphology vs sSFR}
+
 
 % Once galaxies having uncertain morphology removed, \CG{} have <<Nb_S_CG>> (<<fraction_S_CG_pc>>) of their galaxies classified as spiral and 
 % <<Nb_E_CG>> (<<fraction_E_CG_pc>>) elliptical,

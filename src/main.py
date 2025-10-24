@@ -105,14 +105,10 @@ def sSFR_properties(sample):
  
     for status in co.sSFR_status:
         for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]+['SDSS']:
-            report.append_json(f'{cat}_N{status}', len(sample[cat][sample[cat]['sSFR_status'] == status]))
-            report.append_json(f'{cat}_N{status}_pc', f'{(100*len(sample[cat][sample[cat]['sSFR_status'] == status])/len(sample[cat])):.1f}')
+            report.append_json(f'{cat}_N{status}', len(sample[cat][sample[cat]['sSFR_status'] == status]),build=True)
+            report.append_json(f'{cat}_N{status}_pc', f'{(100*len(sample[cat][sample[cat]['sSFR_status'] == status])/len(sample[cat])):.1f}',build=True)
        
         
-    
-    results = sSFR.compare(sample, Verbose=True)
-    for name,pval in results.items():
-        report.append_json('pval_'+name,gu.numformat(pval,prec=1),build=True)
 
     if co.VERBOSE:
         print("   Plotting sSFR gaussian mixture")
@@ -130,32 +126,18 @@ def sSFR_properties(sample):
         print("   Plotting residual distribution")
     sSFR.plot_residual_distribution(non_quenched,f_interp, name="residual_sSFR_histogram", )
 
+    results = sSFR.compare(sample, Verbose=True)
+    for name,pval in results.items():
+        report.append_json('pval_'+name,gu.numformat(pval,prec=1),build=True)
+
 def morph_properties(sample):
 
-    morph_stats = morph.stats(CG, Control)
-    for res_key in morph_stats.keys():
-        # if morph_stats[res_key] ends with '_pc', convert to percentage
-        if res_key.endswith('_pc'):
-            str = f'{100*morph_stats[res_key]:.1f}\%'
-        else:
-            str = morph_stats[res_key]
-        report.append_json(res_key, str)
-
-    if co.VERBOSE:
-        print(f"Control: {100*morph_stats['fraction_S_Control_pc']:.1f}% Spiral, {100*morph_stats['fraction_E_Control_pc']:.1f}% Elliptical")
-        print(f"CG: {100*morph_stats['fraction_S_CG_pc']:.1f}% Spiral, {100*morph_stats['fraction_E_CG_pc']:.1f}% Elliptical")
-        print(f'''Probability (from Fisher) that both come form the same underlying distribution: 
-                {gu.numformat(100*morph_stats['pval_morphologies_CGvsControl_pc'],prec=1)}%''')
+    morph.stats(sample)
     
-    return CG
     
 
 def main():
-    # import sys, importlib.util
-    # print("PY:", sys.executable)
-    # print("astroquery spec:", importlib.util.find_spec("astroquery"))
-
-
+    
     report.initialise_json()
 
     if co.VERBOSE:
@@ -187,8 +169,8 @@ def main():
         with open(co.DATA_PATH + co.PROCESS_SAMPLES, "rb") as file:
             sample = pkl.load(file)
 
-    sample['Control4C_Gals'].to_csv(co.OUTPUT_PATH + "Control4C_Gals_processed.csv", index=False)
-    sample['SDSS'].to_csv(co.OUTPUT_PATH + "SDSS_processed.csv", index=False)
+
+    morph_properties(sample)
 
     report.finalize_json()
     report.generate_report()

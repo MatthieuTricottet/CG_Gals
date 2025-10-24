@@ -103,47 +103,46 @@ def classify_all_samples(sample: dict) -> dict:
 
     return sample
 
-def stats(CG,Control):
-    """
+def stats(sample):
+    """ 
     Perform statistical analysis on the morphological classification of galaxies.
-
     Parameters
     ----------
-    CG : pandas.DataFrame
-        DataFrame containing the morphological classification of galaxies.
-    Control : pandas.DataFrame
-        DataFrame containing the control sample of galaxies.
-
-    Returns
-    -------
-    dict
-        Dictionary containing the results of the statistical analysis.
+    sample : dict
+        Dictionary where keys are sample names and values are pandas DataFrames
+        containing galaxy data with 'morphology' column.    
     """
-    results = {}
-    Nb_S_Control = len(Control[Control['morphology'] == 'Spiral'])
-    results['Nb_S_Control'] = Nb_S_Control
-    Nb_E_Control = len(Control[Control['morphology'] == 'Elliptical'])
-    results['Nb_E_Control'] = Nb_E_Control
-    Nb_S_CG = len(CG[CG['morphology'] == 'Spiral'])
-    results['Nb_S_CG'] = Nb_S_CG
-    Nb_E_CG = len(CG[CG['morphology'] == 'Elliptical'])
-    results['Nb_E_CG'] = Nb_E_CG
-    fraction_S_Control = Nb_S_Control / (Nb_S_Control + Nb_E_Control)
-    results['fraction_S_Control_pc'] = fraction_S_Control
-    fraction_E_Control = Nb_E_Control / (Nb_S_Control + Nb_E_Control)
-    results['fraction_E_Control_pc'] = fraction_E_Control
-    fraction_S_CG = Nb_S_CG / (Nb_S_CG + Nb_E_CG)
-    results['fraction_S_CG_pc'] = fraction_S_CG
-    fraction_E_CG = Nb_E_CG / (Nb_S_CG + Nb_E_CG)
-    results['fraction_E_CG_pc'] = fraction_E_CG
+    # Morphological fractions
+    for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]+['SDSS']:
+        df = sample[cat]
+        n_total = len(df)
+        for morph in co.Morphologies:  
+            n_morph = len(df[df['morphology'] == morph])
+            report.append_json(f'{cat}_N_{morph}', n_morph)  
+            frac_morph = n_morph / n_total
+            report.append_json(f'{cat}_fraction_{morph}_pc', f'{(100*frac_morph):.1f}')  
+            if co.VERBOSE:
+                print(f"   {cat} - {morph}: {n_morph} galaxies ({(100*frac_morph):.1f}%)")      
+    # Statistical tests between CG and Control samples
+    for control_name in co.CONTROL.keys():  
+        control_cat = control_name + co.GASUFF
+        CG_cat = 'CG4' + co.GASUFF
+        for morph in ['Elliptical', 'Spiral']:
+            # Create contingency table
+            n_CG_morph = len(sample[CG_cat][sample[CG_cat]['morphology'] == morph])
+            n_CG_non_morph = len(sample[CG_cat]) - n_CG_morph
+            n_control_morph = len(sample[control_cat][sample[control_cat]['morphology'] == morph])
+            n_control_non_morph = len(sample[control_cat]) - n_control_morph
+            contingency_table = np.array([[n_CG_morph, n_CG_non_morph],
+                                          [n_control_morph, n_control_non_morph]])
+            # Perform Barnard's exact test
+            res_barnard = barnard_exact(contingency_table, alternative='two-sided')
+            pval = res_barnard.pvalue
+            report.append_json(f'pval_{control_name}_{morph}_vs_CG_pc', gu.numformat(pval, prec=1))
+            if co.VERBOSE:
+                print(f"   p-value for {morph} in {control_name} vs CG: {pval:.3e}")
 
-    table = [[Nb_S_Control, Nb_E_Control],
-            [Nb_S_CG, Nb_E_CG]]
-    res_fisher = fisher_exact(table, alternative='two-sided')
-    pval_morphologies_CGvsControl = res_fisher.pvalue
-    results['pval_morphologies_CGvsControl_pc'] = pval_morphologies_CGvsControl
 
-    return results
     
 #    def morph_sSFR(CG,Control):
 #     """

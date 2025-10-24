@@ -37,6 +37,9 @@ def initialise_json(build=False):
         append_json('R_MAX', co.R_MAX)
         append_json('DATA_RELEASE', co.DATA_RELEASE)
         append_json('sSFR_status', co.sSFR_status)
+        append_json('Morphologies', co.Morphologies)
+        append_json('sSFR_THRESHOLD', co.sSFR_THRESHOLD)
+        append_json('sSFR_QUENCHED', co.sSFR_QUENCHED)
   
 
 def append_json(key: str, value, build=False):
@@ -139,10 +142,23 @@ def generate_report():
     # 6) Compile sequence
     try:
         # 6.1 Initial pdflatex
+        # proc = run_proc(
+        #     ["pdflatex", "-interaction=nonstopmode", "-output-directory", report_dir, tex_file],
+        #     cwd=report_dir,
+        #     description="pdflatex (1)"
+        # )
         proc = run_proc(
-            ["pdflatex", "-interaction=nonstopmode", "-output-directory", report_dir, tex_file],
+            [
+                "pdflatex",
+                "-interaction=nonstopmode",
+                "-halt-on-error",
+                "-file-line-error",
+                "-synctex=0",
+                "-output-directory", report_dir,
+                tex_file,
+            ],
             cwd=report_dir,
-            description="pdflatex (1)"
+            description="pdflatex (1, quiet)"
         )
         if proc.returncode != 0:
             return
@@ -166,9 +182,22 @@ def generate_report():
             return
         # 6.3 Two more pdflatex runs
         for i in (1, 2):
+            # proc = run_proc(
+            #     ["pdflatex", "-interaction=nonstopmode",
+            #      "-output-directory", report_dir, tex_file],
+            #     description=f"pdflatex pass #{i+1}"
+            # )
             proc = run_proc(
-                ["pdflatex", "-interaction=nonstopmode",
-                 "-output-directory", report_dir, tex_file],
+                [
+                    "pdflatex",
+                    "-interaction=nonstopmode",
+                    "-halt-on-error",
+                    "-file-line-error",
+                    "-synctex=0",
+                    "-output-directory", report_dir,
+                    tex_file,
+                ],
+                cwd=report_dir,
                 description=f"pdflatex pass #{i+1}"
             )
             if proc.returncode != 0:

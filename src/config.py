@@ -1,7 +1,7 @@
 #* Display graphs or not while running the code
 VERBOSE = True
 SHOW = False
-REBUILD_SAMPLE = True
+REBUILD_SAMPLE = False
 
 #* File system
 BASE_PATH = "/Users/matt/Astrophysics/CG_Gals/"
@@ -36,6 +36,7 @@ DATA_RELEASE = 16
 
 
 sSFR_status = ['Quenched', 'Passive', 'Starforming']
+Morphologies = ['Elliptical', 'Spiral', 'Uncertain']
 
 sSFR_THRESHOLD, sSFR_QUENCHED = -1000, -16.0  # Log(sSFR) floor for quenched galaxies, in yr^-1
 

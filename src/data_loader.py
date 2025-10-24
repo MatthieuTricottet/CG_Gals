@@ -116,6 +116,7 @@ def remove_AGN(df):
 
 def sSFR_floor(cat, sSFR="sSFR"):
     # if cat[sSFR] < co.sSFR_THRESHOLD, replace by co.sSFR_QUENCHED
+    cat.loc[cat[sSFR]<co.sSFR_THRESHOLD, 'sSFR_status'] = co.sSFR_status[0]
     cat.loc[cat[sSFR]<co.sSFR_THRESHOLD, sSFR] = co.sSFR_QUENCHED
     return cat
 
@@ -228,6 +229,7 @@ def load_SDSS():
         'lgm_tot_p50': 'lgm'
         }, inplace=True)
 
+    SDSS_withAGN_df['sSFR_status'] = ''
     SDSS_withAGN_df = sSFR_floor(SDSS_withAGN_df)
 
     SDSS_withAGN_df['log_NII_Ha'] = mu.safe_log_ratio(SDSS_withAGN_df['nii_6584_flux'], 

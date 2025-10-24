@@ -1,26 +1,65 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{15}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{Hahn {et~al.}(2019)Hahn, Starkenburg, Choi, {et~al.}}]{Hahn2019}
+Hahn, C., Starkenburg, T.~K., Choi, E., {et~al.} 2019, Astrophys. J., 872
+
+\bibitem[{Wuyts {et~al.}(2011)Wuyts, F{\"o}rster~Schreiber, Lutz,
+  {et~al.}}]{Wuyts2011}
+Wuyts, S., F{\"o}rster~Schreiber, N.~M., Lutz, D., {et~al.} 2011, Astrophys.
+  J., 742, 96
 
 \bibitem[{{Zheng} \& {Shen}(2021)}]{Zheng&Shen21}
 {Zheng}, Y.-L. \& {Shen}, S.-Y. 2021, \apj, 911, 105
+
+\bibitem[{Bishop(2006)}]{Bishop2006}
+Bishop, C.~M. 2006, Pattern Recognition and Machine Learning (Springer)
+
+\bibitem[{Tojeiro {et~al.}(2009)Tojeiro, Heavens, Jimenez, \&
+  Panter}]{Tojeiro2009}
+Tojeiro, R., Heavens, A.~F., Jimenez, R., \& Panter, B. 2009, Mon. Not. R.
+  Astron. Soc., 397, 1263
 
 \bibitem[{{Lintott} {et~al.}(2011){Lintott}, {Schawinski}, {Bamford}, {Slosar},
   {Land}, {Thomas}, {Edmondson}, {Masters}, {Nichol}, {Raddick}, {Szalay},
   {Andreescu}, {Murray}, \& {Vandenberg}}]{GalaxyZoo1}
 {Lintott}, C., {Schawinski}, K., {Bamford}, S., {et~al.} 2011, \mnras, 410, 166
 
+\bibitem[{Kullback \& Leibler(1951)}]{Kullback1951}
+Kullback, S. \& Leibler, R.~A. 1951, Ann. Math. Statist., 22, 79
+
 \bibitem[{Veilleux \& Osterbrock(1987)}]{Veilleux87}
 Veilleux, S. \& Osterbrock, D.~E. 1987, Astrophysical Journal Supplement
   Series, 63, 295
+
+\bibitem[{Dempster {et~al.}(1977)Dempster, Laird, \& Rubin}]{Dempster1977}
+Dempster, A.~P., Laird, N.~M., \& Rubin, D.~B. 1977, J. R. Statist. Soc. B, 39,
+  1
+
+\bibitem[{McLachlan \& Peel(2000)}]{McLachlanPeel2000}
+McLachlan, G. \& Peel, D. 2000, Finite Mixture Models (Wiley)
 
 \bibitem[{{Tricottet} {et~al.}(2025){Tricottet}, {Mamon}, \&
   {D{\'\i}az-Gim{\'e}nez}}]{Tricottet+25}
 {Tricottet}, M., {Mamon}, G.~A., \& {D{\'\i}az-Gim{\'e}nez}, E. 2025, \aap,
   699, A329
 
+\bibitem[{Bisigello {et~al.}(2018)Bisigello, Caputi, Grogin, \&
+  Koekemoer}]{Bisigello2018}
+Bisigello, L., Caputi, K.~I., Grogin, N., \& Koekemoer, A. 2018, Astron.
+  Astrophys., 609, A82
+
 \bibitem[{Kauffmann {et~al.}(2003)Kauffmann, Heckman, Tremonti, Brinchmann,
   Charlot, White, Reichard, \& Brinkmann}]{Kauffmann+03a}
 Kauffmann, G., Heckman, T.~M., Tremonti, C., {et~al.} 2003, Monthly Notices of
   the Royal Astronomical Society, 346, 1055
+
+\bibitem[{Pedregosa {et~al.}(2011)Pedregosa, Varoquaux, Gramfort,
+  {et~al.}}]{Pedregosa2011}
+Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
+  Res., 12, 2825
+
+\bibitem[{Rousseeuw(1987)}]{Rousseeuw1987}
+Rousseeuw, P.~J. 1987, Comput. Appl. Math., 20, 53
 
 \end{thebibliography}

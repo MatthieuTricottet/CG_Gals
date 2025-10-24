@@ -233,23 +233,27 @@ def sSFR_status(df):
     None
     """
     
-    #* --------------------------------------------------------------------------------
-    #* Classify galaxies based on sSFR status.
-    #* --------------------------------------------------------------------------------
     
-    df['sSFR_status'] = co.sSFR_status[0]  # Default to 'quenched'
-    df.loc[df['sSFR'] > -9999, 'sSFR_status'] = co.sSFR_status[1]  # Set to 'passive'
-    df.loc[~df['is_star_forming'], 'sSFR_status'] = co.sSFR_status[2]  # Set to 'star-forming'
-
+    if 'sSFR_status' not in df.columns:
+        df['sSFR_status'] = pd.Series(pd.NA, index=df.index, dtype=object)
+    current_status = df['sSFR_status']
+    blank_mask = current_status.apply(lambda val: isinstance(val, str) and val.strip() == '')
+    needs_update = current_status.isna() | blank_mask
+    df.loc[needs_update, 'sSFR_status'] = co.sSFR_status[0]  # Default to 'quenched'
+    df.loc[needs_update & (df['sSFR'] > -9999), 'sSFR_status'] = co.sSFR_status[1]  # Set to 'passive'
+    df.loc[needs_update & (~df['is_star_forming']), 'sSFR_status'] = co.sSFR_status[2]  # Set to 'star-forming'
 
     return df['sSFR_status']
-#* --------------------------------------------------------------------------------
- 
+
+
 def add_status(df, fit_results):
     """
     Add the sSFR status to the dataframes
     """
     df['is_star_forming'] = is_star_forming(df, fit_results)
+    #    set df['sSFR_status'] as sSFR_status(df) if df['sSFR_status'] is nan else keep df['sSFR_status']
+    
+
     df['sSFR_status'] = sSFR_status(df)
     
     df.drop(columns=['is_star_forming'], inplace=True)
@@ -260,61 +264,13 @@ def add_status(df, fit_results):
     
 
 def compute_status(sample):
-    non_quenched = sample['SDSS'][sample['SDSS']['sSFR'] > co.sSFR_QUENCHED]
+    non_quenched = sample['SDSS'][sample['SDSS']['sSFR_status'] != co.sSFR_status[0]]
     fit_results = get_fit(non_quenched)
     f_interp = get_decision_boundary_interp(non_quenched, fit_results)
     for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]+['SDSS']:
         sample[cat] = sSFR.add_status(sample[cat], fit_results)
     return sample, non_quenched, fit_results, f_interp
 
-
-def compare(sample, Verbose=True):
-    """
-    Compare the sSFR of the control samples and the CG sample
-    """
-
-    #* --------------------------------------------------------------------------------
-    #* Initialising variables
-    #* --------------------------------------------------------------------------------
-    CG = sample['CG4'+co.GASUFF]
-    CG_lgm = CG[CG['lgm'] > 0]
-    results = {}
-    #* --------------------------------------------------------------------------------
-
-
-    for name, df in enumerate(co.CONTROL):
-        if Verbose:
-            print(name)
-
-        df_lgm = df[df['lgm'] > 0]
-        for status in co.sSFR_status:
-            df_status = df_lgm[df_lgm['sSFR_status'] == status]
-            frac = len(df_status) / len(df_lgm)
-            # results = pu.dict_union(results, {df.name : {'sSFR_status': status, 'fraction': f'{100*frac:.1f}\%'}})
-            if Verbose:
-                print(f"   {status}: {100*frac:.1f} % ")
-        # Calculate the p-value for the proportion of star forming galaxies
-        if co.sSFR_status[2] in df['sSFR_status'].unique(): # Star forming
-            df_starforming = df_lgm[df_lgm['sSFR_status'] == co.sSFR_status[2]]
-            Control_lgm_starforming = Control_lgm[Control_lgm['sSFR_status'] == co.sSFR_status[2]]
-            table = [[len(df_starforming), len(df_lgm)],[len(Control_lgm_starforming), len(Control_lgm)]]
-            res_fisher = fisher_exact(table, alternative='two-sided')
-            # results_old.loc['p_star_forming_diff_Control', df.name] = res_fisher.pvalue
-            results = pu.dict_union(results, {df.name+"_"+status+"vsControl": res_fisher.pvalue})
-            if Verbose:
-                print(f"   {status}: {100*len(df_status)/len(df):.1f} % ")
-                print("Exact test p-values of proportion of star forming being different between CG_4_500 and control sample:")
-                print(f"   Fisher: {res_fisher.pvalue:.1e}")
-                if res_fisher.pvalue < 0.05:
-                    print("   Reject null hypothesis: the proportion of star forming galaxies is different between CG_4_500 and control sample")
-                    print(f"   Control proportion of star forming ({100*len(Control_lgm_starforming)/len(Control_lgm):.1f}%) " + 
-                        f"is different from CG_4_500 proportion of star forming ({100*len(df_starforming)/len(df):.1f}%)")
-                else:
-                    print("   Fail to reject null hypothesis: the proportion of star forming galaxies is not different between " + 
-                        "CG_4 and control sample")
-
-    
-    return results
 
 def compare(sample, Verbose=True):
     """
@@ -491,15 +447,15 @@ def plot_classification(non_quenched, sdss_df, fit_results, f_interp,
         plt.show()
 
  
-def plot_galaxies(Control, CG, markerscale=8, triangle_factor=0.7, name=None, figsize=(10, 8),
+def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsize=(10, 8),
                    fontsize_labels=16, fontsize_legend=14):
     """
     Create a scatter plot of galaxy sSFR vs stellar mass using subplots.
     
     Parameters:
     -----------
-    Control : pandas DataFrame
-        The galaxy Control sample containing 'lgm', 'sSFR', and 'sSFR_status' columns
+    SDSS : pandas DataFrame
+        The galaxy SDSS sample containing 'lgm', 'sSFR', and 'sSFR_status' columns
     CG : pandas DataFrame
         The galaxy Compact Groups sample containing 'lgm', 'sSFR', and 'sSFR_status' columns
     markerscale : float, default=8
@@ -523,7 +479,7 @@ def plot_galaxies(Control, CG, markerscale=8, triangle_factor=0.7, name=None, fi
     # Control = Control.loc[Control['lgm'] > 0]
     
     # Create a copy of the dataframe with capitalized sSFR_status for the legend
-    plot_data = Control.copy()
+    plot_data = SDSS.copy()
     plot_data['sSFR_status'] = plot_data['sSFR_status'].apply(lambda x: x.capitalize())
     
     # Create figure and axis objects
