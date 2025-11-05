@@ -1,0 +1,14 @@
+# Fdb version 4
+["pdflatex"] 1762253747.22377 "/Users/matt/Astrophysics/CG_Gals/src/paper_template/paper_template.tex" "paper_template.pdf" "paper_template" 1762253747.3682 2
+  "/Users/matt/Astrophysics/CG_Gals/src/paper_template/paper_template.tex" 1762253746.90676 17028 18831c3b3f6fa5d622dfd8a0b1fc07bb ""
+  "/usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf" 1708706663 41649 5d6ae549fbbcb850a863f69aa41f3d10 ""
+  "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1739716839 8221427 d184a1371ff42219b23188771f6bd9bc ""
+  "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
+  "aa.cls" 0 -1 0 ""
+  "paper_template.aux" 1762253747.22336 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "paper_template.tex" 1762253746.90676 17028 18831c3b3f6fa5d622dfd8a0b1fc07bb ""
+  (generated)
+  "paper_template.aux"
+  "paper_template.log"
+  "paper_template.pdf"
+  (rewritten before read)

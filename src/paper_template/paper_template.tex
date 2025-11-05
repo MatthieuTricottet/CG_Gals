@@ -260,14 +260,6 @@ between \CG{} and each control sample to actually come from the same underlying 
      \label{fig:Residual_sSFR}
 \end{figure}
 
-\begin{figure}
-    \centering
-     \includegraphics[width=\columnwidth]{galaxies_sfr.pdf}
-     \caption{sSFR and morphologies of galaxies in \CG{} and our SDSS selection. 
-     Quenched galaxies are represented at an arbitrary low value of $10^{<<sSFR_QUENCHED>>}$ Gyr\(^{-1}\).}
-     \label{fig:galaxies_sfr}
-\end{figure}
-
 
 
 \subsection{Morphology}
@@ -279,7 +271,8 @@ Other cases are considered as ``uncertain''. The morphologies found for each sam
 Barnard two-sided exact tests were performed to compare the fraction of each morphology between \CG{} and each control sample. The p-values found are 
 <<pval_Control4B_Elliptical_vs_CG_pc>> for ellipticals and <<pval_Control4B_Spiral_vs_CG_pc>> for spirals versus \CB{} sample, 
  <<pval_Control4C_Elliptical_vs_CG_pc>>  and <<pval_Control4C_Spiral_vs_CG_pc>>  versus \CC{} and  <<pval_RG4_Elliptical_vs_CG_pc>>  
- and <<pval_RG4_Spiral_vs_CG_pc>>  versus \RG.
+ and <<pval_RG4_Spiral_vs_CG_pc>>  versus \RG. Figure \ref{fig:galaxies_morph_sfr} displays the sSFR against masses for galaxies from the SDSS selection and for \CG{}s galaxies.
+
 \begin{table}
     \centering
     \begin{tabular}{lccc}
@@ -297,21 +290,33 @@ Barnard two-sided exact tests were performed to compare the fraction of each mor
     \label{tab:morphologies}
 \end{table}
 
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{galaxies_sfr.pdf}
+     \caption{sSFR and morphologies of galaxies in \CG{} and our SDSS selection. 
+     Quenched galaxies are represented at an arbitrary low value of $10^{<<sSFR_QUENCHED>>}$ Gyr\(^{-1}\).}
+     \label{fig:galaxies_morph_sfr}
+\end{figure}
+
 \subsection{Morphology vs sSFR}
 
 
-% Once galaxies having uncertain morphology removed, \CG{} have <<Nb_S_CG>> (<<fraction_S_CG_pc>>) of their galaxies classified as spiral and 
-% <<Nb_E_CG>> (<<fraction_E_CG_pc>>) elliptical,
-% while the control sample has <<Nb_S_Control>> (<<fraction_S_Control_pc>>) and <<Nb_E_Control>> (<<fraction_E_Control_pc>>), respectively. 
-% The probability that those fractions come from 
-% the same distribution is astimated as <<pval_morphologies_CGvsControl_pc>> from the Fisher two-sided exact test.
 
-% % \begin{figure}
-% %     \centering
-% %      \includegraphics[width=\columnwidth]{.pdf}
-% %      \caption{}
-% %      \label{fig:}
-% % \end{figure}
+Starforming \CG{} are composed of <<CG_Nb_Spiral_Starforming>> of their galaxies classified as spiral 
+(<<CG_fracpc_Spiral_Starforming>>\% once galaxies having uncertain morphology removed) and 
+<<CG_Nb_Elliptical_Starforming>> (<<CG_fracpc_Elliptical_Starforming>>\% once galaxies having uncertain morphology removed) elliptical.
+These figures are <<Control4B_Nb_Spiral_Starforming>> (<<Control4B_fracpc_Spiral_Starforming>>\%) spiral
+and <<Control4B_Nb_Elliptical_Starforming>> (<<Control4B_fracpc_Elliptical_Starforming>>\%) elliptical galaxies for \CB{}, 
+<<Control4C_Nb_Spiral_Starforming>> (<<Control4C_fracpc_Spiral_Starforming>>\%) spiral
+and <<Control4C_Nb_Elliptical_Starforming>> (<<Control4C_fracpc_Elliptical_Starforming>>\%) elliptical galaxies for \CC{}
+and <<RG4_Nb_Spiral_Starforming>> (<<RG4_fracpc_Spiral_Starforming>>\%) spiral
+and <<RG4_Nb_Elliptical_Starforming>> (<<RG4_fracpc_Elliptical_Starforming>>\%) elliptical galaxies for \RG{}. 
+The probability that those fractions come from 
+the same distribution is estimated from the <<Morph_sSFR_test>> as <<pval_Control4B_Starforming_vs_CG_pc>> against \CB,
+<<pval_Control4C_Starforming_vs_CG_pc>> against \CC{} and <<pval_RG4_Starforming_vs_CG_pc>> against \RG. There is thus 
+neither significant excess nor lack of 
+starforming elliptical galaxies in \CG{} compared to all our control samples.
 
 % \subsection{Dominance}
 % We split groups into two categories: the dominated, for which the BGG has a luminosity fraction greater than the median of \RG.

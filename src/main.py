@@ -133,8 +133,10 @@ def sSFR_properties(sample):
 def morph_properties(sample):
 
     morph.stats(sample)
+    morph.morph_sSFR(sample)
     
-    
+# def correlations_by_morph(sample):
+
 
 def main():
     
@@ -171,6 +173,8 @@ def main():
 
 
     morph_properties(sample)
+
+    # correlations_by_morph(sample)
 
     report.finalize_json()
     report.generate_report()

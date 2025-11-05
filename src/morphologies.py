@@ -96,7 +96,7 @@ def classify_all_samples(sample: dict) -> dict:
         df = classify(df)
         for morph in ['Elliptical', 'Spiral', 'Uncertain']:
             n_morph = len(df[df['morphology'] == morph])
-            report.append_json(f'{cat}_N{morph}', n_morph, build=True)
+            report.append_json(f'{cat}_N_{morph}', n_morph, build=True)
             if co.VERBOSE:
                 print(f"   {morph}: {n_morph} galaxies")
         
@@ -144,37 +144,72 @@ def stats(sample):
 
 
     
-#    def morph_sSFR(CG,Control):
-#     """
-#     Perform statistical analysis on the specific star formation rate (sSFR) of galaxies based on their morphological classification.
+def morph_sSFR(sample):
+    """
+    Compare morphological and sSFR classifications between compact group galaxies and control samples.
 
-#     Parameters
-#     ----------
-#     CG : pandas.DataFrame
-#         DataFrame containing the morphological classification and sSFR of galaxies.
-#     Control : pandas.DataFrame
-#         DataFrame containing the control sample of galaxies.
+    Parameters
+    ----------
+    CG : pandas.DataFrame
+        DataFrame containing compact group galaxy data.
+    Controls : dict
+        Dictionary where keys are control sample names and values are pandas DataFrames
+        containing control galaxy data.
 
-#     Returns
-#     -------
-#     dict
-#         Dictionary containing the results of the statistical analysis.
-#     """
-#     results = {}
+    Returns
+    -------
+    dict
+        
+    """
+    status = co.sSFR_status[2] # 'Starforming'
+
+    CG = sample['CG4_Gals']
+    CG = CG.loc[CG['morphology'] != co.Morphologies[2]]  # Remove 'Uncertain' morphologies
+    CG_m0_sSFR2 = len(CG[(CG['morphology'] == co.Morphologies[0]) & (CG['sSFR_status'] == status)])
+    CG_m1_sSFR2 = len(CG[(CG['morphology'] == co.Morphologies[1]) & (CG['sSFR_status'] == status)])
+    CG_NoU_sSFR = CG_m0_sSFR2 + CG_m1_sSFR2
+    report.append_json(f'CG_Nb_{co.Morphologies[0]}_{status}', CG_m0_sSFR2)
+    report.append_json(f'CG_fracpc_{co.Morphologies[0]}_{status}', gu.numformat(100*CG_m0_sSFR2/CG_NoU_sSFR, prec=3))
+    report.append_json(f'CG_Nb_{co.Morphologies[1]}_{status}', CG_m1_sSFR2)
+    report.append_json(f'CG_fracpc_{co.Morphologies[1]}_{status}', gu.numformat(100*CG_m1_sSFR2/CG_NoU_sSFR, prec=3))
+
+    Controls = {name: sample[name+co.GASUFF] for name in co.CONTROL}
+
+    report.append_json(f'Morph_sSFR_test', 'Barnard two-sided exact test')
+    for name, control in Controls.items():
+        control = control.loc[control['morphology'] != co.Morphologies[2]]  # Remove 'Uncertain' morphologies
+        
+        Control_m0_sSFR2 = len(control[(control['morphology'] == co.Morphologies[0]) & (control['sSFR_status'] == status)])
+        Control_m1_sSFR2 = len(control[(control['morphology'] == co.Morphologies[1]) & (control['sSFR_status'] == status)])
+        Control_NoU_sSFR = Control_m0_sSFR2 + Control_m1_sSFR2
+        report.append_json(f'{name}_Nb_{co.Morphologies[0]}_{status}', Control_m0_sSFR2)
+        report.append_json(f'{name}_fracpc_{co.Morphologies[0]}_{status}', gu.numformat(100*Control_m0_sSFR2/Control_NoU_sSFR, prec=3))
+        report.append_json(f'{name}_Nb_{co.Morphologies[1]}_{status}', Control_m1_sSFR2)
+        report.append_json(f'{name}_fracpc_{co.Morphologies[1]}_{status}', gu.numformat(100*Control_m1_sSFR2/Control_NoU_sSFR, prec=3))
+
+
+        table = [  [CG_m0_sSFR2, CG_m1_sSFR2],
+                   [Control_m0_sSFR2, Control_m1_sSFR2]
+                ]
+        
+        res_barnard = barnard_exact(table, alternative='two-sided')
+        pval = res_barnard.pvalue
+        report.append_json(f'pval_{name}_Starforming_vs_CG_pc', gu.numformat(pval, prec=2))
+        if co.VERBOSE:
+            print(name)
+            print(table)
+            print(f"   p-value for Starforming in {name} vs CG: {pval:.3e}")
+
+    # for name, control in Controls.items():
+    #     if co.VERBOSE:
+    #         print(f"Comparing CG4 with {name}")
+    #     # Morphology vs sSFR contingency table
+    #     for morph in co.Morphologies:
+    #         for status in co.sSFR_status:
+    #             n_CG = len(CG[(CG['morphology'] == morph) & (CG['sSFR_status'] == status)])
+    #             n_control = len(control[(control['morphology'] == morph) & (control['sSFR_status'] == status)])
+    #             report.append_json(f'CG4_vs_{name}_N_{morph}_{status}', n_CG, build=True)
+    #             report.append_json(f'Control4B_vs_{name}_N_{morph}_{status}', n_control, build=True)
+    #             if co.VERBOSE:
+    #                 print(f"   {morph} - {status}: CG4: {n_CG}, {name}: {n_control}")
     
-#     # sSFR for Control sample
-#     sSFR_Control = Control['sSFR'].values
-#     results['sSFR_Control_mean'] = np.mean(sSFR_Control)
-#     results['sSFR_Control_std'] = np.std(sSFR_Control)
-
-#     # sSFR for CG sample
-#     sSFR_CG = CG['sSFR'].values
-#     results['sSFR_CG_mean'] = np.mean(sSFR_CG)
-#     results['sSFR_CG_std'] = np.std(sSFR_CG)
-
-#     # Statistical test between CG and Control samples
-#     res_barnard = barnard_exact(sSFR_CG, sSFR_Control, alternative='two-sided')
-#     pval_sSFR_CGvsControl = res_barnard.pvalue
-#     results['pval_sSFR_CGvsControl_pc'] = pval_sSFR_CGvsControl
-
-#     return results
