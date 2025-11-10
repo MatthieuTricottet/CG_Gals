@@ -13,6 +13,9 @@
     pdftitle={Overleaf Example},
     pdfpagemode=FullScreen,
     }
+
+\usepackage[justification=centering]{caption}
+
 \bibpunct{(}{)}{;}{a}{}{,}             %% natbib format for A&A and ApJ
 
 \makeatletter
@@ -213,27 +216,58 @@ delineating star‐forming from passive galaxies.
 
 \mt{Add relevant GM parameters found by the algorithm.}
 
-The sSFR status for each sample is shown in table \ref{tab:sSFR_status}. The probability for \<<sSFR_status[2]>>{} proportion 
-between \CG{} and each control sample to actually come from the same underlying distribution are, estimated using Fisher exact test, 
+The sSFR status for each sample is shown in table \ref{tab:sSFR_status}. Tere is no significant differences of for \<<sSFR_status[2]>>{} proportion 
+between \CG{} and the control samples (probabilities estimated using Fisher exact test are  
 <<pval_Control4B_Starforming_vs_CG>>  versus \CB{} sample, 
- <<pval_Control4C_Starforming_vs_CG>>  versus \CC{} and  <<pval_RG4_Starforming_vs_CG>>  versus \RG.
+ <<pval_Control4C_Starforming_vs_CG>>  versus \CC{} and  <<pval_RG4_Starforming_vs_CG>>  versus \RG).
 
-\begin{table}
+ Restrictions of the comparison to BGGs and satellites only are also shown in table \ref{tab:sSFR_status}. 
+ The p-values found from <<BGG_sSFR_tests>> are 
+  <<BGG_star_forming_pvalue_Control4B_vs_CG4>> against \CB,
+  <<BGG_star_forming_pvalue_Control4C_vs_CG4>> against \CC{} and 
+  <<BGG_star_forming_pvalue_RG4_vs_CG4>>  against \RG. 
+There is thus no significant difference in the fraction of star-forming BGGs nor satellites between \CG{} and our control samples either.
+
+% we find <<CG4_BGG_N_Starforming>> star-forming BGGs (<<CG4_BGG_fracpc_Starforming>>\% of the BGGs),
+% <<CG4_BGG_N_Passive>> Passive BGGs (<<CG4_BGG_fracpc_Passive>>\%) and <<CG4_BGG_N_Quenched>> Quenched BGGs (<<CG4_BGG_fracpc_Quenched>>\%)
+%  in \CG{}.
+%   This is to be compared to 
+%  <<Control4B_BGG_N_Starforming>> (<<Control4B_BGG_fracpc_Starforming>>\%) Starforming, 
+%  <<Control4B_BGG_N_Passive>> (<<Control4B_BGG_fracpc_Passive>>\%) Passive and
+%  <<Control4B_BGG_N_Quenched>> (<<Control4B_BGG_fracpc_Quenched>>\%) in \CB{}, 
+%  <<Control4C_BGG_N_Starforming>> (<<Control4C_BGG_fracpc_Starforming>>\%) Starforming,
+%  <<Control4C_BGG_N_Passive>> (<<Control4C_BGG_fracpc_Passive>>\%) Passive and
+%  <<Control4C_BGG_N_Quenched>> (<<Control4C_BGG_fracpc_Quenched>>\%)  Quenched in \CC{},
+%   and <<RG4_BGG_N_Starforming>> (<<RG4_BGG_fracpc_Starforming>>\%) Starforming,
+%   <<RG4_BGG_N_Passive>> (<<RG4_BGG_fracpc_Passive>>\%) Passive and
+%   <<RG4_BGG_N_Quenched>> (<<RG4_BGG_fracpc_Quenched>>\%) Quenched
+%   in \RG{}. 
+  
+\begin{table*}
     \centering
-    \begin{tabular}{lccc}
+    \begin{tabular}{llccc}
         \toprule
-            \textbf{Sample} & \textbf{  <<sSFR_status[0]>>  } & \textbf{  <<sSFR_status[1]>>  } & \textbf{  <<sSFR_status[2]>>  } \\
-            \CG &  <<CG4_Gals_NQuenched>>  (<<CG4_Gals_NQuenched_pc>> \%) &  <<CG4_Gals_NPassive>>  (<<CG4_Gals_NPassive_pc>> \%)&  <<CG4_Gals_NStarforming>>  (<<CG4_Gals_NStarforming_pc>> \%) \\
-            \CB &  <<Control4B_Gals_NQuenched>>  (<<Control4B_Gals_NQuenched_pc>> \%) &  <<Control4B_Gals_NPassive>>  (<<Control4B_Gals_NPassive_pc>> \%) &  <<Control4B_Gals_NStarforming>>  (<<Control4B_Gals_NStarforming_pc>> \%) \\
-            \CC &  <<Control4C_Gals_NQuenched>>  (<<Control4C_Gals_NQuenched_pc>> \%) &  <<Control4C_Gals_NPassive>>  (<<Control4C_Gals_NPassive_pc>> \%) &  <<Control4C_Gals_NStarforming>>  (<<Control4C_Gals_NStarforming_pc>> \%) \\
-            \RG &  <<RG4_Gals_NQuenched>>  (<<RG4_Gals_NQuenched_pc>> \%) &  <<RG4_Gals_NPassive>>  (<<RG4_Gals_NPassive_pc>> \%) &  <<RG4_Gals_NStarforming>>  (<<RG4_Gals_NStarforming_pc>> \%)\\
-            \emph{SDSS selection} &  \emph{<<SDSS_NQuenched>> (<<SDSS_NQuenched_pc>> \%)} &  \emph{<<SDSS_NPassive>>  (<<SDSS_NPassive_pc>> \%)} &  \emph{<<SDSS_NStarforming>>  (<<SDSS_NStarforming_pc>> \%)}\\
+            \textbf{Sample} & & \textbf{  <<sSFR_status[0]>>  } & \textbf{  <<sSFR_status[1]>>  } & \textbf{  <<sSFR_status[2]>>  } \\
+            \CG & &  <<CG4_Gals_NQuenched>>  (<<CG4_Gals_NQuenched_pc>> \%) &  <<CG4_Gals_NPassive>>  (<<CG4_Gals_NPassive_pc>> \%)&  <<CG4_Gals_NStarforming>>  (<<CG4_Gals_NStarforming_pc>> \%) \\
+             & \emph{BGG} &  \emph{<<CG4_BGG_NQuenched>>  (<<CG4_BGG_NQuenched_pc>> \%)} &  \emph{<<CG4_BGG_NPassive>>  (<<CG4_BGG_NPassive_pc>> \%)} &  \emph{<<CG4_BGG_NStarforming>>  (<<CG4_BGG_NStarforming_pc>> \%)} \\
+             & \emph{Satellites} &  \emph{<<CG4_Sat_NQuenched>>  (<<CG4_Sat_NQuenched_pc>> \%)} &  \emph{<<CG4_Sat_NPassive>>  (<<CG4_Sat_NPassive_pc>> \%)} &  \emph{<<CG4_Sat_NStarforming>>  (<<CG4_Sat_NStarforming_pc>> \%)} \\
+            \CB & &  <<Control4B_Gals_NQuenched>>  (<<Control4B_Gals_NQuenched_pc>> \%) &  <<Control4B_Gals_NPassive>>  (<<Control4B_Gals_NPassive_pc>> \%) &  <<Control4B_Gals_NStarforming>>  (<<Control4B_Gals_NStarforming_pc>> \%) \\
+             & \emph{BGG} &  \emph{<<Control4B_BGG_NQuenched>>  (<<Control4B_BGG_NQuenched_pc>> \%)} &  \emph{<<Control4B_BGG_NPassive>>  (<<Control4B_BGG_NPassive_pc>> \%)} &  \emph{<<Control4B_BGG_NStarforming>>  (<<Control4B_BGG_NStarforming_pc>> \%)} \\
+             & \emph{Satellites} &  \emph{<<Control4B_Sat_NQuenched>>  (<<Control4B_Sat_NQuenched_pc>> \%)} &  \emph{<<Control4B_Sat_NPassive>>  (<<Control4B_Sat_NPassive_pc>> \%)} &  \emph{<<Control4B_Sat_NStarforming>>  (<<Control4B_Sat_NStarforming_pc>> \%)} \\
+            \CC & &  <<Control4C_Gals_NQuenched>>  (<<Control4C_Gals_NQuenched_pc>> \%) &  <<Control4C_Gals_NPassive>>  (<<Control4C_Gals_NPassive_pc>> \%) &  <<Control4C_Gals_NStarforming>>  (<<Control4C_Gals_NStarforming_pc>> \%) \\
+             & \emph{BGG} &  \emph{<<Control4C_BGG_NQuenched>>  (<<Control4C_BGG_NQuenched_pc>> \%)} &  \emph{<<Control4C_BGG_NPassive>>  (<<Control4C_BGG_NPassive_pc>> \%)} &  \emph{<<Control4C_BGG_NStarforming>>  (<<Control4C_BGG_NStarforming_pc>> \%)} \\
+             & \emph{Satellites} &  \emph{<<Control4C_Sat_NQuenched>>  (<<Control4C_Sat_NQuenched_pc>> \%)} &  \emph{<<Control4C_Sat_NPassive>>  (<<Control4C_Sat_NPassive_pc>> \%)} &  \emph{<<Control4C_Sat_NStarforming>>  (<<Control4C_Sat_NStarforming_pc>> \%)} \\
+            \RG & &  <<RG4_Gals_NQuenched>>  (<<RG4_Gals_NQuenched_pc>> \%) &  <<RG4_Gals_NPassive>>  (<<RG4_Gals_NPassive_pc>> \%) &  <<RG4_Gals_NStarforming>>  (<<RG4_Gals_NStarforming_pc>> \%)\\
+            & \emph{BGG} &  \emph{<<RG4_BGG_NQuenched>>  (<<RG4_BGG_NQuenched_pc>> \%)} &  \emph{<<RG4_BGG_NPassive>>  (<<RG4_BGG_NPassive_pc>> \%)} &  \emph{<<RG4_BGG_NStarforming>>  (<<RG4_BGG_NStarforming_pc>> \%)}\\
+            & \emph{Satellites} &  \emph{<<RG4_Sat_NQuenched>>  (<<RG4_Sat_NQuenched_pc>> \%)} &  \emph{<<RG4_Sat_NPassive>>  (<<RG4_Sat_NPassive_pc>> \%)} &  \emph{<<RG4_Sat_NStarforming>>  (<<RG4_Sat_NStarforming_pc>> \%)}\\
+         \midrule
+            \emph{SDSS selection} & &  \emph{<<SDSS_NQuenched>> (<<SDSS_NQuenched_pc>> \%)} &  \emph{<<SDSS_NPassive>>  (<<SDSS_NPassive_pc>> \%)} &  \emph{<<SDSS_NStarforming>>  (<<SDSS_NStarforming_pc>> \%)}\\
          \midrule
         \bottomrule
     \end{tabular}
     \caption{Number of galaxies in each sSFR status for each sample.}
     \label{tab:sSFR_status}
-\end{table}
+\end{table*}
 
         
     
@@ -271,9 +305,11 @@ Other cases are considered as ``uncertain''. The morphologies found for each sam
 Barnard two-sided exact tests were performed to compare the fraction of each morphology between \CG{} and each control sample. The p-values found are 
 <<pval_Control4B_Elliptical_vs_CG_pc>> for ellipticals and <<pval_Control4B_Spiral_vs_CG_pc>> for spirals versus \CB{} sample, 
  <<pval_Control4C_Elliptical_vs_CG_pc>>  and <<pval_Control4C_Spiral_vs_CG_pc>>  versus \CC{} and  <<pval_RG4_Elliptical_vs_CG_pc>>  
- and <<pval_RG4_Spiral_vs_CG_pc>>  versus \RG. Figure \ref{fig:galaxies_morph_sfr} displays the sSFR against masses for galaxies from the SDSS selection and for \CG{}s galaxies.
+ and <<pval_RG4_Spiral_vs_CG_pc>>  versus \RG. Morphologies of \CG, wich we identified as cores of richer groups in 
+ \cite{Tricottet+25}, have morphologies significantly different from ordinary groups of four members. Figure \ref{fig:galaxies_morph_sfr} displays the sSFR against masses for galaxies from the SDSS selection and for \CG{}s galaxies.
 
-\begin{table}
+
+\begin{table*}
     \centering
     \begin{tabular}{lccc}
         \toprule
@@ -288,7 +324,7 @@ Barnard two-sided exact tests were performed to compare the fraction of each mor
     \end{tabular}
     \caption{Number of galaxies of each morphology for each sample.}
     \label{tab:morphologies}
-\end{table}
+\end{table*}
 
 
 \begin{figure}
@@ -317,6 +353,23 @@ the same distribution is estimated from the <<Morph_sSFR_test>> as <<pval_Contro
 <<pval_Control4C_Starforming_vs_CG_pc>> against \CC{} and <<pval_RG4_Starforming_vs_CG_pc>> against \RG. There is thus 
 neither significant excess nor lack of 
 starforming elliptical galaxies in \CG{} compared to all our control samples.
+
+If we restrict the comparison to BGGs only, we find <<CG4_BGG_N_Elliptical>> Elliptical BGGs (<<CG4_BGG_fracpc_Elliptical>>\% of the BGGs) and
+<<CG4_BGG_N_Spiral>> Spiral BGGs (<<CG4_BGG_fracpc_Spiral>>\%) 
+ in \CG{}.
+  This is to be compared to 
+ <<Control4B_BGG_N_Elliptical>> (<<Control4B_BGG_fracpc_Elliptical>>\%) Elliptical and
+ <<Control4B_BGG_N_Spiral>> (<<Control4B_BGG_fracpc_Spiral>>\%) Spiral galaxies in \CB{}, 
+ <<Control4C_BGG_N_Elliptical>> (<<Control4C_BGG_fracpc_Elliptical>>\%) Elliptical and
+ <<Control4C_BGG_N_Spiral>> (<<Control4C_BGG_fracpc_Spiral>>\%)  Spiral in \CC{},
+  and  <<RG4_BGG_N_Elliptical>> (<<RG4_BGG_fracpc_Elliptical>>\%) Elliptical and
+  <<RG4_BGG_N_Spiral>> (<<RG4_BGG_fracpc_Spiral>>\%) Quenched
+  in \RG{}. 
+The p-values found from <<BGG_morph_tests>> are 
+  <<BGG_morph_pvalue_Control4B_vs_CG4>> against \CB,
+  <<BGG_morph_pvalue_Control4C_vs_CG4>> against \CC{} and 
+  <<BGG_morph_pvalue_RG4_vs_CG4>>  against \RG. 
+There is thus no significant difference in the fraction of star-forming BGGs between \CG{} and our control samples.  
 
 % \subsection{Dominance}
 % We split groups into two categories: the dominated, for which the BGG has a luminosity fraction greater than the median of \RG.

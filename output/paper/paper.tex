@@ -13,6 +13,9 @@
     pdftitle={Overleaf Example},
     pdfpagemode=FullScreen,
     }
+
+\usepackage[justification=centering]{caption}
+
 \bibpunct{(}{)}{;}{a}{}{,}             %% natbib format for A&A and ApJ
 
 \makeatletter
@@ -214,7 +217,7 @@ The non-AGN selection process is shown on figure \ref{fig:BPT}.
 
 
 We identify the galaxies having a \texttt{specsf\_tot\_p50} of -9999 in the SDSS as quenched 
-(for graphic representation purposes, we give it here an arbitrary low value of $10^{-16.0}$ Gyr\(^{-1}\)).
+(for graphic representation purposes, we give it here an arbitrary low value of $10^{-14.0}$ Gyr\(^{-1}\)).
 We then consider the other ones and sort them between the 
 star-forming and passive populations using a two‐component Gaussian Mixture Model (GMM) in the \(\log M_*\)–\(\log\mathrm{sSFR}\) plane.
 Its parameters determined by minimizing the Kullback–Leibler divergence between the empirical and model densities 
@@ -233,27 +236,58 @@ delineating star‐forming from passive galaxies.
 
 \mt{Add relevant GM parameters found by the algorithm.}
 
-The sSFR status for each sample is shown in table \ref{tab:sSFR_status}. The probability for \Starforming{} proportion 
-between \CG{} and each control sample to actually come from the same underlying distribution are, estimated using Fisher exact test, 
-$4.8 \times 10^{-1}$  versus \CB{} sample, 
- $2.2 \times 10^{-1}$  versus \CC{} and  $4.1 \times 10^{-3}$  versus \RG.
+The sSFR status for each sample is shown in table \ref{tab:sSFR_status}. Tere is no significant differences of for \Starforming{} proportion 
+between \CG{} and the control samples (probabilities estimated using Fisher exact test are  
+$6.5 \times 10^{-1}$  versus \CB{} sample, 
+ $2.5 \times 10^{-1}$  versus \CC{} and  $1.8 \times 10^{-2}$  versus \RG).
 
-\begin{table}
+ Restrictions of the comparison to BGGs and satellites only are also shown in table \ref{tab:sSFR_status}. 
+ The p-values found from  are 
+   against \CB,
+   against \CC{} and 
+    against \RG. 
+There is thus no significant difference in the fraction of star-forming BGGs nor satellites between \CG{} and our control samples either.
+
+% we find  star-forming BGGs (\% of the BGGs),
+%  Passive BGGs (\%) and  Quenched BGGs (\%)
+%  in \CG{}.
+%   This is to be compared to 
+%   (\%) Starforming, 
+%   (\%) Passive and
+%   (\%) in \CB{}, 
+%   (\%) Starforming,
+%   (\%) Passive and
+%   (\%)  Quenched in \CC{},
+%   and  (\%) Starforming,
+%    (\%) Passive and
+%    (\%) Quenched
+%   in \RG{}. 
+  
+\begin{table*}
     \centering
-    \begin{tabular}{lccc}
+    \begin{tabular}{llccc}
         \toprule
-            \textbf{Sample} & \textbf{  Quenched  } & \textbf{  Passive  } & \textbf{  Starforming  } \\
-            \CG &  4  (1.0 \%) &  128  (31.8 \%)&  270  (67.2 \%) \\
-            \CB &  32  (0.8 \%) &  1401  (36.3 \%) &  2426  (62.9 \%) \\
-            \CC &  31  (0.7 \%) &  1839  (39.1 \%) &  2839  (60.3 \%) \\
-            \RG &  0  (0.0 \%) &  149  (55.6 \%) &  119  (44.4 \%)\\
-            \emph{SDSS selection} &  \emph{634 (1.2 \%)} &  \emph{44199  (84.1 \%)} &  \emph{7698  (14.7 \%)}\\
+            \textbf{Sample} & & \textbf{  Quenched  } & \textbf{  Passive  } & \textbf{  Starforming  } \\
+            \CG & &  18  (7.3 \%) &  146  (58.9 \%)&  84  (33.9 \%) \\
+             & \emph{BGG} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
+             & \emph{Satellites} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
+            \CB & &  181  (6.5 \%) &  1595  (57.0 \%) &  1020  (36.5 \%) \\
+             & \emph{BGG} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
+             & \emph{Satellites} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
+            \CC & &  191  (6.3 \%) &  1619  (53.8 \%) &  1198  (39.8 \%) \\
+             & \emph{BGG} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
+             & \emph{Satellites} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
+            \RG & &  5  (2.2 \%) &  101  (45.1 \%) &  118  (52.7 \%)\\
+            & \emph{BGG} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)}\\
+            & \emph{Satellites} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)}\\
+         \midrule
+            \emph{SDSS selection} & &  \emph{634 (1.2 \%)} &  \emph{7698  (14.7 \%)} &  \emph{44199  (84.1 \%)}\\
          \midrule
         \bottomrule
     \end{tabular}
     \caption{Number of galaxies in each sSFR status for each sample.}
     \label{tab:sSFR_status}
-\end{table}
+\end{table*}
 
         
     
@@ -289,33 +323,35 @@ independent volunteer classifications that are aggregated into debiaised vote fr
 morphology ``elliptical'' if the \texttt{p\_el\_debiased} value is greater than 0.5, and ``spiral'' if the \texttt{p\_cs\_debiased} value is greater than 0.5. 
 Other cases are considered as ``uncertain''. The morphologies found for each sample are shown in table \ref{tab:morphologies}.
 Barnard two-sided exact tests were performed to compare the fraction of each morphology between \CG{} and each control sample. The p-values found are 
-$1.6 \times 10^{-5}$ for ellipticals and $6.0 \times 10^{-1}$ for spirals versus \CB{} sample, 
- $7.4 \times 10^{-2}$  and $6.1 \times 10^{-1}$  versus \CC{} and  $2.8 \times 10^{-9}$  
- and $2.4 \times 10^{-2}$  versus \RG. Figure \ref{fig:galaxies_morph_sfr} displays the sSFR against masses for galaxies from the SDSS selection and for \CG{}s galaxies.
+$5.7 \times 10^{-5}$ for ellipticals and $8.5 \times 10^{-1}$ for spirals versus \CB{} sample, 
+ $2.0 \times 10^{-1}$  and $1.1 \times 10^{-1}$  versus \CC{} and  $1.1 \times 10^{-3}$  
+ and $3.2 \times 10^{-3}$  versus \RG. Morphologies of \CG, wich we identified as cores of richer groups in 
+ \cite{Tricottet+25}, have morphologies significantly different from ordinary groups of four members. Figure \ref{fig:galaxies_morph_sfr} displays the sSFR against masses for galaxies from the SDSS selection and for \CG{}s galaxies.
 
-\begin{table}
+
+\begin{table*}
     \centering
     \begin{tabular}{lccc}
         \toprule
             \textbf{Sample} & \textbf{  Elliptical  } & \textbf{  Spiral  } & \textbf{  Uncertain  } \\
-            \CG &  144  (35.8 \%) &  158  (39.3 \%)&  100  (24.9 \%) \\
-            \CB &  982  (25.4 \%) &  1465  (38.0 \%) &  1412  (36.6 \%) \\
-            \CC &  1483  (31.5 \%) &  1912  (40.6 \%) &  1314  (27.9 \%) \\
-            \RG &  37  (13.8 \%) &  129  (48.1 \%) &  102  (38.1 \%)\\
+            \CG &  52  (21.0 \%) &  53  (21.4 \%)&  143  (57.7 \%) \\
+            \CB &  289  (10.3 \%) &  583  (20.9 \%) &  1924  (68.8 \%) \\
+            \CC &  533  (17.7 \%) &  781  (26.0 \%) &  1694  (56.3 \%) \\
+            \RG &  17  (7.6 \%) &  75  (33.5 \%) &  132  (58.9 \%)\\
             \emph{SDSS selection} &  \emph{10091 (19.2 \%)} &  \emph{34715  (66.1 \%)} &  \emph{7725  (14.7 \%)}\\
          \midrule
         \bottomrule
     \end{tabular}
     \caption{Number of galaxies of each morphology for each sample.}
     \label{tab:morphologies}
-\end{table}
+\end{table*}
 
 
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{galaxies_sfr.pdf}
      \caption{sSFR and morphologies of galaxies in \CG{} and our SDSS selection. 
-     Quenched galaxies are represented at an arbitrary low value of $10^{-16.0}$ Gyr\(^{-1}\).}
+     Quenched galaxies are represented at an arbitrary low value of $10^{-14.0}$ Gyr\(^{-1}\).}
      \label{fig:galaxies_morph_sfr}
 \end{figure}
 
@@ -323,19 +359,37 @@ $1.6 \times 10^{-5}$ for ellipticals and $6.0 \times 10^{-1}$ for spirals versus
 
 
 
-Starforming \CG{} are composed of 85 of their galaxies classified as spiral 
-($42.7$\% once galaxies having uncertain morphology removed) and 
-114 ($57.3$\% once galaxies having uncertain morphology removed) elliptical.
-These figures are 606 ($43.4$\%) spiral
-and 790 ($56.6$\%) elliptical galaxies for \CB{}, 
-775 ($40.4$\%) spiral
-and 1143 ($59.6$\%) elliptical galaxies for \CC{}
-and 32 ($53.3$\%) spiral
-and 28 ($46.7$\%) elliptical galaxies for \RG{}. 
+Starforming \CG{} are composed of 45 of their galaxies classified as spiral 
+($84.9$\% once galaxies having uncertain morphology removed) and 
+8 ($15.1$\% once galaxies having uncertain morphology removed) elliptical.
+These figures are 528 ($90.4$\%) spiral
+and 56 ($9.59$\%) elliptical galaxies for \CB{}, 
+671 ($85.9$\%) spiral
+and 110 ($14.1$\%) elliptical galaxies for \CC{}
+and 68 ($95.8$\%) spiral
+and 3 ($4.23$\%) elliptical galaxies for \RG{}. 
 The probability that those fractions come from 
-the same distribution is estimated from the Barnard two-sided exact test as $0.86$ against \CB,
-$0.53$ against \CC{} and $0.15$ against \RG. There is thus no significant excess of 
+the same distribution is estimated from the Barnard two-sided exact test as $0.22$ against \CB,
+$0.85$ against \CC{} and $4.35 \times 10^{-2}$ against \RG. There is thus 
+neither significant excess nor lack of 
 starforming elliptical galaxies in \CG{} compared to all our control samples.
+
+If we restrict the comparison to BGGs only, we find 6 Elliptical BGGs (9.7\% of the BGGs) and
+2 Spiral BGGs (3.2\%) 
+ in \CG{}.
+  This is to be compared to 
+ 71 (10.2\%) Elliptical and
+ 26 (3.7\%) Spiral galaxies in \CB{}, 
+ 75 (10.0\%) Elliptical and
+ 30 (4.0\%)  Spiral in \CC{},
+  and  4 (7.1\%) Elliptical and
+  6 (10.7\%) Quenched
+  in \RG{}. 
+The p-values found from two-sided Fisher exact test are 
+  1.00 against \CB,
+  1.00 against \CC{} and 
+  0.19  against \RG. 
+There is thus no significant difference in the fraction of star-forming BGGs between \CG{} and our control samples.  
 
 % \subsection{Dominance}
 % We split groups into two categories: the dominated, for which the BGG has a luminosity fraction greater than the median of \RG.

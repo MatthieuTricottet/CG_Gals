@@ -64,8 +64,8 @@ def formatted_label(i,lumG=False):
         'logLum_group'        : r'$\log(L_{r,\mathrm{group}}/\mathrm{L_\odot})$',
         'Prop_M_Sat'          : r'$Frac_\mathrm{Sat}(\mathrm{BGG} = M)$',
         'Prop_Q_Sat'          : r'$Frac_\mathrm{Sat}(\mathrm{BGG} = Q)$',
-        'specsfr_tot_p50'     : r'sSFR (Gyr$^{-1}$)',
-        'sSFR'                : r'sSFR (Gyr$^{-1}$)',
+        'specsfr_tot_p50'     : r'sSFR (yr$^{-1}$)',
+        'sSFR'                : r'sSFR (yr$^{-1}$)',
         'lgm_tot_p50'         : r'$\log(M_\star/M_\odot)$',
         'lgm'                 : r'$\log(M_★/M_\odot)$'
      }

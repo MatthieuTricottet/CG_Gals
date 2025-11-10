@@ -93,6 +93,8 @@ def load_data_build():
     for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]:
         sample[cat] = sample[cat].drop(columns=morphologies, 
                                        errors='ignore')
+        sample[cat]['objid'] = sample[cat]['objid'].astype('int64')
+        SDSS['objid']        = SDSS['objid'].astype('int64')
         sample[cat] = pd.merge(sample[cat], SDSS[['objid']+morphologies], 
                                how='left', on='objid')
 
@@ -107,7 +109,6 @@ def sSFR_properties(sample):
         for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]+['SDSS']:
             report.append_json(f'{cat}_N{status}', len(sample[cat][sample[cat]['sSFR_status'] == status]),build=True)
             report.append_json(f'{cat}_N{status}_pc', f'{(100*len(sample[cat][sample[cat]['sSFR_status'] == status])/len(sample[cat])):.1f}',build=True)
-       
         
 
     if co.VERBOSE:
@@ -130,13 +131,17 @@ def sSFR_properties(sample):
     for name,pval in results.items():
         report.append_json('pval_'+name,gu.numformat(pval,prec=1),build=True)
 
+    sSFR.BGGs_analysis(sample)
+
 def morph_properties(sample):
 
     morph.stats(sample)
     morph.morph_sSFR(sample)
+    morph.BGGs_analysis(sample)
     
-# def correlations_by_morph(sample):
-
+def correlations_by_morph(sample):
+    if co.VERBOSE:
+        print("Analyzing correlations by morphology...")
 
 def main():
     
@@ -174,7 +179,7 @@ def main():
 
     morph_properties(sample)
 
-    # correlations_by_morph(sample)
+    correlations_by_morph(sample)
 
     report.finalize_json()
     report.generate_report()

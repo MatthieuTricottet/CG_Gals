@@ -38,8 +38,9 @@ DATA_RELEASE = 16
 sSFR_status = ['Quenched', 'Passive', 'Starforming']
 Morphologies = ['Elliptical', 'Spiral', 'Uncertain']
 
-sSFR_THRESHOLD, sSFR_QUENCHED = -1000, -16.0  # Log(sSFR) floor for quenched galaxies, in yr^-1
+sSFR_THRESHOLD, sSFR_QUENCHED = -1000, -14.0  # Log(sSFR) floor for quenched galaxies, in yr^-1
 
+DOMINATIION_CRITERIA = 0.6
 
 SAMPLE = {"CG4" : r"\CG","Control4B":r"\CB","Control4C":r"\CC","RG4":r"\RG"}
 CONTROL = {samp : SAMPLE[samp] for samp in (s for s in SAMPLE if s not in ['CG4'])}

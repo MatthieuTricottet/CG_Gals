@@ -241,7 +241,7 @@ def sSFR_status(df):
     needs_update = current_status.isna() | blank_mask
     df.loc[needs_update, 'sSFR_status'] = co.sSFR_status[0]  # Default to 'quenched'
     df.loc[needs_update & (df['sSFR'] > -9999), 'sSFR_status'] = co.sSFR_status[1]  # Set to 'passive'
-    df.loc[needs_update & (~df['is_star_forming']), 'sSFR_status'] = co.sSFR_status[2]  # Set to 'star-forming'
+    df.loc[needs_update & (df['is_star_forming']), 'sSFR_status'] = co.sSFR_status[2]  # Set to 'star-forming'
 
     return df['sSFR_status']
 
@@ -448,7 +448,8 @@ def plot_classification(non_quenched, sdss_df, fit_results, f_interp,
 
  
 def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsize=(10, 8),
-                   fontsize_labels=16, fontsize_legend=14):
+                   fontsize_labels=16, fontsize_legend=14, 
+                   xmin = 7.5, xmax = 11.8, ymin = co.sSFR_QUENCHED - 0.2, ymax = -8):
     """
     Create a scatter plot of galaxy sSFR vs stellar mass using subplots.
     
@@ -540,6 +541,9 @@ def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsi
 
     # Also increase tick label size
     ax.tick_params(axis='both', which='major', labelsize=fontsize_labels-2)
+
+    ax.set_xlim(xmin, xmax)
+    ax.set_ylim(ymin, ymax)
     
     # Adjust layout
     plt.tight_layout()
@@ -551,7 +555,7 @@ def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsi
     return fig, ax
 
 
-def plot_residual_distribution(non_quenched, f_interp, figsize=(12,8), fontsize=14,
+def plot_residual_distribution(non_quenched, f_interp, figsize=(12,8), fontsize=18,
                             name=None):
     """
     Plot the histogram of the vertical residual (galaxy sSFR minus the limiting sSFR).
@@ -601,6 +605,15 @@ def plot_residual_distribution(non_quenched, f_interp, figsize=(12,8), fontsize=
     # Format y-axis tick labels in scientific notation (LaTeX style).
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda x, pos: r'$%s$' % format(x, '.0e')))
     ax.tick_params(axis='both', labelsize=12)
+
+    # enlarge axis labels
+    ax.xaxis.label.set_size(fontsize)
+    ax.yaxis.label.set_size(fontsize)
+
+    # switch y labels to 1, 10, 100, 1000
+    ax.yaxis.set_major_formatter(ticker.ScalarFormatter(useMathText=True))
+    # ax.yaxis.get_major_formatter().set_scientific(True)
+    # ax.yaxis.get_major_formatter().set_powerlimits((-1,1))
 
     fig.tight_layout()
 
@@ -786,3 +799,65 @@ def plot_density_original_vs_GMMfit(X, fit_results, figsize=(16, 8), dpi=150, na
         plt.show()
  
     plt.close()
+
+def restrict_analysis(df, df_name, restric_name):
+    if co.VERBOSE:
+        print(df_name)
+    total = len(df)
+    results = {}
+    for status in co.sSFR_status:
+        n_df = len(df[df['sSFR_status'] == status])
+        results[status] = n_df
+        report.append_json(f'{df_name}_{restric_name}_N{status}', n_df)
+        report.append_json(f'{df_name}_{restric_name}_N{status}_pc', f"{100*n_df/total:.1f}")
+        if co.VERBOSE:
+            print(f".  {status}: {n_df} / {total} = {n_df/total:.1f}")
+
+    return results
+
+def pval_restrict_analysis(res1, res2, df1_name, df2_name, restric_name):
+    matrix = [[res1[co.sSFR_status[1]], res1[co.sSFR_status[2]]],
+                  [res2[co.sSFR_status[1]], res2[co.sSFR_status[2]]]]
+            
+    res_fisher = fisher_exact(matrix, alternative='two-sided')
+    report.append_json(f'{restric_name}_star_forming_pvalue_{df2_name}_vs_{df1_name}', f'{res_fisher.pvalue:.2f}')
+    if co.VERBOSE:
+        print(f"Exact test p-values of proportion of star forming {restric_name} being different between {df1_name} and {df2_name}:")
+        print(f"   Fisher: {res_fisher.pvalue:.1e}")
+        if res_fisher.pvalue < 0.05:
+            print("   Reject null hypothesis: the proportion is different")
+        else:
+            print("   Fail to reject null hypothesis: the proportion is not different")
+
+
+def BGGs_analysis(sample):
+    """
+    Analyze the sSFR status of Brightest Group Galaxies (BGGs) in compact groups.
+    
+    Parameters
+    ----------
+    sample : dict
+        Dictionary containing dataframes for different samples, including 'CG4' compact groups.
+    """
+
+    report.append_json('BGG_sSFR_tests', 'two-sided Fisher exact test')
+
+    CG4 = sample['CG4'+co.GASUFF]
+    restrict_CG4 = {}
+    restrict_CG4['BGG'] = CG4[CG4['rank_M'] == 1]
+    restrict_CG4['Sat'] = CG4[CG4['rank_M'] > 1] 
+
+    results_CG4 = {}
+    for rest_type in restrict_CG4.keys():
+        results_CG4[rest_type] = restrict_analysis(restrict_CG4[rest_type], 'CG4', rest_type)
+
+    
+    for cat in co.CONTROL.keys():
+        df = sample[cat+co.GASUFF] 
+        BGG = df[df['rank_M'] == 1]
+        Sat = df[df['rank_M'] > 1]
+        restrict_df = {'BGG': BGG, 'Sat': Sat}
+        for rest_type in restrict_df.keys():
+            results_df = restrict_analysis(restrict_df[rest_type], cat, rest_type)
+            pval_restrict_analysis(results_CG4[rest_type], results_df, 'CG4', cat, rest_type)
+

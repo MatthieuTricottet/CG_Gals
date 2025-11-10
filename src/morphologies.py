@@ -99,7 +99,20 @@ def classify_all_samples(sample: dict) -> dict:
             report.append_json(f'{cat}_N_{morph}', n_morph, build=True)
             if co.VERBOSE:
                 print(f"   {morph}: {n_morph} galaxies")
+
+
+    # ADD MORPHOLOGICAL FRACTIONS TO GROUPS
         
+    # for cat in [name+co.GRPSUFF for name in co.SAMPLE.keys()]:
+    #     # Add to groups the fraction of spiral and elliptical galaxies, either considering or eliminating uncertain morphologies
+
+
+
+
+    #     def loc_agg(df):
+
+    #     df = sample[cat]
+    #     df['S_frac_U'] = 
 
     return sample
 
@@ -212,4 +225,59 @@ def morph_sSFR(sample):
     #             report.append_json(f'Control4B_vs_{name}_N_{morph}_{status}', n_control, build=True)
     #             if co.VERBOSE:
     #                 print(f"   {morph} - {status}: CG4: {n_CG}, {name}: {n_control}")
+    
+
+def BGGs_analysis(sample):
+    """
+    Analyze the morphological and sSFR properties of Brightest Group Galaxies (BGGs) in compact groups and control samples.
+
+    Parameters
+    ----------
+    sample : dict
+        Dictionary where keys are sample names and values are pandas DataFrames
+        containing galaxy data with 'morphology', 'sSFR_status', and 'rank_M' columns.
+    """
+    if co.VERBOSE:
+        print("Analyzing BGGs morphological properties...")
+
+    report.append_json('BGG_morph_tests', 'two-sided Fisher exact test')
+
+    CG4 = sample['CG4'+co.GASUFF]
+    BGGs_CG4 = CG4[CG4['rank_M'] == 1]
+    total = len(BGGs_CG4)
+    if co.VERBOSE:
+        print(f"Sample: CG4 - Total BGGs: {total}")
+    for morph in co.Morphologies:
+        n_BGGs = len(BGGs_CG4[BGGs_CG4['morphology'] == morph])
+        report.append_json(f'CG4_BGG_N_{morph}', n_BGGs)
+        report.append_json(f'CG4_BGG_fracpc_{morph}', f"{100*n_BGGs/total:.1f}")
+        if co.VERBOSE:
+            print(f".  {morph}: {n_BGGs} / {total} = {n_BGGs/total:.1f}")
+    
+
+    for cat in co.CONTROL.keys():
+        name = cat+co.GASUFF
+        df = sample[name]
+        BGGs = df[df['rank_M'] == 1]
+        total = len(BGGs)
+        if co.VERBOSE:
+            print(f"Sample: {cat} - Total BGGs: {total}")
+        for morph in co.Morphologies:
+            n_BGGs = len(BGGs[BGGs['morphology'] == morph])
+            report.append_json(f'{cat}_BGG_N_{morph}', n_BGGs)
+            report.append_json(f'{cat}_BGG_fracpc_{morph}', f"{100*n_BGGs/total:.1f}")
+            if co.VERBOSE:
+                print(f"   {morph}: {n_BGGs} BGGs")
+        
+        matrix = [[len(BGGs_CG4[BGGs_CG4['morphology'] == co.Morphologies[0]]), len(BGGs_CG4[BGGs_CG4['morphology'] == co.Morphologies[1]])],
+                  [len(BGGs[BGGs['morphology'] == co.Morphologies[0]]), len(BGGs[BGGs['morphology'] == co.Morphologies[1]])]]
+        res_fisher = fisher_exact(matrix, alternative='two-sided')
+        report.append_json(f'BGG_morph_pvalue_{cat}_vs_CG4', f'{res_fisher.pvalue:.2f}')
+        if co.VERBOSE:
+            print("Exact test p-values of proportion of morphologies being different between CG_4 BGGs and the control sample BGGs:")
+            print(f"   Fisher: {res_fisher.pvalue:.1e}")
+            if res_fisher.pvalue < 0.05:
+                print("   Reject null hypothesis: the proportion of morphologies in BGGs is different between CG_4 and the control sample")
+            else:
+                print("   Fail to reject null hypothesis: the proportion of morphologies in BGGs is not different between CG_4 and control sample")    
     
