@@ -1,7 +1,7 @@
 #* Display graphs or not while running the code
 VERBOSE = True
 SHOW = False
-REBUILD_SAMPLE = False
+REBUILD_SAMPLE = True
 
 #* File system
 BASE_PATH = "/Users/matt/Astrophysics/CG_Gals/"

@@ -116,6 +116,52 @@ def classify_all_samples(sample: dict) -> dict:
 
     return sample
 
+def add_morphology_fractions_to_groups(sample: dict) -> dict:
+    """
+    Add morphological fractions of member galaxies to each group in the provided samples.
+
+    Parameters
+    ----------
+    sample : dict
+        Dictionary where keys are sample names and values are pandas DataFrames
+        containing galaxy and group data.
+
+    Returns
+    -------
+    dict
+        The input dictionary with each group DataFrame augmented with morphological fraction columns.
+    """
+    for samp in co.SAMPLE.keys():
+        Gals_key = samp + co.GASUFF
+        Groups_key = samp + co.GRSUFF
+
+        Gals = sample[Gals_key]
+        Groups = sample[Groups_key]
+
+        
+        # Calculate morphological fractions for each group: with or excluding 'Uncertain', with or excluding the BGG
+
+        for exclude_uncertain in [True, False]:
+            for exclude_BGG in [True, False]:
+                suffix = '_frac'
+                if exclude_uncertain:
+                    loc_Gals = Gals[Gals['morphology'] != co.Morphologies[-1]]
+                    suffix += '_NoU'
+                if exclude_BGG:
+                    loc_Gals = loc_Gals[loc_Gals['rank_M'] != 1]
+                    suffix += '_NoBGG'
+
+                sizes = loc_Gals['Group'].value_counts()
+                composition = loc_Gals.groupby(['Group', 'morphology']).size().unstack(fill_value=0)
+                proportions = composition.div(sizes, axis=0)
+                Groups = Groups.merge(proportions[['Elliptical','Spiral']], left_on='Group', right_index=True, how='left')
+                Groups = Groups.rename(columns={'Elliptical':f'E{suffix}', 'Spiral':f'S{suffix}'})
+                    
+        sample[Groups_key] = Groups
+
+
+    return sample
+
 def stats(sample):
     """ 
     Perform statistical analysis on the morphological classification of galaxies.
@@ -154,7 +200,6 @@ def stats(sample):
             report.append_json(f'pval_{control_name}_{morph}_vs_CG_pc', gu.numformat(pval, prec=1))
             if co.VERBOSE:
                 print(f"   p-value for {morph} in {control_name} vs CG: {pval:.3e}")
-
 
     
 def morph_sSFR(sample):

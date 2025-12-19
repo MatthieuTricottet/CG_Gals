@@ -59,7 +59,7 @@ def formatted_label(i,lumG=False):
         't_cr'                : r'$t_\mathrm{cr}$ (Gyr)',
         'M_over_Lr'           : r'$M/L_r$ (solar)',
         'M_virial'            : r'$\mathcal{M}_\mathrm{VT}/(10^{11} M_\odot)$',
-        'logM_virial'         : r'$\log(\mathcal{M}_\mathrm{VT}/M_\odot$)',
+        'logM_virial'         : r'$\log(\mathcal{M}_\mathrm{VT}/M_\odot)$',
         'M_virial_over_L'     : r'$\mathcal{M}_\mathrm{VT}/L_r$ (solar)',
         'logLum_group'        : r'$\log(L_{r,\mathrm{group}}/\mathrm{L_\odot})$',
         'Prop_M_Sat'          : r'$Frac_\mathrm{Sat}(\mathrm{BGG} = M)$',
@@ -67,7 +67,7 @@ def formatted_label(i,lumG=False):
         'specsfr_tot_p50'     : r'sSFR (yr$^{-1}$)',
         'sSFR'                : r'sSFR (yr$^{-1}$)',
         'lgm_tot_p50'         : r'$\log(M_\star/M_\odot)$',
-        'lgm'                 : r'$\log(M_★/M_\odot)$'
+        'lgm'                 : r'$\log(M_\star/M_\odot)$'
      }
     
     lumswitch={

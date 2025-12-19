@@ -371,6 +371,194 @@ The p-values found from <<BGG_morph_tests>> are
   <<BGG_morph_pvalue_RG4_vs_CG4>>  against \RG. 
 There is thus no significant difference in the fraction of star-forming BGGs between \CG{} and our control samples.  
 
+\section{sSFR}
+
+\begin{table*}
+\centering
+
+% 1 column for Sample + 2 columns per quantity
+\begin{tabular}{l*{<< quantities|length * 2 >>}{c}}
+\toprule
+
+% ---------- Header row 1: quantity names ----------
+Sample
+<% for q in quantities %>
+  & \multicolumn{2}{c}{
+    <% if q == 'sSFR' %>
+      $\langle \log sSFR \rangle$
+    <% elif q == 'M_r' %>
+      $\langle M_r \rangle$
+    <% elif q == 'lgm' %>
+      $\langle \log(M_\star/M_\odot) \rangle$
+    <% endif %>
+  }
+<% endfor %>
+\\
+
+% ---------- Header row 2: Passive / Star-forming ----------
+<% for q in quantities %>
+  & Passive & Star-forming
+<% endfor %>
+\\
+\midrule
+
+% ---------- Data rows ----------
+<% for sample in samples %>
+<< sample >>
+<% for q in quantities %>
+  & << r[sample ~ '_Passive_' ~ q ~ '_median'] >>
+  & << r[sample ~ '_Starforming_' ~ q ~ '_median'] >>
+<% endfor %>
+\\
+<% endfor %>
+
+\bottomrule
+\end{tabular}
+
+\caption{Median values of galaxy properties for passive and star-forming populations in each sample. 
+Error bars are computed via bootstrapping (10\,000 iterations).}
+\label{tab:passive_starforming_medians}
+\end{table*}
+
+
+\begin{table*}
+    \centering
+
+    % One column for Sample + 2 columns per quantity
+    \begin{tabular}{l*{<< 2 * quantities|length >>}{c}}
+\toprule
+ Sample &
+<% for q in quantities %>
+  \multicolumn{2}{c}{<< lu.formatted_label(q) >>}%
+  <% if not loop.last %> & <% endif %>
+<% endfor %> \\
+% --- second header row: Passive / Star-forming BGG ---
+ & 
+<% for q in quantities %>
+  Passive BGG & Star-forming BGG%
+  <% if not loop.last %> & <% endif %>
+<% endfor %> \\
+\midrule
+
+<% for sample in samples %>
+  << sample >> &
+  <% for q in quantities %>
+    << r[sample ~ "_BGG_Passive_" ~ q ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Passive_" ~ q ~ "_median_err"] >> &
+    << r[sample ~ "_BGG_Starforming_" ~ q ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Starforming_" ~ q ~ "_median_err"] >> <% if not loop.last %> & <% endif %>
+  <% endfor %> \\
+<% endfor %>
+
+
+\bottomrule
+\end{tabular}
+\caption{Median values of various quantities for galaxies according to the fertility of their BGG (BGG included). 
+Error bars are computed via bootstrapping (10\,000 iterations).}
+\label{tab:split_fertility_BGG_properties}
+\end{table*}
+
+\begin{table*}
+    \centering
+
+    % One column for Sample + 2 columns per quantity
+    \begin{tabular}{l*{<< 2 * quantities|length >>}{c}}
+\toprule
+ Sample &
+<% for q in quantities %>
+  \multicolumn{2}{c}{<< lu.formatted_label(q) >>}%
+  <% if not loop.last %> & <% endif %>
+<% endfor %> \\
+% --- second header row: Passive / Star-forming BGG ---
+ & 
+<% for q in quantities %>
+  Passive BGG & Star-forming BGG%
+  <% if not loop.last %> & <% endif %>
+<% endfor %> \\
+\midrule
+
+<% for sample in samples %>
+  << sample >> &
+  <% for q in quantities %>
+    << r[sample ~ "_Sat_BGG_Passive_" ~ q ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Passive_" ~ q ~ "_median_err"] >> &
+    << r[sample ~ "_Sat_BGG_Starforming_" ~ q ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Starforming_" ~ q ~ "_median_err"] >> <% if not loop.last %> & <% endif %>
+  <% endfor %> \\
+<% endfor %>
+
+
+\bottomrule
+\end{tabular}
+\caption{Median values of various quantities for galaxies according to the fertility of their BGG (satellites only). 
+Error bars are computed via bootstrapping (10\,000 iterations).}
+\label{tab:split_fertility_BGG_properties_Sat}
+\end{table*}
+
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{fertility.pdf}
+     \caption{Distribution various quantities for galaxies according their fertility.}
+     \label{fig:fertility}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{BGG_fertility.pdf}
+     \caption{Distribution various quantities for galaxies according to the fertility of their BGG (BGG included).}
+     \label{fig:BGG_fertility}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{Satellites_by_BGG_fertility.pdf}
+     \caption{Distribution various quantities for galaxies according to the fertility of their BGG (BGG excluded).}
+     \label{fig:Sat_BGG_fertility}
+\end{figure}
+
+\subsection{Main sequence}
+We model the star-forming main sequence as a power law in stellar mass, to various orders (1 to 4) - cf figure . 
+We then compute the residuals of each star-forming galaxy to the main sequence,and plot their histograms in figure .
+
+<% for key, res in build.items() %>
+<% if key.startswith("pval_MSresiduals_") %>
+
+<% set delta = res["Δmedian"] %>
+<% set ci16 = res["CI_16"] %>
+<% set ci84 = res["CI_84"] %>
+<% set p = res["p_value"] %>
+<% set name = key
+    .replace("pval_MSresiduals_", "")
+    .replace("_Gals", "") %>
+
+The median main-sequence residual of CG4 galaxies is
+<% if ci16 > 0 or ci84 < 0 %>
+significantly different
+<% else %>
+not significantly different
+<% endif %>
+from that of << name >>,
+with a median offset of
+$\Delta = << "%.3f"|format(delta) >>$
+($<< "%.3f"|format(ci16) >> \le \Delta \le << "%.3f"|format(ci84) >>$, bootstrap),
+corresponding to a $p$-value of $p = << "%.3f"|format(p) >>$.
+
+<% endif %>
+<% endfor %>
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{Main_Sequence_polyfits.pdf}
+     \caption{}
+     \label{fig:Main_Sequence_polyfits}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{main_sequence_residuals.pdf}
+     \caption{}
+     \label{fig:main_sequence_residuals}
+\end{figure}
+
+
+
 % \subsection{Dominance}
 % We split groups into two categories: the dominated, for which the BGG has a luminosity fraction greater than the median of \RG.
 
@@ -397,7 +585,7 @@ There is thus no significant difference in the fraction of star-forming BGGs bet
 % \end{tabular}
 % \end{table}
 
-
+% \normalcolor
 
 
 

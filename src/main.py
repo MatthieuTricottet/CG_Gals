@@ -44,6 +44,8 @@ from utils import pandas_utils  as pu
 #* --------------------------------------------------------------------------------
 import config as co
 import generate_report as report
+import domination as dom
+
 
 #* --------------------------------------------------------------------------------
 #* Project functions imports
@@ -52,12 +54,57 @@ import data_loader as dl
 import generate_report as report
 import sSFR
 import morphologies as morph
+import analysis as anl
 
 
 
 print("Done")
 
 # endregion
+
+def load_data():
+    """ Load or rebuild the data sample.
+
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        sample : dict
+            Dictionary containing the samples of galaxies and groups
+    """
+    
+    if co.VERBOSE:
+        print("Loading data")
+
+    if co.REBUILD_SAMPLE:
+        report.initialise_json(build=True)
+        sample = load_data_build()
+        if co.VERBOSE:
+            print("Classifying morphologies")
+        sample = morph.classify_all_samples(sample)
+
+        sample = morph.add_morphology_fractions_to_groups(sample)
+
+        if co.VERBOSE:
+            print("Calculating sSFR properties")
+        sample = sSFR_properties(sample)
+
+        report.finalize_json(build=True)
+        if co.VERBOSE:
+            print("Saving processed samples to disk")
+        with open(co.DATA_PATH + co.PROCESS_SAMPLES, "wb") as file:
+            pkl.dump(sample, file)
+
+    else:
+        if co.VERBOSE:
+            print("Loading processed samples from disk")
+        with open(co.DATA_PATH + co.PROCESS_SAMPLES, "rb") as file:
+            sample = pkl.load(file)
+
+    return sample
+
 
 def load_data_build():
         
@@ -98,12 +145,24 @@ def load_data_build():
         sample[cat] = pd.merge(sample[cat], SDSS[['objid']+morphologies], 
                                how='left', on='objid')
 
+    sample = dom.assess_dom(sample)
     return sample
 
 def sSFR_properties(sample): 
 
     sample, non_quenched, fit_results, f_interp = sSFR.compute_status(sample)
     report.append_json('sSFR_interp', f_interp, build=True)
+    main_sequence = sample['SDSS'][sample['SDSS']['sSFR_status']=='Starforming'][['lgm','sSFR']]
+    sSFR.plot_main_sequence_models(main_sequence)
+    model = sSFR.fit_ssfr_vs_lgm_poly(main_sequence, order=2)
+    sSFR.add_MS_residuals(sample, model, suffix=co.GASUFF, non_sf_value=np.nan)
+    sSFR.plot_main_sequence_residuals(sample, figname='main_sequence_residuals')
+    significance = sSFR.compare_main_sequence_residuals_bootstrap(sample)
+    # Report main sequence residuals significance
+    for name, pval in significance.items():
+        # report.append_json('pval_MSresiduals_'+name, gu.numformat(pval, prec=1), build=True)
+        report.append_json('pval_MSresiduals_'+name, pval, build=True)
+
  
     for status in co.sSFR_status:
         for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]+['SDSS']:
@@ -133,6 +192,8 @@ def sSFR_properties(sample):
 
     sSFR.BGGs_analysis(sample)
 
+    return(sample)
+
 def morph_properties(sample):
 
     morph.stats(sample)
@@ -143,43 +204,22 @@ def correlations_by_morph(sample):
     if co.VERBOSE:
         print("Analyzing correlations by morphology...")
 
+
 def main():
     
     report.initialise_json()
-
-    if co.VERBOSE:
-        print("Loading data")
-
-    if co.REBUILD_SAMPLE:
-        report.initialise_json(build=True)
-        sample = load_data_build()
-        if co.VERBOSE:
-            print("Classifying morphologies")
-        sample = morph.classify_all_samples(sample)
-
-        if co.VERBOSE:
-            print("Calculating sSFR properties")
-        sSFR_properties(sample)
+    sample = load_data()
 
 
-        report.finalize_json(build=True)
-        if co.VERBOSE:
-            print("Saving processed samples to disk")
-        with open(co.DATA_PATH + co.PROCESS_SAMPLES, "wb") as file:
-            pkl.dump(sample, file)
+    # morph_properties(sample)
 
-        report.finalize_json(build=True)
+    sSFR.split_by_fertility(sample)
+    sSFR.split_by_BGG_fertility(sample)
+    sSFR.satellites_split_by_BGG_fertility(sample)
 
-    else:
-        if co.VERBOSE:
-            print("Loading processed samples from disk")
-        with open(co.DATA_PATH + co.PROCESS_SAMPLES, "rb") as file:
-            sample = pkl.load(file)
+    
 
-
-    morph_properties(sample)
-
-    correlations_by_morph(sample)
+    # correlations_by_morph(sample)
 
     report.finalize_json()
     report.generate_report()

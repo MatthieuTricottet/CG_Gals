@@ -1,4 +1,6 @@
 # Todo
+ * Add morph frac and sat morph frac to groups (check that there is already BGG morph)
+ * Dev analysis module, and use it for dom, BGG morph, BGG sSFR cat
  * Correlations
  * Change sSFR and morphologies stats in Json and template.tex to loops
  * Check nb passive/starforming in SDSS selection

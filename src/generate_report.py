@@ -10,6 +10,9 @@ from scipy.interpolate import interp1d
 
 import config as co
 
+from utils import labels_utils  as lu
+
+
 # os.makedirs("output", exist_ok=True)
 
 #endregion
@@ -99,6 +102,25 @@ def generate_report():
     # 2) Merge for the template (per-run results take precedence)
     ctx = {**build_data, **results_data}
 
+    # Shortcuts used in the templates
+    ctx["r"] = results_data
+
+    ctx["samples"]  = ["CG4", "Control4B", "Control4C", "RG4"]
+    ctx["statuses"] = ["Passive", "Starforming"]
+    ctx["morphs"]   = ["Elliptical", "Spiral", "Uncertain"]
+
+    # >>> NEW: provide the BGG quantities list to the template <<<
+    ctx["quantities"] = ["sSFR", "M_r", "lgm"]    
+    ctx["qdefs"] = [
+        {"key": "sSFR", "label": r"\langle \log sSFR \rangle"},
+        {"key": "M_r",  "label": r"\langle M_r \rangle"},
+        {"key": "lgm",  "label": r"\langle \log(M_\star/M_\odot) \rangle"},  # <-- your requested label
+    ]
+    # >>> NEW: pass the label-utils module so LaTeX can call lu.formatted_label(q) <<<
+    ctx["lu"] = lu
+
+    ctx["build"] = build_data
+
     # 3) Render LaTeX via Jinja2
     env = Environment(
         loader=FileSystemLoader(co.TEMPLATE_PATH),
@@ -116,7 +138,7 @@ def generate_report():
         print(f"[Error] rendering template: {e}")
         return
 
-    # 4) Write out the .tex file
+    # 4) Write out the .tex file (unchanged)
     report_dir = co.REPORT_PATH
     tex_file   = co.REPORT_FILE
     tex_path   = os.path.join(report_dir, tex_file)

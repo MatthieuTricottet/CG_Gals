@@ -1,3 +1,5 @@
+# region Import
+
 import pandas as pd
 import numpy as np
 import scipy.stats as stats
@@ -13,7 +15,7 @@ from matplotlib.colors import LogNorm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import matplotlib.pyplot as plt
 
-
+# endregion
 
 
 def shuffle(x,y):
@@ -138,8 +140,6 @@ def median_with_errors_str(series,decimals=3):
     return(f'{series.median():.{decimals}f} +/- {(series.quantile(q=0.84)-series.quantile(q=0.16))/(2*np.sqrt(2*N/np.pi)):.{decimals}f}')
     
 
-
-
 def bootstrap_std(sample,n_samples=10000):
     """Compute the standard deviation of a sample using bootstrap resampling
 
@@ -168,6 +168,52 @@ def bootstrap_std(sample,n_samples=10000):
     return std
 
 
+def bootstrap_median_error(values, n_samples=10000, ci=0.68, random_state=None):
+    """
+    Bootstrap error on the median of 'values'.
+
+    Parameters
+    ----------
+    values : array-like or pandas.Series
+        1D numerical sample.
+    n_samples : int
+        Number of bootstrap resamples.
+    ci : float
+        Central confidence interval width (e.g. 0.68 or 0.95).
+    random_state : int or None
+        Seed for reproducibility.
+
+    Returns
+    -------
+    median_hat : float
+        Median of the original sample.
+    sigma_median : float
+        Standard deviation of bootstrap medians (1-sigma error bar).
+    ci_low, ci_high : float
+        Lower and upper bounds of the central CI.
+    """
+    vals = np.asarray(values.dropna() if isinstance(values, pd.Series) else values)
+    n = len(vals)
+    if n == 0:
+        return np.nan, np.nan, np.nan, np.nan
+
+    rng = np.random.default_rng(random_state)
+    boot_medians = np.empty(n_samples)
+
+    for i in range(n_samples):
+        resample = vals[rng.integers(0, n, n)]  # sample with replacement
+        boot_medians[i] = np.median(resample)
+
+    median_hat = np.median(vals)
+    sigma_median = boot_medians.std(ddof=1)
+
+    alpha = 1 - ci
+    ci_low, ci_high = np.percentile(boot_medians, [100 * alpha / 2, 100 * (1 - alpha / 2)])
+
+    return median_hat, sigma_median, ci_low, ci_high
+
+
+
     def V_disp_gapper(gals):
         """Computes the gapper velocity dispersion of a group
         According to Wainer & Thissen (1976)
@@ -191,6 +237,115 @@ def bootstrap_std(sample,n_samples=10000):
 
         return Vdisp
 
+
+def bootstrap_median_diff_error(values_A, values_B, n_samples=10000, ci=0.68, random_state=None):
+    """
+    Bootstrap error on the difference of medians: median(A) - median(B).
+    """
+    vals_A = np.asarray(values_A.dropna() if isinstance(values_A, pd.Series) else values_A)
+    vals_B = np.asarray(values_B.dropna() if isinstance(values_B, pd.Series) else values_B)
+
+    nA, nB = len(vals_A), len(vals_B)
+    if nA == 0 or nB == 0:
+        return np.nan, np.nan, np.nan, np.nan
+
+    rng = np.random.default_rng(random_state)
+    boot_diffs = np.empty(n_samples)
+
+    for i in range(n_samples):
+        resample_A = vals_A[rng.integers(0, nA, nA)]
+        resample_B = vals_B[rng.integers(0, nB, nB)]
+        boot_diffs[i] = np.median(resample_A) - np.median(resample_B)
+
+    diff_hat = np.median(vals_A) - np.median(vals_B)
+    sigma_diff = boot_diffs.std(ddof=1)
+
+    alpha = 1 - ci
+    ci_low, ci_high = np.percentile(boot_diffs, [100 * alpha / 2, 100 * (1 - alpha / 2)])
+
+    return diff_hat, sigma_diff, ci_low, ci_high
+
+
+def bootstrap_median_difference(
+    x: np.ndarray,
+    y: np.ndarray,
+    n_boot: int = 10000,
+    random_state: int | None = None,
+):
+    """
+    Bootstrap the difference of medians: median(x) - median(y).
+
+    Returns:
+        delta_med        : observed median difference
+        ci_16, ci_84     : 68% confidence interval
+        p_value          : two-sided bootstrap p-value
+    """
+    rng = np.random.default_rng(random_state)
+
+    x = x[np.isfinite(x)]
+    y = y[np.isfinite(y)]
+
+    delta_obs = np.median(x) - np.median(y)
+
+    boot = np.empty(n_boot)
+    for i in range(n_boot):
+        xb = rng.choice(x, size=len(x), replace=True)
+        yb = rng.choice(y, size=len(y), replace=True)
+        boot[i] = np.median(xb) - np.median(yb)
+
+    ci_16, ci_84 = np.percentile(boot, [16, 84])
+
+    # two-sided p-value: probability of crossing zero
+    p_value = 2 * min(
+        np.mean(boot <= 0),
+        np.mean(boot >= 0),
+    )
+
+    return delta_obs, ci_16, ci_84, p_value
+
+
+def bootstrap_median_diff_probability(values_A, values_B, n_samples=10000):
+    """
+    Returns:
+      diff_hat       = median(A) - median(B)
+      sigma_diff     = std of bootstrap(diff)
+      prob_difference = fraction of bootstrap resamples that keep same sign as diff_hat
+                        (≈ probability that difference is real)
+    """
+    if isinstance(values_A, pd.Series):
+        A = values_A.dropna().to_numpy()
+    else:
+        A = np.asarray(values_A)
+        A = A[~np.isnan(A)]
+
+    if isinstance(values_B, pd.Series):
+        B = values_B.dropna().to_numpy()
+    else:
+        B = np.asarray(values_B)
+        B = B[~np.isnan(B)]
+
+    nA, nB = len(A), len(B)
+    if nA == 0 or nB == 0:
+        return np.nan, np.nan, np.nan
+
+    rng = np.random.default_rng()
+    boot_diffs = np.empty(n_samples)
+
+    for i in range(n_samples):
+        resA = A[rng.integers(0, nA, nA)]
+        resB = B[rng.integers(0, nB, nB)]
+        boot_diffs[i] = np.median(resA) - np.median(resB)
+
+    diff_hat = np.median(A) - np.median(B)
+    sigma_diff = boot_diffs.std(ddof=1)
+
+    # probability that the sign stays the same
+    if diff_hat > 0:
+        prob = 1 - np.mean(boot_diffs <= 0)
+    else:
+        prob = 1 - np.mean(boot_diffs >= 0)
+
+    return diff_hat, sigma_diff, prob
 
 
 #* --------------------------------------------------------------------------------

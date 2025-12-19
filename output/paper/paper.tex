@@ -242,10 +242,10 @@ $6.5 \times 10^{-1}$  versus \CB{} sample,
  $2.5 \times 10^{-1}$  versus \CC{} and  $1.8 \times 10^{-2}$  versus \RG).
 
  Restrictions of the comparison to BGGs and satellites only are also shown in table \ref{tab:sSFR_status}. 
- The p-values found from  are 
-   against \CB,
-   against \CC{} and 
-    against \RG. 
+ The p-values found from two-sided Fisher exact test are 
+  0.58 against \CB,
+  0.59 against \CC{} and 
+  0.37  against \RG. 
 There is thus no significant difference in the fraction of star-forming BGGs nor satellites between \CG{} and our control samples either.
 
 % we find  star-forming BGGs (\% of the BGGs),
@@ -269,19 +269,19 @@ There is thus no significant difference in the fraction of star-forming BGGs nor
         \toprule
             \textbf{Sample} & & \textbf{  Quenched  } & \textbf{  Passive  } & \textbf{  Starforming  } \\
             \CG & &  18  (7.3 \%) &  146  (58.9 \%)&  84  (33.9 \%) \\
-             & \emph{BGG} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
-             & \emph{Satellites} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
+             & \emph{BGG} &  \emph{6  (9.7 \%)} &  \emph{45  (72.6 \%)} &  \emph{11  (17.7 \%)} \\
+             & \emph{Satellites} &  \emph{12  (6.5 \%)} &  \emph{101  (54.3 \%)} &  \emph{73  (39.2 \%)} \\
             \CB & &  181  (6.5 \%) &  1595  (57.0 \%) &  1020  (36.5 \%) \\
-             & \emph{BGG} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
-             & \emph{Satellites} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
+             & \emph{BGG} &  \emph{58  (8.3 \%)} &  \emph{534  (76.4 \%)} &  \emph{107  (15.3 \%)} \\
+             & \emph{Satellites} &  \emph{123  (5.9 \%)} &  \emph{1061  (50.6 \%)} &  \emph{913  (43.5 \%)} \\
             \CC & &  191  (6.3 \%) &  1619  (53.8 \%) &  1198  (39.8 \%) \\
-             & \emph{BGG} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
-             & \emph{Satellites} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)} \\
+             & \emph{BGG} &  \emph{65  (8.6 \%)} &  \emph{569  (75.7 \%)} &  \emph{118  (15.7 \%)} \\
+             & \emph{Satellites} &  \emph{126  (5.6 \%)} &  \emph{1050  (46.5 \%)} &  \emph{1080  (47.9 \%)} \\
             \RG & &  5  (2.2 \%) &  101  (45.1 \%) &  118  (52.7 \%)\\
-            & \emph{BGG} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)}\\
-            & \emph{Satellites} &  \emph{  ( \%)} &  \emph{  ( \%)} &  \emph{  ( \%)}\\
+            & \emph{BGG} &  \emph{3  (5.4 \%)} &  \emph{38  (67.9 \%)} &  \emph{15  (26.8 \%)}\\
+            & \emph{Satellites} &  \emph{2  (1.2 \%)} &  \emph{63  (37.5 \%)} &  \emph{103  (61.3 \%)}\\
          \midrule
-            \emph{SDSS selection} & &  \emph{634 (1.2 \%)} &  \emph{7698  (14.7 \%)} &  \emph{44199  (84.1 \%)}\\
+            \emph{SDSS selection} & &  \emph{634 (1.2 \%)} &  \emph{7705  (14.7 \%)} &  \emph{44192  (84.1 \%)}\\
          \midrule
         \bottomrule
     \end{tabular}
@@ -323,9 +323,9 @@ independent volunteer classifications that are aggregated into debiaised vote fr
 morphology ``elliptical'' if the \texttt{p\_el\_debiased} value is greater than 0.5, and ``spiral'' if the \texttt{p\_cs\_debiased} value is greater than 0.5. 
 Other cases are considered as ``uncertain''. The morphologies found for each sample are shown in table \ref{tab:morphologies}.
 Barnard two-sided exact tests were performed to compare the fraction of each morphology between \CG{} and each control sample. The p-values found are 
-$5.7 \times 10^{-5}$ for ellipticals and $8.5 \times 10^{-1}$ for spirals versus \CB{} sample, 
- $2.0 \times 10^{-1}$  and $1.1 \times 10^{-1}$  versus \CC{} and  $1.1 \times 10^{-3}$  
- and $3.2 \times 10^{-3}$  versus \RG. Morphologies of \CG, wich we identified as cores of richer groups in 
+ for ellipticals and  for spirals versus \CB{} sample, 
+   and   versus \CC{} and    
+ and   versus \RG. Morphologies of \CG, wich we identified as cores of richer groups in 
  \cite{Tricottet+25}, have morphologies significantly different from ordinary groups of four members. Figure \ref{fig:galaxies_morph_sfr} displays the sSFR against masses for galaxies from the SDSS selection and for \CG{}s galaxies.
 
 
@@ -334,11 +334,11 @@ $5.7 \times 10^{-5}$ for ellipticals and $8.5 \times 10^{-1}$ for spirals versus
     \begin{tabular}{lccc}
         \toprule
             \textbf{Sample} & \textbf{  Elliptical  } & \textbf{  Spiral  } & \textbf{  Uncertain  } \\
-            \CG &  52  (21.0 \%) &  53  (21.4 \%)&  143  (57.7 \%) \\
-            \CB &  289  (10.3 \%) &  583  (20.9 \%) &  1924  (68.8 \%) \\
-            \CC &  533  (17.7 \%) &  781  (26.0 \%) &  1694  (56.3 \%) \\
-            \RG &  17  (7.6 \%) &  75  (33.5 \%) &  132  (58.9 \%)\\
-            \emph{SDSS selection} &  \emph{10091 (19.2 \%)} &  \emph{34715  (66.1 \%)} &  \emph{7725  (14.7 \%)}\\
+            \CG &  52  ( \%) &  53  ( \%)&  143  ( \%) \\
+            \CB &  289  ( \%) &  583  ( \%) &  1924  ( \%) \\
+            \CC &  533  ( \%) &  781  ( \%) &  1694  ( \%) \\
+            \RG &  17  ( \%) &  75  ( \%) &  132  ( \%)\\
+            \emph{SDSS selection} &  \emph{10091 ( \%)} &  \emph{34715  ( \%)} &  \emph{7725  ( \%)}\\
          \midrule
         \bottomrule
     \end{tabular}
@@ -359,37 +359,538 @@ $5.7 \times 10^{-5}$ for ellipticals and $8.5 \times 10^{-1}$ for spirals versus
 
 
 
-Starforming \CG{} are composed of 45 of their galaxies classified as spiral 
-($84.9$\% once galaxies having uncertain morphology removed) and 
-8 ($15.1$\% once galaxies having uncertain morphology removed) elliptical.
-These figures are 528 ($90.4$\%) spiral
-and 56 ($9.59$\%) elliptical galaxies for \CB{}, 
-671 ($85.9$\%) spiral
-and 110 ($14.1$\%) elliptical galaxies for \CC{}
-and 68 ($95.8$\%) spiral
-and 3 ($4.23$\%) elliptical galaxies for \RG{}. 
+Starforming \CG{} are composed of  of their galaxies classified as spiral 
+(\% once galaxies having uncertain morphology removed) and 
+ (\% once galaxies having uncertain morphology removed) elliptical.
+These figures are  (\%) spiral
+and  (\%) elliptical galaxies for \CB{}, 
+ (\%) spiral
+and  (\%) elliptical galaxies for \CC{}
+and  (\%) spiral
+and  (\%) elliptical galaxies for \RG{}. 
 The probability that those fractions come from 
-the same distribution is estimated from the Barnard two-sided exact test as $0.22$ against \CB,
-$0.85$ against \CC{} and $4.35 \times 10^{-2}$ against \RG. There is thus 
+the same distribution is estimated from the  as  against \CB,
+ against \CC{} and  against \RG. There is thus 
 neither significant excess nor lack of 
 starforming elliptical galaxies in \CG{} compared to all our control samples.
 
-If we restrict the comparison to BGGs only, we find 6 Elliptical BGGs (9.7\% of the BGGs) and
-2 Spiral BGGs (3.2\%) 
+If we restrict the comparison to BGGs only, we find  Elliptical BGGs (\% of the BGGs) and
+ Spiral BGGs (\%) 
  in \CG{}.
   This is to be compared to 
- 71 (10.2\%) Elliptical and
- 26 (3.7\%) Spiral galaxies in \CB{}, 
- 75 (10.0\%) Elliptical and
- 30 (4.0\%)  Spiral in \CC{},
-  and  4 (7.1\%) Elliptical and
-  6 (10.7\%) Quenched
+  (\%) Elliptical and
+  (\%) Spiral galaxies in \CB{}, 
+  (\%) Elliptical and
+  (\%)  Spiral in \CC{},
+  and   (\%) Elliptical and
+   (\%) Quenched
   in \RG{}. 
-The p-values found from two-sided Fisher exact test are 
-  1.00 against \CB,
-  1.00 against \CC{} and 
-  0.19  against \RG. 
+The p-values found from  are 
+   against \CB,
+   against \CC{} and 
+    against \RG. 
 There is thus no significant difference in the fraction of star-forming BGGs between \CG{} and our control samples.  
+
+\section{sSFR}
+
+\begin{table*}
+\centering
+
+% 1 column for Sample + 2 columns per quantity
+\begin{tabular}{l*{6}{c}}
+\toprule
+
+% ---------- Header row 1: quantity names ----------
+Sample
+
+  & \multicolumn{2}{c}{
+    
+      $\langle \log sSFR \rangle$
+    
+  }
+
+  & \multicolumn{2}{c}{
+    
+      $\langle M_r \rangle$
+    
+  }
+
+  & \multicolumn{2}{c}{
+    
+      $\langle \log(M_\star/M_\odot) \rangle$
+    
+  }
+
+\\
+
+% ---------- Header row 2: Passive / Star-forming ----------
+
+  & Passive & Star-forming
+
+  & Passive & Star-forming
+
+  & Passive & Star-forming
+
+\\
+\midrule
+
+% ---------- Data rows ----------
+
+CG4
+
+  & $-12.15$
+  & $-10.15$
+
+  & $-21.04$
+  & $-20.18$
+
+  & $10.65$
+  & $9.99$
+
+\\
+
+Control4B
+
+  & $-12.18$
+  & $-10.28$
+
+  & $-21.68$
+  & $-20.71$
+
+  & $10.87$
+  & $10.27$
+
+\\
+
+Control4C
+
+  & $-12$
+  & $-10.14$
+
+  & $-20.98$
+  & $-19.71$
+
+  & $10.55$
+  & $9.75$
+
+\\
+
+RG4
+
+  & $-11.92$
+  & $-10.1$
+
+  & $-21.31$
+  & $-20.12$
+
+  & $10.76$
+  & $9.94$
+
+\\
+
+
+\bottomrule
+\end{tabular}
+
+\caption{Median values of galaxy properties for passive and star-forming populations in each sample. 
+Error bars are computed via bootstrapping (10\,000 iterations).}
+\label{tab:passive_starforming_medians}
+\end{table*}
+
+
+\begin{table*}
+    \centering
+
+    % One column for Sample + 2 columns per quantity
+    \begin{tabular}{l*{6}{c}}
+\toprule
+ Sample &
+
+  \multicolumn{2}{c}{sSFR (yr$^{-1}$)}%
+   & 
+
+  \multicolumn{2}{c}{$M_r$}%
+   & 
+
+  \multicolumn{2}{c}{$\log(M_\star/M_\odot)$}%
+  
+ \\
+% --- second header row: Passive / Star-forming BGG ---
+ & 
+
+  Passive BGG & Star-forming BGG%
+   & 
+
+  Passive BGG & Star-forming BGG%
+   & 
+
+  Passive BGG & Star-forming BGG%
+  
+ \\
+\midrule
+
+
+  CG4 &
+  
+    $-11.99$ $\pm$ 0.09 &
+    $-10.75$ $\pm$ 0.29  & 
+  
+    $-20.84$ $\pm$ 0.11 &
+    $-20.66$ $\pm$ 0.32  & 
+  
+    $10.46$ $\pm$ 0.06 &
+    $10.28$ $\pm$ 0.12 
+   \\
+
+  Control4B &
+  
+    $-11.92$ $\pm$ 0.03 &
+    $-10.7$ $\pm$ 0.06  & 
+  
+    $-21.32$ $\pm$ 0.03 &
+    $-21.11$ $\pm$ 0.07  & 
+  
+    $10.69$ $\pm$ 0.02 &
+    $10.54$ $\pm$ 0.04 
+   \\
+
+  Control4C &
+  
+    $-11.53$ $\pm$ 0.03 &
+    $-10.5$ $\pm$ 0.06  & 
+  
+    $-20.27$ $\pm$ 0.05 &
+    $-20.56$ $\pm$ 0.08  & 
+  
+    $10.18$ $\pm$ 0.02 &
+    $10.24$ $\pm$ 0.06 
+   \\
+
+  RG4 &
+  
+    $-11.36$ $\pm$ 0.19 &
+    $-10.39$ $\pm$ 0.16  & 
+  
+    $-20.69$ $\pm$ 0.14 &
+    $-20.51$ $\pm$ 0.27  & 
+  
+    $10.3$ $\pm$ 0.07 &
+    $10.18$ $\pm$ 0.12 
+   \\
+
+
+
+\bottomrule
+\end{tabular}
+\caption{Median values of various quantities for galaxies according to the fertility of their BGG (BGG included). 
+Error bars are computed via bootstrapping (10\,000 iterations).}
+\label{tab:split_fertility_BGG_properties}
+\end{table*}
+
+\begin{table*}
+    \centering
+
+    % One column for Sample + 2 columns per quantity
+    \begin{tabular}{l*{6}{c}}
+\toprule
+ Sample &
+
+  \multicolumn{2}{c}{sSFR (yr$^{-1}$)}%
+   & 
+
+  \multicolumn{2}{c}{$M_r$}%
+   & 
+
+  \multicolumn{2}{c}{$\log(M_\star/M_\odot)$}%
+  
+ \\
+% --- second header row: Passive / Star-forming BGG ---
+ & 
+
+  Passive BGG & Star-forming BGG%
+   & 
+
+  Passive BGG & Star-forming BGG%
+   & 
+
+  Passive BGG & Star-forming BGG%
+  
+ \\
+\midrule
+
+
+  CG4 &
+  
+    $-11.56$ $\pm$ 0.16 &
+    $-10.84$ $\pm$ 0.47  & 
+  
+    $-20.41$ $\pm$ 0.13 &
+    $-20.28$ $\pm$ 0.18  & 
+  
+    $10.2$ $\pm$ 0.05 &
+    $10.12$ $\pm$ 0.06 
+   \\
+
+  Control4B &
+  
+    $-11.46$ $\pm$ 0.06 &
+    $-10.68$ $\pm$ 0.13  & 
+  
+    $-20.98$ $\pm$ 0.03 &
+    $-20.77$ $\pm$ 0.06  & 
+  
+    $10.49$ $\pm$ 0.02 &
+    $10.37$ $\pm$ 0.03 
+   \\
+
+  Control4C &
+  
+    $-11$ $\pm$ 0.04 &
+    $-10.37$ $\pm$ 0.07  & 
+  
+    $-19.72$ $\pm$ 0.04 &
+    $-20.04$ $\pm$ 0.09  & 
+  
+    $9.9$ $\pm$ 0.02 &
+    $9.9$ $\pm$ 0.07 
+   \\
+
+  RG4 &
+  
+    $-10.64$ $\pm$ 0.19 &
+    $-10.31$ $\pm$ 0.22  & 
+  
+    $-20.15$ $\pm$ 0.16 &
+    $-20.24$ $\pm$ 0.13  & 
+  
+    $10.08$ $\pm$ 0.08 &
+    $10.06$ $\pm$ 0.13 
+   \\
+
+
+
+\bottomrule
+\end{tabular}
+\caption{Median values of various quantities for galaxies according to the fertility of their BGG (satellites only). 
+Error bars are computed via bootstrapping (10\,000 iterations).}
+\label{tab:split_fertility_BGG_properties_Sat}
+\end{table*}
+
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{fertility.pdf}
+     \caption{Distribution various quantities for galaxies according their fertility.}
+     \label{fig:fertility}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{BGG_fertility.pdf}
+     \caption{Distribution various quantities for galaxies according to the fertility of their BGG (BGG included).}
+     \label{fig:BGG_fertility}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{Satellites_by_BGG_fertility.pdf}
+     \caption{Distribution various quantities for galaxies according to the fertility of their BGG (BGG excluded).}
+     \label{fig:Sat_BGG_fertility}
+\end{figure}
+
+\subsection{Main sequence}
+We model the star-forming main sequence as a power law in stellar mass, to various orders (1 to 4) - cf figure . 
+We then compute the residuals of each star-forming galaxy to the main sequence,and plot their histograms in figure .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+The median main-sequence residual of CG4 galaxies is
+
+significantly different
+
+from that of Control4B,
+with a median offset of
+$\Delta = 0.057$
+($0.028 \le \Delta \le 0.099$, bootstrap),
+corresponding to a $p$-value of $p = 0.056$.
+
+
+
+
+
+
+
+
+
+
+
+The median main-sequence residual of CG4 galaxies is
+
+significantly different
+
+from that of Control4C,
+with a median offset of
+$\Delta = 0.082$
+($0.062 \le \Delta \le 0.122$, bootstrap),
+corresponding to a $p$-value of $p = 0.011$.
+
+
+
+
+
+
+
+
+
+
+
+The median main-sequence residual of CG4 galaxies is
+
+not significantly different
+
+from that of RG4,
+with a median offset of
+$\Delta = 0.046$
+($-0.037 \le \Delta \le 0.098$, bootstrap),
+corresponding to a $p$-value of $p = 0.533$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{Main_Sequence_polyfits.pdf}
+     \caption{}
+     \label{fig:Main_Sequence_polyfits}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{main_sequence_residuals.pdf}
+     \caption{}
+     \label{fig:main_sequence_residuals}
+\end{figure}
+
+
 
 % \subsection{Dominance}
 % We split groups into two categories: the dominated, for which the BGG has a luminosity fraction greater than the median of \RG.
@@ -417,7 +918,7 @@ There is thus no significant difference in the fraction of star-forming BGGs bet
 % \end{tabular}
 % \end{table}
 
-
+% \normalcolor
 
 
 

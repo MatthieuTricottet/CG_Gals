@@ -6,14 +6,17 @@
 import pandas as pd
 import numpy as np
 from astroquery.sdss import SDSS
+from dataclasses import dataclass
 
-from scipy.stats import multivariate_normal, fisher_exact, barnard_exact
+from scipy.stats import multivariate_normal, fisher_exact, barnard_exact, linregress
 import scipy.interpolate as interp
 
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import matplotlib.lines as mlines  # for legend proxies
 import matplotlib.ticker as ticker
+from matplotlib.colors import LogNorm
+
 
 import seaborn as sns
 
@@ -55,7 +58,8 @@ import config as co
 #* --------------------------------------------------------------------------------
 import data_loader as dl
 import generate_report as report
-import sSFR
+import analysis as anl
+
 
 # endregion
 
@@ -268,7 +272,7 @@ def compute_status(sample):
     fit_results = get_fit(non_quenched)
     f_interp = get_decision_boundary_interp(non_quenched, fit_results)
     for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]+['SDSS']:
-        sample[cat] = sSFR.add_status(sample[cat], fit_results)
+        sample[cat] = add_status(sample[cat], fit_results)
     return sample, non_quenched, fit_results, f_interp
 
 
@@ -800,6 +804,7 @@ def plot_density_original_vs_GMMfit(X, fit_results, figsize=(16, 8), dpi=150, na
  
     plt.close()
 
+
 def restrict_analysis(df, df_name, restric_name):
     if co.VERBOSE:
         print(df_name)
@@ -814,6 +819,7 @@ def restrict_analysis(df, df_name, restric_name):
             print(f".  {status}: {n_df} / {total} = {n_df/total:.1f}")
 
     return results
+
 
 def pval_restrict_analysis(res1, res2, df1_name, df2_name, restric_name):
     matrix = [[res1[co.sSFR_status[1]], res1[co.sSFR_status[2]]],
@@ -861,3 +867,894 @@ def BGGs_analysis(sample):
             results_df = restrict_analysis(restrict_df[rest_type], cat, rest_type)
             pval_restrict_analysis(results_CG4[rest_type], results_df, 'CG4', cat, rest_type)
 
+
+def correlations_by_fertility(sample):
+    """
+    Analyze correlations between sSFR status and fertility in galaxies.
+    
+    Parameters
+    ----------
+    sample : dict
+        Dictionary containing dataframes for different samples, including 'CG4' compact groups.
+    """
+
+    report.append_json('Fertility_sSFR_tests', 'two-sided Fisher exact test')
+
+    CG4 = sample['CG4'+co.GASUFF]
+    restrict_CG4 = {}
+    restrict_CG4['Fertile'] = CG4[CG4['fertility'] == 'Fertile']
+    restrict_CG4['Sterile'] = CG4[CG4['fertility'] == 'Sterile'] 
+
+    results_CG4 = {}
+    for rest_type in restrict_CG4.keys():
+        results_CG4[rest_type] = restrict_analysis(restrict_CG4[rest_type], 'CG4', rest_type)
+
+    
+    for cat in co.CONTROL.keys():
+        df = sample[cat+co.GASUFF] 
+        Fertile = df[df['fertility'] == 'Fertile']
+        Sterile = df[df['fertility'] == 'Sterile']
+        restrict_df = {'Fertile': Fertile, 'Sterile': Sterile}
+        for rest_type in restrict_df.keys():
+            results_df = restrict_analysis(restrict_df[rest_type], cat, rest_type)
+            pval_restrict_analysis(results_CG4[rest_type], results_df, 'CG4', cat, rest_type)
+
+ 
+
+def split_by_fertility(sample, make_plots=True,
+                       plot_name="fertility",
+                       figsize=(10, 12),
+                       label_fontsize=18,
+                       tick_labelsize=16):
+
+    def local_prec(val, base_prec=4):
+        if np.abs(val) < 10:
+            return base_prec - 1
+        else:
+            return base_prec
+
+    QUANTITIES_FERTILITY = ['sSFR', 'M_r', 'lgm']
+    QUANTITIES_PLOT = ['M_r', 'lgm']
+
+    if co.VERBOSE:
+        print("Analyzing correlations by fertility...")
+
+    plot_rows = []
+
+    for name in co.SAMPLE.keys():
+        if co.VERBOSE:
+            print(f"   Analyzing {name}...")
+
+        cat = name + co.GASUFF
+
+        # Split by galaxy's own fertility
+        split = {
+            co.sSFR_status[index]: sample[cat][
+                sample[cat]['sSFR_status'] == co.sSFR_status[index]
+            ]
+            for index in [1, 2]
+        }
+
+        stats = anl.stats_comp_split(split)
+
+        # ================================================================
+        # A) Store per-population medians + errors (already working)
+        # ================================================================
+        for part in split.keys():  # Passive / Starforming
+            for quantity in QUANTITIES_FERTILITY:
+                median_val = stats[part][quantity]
+
+                report.append_json(
+                    f'{name}_{part}_{quantity}_median',
+                    gu.numformat(median_val, prec=local_prec(median_val))
+                )
+
+                median_hat, sigma_median, ci_low, ci_high = su.bootstrap_median_error(
+                    split[part][quantity]
+                )
+
+                report.append_json(
+                    f'{name}_{part}_{quantity}_median_err',
+                    f'{sigma_median:.2f}'
+                )
+
+                report.append_json(
+                    f'{name}_{part}_{quantity}_median_ci_low',
+                    gu.numformat(ci_low, prec=local_prec(ci_low))
+                )
+                report.append_json(
+                    f'{name}_{part}_{quantity}_median_ci_high',
+                    gu.numformat(ci_high, prec=local_prec(ci_high))
+                )
+
+            # Store counts (unchanged)
+            for status, count in stats[part]['sSFR_status_counts'].items():
+                report.append_json(f'{name}_{part}_sSFR_status_{status}_N', count)
+            for morpho, count in stats[part]['morphology_counts'].items():
+                report.append_json(f'{name}_{part}_morphology_{morpho}_N', count)
+
+        # ================================================================
+        # B) NEW : Difference Passive – Starforming (per sample)
+        # ================================================================
+        if co.sSFR_status[1] in split and co.sSFR_status[-1] in split:
+            A = split[co.sSFR_status[1]] # Passive
+            B = split[co.sSFR_status[-1]] # Starforming
+
+            for quantity in QUANTITIES_FERTILITY:
+                diff_hat, sigma_diff, prob = su.bootstrap_median_diff_probability(
+                    A[quantity],
+                    B[quantity]
+                )
+
+                report.append_json(
+                    f'{name}_Diff_{quantity}_median',
+                    gu.numformat(diff_hat, prec=local_prec(diff_hat))
+                )
+
+                report.append_json(
+                    f'{name}_Diff_{quantity}_median_err',
+                    f'{sigma_diff:.2f}'
+                )
+
+                report.append_json(
+                    f'{name}_Diff_{quantity}_prob_diff',
+                    f'{prob:.3f}'
+                )
+
+        # ================================================================
+        # C) Add data for violin plots (unchanged)
+        # ================================================================
+        if make_plots:
+            for part in split.keys():
+                df_part = split[part][['M_r', 'lgm']].copy()
+                df_part['Sample'] = name
+                df_part['fertility'] = part
+                plot_rows.append(df_part)
+
+    # ------------------------------------------------------------
+    # D) Produce violin plot (same as before)
+    # ------------------------------------------------------------
+    # <--- keep your current plotting code exactly as in BGG version --->
+    # ------------------------------------------------------------
+    #  VIOLIN PLOTS — ONE COLUMN (N rows × 1 column)
+    # ------------------------------------------------------------
+    if make_plots and len(plot_rows) > 0:
+        df_plot = pd.concat(plot_rows, ignore_index=True)
+
+        sample_order = list(co.SAMPLE.keys())
+        fertility_order = [co.sSFR_status[1], co.sSFR_status[2]]  # Passive, Starforming
+
+        quantities = QUANTITIES_PLOT
+
+        sns.set_style("whitegrid")
+
+        n_quant = len(quantities)
+        nrows = n_quant
+        ncols = 1  # one column
+
+        fig, axes = plt.subplots(
+            nrows=nrows,
+            ncols=ncols,
+            figsize=figsize,
+            sharex=True
+        )
+
+        # axes is a single Axes object if nrows == 1
+        if nrows == 1:
+            axes = [axes]
+        else:
+            axes = np.array(axes).ravel()
+
+        for i, quantity in enumerate(quantities):
+            ax = axes[i]
+
+            sns.violinplot(
+                data=df_plot,
+                x="Sample",
+                y=quantity,
+                hue="fertility",
+                hue_order=fertility_order,
+                order=sample_order,
+                split=True,
+                cut=0,
+                density_norm='width',
+                inner="quart",
+                ax=ax,
+            )
+
+            if quantity == "M_r":
+                ax.invert_yaxis()
+
+            ax.set_xlabel("")
+            ax.set_ylabel(lu.formatted_label(quantity), fontsize=label_fontsize)
+            ax.tick_params(axis='x', rotation=45)
+            ax.tick_params(axis='both', labelsize=tick_labelsize)
+
+            # Remove local legends
+            if ax.get_legend() is not None:
+                ax.get_legend().remove()
+
+        # Global legend in the top-right corner
+        handles, labels = axes[0].get_legend_handles_labels()
+        fig.legend(
+            handles,
+            labels,
+            title="Fertility",
+            title_fontsize=label_fontsize,
+            loc="upper right",
+            bbox_to_anchor=(0.8, 0.99),
+            fontsize=label_fontsize - 2
+        )
+
+        fig.tight_layout(rect=[0.0, 0.0, 0.82, 1.0])
+
+        # ------------------------------------------------------------
+        # Saving using your exact pattern
+        # ------------------------------------------------------------
+        if plot_name:
+            filepath = co.FIGURES_PATH + plot_name + '.pdf'
+            fig.savefig(filepath, format='pdf', bbox_inches='tight')
+
+        if co.SHOW:
+            plt.show()
+
+        plt.close(fig)
+
+
+
+def split_by_BGG_fertility(sample, make_plots=True,
+                           plot_name="BGG_fertility", figsize=(10, 12), 
+                           label_fontsize=18, tick_labelsize=16):
+    def local_prec(val, base_prec=4):
+        if np.abs(val) < 10:
+            return base_prec - 1
+        else:
+            return base_prec
+
+    if co.VERBOSE:
+        print("Analyzing correlations by BGG fertility...")
+
+    QUANTITIES_BGG = [
+        'sSFR', 'M_r', 'lgm'
+    ]
+    # --- Collect data for plotting across all samples ---
+    plot_rows = []
+
+    for name in co.SAMPLE.keys():
+        if co.VERBOSE:
+            print(f"   Analyzing {name}...") 
+
+        cat = name + co.GASUFF
+
+        # BGG_split: only BGGs (rank_M == 1), split by fertility
+        BGG_split = {
+            co.sSFR_status[index]: sample[cat][
+                (sample[cat]['sSFR_status'] == co.sSFR_status[index]) &
+                (sample[cat]['rank_M'] == 1)
+            ]
+            for index in [1, 2]
+        }
+
+        # split: all group members whose BGG is of given fertility
+        split = {
+            co.sSFR_status[index]: sample[cat][
+                sample[cat]['Group'].isin(
+                    BGG_split[co.sSFR_status[index]]['Group']
+                )
+            ]
+            for index in [1, 2]
+        }
+
+        # Stats for all desired quantities
+        stats = anl.stats_comp_split(split)
+        for part in split.keys():  # e.g. 'Passive', 'Starforming'
+            for quantity in QUANTITIES_BGG:
+                report.append_json(
+                    f'{name}_BGG_{part}_{quantity}_median',
+                    gu.numformat(
+                        stats[part][quantity],
+                        prec=local_prec(stats[part][quantity])
+                    )
+                )
+                # bootstrap error bar on median
+                median_hat, sigma_median, ci_low, ci_high = su.bootstrap_median_error(split[part][quantity])
+                report.append_json(
+                    f'{name}_BGG_{part}_{quantity}_median_err',
+                    # gu.numformat(sigma_median, prec=local_prec(sigma_median))
+                    f'{sigma_median:.2f}'
+                )
+                # optional: CI bounds if you want to store them
+                report.append_json(
+                    f'{name}_BGG_{part}_{quantity}_median_ci_low',
+                    gu.numformat(ci_low, prec=local_prec(ci_low))
+                )
+                report.append_json(
+                    f'{name}_BGG_{part}_{quantity}_median_ci_high',
+                    gu.numformat(ci_high, prec=local_prec(ci_high))
+                )
+
+            # --- Collect raw values for plotting ---
+            if make_plots:
+                df_part = split[part][QUANTITIES_BGG].copy()
+                df_part['Sample'] = name
+                df_part['BGG_fertility'] = part
+                plot_rows.append(df_part)
+
+    # ------------------------------------------------------------
+    #  VIOLIN PLOTS — ONE COLUMN (N rows × 1 column)
+    # ------------------------------------------------------------
+    if make_plots and len(plot_rows) > 0:
+        df_plot = pd.concat(plot_rows, ignore_index=True)
+
+        sample_order = list(co.SAMPLE.keys())
+        fertility_order = [co.sSFR_status[1], co.sSFR_status[2]]  # Passive, Starforming
+
+        quantities = QUANTITIES_BGG
+
+        sns.set_style("whitegrid")
+
+        n_quant = len(quantities)
+        nrows = n_quant
+        ncols = 1  # <<< ONE COLUMN
+
+        fig, axes = plt.subplots(
+            nrows=nrows,
+            ncols=ncols,
+            figsize=figsize,
+            sharex=True
+        )
+
+        # axes is a single Axes object if nrows == 1
+        if nrows == 1:
+            axes = [axes]
+        else:
+            axes = np.array(axes).ravel()
+
+        for i, quantity in enumerate(quantities):
+            ax = axes[i]
+
+            sns.violinplot(
+                data=df_plot,
+                x="Sample",
+                y=quantity,
+                hue="BGG_fertility",
+                hue_order=fertility_order,
+                order=sample_order,
+                split=True,
+                cut=0,
+                density_norm='width',
+                inner="quart",
+                ax=ax,
+            )
+
+            if quantity == "M_r":
+                ax.invert_yaxis()
+
+            ax.set_xlabel("")
+            ax.set_ylabel(lu.formatted_label(quantity), fontsize=label_fontsize)
+            ax.tick_params(axis='x', rotation=45)
+            ax.tick_params(axis='both', labelsize=tick_labelsize)
+
+            # Remove local legends
+            if ax.get_legend() is not None:
+                ax.get_legend().remove()
+
+        # Global legend in the top-right corner
+        handles, labels = axes[0].get_legend_handles_labels()
+        fig.legend(
+            handles,
+            labels,
+            title="BGG fertility",
+            title_fontsize=label_fontsize,
+            loc="upper right",
+            bbox_to_anchor=(0.8, 0.99),
+            fontsize=label_fontsize-2
+        )
+
+        fig.tight_layout(rect=[0.0, 0.0, 0.82, 1.0])
+
+        # ------------------------------------------------------------
+        # Saving using your exact pattern
+        # ------------------------------------------------------------
+        if plot_name:
+            filepath = co.FIGURES_PATH + plot_name + '.pdf'
+            fig.savefig(filepath, format='pdf', bbox_inches='tight')
+
+        if co.SHOW:
+            plt.show()
+
+        plt.close(fig)
+
+
+
+def satellites_split_by_BGG_fertility(sample, make_plots=True,
+                                      plot_name="Satellites_by_BGG_fertility", figsize=(10, 12), 
+                                      label_fontsize=18, tick_labelsize=16):
+    def local_prec(val, base_prec=4):
+        if np.abs(val) < 10:
+            return base_prec - 1
+        else:
+            return base_prec
+
+    if co.VERBOSE:
+        print("Analyzing correlations by BGG fertility...")
+
+    QUANTITIES_BGG = [
+        'sSFR', 'M_r', 'lgm'
+    ]
+    # --- Collect data for plotting across all samples ---
+    plot_rows = []
+
+    for name in co.SAMPLE.keys():
+        if co.VERBOSE:
+            print(f"   Analyzing {name}...") 
+
+        cat = name + co.GASUFF
+
+        # BGG_split: only BGGs (rank_M == 1), split by fertility
+        BGG_split = {
+            co.sSFR_status[index]: sample[cat][
+                (sample[cat]['sSFR_status'] == co.sSFR_status[index]) &
+                (sample[cat]['rank_M'] == 1)
+            ]
+            for index in [1, 2]
+        }
+
+        # split: all group members whose BGG is of given fertility
+        split = {
+            co.sSFR_status[index]: sample[cat][
+                sample[cat]['Group'].isin(BGG_split[co.sSFR_status[index]]['Group']) &
+                (sample[cat]['rank_M'] > 1)  # Only satellites)
+            ]
+            for index in [1, 2]
+        }
+
+        # Stats for all desired quantities
+        stats = anl.stats_comp_split(split)
+        for part in split.keys():  # e.g. 'Passive', 'Starforming'
+            for quantity in QUANTITIES_BGG:
+                report.append_json(
+                    f'{name}_Sat_BGG_{part}_{quantity}_median',
+                    gu.numformat(
+                        stats[part][quantity],
+                        prec=local_prec(stats[part][quantity])
+                    )
+                )
+                # bootstrap error bar on median
+                median_hat, sigma_median, ci_low, ci_high = su.bootstrap_median_error(split[part][quantity])
+                report.append_json(
+                    f'{name}_Sat_BGG_{part}_{quantity}_median_err',
+                    # gu.numformat(sigma_median, prec=local_prec(sigma_median))
+                    f'{sigma_median:.2f}'
+                )
+                # optional: CI bounds if you want to store them
+                report.append_json(
+                    f'{name}_Sat_BGG_{part}_{quantity}_median_ci_low',
+                    gu.numformat(ci_low, prec=local_prec(ci_low))
+                )
+                report.append_json(
+                    f'{name}_Sat_BGG_{part}_{quantity}_median_ci_high',
+                    gu.numformat(ci_high, prec=local_prec(ci_high))
+                )
+
+            # --- Collect raw values for plotting ---
+            if make_plots:
+                df_part = split[part][QUANTITIES_BGG].copy()
+                df_part['Sample'] = name
+                df_part['BGG_fertility'] = part
+                plot_rows.append(df_part)
+
+    # ------------------------------------------------------------
+    #  VIOLIN PLOTS — ONE COLUMN (N rows × 1 column)
+    # ------------------------------------------------------------
+    if make_plots and len(plot_rows) > 0:
+        df_plot = pd.concat(plot_rows, ignore_index=True)
+
+        sample_order = list(co.SAMPLE.keys())
+        fertility_order = [co.sSFR_status[1], co.sSFR_status[2]]  # Passive, Starforming
+
+        quantities = QUANTITIES_BGG
+
+        sns.set_style("whitegrid")
+
+        n_quant = len(quantities)
+        nrows = n_quant
+        ncols = 1  # <<< ONE COLUMN
+
+        fig, axes = plt.subplots(
+            nrows=nrows,
+            ncols=ncols,
+            figsize=figsize,
+            sharex=True
+        )
+
+        # axes is a single Axes object if nrows == 1
+        if nrows == 1:
+            axes = [axes]
+        else:
+            axes = np.array(axes).ravel()
+
+        for i, quantity in enumerate(quantities):
+            ax = axes[i]
+
+            sns.violinplot(
+                data=df_plot,
+                x="Sample",
+                y=quantity,
+                hue="BGG_fertility",
+                hue_order=fertility_order,
+                order=sample_order,
+                split=True,
+                cut=0,
+                density_norm='width',
+                inner="quart",
+                ax=ax,
+            )
+
+            if quantity == "M_r":
+                ax.invert_yaxis()
+
+            ax.set_xlabel("")
+            ax.set_ylabel(lu.formatted_label(quantity), fontsize=label_fontsize)
+            ax.tick_params(axis='x', rotation=45)
+            ax.tick_params(axis='both', labelsize=tick_labelsize)
+
+            # Remove local legends
+            if ax.get_legend() is not None:
+                ax.get_legend().remove()
+
+        # Global legend in the top-right corner
+        handles, labels = axes[0].get_legend_handles_labels()
+        fig.legend(
+            handles,
+            labels,
+            title="Satellites by BGG fertility",
+            title_fontsize=label_fontsize,
+            loc="upper right",
+            bbox_to_anchor=(0.8, 0.99),
+            fontsize=label_fontsize-2
+        )
+
+        fig.tight_layout(rect=[0.0, 0.0, 0.82, 1.0])
+
+        # ------------------------------------------------------------
+        # Saving using your exact pattern
+        # ------------------------------------------------------------
+        if plot_name:
+            filepath = co.FIGURES_PATH + plot_name + '.pdf'
+            fig.savefig(filepath, format='pdf', bbox_inches='tight')
+
+        if co.SHOW:
+            plt.show()
+
+        plt.close(fig)
+
+
+
+
+
+from sklearn.linear_model import LinearRegression
+
+def compute_main_sequence(
+        df_sample,
+        fert_col="sSFR_status",
+        sSFR_col="sSFR",
+        mass_col="lgm"):
+    """
+    Computes Δlog(sSFR) residuals for *one* sample.
+
+    Steps:
+      - Select star-forming galaxies
+      - Fit log_sSFR = a * lgm + b
+      - Compute residuals for ALL galaxies in this df
+    Returns:
+      df_out : dataframe with new column 'sSFR_residual'
+      (a, b) : slope and intercept of SF fit
+    """
+
+    # -----------------------------------------
+    # Select the star-forming (SF) subsample
+    # -----------------------------------------
+    sf = df_sample[df_sample[fert_col] == co.sSFR_status[-1]] # Starforming
+
+    if len(sf) < 3:
+        return None
+
+    # -----------------------------------------
+    # Linear regression for SF galaxies
+    # -----------------------------------------
+    X = sf[[mass_col]].values.reshape(-1, 1)
+    y = sf[sSFR_col].values
+
+    reg = LinearRegression()
+    reg.fit(X, y)
+
+    return reg
+
+
+
+@dataclass(frozen=True)
+class PolynomialModel1D:
+    coeffs: np.ndarray   # highest degree first
+
+    def predict(self, x: np.ndarray | pd.Series) -> np.ndarray:
+        x = np.asarray(x, dtype=float)
+        return np.polyval(self.coeffs, x)
+
+    def residuals(
+        self,
+        df: pd.DataFrame,
+        x_col="lgm",
+        y_col="sSFR",
+    ) -> np.ndarray:
+        return df[y_col].to_numpy(dtype=float) - self.predict(df[x_col])
+
+def fit_ssfr_vs_lgm_poly(
+    df: pd.DataFrame,
+    order: int = 2,
+    x_col="lgm",
+    y_col="sSFR",
+) -> PolynomialModel1D:
+
+    x = df[x_col].to_numpy(dtype=float)
+    y = df[y_col].to_numpy(dtype=float)
+
+    m = np.isfinite(x) & np.isfinite(y)
+    coeffs = np.polyfit(x[m], y[m], deg=order)
+
+    return PolynomialModel1D(coeffs=coeffs)
+
+
+
+def plot_main_sequence_models(_df, labelsize = 14, ticksize = 12, figname = "Main_Sequence_polyfits"):
+    
+    
+    # --- data ---
+    x = _df["lgm"].to_numpy(dtype=float)
+    y = _df["sSFR"].to_numpy(dtype=float)
+    m = np.isfinite(x) & np.isfinite(y)
+    x, y = x[m], y[m]
+
+    xg = np.linspace(x.min(), x.max(), 400)
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    # --------------------------------------------------
+    # KDE contours (log scale)
+    # --------------------------------------------------
+    sns.kdeplot(
+        x=x,
+        y=y,
+        levels=8,
+        fill=False,
+        linewidths=1.2,
+        # cmap="Greys",
+        cmap="Blues",
+        log_scale=(False, False),   # keep axes linear
+        ax=ax,
+    )
+
+    # --------------------------------------------------
+    # Scatter (light)
+    # --------------------------------------------------
+    # ax.scatter(x, y, s=0.2, alpha=0.6, color="gray", zorder=1)
+    ax.scatter(
+        x, y,
+        s=4,                 # increase slightly so dots are visible
+        marker=".",          # explicit point marker
+        alpha=0.6,
+        color="gray",
+        linewidths=0,        # no edges
+        zorder=1,
+    )
+    # --------------------------------------------------
+    # Polynomial fits + χ²
+    # --------------------------------------------------
+    N = len(x)
+
+    for order in range(1, 5):
+        coeffs = np.polyfit(x, y, deg=order)
+        y_hat = np.polyval(coeffs, x)
+        resid = y - y_hat
+
+        chi2 = np.sum(resid**2)      # σ = 1 assumption
+        dof = N - (order + 1)
+        red_chi2 = chi2 / dof if dof > 0 else np.nan
+
+        yg = np.polyval(coeffs, xg)
+        ax.plot(
+            xg,
+            yg,
+            linestyle="--",
+            linewidth=1.5,
+            label = fr"Fit to order {order}: $\chi^2_r = {red_chi2:.2f}$",
+            zorder=5,
+        )
+
+    ax.tick_params(
+        axis="both",   
+        which="major",
+        labelsize=ticksize,
+    )
+    ax.set_xlabel(r"$\log(M_\star/M_\odot)$",fontsize=labelsize)
+    ax.set_ylabel(r"$\log(\mathrm{sSFR})$",fontsize=labelsize)
+    ax.legend()
+    plt.tight_layout()
+
+    if figname:
+        plt.savefig(co.FIGURES_PATH + figname + '.pdf', format='pdf', bbox_inches='tight')
+
+    if co.SHOW:
+        plt.show()
+
+def add_MS_residuals(
+    sample: dict,
+    model,
+    suffix: str,
+    x_col="lgm",
+    y_col="sSFR",
+    status_col="sSFR_status",
+    sf_value=co.sSFR_status[-1],
+    out_col="MS_res",
+    non_sf_value=np.nan,   # could be None, np.nan, -99, etc.
+):
+    """
+    Add MS residuals to all dataframes whose key ends with `suffix`.
+    """
+
+    for key, df in sample.items():
+        if not key.endswith(suffix):
+            continue
+
+        # Work on a copy only if needed
+        # df = df.copy()
+
+        is_sf = df[status_col] == sf_value
+
+        # initialise column
+        df[out_col] = non_sf_value
+
+        # compute residuals only for star-forming galaxies
+        y_hat = model.predict(df.loc[is_sf, x_col])
+        df.loc[is_sf, out_col] = (
+            df.loc[is_sf, y_col].to_numpy(dtype=float) - y_hat
+        )
+
+def plot_main_sequence_residuals(
+    sample: dict,
+    figname: str | None = None,
+    suffix: str | None = None,
+    res_col: str = "MS_res",
+    bins: int | np.ndarray = 40,
+    range: tuple[float, float] | None = None,
+    density: bool = True,
+    figsize: tuple[float, float] = (8, 5),
+    xlabel: str = r"$\Delta \log(\mathrm{sSFR})$",
+    ylabel: str | None = None,
+    labelsize: int = 14,
+    ticksize: int = 12,
+    legendsize: int = 10,
+    linewidth: float = 1.6,
+    alpha: float = 0.65,
+    title: str | None = None,
+    show: bool | None = None,
+):
+    if suffix is None:
+        suffix = co.GASUFF
+    if show is None:
+        show = co.SHOW
+
+    fig, ax = plt.subplots(figsize=figsize)
+
+    colors = plt.rcParams["axes.prop_cycle"].by_key()["color"]
+
+    for i, (key, df) in enumerate(sample.items()):
+        if not str(key).endswith(suffix):
+            continue
+        if res_col not in df.columns:
+            continue
+
+        res = df[res_col].to_numpy()
+        res = res[np.isfinite(res)]
+        if res.size == 0:
+            continue
+
+        bins = np.linspace(-1.1, 1.1, 10)
+
+        ax.hist(
+            res,
+            bins=bins,
+            range=range,
+            density=density,
+            histtype="step",          # ← journal standard
+            linewidth=linewidth,
+            color=colors[i % len(colors)],
+            alpha=alpha,
+            label=str(key),
+        )
+
+        ax.axvline(
+            np.nanmedian(res),
+            color=colors[i % len(colors)],
+            linestyle="--",
+            linewidth=1.2,
+        )
+
+    ax.set_xlabel(xlabel, fontsize=labelsize)
+    if ylabel is None:
+        ylabel = "Probability density" if density else "Number"
+    ax.set_ylabel(ylabel, fontsize=labelsize)
+
+    ax.tick_params(axis="both", which="major", labelsize=ticksize)
+
+    # Clean look
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+
+    if title is not None:
+        ax.set_title(title, fontsize=labelsize)
+
+    ax.legend(
+        fontsize=legendsize,
+        frameon=False,     # ← very important
+        loc="best",
+    )
+
+    if figname is not None:
+        plt.savefig(
+            co.FIGURES_PATH + figname + ".pdf",
+            format="pdf",
+            bbox_inches="tight",
+        )
+
+    if show:
+        plt.show()
+    else:
+        plt.close(fig)
+
+    return fig, ax
+
+
+def compare_main_sequence_residuals_bootstrap(sample):
+    """ 
+    Compare main sequence residuals between CG4 and other samples using bootstrap.
+    Parameters
+    ----------
+    sample : dict
+        Dictionary containing dataframes for different samples, including 'CG4' compact groups.
+
+    Returns
+    -------
+    results : dict
+        Dictionary with keys as sample names and values as dictionaries containing:
+            - 'Δmedian': Difference in medians (CG4 - other)
+            - 'CI_16': 16th percentile of the bootstrap distribution
+            - 'CI_84': 84th percentile of the bootstrap distribution
+            - 'p_value': p-value for the hypothesis that CG4 median is greater than other sample median
+    """
+
+    cg4_key = "CG4" + co.GASUFF
+    cg4 = sample[cg4_key]["MS_res"].to_numpy()
+    cg4 = cg4[np.isfinite(cg4)]
+
+    results = {}
+
+    for key, df in sample.items():
+        if not key.endswith(co.GASUFF):
+            continue
+        if key == cg4_key:
+            continue
+
+        other = df["MS_res"].to_numpy()
+        other = other[np.isfinite(other)]
+
+        delta, lo, hi, p = su.bootstrap_median_difference(cg4, other)
+
+        results[key] = {
+            "Δmedian": delta,
+            "CI_16": lo,
+            "CI_84": hi,
+            "p_value": p,
+        }
+
+    return results
