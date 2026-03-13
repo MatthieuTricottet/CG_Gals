@@ -148,6 +148,8 @@ def add_group_ssfr_excess_summary(sample: dict[str, pd.DataFrame]) -> dict[str, 
     """Add median sSFR excess and quenched flags to each group catalogue."""
 
     def loc_agg(group: pd.DataFrame) -> pd.Series:
+        """Summarize the member-level star-formation state for one group."""
+
         return pd.Series(
             {
                 "sSFR_excess_median": float(np.nanmedian(group["sSFR_excess"])),
@@ -163,7 +165,12 @@ def add_group_ssfr_excess_summary(sample: dict[str, pd.DataFrame]) -> dict[str, 
         if "sSFR_excess" not in sample[gals_key].columns or "sSFR_status" not in sample[gals_key].columns:
             continue
 
-        group_stats = sample[gals_key].groupby("Group").apply(loc_agg).reset_index()
+        group_stats = (
+            sample[gals_key][["Group", "sSFR_excess", "sSFR_status"]]
+            .groupby("Group")[["sSFR_excess", "sSFR_status"]]
+            .apply(loc_agg)
+            .reset_index()
+        )
         groups = sample[grp_key].drop(columns=["sSFR_excess_median", "has_quenched"], errors="ignore")
         sample[grp_key] = groups.merge(group_stats, on="Group", how="left")
 

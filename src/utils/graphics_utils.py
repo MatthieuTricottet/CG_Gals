@@ -9,7 +9,10 @@ from num2tex import num2tex
 from datetime import timedelta
 
 from . import pandas_utils  as pu
-import config as co
+try:
+    import config as co
+except ModuleNotFoundError:  # pragma: no cover
+    from .. import config as co
 
 # endregion
 

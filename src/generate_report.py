@@ -8,9 +8,12 @@ import os, subprocess, re
 import numpy as np
 from scipy.interpolate import interp1d
 
-import config as co
-
-from utils import labels_utils  as lu
+try:
+    import config as co
+    from utils import labels_utils as lu
+except ModuleNotFoundError:  # pragma: no cover
+    from . import config as co
+    from .utils import labels_utils as lu
 
 
 # os.makedirs("output", exist_ok=True)
@@ -18,6 +21,8 @@ from utils import labels_utils  as lu
 #endregion
 
 def _has_non_ascii(path):
+    """Return whether the file contains any non-ASCII byte."""
+
     try:
         with open(path, "rb") as f:
             data = f.read()
@@ -156,6 +161,8 @@ def generate_report():
 
     # 5) Helper to run commands without immediate exception
     def run_proc(cmd, *, cwd=None, description=None):
+        """Run a subprocess and print its stdout/stderr in a compact build log."""
+
         proc = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, check=False)
         print(f"[Info] {(description or ' '.join(cmd))} -> {proc.returncode}")
         if proc.stdout: print(proc.stdout)
@@ -188,6 +195,8 @@ def generate_report():
 
         # 6.2 BibTeX
         def _has(cmd):
+            """Return whether a command is available on the current PATH."""
+
             try:
                 return subprocess.run([cmd, "--version"], capture_output=True, text=True).returncode == 0
             except Exception:

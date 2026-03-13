@@ -118,6 +118,8 @@ def log_value_formatter(x: float, _pos: int) -> str:
 
 
 def _ensure_axes_2d(axes, nrows: int, ncols: int) -> np.ndarray:
+    """Normalize subplot outputs so downstream indexing is always 2D."""
+
     if nrows == 1 and ncols == 1:
         return np.array([[axes]])
     if nrows == 1:
@@ -504,6 +506,8 @@ def summarize_spiral_fraction_correlations(results: pd.DataFrame) -> list[dict[s
 
 
 def _bh_fdr(pvals: np.ndarray) -> np.ndarray:
+    """Apply a Benjamini-Hochberg FDR correction to a 1D p-value vector."""
+
     pvals = np.asarray(pvals, dtype=float)
     nvals = pvals.size
     order = np.argsort(pvals)
@@ -522,6 +526,8 @@ def _bootstrap_spearman_rho(
     n_boot: int,
     rng: np.random.Generator,
 ) -> np.ndarray:
+    """Bootstrap Spearman coefficients for one variable pair."""
+
     x = np.asarray(x, dtype=float)
     y = np.asarray(y, dtype=float)
     mask = np.isfinite(x) & np.isfinite(y)
@@ -539,6 +545,8 @@ def _bootstrap_spearman_rho(
 
 
 def _compute_pair_pvals(df: pd.DataFrame, q1: str, q2: str, min_n_pair: int = 10):
+    """Compute the Spearman p-value, coefficient and valid-pair count."""
+
     x = pd.to_numeric(df[q1], errors="coerce").to_numpy()
     y = pd.to_numeric(df[q2], errors="coerce").to_numpy()
     mask = np.isfinite(x) & np.isfinite(y)
@@ -550,6 +558,8 @@ def _compute_pair_pvals(df: pd.DataFrame, q1: str, q2: str, min_n_pair: int = 10
 
 
 def _format_p(p_value: float) -> str:
+    """Format p-values compactly for tick labels and annotations."""
+
     if not np.isfinite(p_value):
         return "-"
     if p_value < 1e-3:
@@ -627,6 +637,8 @@ def plot_xor_corrpairs_halfviolins_onefig(
         return None
 
     def best_xor_p(pair: tuple[str, str]) -> float:
+        """Rank XOR-selected pairs by their smallest adjusted significant p-value."""
+
         best = np.inf
         for cat in cats:
             p_dom = p_used.get((cat, True, pair), np.nan)

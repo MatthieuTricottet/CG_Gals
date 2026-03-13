@@ -135,6 +135,7 @@ def load_data():
 
 
 def load_data_build():
+    """Rebuild the processed catalogue from raw CSV inputs and SDSS enrichments."""
         
     sample = dl.load_previous_samples()
     report.append_json('CG4_Gals_withsplit_N', len(sample['CG4_Gals']), build=True)
@@ -178,6 +179,7 @@ def load_data_build():
     return sample
 
 def sSFR_properties(sample): 
+    """Compute the sSFR-derived quantities, figures and report entries."""
 
     sample, non_quenched, fit_results, f_interp = sSFR.compute_status(sample)
     report.append_json('sSFR_interp', f_interp, build=True)
@@ -235,12 +237,15 @@ def sSFR_properties(sample):
     return(sample)
 
 def morph_properties(sample):
+    """Run the morphology analyses that populate the report JSON."""
 
     morph.stats(sample)
     morph.morph_sSFR(sample)
     morph.BGGs_analysis(sample)
     
 def correlations_by_morph(sample):
+    """Generate the morphology-split correlation products."""
+
     if co.VERBOSE:
         print("Analyzing correlations by morphology...")
 
@@ -248,6 +253,8 @@ def correlations_by_morph(sample):
 
 
 def run_explorations(sample):
+    """Execute the factorized exploration modules used by the paper pipeline."""
+
     if co.VERBOSE:
         print("Running exploration analyses")
 
@@ -258,6 +265,7 @@ def run_explorations(sample):
 
 
 def main():
+    """Run the full analysis pipeline and regenerate the paper outputs."""
     
     report.initialise_json()
     sample = load_data()

@@ -68,6 +68,7 @@ Groups_list = ["{}{}".format(i,group_suff) for i in sample_list]
 
 
 def load_previous_samples():
+    """Load the previously exported galaxy and group catalogues from disk."""
 
     my_sample={}
 
@@ -116,6 +117,8 @@ def remove_AGN(df):
     return df
 
 def sSFR_floor(cat, sSFR="sSFR"):
+    """Clamp floor-valued sSFR entries to the quenched sentinel used downstream."""
+
     # if cat[sSFR] < co.sSFR_THRESHOLD, replace by co.sSFR_QUENCHED
     cat.loc[cat[sSFR]<co.sSFR_THRESHOLD, 'sSFR_status'] = co.sSFR_status[0]
     cat.loc[cat[sSFR]<co.sSFR_THRESHOLD, sSFR] = co.sSFR_QUENCHED
@@ -181,6 +184,8 @@ def plot_bpt(Catalogue, figsize=(12.0,8.0), label_fontsize=16, tick_labelsize=14
 
 
 def load_SDSS():
+    """Query SDSS, derive AGN flags and return both raw and filtered catalogues."""
+
 #* --------------------------------------------------------------------------------
 #* Querying the SDSS database to retrieve sSFR and Zoo types.
 #* We use astroquery.sdss to send SQL queries directly to the SDSS database.

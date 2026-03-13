@@ -59,8 +59,9 @@ import analysis as anl
 # endregion
 
 def assess_dom(sample):
+    """Mark each group as dominated or not from its BGG luminosity fraction."""
+
     for sample_name in co.SAMPLE:
         df = sample[sample_name+co.GRSUFF]
         df['is_dominated'] = df['FracLumBGG'] > co.DOMINATIION_CRITERIA
     return sample
-

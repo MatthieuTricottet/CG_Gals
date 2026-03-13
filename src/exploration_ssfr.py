@@ -55,6 +55,38 @@ def add_dist2bgg_kpc_legacy(
     return df
 
 
+def add_normalized_group_distances(
+    gdf: pd.DataFrame,
+    rdf: pd.DataFrame,
+    group_col: str = "Group",
+    z_col: str = "z",
+    dist_ang_col: str = "dist2BGG",
+    group_scale_col: str = "size_Group_Bary_kpc",
+) -> pd.DataFrame:
+    """Attach projected and group-normalized BGG distance columns to a galaxy table."""
+
+    enriched = add_dist2bgg_kpc_legacy(
+        gdf,
+        group_col=group_col,
+        z_col=z_col,
+        dist_ang_col=dist_ang_col,
+        out_kpc_col="dist2BGG_kpc",
+        z_agg="median",
+    )
+
+    scale_frame = rdf[[group_col, group_scale_col]].copy()
+    scale_frame[group_scale_col] = pd.to_numeric(scale_frame[group_scale_col], errors="coerce")
+    scale_frame = scale_frame.groupby(group_col, as_index=False)[group_scale_col].median()
+
+    if group_scale_col in enriched.columns:
+        enriched = enriched.drop(columns=[group_scale_col])
+    enriched = enriched.merge(scale_frame, on=group_col, how="left", validate="m:1")
+    enriched["norm_dist"] = pd.to_numeric(enriched["dist2BGG_kpc"], errors="coerce") / pd.to_numeric(
+        enriched[group_scale_col], errors="coerce"
+    )
+    return enriched
+
+
 def _mini_joint(
     fig: plt.Figure,
     outer_spec,
@@ -236,28 +268,18 @@ def make_two_figures(
         if group_col not in rdf.columns or group_scale_col not in rdf.columns:
             continue
 
-        gdf = add_dist2bgg_kpc_legacy(
+        gdf = add_normalized_group_distances(
             gdf,
+            rdf,
             group_col=group_col,
             z_col=z_col,
             dist_ang_col=dist_ang_col,
-            out_kpc_col="dist2BGG_kpc",
-            z_agg="median",
+            group_scale_col=group_scale_col,
         )
 
         gdf_sat = gdf.loc[gdf["rank_M"] > rank_cut].copy()
         panels_kpc.append((cat, gdf_sat, "dist2BGG_kpc", "Distance to BGG (kpc)"))
 
-        rdf_min = rdf[[group_col, group_scale_col]].copy()
-        rdf_min[group_scale_col] = pd.to_numeric(rdf_min[group_scale_col], errors="coerce")
-        rdf_min = rdf_min.groupby(group_col, as_index=False)[group_scale_col].median()
-
-        if group_scale_col in gdf.columns:
-            gdf = gdf.drop(columns=[group_scale_col])
-        gdf = gdf.merge(rdf_min, on=group_col, how="left", validate="m:1")
-        gdf["norm_dist"] = pd.to_numeric(gdf["dist2BGG_kpc"], errors="coerce") / pd.to_numeric(
-            gdf[group_scale_col], errors="coerce"
-        )
         gdf_sat_norm = gdf.loc[gdf["rank_M"] > rank_cut].copy()
         panels_norm.append(
             (
@@ -294,16 +316,7 @@ def compute_distance_correlations(sample: dict[str, pd.DataFrame]) -> list[dict[
         if not {"Group", "size_Group_Bary_kpc"}.issubset(rdf.columns):
             continue
 
-        gdf = add_dist2bgg_kpc_legacy(gdf)
-        if "size_Group_Bary_kpc" in gdf.columns:
-            gdf = gdf.drop(columns=["size_Group_Bary_kpc"])
-        rdf_min = rdf[["Group", "size_Group_Bary_kpc"]].copy()
-        rdf_min["size_Group_Bary_kpc"] = pd.to_numeric(rdf_min["size_Group_Bary_kpc"], errors="coerce")
-        rdf_min = rdf_min.groupby("Group", as_index=False)["size_Group_Bary_kpc"].median()
-        gdf = gdf.merge(rdf_min, on="Group", how="left", validate="m:1")
-        gdf["norm_dist"] = pd.to_numeric(gdf["dist2BGG_kpc"], errors="coerce") / pd.to_numeric(
-            gdf["size_Group_Bary_kpc"], errors="coerce"
-        )
+        gdf = add_normalized_group_distances(gdf, rdf)
         gdf = gdf[gdf["rank_M"] > 1]
 
         for distance_key, distance_label in [
@@ -343,6 +356,8 @@ def compute_distance_correlations(sample: dict[str, pd.DataFrame]) -> list[dict[
 
 
 def _save_or_close(fig: plt.Figure | None, path: str | None) -> str | None:
+    """Save a figure when present and return its output path."""
+
     if fig is None or path is None:
         return None
     fig.savefig(path, dpi=300, bbox_inches="tight")

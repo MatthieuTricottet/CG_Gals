@@ -59,6 +59,8 @@ def prep_df(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def _empty_group_level_result(error: str | None = None) -> dict[str, object]:
+    """Return the placeholder payload used when the group-level fit cannot run."""
+
     return {
         "n_groups_used": 0,
         "median_fSp_sat_BGGSp": np.nan,
@@ -73,6 +75,8 @@ def _empty_group_level_result(error: str | None = None) -> dict[str, object]:
 
 
 def _empty_satellite_level_result(error: str | None = None) -> dict[str, object]:
+    """Return the placeholder payload used when the satellite-level fit cannot run."""
+
     return {
         "n_sat_used": 0,
         "n_groups_used": 0,

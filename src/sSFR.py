@@ -64,6 +64,7 @@ import analysis as anl
 # endregion
 
 def get_fit(non_quenched, Verbose=True):
+    """Fit the GMM used to separate the non-quenched populations."""
 
     #* --------------------------------------------------------------------------------
     #* Convert data to NumPy arrays (removed PyTorch usage).
@@ -165,6 +166,8 @@ def get_decision_boundary_interp(non_quenched, fit_results, boundary_margin=0.5,
 
 
 def flattens_quenched(row):
+    """Replace the legacy quenched sentinel by the plotting floor value."""
+
     # set sSFR to -15 if it is -9999
     if row['sSFR'] == -9999:
         return -15
@@ -173,6 +176,8 @@ def flattens_quenched(row):
 
 
 def compute_component_prob(x, comp_idx, fit_results):
+    """Evaluate the weighted Gaussian-mixture density of one component."""
+
     means = fit_results['means']
     covs = fit_results['covs']
     weights = fit_results['weights']
@@ -286,6 +291,8 @@ def add_status(df, fit_results):
     
 
 def compute_status(sample):
+    """Classify all samples in sSFR space and build the decision boundary."""
+
     non_quenched = sample['SDSS'][sample['SDSS']['sSFR_status'] != co.sSFR_status[0]]
     fit_results = get_fit(non_quenched)
     f_interp = get_decision_boundary_interp(non_quenched, fit_results)
@@ -394,6 +401,8 @@ def plot_classification(non_quenched, sdss_df, fit_results, f_interp,
     # Compute posterior probabilities for non_quenched galaxies.
     X = non_quenched[['lgm', 'sSFR']].values
     def compute_component_prob(x, comp_idx):
+        """Evaluate the local two-component density used for posterior plotting."""
+
         return weights[comp_idx] * multivariate_normal.pdf(x, mean=means[comp_idx],
                                                              cov=covs[comp_idx],
                                                              allow_singular=True)
@@ -824,6 +833,8 @@ def plot_density_original_vs_GMMfit(X, fit_results, figsize=(16, 8), dpi=150, na
 
 
 def restrict_analysis(df, df_name, restric_name):
+    """Count galaxies by sSFR class inside a restricted subsample and report them."""
+
     if co.VERBOSE:
         print(df_name)
     total = len(df)
@@ -840,6 +851,8 @@ def restrict_analysis(df, df_name, restric_name):
 
 
 def pval_restrict_analysis(res1, res2, df1_name, df2_name, restric_name):
+    """Compare two restricted samples with a Fisher exact test on star-forming counts."""
+
     matrix = [[res1[co.sSFR_status[1]], res1[co.sSFR_status[2]]],
                   [res2[co.sSFR_status[1]], res2[co.sSFR_status[2]]]]
             
@@ -924,8 +937,11 @@ def split_by_fertility(sample, make_plots=True,
                        figsize=(10, 12),
                        label_fontsize=18,
                        tick_labelsize=16):
+    """Compare galaxy properties after splitting each sample by sSFR class."""
 
     def local_prec(val, base_prec=4):
+        """Use slightly lower precision for order-unity values in the JSON output."""
+
         if np.abs(val) < 10:
             return base_prec - 1
         else:
@@ -1123,7 +1139,11 @@ def split_by_fertility(sample, make_plots=True,
 def split_by_BGG_fertility(sample, make_plots=True,
                            plot_name="BGG_fertility", figsize=(10, 12), 
                            label_fontsize=18, tick_labelsize=16):
+    """Compare group members by the sSFR class of their BGG."""
+
     def local_prec(val, base_prec=4):
+        """Use slightly lower precision for order-unity values in the JSON output."""
+
         if np.abs(val) < 10:
             return base_prec - 1
         else:
@@ -1288,7 +1308,11 @@ def split_by_BGG_fertility(sample, make_plots=True,
 def satellites_split_by_BGG_fertility(sample, make_plots=True,
                                       plot_name="Satellites_by_BGG_fertility", figsize=(10, 12), 
                                       label_fontsize=18, tick_labelsize=16):
+    """Compare only satellites after splitting groups by their BGG sSFR class."""
+
     def local_prec(val, base_prec=4):
+        """Use slightly lower precision for order-unity values in the JSON output."""
+
         if np.abs(val) < 10:
             return base_prec - 1
         else:
@@ -1496,6 +1520,8 @@ class PolynomialModel1D:
     coeffs: np.ndarray   # highest degree first
 
     def predict(self, x: np.ndarray | pd.Series) -> np.ndarray:
+        """Evaluate the polynomial model on one or many x values."""
+
         x = np.asarray(x, dtype=float)
         return np.polyval(self.coeffs, x)
 
@@ -1505,6 +1531,8 @@ class PolynomialModel1D:
         x_col="lgm",
         y_col="sSFR",
     ) -> np.ndarray:
+        """Return observed minus model-predicted values for a dataframe."""
+
         return df[y_col].to_numpy(dtype=float) - self.predict(df[x_col])
 
 def fit_ssfr_vs_lgm_poly(
@@ -1513,6 +1541,7 @@ def fit_ssfr_vs_lgm_poly(
     x_col="lgm",
     y_col="sSFR",
 ) -> PolynomialModel1D:
+    """Fit a polynomial main-sequence model in the sSFR-mass plane."""
 
     x = df[x_col].to_numpy(dtype=float)
     y = df[y_col].to_numpy(dtype=float)
@@ -1525,6 +1554,7 @@ def fit_ssfr_vs_lgm_poly(
 
 
 def plot_main_sequence_models(_df, labelsize = 14, ticksize = 12, figname = "Main_Sequence_polyfits"):
+    """Plot polynomial main-sequence fits of increasing order on the SDSS sample."""
     
     
     # --- data ---
@@ -1663,6 +1693,8 @@ def plot_main_sequence_residuals(
     title: str | None = None,
     show: bool | None = None,
 ):
+    """Plot the main-sequence residual distributions for each galaxy sample."""
+
     if suffix is None:
         suffix = co.GASUFF
     if show is None:
