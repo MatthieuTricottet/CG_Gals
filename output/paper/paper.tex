@@ -151,7 +151,10 @@ We use the compact groups and control samples we built in our previous article \
 We neververtheless briefly recall here how they were built. \mt{Explain.} 
 Contrarily to our previous article, though, we remove CGs that we classified as \emph{split} following \cite{Zheng&Shen21}.
 In this process, our initial compact group sample of 78 groups reduced to 
-62.
+62. We also remove groups bluit from Lim group 3688 from our \CB{} and \CC{} samples. This group has six galaxies 
+having a redshift between 0.032 and 0.034, and one having a redshift of 0.048. This group seems spurious, and the 
+outlier galaxy, altough not being the BGG, is selected both in our original \CB{} and \CC{}, influencing the velocity 
+dispersion of the group significantly ($1979$ and $1981\, \kms$, respectively).
 
 We use the SDSS DR 16 to retrieve masses, star formation rates (SFRs) and morphologies of galaxies 
 assessed in Galaxy Zoo \cite{GalaxyZoo1}. We specifically extracted fields \texttt{sfr\_tot\_p50}, 
@@ -170,7 +173,7 @@ through the query displayed in listing \ref{lst:query}.
     SELECT 
         s.specObjID,
         s.z,
-        p.petroMag_r,
+        p.petroMag_r,petroMag_u,petroMag_g,petroMag_i,petroMag_z,
         p.objID,
         g.sfr_tot_p50, g.specsfr_tot_p50, g.lgm_tot_p50,
         l.h_alpha_eqw, l.h_beta_eqw, l.oiii_5007_eqw, l.nii_6584_eqw,
@@ -334,10 +337,10 @@ Barnard two-sided exact tests were performed to compare the fraction of each mor
     \begin{tabular}{lccc}
         \toprule
             \textbf{Sample} & \textbf{  Elliptical  } & \textbf{  Spiral  } & \textbf{  Uncertain  } \\
-            \CG &  52  ( \%) &  53  ( \%)&  143  ( \%) \\
-            \CB &  289  ( \%) &  583  ( \%) &  1924  ( \%) \\
-            \CC &  533  ( \%) &  781  ( \%) &  1694  ( \%) \\
-            \RG &  17  ( \%) &  75  ( \%) &  132  ( \%)\\
+            \CG &  124  ( \%) &  86  ( \%)&  38  ( \%) \\
+            \CB &  1107  ( \%) &  1268  ( \%) &  421  ( \%) \\
+            \CC &  1215  ( \%) &  1251  ( \%) &  542  ( \%) \\
+            \RG &  60  ( \%) &  129  ( \%) &  35  ( \%)\\
             \emph{SDSS selection} &  \emph{10091 ( \%)} &  \emph{34715  ( \%)} &  \emph{7725  ( \%)}\\
          \midrule
         \bottomrule
@@ -572,10 +575,10 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
     $-10.39$ $\pm$ 0.16  & 
   
     $-20.69$ $\pm$ 0.14 &
-    $-20.51$ $\pm$ 0.27  & 
+    $-20.51$ $\pm$ 0.28  & 
   
     $10.3$ $\pm$ 0.07 &
-    $10.18$ $\pm$ 0.12 
+    $10.18$ $\pm$ 0.13 
    \\
 
 
@@ -622,7 +625,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
   CG4 &
   
     $-11.56$ $\pm$ 0.16 &
-    $-10.84$ $\pm$ 0.47  & 
+    $-10.84$ $\pm$ 0.48  & 
   
     $-20.41$ $\pm$ 0.13 &
     $-20.28$ $\pm$ 0.18  & 
@@ -634,7 +637,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
   Control4B &
   
     $-11.46$ $\pm$ 0.06 &
-    $-10.68$ $\pm$ 0.13  & 
+    $-10.68$ $\pm$ 0.12  & 
   
     $-20.98$ $\pm$ 0.03 &
     $-20.77$ $\pm$ 0.06  & 
@@ -649,7 +652,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
     $-10.37$ $\pm$ 0.07  & 
   
     $-19.72$ $\pm$ 0.04 &
-    $-20.04$ $\pm$ 0.09  & 
+    $-20.04$ $\pm$ 0.10  & 
   
     $9.9$ $\pm$ 0.02 &
     $9.9$ $\pm$ 0.07 
@@ -699,8 +702,9 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
 \end{figure}
 
 \subsection{Main sequence}
-We model the star-forming main sequence as a power law in stellar mass, to various orders (1 to 4) - cf figure . 
-We then compute the residuals of each star-forming galaxy to the main sequence,and plot their histograms in figure .
+We model the star-forming main sequence as a power law in stellar mass, to various orders (1 to 4) - cf figure \ref{fig:Main_Sequence_polyfits}.
+We then choose to use order 2 to compute the residuals of each star-forming galaxy to the main sequence,
+and plot their histograms in figure \ref{fig:main_sequence_residuals}.
 
 
 
@@ -764,8 +768,8 @@ significantly different
 from that of Control4B,
 with a median offset of
 $\Delta = 0.057$
-($0.028 \le \Delta \le 0.099$, bootstrap),
-corresponding to a $p$-value of $p = 0.056$.
+($0.028 \le \Delta \le 0.098$, bootstrap),
+corresponding to a $p$-value of $p = 0.048$.
 
 
 
@@ -784,8 +788,8 @@ significantly different
 from that of Control4C,
 with a median offset of
 $\Delta = 0.082$
-($0.062 \le \Delta \le 0.122$, bootstrap),
-corresponding to a $p$-value of $p = 0.011$.
+($0.062 \le \Delta \le 0.121$, bootstrap),
+corresponding to a $p$-value of $p = 0.009$.
 
 
 
@@ -804,8 +808,8 @@ not significantly different
 from that of RG4,
 with a median offset of
 $\Delta = 0.046$
-($-0.037 \le \Delta \le 0.098$, bootstrap),
-corresponding to a $p$-value of $p = 0.533$.
+($-0.035 \le \Delta \le 0.097$, bootstrap),
+corresponding to a $p$-value of $p = 0.531$.
 
 
 
@@ -892,8 +896,8 @@ corresponding to a $p$-value of $p = 0.533$.
 
 
 
-% \subsection{Dominance}
-% We split groups into two categories: the dominated, for which the BGG has a luminosity fraction greater than the median of \RG.
+\subsection{Dominance}
+We split groups into two categories: the dominated, for which the BGG has a luminosity fraction greater than the median of \RG.
 
 \begin{appendix} %First appendix
 \section*{Interpolation points for sSFR classification}

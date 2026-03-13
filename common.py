@@ -50,6 +50,8 @@ sys.path.append('/Users/matt/Google Drive/Astrophysics/MattUtils')
 import sphutils as su # Matt
 import phyutils as pu # Matt
 
+c = 299792.458  # Speed of light in km/s
+
 
 # Globals variable
 def glob():

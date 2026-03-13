@@ -160,7 +160,7 @@ def calc_diameter_arcmin(group):
         theta2 = d2r(group.iloc[row[1]]['Dec']) 
 
         sep = r2d(calc_sep(phi1,theta1,phi2,theta2)) 
-        separation = pu.Series_append(separation,sep)
+        separation = pu.append_series(separation,sep)
     return separation.median() * 60.0
 
 

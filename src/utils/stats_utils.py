@@ -15,6 +15,8 @@ from matplotlib.colors import LogNorm
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 import matplotlib.pyplot as plt
 
+
+c = 299792.458  # Speed of light in km/s
 # endregion
 
 
@@ -214,28 +216,28 @@ def bootstrap_median_error(values, n_samples=10000, ci=0.68, random_state=None):
 
 
 
-    def V_disp_gapper(gals):
-        """Computes the gapper velocity dispersion of a group
-        According to Wainer & Thissen (1976)
+def V_disp_gapper(gals):
+    """Computes the gapper velocity dispersion of a group
+    According to Wainer & Thissen (1976)
 
-        Args:
-            gals (pandas.DatqaFrame): DataFrame of galaxies with 'z' column
+    Args:
+        gals (pandas.DataFrame): DataFrame of galaxies with 'z' column
 
-        Returns:
-            real: velocity dispersion
-        """
-        vd = gals['z'].sort_values().reset_index(drop=True)
-        v= vd.values
-        n = len(v)
-        w = np.arange(1, n) * np.arange(n-1, 0, -1)
+    Returns:
+        real: velocity dispersion
+    """
+    vd = gals['z'].sort_values().reset_index(drop=True)
+    v= vd.values
+    n = len(v)
+    w = np.arange(1, n) * np.arange(n-1, 0, -1)
+
+    g = np.diff(v)
+    sigma_z = (np.sqrt(np.pi))/(n*(n-1)) * np.dot(w, g)
     
-        g = np.diff(v)
-        sigma_z = (np.sqrt(np.pi))/(n*(n-1)) * np.dot(w, g)
-        
-        z_group = gals['z'].mean()
-        Vdisp = c*sigma_z/(1+z_group)
+    z_group = gals['z'].mean()
+    Vdisp = c*sigma_z/(1+z_group)
 
-        return Vdisp
+    return Vdisp
 
 
 def bootstrap_median_diff_error(values_A, values_B, n_samples=10000, ci=0.68, random_state=None):

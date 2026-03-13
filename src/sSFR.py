@@ -249,6 +249,24 @@ def sSFR_status(df):
 
     return df['sSFR_status']
 
+def add_excess(df, f_interp):
+    """
+    Add the sSFR excess to the dataframes
+    """
+    df['sSFR_excess'] = df['sSFR'] - f_interp(df['lgm'])
+    return df
+
+def add_MS_offset(df, MS_coeffs):
+    """
+    Add the sSFR main sequence offset to the dataframes
+    """
+    sSFR_MS = MS_coeffs[0] * df['lgm'] + MS_coeffs[1]
+    df['sSFR_MS_offset'] = np.where(
+        df['sSFR_status'] == 'Starforming',
+        df['sSFR'] - sSFR_MS,
+        np.nan
+    )
+    return df
 
 def add_status(df, fit_results):
     """
@@ -1570,6 +1588,10 @@ def plot_main_sequence_models(_df, labelsize = 14, ticksize = 12, figname = "Mai
             label = fr"Fit to order {order}: $\chi^2_r = {red_chi2:.2f}$",
             zorder=5,
         )
+        if order == 1:
+            coeffs_1 = coeffs
+            report.append_json('Main_Sequence_polyfit_order1_coeffs', [f'{c:.4f}' for c in coeffs])
+            report.append_json('Main_Sequence_polyfit_order1_reduced_chi2', f'{red_chi2:.4f}')
 
     ax.tick_params(
         axis="both",   
@@ -1586,6 +1608,8 @@ def plot_main_sequence_models(_df, labelsize = 14, ticksize = 12, figname = "Mai
 
     if co.SHOW:
         plt.show()
+    
+    return coeffs_1
 
 def add_MS_residuals(
     sample: dict,

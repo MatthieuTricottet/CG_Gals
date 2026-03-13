@@ -47,3 +47,5 @@ CONTROL = {samp : SAMPLE[samp] for samp in (s for s in SAMPLE if s not in ['CG4'
 GASUFF = "_Gals"
 GRSUFF = "_Groups"
 
+# Limit for statistical significance
+P_LIMIT = 5e-2

@@ -151,7 +151,10 @@ We use the compact groups and control samples we built in our previous article \
 We neververtheless briefly recall here how they were built. \mt{Explain.} 
 Contrarily to our previous article, though, we remove CGs that we classified as \emph{split} following \cite{Zheng&Shen21}.
 In this process, our initial compact group sample of <<CG4_Groups_withsplit_N>> groups reduced to 
-<<CG4_Groups_nonsplit_N>>.
+<<CG4_Groups_nonsplit_N>>. We also remove groups bluit from Lim group 3688 from our \CB{} and \CC{} samples. This group has six galaxies 
+having a redshift between 0.032 and 0.034, and one having a redshift of 0.048. This group seems spurious, and the 
+outlier galaxy, altough not being the BGG, is selected both in our original \CB{} and \CC{}, influencing the velocity 
+dispersion of the group significantly ($1979$ and $1981\, \kms$, respectively).
 
 We use the SDSS DR <<DATA_RELEASE>> to retrieve masses, star formation rates (SFRs) and morphologies of galaxies 
 assessed in Galaxy Zoo \cite{GalaxyZoo1}. We specifically extracted fields \texttt{sfr\_tot\_p50}, 
@@ -514,8 +517,9 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
 \end{figure}
 
 \subsection{Main sequence}
-We model the star-forming main sequence as a power law in stellar mass, to various orders (1 to 4) - cf figure . 
-We then compute the residuals of each star-forming galaxy to the main sequence,and plot their histograms in figure .
+We model the star-forming main sequence as a power law in stellar mass, to various orders (1 to 4) - cf figure \ref{fig:Main_Sequence_polyfits}.
+We then choose to use order 2 to compute the residuals of each star-forming galaxy to the main sequence,
+and plot their histograms in figure \ref{fig:main_sequence_residuals}.
 
 <% for key, res in build.items() %>
 <% if key.startswith("pval_MSresiduals_") %>
@@ -559,8 +563,8 @@ corresponding to a $p$-value of $p = << "%.3f"|format(p) >>$.
 
 
 
-% \subsection{Dominance}
-% We split groups into two categories: the dominated, for which the BGG has a luminosity fraction greater than the median of \RG.
+\subsection{Dominance}
+We split groups into two categories: the dominated, for which the BGG has a luminosity fraction greater than the median of \RG.
 
 \begin{appendix} %First appendix
 \section*{Interpolation points for sSFR classification}

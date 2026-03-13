@@ -6,10 +6,10 @@ def formatted_label(i,lumG=False):
         'frac_mass'           : r'$\mathcal{M}/\mathcal{M}_\mathrm{group}$',
         'frac_mass'           : r'$\mathcal{M}/\mathcal{M}_\mathrm{group}$',
 # =============================================================================
-        'Offset_Bary'         : r"$\Delta_\mathrm{BGG-cen}/ \\langle R_{ij} \\rangle$",
-        'frac_radius_Bary'    : r"$\Delta_\mathrm{BGG-cen}/ \\langle R_{ij} \\rangle$",
-        'Offset_Bary_gal'     : r"$\Delta_\mathrm{gal-cen}/ \\langle R_{ij} \\rangle$",
-        'frac_radius_Bary_gal': r"$\Delta_\mathrm{gal-cen}/ \\langle R_{ij} \\rangle$",
+        'Offset_Bary'         : r"$\Delta_\mathrm{BGG-cen}/ \langle R_{ij} \rangle$",
+        'frac_radius_Bary'    : r"$\Delta_\mathrm{BGG-cen}/ \langle R_{ij} \rangle$",
+        'Offset_Bary_gal'     : r"$\Delta_\mathrm{gal-cen}/ \langle R_{ij} \rangle$",
+        'frac_radius_Bary_gal': r"$\Delta_\mathrm{gal-cen}/ \langle R_{ij} \rangle$",
         'Offset_Circ'         : r'$\Delta_\mathrm{Circ}/R_\mathrm{Circ}$',
         'frac_radius_Circ'    : r'$\Delta_\mathrm{Circ}/R_\mathrm{Circ}$',
         'Vdisp'               : r'$\sigma_v$ (km s$^{-1}$)',
@@ -19,7 +19,7 @@ def formatted_label(i,lumG=False):
         'Voffset'             : r'$\Delta V_\mathrm{BGG}/\sigma_v$',
         'DeltaR12'            : r'$\Delta M_{r12}$',
         'PropS'               : r' Proportion of type S satellites',
-        'Radius_Bary_kpc'     : r"$\\langle R_{ij} \\rangle$ (kpc)",
+        'Radius_Bary_kpc'     : r"$\langle R_{ij} \rangle$ (kpc)",
         'Radius_Circ_kpc'     : r"Circular radius (kpc)",
         'BGG_SFRcategory'     : r'BGG SFR category',
         'BGG_Morph'           : r'BGG Morphology',
@@ -37,7 +37,7 @@ def formatted_label(i,lumG=False):
         "Q"                   : r"Quenched",
         "M"                   : r"Main sequence",
         "G"                   : r"Green valley",
-        'size_Group_Bary_kpc' : r"$\\left\\langle R_{ij}\\right\\rangle$ (kpc)",
+        'size_Group_Bary_kpc' : r"$\left\langle R_{ij}\right\rangle$ (kpc)",
         'size_Group_Circ_kpc' : r"$R_\mathrm{Circ}$ (kpc)",
         'Lum'                 : r"Luminosity ($L_\odot$)",
 #         'GSL'                 : "Luminosity ($10^9 \times L_{\odot}$)",
@@ -98,7 +98,14 @@ def formatted_label(i,lumG=False):
     
     return switcher.get(i,"Invalid label")
 
-
+def formatted_sample_name(name):
+    switcher={
+        "CG4"       : r"CG$_4$",
+        "Control4B" : r"Control$_{4B}$",
+        "Control4C" : r"Control$_{4C}$",
+        "RG4"       : r"RG$_4$"
+    }
+    return switcher.get(name,"Invalid sample name")
 
 def my_label(i):
     switcher={

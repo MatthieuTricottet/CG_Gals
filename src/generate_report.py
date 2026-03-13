@@ -43,6 +43,7 @@ def initialise_json(build=False):
         append_json('Morphologies', co.Morphologies)
         append_json('sSFR_THRESHOLD', co.sSFR_THRESHOLD)
         append_json('sSFR_QUENCHED', co.sSFR_QUENCHED)
+        append_json('DOMINATIION_CRITERIA', co.DOMINATIION_CRITERIA)
   
 
 def append_json(key: str, value, build=False):

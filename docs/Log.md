@@ -1,3 +1,12 @@
+# Todo on Dom graph
+* var nb of bin
+* Transpose
+* Geometric bins and log scales x (for L, write log)
+* hist type = step (lw=3), x_offset -  <ins>or better : change colours</ins>
+* place legend better?
+* Larger labels
+
+* Todo with explorations: include in main program, add in paper
 # Todo
  * Add morph frac and sat morph frac to groups (check that there is already BGG morph)
  * Dev analysis module, and use it for dom, BGG morph, BGG sSFR cat
@@ -21,4 +30,4 @@
     
 # To assess
  * p spiral/elliptical threshold: 0.5 vs 0.8
- * domination criteria : frac_lum = 0.6
+ * domination criteria : frac_lum = 0.6 DONE

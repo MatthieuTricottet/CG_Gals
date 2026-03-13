@@ -62,6 +62,28 @@ print("Done")
 
 # endregion
 
+def clean(sample):
+    """ Removes spurious groups comming from Lim group 3688
+
+        Parameters
+        ----------
+        sample : dict
+            Dictionary containing the samples of galaxies and groups
+
+        Returns
+        -------
+        sample : dict
+            Cleaned dictionary containing the samples of galaxies and groups
+    """
+    sample['Control4B_Gals'] = sample['Control4B_Gals'][sample['Control4B_Gals']['Group'] != 3688]
+    sample['Control4B_Groups'] = sample['Control4B_Groups'][sample['Control4B_Groups']['Group'] != 3688]
+
+    sample['Control4C_Gals'] = sample['Control4C_Gals'][sample['Control4C_Gals']['Group'] != 3688]
+    sample['Control4C_Groups'] = sample['Control4C_Groups'][sample['Control4C_Groups']['Group'] != 3688]
+
+    return sample
+
+
 def load_data():
     """ Load or rebuild the data sample.
 
@@ -90,6 +112,8 @@ def load_data():
         if co.VERBOSE:
             print("Calculating sSFR properties")
         sample = sSFR_properties(sample)
+
+        sample = clean(sample)
 
         report.finalize_json(build=True)
         if co.VERBOSE:
@@ -128,11 +152,12 @@ def load_data_build():
 
     if co.VERBOSE:
         print("Loading SDSS data")
-    SDSS = dl.load_SDSS()
+    SDSS_withAGN, SDSS  = dl.load_SDSS()
     if co.VERBOSE:
         print(f"   {len(SDSS)} galaxies loaded from the SDSS in our redshift and magnitude range")
         print("\n")
     sample['SDSS'] = SDSS
+    sample['SDSS_withAGN'] = SDSS_withAGN
 
     if co.VERBOSE:
         print("Enriching samples with Zoo morphologies from SDSS")  
@@ -141,8 +166,8 @@ def load_data_build():
         sample[cat] = sample[cat].drop(columns=morphologies, 
                                        errors='ignore')
         sample[cat]['objid'] = sample[cat]['objid'].astype('int64')
-        SDSS['objid']        = SDSS['objid'].astype('int64')
-        sample[cat] = pd.merge(sample[cat], SDSS[['objid']+morphologies], 
+        SDSS_withAGN['objid'] = SDSS_withAGN['objid'].astype('int64')
+        sample[cat] = pd.merge(sample[cat], SDSS_withAGN[['objid']+morphologies], 
                                how='left', on='objid')
 
     sample = dom.assess_dom(sample)
@@ -153,7 +178,16 @@ def sSFR_properties(sample):
     sample, non_quenched, fit_results, f_interp = sSFR.compute_status(sample)
     report.append_json('sSFR_interp', f_interp, build=True)
     main_sequence = sample['SDSS'][sample['SDSS']['sSFR_status']=='Starforming'][['lgm','sSFR']]
-    sSFR.plot_main_sequence_models(main_sequence)
+
+    # Plot main sequence and get coefficients model
+    # Save them 
+    MS_coeffs = sSFR.plot_main_sequence_models(main_sequence)
+    with open(co.DATA_PATH + co.PROCESS_SAMPLES, "wb") as file:
+            pkl.dump(sample, file)
+
+    for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]:
+        sample[cat] = sSFR.add_MS_offset(sample[cat], MS_coeffs)
+    
     model = sSFR.fit_ssfr_vs_lgm_poly(main_sequence, order=2)
     sSFR.add_MS_residuals(sample, model, suffix=co.GASUFF, non_sf_value=np.nan)
     sSFR.plot_main_sequence_residuals(sample, figname='main_sequence_residuals')
@@ -169,6 +203,8 @@ def sSFR_properties(sample):
             report.append_json(f'{cat}_N{status}', len(sample[cat][sample[cat]['sSFR_status'] == status]),build=True)
             report.append_json(f'{cat}_N{status}_pc', f'{(100*len(sample[cat][sample[cat]['sSFR_status'] == status])/len(sample[cat])):.1f}',build=True)
         
+    for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]:
+        sSFR.add_excess(sample[cat], f_interp)
 
     if co.VERBOSE:
         print("   Plotting sSFR gaussian mixture")
@@ -203,6 +239,8 @@ def morph_properties(sample):
 def correlations_by_morph(sample):
     if co.VERBOSE:
         print("Analyzing correlations by morphology...")
+
+# def dom_properties(sample):
 
 
 def main():

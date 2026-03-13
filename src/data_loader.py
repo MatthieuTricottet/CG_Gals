@@ -193,7 +193,7 @@ def load_SDSS():
     SELECT 
         s.specObjID,
         s.z,
-        p.petroMag_r,
+        p.petroMag_r,petroMag_u,petroMag_g,petroMag_i,petroMag_z,
         p.objID,
         g.sfr_tot_p50, g.specsfr_tot_p50, g.lgm_tot_p50,
         l.h_alpha_eqw, l.h_beta_eqw, l.oiii_5007_eqw, l.nii_6584_eqw,
@@ -244,7 +244,7 @@ def load_SDSS():
         print("   Creating BPT diagram")
     plot_bpt(SDSS_withAGN_df, name="BPT_diagram")
 
-    SDSS_df = remove_AGN(SDSS_withAGN_df)
+    SDSS_df = remove_AGN(SDSS_withAGN_df.copy())
 
     if co.VERBOSE:
         print(f"   {len(SDSS_df)} galaxies left after removing AGN")
@@ -254,4 +254,4 @@ def load_SDSS():
     if co.VERBOSE:
         print(f"{len(SDSS_df)} non-AGN galaxies retrieved.")
 
-    return(SDSS_df)
+    return(SDSS_withAGN_df, SDSS_df)
