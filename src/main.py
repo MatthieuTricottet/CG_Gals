@@ -55,6 +55,10 @@ import generate_report as report
 import sSFR
 import morphologies as morph
 import analysis as anl
+import exploration_dom
+import exploration_morph
+import exploration_ssfr
+import exploration_mvt_tcross
 
 
 
@@ -243,6 +247,16 @@ def correlations_by_morph(sample):
 # def dom_properties(sample):
 
 
+def run_explorations(sample):
+    if co.VERBOSE:
+        print("Running exploration analyses")
+
+    exploration_dom.run(sample)
+    exploration_morph.run(sample)
+    exploration_ssfr.run(sample)
+    exploration_mvt_tcross.run(sample)
+
+
 def main():
     
     report.initialise_json()
@@ -255,6 +269,7 @@ def main():
     sSFR.split_by_BGG_fertility(sample)
     sSFR.satellites_split_by_BGG_fertility(sample)
 
+    run_explorations(sample)
     
 
     # correlations_by_morph(sample)

@@ -99,15 +99,48 @@ def stats_comp_split(split):
     stats = {}
 
     for part in split.keys():
-        gals_subset = split[part]
+        part_data = split[part]
+        if isinstance(part_data, dict) and 'Gals' in part_data:
+            gals_subset = part_data['Gals']
+            groups_subset = part_data.get('Groups')
+        else:
+            gals_subset = part_data
+            groups_subset = None
 
         stats[part] = {
-                'sSFR': gals_subset['sSFR'].median(),
-                'M_r': gals_subset['M_r'].median(),
-                'lgm': gals_subset['lgm'].median(),
-                'sSFR_status_counts': gals_subset['sSFR_status'].value_counts().to_dict(),
-                'morphology_counts': gals_subset['morphology'].value_counts().to_dict(),
-            }
+            'sSFR': gals_subset['sSFR'].mean(),
+            'M_r': gals_subset['M_r'].mean(),
+            'lgm': gals_subset['lgm'].mean(),
+            'sSFR_status_counts': gals_subset['sSFR_status'].value_counts().to_dict(),
+            'morphology_counts': gals_subset['morphology'].value_counts().to_dict(),
+        }
+
+        if 'BGG_SFRcategory' in gals_subset.columns:
+            stats[part]['BGG_SFRcategory'] = gals_subset['BGG_SFRcategory'].value_counts().to_dict()
+
+        if groups_subset is not None:
+            for key in [
+                'Offset_Bary',
+                'Vdisp',
+                'Voffset',
+                'size_Group_Bary_kpc',
+                'M_group',
+                'M_virial',
+                'M_virial_over_L',
+                't_cr',
+                'Prop_M_Sat',
+                'Prop_M_Tot',
+                'Prop_G_Sat',
+                'Prop_G_Tot',
+                'Prop_Q_Sat',
+                'Prop_Q_Tot',
+                'dom',
+                'Misfit_Bary',
+                'Vmisfit',
+                'lMass_200',
+                'r_200_kpc',
+            ]:
+                stats[part][key] = groups_subset[key].mean()
 
     return stats
 

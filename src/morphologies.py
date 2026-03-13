@@ -143,6 +143,7 @@ def add_morphology_fractions_to_groups(sample: dict) -> dict:
 
         for exclude_uncertain in [True, False]:
             for exclude_BGG in [True, False]:
+                loc_Gals = Gals.copy()
                 suffix = '_frac'
                 if exclude_uncertain:
                     loc_Gals = Gals[Gals['morphology'] != co.Morphologies[-1]]
@@ -152,10 +153,18 @@ def add_morphology_fractions_to_groups(sample: dict) -> dict:
                     suffix += '_NoBGG'
 
                 sizes = loc_Gals['Group'].value_counts()
-                composition = loc_Gals.groupby(['Group', 'morphology']).size().unstack(fill_value=0)
+                composition = (
+                    loc_Gals.groupby(['Group', 'morphology'])
+                    .size()
+                    .unstack(fill_value=0)
+                    .reindex(columns=['Elliptical', 'Spiral'], fill_value=0)
+                )
                 proportions = composition.div(sizes, axis=0)
-                Groups = Groups.merge(proportions[['Elliptical','Spiral']], left_on='Group', right_index=True, how='left')
-                Groups = Groups.rename(columns={'Elliptical':f'E{suffix}', 'Spiral':f'S{suffix}'})
+                renamed = proportions[['Elliptical', 'Spiral']].rename(
+                    columns={'Elliptical': f'E{suffix}', 'Spiral': f'S{suffix}'}
+                )
+                Groups = Groups.drop(columns=renamed.columns, errors='ignore')
+                Groups = Groups.merge(renamed, left_on='Group', right_index=True, how='left')
                     
         sample[Groups_key] = Groups
 

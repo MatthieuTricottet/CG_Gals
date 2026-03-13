@@ -561,10 +561,132 @@ corresponding to a $p$-value of $p = << "%.3f"|format(p) >>$.
      \label{fig:main_sequence_residuals}
 \end{figure}
 
+<% if r.get('Main_sequence_offset_by_sample_significant', []) %>
+A direct rank-sum comparison of the star-forming main-sequence offsets only identifies significant differences between \CG{} and
+<% for item in r.get('Main_sequence_offset_by_sample_significant', []) %>
+<< item.sample_label >>, whose median offset is << item.median_ms_offset_fmt >> with respect to the fitted sequence
+(p = << item.p_value_fmt >>)<% if not loop.last %>; <% else %>. <% endif %>
+<% endfor %>
+<% else %>
+A direct rank-sum comparison of the star-forming main-sequence offsets does not reveal any significant difference between \CG{} and the control samples.
+<% endif %>
 
+<% if r.get('Main_sequence_offset_by_cg_class_significant', []) %>
+Within \CG{}, the class-split comparison of star-forming main-sequence offsets highlights
+<% for item in r.get('Main_sequence_offset_by_cg_class_significant', []) %>
+a difference between << item.class_a >> and << item.class_b >>
+(medians << item.median_class_a_fmt >> and << item.median_class_b_fmt >>, respectively; p = << item.p_value_fmt >>)<% if not loop.last %>; <% else %>. <% endif %>
+<% endfor %>
+<% else %>
+Within \CG{}, the star-forming main-sequence offsets of the Embedded, Isolated and Predom classes remain statistically consistent with one another.
+<% endif %>
+
+\subsection{Distance to the BGG}
+We also compare the sSFR of satellite galaxies with their distance to the BGG, expressed both in projected kpc and in units of $\langle R_{ij}\rangle$.
+<% if r.get('Dist2BGG_significant_count', 0) > 0 %>
+Significant monotonic trends are detected in the following cases.
+<% for item in r.get('Dist2BGG_significant_correlations', []) %>
+In << item.sample_label >>, sSFR correlates with << item.distance_label >> with Spearman coefficient
+$\rho_\mathrm{S} = << item.spearman_rho_fmt >>$ for << item.n >> satellites (p = << item.spearman_p_fmt >>) and Pearson coefficient
+$r = << item.pearson_r_fmt >>$ (p = << item.pearson_p_fmt >>).
+<% endfor %>
+<% else %>
+No significant monotonic trend is detected between sSFR and distance to the BGG in either metric.
+<% endif %>
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{dist2BGG_kpc_vs_sSFR.pdf}
+     \caption{sSFR as a function of projected distance to the BGG, in kpc, for satellite galaxies in each sample.}
+     \label{fig:dist2BGG_kpc_vs_sSFR}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{dist2BGG_norm_vs_sSFR.pdf}
+     \caption{sSFR as a function of projected distance to the BGG normalized by $\langle R_{ij}\rangle$ for satellite galaxies in each sample.}
+     \label{fig:dist2BGG_norm_vs_sSFR}
+\end{figure}
 
 \subsection{Dominance}
-We split groups into two categories: the dominated, for which the BGG has a luminosity fraction greater than the median of \RG.
+We split groups into two categories: dominated groups, for which the BGG luminosity fraction exceeds our threshold of <<DOMINATIION_CRITERIA>>, and non-dominated groups.
+Among the group properties explored in this work, the quantities showing at least one significant dominated/non-dominated difference are
+<% for quantity in r.get('Dom_significant_quantities_labels', []) %>
+<< quantity >><% if loop.revindex0 == 1 %> and <% elif not loop.last %>, <% else %>. <% endif %>
+<% endfor %>
+
+<% for item in r.get('Dom_distribution_summary_by_sample', []) %>
+<% if item.has_significant_difference %>
+In << item.sample_label >>, the strongest corrected dominated/non-dominated separation concerns << item.quantity_label >>:
+the dominated groups have a median value of << item.median_dom_fmt >>, compared to << item.median_nondom_fmt >> for the non-dominated ones
+(p$_\mathrm{adj}$ = << item.p_adj_fmt >>; Cliff's $\delta$ = << item.cliffs_delta_fmt >>).
+<% else %>
+In << item.sample_label >>, no dominated/non-dominated difference remains significant after the FDR correction.
+<% endif %>
+<% endfor %>
+
+<% if r.get('Dom_spiral_fraction_significant_count', 0) > 0 %>
+The group spiral fraction also correlates significantly with the group-scale observables in a subset of the samples.
+<% for item in r.get('Dom_spiral_fraction_significant_correlations', []) %>
+For << item.sample_label >> << item.domination|lower >> groups, $S_\mathrm{frac}$ correlates with << item.quantity_label >>
+($\rho_\mathrm{S} = << item.rho_fmt >>$, << item.n_groups >> groups, p = << item.p_value_fmt >>).
+<% endfor %>
+<% endif %>
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{Dom_vs_NonDom.pdf}
+     \caption{Distributions of the main group-scale observables in dominated and non-dominated systems.}
+     \label{fig:Dom_vs_NonDom}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{Dom_vs_NonDom_XOR_halfviolin_ONEFIG.pdf}
+     \caption{Bootstrap distributions of the Spearman coefficients for the group-property pairs selected by the XOR domination criterion.}
+     \label{fig:Dom_vs_NonDom_XOR}
+\end{figure}
+
+\subsection{Morphology and domination}
+<% if r.get('Morphology_domination_effects_count', 0) > 0 %>
+When we further split the samples by domination and by the morphology of the BGG, significant effects only appear in
+<% for item in r.get('Morphology_domination_effects', []) %>
+<< item.sample_label >> << item.domination_label >> groups, where the median satellite spiral fraction is
+<< item.group_median_spiral_bgg_fmt >> for spiral BGGs and << item.group_median_elliptical_bgg_fmt >> for elliptical BGGs.
+The corresponding group-level odds ratio is << item.group_or_fmt >> (p = << item.group_p_fmt >>), while the satellite-level clustered fit gives
+an odds ratio of << item.sat_or_fmt >> (p = << item.sat_p_fmt >>)<% if not loop.last %>; <% else %>. <% endif %>
+<% endfor %>
+<% else %>
+Splitting the samples by both domination and BGG morphology does not reveal any significant modulation of the satellite morphology mix.
+<% endif %>
+
+\section{Group Dynamics}
+The crossing-time exploration quantifies the trends illustrated in figures \ref{fig:tcr_vs_mvirial_over_l} to \ref{fig:tcr_mvirial_lgroup_3d}.
+<% for item in r.get('Tcross_global_correlations', []) %>
+For << item.y_label >>, the global Spearman coefficient with $\log t_\mathrm{cross}$ is
+$\rho_\mathrm{S} = << item.rho_fmt >>$ based on << item.n_groups >> groups (p = << item.p_value_fmt >>).
+<% endfor %>
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{tcr_vs_mvirial_over_l.pdf}
+     \caption{Crossing time versus virial mass-to-light ratio for the compact groups and their controls.}
+     \label{fig:tcr_vs_mvirial_over_l}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{tcr_vs_mvirial.pdf}
+     \caption{Crossing time versus virial mass for the compact groups and their controls.}
+     \label{fig:tcr_vs_mvirial}
+\end{figure}
+
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{tcr_mvirial_lgroup_3d.pdf}
+     \caption{Three-dimensional view of the crossing time, virial mass and group luminosity space.}
+     \label{fig:tcr_mvirial_lgroup_3d}
+\end{figure}
 
 \begin{appendix} %First appendix
 \section*{Interpolation points for sSFR classification}
