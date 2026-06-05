@@ -151,13 +151,13 @@ We use the compact groups and control samples we built in our previous article \
 We neververtheless briefly recall here how they were built. \mt{Explain.} 
 Contrarily to our previous article, though, we remove CGs that we classified as \emph{split} following \cite{Zheng&Shen21}.
 In this process, our initial compact group sample of 78 groups reduced to 
-62. We also remove groups bluit from Lim group 3688 from our \CB{} and \CC{} samples. This group has six galaxies 
+62. We also remove groups built from Lim group 3688 from our \CB{} and \CC{} samples. This group has six galaxies 
 having a redshift between 0.032 and 0.034, and one having a redshift of 0.048. This group seems spurious, and the 
 outlier galaxy, altough not being the BGG, is selected both in our original \CB{} and \CC{}, influencing the velocity 
 dispersion of the group significantly ($1979$ and $1981\, \kms$, respectively).
 
 We use the SDSS DR 16 to retrieve masses, star formation rates (SFRs) and morphologies of galaxies 
-assessed in Galaxy Zoo \cite{GalaxyZoo1}. We specifically extracted fields \texttt{sfr\_tot\_p50}, 
+assessed in Galaxy Zoo (\cite{GalaxyZoo1}). We specifically extracted fields \texttt{sfr\_tot\_p50}, 
 \texttt{specsfr\_tot\_p50} and \texttt{lgm\_tot\_p50} from the \texttt{galSpecExtra} table, and
 \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} from the \texttt{zooSpec} table.
        
@@ -173,7 +173,11 @@ through the query displayed in listing \ref{lst:query}.
     SELECT 
         s.specObjID,
         s.z,
-        p.petroMag_r,petroMag_u,petroMag_g,petroMag_i,petroMag_z,
+        p.petroMag_r - p.extinction_r as r_obs,
+        p.petroMag_u - p.extinction_u as u_obs,
+        p.petroMag_g - p.extinction_g as g_obs,
+        p.petroMag_i - p.extinction_i as i_obs,
+        p.petroMag_z - p.extinction_z as z_obs,
         p.objID,
         g.sfr_tot_p50, g.specsfr_tot_p50, g.lgm_tot_p50,
         l.h_alpha_eqw, l.h_beta_eqw, l.oiii_5007_eqw, l.nii_6584_eqw,
@@ -224,22 +228,22 @@ We identify the galaxies having a \texttt{specsf\_tot\_p50} of -9999 in the SDSS
 We then consider the other ones and sort them between the 
 star-forming and passive populations using a two‐component Gaussian Mixture Model (GMM) in the \(\log M_*\)–\(\log\mathrm{sSFR}\) plane.
 Its parameters determined by minimizing the Kullback–Leibler divergence between the empirical and model densities 
-\cite{Kullback1951,McLachlanPeel2000}. For any trial parameter vector \(\boldsymbol{\theta}\), we reconstruct the mixture means 
+(\cite{Kullback1951,McLachlanPeel2000}). For any trial parameter vector \(\boldsymbol{\theta}\), we reconstruct the mixture means 
 \(\{\boldsymbol{\mu}_i\}\), covariances \(\{\mathbf{\Sigma}_i\}\), and weights \(\{w_i\}\) via a Cholesky‐like decomposition and 
-logistic mapping, optionally constraining the second component’s mean to isolate the passive population \cite{Dempster1977}. 
+logistic mapping, optionally constraining the second component’s mean to isolate the passive population (\cite{Dempster1977}). 
 The KL divergence is estimated by constructing a 2D histogram of the data and summing \(p_\mathrm{data}\ln(p_\mathrm{data}/p_\mathrm{GMM})\), 
-with a small regularization \(\epsilon\) to avoid singularities \cite{Tojeiro2009,Bisigello2018}. We optimize \(\boldsymbol{\theta}\) 
+with a small regularization \(\epsilon\) to avoid singularities (\cite{Tojeiro2009,Bisigello2018}). We optimize \(\boldsymbol{\theta}\) 
 via L-BFGS-B (with fallback to Nelder–Mead) over multiple guided and random initializations, selecting the solution with lowest divergence 
-\cite{Pedregosa2011,Bishop2006}. Initial means are seeded by a median split in \(\log\mathrm{sSFR}\) to improve convergence and robustness 
-against local minima \cite{Rousseeuw1987}. In the final fit, one component naturally aligns with the high-\(\mathrm{sSFR}\) “star‐forming 
+(\cite{Pedregosa2011,Bishop2006}). Initial means are seeded by a median split in \(\log\mathrm{sSFR}\) to improve convergence and robustness 
+against local minima (\cite{Rousseeuw1987}). In the final fit, one component naturally aligns with the high-\(\mathrm{sSFR}\) “star‐forming 
 sequence,” while the other captures the low-\(\mathrm{sSFR}\) “passive” cloud, providing a data‐driven division that agrees with previous 
-multi‐Gaussian decompositions of the SFR–\(M_*\) plane \cite{Wuyts2011,Hahn2019}. The decision boundaries, defined as the 
+multi‐Gaussian decompositions of the SFR–\(M_*\) plane (\cite{Wuyts2011,Hahn2019}). The decision boundaries, defined as the 
 loci where the posterior probabilities of adjacent components are equal, provide an objective criterion for 
 delineating star‐forming from passive galaxies.
 
 \mt{Add relevant GM parameters found by the algorithm.}
 
-The sSFR status for each sample is shown in table \ref{tab:sSFR_status}. Tere is no significant differences of for \Starforming{} proportion 
+The sSFR status for each sample is shown in table \ref{tab:sSFR_status}. There is no significant differences of for \Starforming{} proportion 
 between \CG{} and the control samples (probabilities estimated using Fisher exact test are  
 $6.5 \times 10^{-1}$  versus \CB{} sample, 
  $2.5 \times 10^{-1}$  versus \CC{} and  $1.8 \times 10^{-2}$  versus \RG).
@@ -572,10 +576,10 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
   RG4 &
   
     $-11.14$ $\pm$ 0.19 &
-    $-10.58$ $\pm$ 0.16  & 
+    $-10.58$ $\pm$ 0.17  & 
   
     $-20.69$ $\pm$ 0.14 &
-    $-20.74$ $\pm$ 0.27  & 
+    $-20.74$ $\pm$ 0.28  & 
   
     $10.32$ $\pm$ 0.07 &
     $10.19$ $\pm$ 0.12 
@@ -640,7 +644,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
     $-10.91$ $\pm$ 0.13  & 
   
     $-20.9$ $\pm$ 0.03 &
-    $-20.75$ $\pm$ 0.05  & 
+    $-20.75$ $\pm$ 0.06  & 
   
     $10.43$ $\pm$ 0.02 &
     $10.3$ $\pm$ 0.03 
@@ -648,7 +652,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
 
   Control4C &
   
-    $-10.96$ $\pm$ 0.04 &
+    $-10.96$ $\pm$ 0.05 &
     $-10.6$ $\pm$ 0.07  & 
   
     $-19.8$ $\pm$ 0.04 &
@@ -768,8 +772,8 @@ significantly different
 from that of Control4B,
 with a median offset of
 $\Delta = 0.056$
-($0.028 \le \Delta \le 0.097$, bootstrap),
-corresponding to a $p$-value of $p = 0.053$.
+($0.029 \le \Delta \le 0.097$, bootstrap),
+corresponding to a $p$-value of $p = 0.059$.
 
 
 
@@ -788,8 +792,8 @@ significantly different
 from that of Control4C,
 with a median offset of
 $\Delta = 0.082$
-($0.062 \le \Delta \le 0.122$, bootstrap),
-corresponding to a $p$-value of $p = 0.012$.
+($0.063 \le \Delta \le 0.122$, bootstrap),
+corresponding to a $p$-value of $p = 0.008$.
 
 
 
@@ -808,8 +812,8 @@ not significantly different
 from that of RG4,
 with a median offset of
 $\Delta = 0.046$
-($-0.037 \le \Delta \le 0.098$, bootstrap),
-corresponding to a $p$-value of $p = 0.535$.
+($-0.037 \le \Delta \le 0.097$, bootstrap),
+corresponding to a $p$-value of $p = 0.548$.
 
 
 
@@ -1086,6 +1090,13 @@ $\rho_\mathrm{S} = 0.08$ based on 816 groups (p = $0.03$).
      \caption{Three-dimensional view of the crossing time, virial mass and group luminosity space.}
      \label{fig:tcr_mvirial_lgroup_3d}
 \end{figure}
+
+
+\section{Coulour}
+All galaxies are redder when they have a higher stellar mass, as per \cite{Alpaslan+15} - cf figure \ref{fig:color_mass}. 
+Stellar mass is therefore a confounding factor when comparing the colors of galaxies in different samples, 
+as they do not necessarily have the same mass distribution. We will therefore compare colours properties in stellar mass bins.
+
 
 \begin{appendix} %First appendix
 \section*{Interpolation points for sSFR classification}

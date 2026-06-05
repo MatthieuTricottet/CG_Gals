@@ -198,7 +198,11 @@ def load_SDSS():
     SELECT 
         s.specObjID,
         s.z,
-        p.petroMag_r,petroMag_u,petroMag_g,petroMag_i,petroMag_z,
+        p.petroMag_r - p.extinction_r as r_obs,
+        p.petroMag_u - p.extinction_u as u_obs,
+        p.petroMag_g - p.extinction_g as g_obs,
+        p.petroMag_i - p.extinction_i as i_obs,
+        p.petroMag_z - p.extinction_z as z_obs,
         p.objID,
         g.sfr_tot_p50, g.specsfr_tot_p50, g.lgm_tot_p50,
         l.h_alpha_eqw, l.h_beta_eqw, l.oiii_5007_eqw, l.nii_6584_eqw,

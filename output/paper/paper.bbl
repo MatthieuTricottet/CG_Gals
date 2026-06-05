@@ -1,4 +1,4 @@
-\begin{thebibliography}{15}
+\begin{thebibliography}{16}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{Hahn {et~al.}(2019)Hahn, Starkenburg, Choi, {et~al.}}]{Hahn2019}
@@ -24,6 +24,16 @@ Tojeiro, R., Heavens, A.~F., Jimenez, R., \& Panter, B. 2009, Mon. Not. R.
   {Land}, {Thomas}, {Edmondson}, {Masters}, {Nichol}, {Raddick}, {Szalay},
   {Andreescu}, {Murray}, \& {Vandenberg}}]{GalaxyZoo1}
 {Lintott}, C., {Schawinski}, K., {Bamford}, S., {et~al.} 2011, \mnras, 410, 166
+
+\bibitem[{{Alpaslan} {et~al.}(2015){Alpaslan}, {Driver}, {Robotham},
+  {Obreschkow}, {Andrae}, {Cluver}, {Kelvin}, {Lange}, {Owers}, {Taylor},
+  {Andrews}, {Bamford}, {Bland-Hawthorn}, {Brough}, {Brown}, {Colless},
+  {Davies}, {Eardley}, {Grootes}, {Hopkins}, {Kennedy}, {Liske},
+  {Lara-L{\'o}pez}, {L{\'o}pez-S{\'a}nchez}, {Loveday}, {Madore}, {Mahajan},
+  {Meyer}, {Moffett}, {Norberg}, {Penny}, {Pimbblet}, {Popescu}, {Seibert}, \&
+  {Tuffs}}]{Alpaslan+15}
+{Alpaslan}, M., {Driver}, S., {Robotham}, A. S.~G., {et~al.} 2015, \mnras, 451,
+  3249
 
 \bibitem[{Kullback \& Leibler(1951)}]{Kullback1951}
 Kullback, S. \& Leibler, R.~A. 1951, Ann. Math. Statist., 22, 79
