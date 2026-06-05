@@ -17,7 +17,7 @@ REPORT_FILE = "paper.tex"
 REPORT_PATH = OUTPUT_PATH + "paper/"
 SUBFIGURES_PATH = "figures/"
 FIGURES_PATH = REPORT_PATH + SUBFIGURES_PATH
-TEMPLATE_PATH = BASE_PATH + "src/Paper_template/"
+TEMPLATE_PATH = BASE_PATH + "src/paper_template/"
 TEMPLATE_FILE = "paper_template.tex" 
 BIB_FILE = "paper"
 

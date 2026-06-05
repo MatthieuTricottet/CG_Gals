@@ -98,6 +98,56 @@ def formatted_label(i,lumG=False):
     
     return switcher.get(i,"Invalid label")
 
+def formatted_text_label(i, lumG=False):
+    """Return a prose label without units for narrative text."""
+
+    switcher = {
+        'Vdisp'               : r'$\sigma_v$',
+        'Radius_Bary_kpc'     : r"$\langle R_{ij} \rangle$",
+        'size_Group_Bary_kpc' : r"$\left\langle R_{ij}\right\rangle$",
+        'Radius_Circ_kpc'     : r"$R_\mathrm{Circ}$",
+        'size_Group_Circ_kpc' : r"$R_\mathrm{Circ}$",
+        'r_200'               : r"$R_{200}$",
+        't_cr'                : r'$t_\mathrm{cr}$',
+        'M_over_Lr'           : r'$M/L_r$',
+        'M_virial'            : r'$\mathcal{M}_\mathrm{VT}$',
+        'M_virial_over_L'     : r'$\mathcal{M}_\mathrm{VT}/L_r$',
+        'Lum'                 : r"Luminosity",
+        'GSL'                 : r"Luminosity",
+        'GroupGSL'            : r"Group luminosity",
+        'Lum_BGG'             : r'BGG luminosity',
+        'log_Lum_BGG'         : r'log$_{10}$(BGG luminosity)',
+        'Lum_group'           : r'$L_\mathrm{group}$',
+        'log_Lum_group'       : r'$\log(L_\mathrm{group})$',
+        'Lum_Sat'             : r'Satellite luminosity',
+        'log_Lum_Sat'         : r'log$_{10}$(satellite luminosity)',
+        'specsfr_tot_p50'     : r'sSFR',
+        'sSFR'                : r'sSFR',
+    }
+
+    return switcher.get(i, formatted_label(i, lumG=lumG))
+
+def formatted_unit(i):
+    """Return the unit to append after a numeric value."""
+
+    switcher = {
+        'Vdisp'               : r'km s$^{-1}$',
+        'Radius_Bary_kpc'     : r'kpc',
+        'size_Group_Bary_kpc' : r'kpc',
+        'Radius_Circ_kpc'     : r'kpc',
+        'size_Group_Circ_kpc' : r'kpc',
+        'r_200'               : r'kpc',
+        't_cr'                : r'Gyr',
+        'Lum'                 : r'$L_\odot$',
+        'GSL'                 : r'$L_\odot$',
+        'GroupGSL'            : r'$L_\odot$',
+        'Lum_BGG'             : r'$L_\odot$',
+        'Lum_group'           : r'$L_\odot$',
+        'Lum_Sat'             : r'$L_\odot$',
+    }
+
+    return switcher.get(i, "")
+
 def formatted_sample_name(name):
     switcher={
         "CG4"       : r"CG$_4$",

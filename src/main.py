@@ -232,8 +232,6 @@ def sSFR_properties(sample):
     for name,pval in results.items():
         report.append_json('pval_'+name,gu.numformat(pval,prec=1),build=True)
 
-    sSFR.BGGs_analysis(sample)
-
     return(sample)
 
 def morph_properties(sample):
@@ -242,6 +240,16 @@ def morph_properties(sample):
     morph.stats(sample)
     morph.morph_sSFR(sample)
     morph.BGGs_analysis(sample)
+
+
+def ssfr_report_properties(sample):
+    """Write per-run sSFR comparison results used directly by the paper."""
+
+    results = sSFR.compare(sample, Verbose=True)
+    for name, pval in results.items():
+        report.append_json('pval_' + name, gu.numformat(pval, prec=1))
+
+    sSFR.BGGs_analysis(sample)
     
 def correlations_by_morph(sample):
     """Generate the morphology-split correlation products."""
@@ -271,7 +279,8 @@ def main():
     sample = load_data()
 
 
-    # morph_properties(sample)
+    ssfr_report_properties(sample)
+    morph_properties(sample)
 
     sSFR.split_by_fertility(sample)
     sSFR.split_by_BGG_fertility(sample)

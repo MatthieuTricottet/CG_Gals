@@ -150,7 +150,7 @@
 We use the compact groups and control samples we built in our previous article \cite{Tricottet+25}. 
 We neververtheless briefly recall here how they were built. \mt{Explain.} 
 Contrarily to our previous article, though, we remove CGs that we classified as \emph{split} following \cite{Zheng&Shen21}.
-In this process, our initial compact group sample of <<CG4_Groups_withsplit_N>> groups reduced to 
+In this process, our initial compact group sample of <<CG4_Groups_withsplit_N>> groups reduces to 
 <<CG4_Groups_nonsplit_N>>. We also remove groups built from Lim group 3688 from our \CB{} and \CC{} samples. This group has six galaxies 
 having a redshift between 0.032 and 0.034, and one having a redshift of 0.048. This group seems spurious, and the 
 outlier galaxy, altough not being the BGG, is selected both in our original \CB{} and \CC{}, influencing the velocity 
@@ -225,27 +225,15 @@ between \CG{} and the control samples (probabilities estimated using Fisher exac
  <<pval_Control4C_Starforming_vs_CG>>  versus \CC{} and  <<pval_RG4_Starforming_vs_CG>>  versus \RG).
 
  Restrictions of the comparison to BGGs and satellites only are also shown in table \ref{tab:sSFR_status}. 
- The p-values found from <<BGG_sSFR_tests>> are 
+The p-values found from <<BGG_sSFR_tests>> are 
   <<BGG_star_forming_pvalue_Control4B_vs_CG4>> against \CB,
   <<BGG_star_forming_pvalue_Control4C_vs_CG4>> against \CC{} and 
   <<BGG_star_forming_pvalue_RG4_vs_CG4>>  against \RG. 
-There is thus no significant difference in the fraction of star-forming BGGs nor satellites between \CG{} and our control samples either.
+For satellites, the corresponding p-values are
+  <<Sat_star_forming_pvalue_Control4B_vs_CG4>> against \CB,
+  <<Sat_star_forming_pvalue_Control4C_vs_CG4>> against \CC{} and
+  <<Sat_star_forming_pvalue_RG4_vs_CG4>> against \RG.
 
-% we find <<CG4_BGG_N_Starforming>> star-forming BGGs (<<CG4_BGG_fracpc_Starforming>>\% of the BGGs),
-% <<CG4_BGG_N_Passive>> Passive BGGs (<<CG4_BGG_fracpc_Passive>>\%) and <<CG4_BGG_N_Quenched>> Quenched BGGs (<<CG4_BGG_fracpc_Quenched>>\%)
-%  in \CG{}.
-%   This is to be compared to 
-%  <<Control4B_BGG_N_Starforming>> (<<Control4B_BGG_fracpc_Starforming>>\%) Starforming, 
-%  <<Control4B_BGG_N_Passive>> (<<Control4B_BGG_fracpc_Passive>>\%) Passive and
-%  <<Control4B_BGG_N_Quenched>> (<<Control4B_BGG_fracpc_Quenched>>\%) in \CB{}, 
-%  <<Control4C_BGG_N_Starforming>> (<<Control4C_BGG_fracpc_Starforming>>\%) Starforming,
-%  <<Control4C_BGG_N_Passive>> (<<Control4C_BGG_fracpc_Passive>>\%) Passive and
-%  <<Control4C_BGG_N_Quenched>> (<<Control4C_BGG_fracpc_Quenched>>\%)  Quenched in \CC{},
-%   and <<RG4_BGG_N_Starforming>> (<<RG4_BGG_fracpc_Starforming>>\%) Starforming,
-%   <<RG4_BGG_N_Passive>> (<<RG4_BGG_fracpc_Passive>>\%) Passive and
-%   <<RG4_BGG_N_Quenched>> (<<RG4_BGG_fracpc_Quenched>>\%) Quenched
-%   in \RG{}. 
-  
 \begin{table*}
     \centering
     \begin{tabular}{llccc}
@@ -366,13 +354,14 @@ If we restrict the comparison to BGGs only, we find <<CG4_BGG_N_Elliptical>> Ell
  <<Control4C_BGG_N_Elliptical>> (<<Control4C_BGG_fracpc_Elliptical>>\%) Elliptical and
  <<Control4C_BGG_N_Spiral>> (<<Control4C_BGG_fracpc_Spiral>>\%)  Spiral in \CC{},
   and  <<RG4_BGG_N_Elliptical>> (<<RG4_BGG_fracpc_Elliptical>>\%) Elliptical and
-  <<RG4_BGG_N_Spiral>> (<<RG4_BGG_fracpc_Spiral>>\%) Quenched
+  <<RG4_BGG_N_Spiral>> (<<RG4_BGG_fracpc_Spiral>>\%) Spiral
   in \RG{}. 
 The p-values found from <<BGG_morph_tests>> are 
   <<BGG_morph_pvalue_Control4B_vs_CG4>> against \CB,
   <<BGG_morph_pvalue_Control4C_vs_CG4>> against \CC{} and 
   <<BGG_morph_pvalue_RG4_vs_CG4>>  against \RG. 
-There is thus no significant difference in the fraction of star-forming BGGs between \CG{} and our control samples.  
+We can therefore see that BGG morphologies are different between \CG{} and \RG{}: \CG{} BGGs are more likely 
+to be elliptical than \RG{} BGGs.  
 
 \section{sSFR}
 
@@ -521,6 +510,8 @@ We model the star-forming main sequence as a power law in stellar mass, to vario
 We then choose to use order 2 to compute the residuals of each star-forming galaxy to the main sequence,
 and plot their histograms in figure \ref{fig:main_sequence_residuals}.
 
+The median main-sequence residual of CG4 galaxies is:
+\begin{itemize}
 <% for key, res in build.items() %>
 <% if key.startswith("pval_MSresiduals_") %>
 
@@ -532,13 +523,7 @@ and plot their histograms in figure \ref{fig:main_sequence_residuals}.
     .replace("pval_MSresiduals_", "")
     .replace("_Gals", "") %>
 
-The median main-sequence residual of CG4 galaxies is
-<% if ci16 > 0 or ci84 < 0 %>
-significantly different
-<% else %>
-not significantly different
-<% endif %>
-from that of << name >>,
+\item <% if ci16 > 0 or ci84 < 0 %>significantly different<% else %>not significantly different<% endif %> from that of << name >>,
 with a median offset of
 $\Delta = << "%.3f"|format(delta) >>$
 ($<< "%.3f"|format(ci16) >> \le \Delta \le << "%.3f"|format(ci84) >>$, bootstrap),
@@ -546,6 +531,7 @@ corresponding to a $p$-value of $p = << "%.3f"|format(p) >>$.
 
 <% endif %>
 <% endfor %>
+\end{itemize}
 
 \begin{figure}
     \centering
@@ -610,15 +596,12 @@ No significant monotonic trend is detected between sSFR and distance to the BGG 
 
 \subsection{Dominance}
 We split groups into two categories: dominated groups, for which the BGG luminosity fraction exceeds our threshold of <<DOMINATIION_CRITERIA>>, and non-dominated groups.
-Among the group properties explored in this work, the quantities showing at least one significant dominated/non-dominated difference are
-<% for quantity in r.get('Dom_significant_quantities_labels', []) %>
-<< quantity >><% if loop.revindex0 == 1 %> and <% elif not loop.last %>, <% else %>. <% endif %>
-<% endfor %>
+Among the group properties explored in this work, the quantities showing at least one significant dominated/non-dominated difference are <% for quantity in r.get('Dom_significant_quantities', []) %><< lu.formatted_text_label(quantity) >><% if loop.revindex0 == 1 %> and <% elif not loop.last %>, <% else %>.<% endif %><% endfor %>
 
 <% for item in r.get('Dom_distribution_summary_by_sample', []) %>
 <% if item.has_significant_difference %>
-In << item.sample_label >>, the strongest corrected dominated/non-dominated separation concerns << item.quantity_label >>:
-the dominated groups have a median value of << item.median_dom_fmt >>, compared to << item.median_nondom_fmt >> for the non-dominated ones
+In << item.sample_label >>, the strongest corrected dominated/non-dominated separation concerns << lu.formatted_text_label(item.quantity) >>:
+the dominated groups have a median value of << item.median_dom_fmt >><% if lu.formatted_unit(item.quantity) %> << lu.formatted_unit(item.quantity) >><% endif %>, compared to << item.median_nondom_fmt >><% if lu.formatted_unit(item.quantity) %> << lu.formatted_unit(item.quantity) >><% endif %> for the non-dominated ones
 (p$_\mathrm{adj}$ = << item.p_adj_fmt >>; Cliff's $\delta$ = << item.cliffs_delta_fmt >>).
 <% else %>
 In << item.sample_label >>, no dominated/non-dominated difference remains significant after the FDR correction.
@@ -628,7 +611,7 @@ In << item.sample_label >>, no dominated/non-dominated difference remains signif
 <% if r.get('Dom_spiral_fraction_significant_count', 0) > 0 %>
 The group spiral fraction also correlates significantly with the group-scale observables in a subset of the samples.
 <% for item in r.get('Dom_spiral_fraction_significant_correlations', []) %>
-For << item.sample_label >> << item.domination|lower >> groups, $S_\mathrm{frac}$ correlates with << item.quantity_label >>
+For << item.sample_label >> << item.domination|lower >> groups, $S_\mathrm{frac}$ correlates with << lu.formatted_text_label(item.quantity) >>
 ($\rho_\mathrm{S} = << item.rho_fmt >>$, << item.n_groups >> groups, p = << item.p_value_fmt >>).
 <% endfor %>
 <% endif %>
@@ -694,6 +677,13 @@ All galaxies are redder when they have a higher stellar mass, as per \cite{Alpas
 Stellar mass is therefore a confounding factor when comparing the colors of galaxies in different samples, 
 as they do not necessarily have the same mass distribution. We will therefore compare colours properties in stellar mass bins.
 
+\section{Conclusion}
+
+After removing systems classified as split, we find that compact groups differ from regular four-member groups mainly through their galaxy population mix. Galaxies in CG4 are more frequently elliptical and less frequently spiral than galaxies in RG4, with highly significant differences in both fractions. This morphological difference is also present among BGGs: CG4 BGGs are more often elliptical than RG4 BGGs.
+
+The star-formation difference is more specific. CG4 satellites are significantly less frequently star-forming than RG4 satellites, while the star-forming fraction of BGGs does not differ significantly between the two samples. Moreover, among galaxies that remain star-forming, CG4 galaxies do not show a significant offset from RG4 galaxies relative to the star-forming main sequence.
+
+These results suggest that compact groups are not simply denser versions of ordinary four-member groups. Rather, they appear to host a more evolved galaxy population, with an enhanced fraction of early-type galaxies and a reduced fraction of star-forming satellites. The present analysis is therefore consistent with enhanced morphological transformation and quenching in compact-group environments, although it does not yet distinguish between compact-group-specific evolution, pre-processing in larger-scale structures, and selection effects.
 
 \begin{appendix} %First appendix
 \section*{Interpolation points for sSFR classification}

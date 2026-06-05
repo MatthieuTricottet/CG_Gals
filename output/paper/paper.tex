@@ -150,7 +150,7 @@
 We use the compact groups and control samples we built in our previous article \cite{Tricottet+25}. 
 We neververtheless briefly recall here how they were built. \mt{Explain.} 
 Contrarily to our previous article, though, we remove CGs that we classified as \emph{split} following \cite{Zheng&Shen21}.
-In this process, our initial compact group sample of 78 groups reduced to 
+In this process, our initial compact group sample of 78 groups reduces to 
 62. We also remove groups built from Lim group 3688 from our \CB{} and \CC{} samples. This group has six galaxies 
 having a redshift between 0.032 and 0.034, and one having a redshift of 0.048. This group seems spurious, and the 
 outlier galaxy, altough not being the BGG, is selected both in our original \CB{} and \CC{}, influencing the velocity 
@@ -182,8 +182,8 @@ through the query displayed in listing \ref{lst:query}.
         g.sfr_tot_p50, g.specsfr_tot_p50, g.lgm_tot_p50,
         l.h_alpha_eqw, l.h_beta_eqw, l.oiii_5007_eqw, l.nii_6584_eqw,
         l.h_alpha_flux, l.h_beta_flux, l.oiii_5007_flux, l.nii_6584_flux,
-        z. p_el_debiased AS p_E,
-        z. p_cs_debiased     AS p_S
+        z.p_el_debiased AS p_E,
+        z.p_cs_debiased AS p_S
     FROM SpecObj AS s
         JOIN PhotoObj AS p ON s.bestObjID = p.objID
         JOIN galSpecExtra as g ON s.specObjID = g.specObjID
@@ -249,27 +249,15 @@ $6.5 \times 10^{-1}$  versus \CB{} sample,
  $2.5 \times 10^{-1}$  versus \CC{} and  $1.8 \times 10^{-2}$  versus \RG).
 
  Restrictions of the comparison to BGGs and satellites only are also shown in table \ref{tab:sSFR_status}. 
- The p-values found from two-sided Fisher exact test are 
+The p-values found from two-sided Fisher exact test are 
   0.58 against \CB,
   0.59 against \CC{} and 
   0.37  against \RG. 
-There is thus no significant difference in the fraction of star-forming BGGs nor satellites between \CG{} and our control samples either.
+For satellites, the corresponding p-values are
+  0.30 against \CB,
+  0.03 against \CC{} and
+  0.00 against \RG.
 
-% we find  star-forming BGGs (\% of the BGGs),
-%  Passive BGGs (\%) and  Quenched BGGs (\%)
-%  in \CG{}.
-%   This is to be compared to 
-%   (\%) Starforming, 
-%   (\%) Passive and
-%   (\%) in \CB{}, 
-%   (\%) Starforming,
-%   (\%) Passive and
-%   (\%)  Quenched in \CC{},
-%   and  (\%) Starforming,
-%    (\%) Passive and
-%    (\%) Quenched
-%   in \RG{}. 
-  
 \begin{table*}
     \centering
     \begin{tabular}{llccc}
@@ -279,11 +267,11 @@ There is thus no significant difference in the fraction of star-forming BGGs nor
              & \emph{BGG} &  \emph{6  (9.7 \%)} &  \emph{45  (72.6 \%)} &  \emph{11  (17.7 \%)} \\
              & \emph{Satellites} &  \emph{12  (6.5 \%)} &  \emph{101  (54.3 \%)} &  \emph{73  (39.2 \%)} \\
             \CB & &  181  (6.5 \%) &  1596  (57.1 \%) &  1019  (36.4 \%) \\
-             & \emph{BGG} &  \emph{58  (8.3 \%)} &  \emph{534  (76.4 \%)} &  \emph{107  (15.3 \%)} \\
-             & \emph{Satellites} &  \emph{123  (5.9 \%)} &  \emph{1062  (50.6 \%)} &  \emph{912  (43.5 \%)} \\
+             & \emph{BGG} &  \emph{58  (8.3 \%)} &  \emph{533  (76.4 \%)} &  \emph{107  (15.3 \%)} \\
+             & \emph{Satellites} &  \emph{122  (5.8 \%)} &  \emph{1061  (50.7 \%)} &  \emph{911  (43.5 \%)} \\
             \CC & &  191  (6.3 \%) &  1619  (53.8 \%) &  1198  (39.8 \%) \\
-             & \emph{BGG} &  \emph{65  (8.6 \%)} &  \emph{569  (75.7 \%)} &  \emph{118  (15.7 \%)} \\
-             & \emph{Satellites} &  \emph{126  (5.6 \%)} &  \emph{1050  (46.5 \%)} &  \emph{1080  (47.9 \%)} \\
+             & \emph{BGG} &  \emph{65  (8.7 \%)} &  \emph{568  (75.6 \%)} &  \emph{118  (15.7 \%)} \\
+             & \emph{Satellites} &  \emph{125  (5.5 \%)} &  \emph{1050  (46.6 \%)} &  \emph{1078  (47.8 \%)} \\
             \RG & &  5  (2.2 \%) &  101  (45.1 \%) &  118  (52.7 \%)\\
             & \emph{BGG} &  \emph{3  (5.4 \%)} &  \emph{38  (67.9 \%)} &  \emph{15  (26.8 \%)}\\
             & \emph{Satellites} &  \emph{2  (1.2 \%)} &  \emph{63  (37.5 \%)} &  \emph{103  (61.3 \%)}\\
@@ -330,9 +318,9 @@ independent volunteer classifications that are aggregated into debiaised vote fr
 morphology ``elliptical'' if the \texttt{p\_el\_debiased} value is greater than 0.5, and ``spiral'' if the \texttt{p\_cs\_debiased} value is greater than 0.5. 
 Other cases are considered as ``uncertain''. The morphologies found for each sample are shown in table \ref{tab:morphologies}.
 Barnard two-sided exact tests were performed to compare the fraction of each morphology between \CG{} and each control sample. The p-values found are 
- for ellipticals and  for spirals versus \CB{} sample, 
-   and   versus \CC{} and    
- and   versus \RG. Morphologies of \CG, wich we identified as cores of richer groups in 
+$1.4 \times 10^{-3}$ for ellipticals and $1.2 \times 10^{-3}$ for spirals versus \CB{} sample, 
+ $3.3 \times 10^{-3}$  and $3.4 \times 10^{-2}$  versus \CC{} and  $2.2 \times 10^{-7}$  
+ and $5.9 \times 10^{-7}$  versus \RG. Morphologies of \CG, wich we identified as cores of richer groups in 
  \cite{Tricottet+25}, have morphologies significantly different from ordinary groups of four members. Figure \ref{fig:galaxies_morph_sfr} displays the sSFR against masses for galaxies from the SDSS selection and for \CG{}s galaxies.
 
 
@@ -341,11 +329,11 @@ Barnard two-sided exact tests were performed to compare the fraction of each mor
     \begin{tabular}{lccc}
         \toprule
             \textbf{Sample} & \textbf{  Elliptical  } & \textbf{  Spiral  } & \textbf{  Uncertain  } \\
-            \CG &  124  ( \%) &  86  ( \%)&  38  ( \%) \\
-            \CB &  1107  ( \%) &  1268  ( \%) &  421  ( \%) \\
-            \CC &  1215  ( \%) &  1251  ( \%) &  542  ( \%) \\
-            \RG &  60  ( \%) &  129  ( \%) &  35  ( \%)\\
-            \emph{SDSS selection} &  \emph{10091 ( \%)} &  \emph{34715  ( \%)} &  \emph{7725  ( \%)}\\
+            \CG &  124  (50.0 \%) &  86  (34.7 \%)&  38  (15.3 \%) \\
+            \CB &  1106  (39.6 \%) &  1266  (45.3 \%) &  420  (15.0 \%) \\
+            \CC &  1215  (40.4 \%) &  1249  (41.6 \%) &  540  (18.0 \%) \\
+            \RG &  60  (26.8 \%) &  129  (57.6 \%) &  35  (15.6 \%)\\
+            \emph{SDSS selection} &  \emph{10091 (19.2 \%)} &  \emph{34715  (66.1 \%)} &  \emph{7725  (14.7 \%)}\\
          \midrule
         \bottomrule
     \end{tabular}
@@ -366,37 +354,38 @@ Barnard two-sided exact tests were performed to compare the fraction of each mor
 
 
 
-Starforming \CG{} are composed of  of their galaxies classified as spiral 
-(\% once galaxies having uncertain morphology removed) and 
- (\% once galaxies having uncertain morphology removed) elliptical.
-These figures are  (\%) spiral
-and  (\%) elliptical galaxies for \CB{}, 
- (\%) spiral
-and  (\%) elliptical galaxies for \CC{}
-and  (\%) spiral
-and  (\%) elliptical galaxies for \RG{}. 
+Starforming \CG{} are composed of 58 of their galaxies classified as spiral 
+($84.1$\% once galaxies having uncertain morphology removed) and 
+11 ($15.9$\% once galaxies having uncertain morphology removed) elliptical.
+These figures are 809 ($88.4$\%) spiral
+and 106 ($11.6$\%) elliptical galaxies for \CB{}, 
+851 ($84.3$\%) spiral
+and 159 ($15.7$\%) elliptical galaxies for \CC{}
+and 91 ($91$\%) spiral
+and 9 ($9$\%) elliptical galaxies for \RG{}. 
 The probability that those fractions come from 
-the same distribution is estimated from the  as  against \CB,
- against \CC{} and  against \RG. There is thus 
+the same distribution is estimated from the Barnard two-sided exact test as $0.29$ against \CB,
+$0.97$ against \CC{} and $0.19$ against \RG. There is thus 
 neither significant excess nor lack of 
 starforming elliptical galaxies in \CG{} compared to all our control samples.
 
-If we restrict the comparison to BGGs only, we find  Elliptical BGGs (\% of the BGGs) and
- Spiral BGGs (\%) 
+If we restrict the comparison to BGGs only, we find 36 Elliptical BGGs (58.1\% of the BGGs) and
+17 Spiral BGGs (27.4\%) 
  in \CG{}.
   This is to be compared to 
-  (\%) Elliptical and
-  (\%) Spiral galaxies in \CB{}, 
-  (\%) Elliptical and
-  (\%)  Spiral in \CC{},
-  and   (\%) Elliptical and
-   (\%) Quenched
+ 405 (58.0\%) Elliptical and
+ 195 (27.9\%) Spiral galaxies in \CB{}, 
+ 424 (56.5\%) Elliptical and
+ 216 (28.8\%)  Spiral in \CC{},
+  and  21 (37.5\%) Elliptical and
+  26 (46.4\%) Spiral
   in \RG{}. 
-The p-values found from  are 
-   against \CB,
-   against \CC{} and 
-    against \RG. 
-There is thus no significant difference in the fraction of star-forming BGGs between \CG{} and our control samples.  
+The p-values found from two-sided Fisher exact test are 
+  1.00 against \CB,
+  0.88 against \CC{} and 
+  0.03  against \RG. 
+We can therefore see that BGG morphologies are different between \CG{} and \RG{}: \CG{} BGGs are more likely 
+to be elliptical than \RG{} BGGs.  
 
 \section{sSFR}
 
@@ -576,13 +565,13 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
   RG4 &
   
     $-11.14$ $\pm$ 0.19 &
-    $-10.58$ $\pm$ 0.17  & 
+    $-10.58$ $\pm$ 0.16  & 
   
     $-20.69$ $\pm$ 0.14 &
-    $-20.74$ $\pm$ 0.28  & 
+    $-20.74$ $\pm$ 0.27  & 
   
     $10.32$ $\pm$ 0.07 &
-    $10.19$ $\pm$ 0.12 
+    $10.19$ $\pm$ 0.13 
    \\
 
 
@@ -635,7 +624,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
     $-20.34$ $\pm$ 0.18  & 
   
     $10.22$ $\pm$ 0.05 &
-    $10.09$ $\pm$ 0.07 
+    $10.09$ $\pm$ 0.06 
    \\
 
   Control4B &
@@ -652,7 +641,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
 
   Control4C &
   
-    $-10.96$ $\pm$ 0.05 &
+    $-10.96$ $\pm$ 0.04 &
     $-10.6$ $\pm$ 0.07  & 
   
     $-19.8$ $\pm$ 0.04 &
@@ -710,6 +699,8 @@ We model the star-forming main sequence as a power law in stellar mass, to vario
 We then choose to use order 2 to compute the residuals of each star-forming galaxy to the main sequence,
 and plot their histograms in figure \ref{fig:main_sequence_residuals}.
 
+The median main-sequence residual of CG4 galaxies is:
+\begin{itemize}
 
 
 
@@ -765,15 +756,13 @@ and plot their histograms in figure \ref{fig:main_sequence_residuals}.
 
 
 
-The median main-sequence residual of CG4 galaxies is
 
-significantly different
 
-from that of Control4B,
+\item significantly different from that of Control4B,
 with a median offset of
 $\Delta = 0.056$
-($0.029 \le \Delta \le 0.097$, bootstrap),
-corresponding to a $p$-value of $p = 0.059$.
+($0.029 \le \Delta \le 0.098$, bootstrap),
+corresponding to a $p$-value of $p = 0.058$.
 
 
 
@@ -785,15 +774,11 @@ corresponding to a $p$-value of $p = 0.059$.
 
 
 
-The median main-sequence residual of CG4 galaxies is
-
-significantly different
-
-from that of Control4C,
+\item significantly different from that of Control4C,
 with a median offset of
 $\Delta = 0.082$
-($0.063 \le \Delta \le 0.122$, bootstrap),
-corresponding to a $p$-value of $p = 0.008$.
+($0.062 \le \Delta \le 0.122$, bootstrap),
+corresponding to a $p$-value of $p = 0.010$.
 
 
 
@@ -805,15 +790,11 @@ corresponding to a $p$-value of $p = 0.008$.
 
 
 
-The median main-sequence residual of CG4 galaxies is
-
-not significantly different
-
-from that of RG4,
+\item not significantly different from that of RG4,
 with a median offset of
 $\Delta = 0.046$
-($-0.037 \le \Delta \le 0.097$, bootstrap),
-corresponding to a $p$-value of $p = 0.548$.
+($-0.038 \le \Delta \le 0.100$, bootstrap),
+corresponding to a $p$-value of $p = 0.546$.
 
 
 
@@ -883,6 +864,7 @@ corresponding to a $p$-value of $p = 0.548$.
 
 
 
+\end{itemize}
 
 \begin{figure}
     \centering
@@ -949,18 +931,7 @@ $r = 0.09$ (p = $1.8 \times 10^{-5}$).
 
 \subsection{Dominance}
 We split groups into two categories: dominated groups, for which the BGG luminosity fraction exceeds our threshold of 0.6, and non-dominated groups.
-Among the group properties explored in this work, the quantities showing at least one significant dominated/non-dominated difference are
-
-$\left\langle R_{ij}\right\rangle$ (kpc), 
-
-$\Delta_\mathrm{BGG-cen}/ \langle R_{ij} \rangle$, 
-
-$\sigma_v$ (km s$^{-1}$), 
-
-$\Delta V_\mathrm{BGG}/\sigma_v$ and 
-
- $L_\mathrm{group}$ ($L_\odot$). 
-
+Among the group properties explored in this work, the quantities showing at least one significant dominated/non-dominated difference are $\left\langle R_{ij}\right\rangle$, $\Delta_\mathrm{BGG-cen}/ \langle R_{ij} \rangle$, $\sigma_v$, $\Delta V_\mathrm{BGG}/\sigma_v$ and $L_\mathrm{group}$.
 
 
 
@@ -968,20 +939,20 @@ In CG$_4$, no dominated/non-dominated difference remains significant after the F
 
 
 
-In Control$_{4B}$, the strongest corrected dominated/non-dominated separation concerns  $L_\mathrm{group}$ ($L_\odot$):
-the dominated groups have a median value of 9.1e+10, compared to 1.28e+11 for the non-dominated ones
+In Control$_{4B}$, the strongest corrected dominated/non-dominated separation concerns $L_\mathrm{group}$:
+the dominated groups have a median value of $9.1\times 10^{10}$ $L_\odot$, compared to $1.28\times 10^{11}$ $L_\odot$ for the non-dominated ones
 (p$_\mathrm{adj}$ = $<10^{-6}$; Cliff's $\delta$ = -0.55).
 
 
 
-In Control$_{4C}$, the strongest corrected dominated/non-dominated separation concerns  $L_\mathrm{group}$ ($L_\odot$):
-the dominated groups have a median value of 8.49e+10, compared to 9.54e+10 for the non-dominated ones
+In Control$_{4C}$, the strongest corrected dominated/non-dominated separation concerns $L_\mathrm{group}$:
+the dominated groups have a median value of $8.49\times 10^{10}$ $L_\odot$, compared to $9.54\times 10^{10}$ $L_\odot$ for the non-dominated ones
 (p$_\mathrm{adj}$ = $<10^{-6}$; Cliff's $\delta$ = -0.25).
 
 
 
-In RG$_4$, the strongest corrected dominated/non-dominated separation concerns  $L_\mathrm{group}$ ($L_\odot$):
-the dominated groups have a median value of 7.09e+10, compared to 9.82e+10 for the non-dominated ones
+In RG$_4$, the strongest corrected dominated/non-dominated separation concerns $L_\mathrm{group}$:
+the dominated groups have a median value of $7.09\times 10^{10}$ $L_\odot$, compared to $9.82\times 10^{10}$ $L_\odot$ for the non-dominated ones
 (p$_\mathrm{adj}$ = $7.8 \times 10^{-5}$; Cliff's $\delta$ = -0.59).
 
 
@@ -989,40 +960,40 @@ the dominated groups have a median value of 7.09e+10, compared to 9.82e+10 for t
 
 The group spiral fraction also correlates significantly with the group-scale observables in a subset of the samples.
 
-For Control$_{4C}$ dominated groups, $S_\mathrm{frac}$ correlates with $\left\langle R_{ij}\right\rangle$ (kpc)
+For Control$_{4C}$ dominated groups, $S_\mathrm{frac}$ correlates with $\left\langle R_{ij}\right\rangle$
 ($\rho_\mathrm{S} = 0.38$, 527 groups, p = $<10^{-6}$).
 
-For Control$_{4C}$ non-dominated groups, $S_\mathrm{frac}$ correlates with $\left\langle R_{ij}\right\rangle$ (kpc)
+For Control$_{4C}$ non-dominated groups, $S_\mathrm{frac}$ correlates with $\left\langle R_{ij}\right\rangle$
 ($\rho_\mathrm{S} = 0.35$, 224 groups, p = $<10^{-6}$).
 
-For Control$_{4C}$ dominated groups, $S_\mathrm{frac}$ correlates with $\sigma_v$ (km s$^{-1}$)
+For Control$_{4C}$ dominated groups, $S_\mathrm{frac}$ correlates with $\sigma_v$
 ($\rho_\mathrm{S} = -0.23$, 527 groups, p = $<10^{-6}$).
 
-For Control$_{4C}$ dominated groups, $S_\mathrm{frac}$ correlates with  $L_\mathrm{group}$ ($L_\odot$)
+For Control$_{4C}$ dominated groups, $S_\mathrm{frac}$ correlates with $L_\mathrm{group}$
 ($\rho_\mathrm{S} = -0.15$, 527 groups, p = $8.4 \times 10^{-4}$).
 
-For Control$_{4B}$ non-dominated groups, $S_\mathrm{frac}$ correlates with  $L_\mathrm{group}$ ($L_\odot$)
+For Control$_{4B}$ non-dominated groups, $S_\mathrm{frac}$ correlates with $L_\mathrm{group}$
 ($\rho_\mathrm{S} = -0.14$, 504 groups, p = $1.4 \times 10^{-3}$).
 
-For CG$_4$ dominated groups, $S_\mathrm{frac}$ correlates with  $L_\mathrm{group}$ ($L_\odot$)
+For CG$_4$ dominated groups, $S_\mathrm{frac}$ correlates with $L_\mathrm{group}$
 ($\rho_\mathrm{S} = -0.50$, 36 groups, p = $1.9 \times 10^{-3}$).
 
-For Control$_{4C}$ non-dominated groups, $S_\mathrm{frac}$ correlates with $\sigma_v$ (km s$^{-1}$)
+For Control$_{4C}$ non-dominated groups, $S_\mathrm{frac}$ correlates with $\sigma_v$
 ($\rho_\mathrm{S} = -0.20$, 224 groups, p = $2.6 \times 10^{-3}$).
 
 For CG$_4$ non-dominated groups, $S_\mathrm{frac}$ correlates with $\Delta V_\mathrm{BGG}/\sigma_v$
 ($\rho_\mathrm{S} = -0.53$, 26 groups, p = $5.6 \times 10^{-3}$).
 
-For Control$_{4C}$ non-dominated groups, $S_\mathrm{frac}$ correlates with  $L_\mathrm{group}$ ($L_\odot$)
+For Control$_{4C}$ non-dominated groups, $S_\mathrm{frac}$ correlates with $L_\mathrm{group}$
 ($\rho_\mathrm{S} = -0.15$, 224 groups, p = $0.02$).
 
-For Control$_{4B}$ non-dominated groups, $S_\mathrm{frac}$ correlates with $\sigma_v$ (km s$^{-1}$)
+For Control$_{4B}$ non-dominated groups, $S_\mathrm{frac}$ correlates with $\sigma_v$
 ($\rho_\mathrm{S} = -0.09$, 504 groups, p = $0.03$).
 
-For Control$_{4B}$ non-dominated groups, $S_\mathrm{frac}$ correlates with $\left\langle R_{ij}\right\rangle$ (kpc)
+For Control$_{4B}$ non-dominated groups, $S_\mathrm{frac}$ correlates with $\left\langle R_{ij}\right\rangle$
 ($\rho_\mathrm{S} = 0.09$, 504 groups, p = $0.04$).
 
-For CG$_4$ non-dominated groups, $S_\mathrm{frac}$ correlates with $\left\langle R_{ij}\right\rangle$ (kpc)
+For CG$_4$ non-dominated groups, $S_\mathrm{frac}$ correlates with $\left\langle R_{ij}\right\rangle$
 ($\rho_\mathrm{S} = 0.40$, 26 groups, p = $0.04$).
 
 
@@ -1097,6 +1068,15 @@ All galaxies are redder when they have a higher stellar mass, as per \cite{Alpas
 Stellar mass is therefore a confounding factor when comparing the colors of galaxies in different samples, 
 as they do not necessarily have the same mass distribution. We will therefore compare colours properties in stellar mass bins.
 
+\section{Conclusion}
+
+\section{Temporary conclusion}
+
+After removing systems classified as split, we find that compact groups differ from regular four-member groups mainly through their galaxy population mix. Galaxies in CG4 are more frequently elliptical and less frequently spiral than galaxies in RG4, with highly significant differences in both fractions. This morphological difference is also present among BGGs: CG4 BGGs are more often elliptical than RG4 BGGs.
+
+The star-formation difference is more specific. CG4 satellites are significantly less frequently star-forming than RG4 satellites, while the star-forming fraction of BGGs does not differ significantly between the two samples. Moreover, among galaxies that remain star-forming, CG4 galaxies do not show a significant offset from RG4 galaxies relative to the star-forming main sequence.
+
+These results suggest that compact groups are not simply denser versions of ordinary four-member groups. Rather, they appear to host a more evolved galaxy population, with an enhanced fraction of early-type galaxies and a reduced fraction of star-forming satellites. The present analysis is therefore consistent with enhanced morphological transformation and quenching in compact-group environments, although it does not yet distinguish between compact-group-specific evolution, pre-processing in larger-scale structures, and selection effects.
 
 \begin{appendix} %First appendix
 \section*{Interpolation points for sSFR classification}

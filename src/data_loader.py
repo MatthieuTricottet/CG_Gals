@@ -20,8 +20,12 @@ import seaborn as sns
 import time as time
 import re as re
 from io import StringIO
+import pickle as pkl
 
-import config as co
+try:
+    import config as co
+except ModuleNotFoundError:  # pragma: no cover
+    from . import config as co
 
 #* --------------------------------------------------------------------------------
 #* Personal librairies imports
@@ -30,21 +34,30 @@ import sys, os
 src_path = os.path.abspath(os.path.join("..", "src"))
 if src_path not in sys.path:
     sys.path.insert(0, src_path)
-from utils import astro_utils as au
-from utils import maths_utils  as mu
-from utils import stats_utils  as su
-from utils import graphics_utils  as gu
-from utils import labels_utils  as lu
+try:
+    from utils import astro_utils as au
+    from utils import maths_utils as mu
+    from utils import stats_utils as su
+    from utils import graphics_utils as gu
+    from utils import labels_utils as lu
+except ModuleNotFoundError:  # pragma: no cover
+    from .utils import astro_utils as au
+    from .utils import maths_utils as mu
+    from .utils import stats_utils as su
+    from .utils import graphics_utils as gu
+    from .utils import labels_utils as lu
 
 #* --------------------------------------------------------------------------------
 #* Global variables
 #* --------------------------------------------------------------------------------
-import config as co
 
 #* --------------------------------------------------------------------------------
 #* Project functions imports
 #* --------------------------------------------------------------------------------
-import generate_report as report
+try:
+    import generate_report as report
+except ModuleNotFoundError:  # pragma: no cover
+    from . import generate_report as report
 
 
 #* --------------------------------------------------------------------------------
@@ -78,6 +91,52 @@ def load_previous_samples():
             print(f"{len(my_sample[file])} objects loaded from {file}")
 
     return my_sample
+
+
+def _load_cached_sdss():
+    """Load cached SDSS tables from the processed sample, if available."""
+
+    cache_path = os.path.join(co.DATA_PATH, co.PROCESS_SAMPLES)
+    if not os.path.exists(cache_path):
+        return None
+
+    try:
+        with open(cache_path, "rb") as file:
+            sample = pkl.load(file)
+    except Exception as exc:
+        if co.VERBOSE:
+            print(f"   Could not read cached SDSS data from {cache_path}: {exc}")
+        return None
+
+    if "SDSS_withAGN" not in sample or "SDSS" not in sample:
+        return None
+
+    return sample["SDSS_withAGN"].copy(), sample["SDSS"].copy()
+
+
+def _fallback_cached_sdss(exc):
+    """Return cached SDSS data after a failed remote query, or raise clearly."""
+
+    cached = _load_cached_sdss()
+    if cached is None:
+        raise RuntimeError(
+            "SDSS query failed and no cached SDSS data were found in "
+            f"{co.DATA_PATH + co.PROCESS_SAMPLES}. "
+            "Run with a working SDSS connection once, or set REBUILD_SAMPLE=False "
+            "to use an existing processed sample."
+        ) from exc
+
+    SDSS_withAGN_df, SDSS_df = cached
+    report.append_json("SDSS_source", "cached processed_sample.pkl", build=True)
+    report.append_json("SDSS_Gals_with_AGN", len(SDSS_withAGN_df), build=True)
+    report.append_json("SDSS_Gals_AGN", len(SDSS_df), build=True)
+
+    if co.VERBOSE:
+        print(f"   SDSS query failed ({exc.__class__.__name__}: {exc})")
+        print("   Using cached SDSS data from processed_sample.pkl")
+        print(f"   {len(SDSS_df)} non-AGN galaxies loaded from cache.")
+
+    return SDSS_withAGN_df, SDSS_df
 
     
 def remove_split_CG(Gals,Groups):
@@ -207,8 +266,8 @@ def load_SDSS():
         g.sfr_tot_p50, g.specsfr_tot_p50, g.lgm_tot_p50,
         l.h_alpha_eqw, l.h_beta_eqw, l.oiii_5007_eqw, l.nii_6584_eqw,
         l.h_alpha_flux, l.h_beta_flux, l.oiii_5007_flux, l.nii_6584_flux,
-        z. p_el_debiased AS p_E,
-        z. p_cs_debiased     AS p_S
+        z.p_el_debiased AS p_E,
+        z.p_cs_debiased AS p_S
     FROM SpecObj AS s
         JOIN PhotoObj AS p ON s.bestObjID = p.objID
         JOIN galSpecExtra as g ON s.specObjID = g.specObjID
@@ -221,10 +280,16 @@ def load_SDSS():
     """
     report.append_json('SDSS_query', query,build=True)
 
-    result = SDSS.query_sql(query, data_release=co.DATA_RELEASE)
+    try:
+        result = SDSS.query_sql(query, data_release=co.DATA_RELEASE)
+    except Exception as exc:
+        return _fallback_cached_sdss(exc)
+
     #* Execute the query via astroquery
     if result is None or len(result) == 0:
-        raise RuntimeError("No data retrieved. Check your query and data release.")
+        return _fallback_cached_sdss(
+            RuntimeError("No data retrieved. Check your query and data release.")
+        )
 
 
     SDSS_withAGN_df = result.to_pandas()

@@ -2,7 +2,7 @@
 
 import os
 import json
-from jinja2 import Environment, FileSystemLoader, TemplateNotFound, TemplateSyntaxError
+from jinja2 import Environment, FileSystemLoader, StrictUndefined, TemplateNotFound, TemplateSyntaxError
 import os, subprocess, re
 
 import numpy as np
@@ -78,7 +78,7 @@ def finalize_json(build=False):
 # import os
 import json
 import subprocess
-from jinja2 import Environment, FileSystemLoader, TemplateNotFound, TemplateSyntaxError
+from jinja2 import Environment, FileSystemLoader, StrictUndefined, TemplateNotFound, TemplateSyntaxError
 
 def _load_json(path):
     """Safe JSON loader: returns {} if the file doesn't exist or can't be read."""
@@ -130,6 +130,7 @@ def generate_report():
     # 3) Render LaTeX via Jinja2
     env = Environment(
         loader=FileSystemLoader(co.TEMPLATE_PATH),
+        undefined=StrictUndefined,
         block_start_string='<%', block_end_string='%>',
         variable_start_string='<<', variable_end_string='>>',
         comment_start_string='<#', comment_end_string='#>'

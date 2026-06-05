@@ -314,12 +314,45 @@ def savefig(fig,figfolder,name):
     
     
 def latex_float(f):
-    float_str = "{0:.2g}".format(f)
-    if "e" in float_str:
-        base, exponent = float_str.split("e")
-        return r"{0} \times 10^{{{1}}}".format(base, int(exponent))
+    return latex_number(f, precision=2, math_mode=False)
+
+
+def _strip_trailing_decimal_zeros(value):
+    return value.rstrip("0").rstrip(".")
+
+
+def latex_number(f, precision=3, sci_min=1e4, sci_max=1e-3, math_mode=True):
+    """Format a value for LaTeX prose without Python-style e notation."""
+
+    if f is None:
+        return "NA"
+
+    value = float(f)
+    if not np.isfinite(value):
+        return "NA"
+
+    if value == 0:
+        formatted = "0"
     else:
-        return float_str
+        abs_value = abs(value)
+        use_scientific = abs_value >= sci_min or abs_value < sci_max
+
+        if use_scientific:
+            exponent = int(np.floor(np.log10(abs_value)))
+            mantissa = value / 10**exponent
+            mantissa = round(mantissa, precision - 1)
+            if abs(mantissa) >= 10:
+                mantissa /= 10
+                exponent += 1
+            mantissa_fmt = _strip_trailing_decimal_zeros(f"{mantissa:.{precision - 1}f}")
+            formatted = rf"{mantissa_fmt}\times 10^{{{exponent}}}"
+        else:
+            decimals = max(precision - 1 - int(np.floor(np.log10(abs_value))), 0)
+            formatted = _strip_trailing_decimal_zeros(f"{value:.{decimals}f}")
+
+    if math_mode:
+        return f"${formatted}$"
+    return formatted
 
         
     
