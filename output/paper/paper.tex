@@ -1063,12 +1063,12 @@ $\rho_\mathrm{S} = 0.08$ based on 816 groups (p = $0.03$).
 \end{figure}
 
 
-\section{Coulour}
+\section{Colour}
 We derive the $(u-r)$, $(u-g)$, $(g-r)$ and $(r-i)$ colours from the matched SDSS photometry. The retained matches are 110 of 248 galaxies in CG$_4$, 931 of 2792 galaxies in Control$_{4B}$, 1478 of 3004 galaxies in Control$_{4C}$, 102 of 224 galaxies in RG$_4$. Stellar mass is a confounding variable in colour comparisons \citep{Alpaslan+15}; we therefore model each colour jointly with $\log(M_\star/M_\odot)$ rather than comparing unadjusted colour distributions.
 
 \subsection{Catalogue colour--mass relations}
 
-The hypothesis of a common colour--mass slope across catalogues is rejected for $(u-r)$ ($p=4.96\times 10^{-4}$), $(u-g)$ ($p=0.00203$), $(g-r)$ ($p=1.46\times 10^{-4}$), $(r-i)$ ($p=0.00495$). After Holm correction of the directional comparisons, significantly steeper CG$_4$ slopes are found for $(u-r)$ relative to Control$_{4C}$, with $\Delta b=0.289$ ($p_{\mathrm{Holm}}=0.00163$); for $(u-r)$ relative to SDSS, with $\Delta b=0.232$ ($p_{\mathrm{Holm}}=0.00163$); for $(u-g)$ relative to Control$_{4C}$, with $\Delta b=0.237$ ($p_{\mathrm{Holm}}=0.00287$); for $(u-g)$ relative to SDSS, with $\Delta b=0.186$ ($p_{\mathrm{Holm}}=0.00165$). These relations are shown in Fig.~\ref{fig:color_mass}.
+The hypothesis of a common colour--mass slope across catalogues is rejected for u-r ($p=4.96\times 10^{-4}$), u-g ($p=0.00203$), g-r ($p=1.46\times 10^{-4}$), r-i ($p=0.00495$). After Holm correction of the directional comparisons, significantly steeper CG$_4$ slopes are found for u-r relative to Control$_{4C}$, with $\Delta b=0.289$ ($p_{\mathrm{Holm}}=0.00163$); for u-r relative to SDSS, with $\Delta b=0.232$ ($p_{\mathrm{Holm}}=0.00163$); for u-g relative to Control$_{4C}$, with $\Delta b=0.237$ ($p_{\mathrm{Holm}}=0.00287$); for u-g relative to SDSS, with $\Delta b=0.186$ ($p_{\mathrm{Holm}}=0.00165$). These relations are shown in Fig.~\ref{fig:color_mass}.
 
 \begin{figure*}
     \centering
@@ -1079,7 +1079,7 @@ The hypothesis of a common colour--mass slope across catalogues is rejected for 
 
 \subsection{Satellite colours}
 
-To isolate an environmental difference, we pool satellites from the control catalogues as the ordinary-group population and compare them with CG$_4$ satellites at the common reference mass $\log(M_\star/M_\odot)=9.885$. At this mass, compact-group satellites are 0.124 mag bluer in $(u-r)$ ($p_{\mathrm{Holm}}=0.00909$) and 0.106 mag bluer in $(u-g)$ ($p_{\mathrm{Holm}}=0.00737$). The compact and ordinary colour--mass slopes also differ in $(u-r)$ ($b_{\mathrm{compact}}=0.819$, $b_{\mathrm{ordinary}}=0.344$, $p_{\mathrm{Holm}}=2.21\times 10^{-5}$), $(u-g)$ ($b_{\mathrm{compact}}=0.532$, $b_{\mathrm{ordinary}}=0.150$, $p_{\mathrm{Holm}}=1.42\times 10^{-4}$), $(g-r)$ ($b_{\mathrm{compact}}=0.287$, $b_{\mathrm{ordinary}}=0.195$, $p_{\mathrm{Holm}}=2.9\times 10^{-4}$). Figure~\ref{fig:satellite_colour_mass} displays the corresponding fitted relations.
+To isolate an environmental difference, we pool satellites from the control catalogues as the ordinary-group population and compare them with CG$_4$ satellites at the common reference mass $\log(M_\star/M_\odot)=9.885$. At this mass, compact-group satellites are 0.124 mag bluer in u-r ($p_{\mathrm{Holm}}=0.00909$) and 0.106 mag bluer in u-g ($p_{\mathrm{Holm}}=0.00737$). The compact and ordinary colour--mass slopes also differ in u-r ($b_{\mathrm{compact}}=0.819$, $b_{\mathrm{ordinary}}=0.344$, $p_{\mathrm{Holm}}=2.21\times 10^{-5}$), u-g ($b_{\mathrm{compact}}=0.532$, $b_{\mathrm{ordinary}}=0.150$, $p_{\mathrm{Holm}}=1.42\times 10^{-4}$), g-r ($b_{\mathrm{compact}}=0.287$, $b_{\mathrm{ordinary}}=0.195$, $p_{\mathrm{Holm}}=2.9\times 10^{-4}$). Figure~\ref{fig:satellite_colour_mass} displays the corresponding fitted relations.
 
 \begin{figure*}
     \centering
@@ -1088,9 +1088,39 @@ To isolate an environmental difference, we pool satellites from the control cata
     \label{fig:satellite_colour_mass}
 \end{figure*}
 
+\subsection{Robustness of the satellite colour result}
+
+The SDSS-photometry subset is not representative of the full galaxy catalogues: matched galaxies are systematically less massive, more actively star-forming and more frequently satellites than unmatched galaxies. The fractions with all four colours are 44.4\% in CG4, 33.3\% in Control4B, 49.2\% in Control4C, 45.5\% in RG4.
+
+We therefore refit the satellite colours with cluster-robust standard errors, using catalogue-qualified group identifiers. In the pooled comparison adjusted only for stellar mass and redshift, none of the four CG$_4$ coefficients is significantly negative after Holm correction. After additionally controlling for morphology and sSFR class, negative coefficients appear in $(u-r)$ ($\Delta=-0.127$ mag, $p_{\rm Holm}=0.0177$), $(u-g)$ ($\Delta=-0.101$ mag, $p_{\rm Holm}=0.0271$). These adjusted coefficients are control-sample dependent: the significant individual comparisons are Control4C in $(u-r)$, Control4C in $(u-g)$, Control4C in $(g-r)$.
+
+Within sSFR classes, no negative CG$_4$ residual difference survives correction for the four colours. Likewise, no within-morphology residual difference survives the same correction. Thus, the data do not isolate the colour effect to the star-forming spiral population expected for a simple interaction-triggered star-formation scenario.
+
+Figure~\ref{fig:colour_robustness_coefficients} summarizes the model and control-sample dependence. Taken together, these tests do not establish a robust global blue offset for CG$_4$ satellites; the negative full-model coefficients should instead be treated as a control-sensitive exploratory result.
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{colour_robustness_coefficients.pdf}
+    \caption{Robustness of the satellite colour coefficients. Left: pooled ordinary-group comparison before and after controlling for morphology and sSFR class. Right: mass- and redshift-adjusted comparisons against each control catalogue separately. Points show the CG$_4$ minus ordinary coefficient and bars show 95\% confidence intervals; negative values indicate bluer CG$_4$ satellites.}
+    \label{fig:colour_robustness_coefficients}
+\end{figure*}
+
+\subsection{Radial and group-level colour trends}
+
+The residual colours become bluer at larger projected distance from the BGG in CG$_4$. After Holm correction within each distance metric, significant CG$_4$ correlations are found for $(u-r)$ ($\rho_{\rm S}=-0.379$, $p_{\rm Holm}=2.6\times 10^{-4}$), for $(u-g)$ ($\rho_{\rm S}=-0.336$, $p_{\rm Holm}=0.0011$), for $(g-r)$ ($\rho_{\rm S}=-0.257$, $p_{\rm Holm}=0.00922$). This radial trend is consistent with stronger processing near the group centre and a less processed outer population, rather than centrally triggered blue colours.
+
+At group level, crossing time correlates with mean satellite $\Delta(u-r)$ ($\rho_{\rm S}=-0.418$, $p_{\rm Holm}=0.013$), median satellite $\Delta(u-r)$ ($\rho_{\rm S}=-0.409$, $p_{\rm Holm}=0.0167$), satellite blue fraction ($\rho_{\rm S}=0.369$, $p_{\rm Holm}=0.0393$). These group-level relations remain exploratory because many groups contribute only a small number of colour-matched satellites.
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{colour_residual_distance.pdf}
+    \caption{Mass- and redshift-adjusted satellite $(u-r)$ and $(u-g)$ residuals as a function of projected distance to the BGG. Lines connect binned medians for CG$_4$ and the pooled ordinary-group satellites; extreme plotting tails are omitted for readability, while the reported rank correlations use the full matched sample. More negative residuals are bluer than the ordinary-satellite reference relation.}
+    \label{fig:colour_residual_distance}
+\end{figure*}
+
 \subsection{BGG and satellite colours}
 
-The mean satellite colour varies with the BGG colour across the combined group sample: for $(u-r)$, $r_{\mathrm{P}}=0.360$ ($p_{\mathrm{Holm}}=7.91\times 10^{-7}$) and $\rho_{\mathrm{S}}=0.321$ ($p_{\mathrm{Holm}}=1.3\times 10^{-5}$); for $(u-g)$, $r_{\mathrm{P}}=0.326$ ($p_{\mathrm{Holm}}=6.01\times 10^{-6}$) and $\rho_{\mathrm{S}}=0.325$ ($p_{\mathrm{Holm}}=1.3\times 10^{-5}$); for $(g-r)$, $r_{\mathrm{P}}=0.340$ ($p_{\mathrm{Holm}}=2.94\times 10^{-6}$) and $\rho_{\mathrm{S}}=0.283$ ($p_{\mathrm{Holm}}=1.13\times 10^{-4}$); for $(r-i)$, $r_{\mathrm{P}}=0.142$ ($p_{\mathrm{Holm}}=0.0464$) and $\rho_{\mathrm{S}}=0.232$ ($p_{\mathrm{Holm}}=0.00103$). After Holm correction, the BGG--satellite colour slope in CG$_4$ does not differ significantly from any control catalogue in any of the four colours. Figure~\ref{fig:bgg_satellite_colour} shows these group-level relations.
+The mean satellite colour varies with the BGG colour across the combined group sample: for u-r, $r_{\mathrm{P}}=0.360$ ($p_{\mathrm{Holm}}=7.91\times 10^{-7}$) and $\rho_{\mathrm{S}}=0.321$ ($p_{\mathrm{Holm}}=1.3\times 10^{-5}$); for u-g, $r_{\mathrm{P}}=0.326$ ($p_{\mathrm{Holm}}=6.01\times 10^{-6}$) and $\rho_{\mathrm{S}}=0.325$ ($p_{\mathrm{Holm}}=1.3\times 10^{-5}$); for g-r, $r_{\mathrm{P}}=0.340$ ($p_{\mathrm{Holm}}=2.94\times 10^{-6}$) and $\rho_{\mathrm{S}}=0.283$ ($p_{\mathrm{Holm}}=1.13\times 10^{-4}$); for r-i, $r_{\mathrm{P}}=0.142$ ($p_{\mathrm{Holm}}=0.0464$) and $\rho_{\mathrm{S}}=0.232$ ($p_{\mathrm{Holm}}=0.00103$). After Holm correction, the BGG--satellite colour slope in CG$_4$ does not differ significantly from any control catalogue in any of the four colours. Figure~\ref{fig:bgg_satellite_colour} shows these group-level relations.
 
 \begin{figure*}
     \centering
@@ -1101,7 +1131,7 @@ The mean satellite colour varies with the BGG colour across the combined group s
 
 \subsection{BGG colours and luminosity domination}
 
-The BGG stellar-mass distributions are significantly different between the domination classes ($p=7.32\times 10^{-4}$); the median $\log(M_\star/M_\odot)$ values are 11.092 for dominated and 10.976 for non-dominated BGGs. Before mass adjustment, a significant colour difference is found in $(g-r)$ ($\Delta_{\mathrm{median}}=0.021$, $p_{\mathrm{Holm}}=0.00157$). At the common reference mass $\log(M_\star/M_\odot)=11.042$, the adjusted results are $(u-r)$: $\Delta=-0.002$ mag ($p_{\mathrm{Holm}}=1$); $(u-g)$: $\Delta=-0.010$ mag ($p_{\mathrm{Holm}}=1$); $(g-r)$: $\Delta=0.007$ mag ($p_{\mathrm{Holm}}=1$); $(r-i)$: $\Delta=0.001$ mag ($p_{\mathrm{Holm}}=1$). Thus, no dominated/non-dominated BGG colour offset remains significant after controlling for stellar mass. The mass dependence and class fits are shown in Fig.~\ref{fig:bgg_colour_domination}.
+The BGG stellar-mass distributions are significantly different between the domination classes ($p=7.32\times 10^{-4}$); the median $\log(M_\star/M_\odot)$ values are 11.092 for dominated and 10.976 for non-dominated BGGs. Before mass adjustment, a significant colour difference is found in g-r ($\Delta_{\mathrm{median}}=0.021$, $p_{\mathrm{Holm}}=0.00157$). At the common reference mass $\log(M_\star/M_\odot)=11.042$, the adjusted results are u-r: $\Delta=-0.002$ mag ($p_{\mathrm{Holm}}=1$); u-g: $\Delta=-0.010$ mag ($p_{\mathrm{Holm}}=1$); g-r: $\Delta=0.007$ mag ($p_{\mathrm{Holm}}=1$); r-i: $\Delta=0.001$ mag ($p_{\mathrm{Holm}}=1$). Thus, no dominated/non-dominated BGG colour offset remains significant after controlling for stellar mass. The mass dependence and class fits are shown in Fig.~\ref{fig:bgg_colour_domination}.
 
 \begin{figure*}
     \centering
@@ -1116,7 +1146,7 @@ After removing systems classified as split, we find that compact groups differ f
 
 The star-formation difference is more specific. CG4 satellites are significantly less frequently star-forming than RG4 satellites, while the star-forming fraction of BGGs does not differ significantly between the two samples. Moreover, among galaxies that remain star-forming, CG4 galaxies do not show a significant offset from RG4 galaxies relative to the star-forming main sequence.
 
-The colour analysis does not indicate a simple uniform reddening of compact-group galaxies. At fixed stellar mass, significant offsets relative to ordinary-group satellites are found in $(u-r)$ (CG$_4$ satellites are bluer) and in $(u-g)$ (CG$_4$ satellites are bluer). The BGG and mean satellite colours are correlated, but the corresponding CG$_4$ relations do not differ significantly from those of the control catalogues. Likewise, the apparent colour difference between dominated and non-dominated BGGs disappears after controlling for stellar mass, showing that their different mass distributions account for the unadjusted result.
+The colour analysis does not indicate a simple uniform reddening of compact-group galaxies. The pooled mass- and redshift-adjusted comparison does not support a statistically robust blue CG$_4$ satellite offset. Negative coefficients appear after adding morphology and sSFR class, but the result is sensitive to the choice of control catalogue. Neither the sSFR-class nor morphology splits isolate a significant effect among star-forming spirals. The radial residual trends instead indicate that outer CG$_4$ satellites are bluer than inner satellites, consistent with stronger processing toward the BGG. The BGG and mean satellite colours are correlated, but the corresponding CG$_4$ relations do not differ significantly from those of the control catalogues. Likewise, the apparent colour difference between dominated and non-dominated BGGs disappears after controlling for stellar mass.
 
 These results suggest that compact groups are not simply denser versions of ordinary four-member groups. Rather, they appear to host a more evolved galaxy population, with an enhanced fraction of early-type galaxies and a reduced fraction of star-forming satellites. The present analysis is therefore consistent with enhanced morphological transformation and quenching in compact-group environments, although it does not yet distinguish between compact-group-specific evolution, pre-processing in larger-scale structures, and selection effects.
 

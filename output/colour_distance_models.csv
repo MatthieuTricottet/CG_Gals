@@ -1,0 +1,31 @@
+sample,distance,colour,model,term,coefficient,p_value,p_holm,p_holm_significant
+CG4,dist2BGG_kpc,u_minus_r,within_sample,dist2BGG_kpc,-0.001770561155381425,0.00028577507415362036,0.0008573252224608611,True
+Control4B,dist2BGG_kpc,u_minus_r,within_sample,dist2BGG_kpc,-0.0003758591568689247,0.0018333797529965713,0.0036667595059931427,True
+Control4C,dist2BGG_kpc,u_minus_r,within_sample,dist2BGG_kpc,-0.0013666478819549133,7.75470696525342e-07,1.550941393050684e-06,True
+RG4,dist2BGG_kpc,u_minus_r,within_sample,dist2BGG_kpc,-0.000290841162306296,0.1101337588916712,0.2202675177833424,False
+Pooled interaction,dist2BGG_kpc,u_minus_r,CG4_distance_interaction,is_CG4_numeric:dist2BGG_kpc,-0.0015087950107109747,0.005079230325290187,0.01523769097587056,True
+CG4,dist2BGG_kpc,u_minus_g,within_sample,dist2BGG_kpc,-0.0013686461659651642,0.0009242268188107358,0.0018484536376214716,True
+Control4B,dist2BGG_kpc,u_minus_g,within_sample,dist2BGG_kpc,-0.00025202916139051756,0.006519482338350214,0.006519482338350214,True
+Control4C,dist2BGG_kpc,u_minus_g,within_sample,dist2BGG_kpc,-0.0010728894504051158,2.1326073723158473e-05,2.1326073723158473e-05,True
+RG4,dist2BGG_kpc,u_minus_g,within_sample,dist2BGG_kpc,-0.0001861791663316955,0.2135490697476976,0.2202675177833424,False
+Pooled interaction,dist2BGG_kpc,u_minus_g,CG4_distance_interaction,is_CG4_numeric:dist2BGG_kpc,-0.0012300555275901318,0.009396850127195683,0.018793700254391366,True
+CG4,dist2BGG_kpc,g_minus_r,within_sample,dist2BGG_kpc,-0.0004019149894162614,0.011953255867886736,0.011953255867886736,True
+Control4B,dist2BGG_kpc,g_minus_r,within_sample,dist2BGG_kpc,-0.0001238299954784072,0.00019748884266825828,0.0005924665280047748,True
+Control4C,dist2BGG_kpc,g_minus_r,within_sample,dist2BGG_kpc,-0.00029375843154979745,3.958794665182991e-10,1.1876383995548972e-09,True
+RG4,dist2BGG_kpc,g_minus_r,within_sample,dist2BGG_kpc,-0.00010466199597460035,0.03195382891463367,0.09586148674390102,False
+Pooled interaction,dist2BGG_kpc,g_minus_r,CG4_distance_interaction,is_CG4_numeric:dist2BGG_kpc,-0.0002787394831208409,0.07476501622034046,0.07476501622034046,False
+CG4,norm_dist,u_minus_r,within_sample,norm_dist,-0.14032501199377967,0.157296358420193,0.32766165768119504,False
+Control4B,norm_dist,u_minus_r,within_sample,norm_dist,-0.26887287418879646,0.006090782881835043,0.01827234864550513,True
+Control4C,norm_dist,u_minus_r,within_sample,norm_dist,-0.42822961778622887,0.00209238271236334,0.00627714813709002,True
+RG4,norm_dist,u_minus_r,within_sample,norm_dist,-0.11703431800522462,0.25170027363456016,0.7551008209036805,False
+Pooled interaction,norm_dist,u_minus_r,CG4_distance_interaction,is_CG4_numeric:norm_dist,0.15243292931116928,0.25927506568090075,0.5185501313618015,False
+CG4,norm_dist,u_minus_g,within_sample,norm_dist,-0.13303266388900456,0.10922055256039835,0.32766165768119504,False
+Control4B,norm_dist,u_minus_g,within_sample,norm_dist,-0.1983240230381427,0.009563462812353743,0.01827234864550513,True
+Control4C,norm_dist,u_minus_g,within_sample,norm_dist,-0.36348715603248,0.004073209807009852,0.008146419614019703,True
+RG4,norm_dist,u_minus_g,within_sample,norm_dist,-0.09068008342914143,0.28147756128604684,0.7551008209036805,False
+Pooled interaction,norm_dist,u_minus_g,CG4_distance_interaction,is_CG4_numeric:norm_dist,0.10273224270816723,0.378775807413706,0.5185501313618015,False
+CG4,norm_dist,g_minus_r,within_sample,norm_dist,-0.007292348104775158,0.7720235171854792,0.7720235171854792,False
+Control4B,norm_dist,g_minus_r,within_sample,norm_dist,-0.07054885115065372,0.006476130741032897,0.01827234864550513,True
+Control4C,norm_dist,g_minus_r,within_sample,norm_dist,-0.06474246175374884,0.006513238336182445,0.008146419614019703,True
+RG4,norm_dist,g_minus_r,within_sample,norm_dist,-0.026354234576083366,0.2922141626486836,0.7551008209036805,False
+Pooled interaction,norm_dist,g_minus_r,CG4_distance_interaction,is_CG4_numeric:norm_dist,0.049700686603001844,0.09813867030963074,0.2944160109288922,False

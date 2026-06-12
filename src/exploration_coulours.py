@@ -15,11 +15,13 @@ from statsmodels.stats.multitest import multipletests
 
 try:
     import config as co
+    import exploration_colour_robustness as colour_robustness
     import generate_report as report
     from utils import graphics_utils as gu
     from utils import labels_utils as lu
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
+    from . import exploration_colour_robustness as colour_robustness
     from . import generate_report as report
     from .utils import graphics_utils as gu
     from .utils import labels_utils as lu
@@ -50,6 +52,9 @@ PALETTE = {
     "Dominated": "#A74752",
     "Non-dominated": "#555555",
 }
+ROBUSTNESS_N_BOOT = 1000
+ROBUSTNESS_N_PERM = 1000
+ROBUSTNESS_N_GROUP_BOOT = 300
 
 
 def _as_int(series: pd.Series) -> pd.Series:
@@ -797,6 +802,437 @@ def plot_bgg_domination_relations(bgg_frame: pd.DataFrame, output_path: str) -> 
     return _save_figure(fig, output_path)
 
 
+def _add_holm_correction(
+    frame: pd.DataFrame,
+    p_column: str,
+    group_columns: list[str],
+    output_column: str,
+) -> pd.DataFrame:
+    """Apply Holm correction within explicitly defined comparison families."""
+
+    result = frame.copy()
+    result[output_column] = np.nan
+    if result.empty or p_column not in result:
+        result[f"{output_column}_significant"] = False
+        return result
+
+    grouped = result.groupby(group_columns, dropna=False).groups if group_columns else {"all": result.index}
+    for indices in grouped.values():
+        index = list(indices)
+        valid = result.loc[index, p_column].notna()
+        valid_index = result.loc[index].index[valid]
+        if len(valid_index):
+            result.loc[valid_index, output_column] = multipletests(
+                result.loc[valid_index, p_column],
+                method="holm",
+            )[1]
+    result[f"{output_column}_significant"] = result[output_column] < co.P_LIMIT
+    return result
+
+
+def _colour_display_name(colour: str) -> str:
+    mapping = {key: label for key, label, _ in COLOUR_SPECS}
+    mapping.update(colour_robustness.COLOUR_LABELS)
+    return mapping.get(colour, colour.replace("_", "-"))
+
+
+def compute_colour_robustness(
+    sample: dict[str, pd.DataFrame],
+) -> dict[str, object]:
+    """Run the covariate, selection, distance, and group-level robustness tests."""
+
+    frame = colour_robustness.build_harmonized_colour_frame(sample)
+    audit = colour_robustness.colour_missingness_table(frame)
+    matching_continuous, matching_categorical = colour_robustness.matching_bias_tests(
+        frame,
+        n_boot=ROBUSTNESS_N_BOOT,
+    )
+    _, availability_model = colour_robustness.fit_colour_availability_model(frame)
+
+    frame, residual_models = colour_robustness.make_colour_residuals(frame)
+    residual_comparisons = colour_robustness.compare_satellite_residuals(
+        frame,
+        n_boot=ROBUSTNESS_N_BOOT,
+        n_perm=ROBUSTNESS_N_PERM,
+    )
+    residual_comparisons = _add_holm_correction(
+        residual_comparisons,
+        "permutation_p",
+        ["comparison", "split_value"],
+        "permutation_p_holm",
+    )
+
+    regressions = colour_robustness.satellite_colour_regressions(frame)
+    regressions = _add_holm_correction(
+        regressions,
+        "p_value",
+        ["comparison", "model"],
+        "p_holm",
+    )
+
+    ssfr_splits = colour_robustness.compare_satellite_residuals(
+        frame,
+        split_column="sSFR_class",
+        n_boot=ROBUSTNESS_N_BOOT,
+        n_perm=ROBUSTNESS_N_PERM,
+    )
+    ssfr_splits = _add_holm_correction(
+        ssfr_splits,
+        "permutation_p",
+        ["comparison", "split_value"],
+        "permutation_p_holm",
+    )
+
+    morphology_splits = colour_robustness.compare_satellite_residuals(
+        frame,
+        split_column="morphology_harmonized",
+        n_boot=ROBUSTNESS_N_BOOT,
+        n_perm=ROBUSTNESS_N_PERM,
+    )
+    morphology_splits = _add_holm_correction(
+        morphology_splits,
+        "permutation_p",
+        ["comparison", "split_value"],
+        "permutation_p_holm",
+    )
+    morphology_regressions = colour_robustness.morphology_colour_regressions(frame)
+    morphology_regressions = _add_holm_correction(
+        morphology_regressions,
+        "p_value",
+        ["model"],
+        "p_holm",
+    )
+
+    distance_correlations, distance_models = colour_robustness.distance_colour_analysis(frame)
+    if not distance_correlations.empty:
+        distance_correlations = distance_correlations.loc[
+            distance_correlations["distance"].isin(["dist2BGG_kpc", "norm_dist"])
+        ].copy()
+        distance_correlations = _add_holm_correction(
+            distance_correlations,
+            "spearman_p",
+            ["sample", "distance"],
+            "spearman_p_holm",
+        )
+    if not distance_models.empty:
+        distance_models = distance_models.loc[
+            distance_models["distance"].isin(["dist2BGG_kpc", "norm_dist"])
+        ].copy()
+        distance_models = _add_holm_correction(
+            distance_models,
+            "p_value",
+            ["sample", "distance", "model"],
+            "p_holm",
+        )
+
+    group_summary = colour_robustness.build_group_colour_summary(frame)
+    group_correlations = colour_robustness.group_colour_correlations(
+        group_summary,
+        n_boot=ROBUSTNESS_N_BOOT,
+    )
+    group_correlations = _add_holm_correction(
+        group_correlations,
+        "p_value",
+        ["sample", "outcome"],
+        "p_holm",
+    )
+    class_summary = colour_robustness.group_class_summary(group_summary)
+    outliers = colour_robustness.colour_ssfr_outliers(frame)
+
+    robustness, leave_one_group_out = colour_robustness.robustness_checks(
+        frame,
+        n_group_boot=ROBUSTNESS_N_GROUP_BOOT,
+    )
+    machine_summary = colour_robustness.make_machine_summary(
+        matching_continuous,
+        matching_categorical,
+        regressions,
+        ssfr_splits,
+        morphology_splits,
+        distance_correlations,
+        robustness,
+    )
+
+    matching_biased = bool(
+        (matching_continuous["cliffs_delta"].abs() >= 0.147).any()
+        or (matching_categorical["cramers_v"] >= 0.1).any()
+    )
+    pooled_baseline = regressions.loc[
+        (regressions["comparison"] == "Ordinary pooled")
+        & (regressions["model"] == "mass+redshift")
+    ].copy()
+    pooled_full = regressions.loc[
+        (regressions["comparison"] == "Ordinary pooled")
+        & (regressions["model"] == "full")
+    ].copy()
+    significant_baseline_blue = pooled_baseline.loc[
+        (pooled_baseline["is_CG4_coefficient"] < 0)
+        & pooled_baseline["p_holm_significant"]
+    ].copy()
+    significant_full_blue = pooled_full.loc[
+        (pooled_full["is_CG4_coefficient"] < 0)
+        & pooled_full["p_holm_significant"]
+    ].copy()
+    control_specific = regressions.loc[
+        regressions["comparison"].isin(CONTROL_LABELS)
+        & (regressions["model"] == "full")
+        & (regressions["is_CG4_coefficient"] < 0)
+        & regressions["p_holm_significant"]
+    ].copy()
+    ssfr_significant = ssfr_splits.loc[
+        (ssfr_splits["comparison"] == "Ordinary pooled")
+        & (ssfr_splits["median_diff"] < 0)
+        & ssfr_splits["permutation_p_holm_significant"]
+    ].copy()
+    morphology_significant = morphology_splits.loc[
+        (morphology_splits["comparison"] == "Ordinary pooled")
+        & (morphology_splits["median_diff"] < 0)
+        & morphology_splits["permutation_p_holm_significant"]
+    ].copy()
+    cg4_distance_significant = distance_correlations.loc[
+        (distance_correlations["sample"] == "CG4")
+        & distance_correlations["spearman_p_holm_significant"]
+    ].copy()
+    cg4_tcross = group_correlations.loc[
+        (group_correlations["sample"] == "CG4")
+        & (group_correlations["group_quantity"] == "t_cr")
+    ].copy()
+    robust_pooled_blue = robustness.loc[
+        (robustness["comparison"] == "Ordinary pooled")
+        & (robustness["coefficient"] < 0)
+        & (robustness["ci_high"] < 0)
+    ].copy()
+
+    control_names = sorted(control_specific["comparison"].unique().tolist())
+    if significant_baseline_blue.empty:
+        interpretation = (
+            "The pooled mass-and-redshift comparison does not establish a robust blue "
+            "offset. Negative coefficients after sSFR and morphology adjustment are "
+            "control-sample dependent and are not concentrated in star-forming or spiral "
+            "satellites, so interaction-triggered recent star formation is not the "
+            "preferred explanation."
+        )
+    elif ssfr_significant["split_value"].eq("Starforming").any() or morphology_significant[
+        "split_value"
+    ].eq("Spiral").any():
+        interpretation = (
+            "The blue offset survives the pooled robustness tests and is concentrated in "
+            "star-forming or spiral satellites, consistent with residual recent star formation."
+        )
+    else:
+        interpretation = (
+            "A pooled blue offset is present but is not isolated to star-forming spirals; "
+            "rejuvenation, dust, metallicity, or classification effects remain plausible."
+        )
+
+    summary = {
+        "matching_biased": matching_biased,
+        "baseline_blue_offset": not significant_baseline_blue.empty,
+        "full_model_blue_offset": not significant_full_blue.empty,
+        "control_dependent": len(control_names) < len(CONTROL_LABELS),
+        "significant_control_samples": control_names,
+        "ssfr_split_signal": not ssfr_significant.empty,
+        "morphology_split_signal": not morphology_significant.empty,
+        "distance_signal": not cg4_distance_significant.empty,
+        "robustness_ci_signal": not robust_pooled_blue.empty,
+        "interpretation": interpretation,
+    }
+
+    return {
+        "frame": frame,
+        "residual_models": residual_models,
+        "audit": audit,
+        "matching_continuous": matching_continuous,
+        "matching_categorical": matching_categorical,
+        "availability_model": availability_model,
+        "residual_comparisons": residual_comparisons,
+        "regressions": regressions,
+        "ssfr_splits": ssfr_splits,
+        "morphology_splits": morphology_splits,
+        "morphology_regressions": morphology_regressions,
+        "distance_correlations": distance_correlations,
+        "distance_models": distance_models,
+        "group_summary": group_summary,
+        "group_correlations": group_correlations,
+        "class_summary": class_summary,
+        "outliers": outliers,
+        "robustness": robustness,
+        "leave_one_group_out": leave_one_group_out,
+        "machine_summary": machine_summary,
+        "summary": summary,
+        "pooled_baseline": pooled_baseline,
+        "pooled_full": pooled_full,
+        "significant_baseline_blue": significant_baseline_blue,
+        "significant_full_blue": significant_full_blue,
+        "control_specific": control_specific,
+        "ssfr_significant": ssfr_significant,
+        "morphology_significant": morphology_significant,
+        "cg4_distance_significant": cg4_distance_significant,
+        "cg4_tcross": cg4_tcross,
+    }
+
+
+def plot_colour_robustness_coefficients(
+    regressions: pd.DataFrame,
+    output_path: str,
+) -> str:
+    """Show pooled model dependence and catalogue-to-catalogue heterogeneity."""
+
+    fig, axes = plt.subplots(1, 2, figsize=(7.1, 4.0), sharex=True)
+    colours = colour_robustness.COLOUR_COLUMNS
+    labels = [_colour_display_name(colour) for colour in colours]
+    pooled = regressions.loc[regressions["comparison"] == "Ordinary pooled"].copy()
+
+    offsets = {"mass+redshift": -0.12, "full": 0.12}
+    styles = {
+        "mass+redshift": ("Mass + redshift", "o", PALETTE["Ordinary"]),
+        "full": ("+ morphology + sSFR", "s", PALETTE["CG4"]),
+    }
+    y_base = np.arange(len(colours))
+    for model_name, (label, marker, colour_value) in styles.items():
+        panel = pooled.loc[pooled["model"] == model_name].set_index("colour")
+        panel = panel.reindex(colours)
+        x = panel["is_CG4_coefficient"].to_numpy(dtype=float)
+        low = panel["ci_low"].to_numpy(dtype=float)
+        high = panel["ci_high"].to_numpy(dtype=float)
+        axes[0].errorbar(
+            x,
+            y_base + offsets[model_name],
+            xerr=np.vstack([x - low, high - x]),
+            fmt=marker,
+            color=colour_value,
+            capsize=2.5,
+            markersize=5,
+            linewidth=1.1,
+            label=label,
+        )
+    axes[0].set_yticks(y_base, labels)
+    axes[0].set_title("Pooled ordinary satellites")
+    axes[0].legend(frameon=False, fontsize=7)
+
+    control_offsets = {"Control4B": -0.18, "Control4C": 0.0, "RG4": 0.18}
+    for comparison in CONTROL_LABELS:
+        panel = regressions.loc[
+            (regressions["comparison"] == comparison)
+            & (regressions["model"] == "mass+redshift")
+        ].set_index("colour")
+        panel = panel.reindex(colours)
+        x = panel["is_CG4_coefficient"].to_numpy(dtype=float)
+        low = panel["ci_low"].to_numpy(dtype=float)
+        high = panel["ci_high"].to_numpy(dtype=float)
+        axes[1].errorbar(
+            x,
+            y_base + control_offsets[comparison],
+            xerr=np.vstack([x - low, high - x]),
+            fmt="o",
+            color=PALETTE[comparison],
+            capsize=2.5,
+            markersize=4,
+            linewidth=1.0,
+            label=comparison,
+        )
+    axes[1].set_yticks(y_base, labels)
+    axes[1].set_title("Mass + redshift, separate controls")
+    axes[1].legend(frameon=False, fontsize=7)
+
+    for ax in axes:
+        ax.axvline(0, color="0.35", linestyle=":", linewidth=1)
+        ax.set_xlabel(r"CG$_4$ minus ordinary colour (mag)")
+        ax.grid(axis="x", alpha=0.18)
+        ax.tick_params(direction="in", top=True)
+    fig.tight_layout()
+    return _save_figure(fig, output_path)
+
+
+def plot_colour_residual_distance(
+    frame: pd.DataFrame,
+    output_path: str,
+) -> str:
+    """Plot u-sensitive residuals against BGG distance with robust visual summaries."""
+
+    satellites = frame.loc[frame["is_satellite"].fillna(False)].copy()
+    distance = "dist2BGG_kpc"
+    fig, axes = plt.subplots(1, 2, figsize=(7.1, 3.4), sharex=True)
+    rng = np.random.default_rng(20260612)
+
+    for ax, colour in zip(axes, ["u_minus_r", "u_minus_g"]):
+        residual = f"delta_{colour}"
+        ordinary = satellites.loc[
+            satellites["sample"].isin(CONTROL_LABELS),
+            [distance, residual],
+        ].dropna()
+        compact = satellites.loc[
+            satellites["sample"] == "CG4",
+            [distance, residual],
+        ].dropna()
+        combined = pd.concat([ordinary, compact], ignore_index=True)
+        x_high = float(combined[distance].quantile(0.99))
+        y_low, y_high = combined[residual].quantile([0.025, 0.975])
+
+        for label, panel, colour_value, alpha, size in [
+            ("Ordinary", ordinary, PALETTE["Ordinary"], 0.18, 8),
+            ("CG4", compact, PALETTE["CG4"], 0.70, 15),
+        ]:
+            display_panel = panel.loc[
+                panel[distance].between(0, x_high)
+                & panel[residual].between(y_low, y_high)
+            ].copy()
+            if label == "Ordinary" and len(display_panel) > 1500:
+                display_panel = display_panel.iloc[
+                    rng.choice(len(display_panel), 1500, replace=False)
+                ]
+            ax.scatter(
+                display_panel[distance],
+                display_panel[residual],
+                s=size,
+                alpha=alpha,
+                color=colour_value,
+                linewidths=0,
+                label=f"{label} (N={len(panel)})",
+            )
+            if len(panel) >= 5 and panel[distance].nunique() >= 3:
+                trend_panel = panel.loc[
+                    panel[distance].between(0, x_high)
+                    & panel[residual].between(y_low, y_high)
+                ].copy()
+                n_bins = min(7, max(3, len(trend_panel) // 20))
+                trend_panel["_distance_bin"] = pd.qcut(
+                    trend_panel[distance],
+                    q=n_bins,
+                    duplicates="drop",
+                )
+                binned = trend_panel.groupby("_distance_bin", observed=True)[
+                    [distance, residual]
+                ].median()
+                ax.plot(
+                    binned[distance],
+                    binned[residual],
+                    color=colour_value,
+                    linewidth=1.4,
+                )
+
+        cg_test = stats.spearmanr(compact[distance], compact[residual])
+        ax.text(
+            0.04,
+            0.95,
+            rf"CG$_4$: $\rho={cg_test.statistic:.2f}$, $p={_format_p(cg_test.pvalue)}$",
+            transform=ax.transAxes,
+            va="top",
+            fontsize=7,
+        )
+        ax.axhline(0, color="0.35", linestyle=":", linewidth=1)
+        ax.set_title(_colour_display_name(colour))
+        ax.set_xlabel("Projected distance to BGG (kpc)")
+        ax.set_ylabel(r"$\Delta$ colour (mag)")
+        ax.tick_params(direction="in", top=True, right=True)
+        ax.grid(alpha=0.15)
+        ax.set_xlim(0, x_high)
+        ax.set_ylim(float(y_low), float(y_high))
+    axes[0].legend(frameon=False, fontsize=7, loc="lower left")
+    fig.tight_layout()
+    return _save_figure(fig, output_path)
+
+
 def _format_records(frame: pd.DataFrame, p_columns: list[str] | None = None) -> list[dict[str, object]]:
     p_columns = p_columns or []
     records = []
@@ -832,9 +1268,39 @@ def _format_records(frame: pd.DataFrame, p_columns: list[str] | None = None) -> 
             "delta_at_reference_mass",
             "delta_ci_low",
             "delta_ci_high",
+            "coefficient",
+            "is_CG4_coefficient",
+            "ci_low",
+            "ci_high",
+            "median_diff",
+            "ci68_low",
+            "ci68_high",
+            "ci95_low",
+            "ci95_high",
+            "cliffs_delta",
+            "cramers_v",
+            "median_diff_over_iqr",
         ]:
             if key in record and record[key] is not None:
                 record[f"{key}_fmt"] = f"{record[key]:.3f}"
+        if "colour" in record:
+            record["colour_label"] = _colour_display_name(str(record["colour"]))
+        if "outcome" in record:
+            outcome_labels = {
+                "mean_delta_u_minus_r": r"mean satellite $\Delta(u-r)$",
+                "median_delta_u_minus_r": r"median satellite $\Delta(u-r)$",
+                "satellite_blue_fraction": "satellite blue fraction",
+                "colour_scatter": r"satellite $\Delta(u-r)$ scatter",
+            }
+            record["outcome_label"] = outcome_labels.get(
+                str(record["outcome"]),
+                str(record["outcome"]).replace("_", " "),
+            )
+        if "is_CG4_coefficient" in record and record["is_CG4_coefficient"] is not None:
+            coefficient = record["is_CG4_coefficient"]
+            record["offset_direction"] = (
+                "bluer" if coefficient < 0 else "redder" if coefficient > 0 else "unchanged"
+            )
         if "compact_minus_ordinary" in record and record["compact_minus_ordinary"] is not None:
             offset = record["compact_minus_ordinary"]
             record["offset_abs_fmt"] = f"{abs(offset):.3f}"
@@ -865,6 +1331,7 @@ def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[
     mass_summary, mass_test, raw_domination, adjusted_domination, bgg_reference_mass = (
         compute_bgg_domination_tests(bgg_frame)
     )
+    robust = compute_colour_robustness(sample)
 
     tables = {
         "colour_matching_summary.csv": matching,
@@ -877,6 +1344,23 @@ def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[
         "colour_bgg_domination_mass_summary.csv": mass_summary,
         "colour_bgg_domination_raw_tests.csv": raw_domination,
         "colour_bgg_domination_adjusted_tests.csv": adjusted_domination,
+        "colour_robustness_audit.csv": robust["audit"],
+        "colour_matching_bias_continuous.csv": robust["matching_continuous"],
+        "colour_matching_bias_categorical.csv": robust["matching_categorical"],
+        "colour_matching_availability_model.csv": robust["availability_model"],
+        "colour_residual_comparisons.csv": robust["residual_comparisons"],
+        "colour_satellite_robust_regressions.csv": robust["regressions"],
+        "colour_satellite_ssfr_splits.csv": robust["ssfr_splits"],
+        "colour_satellite_morphology_splits.csv": robust["morphology_splits"],
+        "colour_satellite_morphology_regressions.csv": robust["morphology_regressions"],
+        "colour_distance_correlations.csv": robust["distance_correlations"],
+        "colour_distance_models.csv": robust["distance_models"],
+        "colour_group_summary.csv": robust["group_summary"],
+        "colour_group_correlations.csv": robust["group_correlations"],
+        "colour_group_class_summary.csv": robust["class_summary"],
+        "colour_ssfr_outlier_counts.csv": robust["outliers"],
+        "colour_robustness_checks.csv": robust["robustness"],
+        "colour_leave_one_group_out.csv": robust["leave_one_group_out"],
     }
     for filename, frame in tables.items():
         frame.to_csv(os.path.join(co.OUTPUT_PATH, filename), index=False)
@@ -886,6 +1370,8 @@ def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[
         "satellite_environment": "satellite_colour_mass_environment.pdf",
         "bgg_satellite": "bgg_satellite_colours.pdf",
         "bgg_domination": "bgg_colour_domination.pdf",
+        "robustness_coefficients": "colour_robustness_coefficients.pdf",
+        "residual_distance": "colour_residual_distance.pdf",
     }
     figures = {
         "colour_mass": plot_colour_mass_relations(
@@ -903,6 +1389,14 @@ def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[
         "bgg_domination": plot_bgg_domination_relations(
             bgg_frame,
             os.path.join(output_dir, figure_names["bgg_domination"]),
+        ),
+        "robustness_coefficients": plot_colour_robustness_coefficients(
+            robust["regressions"],
+            os.path.join(output_dir, figure_names["robustness_coefficients"]),
+        ),
+        "residual_distance": plot_colour_residual_distance(
+            robust["frame"],
+            os.path.join(output_dir, figure_names["residual_distance"]),
         ),
     }
 
@@ -933,6 +1427,59 @@ def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[
     adjusted_records = _format_records(
         adjusted_domination,
         ["slope_difference_p", "offset_p_raw", "offset_p_holm"],
+    )
+    robust_audit_records = _format_records(robust["audit"])
+    matching_continuous_records = _format_records(
+        robust["matching_continuous"],
+        ["mannwhitney_p"],
+    )
+    matching_categorical_records = _format_records(
+        robust["matching_categorical"],
+        ["p_value"],
+    )
+    availability_records = _format_records(
+        robust["availability_model"],
+        ["p_value"],
+    )
+    residual_comparison_records = _format_records(
+        robust["residual_comparisons"],
+        ["mannwhitney_p", "permutation_p", "permutation_p_holm"],
+    )
+    robust_regression_records = _format_records(
+        robust["regressions"],
+        ["p_value", "p_holm"],
+    )
+    ssfr_split_records = _format_records(
+        robust["ssfr_splits"],
+        ["mannwhitney_p", "permutation_p", "permutation_p_holm"],
+    )
+    morphology_split_records = _format_records(
+        robust["morphology_splits"],
+        ["mannwhitney_p", "permutation_p", "permutation_p_holm"],
+    )
+    morphology_regression_records = _format_records(
+        robust["morphology_regressions"],
+        ["p_value", "p_holm"],
+    )
+    distance_correlation_records = _format_records(
+        robust["distance_correlations"],
+        ["pearson_p", "spearman_p", "spearman_p_holm"],
+    )
+    distance_model_records = _format_records(
+        robust["distance_models"],
+        ["p_value", "p_holm"],
+    )
+    group_correlation_records = _format_records(
+        robust["group_correlations"],
+        ["p_value", "p_holm"],
+    )
+    robustness_records = _format_records(
+        robust["robustness"],
+        ["p_value"],
+    )
+    leave_one_records = _format_records(
+        robust["leave_one_group_out"],
+        ["p_value"],
     )
 
     report.append_json("Colour_matching_summary", matching_records)
@@ -986,6 +1533,109 @@ def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[
         "Colour_bgg_domination_significant_adjusted",
         [row for row in adjusted_records if row["significant"]],
     )
+    report.append_json("Colour_robustness_audit", robust_audit_records)
+    report.append_json(
+        "Colour_robustness_matching_biased",
+        robust["summary"]["matching_biased"],
+    )
+    report.append_json(
+        "Colour_robustness_matching_continuous",
+        matching_continuous_records,
+    )
+    report.append_json(
+        "Colour_robustness_matching_categorical",
+        matching_categorical_records,
+    )
+    report.append_json(
+        "Colour_robustness_availability_model",
+        availability_records,
+    )
+    report.append_json(
+        "Colour_robustness_residual_comparisons",
+        residual_comparison_records,
+    )
+    report.append_json(
+        "Colour_robustness_satellite_regressions",
+        robust_regression_records,
+    )
+    report.append_json(
+        "Colour_robustness_pooled_baseline",
+        _format_records(robust["pooled_baseline"], ["p_value", "p_holm"]),
+    )
+    report.append_json(
+        "Colour_robustness_pooled_full",
+        _format_records(robust["pooled_full"], ["p_value", "p_holm"]),
+    )
+    report.append_json(
+        "Colour_robustness_significant_baseline_blue",
+        _format_records(robust["significant_baseline_blue"], ["p_value", "p_holm"]),
+    )
+    report.append_json(
+        "Colour_robustness_significant_full_blue",
+        _format_records(robust["significant_full_blue"], ["p_value", "p_holm"]),
+    )
+    report.append_json(
+        "Colour_robustness_control_specific",
+        _format_records(robust["control_specific"], ["p_value", "p_holm"]),
+    )
+    report.append_json("Colour_robustness_ssfr_splits", ssfr_split_records)
+    report.append_json(
+        "Colour_robustness_significant_ssfr_splits",
+        _format_records(
+            robust["ssfr_significant"],
+            ["mannwhitney_p", "permutation_p", "permutation_p_holm"],
+        ),
+    )
+    report.append_json(
+        "Colour_robustness_morphology_splits",
+        morphology_split_records,
+    )
+    report.append_json(
+        "Colour_robustness_significant_morphology_splits",
+        _format_records(
+            robust["morphology_significant"],
+            ["mannwhitney_p", "permutation_p", "permutation_p_holm"],
+        ),
+    )
+    report.append_json(
+        "Colour_robustness_morphology_regressions",
+        morphology_regression_records,
+    )
+    report.append_json(
+        "Colour_robustness_distance_correlations",
+        distance_correlation_records,
+    )
+    report.append_json(
+        "Colour_robustness_significant_cg4_distance",
+        _format_records(
+            robust["cg4_distance_significant"],
+            ["pearson_p", "spearman_p", "spearman_p_holm"],
+        ),
+    )
+    report.append_json(
+        "Colour_robustness_distance_models",
+        distance_model_records,
+    )
+    report.append_json(
+        "Colour_robustness_group_correlations",
+        group_correlation_records,
+    )
+    report.append_json(
+        "Colour_robustness_cg4_tcross",
+        _format_records(robust["cg4_tcross"], ["p_value", "p_holm"]),
+    )
+    report.append_json(
+        "Colour_robustness_group_class_summary",
+        _format_records(robust["class_summary"]),
+    )
+    report.append_json(
+        "Colour_robustness_outlier_counts",
+        _format_records(robust["outliers"]),
+    )
+    report.append_json("Colour_robustness_checks", robustness_records)
+    report.append_json("Colour_robustness_leave_one_group_out", leave_one_records)
+    report.append_json("Colour_robustness_summary", robust["summary"])
+    report.append_json("Colour_robustness_machine_summary", robust["machine_summary"])
     report.append_json("Colour_figures", figure_names)
 
     return {
@@ -998,5 +1648,6 @@ def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[
         "bgg_satellite_slope_tests": slope_tests,
         "bgg_domination_raw": raw_domination,
         "bgg_domination_adjusted": adjusted_domination,
+        "robustness": robust,
         "figures": figures,
     }
