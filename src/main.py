@@ -56,6 +56,7 @@ import sSFR
 import morphologies as morph
 import analysis as anl
 import exploration_dom
+import exploration_coulours
 import exploration_morph
 import exploration_ssfr
 import exploration_mvt_tcross
@@ -267,6 +268,7 @@ def run_explorations(sample):
         print("Running exploration analyses")
 
     exploration_dom.run(sample)
+    exploration_coulours.run(sample)
     exploration_morph.run(sample)
     exploration_ssfr.run(sample)
     exploration_mvt_tcross.run(sample)
