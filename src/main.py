@@ -29,7 +29,7 @@ import pickle as pkl
 #* Personal librairies imports
 #* --------------------------------------------------------------------------------
 import sys, os
-src_path = os.path.abspath(os.path.join("..", "src"))
+src_path = os.path.dirname(os.path.abspath(__file__))
 if src_path not in sys.path:
     sys.path.insert(0, src_path)
 from utils import astro_utils as au
@@ -60,6 +60,7 @@ import exploration_coulours
 import exploration_morph
 import exploration_ssfr
 import exploration_mvt_tcross
+import extended_specialness
 
 
 
@@ -289,6 +290,7 @@ def main():
     sSFR.satellites_split_by_BGG_fertility(sample)
 
     run_explorations(sample)
+    extended_specialness.run_extended_specialness(sample)
     
 
     # correlations_by_morph(sample)

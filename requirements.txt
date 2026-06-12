@@ -117,6 +117,7 @@ rpds-py==0.22.3
 scikit-learn==1.6.1
 scipy==1.15.1
 seaborn==0.13.2
+statsmodels==0.14.6
 Send2Trash==1.8.3
 setuptools==75.8.0
 six==1.17.0

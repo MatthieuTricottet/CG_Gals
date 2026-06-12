@@ -2,8 +2,14 @@
 
 import os
 import json
-from jinja2 import Environment, FileSystemLoader, StrictUndefined, TemplateNotFound, TemplateSyntaxError
-import os, subprocess, re
+from jinja2 import (
+    Environment,
+    FileSystemLoader,
+    StrictUndefined,
+    TemplateNotFound,
+    TemplateSyntaxError,
+)
+import subprocess
 
 import numpy as np
 from scipy.interpolate import interp1d
@@ -18,7 +24,8 @@ except ModuleNotFoundError:  # pragma: no cover
 
 # os.makedirs("output", exist_ok=True)
 
-#endregion
+# endregion
+
 
 def _has_non_ascii(path):
     """Return whether the file contains any non-ASCII byte."""
@@ -30,26 +37,27 @@ def _has_non_ascii(path):
     except Exception:
         return False
 
+
 def initialise_json(build=False):
     """Create the output directory and initialize the results file as an object."""
     file = co.RESULTS_BUILD if build else co.RESULTS
     os.makedirs(co.OUTPUT_PATH, exist_ok=True)
     with open(file, "w") as f:
-        f.write("{\n")     # start an object, not a list
+        f.write("{\n")  # start an object, not a list
     # first entry: write the FIGURES_PATH field
     if not build:
-        append_json('SUBFIGURES_PATH', co.SUBFIGURES_PATH)
-        append_json('BIB_FILE', co.BIB_FILE)
-        append_json('Z_MIN', co.Z_MIN)
-        append_json('Z_MAX', co.Z_MAX)
-        append_json('R_MAX', co.R_MAX)
-        append_json('DATA_RELEASE', co.DATA_RELEASE)
-        append_json('sSFR_status', co.sSFR_status)
-        append_json('Morphologies', co.Morphologies)
-        append_json('sSFR_THRESHOLD', co.sSFR_THRESHOLD)
-        append_json('sSFR_QUENCHED', co.sSFR_QUENCHED)
-        append_json('DOMINATIION_CRITERIA', co.DOMINATIION_CRITERIA)
-  
+        append_json("SUBFIGURES_PATH", co.SUBFIGURES_PATH)
+        append_json("BIB_FILE", co.BIB_FILE)
+        append_json("Z_MIN", co.Z_MIN)
+        append_json("Z_MAX", co.Z_MAX)
+        append_json("R_MAX", co.R_MAX)
+        append_json("DATA_RELEASE", co.DATA_RELEASE)
+        append_json("sSFR_status", co.sSFR_status)
+        append_json("Morphologies", co.Morphologies)
+        append_json("sSFR_THRESHOLD", co.sSFR_THRESHOLD)
+        append_json("sSFR_QUENCHED", co.sSFR_QUENCHED)
+        append_json("DOMINATIION_CRITERIA", co.DOMINATIION_CRITERIA)
+
 
 def append_json(key: str, value, build=False):
     """Append a single JSON key/value pair, followed by a comma+newline."""
@@ -70,15 +78,10 @@ def finalize_json(build=False):
     """Remove trailing comma and close the object."""
     file = co.RESULTS_BUILD if build else co.RESULTS
     with open(file, "rb+") as f:
-        f.seek(-2, os.SEEK_END)      # back over the last comma+newline
-        f.truncate()                 # remove them
-        f.write(b"\n}")              # close the object
+        f.seek(-2, os.SEEK_END)  # back over the last comma+newline
+        f.truncate()  # remove them
+        f.write(b"\n}")  # close the object
 
-
-# import os
-import json
-import subprocess
-from jinja2 import Environment, FileSystemLoader, StrictUndefined, TemplateNotFound, TemplateSyntaxError
 
 def _load_json(path):
     """Safe JSON loader: returns {} if the file doesn't exist or can't be read."""
@@ -92,14 +95,15 @@ def _load_json(path):
         print(f"[Error] reading {path}: {e}")
         return {}
 
+
 def generate_report():
     """
     Generate a LaTeX report with bibliography:
     pdflatex → bibtex → pdflatex ×2.
     """
     # 1) Load both JSONs
-    build_data   = _load_json(co.RESULTS_BUILD)   # produced only when you rebuild
-    results_data = _load_json(co.RESULTS)         # produced every run
+    build_data = _load_json(co.RESULTS_BUILD)  # produced only when you rebuild
+    results_data = _load_json(co.RESULTS)  # produced every run
 
     if not results_data and not build_data:
         print("[Error] Neither results nor build JSON could be loaded.")
@@ -111,30 +115,39 @@ def generate_report():
     # Shortcuts used in the templates
     ctx["r"] = results_data
 
-    ctx["samples"]  = ["CG4", "Control4B", "Control4C", "RG4"]
+    ctx["samples"] = ["CG4", "Control4B", "Control4C", "RG4"]
     ctx["statuses"] = ["Passive", "Starforming"]
-    ctx["morphs"]   = ["Elliptical", "Spiral", "Uncertain"]
+    ctx["morphs"] = ["Elliptical", "Spiral", "Uncertain"]
 
     # >>> NEW: provide the BGG quantities list to the template <<<
-    ctx["quantities"] = ["sSFR", "M_r", "lgm"]    
+    ctx["quantities"] = ["sSFR", "M_r", "lgm"]
     ctx["qdefs"] = [
         {"key": "sSFR", "label": r"\langle \log sSFR \rangle"},
-        {"key": "M_r",  "label": r"\langle M_r \rangle"},
-        {"key": "lgm",  "label": r"\langle \log(M_\star/M_\odot) \rangle"},  # <-- your requested label
+        {"key": "M_r", "label": r"\langle M_r \rangle"},
+        {
+            "key": "lgm",
+            "label": r"\langle \log(M_\star/M_\odot) \rangle",
+        },  # <-- your requested label
     ]
     # >>> NEW: pass the label-utils module so LaTeX can call lu.formatted_label(q) <<<
     ctx["lu"] = lu
 
     ctx["build"] = build_data
+    ctx["extended_specialness"] = results_data.get("extended_specialness", {})
 
     # 3) Render LaTeX via Jinja2
     env = Environment(
         loader=FileSystemLoader(co.TEMPLATE_PATH),
         undefined=StrictUndefined,
-        block_start_string='<%', block_end_string='%>',
-        variable_start_string='<<', variable_end_string='>>',
-        comment_start_string='<#', comment_end_string='#>'
+        block_start_string="<%",
+        block_end_string="%>",
+        variable_start_string="<<",
+        variable_end_string=">>",
+        comment_start_string="<#",
+        comment_end_string="#>",
     )
+    env.filters["fmt"] = _format_number
+    env.filters["pct"] = _format_percent
     try:
         template = env.get_template(co.TEMPLATE_FILE)
         rendered_tex = template.render(ctx)
@@ -147,8 +160,8 @@ def generate_report():
 
     # 4) Write out the .tex file (unchanged)
     report_dir = co.REPORT_PATH
-    tex_file   = co.REPORT_FILE
-    tex_path   = os.path.join(report_dir, tex_file)
+    tex_file = co.REPORT_FILE
+    tex_path = os.path.join(report_dir, tex_file)
     os.makedirs(report_dir, exist_ok=True)
     try:
         with open(tex_path, "w") as f:
@@ -166,8 +179,10 @@ def generate_report():
 
         proc = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, check=False)
         print(f"[Info] {(description or ' '.join(cmd))} -> {proc.returncode}")
-        if proc.stdout: print(proc.stdout)
-        if proc.returncode != 0 and proc.stderr: print(proc.stderr)
+        if proc.stdout:
+            print(proc.stdout)
+        if proc.returncode != 0 and proc.stderr:
+            print(proc.stderr)
         return proc
 
     # 6) Compile sequence
@@ -185,11 +200,12 @@ def generate_report():
                 "-halt-on-error",
                 "-file-line-error",
                 "-synctex=0",
-                "-output-directory", report_dir,
+                "-output-directory",
+                report_dir,
                 tex_file,
             ],
             cwd=report_dir,
-            description="pdflatex (1, quiet)"
+            description="pdflatex (1, quiet)",
         )
         if proc.returncode != 0:
             return
@@ -199,15 +215,47 @@ def generate_report():
             """Return whether a command is available on the current PATH."""
 
             try:
-                return subprocess.run([cmd, "--version"], capture_output=True, text=True).returncode == 0
+                return (
+                    subprocess.run(
+                        [cmd, "--version"], capture_output=True, text=True
+                    ).returncode
+                    == 0
+                )
             except Exception:
                 return False
 
-        bib_cmd = ["bibtex8", "-W", "-c", "utf8c.csf", basename] if _has("bibtex8") else ["bibtex", basename]
+        def _has_bibtex8_utf8():
+            """Return whether bibtex8 can find the requested UTF-8 CS file."""
+
+            if not _has("bibtex8"):
+                return False
+            local_csf = os.path.join(report_dir, "utf8c.csf")
+            if os.path.exists(local_csf):
+                return True
+            try:
+                return (
+                    subprocess.run(
+                        ["kpsewhich", "utf8c.csf"],
+                        capture_output=True,
+                        text=True,
+                        check=False,
+                    ).returncode
+                    == 0
+                )
+            except Exception:
+                return False
+
+        bib_cmd = (
+            ["bibtex8", "-W", "-c", "utf8c.csf", basename]
+            if _has_bibtex8_utf8()
+            else ["bibtex", basename]
+        )
         proc = run_proc(bib_cmd, cwd=report_dir, description=" ".join(bib_cmd))
         if proc.returncode != 0:
             blg = os.path.join(report_dir, f"{basename}.blg")
-            print(f"[Error] Bibliography failed. {os.path.basename(blg)} follows (if present):")
+            print(
+                f"[Error] Bibliography failed. {os.path.basename(blg)} follows (if present):"
+            )
             try:
                 print(open(blg, "r", encoding="utf-8", errors="replace").read())
             except FileNotFoundError:
@@ -227,11 +275,12 @@ def generate_report():
                     "-halt-on-error",
                     "-file-line-error",
                     "-synctex=0",
-                    "-output-directory", report_dir,
+                    "-output-directory",
+                    report_dir,
                     tex_file,
                 ],
                 cwd=report_dir,
-                description=f"pdflatex pass #{i+1}"
+                description=f"pdflatex pass #{i + 1}",
             )
             if proc.returncode != 0:
                 print(proc.stderr)
@@ -241,7 +290,6 @@ def generate_report():
 
     except Exception as e:
         print(f"[Error] build pipeline aborted: {e}")
-
 
 
 def _jsonable(obj):
@@ -255,6 +303,28 @@ def _jsonable(obj):
     if isinstance(obj, dict):
         return {k: _jsonable(v) for k, v in obj.items()}
     return obj
+
+
+def _format_number(value, digits=2):
+    """Format optional finite values safely for the LaTeX template."""
+
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return "n/a"
+    if not np.isfinite(number):
+        return "n/a"
+    return f"{number:.{int(digits)}f}"
+
+
+def _format_percent(value, digits=1):
+    """Format an optional fraction as a percentage without a percent sign."""
+
+    try:
+        return _format_number(100 * float(value), digits)
+    except (TypeError, ValueError):
+        return "n/a"
+
 
 def encode_interp1d(f):
     """
@@ -293,6 +363,7 @@ def encode_interp1d(f):
         # keep point pairs for easy LaTeX/Jinja iteration:
         "points": points,
     }
+
 
 def decode_interp1d(d):
     """Rebuild an interp1d from the dict we wrote."""
