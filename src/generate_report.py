@@ -134,6 +134,10 @@ def generate_report():
 
     ctx["build"] = build_data
     ctx["extended_specialness"] = results_data.get("extended_specialness", {})
+    ctx["phase_space_segregation"] = results_data.get(
+        "phase_space_segregation",
+        ctx["extended_specialness"].get("phase_space_segregation", {}),
+    )
 
     # 3) Render LaTeX via Jinja2
     env = Environment(

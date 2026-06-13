@@ -272,6 +272,9 @@ def fit_logistic_model(
             "ci95": [float(np.exp(low)), float(np.exp(high))],
             "p": float(p_values[term]),
         }
+    bic_value = getattr(fitted, "bic_llf", None)
+    if bic_value is None:
+        bic_value = getattr(fitted, "bic", None)
     result = {
         "status": "ok",
         "n": int(fitted.nobs),
@@ -280,6 +283,8 @@ def fit_logistic_model(
         "standardized_predictors": standardized,
         "covariance": covariance,
         "n_clusters": int(groups.nunique()) if groups is not None else None,
+        "aic": safe_float(getattr(fitted, "aic", None)),
+        "bic": safe_float(bic_value),
         "terms": terms,
     }
     if "is_CG4" in terms:

@@ -13,7 +13,7 @@ try:
     from extended_stats import safe_json
     from fossilness import run_fossilness_analysis
     from matched_controls import run_matched_control_analysis
-    from phase_space import run_phase_space_analysis
+    from phase_space_segregation import run_phase_space_segregation_analysis
     from recent_quenching import run_recent_quenching_analysis
     from selection_diagnostics import run_selection_diagnostics
     from specialness_models import fit_logistic_specialness_models
@@ -26,7 +26,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from .extended_stats import safe_json
     from .fossilness import run_fossilness_analysis
     from .matched_controls import run_matched_control_analysis
-    from .phase_space import run_phase_space_analysis
+    from .phase_space_segregation import run_phase_space_segregation_analysis
     from .recent_quenching import run_recent_quenching_analysis
     from .selection_diagnostics import run_selection_diagnostics
     from .specialness_models import fit_logistic_specialness_models
@@ -50,7 +50,7 @@ def run_extended_specialness(sample, output_dir: str | None = None):
     analyses = [
         ("specialness_models", fit_logistic_specialness_models),
         ("matched_controls", run_matched_control_analysis),
-        ("phase_space", run_phase_space_analysis),
+        ("phase_space_segregation", run_phase_space_segregation_analysis),
         ("fossilness", run_fossilness_analysis),
         ("recent_quenching", run_recent_quenching_analysis),
         ("agn_environment", run_agn_environment_analysis),
@@ -80,7 +80,7 @@ def run_extended_specialness(sample, output_dir: str | None = None):
             and matched.get("p_adj", 1) is not None
             and matched.get("p_adj", 1) < 0.05
         ),
-        "phase_space_signal": results["phase_space"].get(
+        "phase_space_signal": results["phase_space_segregation"].get(
             "fixed_phase_space_cg4_significant", False
         ),
         "magnitude_gap_signal": results["fossilness"].get(
@@ -90,9 +90,11 @@ def run_extended_specialness(sample, output_dir: str | None = None):
             "strong_selection_bias", False
         ),
     }
+    results["phase_space"] = results.get("phase_space_segregation", {})
     results["skipped_analyses"] = [
         name for name, _ in analyses if results[name].get("status") == "skipped"
     ]
     results = safe_json(results)
+    report.append_json("phase_space_segregation", results["phase_space_segregation"])
     report.append_json("extended_specialness", results)
     return results

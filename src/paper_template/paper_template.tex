@@ -859,43 +859,63 @@ The matched comparison is therefore consistent with the adjusted models: the mos
 <% endif %>
 <% endif %>
 
-<% set phase = es.get('phase_space', {}) %>
+<% set phase = phase_space_segregation if phase_space_segregation else es.get('phase_space_segregation', es.get('phase_space', {})) %>
 <% if phase.get('status') == 'ok' %>
-\subsection{Projected phase space}
+\subsection{Satellite segregation around the brightest group galaxy}
 
-For satellites, we use a projected BGG-centric radius normalized by the adopted group-size scale, and \(|\Delta v|/\sigma_v\), where the rest-frame velocity offset is normalized by the group velocity dispersion. In the current implementation the radial coordinate is \(R_{\rm BGG}/R_{\rm scale}\), with \(R_{\rm BGG}/R_{\rm scale}=\) \texttt{<< phase.get('coordinates_used', {}).get('radius')|replace('_', '\\_') >>}. The inner, low-velocity passive fractions are
-<% set inner = phase.get('bin_results', {}).get('inner_low_velocity', {}) %>
-<< inner.get('cg4', {}).get('passive_fraction')|pct(1) >>\% in CG$_4$ and << inner.get('control', {}).get('passive_fraction')|pct(1) >>\% in the controls.
-<% if phase.get('fixed_phase_space_cg4_significant') %>
-At least one fixed phase-space region retains a significant CG$_4$--control difference after correction.
+<% set pst = phase.get('text_summary', {}) %>
+The previous sections show global differences between CG$_4$ and RG$_4$ satellites. We now ask whether these differences are concentrated near the BGG, as expected for accelerated evolution in the dense inner group, or whether they persist across the satellite population. The analysis uses << pst.get('cg_satellite_n') >> CG$_4$ and << pst.get('rg_satellite_n') >> RG$_4$ satellites, excludes rank-1 galaxies, ranks satellites by projected BGG-centric distance, and measures passive and early-type fractions with group-cluster bootstrap uncertainties. When available, we also use \(|\Delta v_{\rm BGG}|/\sigma_v\), with \(\Delta v_{\rm BGG}=c(z_{\rm gal}-z_{\rm BGG})/(1+z_{\rm group})\), as a projected phase-space diagnostic. Similar projected phase-space coordinates are often used as observational proxies for satellite infall state or quenching time, but only statistically \citep{Mahajan+11,Oman&Hudson16,Wetzel+13}.
+
+In the innermost satellite-distance bin, the passive fractions are << pst.get('cg_passive_fraction_inner')|pct(1) >>\% for CG$_4$ and << pst.get('rg_passive_fraction_inner')|pct(1) >>\% for RG$_4$, a CG$_4$--RG$_4$ difference of << pst.get('delta_passive_fraction_inner')|pct(1) >> percentage points. The corresponding early-type fractions are << pst.get('cg_earlytype_fraction_inner')|pct(1) >>\% and << pst.get('rg_earlytype_fraction_inner')|pct(1) >>\%, with a difference of << pst.get('delta_earlytype_fraction_inner')|pct(1) >> percentage points.
+<% if pst.get('passive_radial_trend') == 'stronger_inner' %>
+The passive-fraction contrast is larger in the inner bin than in the outer bin, favouring a centrally concentrated environmental component.
+<% elif pst.get('passive_radial_trend') == 'stronger_outer' %>
+The passive-fraction contrast is not confined to the inner bin; it is at least as large at larger projected distance, which is more consistent with preprocessing or a global sample difference.
+<% elif pst.get('passive_radial_trend') == 'similar_at_inner_and_outer_ranks' %>
+The passive-fraction contrast is similar between the inner and outer distance ranks, so the data do not isolate the CG$_4$ offset to the immediate BGG environment.
 <% else %>
-No fixed phase-space region retains a significant CG$_4$--control difference after correction.
+The radial dependence of the passive-fraction contrast cannot be determined robustly with the available bin counts.
 <% endif %>
 
-<% set phase_model = phase.get('logistic_models', {}).get('passive', {}) %>
-<% if phase_model.get('status') == 'ok' %>
-The continuous phase-space model gives a CG$_4$ passive-status odds ratio of << phase_model.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(phase_model.get('cg4_p')) >>).
-<% if phase_model.get('cg4_p') is not none and phase_model.get('cg4_p') < 0.05 %>
-Thus, CG$_4$ membership remains associated with passive satellite status at fixed projected phase-space coordinates.
-<% elif phase_model.get('cg4_p') is not none and phase_model.get('cg4_p') < 0.10 %>
-This is only marginal, so the phase-space evidence for a residual passive-satellite excess is treated as exploratory.
-<% else %>
-Thus, projected phase space does not by itself reveal a robust residual CG$_4$ passive-satellite excess.
+<% set passive_model = phase.get('regression_results', {}).get('passive_distance', {}) %>
+<% if passive_model.get('status') == 'ok' %>
+After adjusting for stellar mass, redshift, distance bin, and available group-scale controls, the passive-status model gives a CG$_4$ odds ratio of << pst.get('passive_model_sample_cg_or')|fmt(2) >> (95\% CI << pst.get('passive_model_sample_cg_ci_low')|fmt(2) >>--<< pst.get('passive_model_sample_cg_ci_high')|fmt(2) >>; << pval_text(pst.get('passive_model_sample_cg_p')) >>).
 <% endif %>
+<% set early_model = phase.get('regression_results', {}).get('early_type_distance', {}) %>
+<% if early_model.get('status') == 'ok' %>
+The analogous early-type model gives a CG$_4$ odds ratio of << pst.get('earlytype_model_sample_cg_or')|fmt(2) >> (<< pval_text(pst.get('earlytype_model_sample_cg_p')) >>).
 <% endif %>
-
-<% set phase_ell = phase.get('logistic_models', {}).get('elliptical', {}) %>
-<% if phase_ell.get('status') == 'ok' %>
-The analogous elliptical-morphology phase-space model gives a CG$_4$ odds ratio of << phase_ell.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(phase_ell.get('cg4_p')) >>), again indicating that the morphology signal is stronger than the passive-status signal.
+<% set matched_phase = phase.get('matched_robustness', {}) %>
+<% if matched_phase.get('status') == 'ok' %>
+A nearest-neighbour mass--redshift matched check uses << matched_phase.get('n_cg4_matched') >> CG$_4$--RG$_4$ satellite pairs. The matched passive-fraction difference is << pst.get('matched_delta_passive')|pct(1) >> percentage points, and the matched early-type difference is << pst.get('matched_delta_earlytype')|pct(1) >> percentage points.
 <% endif %>
 
-<% if phase.get('figure') %>
-\begin{figure*}
+Projected phase-space coordinates should not be read as orbital reconstructions for individual galaxies. In compact groups the member counts are small, velocity dispersions are noisy, and projection mixes recently accreted and long-resident satellites. We therefore treat these bins as an observational diagnostic of where the CG$_4$--RG$_4$ population contrast appears, rather than as a direct dynamical clock.
+
+<% set pfigs = phase.get('figure_paths', {}) %>
+<% if pfigs.get('passive_fraction_by_distance') %>
+\begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{<< SUBFIGURES_PATH >><< phase.get('figure') >>}
-    \caption{Projected phase space of satellites in compact and ordinary groups. Red points are passive; blue points are non-passive. Annotations give the passive fraction in each region.}
-    \label{fig:phase_space_satellites}
-\end{figure*}
+    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< pfigs.get('passive_fraction_by_distance') >>}
+    \caption{Passive satellite fraction as a function of projected-distance rank from the BGG. Points show CG$_4$ and RG$_4$ fractions; bars show group-cluster bootstrap 16th--84th percentile intervals.}
+    \label{fig:phase_space_passive_distance}
+\end{figure}
+<% endif %>
+<% if pfigs.get('earlytype_fraction_by_distance') %>
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< pfigs.get('earlytype_fraction_by_distance') >>}
+    \caption{Early-type satellite fraction as a function of projected-distance rank from the BGG. Because the catalogue separates ellipticals, spirals, and uncertain morphologies but not S0 galaxies, early type is equivalent to elliptical in this diagnostic.}
+    \label{fig:phase_space_earlytype_distance}
+\end{figure}
+<% endif %>
+<% if pfigs.get('passive_fraction_projected_phase_space') %>
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< pfigs.get('passive_fraction_projected_phase_space') >>}
+    \caption{Passive satellite fraction in coarse projected phase-space bins. Inner and outer refer to projected-distance rank from the BGG; low and high velocity are split at \(|\Delta v_{\rm BGG}|/\sigma_v=1\).}
+    \label{fig:phase_space_passive_projected}
+\end{figure}
 <% endif %>
 <% endif %>
 
@@ -1121,6 +1141,11 @@ The star-formation difference is more specific. CG$_4$ satellites are significan
 The colour analysis does not indicate a simple uniform reddening of compact-group galaxies. <% if r.Colour_robustness_summary.baseline_blue_offset -%>The pooled mass- and redshift-adjusted comparison supports a blue CG$_4$ satellite offset.<% else -%>The pooled mass- and redshift-adjusted comparison does not support a statistically robust blue CG$_4$ satellite offset.<% endif %> <% if r.Colour_robustness_summary.full_model_blue_offset -%>Negative coefficients appear after adding morphology and sSFR class, but<% else -%>The coefficients remain non-significant after adding morphology and sSFR class, and<% endif %> the result is <% if r.Colour_robustness_summary.control_dependent -%>sensitive to the choice of control catalogue<% else -%>consistent across the control catalogues<% endif %>. Neither the sSFR-class nor morphology splits isolate a significant effect among star-forming spirals. The radial residual trends instead indicate that outer CG$_4$ satellites are bluer than inner satellites, consistent with stronger processing toward the BGG. The BGG and mean satellite colours are correlated, but <% if r.Colour_bgg_satellite_significant_slope_count == 0 -%>the corresponding CG$_4$ relations do not differ significantly from those of the control catalogues.<% else -%>some of the corresponding CG$_4$ relations differ significantly from those of the control catalogues.<% endif %> <% if r.Colour_bgg_domination_significant_adjusted|length == 0 -%>Likewise, the apparent colour difference between dominated and non-dominated BGGs disappears after controlling for stellar mass.<% else -%>Some colour differences between dominated and non-dominated BGGs remain significant after controlling for stellar mass.<% endif %>
 
 The most robust compact-group signal is morphological rather than an instantaneous star-formation offset. After controlling for stellar mass, redshift, rank and available group-scale properties, CG$_4$ membership remains associated with enhanced elliptical and reduced spiral probabilities, whereas passive status and satellite star-forming status do not remain significant in the corresponding adjusted models. The matched-control analysis supports the same morphological excess and gives only borderline evidence for an enhanced passive fraction.
+
+<% set phase_conclusion = phase_space_segregation if phase_space_segregation else es.get('phase_space_segregation', {}) %>
+<% if phase_conclusion.get('status') == 'ok' %>
+The projected phase-space test shows <% set phase_trend = phase_conclusion.get('text_summary', {}).get('passive_radial_trend') -%><% if phase_trend == 'stronger_inner' -%>a stronger passive-fraction contrast near the BGG<% elif phase_trend == 'stronger_outer' -%>no confinement of the passive-fraction contrast to the BGG-centred inner bin<% elif phase_trend == 'similar_at_inner_and_outer_ranks' -%>a passive-fraction contrast of similar size at inner and outer satellite ranks<% else -%>no robust radial localization of the passive-fraction contrast<% endif %>. This comparison is necessarily projected: with only a few satellites per group, \(|\Delta v|/\sigma_v\) and projected radius cannot recover individual orbits, so the result should be read as a localization test for the population difference rather than as a dynamical reconstruction.
+<% endif %>
 
 The additional diagnostics do not favour a simple fossil-group or AGN-driven explanation. The magnitude-gap distributions of CG$_4$ and the pooled controls are statistically similar, and AGN-like activity is not independently enhanced after mass and environment adjustment. The limited H\(\alpha\) diagnostic shows a lower strong-emission fraction in CG$_4$ than in the control catalogues, but the absence of both \(D_n4000\) and H\(\delta_A\) prevents a direct post-starburst or recently-quenched classification.
 

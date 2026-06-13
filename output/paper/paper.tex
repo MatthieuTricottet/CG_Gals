@@ -571,7 +571,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
     $-20.74$ $\pm$ 0.27 &
   
     $10.32$ $\pm$ 0.07 &
-    $10.19$ $\pm$ 0.13
+    $10.19$ $\pm$ 0.12
    \\
 
 
@@ -645,7 +645,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
     $-10.6$ $\pm$ 0.07 &
   
     $-19.8$ $\pm$ 0.04 &
-    $-20.02$ $\pm$ 0.10 &
+    $-20.02$ $\pm$ 0.09 &
   
     $9.91$ $\pm$ 0.02 &
     $9.89$ $\pm$ 0.07
@@ -653,7 +653,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
 
   RG4 &
   
-    $-10.82$ $\pm$ 0.18 &
+    $-10.82$ $\pm$ 0.19 &
     $-10.61$ $\pm$ 0.22 &
   
     $-20.23$ $\pm$ 0.16 &
@@ -761,8 +761,8 @@ The median main-sequence residual of CG4 galaxies is:
 \item significantly different from that of Control4B,
 with a median offset of
 $\Delta = 0.056$
-($0.028 \le \Delta \le 0.098$, bootstrap),
-corresponding to a $p$-value of $p = 0.055$.
+($0.029 \le \Delta \le 0.099$, bootstrap),
+corresponding to a $p$-value of $p = 0.051$.
 
 
 
@@ -777,8 +777,8 @@ corresponding to a $p$-value of $p = 0.055$.
 \item significantly different from that of Control4C,
 with a median offset of
 $\Delta = 0.082$
-($0.062 \le \Delta \le 0.121$, bootstrap),
-corresponding to a $p$-value of $p = 0.011$.
+($0.062 \le \Delta \le 0.122$, bootstrap),
+corresponding to a $p$-value of $p = 0.010$.
 
 
 
@@ -793,8 +793,8 @@ corresponding to a $p$-value of $p = 0.011$.
 \item not significantly different from that of RG4,
 with a median offset of
 $\Delta = 0.046$
-($-0.036 \le \Delta \le 0.098$, bootstrap),
-corresponding to a $p$-value of $p = 0.527$.
+($-0.035 \le \Delta \le 0.099$, bootstrap),
+corresponding to a $p$-value of $p = 0.535$.
 
 
 
@@ -1259,35 +1259,55 @@ The matched comparison is therefore consistent with the adjusted models: the mos
 
 
 
-\subsection{Projected phase space}
-
-For satellites, we use a projected BGG-centric radius normalized by the adopted group-size scale, and \(|\Delta v|/\sigma_v\), where the rest-frame velocity offset is normalized by the group velocity dispersion. In the current implementation the radial coordinate is \(R_{\rm BGG}/R_{\rm scale}\), with \(R_{\rm BGG}/R_{\rm scale}=\) \texttt{dist2BGG\_kpc / size\_Group\_Bary\_kpc}. The inner, low-velocity passive fractions are
-
-62.5\% in CG$_4$ and 57.3\% in the controls.
-
-No fixed phase-space region retains a significant CG$_4$--control difference after correction.
+\subsection{Satellite segregation around the brightest group galaxy}
 
 
+The previous sections show global differences between CG$_4$ and RG$_4$ satellites. We now ask whether these differences are concentrated near the BGG, as expected for accelerated evolution in the dense inner group, or whether they persist across the satellite population. The analysis uses 177 CG$_4$ and 166 RG$_4$ satellites, excludes rank-1 galaxies, ranks satellites by projected BGG-centric distance, and measures passive and early-type fractions with group-cluster bootstrap uncertainties. When available, we also use \(|\Delta v_{\rm BGG}|/\sigma_v\), with \(\Delta v_{\rm BGG}=c(z_{\rm gal}-z_{\rm BGG})/(1+z_{\rm group})\), as a projected phase-space diagnostic. Similar projected phase-space coordinates are often used as observational proxies for satellite infall state or quenching time, but only statistically \citep{Mahajan+11,Oman&Hudson16,Wetzel+13}.
 
+In the innermost satellite-distance bin, the passive fractions are 68.9\% for CG$_4$ and 48.2\% for RG$_4$, a CG$_4$--RG$_4$ difference of 20.6 percentage points. The corresponding early-type fractions are 65.4\% and 35.6\%, with a difference of 29.8 percentage points.
 
-The continuous phase-space model gives a CG$_4$ passive-status odds ratio of 1.33 (\(p=0.069\)).
-
-This is only marginal, so the phase-space evidence for a residual passive-satellite excess is treated as exploratory.
+The passive-fraction contrast is similar between the inner and outer distance ranks, so the data do not isolate the CG$_4$ offset to the immediate BGG environment.
 
 
 
 
-
-The analogous elliptical-morphology phase-space model gives a CG$_4$ odds ratio of 1.91 (\(p<10^{-3}\)), again indicating that the morphology signal is stronger than the passive-status signal.
-
+After adjusting for stellar mass, redshift, distance bin, and available group-scale controls, the passive-status model gives a CG$_4$ odds ratio of 1.27 (95\% CI 0.47--3.46; \(p=0.640\)).
 
 
-\begin{figure*}
+
+The analogous early-type model gives a CG$_4$ odds ratio of 2.57 (\(p=0.058\)).
+
+
+
+A nearest-neighbour mass--redshift matched check uses 128 CG$_4$--RG$_4$ satellite pairs. The matched passive-fraction difference is 9.4 percentage points, and the matched early-type difference is 19.6 percentage points.
+
+
+Projected phase-space coordinates should not be read as orbital reconstructions for individual galaxies. In compact groups the member counts are small, velocity dispersions are noisy, and projection mixes recently accreted and long-resident satellites. We therefore treat these bins as an observational diagnostic of where the CG$_4$--RG$_4$ population contrast appears, rather than as a direct dynamical clock.
+
+
+
+\begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{figures/fig_phase_space_satellites.pdf}
-    \caption{Projected phase space of satellites in compact and ordinary groups. Red points are passive; blue points are non-passive. Annotations give the passive fraction in each region.}
-    \label{fig:phase_space_satellites}
-\end{figure*}
+    \includegraphics[width=\columnwidth]{figures/phase_space_satellite_passive_fraction_by_distance.pdf}
+    \caption{Passive satellite fraction as a function of projected-distance rank from the BGG. Points show CG$_4$ and RG$_4$ fractions; bars show group-cluster bootstrap 16th--84th percentile intervals.}
+    \label{fig:phase_space_passive_distance}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{figures/phase_space_satellite_earlytype_fraction_by_distance.pdf}
+    \caption{Early-type satellite fraction as a function of projected-distance rank from the BGG. Because the catalogue separates ellipticals, spirals, and uncertain morphologies but not S0 galaxies, early type is equivalent to elliptical in this diagnostic.}
+    \label{fig:phase_space_earlytype_distance}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{figures/phase_space_satellite_passive_fraction_projected_phase_space.pdf}
+    \caption{Passive satellite fraction in coarse projected phase-space bins. Inner and outer refer to projected-distance rank from the BGG; low and high velocity are split at \(|\Delta v_{\rm BGG}|/\sigma_v=1\).}
+    \label{fig:phase_space_passive_projected}
+\end{figure}
 
 
 
@@ -1515,6 +1535,11 @@ The star-formation difference is more specific. CG$_4$ satellites are significan
 The colour analysis does not indicate a simple uniform reddening of compact-group galaxies. The pooled mass- and redshift-adjusted comparison does not support a statistically robust blue CG$_4$ satellite offset. Negative coefficients appear after adding morphology and sSFR class, but the result is sensitive to the choice of control catalogue. Neither the sSFR-class nor morphology splits isolate a significant effect among star-forming spirals. The radial residual trends instead indicate that outer CG$_4$ satellites are bluer than inner satellites, consistent with stronger processing toward the BGG. The BGG and mean satellite colours are correlated, but the corresponding CG$_4$ relations do not differ significantly from those of the control catalogues. Likewise, the apparent colour difference between dominated and non-dominated BGGs disappears after controlling for stellar mass.
 
 The most robust compact-group signal is morphological rather than an instantaneous star-formation offset. After controlling for stellar mass, redshift, rank and available group-scale properties, CG$_4$ membership remains associated with enhanced elliptical and reduced spiral probabilities, whereas passive status and satellite star-forming status do not remain significant in the corresponding adjusted models. The matched-control analysis supports the same morphological excess and gives only borderline evidence for an enhanced passive fraction.
+
+
+
+The projected phase-space test shows a passive-fraction contrast of similar size at inner and outer satellite ranks. This comparison is necessarily projected: with only a few satellites per group, \(|\Delta v|/\sigma_v\) and projected radius cannot recover individual orbits, so the result should be read as a localization test for the population difference rather than as a dynamical reconstruction.
+
 
 The additional diagnostics do not favour a simple fossil-group or AGN-driven explanation. The magnitude-gap distributions of CG$_4$ and the pooled controls are statistically similar, and AGN-like activity is not independently enhanced after mass and environment adjustment. The limited H\(\alpha\) diagnostic shows a lower strong-emission fraction in CG$_4$ than in the control catalogues, but the absence of both \(D_n4000\) and H\(\delta_A\) prevents a direct post-starburst or recently-quenched classification.
 
