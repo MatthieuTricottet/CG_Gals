@@ -571,7 +571,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
     $-20.74$ $\pm$ 0.27 &
   
     $10.32$ $\pm$ 0.07 &
-    $10.19$ $\pm$ 0.12
+    $10.19$ $\pm$ 0.13
    \\
 
 
@@ -624,7 +624,7 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
     $-20.34$ $\pm$ 0.18 &
   
     $10.22$ $\pm$ 0.05 &
-    $10.09$ $\pm$ 0.06
+    $10.09$ $\pm$ 0.07
    \\
 
   Control4B &
@@ -762,7 +762,7 @@ The median main-sequence residual of CG4 galaxies is:
 with a median offset of
 $\Delta = 0.056$
 ($0.028 \le \Delta \le 0.098$, bootstrap),
-corresponding to a $p$-value of $p = 0.050$.
+corresponding to a $p$-value of $p = 0.055$.
 
 
 
@@ -777,8 +777,8 @@ corresponding to a $p$-value of $p = 0.050$.
 \item significantly different from that of Control4C,
 with a median offset of
 $\Delta = 0.082$
-($0.062 \le \Delta \le 0.120$, bootstrap),
-corresponding to a $p$-value of $p = 0.013$.
+($0.062 \le \Delta \le 0.121$, bootstrap),
+corresponding to a $p$-value of $p = 0.011$.
 
 
 
@@ -794,7 +794,7 @@ corresponding to a $p$-value of $p = 0.013$.
 with a median offset of
 $\Delta = 0.046$
 ($-0.036 \le \Delta \le 0.098$, bootstrap),
-corresponding to a $p$-value of $p = 0.534$.
+corresponding to a $p$-value of $p = 0.527$.
 
 
 
@@ -1142,43 +1142,62 @@ The BGG stellar-mass distributions are significantly different between the domin
 
 
 
+
+
+
+
 \section{What drives the compact-group differences?}
+
+The previous sections establish that CG$_4$ galaxies differ from the control catalogues in their population mix, especially in morphology and in the star-forming fraction of satellites. We now ask whether these differences survive after controlling for stellar mass, rank and available group-scale quantities, and whether they are better interpreted as compact-group-specific evolution, pre-processing in dense halo cores, or catalogue-selection effects.
 
 
 
 \subsection{Mass-, rank- and environment-adjusted galaxy properties}
 
-We fit binomial models to the combined galaxy catalogues, standardizing the continuous predictors and using group-clustered standard errors. The common adjustment set includes stellar mass, redshift, rank, group mass, group luminosity and velocity dispersion when sufficiently complete.
-
-
-
-For passive status, the CG4 odds ratio is \(1.20\), with 95\% confidence interval \([0.88, 1.63]\) and Holm-adjusted \(p=0.485\).
+We fit binomial models to the combined galaxy catalogues, standardizing the continuous predictors and using group-clustered standard errors. The common adjustment set includes stellar mass, redshift, satellite/BGG rank, group luminosity and velocity dispersion when sufficiently complete.
 
 
 
 
-For star-forming satellite status, the CG4 odds ratio is \(0.76\), with 95\% confidence interval \([0.56, 1.05]\) and Holm-adjusted \(p=0.390\).
+For passive status, the CG$_4$ odds ratio is \(1.20\), with 95\% confidence interval \([0.88, 1.63]\) and \(p_{\rm Holm}=0.485\).
 
 
 
 
-For elliptical morphology, the CG4 odds ratio is \(1.62\), with 95\% confidence interval \([1.21, 2.16]\) and Holm-adjusted \(p=0.007\).
+For passive satellite status, the CG$_4$ odds ratio is \(1.31\), with 95\% confidence interval \([0.95, 1.80]\) and \(p_{\rm Holm}=0.390\).
 
 
 
 
-For spiral morphology, the CG4 odds ratio is \(0.62\), with 95\% confidence interval \([0.46, 0.83]\) and Holm-adjusted \(p=0.007\).
+For star-forming satellite status, the CG$_4$ odds ratio is \(0.76\), with 95\% confidence interval \([0.56, 1.05]\) and \(p_{\rm Holm}=0.390\).
 
 
 
-Compact-group membership therefore remains independently associated with elliptical all, spiral all after the available adjustments.
+
+For elliptical morphology, the CG$_4$ odds ratio is \(1.62\), with 95\% confidence interval \([1.21, 2.16]\) and \(p_{\rm Holm}=0.007\).
+
+
+
+
+For elliptical BGG morphology, the CG$_4$ odds ratio is \(0.90\), with 95\% confidence interval \([0.46, 1.74]\) and \(p_{\rm Holm}=0.751\).
+
+
+
+
+For spiral morphology, the CG$_4$ odds ratio is \(0.62\), with 95\% confidence interval \([0.46, 0.83]\) and \(p_{\rm Holm}=0.007\).
+
+
+
+
+
+Compact-group membership therefore remains independently associated with morphology after the available adjustments: CG$_4$ galaxies have a higher probability of being elliptical and a lower probability of being spiral. In contrast, the adjusted passive and star-forming satellite coefficients are weaker and do not provide corrected-significant evidence for an instantaneous star-formation difference.
 
 
 
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/fig_specialness_logistic_coefficients.pdf}
-    \caption{Adjusted CG4 odds ratios. Bars show 95\% confidence intervals; the vertical line marks equal odds.}
+    \caption{Adjusted CG$_4$ odds ratios. Bars show 95\% confidence intervals; the vertical line marks equal odds.}
     \label{fig:specialness_logistic}
 \end{figure}
 
@@ -1188,29 +1207,43 @@ Compact-group membership therefore remains independently associated with ellipti
 
 \subsection{Matched-control comparison}
 
-We matched 234 CG4 galaxies one-to-one to 234 ordinary-group galaxies without replacement, requiring common propensity-score support, a 0.2-standard-deviation caliper and exact rank strata. The propensity model uses logMstar, z numeric, rank, log group luminosity, velocity dispersion. Projected distance is retained as a phase-space and interaction diagnostic rather than matched away because it defines compactness and has limited overlap. The largest absolute standardized mean difference changed from 0.28 before matching to 0.14 afterwards.
+We matched 234 CG$_4$ galaxies one-to-one to 234 ordinary-group galaxies without replacement, requiring common propensity-score support, a 0.2-standard-deviation caliper and exact rank strata. The propensity model uses logMstar, z numeric, rank, log group luminosity, velocity dispersion. Projected distance is retained as a phase-space and interaction diagnostic rather than matched away because it partly defines compactness and has limited overlap. The largest absolute standardized mean difference changed from 0.28 before matching to 0.14 afterwards.
 
 
 
-The matched CG4-minus-control difference in passive fraction is \(0.098\), with 95\% bootstrap interval \([0.017, 0.175]\) and Holm-adjusted \(p=0.054\).
+The matched CG$_4$--minus--control difference in passive fraction is \(0.098\), with 95\% bootstrap interval \([0.017, 0.175]\) and \(p_{\rm Holm}=0.054\).
 
-
-
-
-The matched CG4-minus-control difference in elliptical fraction is \(0.197\), with 95\% bootstrap interval \([0.090, 0.303]\) and Holm-adjusted \(p=0.000\).
+This is suggestive but not formally significant after correction, so we treat the passive-fraction excess as borderline.
 
 
 
 
-The matched CG4-minus-control difference in spiral fraction is \(-0.197\), with 95\% bootstrap interval \([-0.303, -0.090]\) and Holm-adjusted \(p=0.000\).
+
+The corresponding CG$_4$--minus--control difference in star-forming fraction is \(-0.098\), with 95\% bootstrap interval \([-0.175, -0.017]\) and \(p_{\rm Holm}=0.054\).
 
 
+
+
+The matched CG$_4$--minus--control difference in elliptical fraction is \(0.197\), with 95\% bootstrap interval \([0.090, 0.303]\) and \(p_{\rm Holm}<10^{-3}\).
+
+
+
+
+The matched CG$_4$--minus--control difference in spiral fraction is \(-0.197\), with 95\% bootstrap interval \([-0.303, -0.090]\) and \(p_{\rm Holm}<10^{-3}\).
+
+
+
+
+Among matched star-forming galaxies, the residual-sSFR difference is \(-0.096\), with 95\% bootstrap interval \([-0.221, 0.015]\) and \(p=0.084\).
+
+
+The matched comparison is therefore consistent with the adjusted models: the most robust compact-group signal is morphological, while the passive and star-forming-fraction signals are more model-dependent.
 
 
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/fig_matched_control_effects.pdf}
-    \caption{CG4-minus-control effects after one-to-one matching. Bars show 95\% bootstrap confidence intervals.}
+    \caption{CG$_4$--minus--control effects after one-to-one matching. Bars show 95\% bootstrap confidence intervals.}
     \label{fig:matched_control_effects}
 \end{figure}
 
@@ -1228,15 +1261,24 @@ The matched CG4-minus-control difference in spiral fraction is \(-0.197\), with 
 
 \subsection{Projected phase space}
 
-For satellites, we use \(R/\langle R_{ij}\rangle\), where the projected BGG distance is normalized by the group mean projected separation, and \(|\Delta v|/\sigma_v\), where the rest-frame velocity offset is normalized by the group velocity dispersion. The inner, low-velocity passive fractions are
+For satellites, we use a projected BGG-centric radius normalized by the adopted group-size scale, and \(|\Delta v|/\sigma_v\), where the rest-frame velocity offset is normalized by the group velocity dispersion. In the current implementation the radial coordinate is \(R_{\rm BGG}/R_{\rm scale}\), with \(R_{\rm BGG}/R_{\rm scale}=\) \texttt{dist2BGG\_kpc / size\_Group\_Bary\_kpc}. The inner, low-velocity passive fractions are
 
-62.5\% in CG4 and 57.3\% in the controls.
+62.5\% in CG$_4$ and 57.3\% in the controls.
 
-No fixed phase-space region retains a significant CG4--control difference after correction.
+No fixed phase-space region retains a significant CG$_4$--control difference after correction.
 
 
 
-The continuous phase-space model gives a CG4 passive-status odds ratio of 1.33 (\(p=0.069\)).
+
+The continuous phase-space model gives a CG$_4$ passive-status odds ratio of 1.33 (\(p=0.069\)).
+
+This is only marginal, so the phase-space evidence for a residual passive-satellite excess is treated as exploratory.
+
+
+
+
+
+The analogous elliptical-morphology phase-space model gives a CG$_4$ odds ratio of 1.91 (\(p<10^{-3}\)), again indicating that the morphology signal is stronger than the passive-status signal.
 
 
 
@@ -1257,46 +1299,65 @@ We define \(\Delta m_{12}=M_{r,2}-M_{r,1}\) and \(\Delta m_{14}=M_{r,4}-M_{r,1}\
 
 
 
-For \(\Delta m_{12}\), the CG4 and control medians are 1.17 and 1.09 mag, respectively (\(p_{\rm Holm}=0.705\)).
+For \(\Delta m_{12}\), the CG$_4$ and control medians are 1.17 and 1.09 mag, respectively (\(p_{\rm Holm}=0.705\)).
 
 
 
 
-For \(\Delta m_{14}\), the CG4 and control medians are 2.56 and 2.59 mag, respectively (\(p_{\rm Holm}=0.705\)).
+For \(\Delta m_{14}\), the CG$_4$ and control medians are 2.56 and 2.59 mag, respectively (\(p_{\rm Holm}=0.705\)).
+
+
+
+The compact-group morphology signal is therefore not accompanied by a significant excess in these simple fossil-like magnitude-gap indicators.
 
 
 
 
-The correlation between \(\Delta m_{12}\) and passive satellite fraction is \(\rho_{\rm S}=-0.15\) (\(p_{\rm Holm}=0.000\)).
+The correlation between \(\Delta m_{12}\) and passive satellite fraction is \(\rho_{\rm S}=-0.15\) (\(p_{\rm Holm}<10^{-3}\)).
 
 
 
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/fig_magnitude_gap_comparison.pdf}
-    \caption{Distributions of the first--second and first--fourth magnitude gaps in CG4 and the pooled controls.}
+    \caption{Distributions of the first--second and first--fourth magnitude gaps in CG$_4$ and the pooled controls.}
     \label{fig:magnitude_gap}
+\end{figure}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{figures/fig_magnitude_gap_vs_passive_fraction.pdf}
+    \caption{Passive satellite fraction as a function of the first--second magnitude gap.}
+    \label{fig:magnitude_gap_passive_fraction}
 \end{figure}
 
 
 
 
 
-
-\subsection{Recently quenched and emission-line populations}
-
-
-The catalogues do not contain both \(D_n4000\) and H\(\delta_A\), so a post-starburst classification is not possible. We instead perform a limited H\(\alpha\)-equivalent-width comparison, using the SDSS convention in which negative equivalent width denotes emission.
+\subsection{Recently quenched candidates}
 
 
-At least one CG4--control H\(\alpha\) comparison remains significant after correction.
+The catalogues do not contain both \(D_n4000\) and H\(\delta_A\), so a post-starburst classification is not possible. We therefore perform only a limited H\(\alpha\)-equivalent-width comparison, using the SDSS convention in which negative equivalent width denotes emission. We classify strong H\(\alpha\) emission using h\_alpha\_eqw <= -3 Angstrom.
 
 
-The complementary BPT analysis classifies star-forming, composite and broad AGN-like populations. The CG4 AGN-like fraction is 38.0\%.
+
+The strong-emission fraction is 32.3\% in CG$_4$, 41.0\% in Control4B, 45.7\% in Control4C, 56.9\% in RG4.
 
 
-After mass and environment adjustment, the CG4 AGN-like odds ratio is 1.14 (\(p=0.451\)).
+Relative to Control4B, the CG$_4$ strong-emission fraction differs by \(-0.087\) (\(p_{\rm Holm}=0.012\)).
 
+
+
+Relative to Control4C, the CG$_4$ strong-emission fraction differs by \(-0.135\) (\(p_{\rm Holm}<10^{-3}\)).
+
+
+
+Relative to RG4, the CG$_4$ strong-emission fraction differs by \(-0.246\) (\(p_{\rm Holm}<10^{-3}\)).
+
+
+These limited H\(\alpha\) results indicate that CG$_4$ galaxies have a lower strong-emission fraction than each control sample in the current catalogue, but they do not provide a direct post-starburst or recently-quenched classification.
 
 
 
@@ -1306,6 +1367,22 @@ After mass and environment adjustment, the CG4 AGN-like odds ratio is 1.14 (\(p=
     \caption{H\(\alpha\) equivalent-width distributions used for the limited recent-quenching diagnostic.}
     \label{fig:recent_quenching}
 \end{figure}
+
+
+
+
+
+\subsection{Emission-line and AGN-like populations}
+
+The complementary BPT analysis classifies star-forming, composite and broad AGN-like populations. The CG$_4$ AGN-like fraction is 38.0\%.
+
+
+
+After mass and environment adjustment, the CG$_4$ AGN-like odds ratio is 1.14 (\(p=0.451\)).
+
+Thus, AGN-like activity does not provide a robust independent compact-group discriminator in this analysis.
+
+
 
 
 \begin{figure}
@@ -1319,12 +1396,29 @@ After mass and environment adjustment, the CG4 AGN-like odds ratio is 1.14 (\(p=
 
 
 
-The pairwise analysis reconstructs projected separations and velocity differences for 6268 galaxies and tests whether adding \(\sum_j M_{\star,j}/R_{ij}^3\) reduces the adjusted CG4 coefficient.
+\subsection{Pairwise tidal index}
+
+The pairwise analysis reconstructs projected separations and velocity differences for 6268 galaxies and tests whether adding \(\sum_j M_{\star,j}/R_{ij}^3\) changes the adjusted CG$_4$ coefficient.
+
+
+
+
+
+For passive status, the baseline CG$_4$ odds ratio is 1.20 (\(p=0.227\)), while the model including the tidal index gives a CG$_4$ odds ratio of 0.80 (\(p=0.170\)). The tidal-index term itself has odds ratio 1.65 (\(p<10^{-3}\)).
+
+
+
+
+
+
+For elliptical morphology, the baseline CG$_4$ odds ratio is 1.65 (\(p<10^{-3}\)), whereas the model including the tidal index gives a CG$_4$ odds ratio of 1.15 (\(p=0.346\)). The tidal-index term has odds ratio 1.56 (\(p<10^{-3}\)). This suggests that the reconstructed local tidal-density proxy absorbs much of the unadjusted CG$_4$ morphology coefficient, although the result remains an exploratory projected-pair diagnostic.
+
+
 
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/fig_tidal_index_outcomes.pdf}
-    \caption{Passive status as a function of the reconstructed pairwise tidal index. Colours distinguish CG4 from control galaxies.}
+    \caption{Passive status as a function of the reconstructed pairwise tidal index. Colours distinguish CG$_4$ from control galaxies.}
     \label{fig:tidal_index_outcomes}
 \end{figure}
 
@@ -1334,13 +1428,20 @@ The pairwise analysis reconstructs projected separations and velocity difference
 
 \subsection{Selection diagnostics}
 
-The fractions with complete morphology, sSFR, stellar mass, colours, spectral lines, velocity data and group-scale quantities are shown in Fig.~\ref{fig:data_availability}. The colour-matched versus unmatched comparisons quantify shifts in stellar mass, redshift, rank, star-formation class and morphology.
+The fractions with complete measurements for the major derived quantities are shown in Fig.~\ref{fig:data_availability}. The colour-matched versus unmatched comparisons quantify shifts in stellar mass, redshift, rank, star-formation class and morphology.
 
 
-The median nearest-neighbour angular separation is 100.9 arcsec in CG4 and 209.0 arcsec in the controls; the fractions below the 55-arcsec SDSS fibre-collision scale are 19.4\% and 9.3\%, respectively.
+
+The median nearest-neighbour angular separation is 100.9 arcsec in CG$_4$ and 209.0 arcsec in the controls; the fractions below the 55-arcsec SDSS fibre-collision scale are 19.4\% and 9.3\%, respectively.
+
 
 
 No major availability difference meets both the corrected-significance and ten-percentage-point criteria.
+
+
+
+
+The automated availability row for group-scale quantities should be interpreted as an alias audit for a specific set of column names rather than as evidence that no group-scale information is used elsewhere in the analysis.
 
 
 
@@ -1362,23 +1463,65 @@ No major availability difference meets both the corrected-significance and ten-p
 
 
 
+\section{Relation to recent structural studies of compact-group galaxies}
+
+A complementary interpretation of the present results is provided by the recent series of studies by
+\citet{Montaguth2023,Montaguth2025,Montaguth2026NonIsolated,Montaguth2026MassSize}.
+Using multiwavelength S-PLUS imaging and single-S'ersic structural fits, these authors identified a population of
+``transition’’ galaxies, broadly corresponding to red systems with relatively low or intermediate S'ersic index, whose
+location in the ($R_{\rm e})-(n)$ plane suggests ongoing structural transformation in compact groups. In particular,
+\citet{Montaguth2023} found that compact-group transition galaxies include a population that is smaller and more
+centrally concentrated than analogous field galaxies, while \citet{Montaguth2025} showed that this signature is
+stronger in non-isolated compact groups embedded in larger structures. \citet{Montaguth2026NonIsolated} further
+compared non-isolated compact groups with their surrounding host-group galaxies and found that the compact-group
+members display higher quenched fractions, a larger early-type fraction, and distinct transition-galaxy
+($R_{\rm e})-(n)$ distributions. Finally, \citet{Montaguth2026MassSize} showed that the environmental dependence of the
+stellar mass–size relation is weak for early- and late-type galaxies, but strongest for transition galaxies, whose
+mass–size slopes and S'ersic-index distributions become more early-type-like in groups and compact groups.
+
+Our analysis addresses a related but stricter question. Rather than comparing compact groups primarily with the
+field, or non-isolated compact groups with their immediate host structures, we ask whether compact-group galaxies
+remain different from galaxies in regular four-member group analogues after controlling for stellar mass, redshift,
+rank, and available group-scale quantities. In this framework, the most robust residual signal is morphological:
+compact-group membership remains associated with an enhanced probability of being classified as elliptical and a
+reduced probability of being classified as spiral. By contrast, the passive and star-forming satellite fractions are
+more sensitive to the adopted control sample and to the adjustment or matching procedure.
+
+The two sets of results are therefore not contradictory. The structural work of
+\citet{Montaguth2023,Montaguth2025,Montaguth2026NonIsolated,Montaguth2026MassSize} identifies the likely
+nature of the transformation: disk fading, increasing central concentration, and/or bulge growth in galaxies occupying
+an intermediate region between blue late-type disks and red early-type systems. Our results indicate that, when
+compact groups are compared with regular-group analogues rather than with the field alone, the clearest surviving
+signature is the accumulated morphological state of the galaxy population, whereas an instantaneous star-formation
+offset is less robust. This suggests that compact groups should not be interpreted simply as environments with
+ongoing enhanced quenching at the present epoch. They are more plausibly very dense regions in which past
+interactions, local tidal density, and preprocessing in larger haloes have already shifted part of the galaxy population
+toward earlier morphologies.
+
+A useful way to reconcile these views is to regard the compact-group signal as primarily structural and cumulative.
+In that picture, the compact configuration may accelerate morphological transformation, but some of the observed
+differences may also reflect the fact that many compact groups are the dense cores or substructures of larger systems.
+Future work combining the structural diagnostics of S-PLUS-like analyses, especially ($R_{\rm e}$), S\'ersic index,
+transition-galaxy classifications, and mass–size residuals, with the matched regular-group control framework used
+here would provide a direct test of whether the compact-group transformation is unique to compact configurations
+or is the high-density limit of more general group preprocessing.
+
 \section{Conclusion}
 
-After removing systems classified as split, we find that compact groups differ from regular four-member groups mainly through their galaxy population mix. Galaxies in CG4 are more frequently elliptical and less frequently spiral than galaxies in RG4, with highly significant differences in both fractions. This morphological difference is also present among BGGs: CG4 BGGs are more often elliptical than RG4 BGGs.
+After removing systems classified as split, we find that compact groups differ from regular four-member groups mainly through their galaxy population mix. Galaxies in CG$_4$ are more frequently elliptical and less frequently spiral than galaxies in RG$_4$, with highly significant differences in both fractions. This morphological difference is also present among BGGs: CG$_4$ BGGs are more often elliptical than RG$_4$ BGGs.
 
-The star-formation difference is more specific. CG4 satellites are significantly less frequently star-forming than RG4 satellites, while the star-forming fraction of BGGs does not differ significantly between the two samples. Moreover, among galaxies that remain star-forming, CG4 galaxies do not show a significant offset from RG4 galaxies relative to the star-forming main sequence.
+The star-formation difference is more specific. CG$_4$ satellites are significantly less frequently star-forming than RG$_4$ satellites, while the star-forming fraction of BGGs does not differ significantly between the two samples. Moreover, among galaxies that remain star-forming, CG$_4$ galaxies do not show a significant offset from RG$_4$ galaxies relative to the star-forming main sequence.
 
 The colour analysis does not indicate a simple uniform reddening of compact-group galaxies. The pooled mass- and redshift-adjusted comparison does not support a statistically robust blue CG$_4$ satellite offset. Negative coefficients appear after adding morphology and sSFR class, but the result is sensitive to the choice of control catalogue. Neither the sSFR-class nor morphology splits isolate a significant effect among star-forming spirals. The radial residual trends instead indicate that outer CG$_4$ satellites are bluer than inner satellites, consistent with stronger processing toward the BGG. The BGG and mean satellite colours are correlated, but the corresponding CG$_4$ relations do not differ significantly from those of the control catalogues. Likewise, the apparent colour difference between dominated and non-dominated BGGs disappears after controlling for stellar mass.
 
-These results suggest that compact groups host a more evolved galaxy population, with an enhanced fraction of early-type galaxies and a reduced fraction of star-forming satellites.
+The most robust compact-group signal is morphological rather than an instantaneous star-formation offset. After controlling for stellar mass, redshift, rank and available group-scale properties, CG$_4$ membership remains associated with enhanced elliptical and reduced spiral probabilities, whereas passive status and satellite star-forming status do not remain significant in the corresponding adjusted models. The matched-control analysis supports the same morphological excess and gives only borderline evidence for an enhanced passive fraction.
 
-Because the passive CG4 signal does not remain significant in both the adjusted and matched analyses, the apparent specialness is at least partly explained by environment, mass/rank mix, or pre-processing in dense halo cores.
+The additional diagnostics do not favour a simple fossil-group or AGN-driven explanation. The magnitude-gap distributions of CG$_4$ and the pooled controls are statistically similar, and AGN-like activity is not independently enhanced after mass and environment adjustment. The limited H\(\alpha\) diagnostic shows a lower strong-emission fraction in CG$_4$ than in the control catalogues, but the absence of both \(D_n4000\) and H\(\delta_A\) prevents a direct post-starburst or recently-quenched classification.
+
+Taken together, these results suggest that compact groups host a more morphologically evolved galaxy population, with an enhanced fraction of early-type galaxies and a reduced fraction of star-forming satellites. Because the passive CG$_4$ signal does not remain significant in both the adjusted and matched analyses, the apparent star-formation specialness is at least partly explained by environment, mass/rank mix, or pre-processing in dense halo cores. The morphology signal is more robust, but the projected tidal-index experiment suggests that local pairwise density may absorb part of that signal, so this result should be interpreted as evidence for accumulated transformation in very dense environments rather than as a uniquely isolated compact-group effect.
 
 
-
-
-
-The selection audit does not remove all catalogue-systematic uncertainty, but it does not identify a major availability imbalance under the adopted criterion.
+The selection audit does not remove all catalogue-systematic uncertainty, and the angular-neighbour diagnostic confirms the expected higher close-pair incidence in CG$_4$, but it does not identify a major availability imbalance under the adopted criterion.
 
 
 \begin{appendix} %First appendix

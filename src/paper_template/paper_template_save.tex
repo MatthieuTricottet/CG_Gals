@@ -749,43 +749,32 @@ The BGG stellar-mass distributions are <% if r.Colour_bgg_domination_mass_test.s
     \label{fig:bgg_colour_domination}
 \end{figure*}
 
-<% macro pval_text(x, nd=3) -%><% if x is none -%>\(p\) unavailable<% elif x < 0.001 -%>\(p<10^{-3}\)<% else -%>\(p=<< x|fmt(nd) >>\)<% endif -%><% endmacro %>
-
-<% macro pholm_text(x, nd=3) -%><% if x is none -%>\(p_{\rm Holm}\) unavailable<% elif x < 0.001 -%>\(p_{\rm Holm}<10^{-3}\)<% else -%>\(p_{\rm Holm}=<< x|fmt(nd) >>\)<% endif -%><% endmacro %>
-
 <% set es = extended_specialness %>
 <% if es and es.get('status') == 'ok' %>
 \section{What drives the compact-group differences?}
-
-The previous sections establish that CG$_4$ galaxies differ from the control catalogues in their population mix, especially in morphology and in the star-forming fraction of satellites. We now ask whether these differences survive after controlling for stellar mass, rank and available group-scale quantities, and whether they are better interpreted as compact-group-specific evolution, pre-processing in dense halo cores, or catalogue-selection effects.
 
 <% set sm = es.get('specialness_models', {}) %>
 <% if sm.get('status') == 'ok' %>
 \subsection{Mass-, rank- and environment-adjusted galaxy properties}
 
-We fit binomial models to the combined galaxy catalogues, standardizing the continuous predictors and using group-clustered standard errors. The common adjustment set includes stellar mass, redshift, satellite/BGG rank, group luminosity and velocity dispersion when sufficiently complete.
-
-<% for key, label in [('passive_all', 'passive status'), ('passive_satellites', 'passive satellite status'), ('starforming_satellites', 'star-forming satellite status'), ('elliptical_all', 'elliptical morphology'), ('elliptical_bgg', 'elliptical BGG morphology'), ('spiral_all', 'spiral morphology')] %>
+We fit binomial models to the combined galaxy catalogues, standardizing the continuous predictors and using group-clustered standard errors. The common adjustment set includes stellar mass, redshift, rank, group mass, group luminosity and velocity dispersion when sufficiently complete.
+<% for key, label in [('passive_all', 'passive status'), ('starforming_satellites', 'star-forming satellite status'), ('elliptical_all', 'elliptical morphology'), ('spiral_all', 'spiral morphology')] %>
 <% set model = sm.get(key, {}) %>
 <% if model.get('status') == 'ok' %>
-For << label >>, the CG$_4$ odds ratio is \(<< model.get('cg4_odds_ratio')|fmt(2) >>\), with 95\% confidence interval \([<< model.get('cg4_ci95')[0]|fmt(2) >>, << model.get('cg4_ci95')[1]|fmt(2) >>]\) and << pholm_text(model.get('cg4_p_adj')) >>.
+For << label >>, the CG4 odds ratio is \(<< model.get('cg4_odds_ratio')|fmt(2) >>\), with 95\% confidence interval \([<< model.get('cg4_ci95')[0]|fmt(2) >>, << model.get('cg4_ci95')[1]|fmt(2) >>]\) and Holm-adjusted \(p=<< model.get('cg4_p_adj')|fmt(3) >>\).
 <% endif %>
 <% endfor %>
-
-<% set sig = sm.get('significant_models', []) %>
-<% if ('elliptical_all' in sig) or ('spiral_all' in sig) %>
-Compact-group membership therefore remains independently associated with morphology after the available adjustments: CG$_4$ galaxies have a higher probability of being elliptical and a lower probability of being spiral. In contrast, the adjusted passive and star-forming satellite coefficients are weaker and do not provide corrected-significant evidence for an instantaneous star-formation difference.
-<% elif sig %>
-Compact-group membership remains independently associated with <% for item in sig -%><< item|replace('_', ' ') >><% if not loop.last %>, <% else %> after the available adjustments.<% endif %><% endfor %>
+<% if sm.get('significant_models', []) %>
+Compact-group membership therefore remains independently associated with << sm.get('significant_models')|join(', ')|replace('_', ' ') >> after the available adjustments.
 <% else %>
-None of the CG$_4$ coefficients remains significant after correction across this model family.
+None of the CG4 coefficients remains significant after correction across this model family.
 <% endif %>
 
 <% if sm.get('figure') %>
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< sm.get('figure') >>}
-    \caption{Adjusted CG$_4$ odds ratios. Bars show 95\% confidence intervals; the vertical line marks equal odds.}
+    \caption{Adjusted CG4 odds ratios. Bars show 95\% confidence intervals; the vertical line marks equal odds.}
     \label{fig:specialness_logistic}
 \end{figure}
 <% endif %>
@@ -795,47 +784,19 @@ None of the CG$_4$ coefficients remains significant after correction across this
 <% if matched.get('status') == 'ok' %>
 \subsection{Matched-control comparison}
 
-We matched << matched.get('n_cg4_matched') >> CG$_4$ galaxies one-to-one to << matched.get('n_control_matched') >> ordinary-group galaxies <% if not matched.get('replacement') %>without<% else %>with<% endif %> replacement, requiring common propensity-score support, a << matched.get('propensity_caliper_logit_sd')|fmt(1) >>-standard-deviation caliper and exact rank strata. The propensity model uses << matched.get('propensity_variables', [])|join(', ')|replace('_', ' ') >>. Projected distance is retained as a phase-space and interaction diagnostic rather than matched away because it partly defines compactness and has limited overlap. The largest absolute standardized mean difference changed from << matched.get('max_abs_smd_before')|fmt(2) >> before matching to << matched.get('max_abs_smd_after')|fmt(2) >> afterwards.
-
-<% set m_passive = matched.get('effects', {}).get('passive_fraction', {}) %>
-<% if m_passive.get('status') == 'ok' %>
-The matched CG$_4$--minus--control difference in passive fraction is \(<< m_passive.get('delta_cg4_minus_control')|fmt(3) >>\), with 95\% bootstrap interval \([<< m_passive.get('ci95')[0]|fmt(3) >>, << m_passive.get('ci95')[1]|fmt(3) >>]\) and << pholm_text(m_passive.get('p_adj')) >>.
-<% if m_passive.get('p_adj') is not none and m_passive.get('p_adj') < 0.05 %>
-This supports an enhanced passive fraction in CG$_4$ after matching.
-<% elif m_passive.get('p_adj') is not none and m_passive.get('p_adj') < 0.10 %>
-This is suggestive but not formally significant after correction, so we treat the passive-fraction excess as borderline.
-<% else %>
-This does not provide corrected-significant evidence for an enhanced passive fraction in CG$_4$ after matching.
+We matched << matched.get('n_cg4_matched') >> CG4 galaxies one-to-one to << matched.get('n_control_matched') >> ordinary-group galaxies without replacement, requiring common propensity-score support, a 0.2-standard-deviation caliper and exact rank strata. The propensity model uses << matched.get('propensity_variables', [])|join(', ')|replace('_', ' ') >>. Projected distance is retained as a phase-space and interaction diagnostic rather than matched away because it defines compactness and has limited overlap. The largest absolute standardized mean difference changed from << matched.get('max_abs_smd_before')|fmt(2) >> before matching to << matched.get('max_abs_smd_after')|fmt(2) >> afterwards.
+<% for key, label in [('passive_fraction', 'passive fraction'), ('elliptical_fraction', 'elliptical fraction'), ('spiral_fraction', 'spiral fraction')] %>
+<% set effect = matched.get('effects', {}).get(key, {}) %>
+<% if effect.get('status') == 'ok' %>
+The matched CG4-minus-control difference in << label >> is \(<< effect.get('delta_cg4_minus_control')|fmt(3) >>\), with 95\% bootstrap interval \([<< effect.get('ci95')[0]|fmt(3) >>, << effect.get('ci95')[1]|fmt(3) >>]\) and Holm-adjusted \(p=<< effect.get('p_adj')|fmt(3) >>\).
 <% endif %>
-<% endif %>
-
-<% set m_sf = matched.get('effects', {}).get('starforming_fraction', {}) %>
-<% if m_sf.get('status') == 'ok' %>
-The corresponding CG$_4$--minus--control difference in star-forming fraction is \(<< m_sf.get('delta_cg4_minus_control')|fmt(3) >>\), with 95\% bootstrap interval \([<< m_sf.get('ci95')[0]|fmt(3) >>, << m_sf.get('ci95')[1]|fmt(3) >>]\) and << pholm_text(m_sf.get('p_adj')) >>.
-<% endif %>
-
-<% set m_ell = matched.get('effects', {}).get('elliptical_fraction', {}) %>
-<% if m_ell.get('status') == 'ok' %>
-The matched CG$_4$--minus--control difference in elliptical fraction is \(<< m_ell.get('delta_cg4_minus_control')|fmt(3) >>\), with 95\% bootstrap interval \([<< m_ell.get('ci95')[0]|fmt(3) >>, << m_ell.get('ci95')[1]|fmt(3) >>]\) and << pholm_text(m_ell.get('p_adj')) >>.
-<% endif %>
-
-<% set m_spiral = matched.get('effects', {}).get('spiral_fraction', {}) %>
-<% if m_spiral.get('status') == 'ok' %>
-The matched CG$_4$--minus--control difference in spiral fraction is \(<< m_spiral.get('delta_cg4_minus_control')|fmt(3) >>\), with 95\% bootstrap interval \([<< m_spiral.get('ci95')[0]|fmt(3) >>, << m_spiral.get('ci95')[1]|fmt(3) >>]\) and << pholm_text(m_spiral.get('p_adj')) >>.
-<% endif %>
-
-<% set m_resid = matched.get('effects', {}).get('residual_sSFR_starforming', {}) %>
-<% if m_resid.get('status') == 'ok' %>
-Among matched star-forming galaxies, the residual-sSFR difference is \(<< m_resid.get('delta_cg4_minus_control')|fmt(3) >>\), with 95\% bootstrap interval \([<< m_resid.get('ci95')[0]|fmt(3) >>, << m_resid.get('ci95')[1]|fmt(3) >>]\) and << pval_text(m_resid.get('p')) >>.
-<% endif %>
-
-The matched comparison is therefore consistent with the adjusted models: the most robust compact-group signal is morphological, while the passive and star-forming-fraction signals are more model-dependent.
+<% endfor %>
 
 <% if matched.get('effects_figure') %>
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< matched.get('effects_figure') >>}
-    \caption{CG$_4$--minus--control effects after one-to-one matching. Bars show 95\% bootstrap confidence intervals.}
+    \caption{CG4-minus-control effects after one-to-one matching. Bars show 95\% bootstrap confidence intervals.}
     \label{fig:matched_control_effects}
 \end{figure}
 <% endif %>
@@ -853,30 +814,17 @@ The matched comparison is therefore consistent with the adjusted models: the mos
 <% if phase.get('status') == 'ok' %>
 \subsection{Projected phase space}
 
-For satellites, we use a projected BGG-centric radius normalized by the adopted group-size scale, and \(|\Delta v|/\sigma_v\), where the rest-frame velocity offset is normalized by the group velocity dispersion. In the current implementation the radial coordinate is \(R_{\rm BGG}/R_{\rm scale}\), with \(R_{\rm BGG}/R_{\rm scale}=\) \texttt{<< phase.get('coordinates_used', {}).get('radius')|replace('_', '\\_') >>}. The inner, low-velocity passive fractions are
+For satellites, we use \(R/\langle R_{ij}\rangle\), where the projected BGG distance is normalized by the group mean projected separation, and \(|\Delta v|/\sigma_v\), where the rest-frame velocity offset is normalized by the group velocity dispersion. The inner, low-velocity passive fractions are
 <% set inner = phase.get('bin_results', {}).get('inner_low_velocity', {}) %>
-<< inner.get('cg4', {}).get('passive_fraction')|pct(1) >>\% in CG$_4$ and << inner.get('control', {}).get('passive_fraction')|pct(1) >>\% in the controls.
+<< inner.get('cg4', {}).get('passive_fraction')|pct(1) >>\% in CG4 and << inner.get('control', {}).get('passive_fraction')|pct(1) >>\% in the controls.
 <% if phase.get('fixed_phase_space_cg4_significant') %>
-At least one fixed phase-space region retains a significant CG$_4$--control difference after correction.
+At least one fixed phase-space region retains a significant CG4--control difference after correction.
 <% else %>
-No fixed phase-space region retains a significant CG$_4$--control difference after correction.
+No fixed phase-space region retains a significant CG4--control difference after correction.
 <% endif %>
-
 <% set phase_model = phase.get('logistic_models', {}).get('passive', {}) %>
 <% if phase_model.get('status') == 'ok' %>
-The continuous phase-space model gives a CG$_4$ passive-status odds ratio of << phase_model.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(phase_model.get('cg4_p')) >>).
-<% if phase_model.get('cg4_p') is not none and phase_model.get('cg4_p') < 0.05 %>
-Thus, CG$_4$ membership remains associated with passive satellite status at fixed projected phase-space coordinates.
-<% elif phase_model.get('cg4_p') is not none and phase_model.get('cg4_p') < 0.10 %>
-This is only marginal, so the phase-space evidence for a residual passive-satellite excess is treated as exploratory.
-<% else %>
-Thus, projected phase space does not by itself reveal a robust residual CG$_4$ passive-satellite excess.
-<% endif %>
-<% endif %>
-
-<% set phase_ell = phase.get('logistic_models', {}).get('elliptical', {}) %>
-<% if phase_ell.get('status') == 'ok' %>
-The analogous elliptical-morphology phase-space model gives a CG$_4$ odds ratio of << phase_ell.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(phase_ell.get('cg4_p')) >>), again indicating that the morphology signal is stronger than the passive-status signal.
+The continuous phase-space model gives a CG4 passive-status odds ratio of << phase_model.get('cg4_odds_ratio')|fmt(2) >> (\(p=<< phase_model.get('cg4_p')|fmt(3) >>\)).
 <% endif %>
 
 <% if phase.get('figure') %>
@@ -894,62 +842,48 @@ The analogous elliptical-morphology phase-space model gives a CG$_4$ odds ratio 
 \subsection{Magnitude gaps and fossil-like assembly}
 
 We define \(\Delta m_{12}=M_{r,2}-M_{r,1}\) and \(\Delta m_{14}=M_{r,4}-M_{r,1}\), so that a more dominant BGG has a positive, larger gap.
-
-<% set dm12 = fossil.get('sample_comparisons', {}).get('Delta_m12', {}) %>
-<% if dm12.get('status') == 'ok' %>
-For \(\Delta m_{12}\), the CG$_4$ and control medians are << dm12.get('median_cg4')|fmt(2) >> and << dm12.get('median_control')|fmt(2) >> mag, respectively (<< pholm_text(dm12.get('p_adj')) >>).
+<% for gap in ['Delta_m12', 'Delta_m14'] %>
+<% set comparison = fossil.get('sample_comparisons', {}).get(gap, {}) %>
+<% if comparison.get('status') == 'ok' %>
+For << gap|replace('Delta_m', '\(\Delta m_{')|replace('12', '12}\)')|replace('14', '14}\)') >>, the CG4 and control medians are << comparison.get('median_cg4')|fmt(2) >> and << comparison.get('median_control')|fmt(2) >> mag, respectively (\(p_{\rm Holm}=<< comparison.get('p_adj')|fmt(3) >>\)).
 <% endif %>
-
-<% set dm14 = fossil.get('sample_comparisons', {}).get('Delta_m14', {}) %>
-<% if dm14.get('status') == 'ok' %>
-For \(\Delta m_{14}\), the CG$_4$ and control medians are << dm14.get('median_cg4')|fmt(2) >> and << dm14.get('median_control')|fmt(2) >> mag, respectively (<< pholm_text(dm14.get('p_adj')) >>).
-<% endif %>
-
-<% if not fossil.get('magnitude_gap_significant') %>
-The compact-group morphology signal is therefore not accompanied by a significant excess in these simple fossil-like magnitude-gap indicators.
-<% endif %>
-
+<% endfor %>
 <% set gap_passive = fossil.get('correlations', {}).get('Delta_m12_vs_passive_satellite_fraction', {}) %>
 <% if gap_passive.get('status') == 'ok' %>
-The correlation between \(\Delta m_{12}\) and passive satellite fraction is \(\rho_{\rm S}=<< gap_passive.get('spearman_rho')|fmt(2) >>\) (<< pholm_text(gap_passive.get('p_adj')) >>).
+The correlation between \(\Delta m_{12}\) and passive satellite fraction is \(\rho_{\rm S}=<< gap_passive.get('spearman_rho')|fmt(2) >>\) (\(p_{\rm Holm}=<< gap_passive.get('p_adj')|fmt(3) >>\)).
 <% endif %>
 
 <% if fossil.get('figure') %>
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< fossil.get('figure') >>}
-    \caption{Distributions of the first--second and first--fourth magnitude gaps in CG$_4$ and the pooled controls.}
+    \caption{Distributions of the first--second and first--fourth magnitude gaps in CG4 and the pooled controls.}
     \label{fig:magnitude_gap}
-\end{figure}
-<% endif %>
-<% if fossil.get('passive_fraction_figure') %>
-\begin{figure}
-    \centering
-    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< fossil.get('passive_fraction_figure') >>}
-    \caption{Passive satellite fraction as a function of the first--second magnitude gap.}
-    \label{fig:magnitude_gap_passive_fraction}
 \end{figure}
 <% endif %>
 <% endif %>
 
 <% set recent = es.get('recent_quenching', {}) %>
-<% if recent.get('status') in ['ok', 'limited'] %>
-\subsection{Recently quenched candidates}
+<% set agn = es.get('agn_environment', {}) %>
+<% if recent.get('status') in ['ok', 'limited'] or agn.get('status') in ['ok', 'limited'] %>
+\subsection{Recently quenched and emission-line populations}
 
 <% if recent.get('status') == 'limited' %>
-The catalogues do not contain both \(D_n4000\) and H\(\delta_A\), so a post-starburst classification is not possible. We therefore perform only a limited H\(\alpha\)-equivalent-width comparison, using the SDSS convention in which negative equivalent width denotes emission. We classify strong H\(\alpha\) emission using << recent.get('classification_thresholds', {}).get('strong_halpha_emission')|replace('_', '\\_') >>.
+The catalogues do not contain both \(D_n4000\) and H\(\delta_A\), so a post-starburst classification is not possible. We instead perform a limited H\(\alpha\)-equivalent-width comparison, using the SDSS convention in which negative equivalent width denotes emission.
 <% elif recent.get('status') == 'ok' %>
 The available \(D_n4000\), H\(\delta_A\), and H\(\alpha\) measurements permit a direct recently-quenched classification.
 <% endif %>
-
-<% if recent.get('status') == 'limited' %>
-The strong-emission fraction is <% for sample, item in recent.get('fractions_by_sample', {}).items() -%><< item.get('strong_emission_fraction')|pct(1) >>\% in << sample|replace('CG4', 'CG$_4$') >><% if not loop.last %>, <% else %>.<% endif %><% endfor %>
-<% for comp_name, comp in recent.get('comparisons', {}).items() %>
-<% if comp.get('status') == 'ok' %>
-Relative to << comp_name|replace('CG4_vs_', '')|replace('Control4B', 'Control4B')|replace('Control4C', 'Control4C')|replace('RG4', 'RG4') >>, the CG$_4$ strong-emission fraction differs by \(<< comp.get('strong_emission_fraction_difference')|fmt(3) >>\) (<< pholm_text(comp.get('p_adj')) >>).
+<% if recent.get('any_significant_comparison') %>
+At least one CG4--control H\(\alpha\) comparison remains significant after correction.
+<% elif recent.get('status') == 'limited' %>
+No CG4--control strong-emission comparison remains significant after correction.
 <% endif %>
-<% endfor %>
-These limited H\(\alpha\) results indicate that CG$_4$ galaxies have a lower strong-emission fraction than each control sample in the current catalogue, but they do not provide a direct post-starburst or recently-quenched classification.
+<% if agn.get('status') in ['ok', 'limited'] %>
+The complementary BPT analysis classifies star-forming, composite and broad AGN-like populations. The CG4 AGN-like fraction is << agn.get('fractions_by_sample', {}).get('CG4', {}).get('agn_like_fraction')|pct(1) >>\%.
+<% set agn_model = agn.get('mass_adjusted_models', {}).get('all', {}) %>
+<% if agn_model.get('status') == 'ok' %>
+After mass and environment adjustment, the CG4 AGN-like odds ratio is << agn_model.get('cg4_odds_ratio')|fmt(2) >> (\(p=<< agn_model.get('cg4_p')|fmt(3) >>\)).
+<% endif %>
 <% endif %>
 
 <% if recent.get('figure') %>
@@ -960,24 +894,6 @@ These limited H\(\alpha\) results indicate that CG$_4$ galaxies have a lower str
     \label{fig:recent_quenching}
 \end{figure}
 <% endif %>
-<% endif %>
-
-<% set agn = es.get('agn_environment', {}) %>
-<% if agn.get('status') in ['ok', 'limited'] %>
-\subsection{Emission-line and AGN-like populations}
-
-The complementary BPT analysis classifies star-forming, composite and broad AGN-like populations. The CG$_4$ AGN-like fraction is << agn.get('fractions_by_sample', {}).get('CG4', {}).get('agn_like_fraction')|pct(1) >>\%.
-
-<% set agn_model = agn.get('mass_adjusted_models', {}).get('all', {}) %>
-<% if agn_model.get('status') == 'ok' %>
-After mass and environment adjustment, the CG$_4$ AGN-like odds ratio is << agn_model.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(agn_model.get('cg4_p')) >>).
-<% if agn_model.get('cg4_p') is not none and agn_model.get('cg4_p') < 0.05 %>
-Thus, AGN-like activity remains associated with compact-group membership after adjustment.
-<% else %>
-Thus, AGN-like activity does not provide a robust independent compact-group discriminator in this analysis.
-<% endif %>
-<% endif %>
-
 <% if agn.get('figure') %>
 \begin{figure}
     \centering
@@ -990,29 +906,12 @@ Thus, AGN-like activity does not provide a robust independent compact-group disc
 
 <% set tidal = es.get('tidal_indices', {}) %>
 <% if tidal.get('status') == 'ok' %>
-\subsection{Pairwise tidal index}
-
-The pairwise analysis reconstructs projected separations and velocity differences for << tidal.get('n_galaxies_with_pairs') >> galaxies and tests whether adding \(\sum_j M_{\star,j}/R_{ij}^3\) changes the adjusted CG$_4$ coefficient.
-
-<% set tidal_passive = tidal.get('models', {}).get('passive', {}) %>
-<% set passive_base = tidal_passive.get('baseline', {}) %>
-<% set passive_tidal = tidal_passive.get('with_tidal_index', {}) %>
-<% if passive_base.get('status') == 'ok' and passive_tidal.get('status') == 'ok' %>
-For passive status, the baseline CG$_4$ odds ratio is << passive_base.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(passive_base.get('cg4_p')) >>), while the model including the tidal index gives a CG$_4$ odds ratio of << passive_tidal.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(passive_tidal.get('cg4_p')) >>). The tidal-index term itself has odds ratio << passive_tidal.get('terms', {}).get('log_tidal_index', {}).get('odds_ratio')|fmt(2) >> (<< pval_text(passive_tidal.get('terms', {}).get('log_tidal_index', {}).get('p')) >>).
-<% endif %>
-
-<% set tidal_ell = tidal.get('models', {}).get('elliptical', {}) %>
-<% set ell_base = tidal_ell.get('baseline', {}) %>
-<% set ell_tidal = tidal_ell.get('with_tidal_index', {}) %>
-<% if ell_base.get('status') == 'ok' and ell_tidal.get('status') == 'ok' %>
-For elliptical morphology, the baseline CG$_4$ odds ratio is << ell_base.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(ell_base.get('cg4_p')) >>), whereas the model including the tidal index gives a CG$_4$ odds ratio of << ell_tidal.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(ell_tidal.get('cg4_p')) >>). The tidal-index term has odds ratio << ell_tidal.get('terms', {}).get('log_tidal_index', {}).get('odds_ratio')|fmt(2) >> (<< pval_text(ell_tidal.get('terms', {}).get('log_tidal_index', {}).get('p')) >>). This suggests that the reconstructed local tidal-density proxy absorbs much of the unadjusted CG$_4$ morphology coefficient, although the result remains an exploratory projected-pair diagnostic.
-<% endif %>
-
+The pairwise analysis reconstructs projected separations and velocity differences for << tidal.get('n_galaxies_with_pairs') >> galaxies and tests whether adding \(\sum_j M_{\star,j}/R_{ij}^3\) reduces the adjusted CG4 coefficient.
 <% if tidal.get('figure') %>
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< tidal.get('figure') >>}
-    \caption{Passive status as a function of the reconstructed pairwise tidal index. Colours distinguish CG$_4$ from control galaxies.}
+    \caption{Passive status as a function of the reconstructed pairwise tidal index. Colours distinguish CG4 from control galaxies.}
     \label{fig:tidal_index_outcomes}
 \end{figure}
 <% endif %>
@@ -1022,22 +921,15 @@ For elliptical morphology, the baseline CG$_4$ odds ratio is << ell_base.get('cg
 <% if selection.get('status') == 'ok' %>
 \subsection{Selection diagnostics}
 
-The fractions with complete measurements for the major derived quantities are shown in Fig.~\ref{fig:data_availability}. The colour-matched versus unmatched comparisons quantify shifts in stellar mass, redshift, rank, star-formation class and morphology.
-
+The fractions with complete morphology, sSFR, stellar mass, colours, spectral lines, velocity data and group-scale quantities are shown in Fig.~\ref{fig:data_availability}. The colour-matched versus unmatched comparisons quantify shifts in stellar mass, redshift, rank, star-formation class and morphology.
 <% set angular = selection.get('nearest_angular_separation', {}) %>
 <% if angular.get('status') == 'ok' %>
-The median nearest-neighbour angular separation is << angular.get('median_cg4')|fmt(1) >> arcsec in CG$_4$ and << angular.get('median_control')|fmt(1) >> arcsec in the controls; the fractions below the 55-arcsec SDSS fibre-collision scale are << angular.get('cg4_fraction_below_threshold')|pct(1) >>\% and << angular.get('control_fraction_below_threshold')|pct(1) >>\%, respectively.
+The median nearest-neighbour angular separation is << angular.get('median_cg4')|fmt(1) >> arcsec in CG4 and << angular.get('median_control')|fmt(1) >> arcsec in the controls; the fractions below the 55-arcsec SDSS fibre-collision scale are << angular.get('cg4_fraction_below_threshold')|pct(1) >>\% and << angular.get('control_fraction_below_threshold')|pct(1) >>\%, respectively.
 <% endif %>
-
 <% if selection.get('strong_selection_bias') %>
 At least one major availability difference is both statistically significant and larger than ten percentage points, so affected results are treated as exploratory.
 <% else %>
 No major availability difference meets both the corrected-significance and ten-percentage-point criteria.
-<% endif %>
-
-<% set avail = selection.get('availability_by_sample', {}) %>
-<% if avail and avail.get('CG4', {}).get('group_scale_quantities') == 0 %>
-The automated availability row for group-scale quantities should be interpreted as an alias audit for a specific set of column names rather than as evidence that no group-scale information is used elsewhere in the analysis.
 <% endif %>
 
 <% if selection.get('availability_figure') %>
@@ -1059,67 +951,35 @@ The automated availability row for group-scale quantities should be interpreted 
 <% endif %>
 <% endif %>
 
-\section{Relation to recent structural studies of compact-group galaxies}
-
-A complementary interpretation of the present results is provided by the recent series of studies by
-\citet{Montaguth2023,Montaguth2025,Montaguth2026NonIsolated,Montaguth2026MassSize}.
-Using multiwavelength S-PLUS imaging and single-S'ersic structural fits, these authors identified a population of
-``transition’’ galaxies, broadly corresponding to red systems with relatively low or intermediate S'ersic index, whose
-location in the ($R_{\rm e})-(n)$ plane suggests ongoing structural transformation in compact groups. In particular,
-\citet{Montaguth2023} found that compact-group transition galaxies include a population that is smaller and more
-centrally concentrated than analogous field galaxies, while \citet{Montaguth2025} showed that this signature is
-stronger in non-isolated compact groups embedded in larger structures. \citet{Montaguth2026NonIsolated} further
-compared non-isolated compact groups with their surrounding host-group galaxies and found that the compact-group
-members display higher quenched fractions, a larger early-type fraction, and distinct transition-galaxy
-($R_{\rm e})-(n)$ distributions. Finally, \citet{Montaguth2026MassSize} showed that the environmental dependence of the
-stellar mass–size relation is weak for early- and late-type galaxies, but strongest for transition galaxies, whose
-mass–size slopes and S'ersic-index distributions become more early-type-like in groups and compact groups.
-
-Our analysis addresses a related but stricter question. Rather than comparing compact groups primarily with the
-field, or non-isolated compact groups with their immediate host structures, we ask whether compact-group galaxies
-remain different from galaxies in regular four-member group analogues after controlling for stellar mass, redshift,
-rank, and available group-scale quantities. In this framework, the most robust residual signal is morphological:
-compact-group membership remains associated with an enhanced probability of being classified as elliptical and a
-reduced probability of being classified as spiral. By contrast, the passive and star-forming satellite fractions are
-more sensitive to the adopted control sample and to the adjustment or matching procedure.
-
-The two sets of results are therefore not contradictory. The structural work of
-\citet{Montaguth2023,Montaguth2025,Montaguth2026NonIsolated,Montaguth2026MassSize} identifies the likely
-nature of the transformation: disk fading, increasing central concentration, and/or bulge growth in galaxies occupying
-an intermediate region between blue late-type disks and red early-type systems. Our results indicate that, when
-compact groups are compared with regular-group analogues rather than with the field alone, the clearest surviving
-signature is the accumulated morphological state of the galaxy population, whereas an instantaneous star-formation
-offset is less robust. This suggests that compact groups should not be interpreted simply as environments with
-ongoing enhanced quenching at the present epoch. They are more plausibly very dense regions in which past
-interactions, local tidal density, and preprocessing in larger haloes have already shifted part of the galaxy population
-toward earlier morphologies.
-
-A useful way to reconcile these views is to regard the compact-group signal as primarily structural and cumulative.
-In that picture, the compact configuration may accelerate morphological transformation, but some of the observed
-differences may also reflect the fact that many compact groups are the dense cores or substructures of larger systems.
-Future work combining the structural diagnostics of S-PLUS-like analyses, especially ($R_{\rm e}$), S\'ersic index,
-transition-galaxy classifications, and mass–size residuals, with the matched regular-group control framework used
-here would provide a direct test of whether the compact-group transformation is unique to compact configurations
-or is the high-density limit of more general group preprocessing.
-
 \section{Conclusion}
 
-After removing systems classified as split, we find that compact groups differ from regular four-member groups mainly through their galaxy population mix. Galaxies in CG$_4$ are more frequently elliptical and less frequently spiral than galaxies in RG$_4$, with highly significant differences in both fractions. This morphological difference is also present among BGGs: CG$_4$ BGGs are more often elliptical than RG$_4$ BGGs.
+After removing systems classified as split, we find that compact groups differ from regular four-member groups mainly through their galaxy population mix. Galaxies in CG4 are more frequently elliptical and less frequently spiral than galaxies in RG4, with highly significant differences in both fractions. This morphological difference is also present among BGGs: CG4 BGGs are more often elliptical than RG4 BGGs.
 
-The star-formation difference is more specific. CG$_4$ satellites are significantly less frequently star-forming than RG$_4$ satellites, while the star-forming fraction of BGGs does not differ significantly between the two samples. Moreover, among galaxies that remain star-forming, CG$_4$ galaxies do not show a significant offset from RG$_4$ galaxies relative to the star-forming main sequence.
+The star-formation difference is more specific. CG4 satellites are significantly less frequently star-forming than RG4 satellites, while the star-forming fraction of BGGs does not differ significantly between the two samples. Moreover, among galaxies that remain star-forming, CG4 galaxies do not show a significant offset from RG4 galaxies relative to the star-forming main sequence.
 
 The colour analysis does not indicate a simple uniform reddening of compact-group galaxies. <% if r.Colour_robustness_summary.baseline_blue_offset -%>The pooled mass- and redshift-adjusted comparison supports a blue CG$_4$ satellite offset.<% else -%>The pooled mass- and redshift-adjusted comparison does not support a statistically robust blue CG$_4$ satellite offset.<% endif %> <% if r.Colour_robustness_summary.full_model_blue_offset -%>Negative coefficients appear after adding morphology and sSFR class, but<% else -%>The coefficients remain non-significant after adding morphology and sSFR class, and<% endif %> the result is <% if r.Colour_robustness_summary.control_dependent -%>sensitive to the choice of control catalogue<% else -%>consistent across the control catalogues<% endif %>. Neither the sSFR-class nor morphology splits isolate a significant effect among star-forming spirals. The radial residual trends instead indicate that outer CG$_4$ satellites are bluer than inner satellites, consistent with stronger processing toward the BGG. The BGG and mean satellite colours are correlated, but <% if r.Colour_bgg_satellite_significant_slope_count == 0 -%>the corresponding CG$_4$ relations do not differ significantly from those of the control catalogues.<% else -%>some of the corresponding CG$_4$ relations differ significantly from those of the control catalogues.<% endif %> <% if r.Colour_bgg_domination_significant_adjusted|length == 0 -%>Likewise, the apparent colour difference between dominated and non-dominated BGGs disappears after controlling for stellar mass.<% else -%>Some colour differences between dominated and non-dominated BGGs remain significant after controlling for stellar mass.<% endif %>
 
-The most robust compact-group signal is morphological rather than an instantaneous star-formation offset. After controlling for stellar mass, redshift, rank and available group-scale properties, CG$_4$ membership remains associated with enhanced elliptical and reduced spiral probabilities, whereas passive status and satellite star-forming status do not remain significant in the corresponding adjusted models. The matched-control analysis supports the same morphological excess and gives only borderline evidence for an enhanced passive fraction.
-
-The additional diagnostics do not favour a simple fossil-group or AGN-driven explanation. The magnitude-gap distributions of CG$_4$ and the pooled controls are statistically similar, and AGN-like activity is not independently enhanced after mass and environment adjustment. The limited H\(\alpha\) diagnostic shows a lower strong-emission fraction in CG$_4$ than in the control catalogues, but the absence of both \(D_n4000\) and H\(\delta_A\) prevents a direct post-starburst or recently-quenched classification.
-
-Taken together, these results suggest that compact groups host a more morphologically evolved galaxy population, with an enhanced fraction of early-type galaxies and a reduced fraction of star-forming satellites. Because the passive CG$_4$ signal does not remain significant in both the adjusted and matched analyses, the apparent star-formation specialness is at least partly explained by environment, mass/rank mix, or pre-processing in dense halo cores. The morphology signal is more robust, but the projected tidal-index experiment suggests that local pairwise density may absorb part of that signal, so this result should be interpreted as evidence for accumulated transformation in very dense environments rather than as a uniquely isolated compact-group effect.
-
+These results suggest that compact groups host a more evolved galaxy population, with an enhanced fraction of early-type galaxies and a reduced fraction of star-forming satellites.
+<% if es and es.get('interpretation', {}).get('independent_compact_group_signal') %>
+Because the CG4 passive signal remains significant in both the adjusted and matched analyses, compact-group membership appears to carry an independent signal beyond the measured mass, rank and group-environment mix.
+<% elif es and es.get('status') == 'ok' %>
+Because the passive CG4 signal does not remain significant in both the adjusted and matched analyses, the apparent specialness is at least partly explained by environment, mass/rank mix, or pre-processing in dense halo cores.
+<% else %>
+The present analysis does not yet distinguish compact-group-specific evolution from pre-processing in larger-scale structures.
+<% endif %>
+<% if es and es.get('interpretation', {}).get('phase_space_signal') %>
+The phase-space differences further link satellite transformation to dynamical location within the group.
+<% endif %>
+<% if es and es.get('interpretation', {}).get('magnitude_gap_signal') %>
+The magnitude-gap comparison indicates that assembly age or fossil-like evolution may also contribute.
+<% endif %>
+<% if es and es.get('recent_quenching', {}).get('status') == 'limited' and not es.get('recent_quenching', {}).get('any_significant_comparison') %>
+The limited emission-line diagnostic does not show a corrected excess of strong current H\(\alpha\) emission; together with the unavailable age indices, this is more consistent with accumulated transformation than with a demonstrated large present burst of recent quenching.
+<% endif %>
 <% if es and es.get('interpretation', {}).get('strong_selection_bias') %>
 Finally, the strong availability differences identified by the selection diagnostics make the affected measurements exploratory and prevent a purely evolutionary interpretation.
 <% else %>
-The selection audit does not remove all catalogue-systematic uncertainty, and the angular-neighbour diagnostic confirms the expected higher close-pair incidence in CG$_4$, but it does not identify a major availability imbalance under the adopted criterion.
+The selection audit does not remove all catalogue-systematic uncertainty, but it does not identify a major availability imbalance under the adopted criterion.
 <% endif %>
 
 \begin{appendix} %First appendix
