@@ -37,8 +37,21 @@ AVAILABILITY = {
     "colours": ["u_minus_r", "u_minus_g", "g_minus_r", "r_minus_i"],
     "spectral_lines": ["h_alpha_eqw", "h_beta_eqw", "oiii_5007_eqw", "nii_6584_eqw"],
     "velocity_data": ["V_norm"],
-    "group_scale_quantities": ["R_scale", "velocity_dispersion", "log_group_mass"],
+    "group_scale_quantities": [
+        "R_scale",
+        "velocity_dispersion",
+        "log_group_luminosity",
+        "dominance",
+    ],
 }
+
+GROUP_SCALE_AUDIT_COLUMNS = [
+    "R_scale",
+    "velocity_dispersion",
+    "log_group_mass",
+    "log_group_luminosity",
+    "dominance",
+]
 
 
 def _nearest_angular(frame):
@@ -132,6 +145,23 @@ def _plot_colour_bias(frame, path):
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
     return os.path.basename(path)
+
+
+def _group_scale_audit(frame):
+    fractions = {}
+    for column in GROUP_SCALE_AUDIT_COLUMNS:
+        if column in frame:
+            fractions[column] = float(frame[column].notna().mean())
+        else:
+            fractions[column] = 0.0
+    used_columns = AVAILABILITY["group_scale_quantities"]
+    return {
+        "availability_columns": used_columns,
+        "column_available_fraction": fractions,
+        "missing_or_sparse_columns": [
+            column for column, fraction in fractions.items() if fraction < 0.65
+        ],
+    }
 
 
 def run_selection_diagnostics(data, output_dir: str | None = None):
@@ -236,6 +266,7 @@ def run_selection_diagnostics(data, output_dir: str | None = None):
     result = {
         "status": "ok",
         "availability_by_sample": availability,
+        "group_scale_column_audit": _group_scale_audit(frame),
         "missingness_comparisons": missingness,
         "matched_unmatched_comparisons": matched_unmatched,
         "nearest_angular_separation": angular_result,

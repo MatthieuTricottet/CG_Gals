@@ -61,6 +61,7 @@ import exploration_morph
 import exploration_ssfr
 import exploration_mvt_tcross
 import extended_specialness
+import ssfr_robustness
 
 
 
@@ -132,6 +133,8 @@ def load_data():
             print("Loading processed samples from disk")
         with open(co.DATA_PATH + co.PROCESS_SAMPLES, "rb") as file:
             sample = pkl.load(file)
+        if "SDSS_withAGN" in sample:
+            dl.plot_bpt(sample["SDSS_withAGN"], name="BPT_diagram")
 
     return sample
 
@@ -296,6 +299,7 @@ def main():
     sSFR.satellites_split_by_BGG_fertility(sample)
 
     run_explorations(sample)
+    ssfr_robustness.run(sample)
     extended_specialness.run_extended_specialness(sample)
     
 

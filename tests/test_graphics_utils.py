@@ -15,3 +15,9 @@ def test_latex_number_keeps_plain_decimal_for_moderate_values():
 
 def test_latex_float_remains_unwrapped_for_axis_labels():
     assert gu.latex_float(9.100024523062283e10) == r"9.1\times 10^{10}"
+
+
+def test_pvalue_latex_never_rounds_to_zero():
+    assert gu.pvalue_latex(0.00023) == r"$2.3\times 10^{-4}$"
+    assert gu.pvalue_latex(2e-8) == r"$<10^{-6}$"
+    assert gu.pvalue_latex(0.051) == r"$0.051$"

@@ -115,6 +115,19 @@ def test_all_modules_skip_gracefully_with_missing_columns():
         assert function(empty)["status"] == "skipped"
 
 
+def test_group_scale_availability_does_not_require_absent_mass():
+    frame = synthetic_frame()
+    frame["log_group_mass"] = np.nan
+
+    result = run_selection_diagnostics(frame)
+
+    assert result["availability_by_sample"]["CG4"]["group_scale_quantities"] == 1.0
+    assert (
+        "log_group_mass"
+        in result["group_scale_column_audit"]["missing_or_sparse_columns"]
+    )
+
+
 def test_all_modules_execute_on_synthetic_data_and_create_figures(tmp_path):
     frame = synthetic_frame()
     results = {

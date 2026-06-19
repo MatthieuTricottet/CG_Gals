@@ -132,19 +132,33 @@
                 \and Universidad Nacional de C\'ordoba (UNC). Observatorio Astron\'omico de C\'ordoba (OAC), Laprida 854, X5000BGR, C\'ordoba, Argentina
             }
 
-   \date{}
+  \date{}
 
   \abstract{
-    We investigate the properties of galaxies in compact groups (CGs) and compare them to a control sample of galaxies.
+    We ask whether galaxies in compact groups (CGs) remain special when they are compared with regular-group analogues rather than with the field alone. We use the CG$_4$ sample inherited from the Tricottet et al. construction after removing split systems, leaving 62 compact groups, and compare it with three regular-group controls: RG$_4$, Control$_{4B}$, and Control$_{4C}$. These controls respectively test true four-member regular groups, the luminous cores of richer regular groups, and projected compact cores around the brightest group galaxy. We combine Galaxy Zoo vote-fraction morphologies, SDSS stellar masses and specific star-formation rates, optical colours, emission-line and AGN-like diagnostics, and both adjusted and one-to-one matched control comparisons. CG$_4$ galaxies are more often classified as elliptical/smooth and less often as spiral/features than galaxies in the controls. This morphology signal survives adjustment for stellar mass, redshift, rank, and available group-scale quantities, and is also present in matched comparisons. The star-formation signal is weaker: CG$_4$ satellites have a lower raw star-forming fraction, especially relative to RG$_4$, but this contrast is not comparably robust after the adjusted and matched analyses. Among galaxies that remain star-forming, we find no robust compact-group offset from the star-forming main sequence. Colours, AGN-like fractions, magnitude gaps, and the limited H\(\alpha\) diagnostics do not support a simple instantaneous-quenching, fossil-group, or AGN-driven explanation. A projected pairwise tidal-index diagnostic suggests that local tidal density accounts for part of the morphology signal. Compact groups therefore host a more morphologically evolved population, consistent with accumulated transformation in very dense group cores and/or preprocessing rather than a uniquely isolated compact-group quenching mode.
    }
 
    \keywords{galaxies: groups: general -- galaxies: evolution -- galaxies: interactions -- galaxies: star formation -- galaxies: statistics}
 
    \maketitle
 
+
+
+
+
 \section{Introduction}\label{sec:intro}
 
-\section{Data}
+Compact groups of galaxies are useful laboratories for environmental evolution because they combine high projected galaxy densities with relatively low velocity dispersions \citep{Hickson82,Hickson+92}. In such configurations, repeated tidal encounters, dynamical friction, mergers, gas stripping or consumption, and disk heating can plausibly accelerate the transformation of galaxies compared with more diffuse environments \citep{Barnes85,Barnes89,Verdes-Montenegro+01}. This expectation is closely connected to the broader morphology-density and star-formation-environment relation, in which galaxy structure and star-formation activity vary systematically with local density \citep{Dressler80}.
+
+The interpretation of compact groups is nevertheless ambiguous. Projected selection can include chance alignments, and many Hickson-like systems need not be isolated bound entities. Simulations and redshift-space analyses have long shown that apparent compact groups may be transient alignments, dense substructures, or cores embedded in looser groups and richer haloes \citep{Mamon86,DiazGimenez&Mamon10,DiazGimenez+12,Zheng&Shen21}. The relevant observational question is therefore not only whether compact-group galaxies differ from field galaxies, but whether they remain different from galaxies occupying regular-group analogues selected with comparable luminosity, redshift, and membership constraints.
+
+Recent structural work strengthens this motivation. Using S-PLUS imaging and single-S\'ersic measurements, \citet{Montaguth2023,Montaguth2025,Montaguth2026NonIsolated,Montaguth2026MassSize} identified transition galaxies and trends in the \(R_{\rm e}\)--S\'ersic-index plane that point to structural transformation in compact groups, with stronger signatures in non-isolated compact groups and host structures. These studies suggest that compact groups can mark sites of cumulative structural processing. They do not, however, by themselves answer whether compact-group galaxies remain distinct after comparison with regular-group cores selected from the same parent catalogues.
+
+Our previous sample-construction paper \citep{Tricottet+25} showed that many compact groups are not isolated systems, but appear as dense cores or substructures of richer environments. This result motivates the stricter comparison made here. We use the same compact-group and regular-group sample framework to ask whether CG galaxies are still special after controlling for stellar mass, redshift, galaxy rank, and available group-scale properties. We then ask which observable carries the signal: star-formation class, Galaxy Zoo morphology, optical colour, AGN-like activity, fossil-like magnitude gaps, projected phase-space position, or local projected tidal density.
+
+The paper is organized as follows. Section~2 describes the samples, the sSFR and morphology classifications, and the statistical hierarchy. Sections~3 and 4 present baseline population differences and group-scale diagnostics. Section~5 tests which signals survive adjusted and matched comparisons and examines secondary diagnostics. Section~6 relates the results to recent structural studies of compact-group galaxies, and Section~7 summarizes the conclusions.
+
+\section{Data and classifications}
 \subsection{Samples}
 We use the compact-group and control samples constructed in our previous study \cite{Tricottet+25}.
 We briefly recall their construction here. Galaxy properties are taken from the SDSS DR12 catalogue
@@ -167,13 +181,15 @@ with redshifts between 0.032 and 0.034, and 1 with a redshift of 0.048. This gro
 outlying galaxy, although not the BGG, is selected in both our original \CB{} and \CC{} samples, significantly affecting the group velocity
 dispersion ($1979$ and $1981\, \kms$, respectively).
 
+The three regular-group controls serve different physical purposes. RG$_4$ contains true regular groups with exactly four selected members and is the most direct four-member regular-group comparison. Control$_{4B}$ contains the four brightest galaxies in richer regular groups and tests whether the CG$_4$ population resembles the luminous core of an ordinary group. Control$_{4C}$ contains the BGG plus the three closest projected companions and is the most compact-core-like ordinary-group analogue. CG$_4$ is therefore tested against both equal-membership groups and regular-group cores, rather than against a single control definition.
+
 We use SDSS DR 16 to retrieve stellar masses, star formation rates (SFRs), and Galaxy Zoo morphologies
 \citep{GalaxyZoo1}. We specifically extract the columns \texttt{sfr\_tot\_p50},
 \texttt{specsfr\_tot\_p50}, and \texttt{lgm\_tot\_p50} from the \texttt{galSpecExtra} table, and
 \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} from the \texttt{zooSpec} table.
 
 
-\subsection{sSFR}
+\subsection{sSFR classification}
 To build a general star formation classification that could be uniformly applied to all our samples, we extracted
  galaxies from the SDSS DR 16
 using the query shown in Listing~\ref{lst:query}.
@@ -207,13 +223,13 @@ using the query shown in Listing~\ref{lst:query}.
     
 \end{lstlisting}
 
-We select non-AGN galaxies by first placing them on the classical BPT diagnostic of \cite{Veilleux87} and requiring measured values of both emission-line ratios
+We identify BPT-classifiable galaxies by requiring measured values of both emission-line ratios
 \[
 \log_{10}\!\bigl([\mathrm{N\,II}]\lambda6584/\mathrm{H}\alpha\bigr)
 \quad\text{and}\quad
 \log_{10}\!\bigl([\mathrm{O\,III}]\lambda5007/\mathrm{H}\beta\bigr).
 \]
-A galaxy is flagged as an AGN if it satisfies either
+Among these galaxies, we flag broad AGN-like systems if they satisfy either
 \[
 \log_{10}\frac{[\mathrm{N\,II}]}{\mathrm{H}\alpha} > 0,
 \]
@@ -222,14 +238,13 @@ or if it lies above the empirical demarcation of \cite{Kauffmann+03a}:
 \log_{10}\frac{[\mathrm{O\,III}]}{\mathrm{H}\beta}
 > \frac{0.61}{\log_{10}([\mathrm{N\,II}]/\mathrm{H}\alpha)-0.05} \;+\; 1.3,
 \]
-in which case it is removed from the non-AGN sample.  All remaining galaxies—including those with missing line ratios—are retained as non-AGN.
-The non-AGN selection process is shown in Fig.~\ref{fig:BPT}.
+in which case they are excluded from the GMM calibration sample. Galaxies with missing diagnostic line ratios are BPT-unclassified, not proven non-AGN. They are retained for the broad sSFR status assignment when valid SDSS stellar mass and sSFR estimates are available, while the emission-line/AGN-like analysis below treats BPT-unclassified objects separately. The BPT-classifiable subset is shown in Fig.~\ref{fig:BPT}.
 
 
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{BPT_diagram.pdf}
-     \caption{BPT diagram showing our separation between non-AGN and AGN galaxies.}
+     \caption{BPT diagram for galaxies with measured diagnostic line ratios. The AGN-like region is excluded from the sSFR calibration sample; galaxies without the required ratios are BPT-unclassified rather than classified as non-AGN by this diagram.}
      \label{fig:BPT}
 \end{figure}
 
@@ -250,24 +265,25 @@ against local minima (\cite{Rousseeuw1987}). In the final fit, one component nat
 sequence,” while the other captures the low-\(\mathrm{sSFR}\) “passive” cloud, providing a data‐driven division that agrees with previous
 multi‐Gaussian decompositions of the SFR–\(M_*\) plane (\cite{Wuyts2011,Hahn2019}). The decision boundaries, defined as the
 loci where the posterior probabilities of adjacent components are equal, provide an objective criterion for
-delineating star‐forming from passive galaxies.
+delineating star‐forming from passive galaxies. The GMM calibration excludes galaxies flagged as AGN-like where the required BPT ratios are available, while line-missing galaxies can still receive a broad sSFR class from their SDSS mass and sSFR measurements.
 
 % GMM parameter summary to be inserted if needed.
 
-The sSFR status for each sample is shown in Table~\ref{tab:sSFR_status}. We find no significant difference in the \Starforming{} fraction
-between \CG{} and the control samples; Fisher's exact test gives p-values of
-$6.5 \times 10^{-1}$  versus the \CB{} sample,
- $2.5 \times 10^{-1}$  versus \CC{}, and  $1.8 \times 10^{-2}$  versus \RG.
+\subsection{Raw sSFR fractions}
+
+The sSFR status for each sample is shown in Table~\ref{tab:sSFR_status}. In the raw all-galaxy comparison, Fisher's exact test gives star-forming-fraction p-values of
+\(p=6.5 \times 10^{-1}\) versus the \CB{} sample,
+ \(p=2.5 \times 10^{-1}\) versus \CC{}, and  \(p=1.8 \times 10^{-2}\) versus \RG. We treat these raw tests as descriptive because they do not adjust for stellar mass, rank, or group-scale differences.
 
  The same comparison restricted to BGGs and satellites is also shown in Table~\ref{tab:sSFR_status}.
 For BGGs, the p-values obtained with two-sided Fisher exact test are
-  0.58 against \CB,
-  0.59 against \CC{} and
-  0.37  against \RG.
+  \(p=0.578\) against \CB,
+  \(p=0.587\) against \CC{} and
+  \(p=0.37\)  against \RG.
 For satellites, the corresponding p-values are
-  0.30 against \CB,
-  0.03 against \CC{} and
-  0.00 against \RG.
+  \(p=0.303\) against \CB,
+  \(p=0.033\) against \CC{} and
+  \(p=2.3\times 10^{-4}\) against \RG. The satellite deficit is clearest in the raw comparison with RG$_4$ and is revisited below with adjusted and matched analyses.
 
 \begin{table*}
     \centering
@@ -300,13 +316,6 @@ For satellites, the corresponding p-values are
 
 \begin{figure}
     \centering
-     \includegraphics[width=\columnwidth]{density_original_vs_GMMfit.pdf}
-     \caption{Observed non-quenched SDSS distribution in the \(\log M_*\)--\(\log\mathrm{sSFR}\) plane and best-fitting two-component GMM density.}
-     \label{fig:density_original_vs_GMMfit}
-\end{figure}
-
-\begin{figure}
-    \centering
      \includegraphics[width=\columnwidth]{sSFR_classification.pdf}
      \caption{sSFR vs mass, star-forming/passive limit and Zoo morphologies for the SDSS control sample,
      excluding quenched galaxies.}
@@ -322,24 +331,33 @@ For satellites, the corresponding p-values are
 
 
 
-\subsection{Morphology}
+\subsection{Morphology classification}
 Morphologies are determined via the Galaxy Zoo citizen‐science decision tree, in which each galaxy image receives multiple
 independent volunteer classifications that are aggregated into debiased vote fractions \citep{GalaxyZoo1}. Those fractions are provided in the
 \texttt{zooSpec} table of the SDSS database through the \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} columns. We classify a galaxy as
-``elliptical'' if \texttt{p\_el\_debiased} is greater than 0.5, and as ``spiral'' if \texttt{p\_cs\_debiased} is greater than 0.5.
-All other cases are classified as ``uncertain''. The morphologies obtained for each sample are shown in Table~\ref{tab:morphologies}.
+``elliptical/smooth'' if \texttt{p\_el\_debiased} is greater than 0.5, and as ``spiral/features'' if \texttt{p\_cs\_debiased} is greater than 0.5.
+All other cases are classified as ``uncertain''. These are vote-fraction classes, not a full structural decomposition. In particular, the catalogue used here does not provide a clean E/S0 separation, so references below to elliptical or early-type galaxies should be read as Galaxy Zoo smooth/early-type proxies rather than as a bulge-disc structural classification.
+
+\subsection{Statistical strategy}
+
+The analyses are organized hierarchically. Raw tables and exact tests provide descriptive baseline comparisons. Fisher or Barnard exact tests are used for two-sample categorical comparisons depending on the table structure, while rank-sum or bootstrap comparisons are used for distributional and median differences. Spearman and Pearson correlations are used only as diagnostics of monotonic or linear trends; when the coefficients are small, we interpret them as weak even if the p-values are formally small. Holm or Benjamini--Hochberg corrections are applied where multiple related tests are performed. The primary robustness layer consists of mass-, rank-, and environment-adjusted binomial models with group-clustered standard errors, followed by one-to-one matched control comparisons. Colours, AGN-like fractions, H\(\alpha\) equivalent widths, magnitude gaps, crossing-time trends, projected phase space, and the pairwise tidal index are secondary diagnostics. The main conclusions below rely on signals that survive the adjusted and matched analyses, not on isolated exploratory tests.
+
+\section{Baseline population differences}
+\subsection{Raw morphology fractions}
+
+The morphologies obtained for each sample are shown in Table~\ref{tab:morphologies}.
 Barnard's two-sided exact tests were used to compare the fraction of each morphology between \CG{} and each control sample. The resulting p-values are
-$1.4 \times 10^{-3}$ for ellipticals and $1.2 \times 10^{-3}$ for spirals versus the \CB{} sample,
- $3.3 \times 10^{-3}$  and $3.4 \times 10^{-2}$  versus \CC{} and  $2.2 \times 10^{-7}$
- and $5.9 \times 10^{-7}$  versus \RG. The galaxies in \CG{} systems, which we identified as cores of richer groups in
- \cite{Tricottet+25}, have morphology distributions that differ significantly from those of ordinary four-member groups. Figure~\ref{fig:galaxies_morph_sfr} displays sSFR versus stellar mass for galaxies in the SDSS selection and in \CG{}.
+\(p=1.4 \times 10^{-3}\) for ellipticals and \(p=1.2 \times 10^{-3}\) for spirals versus the \CB{} sample,
+ \(p=3.3 \times 10^{-3}\) and \(p=3.4 \times 10^{-2}\) versus \CC{} and \(p=2.2 \times 10^{-7}\)
+ and \(p=5.9 \times 10^{-7}\) versus \RG. The galaxies in \CG{} systems, which we identified as cores of richer groups in
+ \cite{Tricottet+25}, show a robust raw excess of elliptical/smooth classifications and a deficit of spiral/features classifications. Figure~\ref{fig:galaxies_morph_sfr} displays sSFR versus stellar mass for galaxies in the SDSS selection and in \CG{}.
 
 
 \begin{table*}
     \centering
     \begin{tabular}{lccc}
         \toprule
-            \textbf{Sample} & \textbf{  Elliptical  } & \textbf{  Spiral  } & \textbf{  Uncertain  } \\
+            \textbf{Sample} & \textbf{Elliptical/smooth} & \textbf{Spiral/features} & \textbf{Uncertain} \\
             \CG &  124  (50.0 \%) &  86  (34.7 \%)&  38  (15.3 \%) \\
             \CB &  1106  (39.6 \%) &  1266  (45.3 \%) &  420  (15.0 \%) \\
             \CC &  1215  (40.4 \%) &  1249  (41.6 \%) &  540  (18.0 \%) \\
@@ -348,7 +366,7 @@ $1.4 \times 10^{-3}$ for ellipticals and $1.2 \times 10^{-3}$ for spirals versus
          \midrule
         \bottomrule
     \end{tabular}
-    \caption{Number of galaxies of each morphology for each sample.}
+    \caption{Number of galaxies in each Galaxy Zoo vote-fraction morphology proxy for each sample.}
     \label{tab:morphologies}
 \end{table*}
 
@@ -375,8 +393,8 @@ and 159 elliptical galaxies ($15.7$\%) for \CC{},
 and 91 spiral galaxies ($91$\%)
 and 9 elliptical galaxies ($9$\%) for \RG{}.
 The probabilities that these fractions are drawn from
-the same distribution, estimated with Barnard two-sided exact test, are $0.29$ against \CB,
-$0.97$ against \CC{}, and $0.19$ against \RG. We therefore find
+the same distribution, estimated with Barnard two-sided exact test, are \(p=0.29\) against \CB,
+\(p=0.97\) against \CC{}, and \(p=0.19\) against \RG. We therefore find
 neither a significant excess nor a deficit of
 star-forming elliptical galaxies in \CG{} relative to any control sample.
 
@@ -397,7 +415,7 @@ The p-values obtained with two-sided Fisher exact test are
   0.03  against \RG.
 Thus, BGG morphologies differ between \CG{} and \RG{}: \CG{} BGGs have a higher elliptical fraction than \RG{} BGGs.
 
-\section{sSFR}
+\subsection{Population medians by sSFR class}
 
 \begin{table*}
 \centering
@@ -439,7 +457,7 @@ CG4
   & $-20.4$ $\pm$ 0.14
 
   & $10.64$ $\pm$ 0.07
-  & $10.05$ $\pm$ 0.05
+  & $10.05$ $\pm$ 0.06
 
 \\
 
@@ -461,7 +479,7 @@ Control4C
   & $-11.92$ $\pm$ 0.02
   & $-10.16$ $\pm$ 0.02
 
-  & $-20.81$ $\pm$ 0.06
+  & $-20.81$ $\pm$ 0.07
   & $-19.93$ $\pm$ 0.04
 
   & $10.47$ $\pm$ 0.03
@@ -477,7 +495,7 @@ RG4
   & $-21.11$ $\pm$ 0.25
   & $-20.32$ $\pm$ 0.12
 
-  & $10.62$ $\pm$ 0.09
+  & $10.62$ $\pm$ 0.08
   & $9.97$ $\pm$ 0.09
 
 \\
@@ -510,7 +528,7 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).
   \multicolumn{2}{c}{$\log(M_\star/M_\odot)$}%
   
  \\
-% --- second header row: BGG fertility split ---
+% --- second header row: BGG sSFR-class split ---
  BGG &
 
   Passive & Star-forming%
@@ -528,7 +546,7 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).
   CG4 &
   
     $-11.53$ $\pm$ 0.09 &
-    $-10.85$ $\pm$ 0.30 &
+    $-10.85$ $\pm$ 0.29 &
   
     $-20.93$ $\pm$ 0.11 &
     $-20.77$ $\pm$ 0.32 &
@@ -564,22 +582,22 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).
   RG4 &
   
     $-11.14$ $\pm$ 0.19 &
-    $-10.58$ $\pm$ 0.17 &
+    $-10.58$ $\pm$ 0.16 &
   
     $-20.69$ $\pm$ 0.14 &
     $-20.74$ $\pm$ 0.27 &
   
     $10.32$ $\pm$ 0.07 &
-    $10.19$ $\pm$ 0.13
+    $10.19$ $\pm$ 0.12
    \\
 
 
 
 \bottomrule
 \end{tabular}
-\caption{Median values of various quantities for galaxies according to the fertility of their BGG (BGG included).
+\caption{Median values of various quantities for galaxies according to the sSFR class of their BGG (BGG included).
 Uncertainties are estimated by bootstrapping (10\,000 iterations).}
-\label{tab:split_fertility_BGG_properties}
+\label{tab:split_BGG_ssfr_class_properties}
 \end{table*}
 
 \begin{table*}
@@ -599,7 +617,7 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
   \multicolumn{2}{c}{$\log(M_\star/M_\odot)$}%
   
  \\
-% --- second header row: BGG fertility split ---
+% --- second header row: BGG sSFR-class split ---
  &
 
   Passive & Star-forming%
@@ -619,7 +637,7 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
     $-11.23$ $\pm$ 0.16 &
     $-10.92$ $\pm$ 0.48 &
   
-    $-20.45$ $\pm$ 0.12 &
+    $-20.45$ $\pm$ 0.13 &
     $-20.34$ $\pm$ 0.18 &
   
     $10.22$ $\pm$ 0.05 &
@@ -632,7 +650,7 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
     $-10.91$ $\pm$ 0.13 &
   
     $-20.9$ $\pm$ 0.03 &
-    $-20.75$ $\pm$ 0.05 &
+    $-20.75$ $\pm$ 0.06 &
   
     $10.43$ $\pm$ 0.02 &
     $10.3$ $\pm$ 0.03
@@ -640,11 +658,11 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
 
   Control4C &
   
-    $-10.96$ $\pm$ 0.05 &
+    $-10.96$ $\pm$ 0.04 &
     $-10.6$ $\pm$ 0.07 &
   
     $-19.8$ $\pm$ 0.04 &
-    $-20.02$ $\pm$ 0.10 &
+    $-20.02$ $\pm$ 0.09 &
   
     $9.91$ $\pm$ 0.02 &
     $9.89$ $\pm$ 0.07
@@ -655,7 +673,7 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
     $-10.82$ $\pm$ 0.19 &
     $-10.61$ $\pm$ 0.22 &
   
-    $-20.23$ $\pm$ 0.17 &
+    $-20.23$ $\pm$ 0.16 &
     $-20.3$ $\pm$ 0.13 &
   
     $10.09$ $\pm$ 0.08 &
@@ -666,31 +684,31 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
 
 \bottomrule
 \end{tabular}
-\caption{Median values of various quantities for galaxies according to the fertility of their BGG (satellites only).
+\caption{Median values of various quantities for galaxies according to the sSFR class of their BGG (satellites only).
 Uncertainties are estimated by bootstrapping (10\,000 iterations).}
-\label{tab:split_fertility_BGG_properties_Sat}
+\label{tab:split_BGG_ssfr_class_properties_Sat}
 \end{table*}
 
 
 \begin{figure}
     \centering
-     \includegraphics[width=\columnwidth]{fertility.pdf}
-     \caption{Distributions of various quantities for galaxies according to their fertility.}
-     \label{fig:fertility}
+     \includegraphics[width=\columnwidth]{ssfr_class.pdf}
+     \caption{Distributions of various quantities for galaxies according to their sSFR class.}
+     \label{fig:ssfr_class}
 \end{figure}
 
 \begin{figure}
     \centering
-     \includegraphics[width=\columnwidth]{BGG_fertility.pdf}
-     \caption{Distributions of various quantities for galaxies according to the fertility of their BGG (BGG included).}
-     \label{fig:BGG_fertility}
+     \includegraphics[width=\columnwidth]{BGG_ssfr_class.pdf}
+     \caption{Distributions of various quantities for galaxies according to the BGG sSFR class (BGG included).}
+     \label{fig:BGG_ssfr_class}
 \end{figure}
 
 \begin{figure}
     \centering
-     \includegraphics[width=\columnwidth]{Satellites_by_BGG_fertility.pdf}
-     \caption{Distributions of various quantities for galaxies according to the fertility of their BGG (satellites only).}
-     \label{fig:Sat_BGG_fertility}
+     \includegraphics[width=\columnwidth]{Satellites_by_BGG_ssfr_class.pdf}
+     \caption{Distributions of various quantities for satellites according to the BGG sSFR class.}
+     \label{fig:Sat_BGG_ssfr_class}
 \end{figure}
 
 \subsection{Main sequence}
@@ -761,7 +779,7 @@ The median main-sequence residual of CG4 galaxies is:
 with a median offset of
 $\Delta = 0.056$
 ($0.029 \le \Delta \le 0.099$, bootstrap),
-corresponding to a $p$-value of $p = 0.051$.
+corresponding to \(p=0.051\).
 
 
 
@@ -777,7 +795,7 @@ corresponding to a $p$-value of $p = 0.051$.
 with a median offset of
 $\Delta = 0.082$
 ($0.062 \le \Delta \le 0.122$, bootstrap),
-corresponding to a $p$-value of $p = 0.010$.
+corresponding to \(p=0.010\).
 
 
 
@@ -793,7 +811,7 @@ corresponding to a $p$-value of $p = 0.010$.
 with a median offset of
 $\Delta = 0.046$
 ($-0.035 \le \Delta \le 0.099$, bootstrap),
-corresponding to a $p$-value of $p = 0.535$.
+corresponding to \(p=0.535\).
 
 
 
@@ -883,34 +901,35 @@ corresponding to a $p$-value of $p = 0.535$.
 A direct rank-sum comparison of the star-forming main-sequence offsets only identifies significant differences between \CG{} and
 
 Control$_{4C}$, whose median offset is -0.060 with respect to the fitted sequence
-(p = $0.03$). 
+(\(p=0.03\)).
 
 
 
 
-Within \CG{}, the star-forming main-sequence offsets of the Embedded, Isolated and Predom classes remain statistically consistent with one another.
+Within \CG{}, the star-forming main-sequence offsets of the Embedded, Isolated and Predominant classes remain statistically consistent with one another.
 
 
+\section{Environmental and group-scale diagnostics}
 \subsection{Distance to the BGG}
 We also compare the sSFR of satellite galaxies with their distance to the BGG, expressed both in projected kpc and in units of $\langle R_{ij}\rangle$.
 
 Significant monotonic trends are detected in the following cases.
 
 In CG$_4$, sSFR correlates with projected distance to the BGG with Spearman coefficient
-$\rho_\mathrm{S} = 0.24$ for 177 satellites (p = $1.2 \times 10^{-3}$) and Pearson coefficient
-$r = 0.21$ (p = $4.1 \times 10^{-3}$).
+$\rho_\mathrm{S} = 0.24$ for 177 satellites (\(p=1.2 \times 10^{-3}\)) and Pearson coefficient
+$r = 0.21$ (\(p=4.1 \times 10^{-3}\)).
 
 In Control$_{4B}$, sSFR correlates with distance to the BGG normalized by $\langle R_{ij}\rangle$ with Spearman coefficient
-$\rho_\mathrm{S} = 0.08$ for 1991 satellites (p = $3.6 \times 10^{-4}$) and Pearson coefficient
-$r = 0.08$ (p = $2.3 \times 10^{-4}$).
+$\rho_\mathrm{S} = 0.08$ for 1991 satellites (\(p=3.6 \times 10^{-4}\)) and Pearson coefficient
+$r = 0.08$ (\(p=2.3 \times 10^{-4}\)).
 
 In Control$_{4C}$, sSFR correlates with projected distance to the BGG with Spearman coefficient
-$\rho_\mathrm{S} = 0.25$ for 2143 satellites (p = $<10^{-6}$) and Pearson coefficient
-$r = 0.20$ (p = $<10^{-6}$).
+$\rho_\mathrm{S} = 0.25$ for 2143 satellites (\(p<10^{-6}\)) and Pearson coefficient
+$r = 0.20$ (\(p<10^{-6}\)).
 
 In Control$_{4C}$, sSFR correlates with distance to the BGG normalized by $\langle R_{ij}\rangle$ with Spearman coefficient
-$\rho_\mathrm{S} = 0.10$ for 2143 satellites (p = $4.6 \times 10^{-6}$) and Pearson coefficient
-$r = 0.09$ (p = $1.8 \times 10^{-5}$).
+$\rho_\mathrm{S} = 0.10$ for 2143 satellites (\(p=4.6 \times 10^{-6}\)) and Pearson coefficient
+$r = 0.09$ (\(p=1.8 \times 10^{-5}\)).
 
 
 
@@ -965,17 +984,17 @@ When we further split the samples by domination and by the morphology of the BGG
 
 Control$_{4B}$ dominated groups, where the median satellite spiral fraction is
 1.00 for spiral BGGs and 0.67 for elliptical BGGs.
-The corresponding group-level odds ratio is 1.84 (p = $0.01$), while the satellite-level clustered fit gives
-an odds ratio of 1.84 (p = $0.02$); 
+The corresponding group-level odds ratio is 1.84 (\(p=0.01\)), while the satellite-level clustered fit gives
+an odds ratio of 1.84 (\(p=0.02\));
 
 Control$_{4C}$ dominated groups, where the median satellite spiral fraction is
 0.67 for spiral BGGs and 0.50 for elliptical BGGs.
-The corresponding group-level odds ratio is 1.84 (p = $2.1 \times 10^{-5}$), while the satellite-level clustered fit gives
-an odds ratio of 1.84 (p = $2.7 \times 10^{-5}$). 
+The corresponding group-level odds ratio is 1.84 (\(p=2.1 \times 10^{-5}\)), while the satellite-level clustered fit gives
+an odds ratio of 1.84 (\(p=2.7 \times 10^{-5}\)).
 
 
 
-\section{Group dynamics}
+\subsection{Crossing time}
 
 
 
@@ -1007,12 +1026,12 @@ The crossing-time diagnostic mainly separates systems by dynamical scale rather 
 \end{figure}
 
 
-\section{Colour}
+\subsection{Optical colours}
 We derive the $(u-r)$, $(u-g)$, $(g-r)$ and $(r-i)$ colours from the matched SDSS photometry. The retained matches include 110 of 248 galaxies in CG$_4$, 931 of 2792 galaxies in Control$_{4B}$, 1478 of 3004 galaxies in Control$_{4C}$, 102 of 224 galaxies in RG$_4$. Stellar mass is a confounding variable in colour comparisons \citep{Alpaslan+15}; we therefore model each colour jointly with $\log(M_\star/M_\odot)$ rather than comparing unadjusted colour distributions.
 
-\subsection{Catalogue colour--mass relations}
+\subsubsection{Catalogue colour--mass relations}
 
-The hypothesis of a common colour--mass slope across catalogues is rejected for u-r ($p=4.96\times 10^{-4}$), u-g ($p=0.00203$), g-r ($p=1.46\times 10^{-4}$), r-i ($p=0.00495$). After Holm correction for the directional comparisons, significantly steeper CG$_4$ slopes are found for u-r relative to Control$_{4C}$, with $\Delta b=0.289$ ($p_{\mathrm{Holm}}=0.00163$); for u-r relative to SDSS, with $\Delta b=0.232$ ($p_{\mathrm{Holm}}=0.00163$); for u-g relative to Control$_{4C}$, with $\Delta b=0.237$ ($p_{\mathrm{Holm}}=0.00287$); for u-g relative to SDSS, with $\Delta b=0.186$ ($p_{\mathrm{Holm}}=0.00165$). These relations are shown in Fig.~\ref{fig:color_mass}.
+The hypothesis of a common colour--mass slope across catalogues is rejected for u-r (\(p=4.96\times 10^{-4}\)), u-g (\(p=0.00203\)), g-r (\(p=1.46\times 10^{-4}\)), r-i (\(p=0.00495\)). After Holm correction for the directional comparisons, significantly steeper CG$_4$ slopes are found for u-r relative to Control$_{4C}$, with $\Delta b=0.289$ (\(p_{\mathrm{Holm}}=0.00163\)); for u-r relative to SDSS, with $\Delta b=0.232$ (\(p_{\mathrm{Holm}}=0.00163\)); for u-g relative to Control$_{4C}$, with $\Delta b=0.237$ (\(p_{\mathrm{Holm}}=0.00287\)); for u-g relative to SDSS, with $\Delta b=0.186$ (\(p_{\mathrm{Holm}}=0.00165\)). These relations are shown in Fig.~\ref{fig:color_mass}.
 
 \begin{figure*}
     \centering
@@ -1021,9 +1040,9 @@ The hypothesis of a common colour--mass slope across catalogues is rejected for 
     \label{fig:color_mass}
 \end{figure*}
 
-\subsection{Satellite colours}
+\subsubsection{Satellite colours}
 
-To isolate an environmental difference, we pool satellites from the control catalogues as the ordinary-group population and compare them with CG$_4$ satellites at the common reference mass $\log(M_\star/M_\odot)=9.885$. At this mass, compact-group satellites are 0.124 mag bluer in u-r ($p_{\mathrm{Holm}}=0.00909$) and 0.106 mag bluer in u-g ($p_{\mathrm{Holm}}=0.00737$). The compact and ordinary colour--mass slopes also differ in u-r ($b_{\mathrm{compact}}=0.819$, $b_{\mathrm{ordinary}}=0.344$, $p_{\mathrm{Holm}}=2.21\times 10^{-5}$), u-g ($b_{\mathrm{compact}}=0.532$, $b_{\mathrm{ordinary}}=0.150$, $p_{\mathrm{Holm}}=1.42\times 10^{-4}$), g-r ($b_{\mathrm{compact}}=0.287$, $b_{\mathrm{ordinary}}=0.195$, $p_{\mathrm{Holm}}=2.9\times 10^{-4}$). Figure~\ref{fig:satellite_colour_mass} displays the corresponding fitted relations.
+To isolate an environmental difference, we pool satellites from the control catalogues as the ordinary-group population and compare them with CG$_4$ satellites at the common reference mass $\log(M_\star/M_\odot)=9.885$. At this mass, compact-group satellites are 0.124 mag bluer in u-r (\(p_{\mathrm{Holm}}=0.00909\)) and 0.106 mag bluer in u-g (\(p_{\mathrm{Holm}}=0.00737\)). The compact and ordinary colour--mass slopes also differ in u-r ($b_{\mathrm{compact}}=0.819$, $b_{\mathrm{ordinary}}=0.344$, \(p_{\mathrm{Holm}}=2.21\times 10^{-5}\)), u-g ($b_{\mathrm{compact}}=0.532$, $b_{\mathrm{ordinary}}=0.150$, \(p_{\mathrm{Holm}}=1.42\times 10^{-4}\)), g-r ($b_{\mathrm{compact}}=0.287$, $b_{\mathrm{ordinary}}=0.195$, \(p_{\mathrm{Holm}}=2.9\times 10^{-4}\)). Figure~\ref{fig:satellite_colour_mass} displays the corresponding fitted relations.
 
 \begin{figure*}
     \centering
@@ -1032,7 +1051,7 @@ To isolate an environmental difference, we pool satellites from the control cata
     \label{fig:satellite_colour_mass}
 \end{figure*}
 
-\subsection{Robustness of the satellite colour result}
+\subsubsection{Robustness of the satellite colour result}
 
 The SDSS-photometry subset is not representative of the full galaxy catalogues: matched galaxies are systematically less massive, more actively star-forming and more frequently satellites than unmatched galaxies. The fractions with all four colours are 44.4\% in CG4, 33.3\% in Control4B, 49.2\% in Control4C, 45.5\% in RG4.
 
@@ -1049,7 +1068,7 @@ Figure~\ref{fig:colour_robustness_coefficients} summarizes the model and control
     \label{fig:colour_robustness_coefficients}
 \end{figure*}
 
-\subsection{Radial and group-level colour trends}
+\subsubsection{Radial and group-level colour trends}
 
 The residual colours become bluer at larger projected distance from the BGG in CG$_4$. After Holm correction within each distance metric, significant CG$_4$ correlations are found for $(u-r)$ ($\rho_{\rm S}=-0.379$, $p_{\rm Holm}=2.6\times 10^{-4}$), for $(u-g)$ ($\rho_{\rm S}=-0.336$, $p_{\rm Holm}=0.0011$), for $(g-r)$ ($\rho_{\rm S}=-0.257$, $p_{\rm Holm}=0.00922$). This radial trend is consistent with stronger processing near the group centre and a less processed outer population, rather than centrally triggered blue colours.
 
@@ -1062,11 +1081,11 @@ At the group level, crossing time correlates with mean satellite $\Delta(u-r)$ (
     \label{fig:colour_residual_distance}
 \end{figure*}
 
-\subsection{BGG and satellite colours}
+\subsubsection{BGG and satellite colours}
 
-The mean satellite colour varies with the BGG colour across the combined group sample: for u-r, $r_{\mathrm{P}}=0.360$ ($p_{\mathrm{Holm}}=7.91\times 10^{-7}$) and $\rho_{\mathrm{S}}=0.321$ ($p_{\mathrm{Holm}}=1.3\times 10^{-5}$); for u-g, $r_{\mathrm{P}}=0.326$ ($p_{\mathrm{Holm}}=6.01\times 10^{-6}$) and $\rho_{\mathrm{S}}=0.325$ ($p_{\mathrm{Holm}}=1.3\times 10^{-5}$); for g-r, $r_{\mathrm{P}}=0.340$ ($p_{\mathrm{Holm}}=2.94\times 10^{-6}$) and $\rho_{\mathrm{S}}=0.283$ ($p_{\mathrm{Holm}}=1.13\times 10^{-4}$); for r-i, $r_{\mathrm{P}}=0.142$ ($p_{\mathrm{Holm}}=0.0464$) and $\rho_{\mathrm{S}}=0.232$ ($p_{\mathrm{Holm}}=0.00103$). After Holm correction, the BGG--satellite colour slope in CG$_4$ does not differ significantly from any control catalogue in any of the four colours. Figure~\ref{fig:bgg_satellite_colour} shows these group-level relations.
+The mean satellite colour varies with the BGG colour across the combined group sample: for u-r, $r_{\mathrm{P}}=0.360$ (\(p_{\mathrm{Holm}}=7.91\times 10^{-7}\)) and $\rho_{\mathrm{S}}=0.321$ (\(p_{\mathrm{Holm}}=1.3\times 10^{-5}\)); for u-g, $r_{\mathrm{P}}=0.326$ (\(p_{\mathrm{Holm}}=6.01\times 10^{-6}\)) and $\rho_{\mathrm{S}}=0.325$ (\(p_{\mathrm{Holm}}=1.3\times 10^{-5}\)); for g-r, $r_{\mathrm{P}}=0.340$ (\(p_{\mathrm{Holm}}=2.94\times 10^{-6}\)) and $\rho_{\mathrm{S}}=0.283$ (\(p_{\mathrm{Holm}}=1.13\times 10^{-4}\)); for r-i, $r_{\mathrm{P}}=0.142$ (\(p_{\mathrm{Holm}}=0.0464\)) and $\rho_{\mathrm{S}}=0.232$ (\(p_{\mathrm{Holm}}=0.00103\)). After Holm correction, the BGG--satellite colour slope in CG$_4$ does not differ significantly from any control catalogue in any of the four colours. Figure~\ref{fig:bgg_satellite_colour} shows these group-level relations.
 
-Taken together, these results suggest a limited degree of BGG--satellite concordance. The direct evidence is clearest for colour: redder BGGs are associated with redder mean satellite populations. A similar tendency appears in the satellite-only split by BGG sSFR class in Table~\ref{tab:split_fertility_BGG_properties_Sat}, where satellites around passive BGGs have lower median sSFR than those around star-forming BGGs. The morphology signal is more restricted, appearing only in dominated control systems. We therefore treat concordance as a secondary pattern in the present analysis rather than as a separate population-level classification.
+Taken together, these results suggest a limited degree of BGG--satellite concordance. The direct evidence is clearest for colour: redder BGGs are associated with redder mean satellite populations. A similar tendency appears in the satellite-only split by BGG sSFR class in Table~\ref{tab:split_BGG_ssfr_class_properties_Sat}, where satellites around passive BGGs have lower median sSFR than those around star-forming BGGs. The morphology signal is more restricted, appearing only in dominated control systems. We therefore treat concordance as a secondary pattern in the present analysis rather than as a separate population-level classification.
 
 \begin{figure*}
     \centering
@@ -1075,9 +1094,9 @@ Taken together, these results suggest a limited degree of BGG--satellite concord
     \label{fig:bgg_satellite_colour}
 \end{figure*}
 
-\subsection{BGG colours and luminosity domination}
+\subsubsection{BGG colours and luminosity domination}
 
-The BGG stellar-mass distributions are significantly different between the domination classes ($p=7.32\times 10^{-4}$); the median $\log(M_\star/M_\odot)$ values are 11.092 for dominated and 10.976 for non-dominated BGGs. Before mass adjustment, a significant colour difference is found in g-r ($\Delta_{\mathrm{median}}=0.021$, $p_{\mathrm{Holm}}=0.00157$). At the common reference mass $\log(M_\star/M_\odot)=11.042$, the adjusted results are u-r: $\Delta=-0.002$ mag ($p_{\mathrm{Holm}}=1$); u-g: $\Delta=-0.010$ mag ($p_{\mathrm{Holm}}=1$); g-r: $\Delta=0.007$ mag ($p_{\mathrm{Holm}}=1$); r-i: $\Delta=0.001$ mag ($p_{\mathrm{Holm}}=1$). Thus, no dominated/non-dominated BGG colour offset remains significant after controlling for stellar mass. The mass dependence and class fits are shown in Fig.~\ref{fig:bgg_colour_domination}.
+The BGG stellar-mass distributions are significantly different between the domination classes (\(p=7.32\times 10^{-4}\)); the median $\log(M_\star/M_\odot)$ values are 11.092 for dominated and 10.976 for non-dominated BGGs. Before mass adjustment, a significant colour difference is found in g-r ($\Delta_{\mathrm{median}}=0.021$, \(p_{\mathrm{Holm}}=0.00157\)). At the common reference mass $\log(M_\star/M_\odot)=11.042$, the adjusted results are u-r: $\Delta=-0.002$ mag (\(p_{\mathrm{Holm}}=1\)); u-g: $\Delta=-0.010$ mag (\(p_{\mathrm{Holm}}=1\)); g-r: $\Delta=0.007$ mag (\(p_{\mathrm{Holm}}=1\)); r-i: $\Delta=0.001$ mag (\(p_{\mathrm{Holm}}=1\)). Thus, no dominated/non-dominated BGG colour offset remains significant after controlling for stellar mass. The mass dependence and class fits are shown in Fig.~\ref{fig:bgg_colour_domination}.
 
 \begin{figure*}
     \centering
@@ -1088,11 +1107,7 @@ The BGG stellar-mass distributions are significantly different between the domin
 
 
 
-
-
-
-
-\section{What drives the compact-group differences?}
+\section{Robustness: what drives the compact-group differences?}
 
 The previous sections establish that CG$_4$ galaxies differ from the control catalogues in their population mix, especially in morphology and in the star-forming fraction of satellites. We now ask whether these differences survive after controlling for stellar mass, rank and available group-scale quantities, and whether they are better interpreted as compact-group-specific evolution, preprocessing in dense halo cores, or catalogue-selection effects.
 
@@ -1170,17 +1185,22 @@ The corresponding CG$_4$--minus--control difference in star-forming fraction is 
 
 
 
-The matched CG$_4$--minus--control difference in elliptical fraction is \(0.197\), with 95\% bootstrap interval \([0.090, 0.303]\) and \(p_{\rm Holm}<10^{-3}\).
+The matched CG$_4$--minus--control difference in elliptical fraction is \(0.197\), with 95\% bootstrap interval \([0.090, 0.303]\) and \(p_{\rm Holm}<10^{-6}\).
 
 
 
 
-The matched CG$_4$--minus--control difference in spiral fraction is \(-0.197\), with 95\% bootstrap interval \([-0.303, -0.090]\) and \(p_{\rm Holm}<10^{-3}\).
+The matched CG$_4$--minus--control difference in spiral fraction is \(-0.197\), with 95\% bootstrap interval \([-0.303, -0.090]\) and \(p_{\rm Holm}<10^{-6}\).
 
 
 
 
 Among matched star-forming galaxies, the residual-sSFR difference is \(-0.096\), with 95\% bootstrap interval \([-0.221, 0.015]\) and \(p=0.084\).
+
+
+
+
+The main interpretation does not rely on the exact GMM division of the sSFR plane. Repeating the key satellite comparison with a fixed threshold, $\log_{10}(\mathrm{sSFR}/\mathrm{yr}^{-1})=-11.0$, gives CG$_4$ and RG$_4$ satellite star-forming fractions of 40.7\% and 60.2\%, respectively, a CG$_4$--RG$_4$ difference of -19.6 percentage points (\(p=3.6\times 10^{-4}\)). The qualitative hierarchy is unchanged: the morphology result is independent of the sSFR threshold, whereas the passive/star-forming contrast remains more sensitive to modelling choices.
 
 
 The matched comparison is therefore consistent with the adjusted models: the most robust compact-group signal is morphological, while the passive and star-forming-fraction signals are more model-dependent.
@@ -1279,7 +1299,7 @@ The compact-group morphology signal is therefore not accompanied by a significan
 
 
 
-The correlation between \(\Delta m_{12}\) and passive satellite fraction is \(\rho_{\rm S}=-0.15\) (\(p_{\rm Holm}<10^{-3}\)).
+The correlation between \(\Delta m_{12}\) and passive satellite fraction is \(\rho_{\rm S}=-0.15\) (\(p_{\rm Holm}<10^{-6}\)).
 
 
 
@@ -1316,11 +1336,11 @@ Relative to Control4B, the CG$_4$ strong-emission fraction differs by \(-0.087\)
 
 
 
-Relative to Control4C, the CG$_4$ strong-emission fraction differs by \(-0.135\) (\(p_{\rm Holm}<10^{-3}\)).
+Relative to Control4C, the CG$_4$ strong-emission fraction differs by \(-0.135\) (\(p_{\rm Holm}=2.4\times 10^{-4}\)).
 
 
 
-Relative to RG4, the CG$_4$ strong-emission fraction differs by \(-0.246\) (\(p_{\rm Holm}<10^{-3}\)).
+Relative to RG4, the CG$_4$ strong-emission fraction differs by \(-0.246\) (\(p_{\rm Holm}=1.5\times 10^{-6}\)).
 
 
 These limited H\(\alpha\) results indicate that CG$_4$ galaxies have a lower strong-emission fraction than in each control sample in the current catalogue, but they do not provide a direct post-starburst or recently-quenched classification.
@@ -1340,7 +1360,7 @@ These limited H\(\alpha\) results indicate that CG$_4$ galaxies have a lower str
 
 \subsection{Emission-line and AGN-like populations}
 
-The complementary BPT analysis classifies star-forming, composite and broad AGN-like populations. The CG$_4$ AGN-like fraction is 38.0\%.
+The complementary emission-line analysis classifies BPT-star-forming, composite and broad AGN-like populations for galaxies with the required diagnostic line ratios. BPT-unclassified galaxies are excluded from the AGN-like fraction denominator rather than treated as confirmed non-AGN. Among BPT-classified CG$_4$ galaxies, the AGN-like fraction is 38.0\%.
 
 
 
@@ -1354,7 +1374,7 @@ Thus, AGN-like activity does not provide a robust independent compact-group disc
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/fig_agn_fraction_by_sample.pdf}
-    \caption{AGN-like fractions from the BPT/AGN-flag classification.}
+    \caption{AGN-like fractions among galaxies with BPT-classifiable emission-line ratios. BPT-unclassified galaxies are not counted as non-AGN in this diagnostic.}
     \label{fig:agn_fraction}
 \end{figure}
 
@@ -1370,14 +1390,14 @@ The pairwise analysis reconstructs projected separations and velocity difference
 
 
 
-For passive status, the baseline CG$_4$ odds ratio is 1.20 (\(p=0.227\)), while the model including the tidal index gives a CG$_4$ odds ratio of 0.80 (\(p=0.170\)). The tidal-index term itself has odds ratio 1.65 (\(p<10^{-3}\)).
+For passive status, the baseline CG$_4$ odds ratio is 1.20 (\(p=0.227\)), while the model including the tidal index gives a CG$_4$ odds ratio of 0.80 (\(p=0.170\)). The tidal-index term itself has odds ratio 1.65 (\(p<10^{-6}\)).
 
 
 
 
 
 
-For elliptical morphology, the baseline CG$_4$ odds ratio is 1.65 (\(p<10^{-3}\)), whereas the model including the tidal index gives a CG$_4$ odds ratio of 1.15 (\(p=0.346\)). The tidal-index term has odds ratio 1.56 (\(p<10^{-3}\)). This suggests that the reconstructed local tidal-density proxy absorbs much of the unadjusted CG$_4$ morphology coefficient, although the result remains an exploratory projected-pair diagnostic.
+For elliptical morphology, the baseline CG$_4$ odds ratio is 1.65 (\(p=4.1\times 10^{-4}\)), whereas the model including the tidal index gives a CG$_4$ odds ratio of 1.15 (\(p=0.346\)). The tidal-index term has odds ratio 1.56 (\(p<10^{-6}\)). This suggests that the reconstructed local tidal-density proxy absorbs much of the unadjusted CG$_4$ morphology coefficient, although the result remains an exploratory projected-pair diagnostic.
 
 
 
@@ -1407,7 +1427,9 @@ No major availability difference meets both criteria of corrected significance a
 
 
 
-The automated availability row for group-scale quantities should be interpreted as an alias audit for a specific set of column names rather than as evidence that no group-scale information is used elsewhere in the analysis.
+
+
+The group-scale availability row is based on the group covariates available for this catalogue: radius scale, velocity dispersion, group luminosity, and BGG luminosity dominance. A harmonized group-mass estimate is not available in these tables, so models that request it omit that covariate.
 
 
 
@@ -1426,6 +1448,27 @@ The automated availability row for group-scale quantities should be interpreted 
     \label{fig:colour_selection_bias}
 \end{figure}
 
+
+
+\begin{table*}
+\centering
+\begin{tabular}{p{0.22\textwidth}p{0.23\textwidth}p{0.18\textwidth}p{0.28\textwidth}}
+\toprule
+Diagnostic & Baseline CG$_4$ signal & Survives adjusted/matched analysis? & Interpretation \\
+\midrule
+Elliptical/smooth fraction & Enhanced in CG$_4$ & Yes & Robust accumulated morphology signal. \\
+Spiral/features fraction & Reduced in CG$_4$ & Yes & Reduced late-type vote-fraction population. \\
+Satellite star-forming fraction & Reduced, especially versus RG$_4$ & Weak or borderline & Partly explained by mass, rank, environment, or preprocessing. \\
+Star-forming main-sequence residual & Weak and control-dependent & No robust offset & No strong instantaneous SFR enhancement or suppression among remaining star-forming galaxies. \\
+Satellite colours & Colour-slope and residual hints & Control-sensitive & Exploratory; not a simple uniform reddening or blueing of CG$_4$ satellites. \\
+AGN-like fraction & No robust independent signal & No & Not an AGN-driven explanation. \\
+Magnitude gaps & No significant excess & No & Not fossil-like under the simple gap diagnostics used here. \\
+Pairwise tidal index & Local projected density proxy is informative & Absorbs much of the morphology coefficient & Local tidal density likely contributes to the morphology signal. \\
+\bottomrule
+\end{tabular}
+\caption{Result hierarchy. Baseline tests describe where CG$_4$ differs from the controls; the main interpretation is based on diagnostics that remain after adjusted or matched comparisons.}
+\label{tab:result_hierarchy}
+\end{table*}
 
 
 
@@ -1474,55 +1517,17 @@ or is the high-density limit of more general group preprocessing.
 
 \section{Conclusion}
 
-After removing systems classified as split, we find that compact groups differ from regular four-member groups mainly through their galaxy population mix. Galaxies in CG$_4$ are more frequently elliptical and less frequently spiral than galaxies in RG$_4$, with highly significant differences in both fractions. This morphological difference is also present among BGGs: CG$_4$ BGGs are more often elliptical than RG$_4$ BGGs.
+We have tested whether galaxies in CG$_4$ compact groups remain special after removing split systems and comparing them with three regular-group analogues: RG$_4$, Control$_{4B}$, and Control$_{4C}$. The comparison was designed to separate compact configurations from ordinary four-member groups, luminous group cores, and projected compact cores around BGGs.
 
-The star-formation difference is more specific. CG$_4$ satellites are significantly less frequently star-forming than RG$_4$ satellites, while the star-forming fraction of BGGs does not differ significantly between the two samples. Moreover, among galaxies that remain star-forming, CG$_4$ galaxies do not show a significant offset from RG$_4$ galaxies relative to the star-forming main sequence.
+The main result is morphological. CG$_4$ galaxies have an enhanced elliptical/smooth Galaxy Zoo fraction and a reduced spiral/features fraction. This signal survives the mass-, redshift-, rank-, and group-adjusted binomial models and is also recovered in the one-to-one matched-control analysis.
 
-The colour analysis does not indicate a simple uniform reddening of compact-group galaxies. The pooled mass- and redshift-adjusted comparison does not support a statistically robust blue CG$_4$ satellite offset. Negative coefficients appear after adding morphology and sSFR class, but the result is sensitive to the choice of control catalogue. Neither the sSFR-class nor morphology splits isolate a significant effect among star-forming spirals. The radial residual trends instead indicate that outer CG$_4$ satellites are bluer than inner satellites, consistent with stronger processing toward the BGG. The BGG and mean satellite colours are correlated, but the corresponding CG$_4$ relations do not differ significantly from those of the control catalogues. Together with the satellite-only split by BGG sSFR class and the domination-conditioned morphology result, this suggests limited BGG--satellite concordance rather than a separately established general concordance signal. Likewise, the apparent colour difference between dominated and non-dominated BGGs disappears after controlling for stellar mass.
+The star-formation result is weaker. CG$_4$ satellites have a lower raw star-forming fraction, especially relative to RG$_4$, but the adjusted and matched evidence is weaker or borderline. Among galaxies that remain star-forming, CG$_4$ galaxies do not show a robust offset from the fitted star-forming main sequence.
 
-The most robust compact-group signal is morphological rather than an instantaneous star-formation offset. After controlling for stellar mass, redshift, rank and available group-scale properties, CG$_4$ membership remains associated with enhanced elliptical and reduced spiral probabilities, whereas passive status and satellite star-forming status do not remain significant in the corresponding adjusted models. The matched-control analysis supports the same morphological excess and gives only borderline evidence for an enhanced passive fraction.
+The secondary diagnostics do not identify a simple alternative driver. The colour results are control-sensitive and based on a biased colour-matched subset. AGN-like fractions and magnitude gaps do not explain the morphology signal, the H\(\alpha\) diagnostic is limited by missing age-sensitive spectral indices, and projected phase-space trends do not localize the passive difference uniquely to the nearest satellites.
 
+We therefore interpret CG$_4$ galaxies as a more morphologically evolved population, consistent with accumulated transformation in very dense environments, dense group cores, and/or preprocessing. The pairwise tidal-index experiment suggests that local projected tidal density accounts for part of the compact-group morphology coefficient, so the result should not be read as evidence for a uniquely isolated compact-group quenching mechanism.
 
-
-The projected phase-space test shows a passive-fraction contrast of similar size at inner and outer satellite ranks. This comparison is necessarily projected: with only a few satellites per group, \(|\Delta v|/\sigma_v\) and projected radius cannot recover individual orbits, so the result should be read as a localization test for the population difference rather than as a dynamical reconstruction.
-
-
-The additional diagnostics do not favour a simple fossil-group or AGN-driven explanation. The magnitude-gap distributions of CG$_4$ and the pooled controls are statistically similar, and AGN-like activity is not independently enhanced after mass and environment adjustment. The limited H\(\alpha\) diagnostic shows a lower strong-emission fraction in CG$_4$ than in the control catalogues, but the absence of both \(D_n4000\) and H\(\delta_A\) prevents a direct post-starburst or recently-quenched classification.
-
-Taken together, these results suggest that compact groups host a more morphologically evolved galaxy population, with an enhanced fraction of early-type galaxies and a reduced fraction of star-forming satellites. Because the passive CG$_4$ signal does not remain significant in both the adjusted and matched analyses, the apparent star-formation specialness is at least partly explained by environment, mass/rank mix, or pre-processing in dense halo cores. The morphology signal is more robust, but the projected tidal-index experiment suggests that local pairwise density may absorb part of that signal, so this result should be interpreted as evidence for accumulated transformation in very dense environments rather than as a uniquely isolated compact-group effect.
-
-
-The selection audit does not remove all catalogue-systematic uncertainty, and the angular-neighbour diagnostic confirms the expected higher close-pair incidence in CG$_4$, but it does not identify a major availability imbalance under the adopted criterion.
-
-
-\begin{appendix} %First appendix
-\section*{Interpolation points for sSFR classification}
-
-% \begin{table}[t]
-% \centering
-% \caption{Interpolation points for sSFR classification curve}
-% \begin{tabular}{rr}
-% \toprule
-% $x$ & $y$ \\
-% \midrule
-% {%- if data.my_interp.points and (data.my_interp.points|length > 0) -%}
-% {%- for p in data.my_interp.points %}
-% {{ "%.6g"|format(p.x) }} & {{ "%.6g"|format(p.y) }}{% if not loop.last %} \\{% endif %}
-% {%- endfor %}
-% \\
-% {%- else %}
-% \multicolumn{2}{c}{\rule{0pt}{0pt}}\\
-% \multicolumn{2}{c}{No interpolation points available} \\
-% {%- endif %}
-% \bottomrule
-% \end{tabular}
-% \end{table}
-
-% \normalcolor
-
-
-
-\end{appendix}
+Future work should connect this regular-group control framework directly to structural measurements, including \(R_{\rm e}\), S\'ersic index, transition-galaxy classifications, mass-size residuals, and better spectroscopic post-starburst diagnostics. Those measurements would test whether the morphology signal isolated here is the same cumulative structural transformation highlighted by recent S-PLUS studies.
 
 % \begin{acknowledgements}
 % Add acknowledgements here before submission.

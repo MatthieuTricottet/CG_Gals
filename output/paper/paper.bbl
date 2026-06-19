@@ -1,4 +1,4 @@
-\begin{thebibliography}{26}
+\begin{thebibliography}{34}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Alpaslan} {et~al.}(2015){Alpaslan}, {Driver}, {Robotham},
@@ -10,6 +10,12 @@
   {Tuffs}}]{Alpaslan+15}
 {Alpaslan}, M., {Driver}, S., {Robotham}, A. S.~G., {et~al.} 2015, \mnras, 451,
   3249
+
+\bibitem[{{Barnes}(1985)}]{Barnes85}
+{Barnes}, J. 1985, \mnras, 215, 517
+
+\bibitem[{{Barnes}(1989)}]{Barnes89}
+{Barnes}, J.~E. 1989, \nat, 338, 123
 
 \bibitem[{Bishop(2006)}]{Bishop2006}
 Bishop, C.~M. 2006, Pattern Recognition and Machine Learning (Springer)
@@ -23,13 +29,32 @@ Bisigello, L., Caputi, K.~I., Grogin, N., \& Koekemoer, A. 2018, Astron.
 Dempster, A.~P., Laird, N.~M., \& Rubin, D.~B. 1977, J. R. Statist. Soc. B, 39,
   1
 
+\bibitem[{{D{\'\i}az-Gim{\'e}nez} \& {Mamon}(2010)}]{DiazGimenez&Mamon10}
+{D{\'\i}az-Gim{\'e}nez}, E. \& {Mamon}, G.~A. 2010, \mnras, 409, 1227
+
+\bibitem[{{D{\'{\i}}az-Gim{\'e}nez} {et~al.}(2012){D{\'{\i}}az-Gim{\'e}nez},
+  {Mamon}, {Pacheco}, {Mendes de Oliveira}, \& {Alonso}}]{DiazGimenez+12}
+{D{\'{\i}}az-Gim{\'e}nez}, E., {Mamon}, G.~A., {Pacheco}, M., {Mendes de
+  Oliveira}, C., \& {Alonso}, M.~V. 2012, \mnras, 426, 296
+
 \bibitem[{{D{\'\i}az-Gim{\'e}nez} {et~al.}(2018){D{\'\i}az-Gim{\'e}nez},
   {Zandivarez}, \& {Taverna}}]{DiazGimenez+18}
 {D{\'\i}az-Gim{\'e}nez}, E., {Zandivarez}, A., \& {Taverna}, A. 2018, \aap,
   618, A157
 
+\bibitem[{{Dressler}(1980)}]{Dressler80}
+{Dressler}, A. 1980, \apj, 236, 351
+
 \bibitem[{Hahn {et~al.}(2019)Hahn, Starkenburg, Choi, {et~al.}}]{Hahn2019}
 Hahn, C., Starkenburg, T.~K., Choi, E., {et~al.} 2019, Astrophys. J., 872
+
+\bibitem[{{Hickson}(1982)}]{Hickson82}
+{Hickson}, P. 1982, \apj, 255, 382
+
+\bibitem[{{Hickson} {et~al.}(1992){Hickson}, {Mendes de Oliveira}, {Huchra}, \&
+  {Palumbo}}]{Hickson+92}
+{Hickson}, P., {Mendes de Oliveira}, C., {Huchra}, J.~P., \& {Palumbo}, G.~G.
+  1992, \apj, 399, 353
 
 \bibitem[{Kauffmann {et~al.}(2003)Kauffmann, Heckman, Tremonti, Brinchmann,
   Charlot, White, Reichard, \& Brinkmann}]{Kauffmann+03a}
@@ -51,6 +76,9 @@ Kullback, S. \& Leibler, R.~A. 1951, Ann. Math. Statist., 22, 79
 \bibitem[{{Mahajan} {et~al.}(2011){Mahajan}, {Mamon}, \&
   {Raychaudhury}}]{Mahajan+11}
 {Mahajan}, S., {Mamon}, G.~A., \& {Raychaudhury}, S. 2011, \mnras, 416, 2882
+
+\bibitem[{{Mamon}(1986)}]{Mamon86}
+{Mamon}, G.~A. 1986, \apj, 307, 426
 
 \bibitem[{McLachlan \& Peel(2000)}]{McLachlanPeel2000}
 McLachlan, G. \& Peel, D. 2000, Finite Mixture Models (Wiley)
@@ -107,9 +135,10 @@ Tojeiro, R., Heavens, A.~F., Jimenez, R., \& Panter, B. 2009, Mon. Not. R.
 {Tricottet}, M., {Mamon}, G.~A., \& {D{\'\i}az-Gim{\'e}nez}, E. 2025, \aap,
   699, A329
 
-\bibitem[{Veilleux \& Osterbrock(1987)}]{Veilleux87}
-Veilleux, S. \& Osterbrock, D.~E. 1987, Astrophysical Journal Supplement
-  Series, 63, 295
+\bibitem[{{Verdes-Montenegro} {et~al.}(2001){Verdes-Montenegro}, {Yun},
+  {Williams}, {Huchtmeier}, {Del Olmo}, \& {Perea}}]{Verdes-Montenegro+01}
+{Verdes-Montenegro}, L., {Yun}, M.~S., {Williams}, B.~A., {et~al.} 2001, \aap,
+  377, 812
 
 \bibitem[{{Wetzel} {et~al.}(2013){Wetzel}, {Tinker}, {Conroy}, \& {van den
   Bosch}}]{Wetzel+13}

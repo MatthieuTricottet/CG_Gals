@@ -29,6 +29,11 @@ except ModuleNotFoundError:  # pragma: no cover
 
 GROUP_QUANTITIES = ["t_cr", "M_virial", "Lum_group", "M_virial_over_L"]
 STARFORMING = "Starforming"
+CLASS_LABELS = {"Predom": "Predominant"}
+
+
+def _class_label(value):
+    return CLASS_LABELS.get(value, value)
 
 
 def log10_formatter(x: float, _pos: int, n_min: int = -2, n_max: int = 2) -> str:
@@ -361,6 +366,8 @@ def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[
             {
                 "class_a": row["class_a"],
                 "class_b": row["class_b"],
+                "class_a_label": _class_label(row["class_a"]),
+                "class_b_label": _class_label(row["class_b"]),
                 "n_class_a": int(row["n_class_a"]),
                 "n_class_b": int(row["n_class_b"]),
                 "median_class_a": float(row["median_class_a"]),

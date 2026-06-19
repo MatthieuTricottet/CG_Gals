@@ -17,9 +17,11 @@ from scipy.interpolate import interp1d
 try:
     import config as co
     from utils import labels_utils as lu
+    from utils import graphics_utils as gu
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from .utils import labels_utils as lu
+    from .utils import graphics_utils as gu
 
 
 # os.makedirs("output", exist_ok=True)
@@ -131,6 +133,7 @@ def generate_report():
     ]
     # >>> NEW: pass the label-utils module so LaTeX can call lu.formatted_label(q) <<<
     ctx["lu"] = lu
+    ctx["gu"] = gu
 
     ctx["build"] = build_data
     ctx["extended_specialness"] = results_data.get("extended_specialness", {})

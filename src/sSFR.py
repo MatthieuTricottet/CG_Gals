@@ -857,7 +857,10 @@ def pval_restrict_analysis(res1, res2, df1_name, df2_name, restric_name):
                   [res2[co.sSFR_status[1]], res2[co.sSFR_status[2]]]]
             
     res_fisher = fisher_exact(matrix, alternative='two-sided')
-    report.append_json(f'{restric_name}_star_forming_pvalue_{df2_name}_vs_{df1_name}', f'{res_fisher.pvalue:.2f}')
+    report.append_json(
+        f'{restric_name}_star_forming_pvalue_{df2_name}_vs_{df1_name}',
+        gu.pvalue_latex(res_fisher.pvalue),
+    )
     if co.VERBOSE:
         print(f"Exact test p-values of proportion of star forming {restric_name} being different between {df1_name} and {df2_name}:")
         print(f"   Fisher: {res_fisher.pvalue:.1e}")
@@ -933,7 +936,7 @@ def correlations_by_fertility(sample):
  
 
 def split_by_fertility(sample, make_plots=True,
-                       plot_name="fertility",
+                       plot_name="ssfr_class",
                        figsize=(10, 12),
                        label_fontsize=18,
                        tick_labelsize=16):
@@ -1113,7 +1116,7 @@ def split_by_fertility(sample, make_plots=True,
         fig.legend(
             handles,
             labels,
-            title="Fertility",
+            title="sSFR class",
             title_fontsize=label_fontsize,
             loc="upper right",
             bbox_to_anchor=(0.8, 0.99),
@@ -1137,7 +1140,7 @@ def split_by_fertility(sample, make_plots=True,
 
 
 def split_by_BGG_fertility(sample, make_plots=True,
-                           plot_name="BGG_fertility", figsize=(10, 12), 
+                           plot_name="BGG_ssfr_class", figsize=(10, 12),
                            label_fontsize=18, tick_labelsize=16):
     """Compare group members by the sSFR class of their BGG."""
 
@@ -1282,7 +1285,7 @@ def split_by_BGG_fertility(sample, make_plots=True,
         fig.legend(
             handles,
             labels,
-            title="BGG fertility",
+            title="BGG sSFR class",
             title_fontsize=label_fontsize,
             loc="upper right",
             bbox_to_anchor=(0.8, 0.99),
@@ -1306,7 +1309,7 @@ def split_by_BGG_fertility(sample, make_plots=True,
 
 
 def satellites_split_by_BGG_fertility(sample, make_plots=True,
-                                      plot_name="Satellites_by_BGG_fertility", figsize=(10, 12), 
+                                      plot_name="Satellites_by_BGG_ssfr_class", figsize=(10, 12),
                                       label_fontsize=18, tick_labelsize=16):
     """Compare only satellites after splitting groups by their BGG sSFR class."""
 
@@ -1450,7 +1453,7 @@ def satellites_split_by_BGG_fertility(sample, make_plots=True,
         fig.legend(
             handles,
             labels,
-            title="Satellites by BGG fertility",
+            title="Satellites by BGG sSFR class",
             title_fontsize=label_fontsize,
             loc="upper right",
             bbox_to_anchor=(0.8, 0.99),

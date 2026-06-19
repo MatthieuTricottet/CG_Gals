@@ -354,6 +354,34 @@ def latex_number(f, precision=3, sci_min=1e4, sci_max=1e-3, math_mode=True):
         return f"${formatted}$"
     return formatted
 
+
+def pvalue_latex(p_value, precision=3, lower_bound=1e-6, math_mode=True):
+    """Format a p-value for LaTeX without rounding small values to zero."""
+
+    if p_value is None:
+        formatted = "NA"
+    else:
+        value = float(p_value)
+        if not np.isfinite(value):
+            formatted = "NA"
+        elif value < lower_bound:
+            exponent = int(np.floor(np.log10(lower_bound)))
+            formatted = rf"<10^{{{exponent}}}"
+        elif value < 1e-3:
+            formatted = latex_number(
+                value,
+                precision=2,
+                sci_min=1e4,
+                sci_max=1e-3,
+                math_mode=False,
+            )
+        else:
+            formatted = f"{value:.{precision}f}".rstrip("0").rstrip(".")
+
+    if math_mode:
+        return f"${formatted}$"
+    return formatted
+
         
     
 def form(x,nb_decimal=2):

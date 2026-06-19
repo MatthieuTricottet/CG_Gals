@@ -211,18 +211,17 @@ def plot_bpt(Catalogue, figsize=(12.0,8.0), label_fontsize=16, tick_labelsize=14
     mask = Catalogue['log_NII_Ha'].notnull() & Catalogue['log_OIII_Hb'].notnull()
     df_plot = Catalogue[mask]
 
-    # Separate AGN and non-AGN galaxies.
+    # Separate BPT-classified AGN-like and non-AGN-like galaxies.
     agn = df_plot[df_plot['is_AGN']]
     non_agn = df_plot[~df_plot['is_AGN']]
 
     # Create a figure and axis.
     fig, ax = plt.subplots(figsize=figsize)
 
-    # Plot non-AGN galaxies in blue and AGN in red.
     ax.scatter(non_agn['log_NII_Ha'], non_agn['log_OIII_Hb'], 
-               color='blue', label='Non-AGN', alpha=0.7, s=0.1)
+               color='blue', label='BPT non-AGN-like', alpha=0.7, s=0.1)
     ax.scatter(agn['log_NII_Ha'], agn['log_OIII_Hb'], 
-               color='red', label='AGN', alpha=0.7, s=0.1)
+               color='red', label='AGN-like', alpha=0.7, s=0.1)
 
     # Set axis labels using LaTeX formatting.
     ax.set_xlabel(r'$\log([\mathrm{NII}]/H\alpha)$', fontsize=label_fontsize)
