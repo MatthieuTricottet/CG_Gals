@@ -164,8 +164,8 @@ def _mini_joint(
         r_p, p_p = pearsonr(d[x], d[y])
         txt = (
             f"n={n_points}\n"
-            f"Spearman rho={rho_s:.2f}, p={gu.tex_form(p_s)}\n"
-            f"Pearson r={r_p:.2f}, p={gu.tex_form(p_p)}"
+            f"Spearman rho={rho_s:.2f}, {gu.pvalue_label_latex(p_s)}\n"
+            f"Pearson r={r_p:.2f}, {gu.pvalue_label_latex(p_p)}"
         )
     else:
         txt = f"n={n_points}\n(not enough data)"

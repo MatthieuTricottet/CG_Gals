@@ -72,7 +72,7 @@ def _finite_float(value) -> float | None:
 
 def _format_p(value: float | None) -> str:
     return (
-        gu.latex_number(value, precision=3, math_mode=False)
+        gu.pvalue_latex(value, math_mode=False)
         if value is not None and np.isfinite(value)
         else "NA"
     )
@@ -1215,7 +1215,7 @@ def plot_colour_residual_distance(
         ax.text(
             0.04,
             0.95,
-            rf"CG$_4$: $\rho={cg_test.statistic:.2f}$, $p={_format_p(cg_test.pvalue)}$",
+            rf"CG$_4$: $\rho={cg_test.statistic:.2f}$, {gu.pvalue_label_latex(cg_test.pvalue)}",
             transform=ax.transAxes,
             va="top",
             fontsize=7,

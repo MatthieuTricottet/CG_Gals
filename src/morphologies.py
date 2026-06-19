@@ -206,7 +206,7 @@ def stats(sample):
             # Perform Barnard's exact test
             res_barnard = barnard_exact(contingency_table, alternative='two-sided')
             pval = res_barnard.pvalue
-            report.append_json(f'pval_{control_name}_{morph}_vs_CG_pc', gu.numformat(pval, prec=1))
+            report.append_json(f'pval_{control_name}_{morph}_vs_CG_pc', gu.pvalue_latex(pval))
             if co.VERBOSE:
                 print(f"   p-value for {morph} in {control_name} vs CG: {pval:.3e}")
 
@@ -261,7 +261,7 @@ def morph_sSFR(sample):
         
         res_barnard = barnard_exact(table, alternative='two-sided')
         pval = res_barnard.pvalue
-        report.append_json(f'pval_{name}_Starforming_vs_CG_pc', gu.numformat(pval, prec=2))
+        report.append_json(f'pval_{name}_Starforming_vs_CG_pc', gu.pvalue_latex(pval))
         if co.VERBOSE:
             print(name)
             print(table)

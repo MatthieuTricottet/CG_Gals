@@ -226,10 +226,10 @@ def plot_domination_distributions(
                 ax.set_xlabel(lu.formatted_label(label_key), fontsize=16)
 
             if np.isfinite(p_value):
-                ptxt = f"p={gu.tex_form(p_value)}"
+                ptxt = gu.pvalue_label_latex(p_value)
                 pcol = "red" if p_value <= co.P_LIMIT else "black"
             else:
-                ptxt = "p=NA"
+                ptxt = "p = NA"
                 pcol = "black"
 
             ax.text(
@@ -562,9 +562,7 @@ def _format_p(p_value: float) -> str:
 
     if not np.isfinite(p_value):
         return "-"
-    if p_value < 1e-3:
-        return f"{p_value:.1e}"
-    return f"{p_value:.3f}"
+    return gu.pvalue_latex(p_value, math_mode=False)
 
 
 def plot_xor_corrpairs_halfviolins_onefig(
@@ -774,9 +772,11 @@ def plot_xor_corrpairs_halfviolins_onefig(
                 n_non = n_pair.get((cat, False, pair), 0)
                 sig_dom = np.isfinite(p_dom) and (p_dom < alpha_report)
                 sig_non = np.isfinite(p_non) and (p_non < alpha_report)
-                p_dom_txt = _format_p(p_dom) + ("*" if (sig_dom and not sig_non) else "")
-                p_non_txt = _format_p(p_non) + ("*" if (sig_non and not sig_dom) else "")
-                labels.append(f"{sample_name}\nN={n_dom}/{n_non}\npD={p_dom_txt}  pN={p_non_txt}")
+                p_dom_txt = gu.pvalue_label_latex(p_dom, label="pD", math_mode=False)
+                p_non_txt = gu.pvalue_label_latex(p_non, label="pN", math_mode=False)
+                p_dom_txt += "*" if (sig_dom and not sig_non) else ""
+                p_non_txt += "*" if (sig_non and not sig_dom) else ""
+                labels.append(f"{sample_name}\nN={n_dom}/{n_non}\n{p_dom_txt}  {p_non_txt}")
             ax.set_xticklabels(labels, rotation=0)
             ax.tick_params(axis="x", pad=10)
         else:

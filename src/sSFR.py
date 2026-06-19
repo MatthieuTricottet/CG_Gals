@@ -448,7 +448,7 @@ def plot_classification(non_quenched, sdss_df, fit_results, f_interp,
     x_vals = np.linspace(non_quenched['lgm'].min()-0.5, 
                          non_quenched['lgm'].max()+0.5, 200)
     y_vals = f_interp(x_vals)
-    ax.plot(x_vals, y_vals, 'k--', linewidth=2, label='Star forming – Passive limit')
+    ax.plot(x_vals, y_vals, 'k--', linewidth=2, label='Star-forming - passive limit')
     
     # Add quenched galaxies as red points.
     # sdss_quenched = sdss_df[sdss_df['sSFR_status'] == 'Q'].copy()
@@ -512,7 +512,7 @@ def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsi
     
     # Create a copy of the dataframe with capitalized sSFR_status for the legend
     plot_data = SDSS.copy()
-    plot_data['sSFR_status'] = plot_data['sSFR_status'].apply(lambda x: x.capitalize())
+    plot_data['sSFR_status'] = plot_data['sSFR_status'].apply(lu.display_label)
     
     # Create figure and axis objects
     fig, ax = plt.subplots(figsize=figsize)
@@ -523,7 +523,11 @@ def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsi
         x='lgm',
         y='sSFR',
         hue='sSFR_status',
-        palette={co.sSFR_status[0]: 'red', co.sSFR_status[1]: 'green', co.sSFR_status[2]: 'blue'},
+        palette={
+            lu.display_label(co.sSFR_status[0]): 'red',
+            lu.display_label(co.sSFR_status[1]): 'green',
+            lu.display_label(co.sSFR_status[2]): 'blue',
+        },
         alpha=0.5,
         s=1,
         ax=ax,
@@ -533,11 +537,11 @@ def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsi
     # Create a new legend with proper sizes for dot markers
     dot_legend_elements = [
         plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='red', 
-                  markersize=markerscale, label=co.sSFR_status[0], alpha=0.7),
+                  markersize=markerscale, label=lu.display_label(co.sSFR_status[0]), alpha=0.7),
         plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='green', 
-                  markersize=markerscale, label=co.sSFR_status[1], alpha=0.7),
+                  markersize=markerscale, label=lu.display_label(co.sSFR_status[1]), alpha=0.7),
         plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='blue', 
-                  markersize=markerscale, label=co.sSFR_status[2], alpha=0.7)
+                  markersize=markerscale, label=lu.display_label(co.sSFR_status[2]), alpha=0.7)
     ]
     
         
@@ -1113,6 +1117,7 @@ def split_by_fertility(sample, make_plots=True,
 
         # Global legend in the top-right corner
         handles, labels = axes[0].get_legend_handles_labels()
+        labels = [lu.display_label(label) for label in labels]
         fig.legend(
             handles,
             labels,
@@ -1282,6 +1287,7 @@ def split_by_BGG_fertility(sample, make_plots=True,
 
         # Global legend in the top-right corner
         handles, labels = axes[0].get_legend_handles_labels()
+        labels = [lu.display_label(label) for label in labels]
         fig.legend(
             handles,
             labels,
@@ -1450,6 +1456,7 @@ def satellites_split_by_BGG_fertility(sample, make_plots=True,
 
         # Global legend in the top-right corner
         handles, labels = axes[0].get_legend_handles_labels()
+        labels = [lu.display_label(label) for label in labels]
         fig.legend(
             handles,
             labels,

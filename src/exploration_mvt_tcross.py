@@ -71,6 +71,7 @@ def build_group_property_frame(sample: dict[str, pd.DataFrame]) -> pd.DataFrame:
         return pd.DataFrame()
 
     data = pd.concat(frames, ignore_index=True)
+    data["Class"] = data["Class"].map(_class_label)
     for quantity in GROUP_QUANTITIES:
         data[f"lg_{quantity}"] = np.log10(pd.to_numeric(data[quantity], errors="coerce"))
     return data.replace([np.inf, -np.inf], np.nan).dropna()

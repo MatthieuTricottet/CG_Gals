@@ -157,6 +157,16 @@ def formatted_sample_name(name):
     }
     return switcher.get(name,"Invalid sample name")
 
+def display_label(value):
+    """Return publication-facing labels while preserving internal category names."""
+
+    switcher = {
+        "Starforming": "Star-forming",
+        "Star forming": "Star-forming",
+        "Predom": "Predominant",
+    }
+    return switcher.get(value, value)
+
 def my_label(i):
     switcher={
         "CG"                 : "CG$_4$",

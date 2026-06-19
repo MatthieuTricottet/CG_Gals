@@ -14,3 +14,10 @@ def test_formatted_unit_returns_only_value_units():
     assert lu.formatted_unit("size_Group_Bary_kpc") == "kpc"
     assert lu.formatted_unit("Lum_group") == r"$L_\odot$"
     assert lu.formatted_unit("Offset_Bary") == ""
+
+
+def test_display_label_normalizes_publication_labels():
+    assert lu.display_label("Starforming") == "Star-forming"
+    assert lu.display_label("Star forming") == "Star-forming"
+    assert lu.display_label("Predom") == "Predominant"
+    assert lu.display_label("Passive") == "Passive"

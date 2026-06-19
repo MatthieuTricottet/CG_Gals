@@ -355,28 +355,70 @@ def latex_number(f, precision=3, sci_min=1e4, sci_max=1e-3, math_mode=True):
     return formatted
 
 
-def pvalue_latex(p_value, precision=3, lower_bound=1e-6, math_mode=True):
-    """Format a p-value for LaTeX without rounding small values to zero."""
+def _format_pvalue_parts(p_value, precision=3, lower_bound=1e-6, sci_threshold=1e-2):
+    """Return a p-value comparison operator and LaTeX-formatted value."""
 
     if p_value is None:
-        formatted = "NA"
-    else:
-        value = float(p_value)
-        if not np.isfinite(value):
-            formatted = "NA"
-        elif value < lower_bound:
-            exponent = int(np.floor(np.log10(lower_bound)))
-            formatted = rf"<10^{{{exponent}}}"
-        elif value < 1e-3:
-            formatted = latex_number(
-                value,
-                precision=2,
-                sci_min=1e4,
-                sci_max=1e-3,
-                math_mode=False,
-            )
-        else:
-            formatted = f"{value:.{precision}f}".rstrip("0").rstrip(".")
+        return "", "NA"
+
+    value = float(p_value)
+    if not np.isfinite(value):
+        return "", "NA"
+    if value < lower_bound:
+        exponent = int(np.floor(np.log10(lower_bound)))
+        return "<", rf"10^{{{exponent}}}"
+    if value < sci_threshold:
+        return "=", latex_number(
+            value,
+            precision=2,
+            sci_min=1e4,
+            sci_max=sci_threshold,
+            math_mode=False,
+        )
+
+    formatted = f"{value:.{precision}f}".rstrip("0").rstrip(".")
+    return "=", formatted
+
+
+def pvalue_latex(
+    p_value,
+    precision=3,
+    lower_bound=1e-6,
+    sci_threshold=1e-2,
+    math_mode=True,
+):
+    """Format a p-value for LaTeX without rounding small values to zero."""
+
+    operator, value = _format_pvalue_parts(
+        p_value,
+        precision=precision,
+        lower_bound=lower_bound,
+        sci_threshold=sci_threshold,
+    )
+    formatted = f"{operator}{value}" if operator == "<" else value
+
+    if math_mode:
+        return f"${formatted}$"
+    return formatted
+
+
+def pvalue_label_latex(
+    p_value,
+    label="p",
+    precision=3,
+    lower_bound=1e-6,
+    sci_threshold=1e-2,
+    math_mode=True,
+):
+    """Format a full p-value label such as ``p < 10^{-6}`` or ``p = 0.051``."""
+
+    operator, value = _format_pvalue_parts(
+        p_value,
+        precision=precision,
+        lower_bound=lower_bound,
+        sci_threshold=sci_threshold,
+    )
+    formatted = f"{label} {operator} {value}" if operator else f"{label} = {value}"
 
     if math_mode:
         return f"${formatted}$"
@@ -389,28 +431,12 @@ def form(x,nb_decimal=2):
     return '.' + nb_str + 'f' if (np.abs(x)>=10**(-nb_decimal)) else '.' + nb_str + 'e' 
 
 def tex_form(x,nb_decimal=2,nb_decimal_exp=1, exp_min=6):
-    neg_x = (x<0)
-    x=np.abs(x)
-    
-    if(x<10**-exp_min):
-        return f'$<10^{{-{exp_min}}}$'
-    
-    nb_str = str(nb_decimal)
-    nb_exp_str = str(nb_decimal_exp)
-    
-    if (np.abs(x)>=10**(-nb_decimal)):
-        my_form = '.' + nb_str + 'f'
-        formatted = f'{x:{my_form}}$'
-    else:
-        my_form = '{:.' + nb_exp_str + 'e}$'
-        formatted = my_form.format(num2tex(x,precision=nb_decimal_exp))
-    
-    if neg_x:
-        formatted = '- ' + formatted
-    
-    formatted = '$' + formatted
-    
-    return formatted
+    return pvalue_latex(
+        x,
+        precision=nb_decimal,
+        lower_bound=10**(-exp_min),
+        sci_threshold=10**(-nb_decimal),
+    )
 
 
 

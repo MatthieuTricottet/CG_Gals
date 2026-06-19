@@ -235,7 +235,7 @@ def sSFR_properties(sample):
 
     results = sSFR.compare(sample, Verbose=True)
     for name,pval in results.items():
-        report.append_json('pval_'+name,gu.numformat(pval,prec=1),build=True)
+        report.append_json('pval_'+name, gu.pvalue_latex(pval), build=True)
 
     return(sample)
 
@@ -252,7 +252,7 @@ def ssfr_report_properties(sample):
 
     results = sSFR.compare(sample, Verbose=True)
     for name, pval in results.items():
-        report.append_json('pval_' + name, gu.numformat(pval, prec=1))
+        report.append_json('pval_' + name, gu.pvalue_latex(pval))
 
     sSFR.BGGs_analysis(sample)
     
