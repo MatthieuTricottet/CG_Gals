@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from astropy.cosmology import Planck15
+from matplotlib.lines import Line2D
 
 try:
     from extended_data import C_KMS, ensure_galaxy_frame
@@ -83,26 +84,45 @@ def _derive(frame):
 
 
 def _plot(work, path):
-    clean = work[["log_tidal_index", "passive", "is_CG4"]].dropna()
-    if len(clean) < 20:
+    outcomes = [
+        ("passive", "Passive status", "Not passive", "Passive"),
+        ("elliptical", "Elliptical/smooth morphology", "Not smooth", "Smooth"),
+    ]
+    outcomes = [item for item in outcomes if item[0] in work]
+    columns = ["log_tidal_index", "is_CG4"] + [item[0] for item in outcomes]
+    clean = work[columns].dropna(subset=["log_tidal_index", "is_CG4"])
+    if len(clean) < 20 or not outcomes:
         return None
-    fig, ax = plt.subplots(figsize=(6.5, 4.6))
-    for passive, label, marker in [(1, "Passive", "o"), (0, "Star-forming/other", "^")]:
-        part = clean.loc[clean["passive"] == passive]
-        ax.scatter(
-            part["log_tidal_index"],
-            np.full(len(part), passive)
-            + np.random.default_rng(20260612).normal(0, 0.025, len(part)),
-            s=10,
-            alpha=0.35,
-            marker=marker,
-            label=label,
-            c=np.where(part["is_CG4"] == 1, "#2864A6", "#777777"),
-        )
-    ax.set_xlabel(r"$\log_{10}\sum_j(M_{\star,j}/R_{ij}^3)$")
-    ax.set_yticks([0, 1], ["Not passive", "Passive"])
-    ax.legend(frameon=False)
-    fig.tight_layout()
+    fig, axes = plt.subplots(1, len(outcomes), figsize=(4.2 * len(outcomes), 3.8), sharex=True)
+    if len(outcomes) == 1:
+        axes = [axes]
+    rng = np.random.default_rng(20260612)
+    for ax, (column, title, false_label, true_label) in zip(axes, outcomes):
+        panel = clean[["log_tidal_index", "is_CG4", column]].dropna()
+        for value, marker in [(1, "o"), (0, "^")]:
+            part = panel.loc[panel[column] == value]
+            ax.scatter(
+                part["log_tidal_index"],
+                np.full(len(part), value) + rng.normal(0, 0.025, len(part)),
+                s=10,
+                alpha=0.35,
+                marker=marker,
+                c=np.where(part["is_CG4"] == 1, "#2864A6", "#777777"),
+            )
+        ax.set_title(title)
+        ax.set_xlabel(r"$\log_{10}\sum_j(M_{\star,j}/R_{ij}^3)$")
+        ax.set_yticks([0, 1], [false_label, true_label])
+    axes[0].set_ylabel("Outcome")
+    fig.legend(
+        handles=[
+            Line2D([0], [0], marker="o", color="w", markerfacecolor="#2864A6", label="CG$_4$", markersize=6),
+            Line2D([0], [0], marker="o", color="w", markerfacecolor="#777777", label="Controls", markersize=6),
+        ],
+        frameon=False,
+        loc="upper center",
+        ncol=2,
+    )
+    fig.tight_layout(rect=(0, 0, 1, 0.9))
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
     return os.path.basename(path)
