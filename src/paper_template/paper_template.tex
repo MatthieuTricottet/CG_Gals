@@ -1,4 +1,4 @@
-\documentclass{aa}  
+\documentclass{aa}
 %
 \usepackage{graphicx}
 \usepackage[varg]{txfonts}
@@ -8,13 +8,11 @@
     colorlinks=true,
     linkcolor=blue,
     citecolor=blue,
-    filecolor=magenta,      
+    filecolor=magenta,
     urlcolor=cyan,
-    pdftitle={Overleaf Example},
+    pdftitle={Are galaxies in compact groups special?},
     pdfpagemode=FullScreen,
     }
-
-\usepackage[justification=centering]{caption}
 
 \bibpunct{(}{)}{;}{a}{}{,}             %% natbib format for A&A and ApJ
 
@@ -62,10 +60,10 @@
 \newcommand{\Starforming}{Star forming}
 
 
-\newcommand{\CB}{Control\textsubscript{4B}} 
-\newcommand{\CC}{Control\textsubscript{4C}} 
-\newcommand{\CG}{CG\textsubscript{4}} 
-\newcommand{\RG}{RG\textsubscript{4}} 
+\newcommand{\CB}{Control\textsubscript{4B}}
+\newcommand{\CC}{Control\textsubscript{4C}}
+\newcommand{\CG}{CG\textsubscript{4}}
+\newcommand{\RG}{RG\textsubscript{4}}
 \newcommand{\kms}{\,\mathrm{km\,s}^{-1}}
 \newcommand{\gap}{$\Delta R_{1,2}$}
 \newcommand{\msun}{\mathrm{M}_\odot}
@@ -122,24 +120,25 @@
 \nolinenumbers
 \title{Are galaxies in compact groups special?}
 
-   \author{Matthieu Tricottet\inst{1} \thanks{matthieu.tricottet@gmail.com}
+   \author{Matthieu Tricottet\inst{1}
            \and Gary A. Mamon\inst{2}
            \and Eugenia \diazg\inst{3,4}}
 
-   \institute{  
-                80, rue d'Al\'esia, 75014 Paris, France
+   \institute{
+                80, rue d'Al\'esia, 75014 Paris, France\\
+                \email{matthieu.tricottet@gmail.com}
                 \and Institut d'Astrophysique de Paris (UMR 7095: CNRS \& Sorbonne Universit\'e), 98 bis boulevard Arago, 75014 Paris, France
                 \and CONICET. Instituto de Astronom\'ia Te\'orica y Experimental (IATE), Laprida 854, X5000BGR, C\'ordoba, Argentina
                 \and Universidad Nacional de C\'ordoba (UNC). Observatorio Astron\'omico de C\'ordoba (OAC), Laprida 854, X5000BGR, C\'ordoba, Argentina
             }
 
-   \date{Received XXX; accepted YYY}
+   \date{}
 
   \abstract{
-    We investigate the properties of galaxies in compact groups (CGs) and compare them to a control sample of galaxies.  
+    We investigate the properties of galaxies in compact groups (CGs) and compare them to a control sample of galaxies.
    }
 
-   \keywords{galaxies: clusters: general -- catalogs}
+   \keywords{galaxies: groups: general -- galaxies: evolution -- galaxies: interactions -- galaxies: star formation -- galaxies: statistics}
 
    \maketitle
 
@@ -147,25 +146,37 @@
 
 \section{Data}
 \subsection{Samples}
-We use the compact groups and control samples we built in our previous article \cite{Tricottet+25}. 
-We neververtheless briefly recall here how they were built. \mt{Explain.} 
-Contrarily to our previous article, though, we remove CGs that we classified as \emph{split} following \cite{Zheng&Shen21}.
-In this process, our initial compact group sample of <<CG4_Groups_withsplit_N>> groups reduces to 
-<<CG4_Groups_nonsplit_N>>. We also remove groups built from Lim group 3688 from our \CB{} and \CC{} samples. This group has six galaxies 
-having a redshift between 0.032 and 0.034, and one having a redshift of 0.048. This group seems spurious, and the 
-outlier galaxy, altough not being the BGG, is selected both in our original \CB{} and \CC{}, influencing the velocity 
-dispersion of the group significantly ($1979$ and $1981\, \kms$, respectively).
+We use the compact-group and control samples constructed in our previous study \cite{Tricottet+25}.
+We briefly recall their construction here. Galaxy properties are taken from the SDSS DR12 catalogue
+of \citet{Tempel+17}, while regular groups are drawn from the SDSS DR7 group catalogue of \citet{Lim+17}; the two
+catalogues were matched through SDSS object identifiers to define the Lim--Tempel working catalogue. Compact groups
+are selected from the modified Hickson compact-group catalogue of \citet{DiazGimenez+18}. Starting from the reliable
+HMCGs with exactly four members, we retain only systems in which all galaxies are present in the Lim--Tempel catalogue and
+impose the volume- and luminosity-complete limits $0.005 < z_{\rm BGG} < 0.0452$ and $M_{r,\rm BGG}\leq -21.81$, with
+all 4 galaxies lying within 3 magnitudes of the brightest group galaxy. This defines the parent \CG{} sample of
+78 compact groups. The regular-group comparison samples are built from Lim--Tempel groups satisfying the same redshift
+and BGG-luminosity limits, with at least 4 members and at least 3 satellites within 3 magnitudes of the BGG.
+From this parent control catalogue, we define \RG{} groups as regular groups with exactly four members, excluding
+systems identical to a \CG{}, and we additionally use the \CB{} and \CC{} samples, formed respectively from
+the 4 brightest galaxies and from the BGG plus its 3 closest projected companions in each parent regular group,
+after removing groups that share galaxies with \CG{}s.
+In contrast to our previous study, we remove CGs classified as \emph{split} following \cite{Zheng&Shen21}.
+This reduces the compact-group sample from <<CG4_Groups_withsplit_N>> to
+<<CG4_Groups_nonsplit_N>> groups. We also remove the systems associated with Lim group 3688 from our \CB{} and \CC{} samples. This group contains 6 galaxies
+with redshifts between 0.032 and 0.034, and 1 with a redshift of 0.048. This group appears to be spurious, and the
+outlying galaxy, although not the BGG, is selected in both our original \CB{} and \CC{} samples, significantly affecting the group velocity
+dispersion ($1979$ and $1981\, \kms$, respectively).
 
-We use the SDSS DR <<DATA_RELEASE>> to retrieve masses, star formation rates (SFRs) and morphologies of galaxies 
-assessed in Galaxy Zoo (\cite{GalaxyZoo1}). We specifically extracted fields \texttt{sfr\_tot\_p50}, 
-\texttt{specsfr\_tot\_p50} and \texttt{lgm\_tot\_p50} from the \texttt{galSpecExtra} table, and
+We use SDSS DR <<DATA_RELEASE>> to retrieve stellar masses, star formation rates (SFRs), and Galaxy Zoo morphologies
+\citep{GalaxyZoo1}. We specifically extract the columns \texttt{sfr\_tot\_p50},
+\texttt{specsfr\_tot\_p50}, and \texttt{lgm\_tot\_p50} from the \texttt{galSpecExtra} table, and
 \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} from the \texttt{zooSpec} table.
-       
+
 
 \subsection{sSFR}
 To build a general star formation classification that could be uniformly applied to all our samples, we extracted
- galaxies from the SDSS DR <<DATA_RELEASE>>  
-through the query displayed in listing \ref{lst:query}. 
+ galaxies from the SDSS DR <<DATA_RELEASE>>
+using the query shown in Listing~\ref{lst:query}.
 % The number of galaxies in each sample is shown in table \ref{tab:sample_sizes}.
 
 \begin{lstlisting}[caption={Query used for selecting spectral \& photometric data from the SDSS},label={lst:query}]
@@ -178,57 +189,57 @@ We select non-AGN galaxies by first placing them on the classical BPT diagnostic
 \quad\text{and}\quad
 \log_{10}\!\bigl([\mathrm{O\,III}]\lambda5007/\mathrm{H}\beta\bigr).
 \]
-A galaxy is flagged as an AGN if it satisfies either  
+A galaxy is flagged as an AGN if it satisfies either
 \[
 \log_{10}\frac{[\mathrm{N\,II}]}{\mathrm{H}\alpha} > 0,
-\]  
-or if it lies above the empirical demarcation of \cite{Kauffmann+03a}:  
+\]
+or if it lies above the empirical demarcation of \cite{Kauffmann+03a}:
 \[
 \log_{10}\frac{[\mathrm{O\,III}]}{\mathrm{H}\beta}
 > \frac{0.61}{\log_{10}([\mathrm{N\,II}]/\mathrm{H}\alpha)-0.05} \;+\; 1.3,
 \]
 in which case it is removed from the non-AGN sample.  All remaining galaxies—including those with missing line ratios—are retained as non-AGN.
-The non-AGN selection process is shown on figure \ref{fig:BPT}.
+The non-AGN selection process is shown in Fig.~\ref{fig:BPT}.
 
 
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{BPT_diagram.pdf}
-     \caption{BPT diagram showing our separation between ordinary and AGN galaxies}
+     \caption{BPT diagram showing our separation between non-AGN and AGN galaxies.}
      \label{fig:BPT}
 \end{figure}
 
 
-We identify the galaxies having a \texttt{specsf\_tot\_p50} of -9999 in the SDSS as quenched 
-(for graphic representation purposes, we give it here an arbitrary low value of $10^{<<sSFR_QUENCHED>>}$ Gyr\(^{-1}\)).
-We then consider the other ones and sort them between the 
+Galaxies with \texttt{specsfr\_tot\_p50} equal to -9999 in the SDSS are classified as quenched
+(for display purposes, they are assigned the arbitrary low value $10^{<<sSFR_QUENCHED>>}$ Gyr\(^{-1}\)).
+The remaining galaxies are separated into
 star-forming and passive populations using a two‐component Gaussian Mixture Model (GMM) in the \(\log M_*\)–\(\log\mathrm{sSFR}\) plane.
-Its parameters determined by minimizing the Kullback–Leibler divergence between the empirical and model densities 
-(\cite{Kullback1951,McLachlanPeel2000}). For any trial parameter vector \(\boldsymbol{\theta}\), we reconstruct the mixture means 
-\(\{\boldsymbol{\mu}_i\}\), covariances \(\{\mathbf{\Sigma}_i\}\), and weights \(\{w_i\}\) via a Cholesky‐like decomposition and 
-logistic mapping, optionally constraining the second component’s mean to isolate the passive population (\cite{Dempster1977}). 
-The KL divergence is estimated by constructing a 2D histogram of the data and summing \(p_\mathrm{data}\ln(p_\mathrm{data}/p_\mathrm{GMM})\), 
-with a small regularization \(\epsilon\) to avoid singularities (\cite{Tojeiro2009,Bisigello2018}). We optimize \(\boldsymbol{\theta}\) 
-via L-BFGS-B (with fallback to Nelder–Mead) over multiple guided and random initializations, selecting the solution with lowest divergence 
-(\cite{Pedregosa2011,Bishop2006}). Initial means are seeded by a median split in \(\log\mathrm{sSFR}\) to improve convergence and robustness 
-against local minima (\cite{Rousseeuw1987}). In the final fit, one component naturally aligns with the high-\(\mathrm{sSFR}\) “star‐forming 
-sequence,” while the other captures the low-\(\mathrm{sSFR}\) “passive” cloud, providing a data‐driven division that agrees with previous 
-multi‐Gaussian decompositions of the SFR–\(M_*\) plane (\cite{Wuyts2011,Hahn2019}). The decision boundaries, defined as the 
-loci where the posterior probabilities of adjacent components are equal, provide an objective criterion for 
+Its parameters are determined by minimizing the Kullback–Leibler divergence between the empirical and model densities
+(\cite{Kullback1951,McLachlanPeel2000}). For any trial parameter vector \(\boldsymbol{\theta}\), we reconstruct the mixture means
+\(\{\boldsymbol{\mu}_i\}\), covariances \(\{\mathbf{\Sigma}_i\}\), and weights \(\{w_i\}\) via a Cholesky‐like decomposition and
+logistic mapping, optionally constraining the second component’s mean to isolate the passive population (\cite{Dempster1977}).
+The KL divergence is estimated by constructing a 2D histogram of the data and summing \(p_\mathrm{data}\ln(p_\mathrm{data}/p_\mathrm{GMM})\),
+with a small regularization \(\epsilon\) to avoid singularities (\cite{Tojeiro2009,Bisigello2018}). We optimize \(\boldsymbol{\theta}\)
+via L-BFGS-B (with fallback to Nelder–Mead) over multiple guided and random initializations, selecting the solution with lowest divergence
+(\cite{Pedregosa2011,Bishop2006}). Initial means are seeded by a median split in \(\log\mathrm{sSFR}\) to improve convergence and robustness
+against local minima (\cite{Rousseeuw1987}). In the final fit, one component naturally aligns with the high-\(\mathrm{sSFR}\) “star‐forming
+sequence,” while the other captures the low-\(\mathrm{sSFR}\) “passive” cloud, providing a data‐driven division that agrees with previous
+multi‐Gaussian decompositions of the SFR–\(M_*\) plane (\cite{Wuyts2011,Hahn2019}). The decision boundaries, defined as the
+loci where the posterior probabilities of adjacent components are equal, provide an objective criterion for
 delineating star‐forming from passive galaxies.
 
-\mt{Add relevant GM parameters found by the algorithm.}
+% GMM parameter summary to be inserted if needed.
 
-The sSFR status for each sample is shown in table \ref{tab:sSFR_status}. There is no significant differences of for \<<sSFR_status[2]>>{} proportion 
-between \CG{} and the control samples (probabilities estimated using Fisher exact test are  
-<<pval_Control4B_Starforming_vs_CG>>  versus \CB{} sample, 
- <<pval_Control4C_Starforming_vs_CG>>  versus \CC{} and  <<pval_RG4_Starforming_vs_CG>>  versus \RG).
+The sSFR status for each sample is shown in Table~\ref{tab:sSFR_status}. We find no significant difference in the \<<sSFR_status[2]>>{} fraction
+between \CG{} and the control samples; Fisher's exact test gives p-values of
+<<pval_Control4B_Starforming_vs_CG>>  versus the \CB{} sample,
+ <<pval_Control4C_Starforming_vs_CG>>  versus \CC{}, and  <<pval_RG4_Starforming_vs_CG>>  versus \RG.
 
- Restrictions of the comparison to BGGs and satellites only are also shown in table \ref{tab:sSFR_status}. 
-The p-values found from <<BGG_sSFR_tests>> are 
+ The same comparison restricted to BGGs and satellites is also shown in Table~\ref{tab:sSFR_status}.
+For BGGs, the p-values obtained with <<BGG_sSFR_tests>> are
   <<BGG_star_forming_pvalue_Control4B_vs_CG4>> against \CB,
-  <<BGG_star_forming_pvalue_Control4C_vs_CG4>> against \CC{} and 
-  <<BGG_star_forming_pvalue_RG4_vs_CG4>>  against \RG. 
+  <<BGG_star_forming_pvalue_Control4C_vs_CG4>> against \CC{} and
+  <<BGG_star_forming_pvalue_RG4_vs_CG4>>  against \RG.
 For satellites, the corresponding p-values are
   <<Sat_star_forming_pvalue_Control4B_vs_CG4>> against \CB,
   <<Sat_star_forming_pvalue_Control4C_vs_CG4>> against \CC{} and
@@ -260,20 +271,20 @@ For satellites, the corresponding p-values are
     \label{tab:sSFR_status}
 \end{table*}
 
-        
-    
+
+
 
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{density_original_vs_GMMfit.pdf}
-     \caption{}
+     \caption{Observed non-quenched SDSS distribution in the \(\log M_*\)--\(\log\mathrm{sSFR}\) plane and best-fitting two-component GMM density.}
      \label{fig:density_original_vs_GMMfit}
 \end{figure}
 
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{sSFR_classification.pdf}
-     \caption{sSFR vs mass, star-forming/passive limit and Zoo morphologies for the SDSS control sample, 
+     \caption{sSFR vs mass, star-forming/passive limit and Zoo morphologies for the SDSS control sample,
      excluding quenched galaxies.}
      \label{fig:sSFR_classification}
 \end{figure}
@@ -281,23 +292,23 @@ For satellites, the corresponding p-values are
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{residual_sSFR_histogram.pdf}
-     \caption{}
+     \caption{Distribution of residual sSFR offsets from the adopted star-forming main sequence.}
      \label{fig:Residual_sSFR}
 \end{figure}
 
 
 
 \subsection{Morphology}
-Morphologies are determined via the Galaxy Zoo citizen‐science decision tree, in which each galaxy image receives multiple 
-independent volunteer classifications that are aggregated into debiaised vote fractions \cite{GalaxyZoo1}. Those fractions are provided in the 
-\texttt{zooSpecz} table of the SDSS databasethrough the \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} columns. We attribute to galaxies the
-morphology ``elliptical'' if the \texttt{p\_el\_debiased} value is greater than 0.5, and ``spiral'' if the \texttt{p\_cs\_debiased} value is greater than 0.5. 
-Other cases are considered as ``uncertain''. The morphologies found for each sample are shown in table \ref{tab:morphologies}.
-Barnard two-sided exact tests were performed to compare the fraction of each morphology between \CG{} and each control sample. The p-values found are 
-<<pval_Control4B_Elliptical_vs_CG_pc>> for ellipticals and <<pval_Control4B_Spiral_vs_CG_pc>> for spirals versus \CB{} sample, 
- <<pval_Control4C_Elliptical_vs_CG_pc>>  and <<pval_Control4C_Spiral_vs_CG_pc>>  versus \CC{} and  <<pval_RG4_Elliptical_vs_CG_pc>>  
- and <<pval_RG4_Spiral_vs_CG_pc>>  versus \RG. Morphologies of \CG, wich we identified as cores of richer groups in 
- \cite{Tricottet+25}, have morphologies significantly different from ordinary groups of four members. Figure \ref{fig:galaxies_morph_sfr} displays the sSFR against masses for galaxies from the SDSS selection and for \CG{}s galaxies.
+Morphologies are determined via the Galaxy Zoo citizen‐science decision tree, in which each galaxy image receives multiple
+independent volunteer classifications that are aggregated into debiased vote fractions \citep{GalaxyZoo1}. Those fractions are provided in the
+\texttt{zooSpec} table of the SDSS database through the \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} columns. We classify a galaxy as
+``elliptical'' if \texttt{p\_el\_debiased} is greater than 0.5, and as ``spiral'' if \texttt{p\_cs\_debiased} is greater than 0.5.
+All other cases are classified as ``uncertain''. The morphologies obtained for each sample are shown in Table~\ref{tab:morphologies}.
+Barnard's two-sided exact tests were used to compare the fraction of each morphology between \CG{} and each control sample. The resulting p-values are
+<<pval_Control4B_Elliptical_vs_CG_pc>> for ellipticals and <<pval_Control4B_Spiral_vs_CG_pc>> for spirals versus the \CB{} sample,
+ <<pval_Control4C_Elliptical_vs_CG_pc>>  and <<pval_Control4C_Spiral_vs_CG_pc>>  versus \CC{} and  <<pval_RG4_Elliptical_vs_CG_pc>>
+ and <<pval_RG4_Spiral_vs_CG_pc>>  versus \RG. The galaxies in \CG{} systems, which we identified as cores of richer groups in
+ \cite{Tricottet+25}, have morphology distributions that differ significantly from those of ordinary four-member groups. Figure~\ref{fig:galaxies_morph_sfr} displays sSFR versus stellar mass for galaxies in the SDSS selection and in \CG{}.
 
 
 \begin{table*}
@@ -321,47 +332,46 @@ Barnard two-sided exact tests were performed to compare the fraction of each mor
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{galaxies_sfr.pdf}
-     \caption{sSFR and morphologies of galaxies in \CG{} and our SDSS selection. 
+     \caption{sSFR and morphologies of galaxies in \CG{} and our SDSS selection.
      Quenched galaxies are represented at an arbitrary low value of $10^{<<sSFR_QUENCHED>>}$ Gyr\(^{-1}\).}
      \label{fig:galaxies_morph_sfr}
 \end{figure}
 
-\subsection{Morphology vs sSFR}
+\subsection{Morphology versus sSFR}
 
 
 
-Starforming \CG{} are composed of <<CG_Nb_Spiral_Starforming>> of their galaxies classified as spiral 
-(<<CG_fracpc_Spiral_Starforming>>\% once galaxies having uncertain morphology removed) and 
-<<CG_Nb_Elliptical_Starforming>> (<<CG_fracpc_Elliptical_Starforming>>\% once galaxies having uncertain morphology removed) elliptical.
-These figures are <<Control4B_Nb_Spiral_Starforming>> (<<Control4B_fracpc_Spiral_Starforming>>\%) spiral
-and <<Control4B_Nb_Elliptical_Starforming>> (<<Control4B_fracpc_Elliptical_Starforming>>\%) elliptical galaxies for \CB{}, 
-<<Control4C_Nb_Spiral_Starforming>> (<<Control4C_fracpc_Spiral_Starforming>>\%) spiral
-and <<Control4C_Nb_Elliptical_Starforming>> (<<Control4C_fracpc_Elliptical_Starforming>>\%) elliptical galaxies for \CC{}
-and <<RG4_Nb_Spiral_Starforming>> (<<RG4_fracpc_Spiral_Starforming>>\%) spiral
-and <<RG4_Nb_Elliptical_Starforming>> (<<RG4_fracpc_Elliptical_Starforming>>\%) elliptical galaxies for \RG{}. 
-The probability that those fractions come from 
-the same distribution is estimated from the <<Morph_sSFR_test>> as <<pval_Control4B_Starforming_vs_CG_pc>> against \CB,
-<<pval_Control4C_Starforming_vs_CG_pc>> against \CC{} and <<pval_RG4_Starforming_vs_CG_pc>> against \RG. There is thus 
-neither significant excess nor lack of 
-starforming elliptical galaxies in \CG{} compared to all our control samples.
+Among star-forming \CG{} galaxies, <<CG_Nb_Spiral_Starforming>> are classified as spiral
+(<<CG_fracpc_Spiral_Starforming>>\% after removing galaxies with uncertain morphology) and
+<<CG_Nb_Elliptical_Starforming>> are classified as elliptical (<<CG_fracpc_Elliptical_Starforming>>\% after removing galaxies with uncertain morphology).
+The corresponding numbers are <<Control4B_Nb_Spiral_Starforming>> spiral galaxies (<<Control4B_fracpc_Spiral_Starforming>>\%)
+and <<Control4B_Nb_Elliptical_Starforming>> elliptical galaxies (<<Control4B_fracpc_Elliptical_Starforming>>\%) for \CB{},
+<<Control4C_Nb_Spiral_Starforming>> spiral galaxies (<<Control4C_fracpc_Spiral_Starforming>>\%)
+and <<Control4C_Nb_Elliptical_Starforming>> elliptical galaxies (<<Control4C_fracpc_Elliptical_Starforming>>\%) for \CC{},
+and <<RG4_Nb_Spiral_Starforming>> spiral galaxies (<<RG4_fracpc_Spiral_Starforming>>\%)
+and <<RG4_Nb_Elliptical_Starforming>> elliptical galaxies (<<RG4_fracpc_Elliptical_Starforming>>\%) for \RG{}.
+The probabilities that these fractions are drawn from
+the same distribution, estimated with <<Morph_sSFR_test>>, are <<pval_Control4B_Starforming_vs_CG_pc>> against \CB,
+<<pval_Control4C_Starforming_vs_CG_pc>> against \CC{}, and <<pval_RG4_Starforming_vs_CG_pc>> against \RG. We therefore find
+neither a significant excess nor a deficit of
+star-forming elliptical galaxies in \CG{} relative to any control sample.
 
-If we restrict the comparison to BGGs only, we find <<CG4_BGG_N_Elliptical>> Elliptical BGGs (<<CG4_BGG_fracpc_Elliptical>>\% of the BGGs) and
-<<CG4_BGG_N_Spiral>> Spiral BGGs (<<CG4_BGG_fracpc_Spiral>>\%) 
+When restricting the comparison to BGGs, we find <<CG4_BGG_N_Elliptical>> elliptical BGGs (<<CG4_BGG_fracpc_Elliptical>>\% of the BGGs) and
+<<CG4_BGG_N_Spiral>> spiral BGGs (<<CG4_BGG_fracpc_Spiral>>\%)
  in \CG{}.
-  This is to be compared to 
- <<Control4B_BGG_N_Elliptical>> (<<Control4B_BGG_fracpc_Elliptical>>\%) Elliptical and
- <<Control4B_BGG_N_Spiral>> (<<Control4B_BGG_fracpc_Spiral>>\%) Spiral galaxies in \CB{}, 
- <<Control4C_BGG_N_Elliptical>> (<<Control4C_BGG_fracpc_Elliptical>>\%) Elliptical and
- <<Control4C_BGG_N_Spiral>> (<<Control4C_BGG_fracpc_Spiral>>\%)  Spiral in \CC{},
-  and  <<RG4_BGG_N_Elliptical>> (<<RG4_BGG_fracpc_Elliptical>>\%) Elliptical and
-  <<RG4_BGG_N_Spiral>> (<<RG4_BGG_fracpc_Spiral>>\%) Spiral
-  in \RG{}. 
-The p-values found from <<BGG_morph_tests>> are 
+  The corresponding numbers are
+ <<Control4B_BGG_N_Elliptical>> elliptical BGGs (<<Control4B_BGG_fracpc_Elliptical>>\%) and
+ <<Control4B_BGG_N_Spiral>> spiral BGGs (<<Control4B_BGG_fracpc_Spiral>>\%) in \CB{},
+ <<Control4C_BGG_N_Elliptical>> elliptical BGGs (<<Control4C_BGG_fracpc_Elliptical>>\%) and
+ <<Control4C_BGG_N_Spiral>> spiral BGGs (<<Control4C_BGG_fracpc_Spiral>>\%) in \CC{},
+  and  <<RG4_BGG_N_Elliptical>> elliptical BGGs (<<RG4_BGG_fracpc_Elliptical>>\%) and
+  <<RG4_BGG_N_Spiral>> spiral BGGs (<<RG4_BGG_fracpc_Spiral>>\%)
+  in \RG{}.
+The p-values obtained with <<BGG_morph_tests>> are
   <<BGG_morph_pvalue_Control4B_vs_CG4>> against \CB,
-  <<BGG_morph_pvalue_Control4C_vs_CG4>> against \CC{} and 
-  <<BGG_morph_pvalue_RG4_vs_CG4>>  against \RG. 
-We can therefore see that BGG morphologies are different between \CG{} and \RG{}: \CG{} BGGs are more likely 
-to be elliptical than \RG{} BGGs.  
+  <<BGG_morph_pvalue_Control4C_vs_CG4>> against \CC{} and
+  <<BGG_morph_pvalue_RG4_vs_CG4>>  against \RG.
+Thus, BGG morphologies differ between \CG{} and \RG{}: \CG{} BGGs have a higher elliptical fraction than \RG{} BGGs.
 
 \section{sSFR}
 
@@ -407,8 +417,8 @@ Sample
 \bottomrule
 \end{tabular}
 
-\caption{Median values of galaxy properties for passive and star-forming populations in each sample. 
-Error bars are computed via bootstrapping (10\,000 iterations).}
+\caption{Median values of galaxy properties for passive and star-forming populations in each sample.
+Uncertainties are estimated by bootstrapping (10\,000 iterations).}
 \label{tab:passive_starforming_medians}
 \end{table*}
 
@@ -424,10 +434,10 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
   \multicolumn{2}{c}{<< lu.formatted_label(q) >>}%
   <% if not loop.last %> & <% endif %>
 <% endfor %> \\
-% --- second header row: Passive / Star-forming BGG ---
- & 
+% --- second header row: BGG fertility split ---
+ &
 <% for q in quantities %>
-  Passive BGG & Star-forming BGG%
+  Passive & Star-forming%
   <% if not loop.last %> & <% endif %>
 <% endfor %> \\
 \midrule
@@ -443,8 +453,8 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
 
 \bottomrule
 \end{tabular}
-\caption{Median values of various quantities for galaxies according to the fertility of their BGG (BGG included). 
-Error bars are computed via bootstrapping (10\,000 iterations).}
+\caption{Median values of various quantities for galaxies according to the fertility of their BGG (BGG included).
+Uncertainties are estimated by bootstrapping (10\,000 iterations).}
 \label{tab:split_fertility_BGG_properties}
 \end{table*}
 
@@ -459,10 +469,10 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
   \multicolumn{2}{c}{<< lu.formatted_label(q) >>}%
   <% if not loop.last %> & <% endif %>
 <% endfor %> \\
-% --- second header row: Passive / Star-forming BGG ---
- & 
+% --- second header row: BGG fertility split ---
+ &
 <% for q in quantities %>
-  Passive BGG & Star-forming BGG%
+  Passive & Star-forming%
   <% if not loop.last %> & <% endif %>
 <% endfor %> \\
 \midrule
@@ -478,8 +488,8 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
 
 \bottomrule
 \end{tabular}
-\caption{Median values of various quantities for galaxies according to the fertility of their BGG (satellites only). 
-Error bars are computed via bootstrapping (10\,000 iterations).}
+\caption{Median values of various quantities for galaxies according to the fertility of their BGG (satellites only).
+Uncertainties are estimated by bootstrapping (10\,000 iterations).}
 \label{tab:split_fertility_BGG_properties_Sat}
 \end{table*}
 
@@ -487,28 +497,28 @@ Error bars are computed via bootstrapping (10\,000 iterations).}
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{fertility.pdf}
-     \caption{Distribution various quantities for galaxies according their fertility.}
+     \caption{Distributions of various quantities for galaxies according to their fertility.}
      \label{fig:fertility}
 \end{figure}
 
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{BGG_fertility.pdf}
-     \caption{Distribution various quantities for galaxies according to the fertility of their BGG (BGG included).}
+     \caption{Distributions of various quantities for galaxies according to the fertility of their BGG (BGG included).}
      \label{fig:BGG_fertility}
 \end{figure}
 
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{Satellites_by_BGG_fertility.pdf}
-     \caption{Distribution various quantities for galaxies according to the fertility of their BGG (BGG excluded).}
+     \caption{Distributions of various quantities for galaxies according to the fertility of their BGG (satellites only).}
      \label{fig:Sat_BGG_fertility}
 \end{figure}
 
 \subsection{Main sequence}
-We model the star-forming main sequence as a power law in stellar mass, to various orders (1 to 4) - cf figure \ref{fig:Main_Sequence_polyfits}.
-We then choose to use order 2 to compute the residuals of each star-forming galaxy to the main sequence,
-and plot their histograms in figure \ref{fig:main_sequence_residuals}.
+We model the star-forming main sequence as a function of stellar mass using orders 1--4 (Fig.~\ref{fig:Main_Sequence_polyfits}).
+We then use order 2 to compute the residual of each star-forming galaxy with respect to the main sequence,
+and show their distributions in Fig.~\ref{fig:main_sequence_residuals}.
 
 The median main-sequence residual of CG4 galaxies is:
 \begin{itemize}
@@ -536,14 +546,14 @@ corresponding to a $p$-value of $p = << "%.3f"|format(p) >>$.
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{Main_Sequence_polyfits.pdf}
-     \caption{}
+     \caption{Polynomial fits of orders 1--4 to the star-forming main sequence.}
      \label{fig:Main_Sequence_polyfits}
 \end{figure}
 
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{main_sequence_residuals.pdf}
-     \caption{}
+     \caption{Main-sequence residual distributions for the star-forming galaxies in each sample.}
      \label{fig:main_sequence_residuals}
 \end{figure}
 
@@ -643,8 +653,8 @@ an odds ratio of << item.sat_or_fmt >> (p = << item.sat_p_fmt >>)<% if not loop.
 Splitting the samples by both domination and BGG morphology does not reveal any significant modulation of the satellite morphology mix.
 <% endif %>
 
-\section{Group Dynamics}
-The crossing-time exploration quantifies the trends illustrated in figures \ref{fig:tcr_vs_mvirial_over_l} to \ref{fig:tcr_mvirial_lgroup_3d}.
+\section{Group dynamics}
+The crossing-time exploration quantifies the trends illustrated in Figs.~\ref{fig:tcr_vs_mvirial_over_l}--\ref{fig:tcr_mvirial_lgroup_3d}.
 <% for item in r.get('Tcross_global_correlations', []) %>
 For << item.y_label >>, the global Spearman coefficient with $\log t_\mathrm{cross}$ is
 $\rho_\mathrm{S} = << item.rho_fmt >>$ based on << item.n_groups >> groups (p = << item.p_value_fmt >>).
@@ -673,11 +683,11 @@ $\rho_\mathrm{S} = << item.rho_fmt >>$ based on << item.n_groups >> groups (p = 
 
 
 \section{Colour}
-We derive the $(u-r)$, $(u-g)$, $(g-r)$ and $(r-i)$ colours from the matched SDSS photometry. The retained matches are <% for item in r.Colour_matching_summary -%><< item.n_matched >> of << item.n_total >> galaxies in << item.sample_label >><% if not loop.last %>, <% else %>.<% endif %><% endfor %> Stellar mass is a confounding variable in colour comparisons \citep{Alpaslan+15}; we therefore model each colour jointly with $\log(M_\star/M_\odot)$ rather than comparing unadjusted colour distributions.
+We derive the $(u-r)$, $(u-g)$, $(g-r)$ and $(r-i)$ colours from the matched SDSS photometry. The retained matches include <% for item in r.Colour_matching_summary -%><< item.n_matched >> of << item.n_total >> galaxies in << item.sample_label >><% if not loop.last %>, <% else %>.<% endif %><% endfor %> Stellar mass is a confounding variable in colour comparisons \citep{Alpaslan+15}; we therefore model each colour jointly with $\log(M_\star/M_\odot)$ rather than comparing unadjusted colour distributions.
 
 \subsection{Catalogue colour--mass relations}
 
-<% if r.Colour_mass_significant_global_tests|length > 0 -%>The hypothesis of a common colour--mass slope across catalogues is rejected for <% for item in r.Colour_mass_significant_global_tests -%><< item.colour_label >> ($p=<< item.p_value_fmt >>$)<% if not loop.last %>, <% else %>.<% endif %><% endfor %><% else -%>The hypothesis of a common colour--mass slope across catalogues is not rejected for any colour.<% endif %> <% if r.Colour_mass_significant_pairwise_tests|length > 0 -%>After Holm correction of the directional comparisons, significantly steeper CG$_4$ slopes are found <% for item in r.Colour_mass_significant_pairwise_tests -%>for << item.colour_label >> relative to <% if item.comparison == "SDSS" -%>SDSS<% else -%><< item.comparison_label >><% endif %>, with $\Delta b=<< item.delta_slope_fmt >>$ ($p_{\mathrm{Holm}}=<< item.p_holm_fmt >>$)<% if not loop.last %>; <% else %>.<% endif %><% endfor %><% else -%>No directional slope comparison remains significant after Holm correction.<% endif %> These relations are shown in Fig.~\ref{fig:color_mass}.
+<% if r.Colour_mass_significant_global_tests|length > 0 -%>The hypothesis of a common colour--mass slope across catalogues is rejected for <% for item in r.Colour_mass_significant_global_tests -%><< item.colour_label >> ($p=<< item.p_value_fmt >>$)<% if not loop.last %>, <% else %>.<% endif %><% endfor %><% else -%>The hypothesis of a common colour--mass slope across catalogues is not rejected for any colour.<% endif %> <% if r.Colour_mass_significant_pairwise_tests|length > 0 -%>After Holm correction for the directional comparisons, significantly steeper CG$_4$ slopes are found <% for item in r.Colour_mass_significant_pairwise_tests -%>for << item.colour_label >> relative to <% if item.comparison == "SDSS" -%>SDSS<% else -%><< item.comparison_label >><% endif %>, with $\Delta b=<< item.delta_slope_fmt >>$ ($p_{\mathrm{Holm}}=<< item.p_holm_fmt >>$)<% if not loop.last %>; <% else %>.<% endif %><% endfor %><% else -%>No directional slope comparison remains significant after Holm correction.<% endif %> These relations are shown in Fig.~\ref{fig:color_mass}.
 
 \begin{figure*}
     \centering
@@ -693,7 +703,7 @@ To isolate an environmental difference, we pool satellites from the control cata
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{<< r.Colour_figures.satellite_environment >>}
-    \caption{Satellite colour--mass relations in compact and ordinary groups. The fitted lines expose both colour offsets at the reference mass and differences in slope.}
+    \caption{Satellite colour--mass relations in compact and ordinary groups. The fitted lines show both colour offsets at the reference mass and differences in slope.}
     \label{fig:satellite_colour_mass}
 \end{figure*}
 
@@ -703,7 +713,7 @@ The SDSS-photometry subset is <% if r.Colour_robustness_matching_biased -%>not r
 
 We therefore refit the satellite colours with cluster-robust standard errors, using catalogue-qualified group identifiers. In the pooled comparison adjusted only for stellar mass and redshift, <% if r.Colour_robustness_significant_baseline_blue|length == 0 -%>none of the four CG$_4$ coefficients is significantly negative after Holm correction<% else -%>CG$_4$ satellites are significantly bluer in <% for item in r.Colour_robustness_significant_baseline_blue -%><< item.colour_label >> ($\Delta=<< item.is_CG4_coefficient_fmt >>$ mag, $p_{\rm Holm}=<< item.p_holm_fmt >>$)<% if not loop.last %>, <% endif %><% endfor %><% endif %>. <% if r.Colour_robustness_significant_full_blue|length > 0 -%>After additionally controlling for morphology and sSFR class, negative coefficients appear in <% for item in r.Colour_robustness_significant_full_blue -%><< item.colour_label >> ($\Delta=<< item.is_CG4_coefficient_fmt >>$ mag, $p_{\rm Holm}=<< item.p_holm_fmt >>$)<% if not loop.last %>, <% else %>.<% endif %><% endfor %><% else -%>Adding morphology and sSFR class does not reveal a significant negative coefficient.<% endif %> These adjusted coefficients are <% if r.Colour_robustness_summary.control_dependent -%>control-sample dependent<% else -%>consistent across the control catalogues<% endif %><% if r.Colour_robustness_control_specific|length > 0 -%>: the significant individual comparisons are <% for item in r.Colour_robustness_control_specific -%><< item.comparison >> in << item.colour_label >><% if not loop.last %>, <% else %>.<% endif %><% endfor %><% else -%>.<% endif %>
 
-Within sSFR classes, <% if r.Colour_robustness_significant_ssfr_splits|length == 0 -%>no negative CG$_4$ residual difference survives correction for the four colours<% else -%>significant negative residual differences remain <% for item in r.Colour_robustness_significant_ssfr_splits -%>for << item.split_value|lower >> satellites in << item.colour_label >><% if not loop.last %>, <% else %>.<% endif %><% endfor %><% endif %>. Likewise, <% if r.Colour_robustness_significant_morphology_splits|length == 0 -%>no within-morphology residual difference survives the same correction<% else -%>significant negative residual differences remain <% for item in r.Colour_robustness_significant_morphology_splits -%>for << item.split_value|lower >> satellites in << item.colour_label >><% if not loop.last %>, <% else %>.<% endif %><% endfor %><% endif %>. Thus, the data do not isolate the colour effect to the star-forming spiral population expected for a simple interaction-triggered star-formation scenario.
+Within sSFR classes, <% if r.Colour_robustness_significant_ssfr_splits|length == 0 -%>no negative CG$_4$ residual difference survives correction for the four colours<% else -%>significant negative residual differences remain <% for item in r.Colour_robustness_significant_ssfr_splits -%>for << item.split_value|lower >> satellites in << item.colour_label >><% if not loop.last %>, <% else %>.<% endif %><% endfor %><% endif %>. Likewise, <% if r.Colour_robustness_significant_morphology_splits|length == 0 -%>no within-morphology residual difference survives the same correction<% else -%>significant negative residual differences remain <% for item in r.Colour_robustness_significant_morphology_splits -%>for << item.split_value|lower >> satellites in << item.colour_label >><% if not loop.last %>, <% else %>.<% endif %><% endfor %><% endif %>. Thus, the data do not localize the colour effect to the star-forming spiral population expected for a simple interaction-triggered star-formation scenario.
 
 Figure~\ref{fig:colour_robustness_coefficients} summarizes the model and control-sample dependence. Taken together, these tests do not establish a robust global blue offset for CG$_4$ satellites; the negative full-model coefficients should instead be treated as a control-sensitive exploratory result.
 
@@ -718,7 +728,7 @@ Figure~\ref{fig:colour_robustness_coefficients} summarizes the model and control
 
 The residual colours become bluer at larger projected distance from the BGG in CG$_4$. <% if r.Colour_robustness_significant_cg4_distance|length > 0 -%>After Holm correction within each distance metric, significant CG$_4$ correlations are found <% for item in r.Colour_robustness_significant_cg4_distance if item.distance == 'dist2BGG_kpc' -%>for << item.colour_label >> ($\rho_{\rm S}=<< item.spearman_rho_fmt >>$, $p_{\rm Holm}=<< item.spearman_p_holm_fmt >>$)<% if not loop.last %>, <% else %>.<% endif %><% endfor %><% else -%>No CG$_4$ distance correlation remains significant after correction.<% endif %> This radial trend is consistent with stronger processing near the group centre and a less processed outer population, rather than centrally triggered blue colours.
 
-At group level, <% set significant_tcross = r.Colour_robustness_cg4_tcross|selectattr('p_holm_significant')|list -%><% if significant_tcross|length > 0 -%>crossing time correlates with <% for item in significant_tcross -%><< item.outcome_label >> ($\rho_{\rm S}=<< item.spearman_rho_fmt >>$, $p_{\rm Holm}=<< item.p_holm_fmt >>$)<% if not loop.last %>, <% else %>.<% endif %><% endfor %><% else -%>no satellite colour summary after correction for the tested group quantities.<% endif %> These group-level relations remain exploratory because many groups contribute only a small number of colour-matched satellites.
+At the group level, <% set significant_tcross = r.Colour_robustness_cg4_tcross|selectattr('p_holm_significant')|list -%><% if significant_tcross|length > 0 -%>crossing time correlates with <% for item in significant_tcross -%><< item.outcome_label >> ($\rho_{\rm S}=<< item.spearman_rho_fmt >>$, $p_{\rm Holm}=<< item.p_holm_fmt >>$)<% if not loop.last %>, <% else %>.<% endif %><% endfor %><% else -%>no satellite colour summary remains significantly correlated with the tested group quantities after correction.<% endif %> These group-level relations remain exploratory because many groups contribute only a small number of colour-matched satellites.
 
 \begin{figure*}
     \centering
@@ -757,7 +767,7 @@ The BGG stellar-mass distributions are <% if r.Colour_bgg_domination_mass_test.s
 <% if es and es.get('status') == 'ok' %>
 \section{What drives the compact-group differences?}
 
-The previous sections establish that CG$_4$ galaxies differ from the control catalogues in their population mix, especially in morphology and in the star-forming fraction of satellites. We now ask whether these differences survive after controlling for stellar mass, rank and available group-scale quantities, and whether they are better interpreted as compact-group-specific evolution, pre-processing in dense halo cores, or catalogue-selection effects.
+The previous sections establish that CG$_4$ galaxies differ from the control catalogues in their population mix, especially in morphology and in the star-forming fraction of satellites. We now ask whether these differences survive after controlling for stellar mass, rank and available group-scale quantities, and whether they are better interpreted as compact-group-specific evolution, preprocessing in dense halo cores, or catalogue-selection effects.
 
 <% set sm = es.get('specialness_models', {}) %>
 <% if sm.get('status') == 'ok' %>
@@ -774,7 +784,7 @@ For << label >>, the CG$_4$ odds ratio is \(<< model.get('cg4_odds_ratio')|fmt(2
 
 <% set sig = sm.get('significant_models', []) %>
 <% if ('elliptical_all' in sig) or ('spiral_all' in sig) %>
-Compact-group membership therefore remains independently associated with morphology after the available adjustments: CG$_4$ galaxies have a higher probability of being elliptical and a lower probability of being spiral. In contrast, the adjusted passive and star-forming satellite coefficients are weaker and do not provide corrected-significant evidence for an instantaneous star-formation difference.
+Compact-group membership therefore remains independently associated with morphology after the available adjustments: CG$_4$ galaxies have a higher probability of being elliptical and a lower probability of being spiral. In contrast, the adjusted passive and star-forming satellite coefficients are weaker and do not provide evidence for an instantaneous star-formation difference that remains significant after correction.
 <% elif sig %>
 Compact-group membership remains independently associated with <% for item in sig -%><< item|replace('_', ' ') >><% if not loop.last %>, <% else %> after the available adjustments.<% endif %><% endfor %>
 <% else %>
@@ -805,7 +815,7 @@ This supports an enhanced passive fraction in CG$_4$ after matching.
 <% elif m_passive.get('p_adj') is not none and m_passive.get('p_adj') < 0.10 %>
 This is suggestive but not formally significant after correction, so we treat the passive-fraction excess as borderline.
 <% else %>
-This does not provide corrected-significant evidence for an enhanced passive fraction in CG$_4$ after matching.
+After matching, this does not provide evidence for an enhanced passive fraction in CG$_4$ that remains significant after correction.
 <% endif %>
 <% endif %>
 
@@ -949,7 +959,7 @@ The strong-emission fraction is <% for sample, item in recent.get('fractions_by_
 Relative to << comp_name|replace('CG4_vs_', '')|replace('Control4B', 'Control4B')|replace('Control4C', 'Control4C')|replace('RG4', 'RG4') >>, the CG$_4$ strong-emission fraction differs by \(<< comp.get('strong_emission_fraction_difference')|fmt(3) >>\) (<< pholm_text(comp.get('p_adj')) >>).
 <% endif %>
 <% endfor %>
-These limited H\(\alpha\) results indicate that CG$_4$ galaxies have a lower strong-emission fraction than each control sample in the current catalogue, but they do not provide a direct post-starburst or recently-quenched classification.
+These limited H\(\alpha\) results indicate that CG$_4$ galaxies have a lower strong-emission fraction than in each control sample in the current catalogue, but they do not provide a direct post-starburst or recently-quenched classification.
 <% endif %>
 
 <% if recent.get('figure') %>
@@ -1030,9 +1040,9 @@ The median nearest-neighbour angular separation is << angular.get('median_cg4')|
 <% endif %>
 
 <% if selection.get('strong_selection_bias') %>
-At least one major availability difference is both statistically significant and larger than ten percentage points, so affected results are treated as exploratory.
+At least one major availability difference is both statistically significant and larger than 10 percentage points, so affected results are treated as exploratory.
 <% else %>
-No major availability difference meets both the corrected-significance and ten-percentage-point criteria.
+No major availability difference meets both criteria of corrected significance and a difference exceeding 10 percentage points.
 <% endif %>
 
 <% set avail = selection.get('availability_by_sample', {}) %>
@@ -1063,17 +1073,17 @@ The automated availability row for group-scale quantities should be interpreted 
 
 A complementary interpretation of the present results is provided by the recent series of studies by
 \citet{Montaguth2023,Montaguth2025,Montaguth2026NonIsolated,Montaguth2026MassSize}.
-Using multiwavelength S-PLUS imaging and single-S'ersic structural fits, these authors identified a population of
-``transition’’ galaxies, broadly corresponding to red systems with relatively low or intermediate S'ersic index, whose
-location in the ($R_{\rm e})-(n)$ plane suggests ongoing structural transformation in compact groups. In particular,
+Using multiwavelength S-PLUS imaging and single-S\'ersic structural fits, these authors identified a population of
+``transition'' galaxies, broadly corresponding to red systems with relatively low or intermediate S\'ersic index, whose
+location in the $R_{\rm e}$--$n$ plane suggests ongoing structural transformation in compact groups. In particular,
 \citet{Montaguth2023} found that compact-group transition galaxies include a population that is smaller and more
 centrally concentrated than analogous field galaxies, while \citet{Montaguth2025} showed that this signature is
 stronger in non-isolated compact groups embedded in larger structures. \citet{Montaguth2026NonIsolated} further
 compared non-isolated compact groups with their surrounding host-group galaxies and found that the compact-group
 members display higher quenched fractions, a larger early-type fraction, and distinct transition-galaxy
-($R_{\rm e})-(n)$ distributions. Finally, \citet{Montaguth2026MassSize} showed that the environmental dependence of the
+($R_{\rm e}$--$n$) distributions. Finally, \citet{Montaguth2026MassSize} showed that the environmental dependence of the
 stellar mass–size relation is weak for early- and late-type galaxies, but strongest for transition galaxies, whose
-mass–size slopes and S'ersic-index distributions become more early-type-like in groups and compact groups.
+mass–size slopes and S\'ersic-index distributions become more early-type-like in groups and compact groups.
 
 Our analysis addresses a related but stricter question. Rather than comparing compact groups primarily with the
 field, or non-isolated compact groups with their immediate host structures, we ask whether compact-group galaxies
@@ -1097,7 +1107,7 @@ toward earlier morphologies.
 A useful way to reconcile these views is to regard the compact-group signal as primarily structural and cumulative.
 In that picture, the compact configuration may accelerate morphological transformation, but some of the observed
 differences may also reflect the fact that many compact groups are the dense cores or substructures of larger systems.
-Future work combining the structural diagnostics of S-PLUS-like analyses, especially ($R_{\rm e}$), S\'ersic index,
+Future work combining the structural diagnostics of S-PLUS-like analyses, especially $R_{\rm e}$, S\'ersic index,
 transition-galaxy classifications, and mass–size residuals, with the matched regular-group control framework used
 here would provide a direct test of whether the compact-group transformation is unique to compact configurations
 or is the high-density limit of more general group preprocessing.
@@ -1151,9 +1161,9 @@ The selection audit does not remove all catalogue-systematic uncertainty, and th
 
 \end{appendix}
 
-\begin{acknowledgements}
-We thank ... 
-\end{acknowledgements}
+% \begin{acknowledgements}
+% Add acknowledgements here before submission.
+% \end{acknowledgements}
 
 \bibliographystyle{aa}
 \bibliography{<<BIB_FILE>>}
