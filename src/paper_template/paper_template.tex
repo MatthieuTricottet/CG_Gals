@@ -379,26 +379,18 @@ Thus, BGG morphologies differ between \CG{} and \RG{}: \CG{} BGGs have a higher 
 \centering
 
 % 1 column for Sample + 2 columns per quantity
-\begin{tabular}{l*{<< quantities|length * 2 >>}{c}}
+\begin{tabular}{l*{<< qdefs|length * 2 >>}{c}}
 \toprule
 
 % ---------- Header row 1: quantity names ----------
 Sample
-<% for q in quantities %>
-  & \multicolumn{2}{c}{
-    <% if q == 'sSFR' %>
-      $\langle \log sSFR \rangle$
-    <% elif q == 'M_r' %>
-      $\langle M_r \rangle$
-    <% elif q == 'lgm' %>
-      $\langle \log(M_\star/M_\odot) \rangle$
-    <% endif %>
-  }
+<% for q in qdefs %>
+  & \multicolumn{2}{c}{<< q.label >>}
 <% endfor %>
 \\
 
 % ---------- Header row 2: Passive / Star-forming ----------
-<% for q in quantities %>
+<% for q in qdefs %>
   & Passive & Star-forming
 <% endfor %>
 \\
@@ -407,9 +399,9 @@ Sample
 % ---------- Data rows ----------
 <% for sample in samples %>
 << sample >>
-<% for q in quantities %>
-  & << r[sample ~ '_Passive_' ~ q ~ '_median'] >>
-  & << r[sample ~ '_Starforming_' ~ q ~ '_median'] >>
+<% for q in qdefs %>
+  & << r[sample ~ '_Passive_' ~ q.key ~ '_median'] >> $\pm$ << r[sample ~ '_Passive_' ~ q.key ~ '_median_err'] >>
+  & << r[sample ~ '_Starforming_' ~ q.key ~ '_median'] >> $\pm$ << r[sample ~ '_Starforming_' ~ q.key ~ '_median_err'] >>
 <% endfor %>
 \\
 <% endfor %>
@@ -418,7 +410,8 @@ Sample
 \end{tabular}
 
 \caption{Median values of galaxy properties for passive and star-forming populations in each sample.
-Uncertainties are estimated by bootstrapping (10\,000 iterations).}
+Uncertainties are estimated by bootstrapping (10\,000 iterations).
+}
 \label{tab:passive_starforming_medians}
 \end{table*}
 
@@ -427,16 +420,16 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
     \centering
 
     % One column for Sample + 2 columns per quantity
-    \begin{tabular}{l*{<< 2 * quantities|length >>}{c}}
+    \begin{tabular}{l*{<< 2 * qdefs|length >>}{c}}
 \toprule
  Sample &
-<% for q in quantities %>
-  \multicolumn{2}{c}{<< lu.formatted_label(q) >>}%
+<% for q in qdefs %>
+  \multicolumn{2}{c}{<< q.label >>}%
   <% if not loop.last %> & <% endif %>
 <% endfor %> \\
 % --- second header row: BGG fertility split ---
- &
-<% for q in quantities %>
+ BGG &
+<% for q in qdefs %>
   Passive & Star-forming%
   <% if not loop.last %> & <% endif %>
 <% endfor %> \\
@@ -444,9 +437,9 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
 
 <% for sample in samples %>
   << sample >> &
-  <% for q in quantities %>
-    << r[sample ~ "_BGG_Passive_" ~ q ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Passive_" ~ q ~ "_median_err"] >> &
-    << r[sample ~ "_BGG_Starforming_" ~ q ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Starforming_" ~ q ~ "_median_err"] >><% if not loop.last %> &<% endif %>
+  <% for q in qdefs %>
+    << r[sample ~ "_BGG_Passive_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Passive_" ~ q.key ~ "_median_err"] >> &
+    << r[sample ~ "_BGG_Starforming_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Starforming_" ~ q.key ~ "_median_err"] >><% if not loop.last %> &<% endif %>
   <% endfor %> \\
 <% endfor %>
 
@@ -462,16 +455,16 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
     \centering
 
     % One column for Sample + 2 columns per quantity
-    \begin{tabular}{l*{<< 2 * quantities|length >>}{c}}
+    \begin{tabular}{l*{<< 2 * qdefs|length >>}{c}}
 \toprule
  Sample &
-<% for q in quantities %>
-  \multicolumn{2}{c}{<< lu.formatted_label(q) >>}%
+<% for q in qdefs %>
+  \multicolumn{2}{c}{<< q.label >>}%
   <% if not loop.last %> & <% endif %>
 <% endfor %> \\
 % --- second header row: BGG fertility split ---
  &
-<% for q in quantities %>
+<% for q in qdefs %>
   Passive & Star-forming%
   <% if not loop.last %> & <% endif %>
 <% endfor %> \\
@@ -479,9 +472,9 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
 
 <% for sample in samples %>
   << sample >> &
-  <% for q in quantities %>
-    << r[sample ~ "_Sat_BGG_Passive_" ~ q ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Passive_" ~ q ~ "_median_err"] >> &
-    << r[sample ~ "_Sat_BGG_Starforming_" ~ q ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Starforming_" ~ q ~ "_median_err"] >><% if not loop.last %> &<% endif %>
+  <% for q in qdefs %>
+    << r[sample ~ "_Sat_BGG_Passive_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Passive_" ~ q.key ~ "_median_err"] >> &
+    << r[sample ~ "_Sat_BGG_Starforming_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Starforming_" ~ q.key ~ "_median_err"] >><% if not loop.last %> &<% endif %>
   <% endfor %> \\
 <% endfor %>
 
@@ -605,26 +598,21 @@ No significant monotonic trend is detected between sSFR and distance to the BGG 
 \end{figure}
 
 \subsection{Dominance}
-We split groups into two categories: dominated groups, for which the BGG luminosity fraction exceeds our threshold of <<DOMINATIION_CRITERIA>>, and non-dominated groups.
-Among the group properties explored in this work, the quantities showing at least one significant dominated/non-dominated difference are <% for quantity in r.get('Dom_significant_quantities', []) %><< lu.formatted_text_label(quantity) >><% if loop.revindex0 == 1 %> and <% elif not loop.last %>, <% else %>.<% endif %><% endfor %>
+<% set dom_summary = r.get('Dom_distribution_summary_by_sample', []) %>
+<% set dom_significant = dom_summary|selectattr('has_significant_difference')|list %>
+<% set dom_not_significant = dom_summary|rejectattr('has_significant_difference')|list %>
+<% set spiral_corr = r.get('Dom_spiral_fraction_significant_correlations', []) %>
+<% set c4c_size = spiral_corr|selectattr('sample', 'equalto', 'Control4C')|selectattr('quantity', 'equalto', 'size_Group_Bary_kpc')|list %>
+<% set c4c_vdisp = spiral_corr|selectattr('sample', 'equalto', 'Control4C')|selectattr('quantity', 'equalto', 'Vdisp')|list %>
+<% set c4c_lum = spiral_corr|selectattr('sample', 'equalto', 'Control4C')|selectattr('quantity', 'equalto', 'Lum_group')|list %>
+<% set c4b_corr = spiral_corr|selectattr('sample', 'equalto', 'Control4B')|list %>
+<% set cg4_dom_lum = spiral_corr|selectattr('sample', 'equalto', 'CG4')|selectattr('domination', 'equalto', 'Dominated')|selectattr('quantity', 'equalto', 'Lum_group')|list|first %>
+<% set cg4_nondom_voffset = spiral_corr|selectattr('sample', 'equalto', 'CG4')|selectattr('domination', 'equalto', 'Non-dominated')|selectattr('quantity', 'equalto', 'Voffset')|list|first %>
+We split groups into dominated systems, where the BGG contributes more than << (DOMINATIION_CRITERIA * 100)|round|int >>\% of the group luminosity, and non-dominated systems. This split does not produce a strong compact-group signal by itself: <% if dom_not_significant|length > 0 %><% if dom_not_significant|length == 1 -%><< dom_not_significant[0].sample_label >> shows no significant dominated/non-dominated difference after the Benjamini--Hochberg false-discovery-rate (FDR) correction<% else -%><% for item in dom_not_significant -%><< item.sample_label >><% if loop.revindex0 == 1 %> and <% elif not loop.last %>, <% else %> show no significant dominated/non-dominated difference after the Benjamini--Hochberg false-discovery-rate (FDR) correction<% endif %><% endfor %><% endif %><% else %>all samples show at least one corrected dominated/non-dominated difference<% endif %>. Here \(p_\mathrm{adj}\) denotes the FDR-adjusted p-value, and Cliff's \(\delta\) is a rank-based effect size ranging from -1 to 1.
 
-<% for item in r.get('Dom_distribution_summary_by_sample', []) %>
-<% if item.has_significant_difference %>
-In << item.sample_label >>, the strongest corrected dominated/non-dominated separation concerns << lu.formatted_text_label(item.quantity) >>:
-the dominated groups have a median value of << item.median_dom_fmt >><% if lu.formatted_unit(item.quantity) %> << lu.formatted_unit(item.quantity) >><% endif %>, compared to << item.median_nondom_fmt >><% if lu.formatted_unit(item.quantity) %> << lu.formatted_unit(item.quantity) >><% endif %> for the non-dominated ones
-(p$_\mathrm{adj}$ = << item.p_adj_fmt >>; Cliff's $\delta$ = << item.cliffs_delta_fmt >>).
-<% else %>
-In << item.sample_label >>, no dominated/non-dominated difference remains significant after the FDR correction.
-<% endif %>
-<% endfor %>
+Across the control and reference samples, the clearest binary separation is instead in group luminosity. Dominated systems have lower \(L_\mathrm{group}\) than their non-dominated counterparts: <% for item in dom_significant -%><% set p_adj_text = item.p_adj_fmt|replace('$', '') -%><< item.sample_label >> gives << item.median_dom_fmt >> versus << item.median_nondom_fmt >><% if lu.formatted_unit(item.quantity) %> << lu.formatted_unit(item.quantity) >><% endif %> (\(p_\mathrm{adj}<% if p_adj_text.startswith('<') %><< p_adj_text >><% else %>=<< p_adj_text >><% endif %>\), \(\delta=<< item.cliffs_delta_fmt >>\))<% if loop.revindex0 == 1 %>; and <% elif not loop.last %>; <% else %>.<% endif %><% endfor %> The negative \(\delta\) values mean that dominated groups tend to occupy the lower-luminosity side of each comparison.
 
-<% if r.get('Dom_spiral_fraction_significant_count', 0) > 0 %>
-The group spiral fraction also correlates significantly with the group-scale observables in a subset of the samples.
-<% for item in r.get('Dom_spiral_fraction_significant_correlations', []) %>
-For << item.sample_label >> << item.domination|lower >> groups, $S_\mathrm{frac}$ correlates with << lu.formatted_text_label(item.quantity) >>
-($\rho_\mathrm{S} = << item.rho_fmt >>$, << item.n_groups >> groups, p = << item.p_value_fmt >>).
-<% endfor %>
-<% endif %>
+The spiral-fraction correlations show a broader environmental pattern rather than a clean dominated/non-dominated dichotomy. <% if c4c_size|length > 0 %>The most coherent set appears in Control$_{4C}$, where \(S_\mathrm{frac}\) increases with \(\left\langle R_{ij}\right\rangle\) in both dominated and non-dominated groups (<% for item in c4c_size -%><% set p_text = item.p_value_fmt|replace('$', '') -%>\(\rho_\mathrm{S}=<< item.rho_fmt >>\), \(p<% if p_text.startswith('<') %><< p_text >><% else %>=<< p_text >><% endif %>\)<% if loop.revindex0 == 1 %> and <% endif %><% endfor %>)<% if c4c_vdisp|length > 0 or c4c_lum|length > 0 %>, while weaker negative trends are found with <% if c4c_vdisp|length > 0 %>\(\sigma_v\)<% if c4c_lum|length > 0 %> and <% endif %><% endif %><% if c4c_lum|length > 0 %>\(L_\mathrm{group}\)<% endif %><% endif %>.<% endif %> <% if c4b_corr|length > 0 %>Control$_{4B}$ contributes only weaker non-dominated-group correlations. <% endif %><% if cg4_dom_lum or cg4_nondom_voffset %>In CG$_4$, the significant trends occur in small subsets<% if cg4_dom_lum %>, with \(S_\mathrm{frac}\) decreasing with \(L_\mathrm{group}\) among dominated groups (\(\rho_\mathrm{S}=<< cg4_dom_lum.rho_fmt >>\), << cg4_dom_lum.n_groups >> groups)<% endif %><% if cg4_nondom_voffset %> and with \(\Delta V_\mathrm{BGG}/\sigma_v\) among non-dominated groups (\(\rho_\mathrm{S}=<< cg4_nondom_voffset.rho_fmt >>\), << cg4_nondom_voffset.n_groups >> groups)<% endif %>; we therefore treat these as supporting diagnostics rather than the main dominance result.<% endif %> The full distributional and correlation diagnostics are shown in Figs.~\ref{fig:Dom_vs_NonDom} and \ref{fig:Dom_vs_NonDom_XOR}.
 
 \begin{figure}
     \centering
@@ -654,11 +642,14 @@ Splitting the samples by both domination and BGG morphology does not reveal any 
 <% endif %>
 
 \section{Group dynamics}
-The crossing-time exploration quantifies the trends illustrated in Figs.~\ref{fig:tcr_vs_mvirial_over_l}--\ref{fig:tcr_mvirial_lgroup_3d}.
-<% for item in r.get('Tcross_global_correlations', []) %>
-For << item.y_label >>, the global Spearman coefficient with $\log t_\mathrm{cross}$ is
-$\rho_\mathrm{S} = << item.rho_fmt >>$ based on << item.n_groups >> groups (p = << item.p_value_fmt >>).
-<% endfor %>
+<% set tcross_corr = r.get('Tcross_global_correlations', []) %>
+<% set tcross_m_over_l = tcross_corr|selectattr('y_key', 'equalto', 'lg_M_virial_over_L')|list|first %>
+<% set tcross_mass = tcross_corr|selectattr('y_key', 'equalto', 'lg_M_virial')|list|first %>
+<% set tcross_lum = tcross_corr|selectattr('y_key', 'equalto', 'lg_Lum_group')|list|first %>
+<% set p_m_over_l = tcross_m_over_l.p_value_fmt|replace('$', '') if tcross_m_over_l else '' %>
+<% set p_mass = tcross_mass.p_value_fmt|replace('$', '') if tcross_mass else '' %>
+<% set p_lum = tcross_lum.p_value_fmt|replace('$', '') if tcross_lum else '' %>
+The crossing-time diagnostic mainly separates systems by dynamical scale rather than by luminosity alone. Shorter \(t_\mathrm{cross}\) systems have larger virial mass-to-light ratios and virial masses: the correlations with \(\log(\mathcal{M}_\mathrm{VT}/L_r)\) and \(\log(\mathcal{M}_\mathrm{VT})\) are \(\rho_\mathrm{S}=<< tcross_m_over_l.rho_fmt >>\) (\(p<% if p_m_over_l.startswith('<') %><< p_m_over_l >><% else %>=<< p_m_over_l >><% endif %>\)) and \(\rho_\mathrm{S}=<< tcross_mass.rho_fmt >>\) (\(p<% if p_mass.startswith('<') %><< p_mass >><% else %>=<< p_mass >><% endif %>\)), respectively, over << tcross_mass.n_groups >> groups. By contrast, the relation with total group luminosity is formally significant but very weak (\(\rho_\mathrm{S}=<< tcross_lum.rho_fmt >>\), \(p<% if p_lum.startswith('<') %><< p_lum >><% else %>=<< p_lum >><% endif %>\)). We therefore read \(t_\mathrm{cross}\) as a dynamical compactness indicator tied primarily to virial mass and mass-to-light ratio, with little independent leverage from \(L_\mathrm{group}\). Figures~\ref{fig:tcr_vs_mvirial_over_l}--\ref{fig:tcr_mvirial_lgroup_3d} show the corresponding projected and three-dimensional trends.
 
 \begin{figure}
     \centering
@@ -740,6 +731,8 @@ At the group level, <% set significant_tcross = r.Colour_robustness_cg4_tcross|s
 \subsection{BGG and satellite colours}
 
 The mean satellite colour varies with the BGG colour across the combined group sample: <% for item in r.Colour_bgg_satellite_overall_correlations -%>for << item.colour_label >>, $r_{\mathrm{P}}=<< item.pearson_r_fmt >>$ ($p_{\mathrm{Holm}}=<< item.pearson_p_holm_fmt >>$) and $\rho_{\mathrm{S}}=<< item.spearman_rho_fmt >>$ ($p_{\mathrm{Holm}}=<< item.spearman_p_holm_fmt >>$)<% if not loop.last %>; <% else %>.<% endif %><% endfor %> <% if r.Colour_bgg_satellite_significant_slope_count == 0 -%>After Holm correction, the BGG--satellite colour slope in CG$_4$ does not differ significantly from any control catalogue in any of the four colours.<% else -%>Significant CG$_4$ slope differences are found <% for item in r.Colour_bgg_satellite_significant_slope_tests -%>against << item.comparison_label >> in << item.colour_label >> ($p_{\mathrm{Holm}}=<< item.p_holm_fmt >>$)<% if not loop.last %>, <% else %>.<% endif %><% endfor %><% endif %> Figure~\ref{fig:bgg_satellite_colour} shows these group-level relations.
+
+Taken together, these results suggest a limited degree of BGG--satellite concordance. The direct evidence is clearest for colour: redder BGGs are associated with redder mean satellite populations. A similar tendency appears in the satellite-only split by BGG sSFR class in Table~\ref{tab:split_fertility_BGG_properties_Sat}, where satellites around passive BGGs have lower median sSFR than those around star-forming BGGs. The morphology signal is more restricted, appearing only in dominated control systems. We therefore treat concordance as a secondary pattern in the present analysis rather than as a separate population-level classification.
 
 \begin{figure*}
     \centering
@@ -1138,7 +1131,7 @@ After removing systems classified as split, we find that compact groups differ f
 
 The star-formation difference is more specific. CG$_4$ satellites are significantly less frequently star-forming than RG$_4$ satellites, while the star-forming fraction of BGGs does not differ significantly between the two samples. Moreover, among galaxies that remain star-forming, CG$_4$ galaxies do not show a significant offset from RG$_4$ galaxies relative to the star-forming main sequence.
 
-The colour analysis does not indicate a simple uniform reddening of compact-group galaxies. <% if r.Colour_robustness_summary.baseline_blue_offset -%>The pooled mass- and redshift-adjusted comparison supports a blue CG$_4$ satellite offset.<% else -%>The pooled mass- and redshift-adjusted comparison does not support a statistically robust blue CG$_4$ satellite offset.<% endif %> <% if r.Colour_robustness_summary.full_model_blue_offset -%>Negative coefficients appear after adding morphology and sSFR class, but<% else -%>The coefficients remain non-significant after adding morphology and sSFR class, and<% endif %> the result is <% if r.Colour_robustness_summary.control_dependent -%>sensitive to the choice of control catalogue<% else -%>consistent across the control catalogues<% endif %>. Neither the sSFR-class nor morphology splits isolate a significant effect among star-forming spirals. The radial residual trends instead indicate that outer CG$_4$ satellites are bluer than inner satellites, consistent with stronger processing toward the BGG. The BGG and mean satellite colours are correlated, but <% if r.Colour_bgg_satellite_significant_slope_count == 0 -%>the corresponding CG$_4$ relations do not differ significantly from those of the control catalogues.<% else -%>some of the corresponding CG$_4$ relations differ significantly from those of the control catalogues.<% endif %> <% if r.Colour_bgg_domination_significant_adjusted|length == 0 -%>Likewise, the apparent colour difference between dominated and non-dominated BGGs disappears after controlling for stellar mass.<% else -%>Some colour differences between dominated and non-dominated BGGs remain significant after controlling for stellar mass.<% endif %>
+The colour analysis does not indicate a simple uniform reddening of compact-group galaxies. <% if r.Colour_robustness_summary.baseline_blue_offset -%>The pooled mass- and redshift-adjusted comparison supports a blue CG$_4$ satellite offset.<% else -%>The pooled mass- and redshift-adjusted comparison does not support a statistically robust blue CG$_4$ satellite offset.<% endif %> <% if r.Colour_robustness_summary.full_model_blue_offset -%>Negative coefficients appear after adding morphology and sSFR class, but<% else -%>The coefficients remain non-significant after adding morphology and sSFR class, and<% endif %> the result is <% if r.Colour_robustness_summary.control_dependent -%>sensitive to the choice of control catalogue<% else -%>consistent across the control catalogues<% endif %>. Neither the sSFR-class nor morphology splits isolate a significant effect among star-forming spirals. The radial residual trends instead indicate that outer CG$_4$ satellites are bluer than inner satellites, consistent with stronger processing toward the BGG. The BGG and mean satellite colours are correlated, but <% if r.Colour_bgg_satellite_significant_slope_count == 0 -%>the corresponding CG$_4$ relations do not differ significantly from those of the control catalogues.<% else -%>some of the corresponding CG$_4$ relations differ significantly from those of the control catalogues.<% endif %> Together with the satellite-only split by BGG sSFR class and the domination-conditioned morphology result, this suggests limited BGG--satellite concordance rather than a separately established general concordance signal. <% if r.Colour_bgg_domination_significant_adjusted|length == 0 -%>Likewise, the apparent colour difference between dominated and non-dominated BGGs disappears after controlling for stellar mass.<% else -%>Some colour differences between dominated and non-dominated BGGs remain significant after controlling for stellar mass.<% endif %>
 
 The most robust compact-group signal is morphological rather than an instantaneous star-formation offset. After controlling for stellar mass, redshift, rank and available group-scale properties, CG$_4$ membership remains associated with enhanced elliptical and reduced spiral probabilities, whereas passive status and satellite star-forming status do not remain significant in the corresponding adjusted models. The matched-control analysis supports the same morphological excess and gives only borderline evidence for an enhanced passive fraction.
 

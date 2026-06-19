@@ -1,7 +1,9 @@
 #* Display graphs or not while running the code
 VERBOSE = True
 SHOW = False
-REBUILD_SAMPLE = True
+REBUILD_SAMPLE = False
+# Render the paper from existing JSON outputs without rerunning analyses.
+RENDER_PAPER_ONLY = True
 
 #* File system
 BASE_PATH = "/Users/matt/Astrophysics/CG_Gals/"

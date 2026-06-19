@@ -276,8 +276,14 @@ def run_explorations(sample):
 
 
 def main():
-    """Run the full analysis pipeline and regenerate the paper outputs."""
+    """Run the configured analysis pipeline and regenerate the paper outputs."""
     
+    if co.RENDER_PAPER_ONLY:
+        if co.VERBOSE:
+            print("Rendering paper from existing JSON outputs")
+        report.generate_report()
+        return
+
     report.initialise_json()
     sample = load_data()
 

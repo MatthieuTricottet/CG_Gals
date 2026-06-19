@@ -119,15 +119,15 @@ def generate_report():
     ctx["statuses"] = ["Passive", "Starforming"]
     ctx["morphs"] = ["Elliptical", "Spiral", "Uncertain"]
 
-    # >>> NEW: provide the BGG quantities list to the template <<<
+    # Quantities used in the passive/star-forming median tables.
     ctx["quantities"] = ["sSFR", "M_r", "lgm"]
     ctx["qdefs"] = [
-        {"key": "sSFR", "label": r"\langle \log sSFR \rangle"},
-        {"key": "M_r", "label": r"\langle M_r \rangle"},
+        {"key": "sSFR", "label": r"$\log_{10}(\mathrm{sSFR}\,[\mathrm{yr}^{-1}])$"},
+        {"key": "M_r", "label": r"$M_r$"},
         {
             "key": "lgm",
-            "label": r"\langle \log(M_\star/M_\odot) \rangle",
-        },  # <-- your requested label
+            "label": r"$\log(M_\star/M_\odot)$",
+        },
     ]
     # >>> NEW: pass the label-utils module so LaTeX can call lu.formatted_label(q) <<<
     ctx["lu"] = lu
