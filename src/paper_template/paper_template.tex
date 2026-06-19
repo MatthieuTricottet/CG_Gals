@@ -57,7 +57,7 @@
 
 \newcommand{\Quenched}{Quenched}
 \newcommand{\Passive}{Passive}
-\newcommand{\Starforming}{Star forming}
+\newcommand{\Starforming}{Star-forming}
 
 
 \newcommand{\CB}{Control\textsubscript{4B}}
@@ -145,7 +145,7 @@
 
    \maketitle
 
-<% macro p_from_fmt(fmt, label='p') -%><% set text = (fmt|string)|replace('$', '')|trim -%>\(<< label >><% if text.startswith('<') %><< text >><% else %>=<< text >><% endif %>\)<%- endmacro %>
+<% macro p_from_fmt(fmt, label='p') -%><% set text = (fmt|string)|replace('$', '')|replace('= <', '<')|replace('=<', '<')|trim -%>\(<< label >><% if text.startswith('<') %><< text >><% else %>=<< text >><% endif %>\)<%- endmacro %>
 <% macro pval_text(x, nd=3) -%><% if x is none -%>\(p\) unavailable<% elif x < 0.000001 -%>\(p<10^{-6}\)<% elif x < 0.001 -%>\(p=<< gu.latex_number(x, precision=2, math_mode=False) >>\)<% else -%>\(p=<< x|fmt(nd) >>\)<% endif -%><% endmacro %>
 <% macro pholm_text(x, nd=3) -%><% if x is none -%>\(p_{\rm Holm}\) unavailable<% elif x < 0.000001 -%>\(p_{\rm Holm}<10^{-6}\)<% elif x < 0.001 -%>\(p_{\rm Holm}=<< gu.latex_number(x, precision=2, math_mode=False) >>\)<% else -%>\(p_{\rm Holm}=<< x|fmt(nd) >>\)<% endif -%><% endmacro %>
 
@@ -268,7 +268,7 @@ For satellites, the corresponding p-values are
     \centering
     \begin{tabular}{llccc}
         \toprule
-            \textbf{Sample} & & \textbf{  <<sSFR_status[0]>>  } & \textbf{  <<sSFR_status[1]>>  } & \textbf{  <<sSFR_status[2]>>  } \\
+            \textbf{Sample} & & \textbf{\Quenched} & \textbf{\Passive} & \textbf{\Starforming} \\
             \CG & &  <<CG4_Gals_NQuenched>>  (<<CG4_Gals_NQuenched_pc>> \%) &  <<CG4_Gals_NPassive>>  (<<CG4_Gals_NPassive_pc>> \%)&  <<CG4_Gals_NStarforming>>  (<<CG4_Gals_NStarforming_pc>> \%) \\
              & \emph{BGG} &  \emph{<<CG4_BGG_NQuenched>>  (<<CG4_BGG_NQuenched_pc>> \%)} &  \emph{<<CG4_BGG_NPassive>>  (<<CG4_BGG_NPassive_pc>> \%)} &  \emph{<<CG4_BGG_NStarforming>>  (<<CG4_BGG_NStarforming_pc>> \%)} \\
              & \emph{Satellites} &  \emph{<<CG4_Sat_NQuenched>>  (<<CG4_Sat_NQuenched_pc>> \%)} &  \emph{<<CG4_Sat_NPassive>>  (<<CG4_Sat_NPassive_pc>> \%)} &  \emph{<<CG4_Sat_NStarforming>>  (<<CG4_Sat_NStarforming_pc>> \%)} \\
@@ -386,6 +386,14 @@ The p-values obtained with <<BGG_morph_tests>> are
 Thus, BGG morphologies differ between \CG{} and \RG{}: \CG{} BGGs have a higher elliptical fraction than \RG{} BGGs.
 
 \subsection{Population medians by sSFR class}
+
+Tables~\ref{tab:medians_sSFR}, \ref{tab:medians_BGG_sSFR}, and
+\ref{tab:medians_sat_BGG_sSFR} summarize the typical stellar masses,
+absolute magnitudes, and sSFRs of passive and star-forming galaxies,
+including splits by the sSFR class of the BGG. These medians are
+descriptive rather than causal: they show that star-formation class is
+entangled with stellar mass, luminosity, and galaxy rank, and therefore
+motivate the adjusted models used below.
 
 \begin{table*}
 \centering
@@ -517,7 +525,7 @@ The median main-sequence residual of CG4 galaxies is:
     .replace("pval_MSresiduals_", "")
     .replace("_Gals", "") %>
 
-\item <% if ci16 > 0 or ci84 < 0 %>significantly different<% else %>not significantly different<% endif %> from that of << name >>,
+\item <% if (ci16 > 0 or ci84 < 0) and p < 0.05 %>significantly different from<% elif (ci16 > 0 or ci84 < 0) and p < 0.10 %>marginally different from<% elif ci16 > 0 or ci84 < 0 %>offset from<% else %>not significantly different from<% endif %> that of << name >>,
 with a median offset of
 $\Delta = << "%.3f"|format(delta) >>$
 ($<< "%.3f"|format(ci16) >> \le \Delta \le << "%.3f"|format(ci84) >>$, bootstrap),
@@ -535,7 +543,7 @@ corresponding to << pval_text(p) >>.
 \end{figure}
 
 <% if r.get('Main_sequence_offset_by_sample_significant', []) %>
-A direct rank-sum comparison of the star-forming main-sequence offsets only identifies significant differences between \CG{} and
+A direct rank-sum comparison of the star-forming main-sequence offsets only highlights a significant difference between \CG{} and
 <% for item in r.get('Main_sequence_offset_by_sample_significant', []) %>
 << item.sample_label >>, whose median offset is << item.median_ms_offset_fmt >> with respect to the fitted sequence
 (<< p_from_fmt(item.p_value_fmt) >>)<% if not loop.last %>; <% else %>.<% endif %>
@@ -617,7 +625,7 @@ The colour-matched subset is <% if r.Colour_robustness_matching_biased -%>not re
 
 The raw catalogue colour--mass fits indicate that CG$_4$ does not simply follow the same colour--mass relation as every comparison sample: <% if r.Colour_mass_significant_global_tests|length > 0 -%>common slopes are rejected in << r.Colour_mass_significant_global_tests|length >> of the four colours<% else -%>common slopes are not rejected in the four colours<% endif %><% if r.Colour_mass_significant_pairwise_tests|length > 0 -%>, with the significant directional slope differences concentrated in the bluer colours and dependent on the adopted comparison catalogue<% endif %>. In the satellite-only comparison, the fitted offsets and slopes likewise depend on the control definition. These tests motivate the robustness analysis rather than establishing a stand-alone compact-group colour effect.
 
-We therefore refit the satellite colours with cluster-robust standard errors, using catalogue-qualified group identifiers. In the pooled comparison adjusted only for stellar mass and redshift, <% if r.Colour_robustness_significant_baseline_blue|length == 0 -%>none of the four CG$_4$ coefficients is significantly negative after Holm correction<% else -%>CG$_4$ satellites are significantly bluer in <% for item in r.Colour_robustness_significant_baseline_blue -%><< item.colour_label >><% if not loop.last %>, <% else %><% endif %><% endfor %><% endif %>. <% if r.Colour_robustness_significant_full_blue|length > 0 -%>After additionally controlling for morphology and sSFR class, negative coefficients appear in <% for item in r.Colour_robustness_significant_full_blue -%><< item.colour_label >> ($\Delta=<< item.is_CG4_coefficient_fmt >>$ mag, << p_from_fmt(item.p_holm_fmt, 'p_{\rm Holm}') >>)<% if not loop.last %> and <% else %>.<% endif %><% endfor %><% else -%>Adding morphology and sSFR class does not reveal a significant negative coefficient.<% endif %> However, these adjusted coefficients are <% if r.Colour_robustness_summary.control_dependent -%>control-sample dependent<% else -%>consistent across the control catalogues<% endif %>, and <% if r.Colour_robustness_significant_ssfr_splits|length == 0 and r.Colour_robustness_significant_morphology_splits|length == 0 -%>they do not persist within the sSFR or morphology splits<% else -%>their split-sample behaviour is not uniform<% endif %>. The data therefore do not localize the colour effect to the star-forming spiral population expected for a simple interaction-triggered star-formation scenario.
+We therefore refit the satellite colours with cluster-robust standard errors, using catalogue-qualified group identifiers. In the pooled comparison adjusted only for stellar mass and redshift, <% if r.Colour_robustness_significant_baseline_blue|length == 0 -%>none of the four CG$_4$ coefficients is significantly negative after Holm correction<% else -%>CG$_4$ satellites are significantly bluer in <% for item in r.Colour_robustness_significant_baseline_blue -%><< item.colour_label >><% if not loop.last %>, <% else %><% endif %><% endfor %><% endif %>. <% if r.Colour_robustness_significant_full_blue|length > 0 -%>After additionally controlling for morphology and sSFR class, negative coefficients appear in <% for item in r.Colour_robustness_significant_full_blue -%><< item.colour_label >> ($\Delta=<< item.is_CG4_coefficient_fmt >>$ mag, Holm-adjusted << p_from_fmt(item.p_holm_fmt) >>)<% if not loop.last %> and <% else %>.<% endif %><% endfor %><% else -%>Adding morphology and sSFR class does not reveal a significant negative coefficient.<% endif %> However, these adjusted coefficients are <% if r.Colour_robustness_summary.control_dependent -%>control-sample dependent<% else -%>consistent across the control catalogues<% endif %>, and <% if r.Colour_robustness_significant_ssfr_splits|length == 0 and r.Colour_robustness_significant_morphology_splits|length == 0 -%>they do not persist within the sSFR or morphology splits<% else -%>their split-sample behaviour is not uniform<% endif %>. The data therefore do not localize the colour effect to the star-forming spiral population expected for a simple interaction-triggered star-formation scenario.
 
 Residual colour trends with projected BGG-centric distance are consistent with stronger processing near the group centre and a less processed outer population, but these trends use the same biased colour subset and are treated as exploratory. The group-level BGG--satellite colour concordance is similarly secondary: redder BGGs tend to have redder mean satellite populations in the combined group sample, but the CG$_4$ slope is not a robustly distinct population-level signature. Detailed colour--mass, satellite, radial, BGG--satellite, and domination diagnostics are shown in Appendix Figs.~\ref{fig:color_mass}--\ref{fig:bgg_colour_domination}. Figure~\ref{fig:colour_robustness_coefficients} summarizes the model and control-sample dependence that motivates our interpretation: the present data do not establish a robust global blue or red offset for CG$_4$ satellites.
 
@@ -1075,6 +1083,7 @@ This appendix collects the secondary diagnostic figures referenced in the main t
      \label{fig:tcr_mvirial_lgroup_3d}
 \end{figure}
 
+\clearpage
 \subsection{Colour diagnostics}
 
 \begin{figure*}

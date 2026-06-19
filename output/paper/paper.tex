@@ -57,7 +57,7 @@
 
 \newcommand{\Quenched}{Quenched}
 \newcommand{\Passive}{Passive}
-\newcommand{\Starforming}{Star forming}
+\newcommand{\Starforming}{Star-forming}
 
 
 \newcommand{\CB}{Control\textsubscript{4B}}
@@ -292,7 +292,7 @@ For satellites, the corresponding p-values are
     \centering
     \begin{tabular}{llccc}
         \toprule
-            \textbf{Sample} & & \textbf{  Quenched  } & \textbf{  Passive  } & \textbf{  Starforming  } \\
+            \textbf{Sample} & & \textbf{\Quenched} & \textbf{\Passive} & \textbf{\Starforming} \\
             \CG & &  18  (7.3 \%) &  146  (58.9 \%)&  84  (33.9 \%) \\
              & \emph{BGG} &  \emph{6  (9.7 \%)} &  \emph{45  (72.6 \%)} &  \emph{11  (17.7 \%)} \\
              & \emph{Satellites} &  \emph{12  (6.5 \%)} &  \emph{101  (54.3 \%)} &  \emph{73  (39.2 \%)} \\
@@ -411,6 +411,14 @@ Thus, BGG morphologies differ between \CG{} and \RG{}: \CG{} BGGs have a higher 
 
 \subsection{Population medians by sSFR class}
 
+Tables~\ref{tab:medians_sSFR}, \ref{tab:medians_BGG_sSFR}, and
+\ref{tab:medians_sat_BGG_sSFR} summarize the typical stellar masses,
+absolute magnitudes, and sSFRs of passive and star-forming galaxies,
+including splits by the sSFR class of the BGG. These medians are
+descriptive rather than causal: they show that star-formation class is
+entangled with stellar mass, luminosity, and galaxy rank, and therefore
+motivate the adjusted models used below.
+
 \begin{table*}
 \centering
 
@@ -487,9 +495,9 @@ RG4
   & $-10.16$ $\pm$ 0.07
 
   & $-21.11$ $\pm$ 0.25
-  & $-20.32$ $\pm$ 0.12
+  & $-20.32$ $\pm$ 0.13
 
-  & $10.62$ $\pm$ 0.08
+  & $10.62$ $\pm$ 0.09
   & $9.97$ $\pm$ 0.09
 
 \\
@@ -579,10 +587,10 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).
     $-10.58$ $\pm$ 0.16 &
   
     $-20.69$ $\pm$ 0.14 &
-    $-20.74$ $\pm$ 0.28 &
+    $-20.74$ $\pm$ 0.27 &
   
     $10.32$ $\pm$ 0.07 &
-    $10.19$ $\pm$ 0.12
+    $10.19$ $\pm$ 0.13
    \\
 
 
@@ -628,14 +636,14 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
 
   CG4 &
   
-    $-11.23$ $\pm$ 0.16 &
+    $-11.23$ $\pm$ 0.17 &
     $-10.92$ $\pm$ 0.48 &
   
     $-20.45$ $\pm$ 0.13 &
     $-20.34$ $\pm$ 0.18 &
   
     $10.22$ $\pm$ 0.05 &
-    $10.09$ $\pm$ 0.07
+    $10.09$ $\pm$ 0.06
    \\
 
   Control4B &
@@ -644,7 +652,7 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
     $-10.91$ $\pm$ 0.13 &
   
     $-20.9$ $\pm$ 0.03 &
-    $-20.75$ $\pm$ 0.06 &
+    $-20.75$ $\pm$ 0.05 &
   
     $10.43$ $\pm$ 0.02 &
     $10.3$ $\pm$ 0.03
@@ -656,7 +664,7 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations).}
     $-10.6$ $\pm$ 0.07 &
   
     $-19.8$ $\pm$ 0.04 &
-    $-20.02$ $\pm$ 0.10 &
+    $-20.02$ $\pm$ 0.09 &
   
     $9.91$ $\pm$ 0.02 &
     $9.89$ $\pm$ 0.07
@@ -748,7 +756,7 @@ The median main-sequence residual of CG4 galaxies is:
 
 
 
-\item significantly different from that of Control4B,
+\item marginally different from that of Control4B,
 with a median offset of
 $\Delta = 0.056$
 ($0.029 \le \Delta \le 0.099$, bootstrap),
@@ -864,7 +872,7 @@ corresponding to \(p=0.535\).
 \end{figure}
 
 
-A direct rank-sum comparison of the star-forming main-sequence offsets only identifies significant differences between \CG{} and
+A direct rank-sum comparison of the star-forming main-sequence offsets only highlights a significant difference between \CG{} and
 
 Control$_{4C}$, whose median offset is -0.060 with respect to the fitted sequence
 (\(p=0.03\)).
@@ -951,7 +959,7 @@ The colour-matched subset is not representative of the full galaxy catalogues: m
 
 The raw catalogue colour--mass fits indicate that CG$_4$ does not simply follow the same colour--mass relation as every comparison sample: common slopes are rejected in 4 of the four colours, with the significant directional slope differences concentrated in the bluer colours and dependent on the adopted comparison catalogue. In the satellite-only comparison, the fitted offsets and slopes likewise depend on the control definition. These tests motivate the robustness analysis rather than establishing a stand-alone compact-group colour effect.
 
-We therefore refit the satellite colours with cluster-robust standard errors, using catalogue-qualified group identifiers. In the pooled comparison adjusted only for stellar mass and redshift, none of the four CG$_4$ coefficients is significantly negative after Holm correction. After additionally controlling for morphology and sSFR class, negative coefficients appear in $(u-r)$ ($\Delta=-0.127$ mag, \(p_{m Holm}=0.0177\)) and $(u-g)$ ($\Delta=-0.101$ mag, \(p_{m Holm}=0.0271\)). However, these adjusted coefficients are control-sample dependent, and they do not persist within the sSFR or morphology splits. The data therefore do not localize the colour effect to the star-forming spiral population expected for a simple interaction-triggered star-formation scenario.
+We therefore refit the satellite colours with cluster-robust standard errors, using catalogue-qualified group identifiers. In the pooled comparison adjusted only for stellar mass and redshift, none of the four CG$_4$ coefficients is significantly negative after Holm correction. After additionally controlling for morphology and sSFR class, negative coefficients appear in $(u-r)$ ($\Delta=-0.127$ mag, Holm-adjusted \(p=0.0177\)) and $(u-g)$ ($\Delta=-0.101$ mag, Holm-adjusted \(p=0.0271\)). However, these adjusted coefficients are control-sample dependent, and they do not persist within the sSFR or morphology splits. The data therefore do not localize the colour effect to the star-forming spiral population expected for a simple interaction-triggered star-formation scenario.
 
 Residual colour trends with projected BGG-centric distance are consistent with stronger processing near the group centre and a less processed outer population, but these trends use the same biased colour subset and are treated as exploratory. The group-level BGG--satellite colour concordance is similarly secondary: redder BGGs tend to have redder mean satellite populations in the combined group sample, but the CG$_4$ slope is not a robustly distinct population-level signature. Detailed colour--mass, satellite, radial, BGG--satellite, and domination diagnostics are shown in Appendix Figs.~\ref{fig:color_mass}--\ref{fig:bgg_colour_domination}. Figure~\ref{fig:colour_robustness_coefficients} summarizes the model and control-sample dependence that motivates our interpretation: the present data do not establish a robust global blue or red offset for CG$_4$ satellites.
 
@@ -1420,6 +1428,7 @@ This appendix collects the secondary diagnostic figures referenced in the main t
      \label{fig:tcr_mvirial_lgroup_3d}
 \end{figure}
 
+\clearpage
 \subsection{Colour diagnostics}
 
 \begin{figure*}
