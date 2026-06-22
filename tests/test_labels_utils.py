@@ -20,4 +20,5 @@ def test_display_label_normalizes_publication_labels():
     assert lu.display_label("Starforming") == "Star-forming"
     assert lu.display_label("Star forming") == "Star-forming"
     assert lu.display_label("Predom") == "Predominant"
+    assert lu.display_label("Control4C_Gals") == "Control4C"
     assert lu.display_label("Passive") == "Passive"

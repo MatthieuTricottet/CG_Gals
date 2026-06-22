@@ -13,6 +13,7 @@ try:
     from extended_stats import safe_json
     from fossilness import run_fossilness_analysis
     from matched_controls import run_matched_control_analysis
+    from morphology_robustness import run_morphology_robustness
     from phase_space_segregation import run_phase_space_segregation_analysis
     from recent_quenching import run_recent_quenching_analysis
     from selection_diagnostics import run_selection_diagnostics
@@ -26,6 +27,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from .extended_stats import safe_json
     from .fossilness import run_fossilness_analysis
     from .matched_controls import run_matched_control_analysis
+    from .morphology_robustness import run_morphology_robustness
     from .phase_space_segregation import run_phase_space_segregation_analysis
     from .recent_quenching import run_recent_quenching_analysis
     from .selection_diagnostics import run_selection_diagnostics
@@ -50,6 +52,7 @@ def run_extended_specialness(sample, output_dir: str | None = None):
     analyses = [
         ("specialness_models", fit_logistic_specialness_models),
         ("matched_controls", run_matched_control_analysis),
+        ("morphology_robustness", run_morphology_robustness),
         ("phase_space_segregation", run_phase_space_segregation_analysis),
         ("fossilness", run_fossilness_analysis),
         ("recent_quenching", run_recent_quenching_analysis),
@@ -91,6 +94,20 @@ def run_extended_specialness(sample, output_dir: str | None = None):
         ),
     }
     results["phase_space"] = results.get("phase_space_segregation", {})
+    selection = results.get("selection_diagnostics", {})
+    matched = results.get("matched_controls", {})
+    if (
+        isinstance(selection, dict)
+        and isinstance(matched, dict)
+        and selection.get("status") == "ok"
+        and matched.get("status") == "ok"
+    ):
+        audit = selection.get("sample_size_audit", {})
+        for sample_name, count in matched.get("matched_counts_by_sample", {}).items():
+            if sample_name in audit:
+                audit[sample_name]["matched_N"] = count
+        selection["sample_size_audit"] = audit
+        results["sample_size_audit"] = audit
     results["skipped_analyses"] = [
         name for name, _ in analyses if results[name].get("status") == "skipped"
     ]

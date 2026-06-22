@@ -164,6 +164,10 @@ def display_label(value):
         "Starforming": "Star-forming",
         "Star forming": "Star-forming",
         "Predom": "Predominant",
+        "CG4_Gals": "CG4",
+        "Control4B_Gals": "Control4B",
+        "Control4C_Gals": "Control4C",
+        "RG4_Gals": "RG4",
     }
     return switcher.get(value, value)
 

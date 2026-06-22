@@ -240,6 +240,19 @@ def run_matched_control_analysis(
         "n_cg4_matched": int(len(treated)),
         "n_control_matched": int(len(control)),
         "n_control_unique": int(len(set(control_indices))),
+        "matched_counts_by_sample": {
+            key: int(value)
+            for key, value in (
+                frame.loc[treated_indices + control_indices, "sample"]
+                .value_counts()
+                .sort_index()
+                .items()
+            )
+        },
+        "matched_control_counts_by_sample": {
+            key: int(value)
+            for key, value in control["sample"].value_counts().sort_index().items()
+        },
         "median_match_distance": float(np.median([pair["distance"] for pair in pairs])),
         "balance": {"before": before, "after": after},
         "max_abs_smd_before": max(

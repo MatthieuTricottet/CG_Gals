@@ -273,13 +273,14 @@ def bootstrap_median_difference(
     y: np.ndarray,
     n_boot: int = 10000,
     random_state: int | None = None,
+    return_ci95: bool = False,
 ):
     """
     Bootstrap the difference of medians: median(x) - median(y).
 
     Returns:
         delta_med        : observed median difference
-        ci_16, ci_84     : 68% confidence interval
+        ci_16, ci_84     : central 68% bootstrap interval
         p_value          : two-sided bootstrap p-value
     """
     rng = np.random.default_rng(random_state)
@@ -296,6 +297,7 @@ def bootstrap_median_difference(
         boot[i] = np.median(xb) - np.median(yb)
 
     ci_16, ci_84 = np.percentile(boot, [16, 84])
+    ci_95_low, ci_95_high = np.percentile(boot, [2.5, 97.5])
 
     # two-sided p-value: probability of crossing zero
     p_value = 2 * min(
@@ -303,6 +305,8 @@ def bootstrap_median_difference(
         np.mean(boot >= 0),
     )
 
+    if return_ci95:
+        return delta_obs, ci_16, ci_84, p_value, ci_95_low, ci_95_high
     return delta_obs, ci_16, ci_84, p_value
 
 
@@ -566,4 +570,3 @@ def fit_gmm(original_data, labels=['Star-forming Galaxies', 'Green Valley Galaxi
         'covs_orig': covs_orig,
         'weights_orig': weights_orig
     }
-

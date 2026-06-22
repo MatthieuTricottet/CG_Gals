@@ -24,16 +24,20 @@ MODEL_SPECS = {
     "passive_satellites": ("passive", ("is_satellite", 1)),
     "starforming_satellites": ("starforming", ("is_satellite", 1)),
     "elliptical_all": ("elliptical", None),
+    "elliptical_satellites": ("elliptical", ("is_satellite", 1)),
     "elliptical_bgg": ("elliptical", ("is_bgg", 1)),
     "spiral_all": ("spiral", None),
+    "spiral_satellites": ("spiral", ("is_satellite", 1)),
 }
 LABELS = {
     "passive_all": "Passive, all",
     "passive_satellites": "Passive, satellites",
     "starforming_satellites": "Star-forming, satellites",
     "elliptical_all": "Elliptical, all",
+    "elliptical_satellites": "Elliptical, satellites",
     "elliptical_bgg": "Elliptical, BGG",
     "spiral_all": "Spiral, all",
+    "spiral_satellites": "Spiral, satellites",
 }
 
 

@@ -8,6 +8,7 @@ from src.agn_environment import run_agn_environment_analysis
 from src.extended_stats import safe_json
 from src.fossilness import run_fossilness_analysis
 from src.matched_controls import run_matched_control_analysis
+from src.morphology_robustness import run_morphology_robustness
 from src.phase_space import run_phase_space_analysis
 from src.recent_quenching import run_recent_quenching_analysis
 from src.selection_diagnostics import run_selection_diagnostics
@@ -110,6 +111,7 @@ def test_all_modules_skip_gracefully_with_missing_columns():
         run_agn_environment_analysis,
         run_tidal_indices_analysis,
         run_selection_diagnostics,
+        run_morphology_robustness,
     ]
     for function in functions:
         assert function(empty)["status"] == "skipped"
@@ -135,6 +137,7 @@ def test_all_modules_execute_on_synthetic_data_and_create_figures(tmp_path):
         "matched_controls": run_matched_control_analysis(frame, tmp_path, n_boot=100),
         "phase_space": run_phase_space_analysis(frame, tmp_path),
         "fossilness": run_fossilness_analysis(frame, tmp_path),
+        "morphology_robustness": run_morphology_robustness(frame, tmp_path),
         "recent_quenching": run_recent_quenching_analysis(frame, tmp_path),
         "agn_environment": run_agn_environment_analysis(frame, tmp_path),
         "tidal_indices": run_tidal_indices_analysis(frame, tmp_path),
@@ -152,6 +155,7 @@ def test_all_modules_execute_on_synthetic_data_and_create_figures(tmp_path):
         "phase_space_satellite_passive_fraction_projected_phase_space.pdf",
         "phase_space_mass_redshift_balance.pdf",
         "fig_magnitude_gap_comparison.pdf",
+        "fig_morphology_crowding_robustness.pdf",
         "fig_recent_quenching_diagnostics.pdf",
         "fig_agn_fraction_by_sample.pdf",
         "fig_tidal_index_outcomes.pdf",

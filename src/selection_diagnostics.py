@@ -53,6 +53,14 @@ GROUP_SCALE_AUDIT_COLUMNS = [
     "dominance",
 ]
 
+MATCHING_AUDIT_COLUMNS = [
+    "logMstar",
+    "z_numeric",
+    "rank",
+    "log_group_luminosity",
+    "velocity_dispersion",
+]
+
 
 def _nearest_angular(frame):
     values = np.full(len(frame), np.nan)
@@ -164,6 +172,66 @@ def _group_scale_audit(frame):
     }
 
 
+def _sample_size_audit(frame):
+    """Return per-sample denominators for the main diagnostic families."""
+
+    rows = {}
+    colour_columns = [
+        column
+        for column in ["u_minus_r", "u_minus_g", "g_minus_r", "r_minus_i"]
+        if column in frame
+    ]
+    bpt_columns = [column for column in ["log_NII_Ha", "log_OIII_Hb"] if column in frame]
+    matching_columns = [column for column in MATCHING_AUDIT_COLUMNS if column in frame]
+
+    for sample_name, part in frame.groupby("sample", observed=True):
+        if "morphology" in part:
+            morphology_table = int(part["morphology"].notna().sum())
+        elif {"elliptical", "spiral"}.issubset(part.columns):
+            morphology_table = int((part["elliptical"].notna() | part["spiral"].notna()).sum())
+        else:
+            morphology_table = 0
+
+        row = {
+            "total_galaxies": int(len(part)),
+            "sSFR_table_N": int(part["passive"].notna().sum()) if "passive" in part else 0,
+            "morphology_table_N": morphology_table,
+            "secure_morphology_N": (
+                int((part["elliptical"].notna() | part["spiral"].notna()).sum())
+                if {"elliptical", "spiral"}.issubset(part.columns)
+                else 0
+            ),
+            "stellar_mass_N": int(part["logMstar"].notna().sum()) if "logMstar" in part else 0,
+            "all_colours_N": (
+                int(part[colour_columns].notna().all(axis=1).sum())
+                if colour_columns
+                else 0
+            ),
+            "satellites_BGG_distance_N": (
+                int(
+                    (
+                        part.get("is_satellite", 0).eq(1)
+                        & part.get("dist2BGG_kpc", np.nan).notna()
+                    ).sum()
+                )
+                if {"is_satellite", "dist2BGG_kpc"}.issubset(part.columns)
+                else 0
+            ),
+            "matching_complete_case_N": (
+                int(part[matching_columns].replace([np.inf, -np.inf], np.nan).notna().all(axis=1).sum())
+                if matching_columns
+                else 0
+            ),
+            "BPT_AGN_classifiable_N": (
+                int(part[bpt_columns].replace([np.inf, -np.inf], np.nan).notna().all(axis=1).sum())
+                if bpt_columns
+                else 0
+            ),
+        }
+        rows[sample_name] = row
+    return rows
+
+
 def run_selection_diagnostics(data, output_dir: str | None = None):
     """Quantify availability, colour-selection, and close-neighbour differences."""
 
@@ -266,6 +334,7 @@ def run_selection_diagnostics(data, output_dir: str | None = None):
     result = {
         "status": "ok",
         "availability_by_sample": availability,
+        "sample_size_audit": _sample_size_audit(frame),
         "group_scale_column_audit": _group_scale_audit(frame),
         "missingness_comparisons": missingness,
         "matched_unmatched_comparisons": matched_unmatched,

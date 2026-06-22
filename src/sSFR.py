@@ -1736,7 +1736,7 @@ def plot_main_sequence_residuals(
             linewidth=linewidth,
             color=colors[i % len(colors)],
             alpha=alpha,
-            label=str(key),
+            label=lu.display_label(str(key)),
         )
 
         ax.axvline(
@@ -1796,6 +1796,8 @@ def compare_main_sequence_residuals_bootstrap(sample):
             - 'Δmedian': Difference in medians (CG4 - other)
             - 'CI_16': 16th percentile of the bootstrap distribution
             - 'CI_84': 84th percentile of the bootstrap distribution
+            - 'CI_95_low': 2.5th percentile of the bootstrap distribution
+            - 'CI_95_high': 97.5th percentile of the bootstrap distribution
             - 'p_value': p-value for the hypothesis that CG4 median is greater than other sample median
     """
 
@@ -1814,12 +1816,19 @@ def compare_main_sequence_residuals_bootstrap(sample):
         other = df["MS_res"].to_numpy()
         other = other[np.isfinite(other)]
 
-        delta, lo, hi, p = su.bootstrap_median_difference(cg4, other)
+        delta, lo, hi, p, lo95, hi95 = su.bootstrap_median_difference(
+            cg4, other, random_state=20260612, return_ci95=True
+        )
 
         results[key] = {
             "Δmedian": delta,
             "CI_16": lo,
             "CI_84": hi,
+            "CI_95_low": lo95,
+            "CI_95_high": hi95,
+            "interval_16_84_level": 0.68,
+            "delta_sign_convention": "median(CG4) - median(control)",
+            "p_value_method": "two-sided bootstrap sign probability for the median difference",
             "p_value": p,
         }
 

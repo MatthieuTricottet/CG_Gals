@@ -1,4 +1,4 @@
-\begin{thebibliography}{27}
+\begin{thebibliography}{31}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Alpaslan} {et~al.}(2015){Alpaslan}, {Driver}, {Robotham},
@@ -16,6 +16,11 @@
 
 \bibitem[{{Barnes}(1989)}]{Barnes89}
 {Barnes}, J.~E. 1989, \nat, 338, 123
+
+\bibitem[{{Brinchmann} {et~al.}(2004){Brinchmann}, {Charlot}, {White},
+  {Tremonti}, {Kauffmann}, {Heckman}, \& {Brinkmann}}]{Brinchmann+04}
+{Brinchmann}, J., {Charlot}, S., {White}, S.~D.~M., {et~al.} 2004, \mnras, 351,
+  1151
 
 \bibitem[{{D{\'\i}az-Gim{\'e}nez} \& {Mamon}(2010)}]{DiazGimenez&Mamon10}
 {D{\'\i}az-Gim{\'e}nez}, E. \& {Mamon}, G.~A. 2010, \mnras, 409, 1227
@@ -48,6 +53,19 @@ Hahn, C., Starkenburg, T.~K., Choi, E., {et~al.} 2019, Astrophys. J., 872
   Charlot, White, Reichard, \& Brinkmann}]{Kauffmann+03a}
 Kauffmann, G., Heckman, T.~M., Tremonti, C., {et~al.} 2003, Monthly Notices of
   the Royal Astronomical Society, 346, 1055
+
+\bibitem[{{Kauffmann} {et~al.}(2003){Kauffmann}, {Heckman}, {White}, {Charlot},
+  {Tremonti}, {Brinchmann}, {Bruzual}, {Peng}, {Seibert}, {Bernardi},
+  {Blanton}, {Brinkmann}, {Castander}, {Cs{\'a}bai}, {Fukugita}, {Ivezic},
+  {Munn}, {Nichol}, {Padmanabhan}, {Thakar}, {Weinberg}, \&
+  {York}}]{Kauffmann+03b}
+{Kauffmann}, G., {Heckman}, T.~M., {White}, S.~D.~M., {et~al.} 2003, \mnras,
+  341, 33
+
+\bibitem[{{Kewley} {et~al.}(2001){Kewley}, {Dopita}, {Sutherland}, {Heisler},
+  \& {Trevena}}]{Kewley+01}
+{Kewley}, L.~J., {Dopita}, M.~A., {Sutherland}, R.~S., {Heisler}, C.~A., \&
+  {Trevena}, J. 2001, \apj, 556, 121
 
 \bibitem[{{Lim} {et~al.}(2017){Lim}, {Mo}, {Lu}, {Wang}, \& {Yang}}]{Lim+17}
 {Lim}, S.~H., {Mo}, H.~J., {Lu}, Y., {Wang}, H., \& {Yang}, X. 2017, \mnras,
@@ -96,6 +114,54 @@ Montaguth, G.~P., Torres-Flores, S., Monachesi, A., {et~al.} 2023, Monthly
 
 \bibitem[{{Oman} \& {Hudson}(2016)}]{Oman&Hudson16}
 {Oman}, K.~A. \& {Hudson}, M.~J. 2016, \mnras, 463, 3083
+
+\bibitem[{{Planck Collaboration} {et~al.}(2016){Planck Collaboration}, {Ade},
+  {Aghanim}, {Arnaud}, {Ashdown}, {Aumont}, {Baccigalupi}, {Banday},
+  {Barreiro}, {Bartlett}, {Bartolo}, {Battaner}, {Battye}, {Benabed},
+  {Beno{\^\i}t}, {Benoit-L{\'e}vy}, {Bernard}, {Bersanelli}, {Bielewicz},
+  {Bock}, {Bonaldi}, {Bonavera}, {Bond}, {Borrill}, {Bouchet}, {Boulanger},
+  {Bucher}, {Burigana}, {Butler}, {Calabrese}, {Cardoso}, {Catalano},
+  {Challinor}, {Chamballu}, {Chary}, {Chiang}, {Chluba}, {Christensen},
+  {Church}, {Clements}, {Colombi}, {Colombo}, {Combet}, {Coulais}, {Crill},
+  {Curto}, {Cuttaia}, {Danese}, {Davies}, {Davis}, {de Bernardis}, {de Rosa},
+  {de Zotti}, {Delabrouille}, {D{\'e}sert}, {Di Valentino}, {Dickinson},
+  {Diego}, {Dolag}, {Dole}, {Donzelli}, {Dor{\'e}}, {Douspis}, {Ducout},
+  {Dunkley}, {Dupac}, {Efstathiou}, {Elsner}, {En{\ss}lin}, {Eriksen},
+  {Farhang}, {Fergusson}, {Finelli}, {Forni}, {Frailis}, {Fraisse},
+  {Franceschi}, {Frejsel}, {Galeotta}, {Galli}, {Ganga}, {Gauthier}, {Gerbino},
+  {Ghosh}, {Giard}, {Giraud-H{\'e}raud}, {Giusarma}, {Gjerl{\o}w},
+  {Gonz{\'a}lez-Nuevo}, {G{\'o}rski}, {Gratton}, {Gregorio}, {Gruppuso},
+  {Gudmundsson}, {Hamann}, {Hansen}, {Hanson}, {Harrison}, {Helou},
+  {Henrot-Versill{\'e}}, {Hern{\'a}ndez-Monteagudo}, {Herranz}, {Hildebrand t},
+  {Hivon}, {Hobson}, {Holmes}, {Hornstrup}, {Hovest}, {Huang}, {Huffenberger},
+  {Hurier}, {Jaffe}, {Jaffe}, {Jones}, {Juvela}, {Keih{\"a}nen}, {Keskitalo},
+  {Kisner}, {Kneissl}, {Knoche}, {Knox}, {Kunz}, {Kurki-Suonio}, {Lagache},
+  {L{\"a}hteenm{\"a}ki}, {Lamarre}, {Lasenby}, {Lattanzi}, {Lawrence}, {Leahy},
+  {Leonardi}, {Lesgourgues}, {Levrier}, {Lewis}, {Liguori}, {Lilje},
+  {Linden-V{\o}rnle}, {L{\'o}pez-Caniego}, {Lubin}, {Mac{\'\i}as-P{\'e}rez},
+  {Maggio}, {Maino}, {Mandolesi}, {Mangilli}, {Marchini}, {Maris}, {Martin},
+  {Martinelli}, {Mart{\'\i}nez-Gonz{\'a}lez}, {Masi}, {Matarrese}, {McGehee},
+  {Meinhold}, {Melchiorri}, {Melin}, {Mendes}, {Mennella}, {Migliaccio},
+  {Millea}, {Mitra}, {Miville-Desch{\^e}nes}, {Moneti}, {Montier}, {Morgante},
+  {Mortlock}, {Moss}, {Munshi}, {Murphy}, {Naselsky}, {Nati}, {Natoli},
+  {Netterfield}, {N{\o}rgaard-Nielsen}, {Noviello}, {Novikov}, {Novikov},
+  {Oxborrow}, {Paci}, {Pagano}, {Pajot}, {Paladini}, {Paoletti}, {Partridge},
+  {Pasian}, {Patanchon}, {Pearson}, {Perdereau}, {Perotto}, {Perrotta},
+  {Pettorino}, {Piacentini}, {Piat}, {Pierpaoli}, {Pietrobon}, {Plaszczynski},
+  {Pointecouteau}, {Polenta}, {Popa}, {Pratt}, {Pr{\'e}zeau}, {Prunet},
+  {Puget}, {Rachen}, {Reach}, {Rebolo}, {Reinecke}, {Remazeilles}, {Renault},
+  {Renzi}, {Ristorcelli}, {Rocha}, {Rosset}, {Rossetti}, {Roudier},
+  {Rouill{\'e} d'Orfeuil}, {Rowan-Robinson}, {Rubi{\~n}o-Mart{\'\i}n},
+  {Rusholme}, {Said}, {Salvatelli}, {Salvati}, {Sandri}, {Santos},
+  {Savelainen}, {Savini}, {Scott}, {Seiffert}, {Serra}, {Shellard}, {Spencer},
+  {Spinelli}, {Stolyarov}, {Stompor}, {Sudiwala}, {Sunyaev}, {Sutton},
+  {Suur-Uski}, {Sygnet}, {Tauber}, {Terenzi}, {Toffolatti}, {Tomasi},
+  {Tristram}, {Trombetti}, {Tucci}, {Tuovinen}, {T{\"u}rler}, {Umana},
+  {Valenziano}, {Valiviita}, {Van Tent}, {Vielva}, {Villa}, {Wade}, {Wandelt},
+  {Wehus}, {White}, {White}, {Wilkinson}, {Yvon}, {Zacchei}, \&
+  {Zonca}}]{Planck15}
+{Planck Collaboration}, {Ade}, P.~A.~R., {Aghanim}, N., {et~al.} 2016, \aap,
+  594, A13
 
 \bibitem[{{Tempel} {et~al.}(2017){Tempel}, {Tuvikene}, {Kipper}, \&
   {Libeskind}}]{Tempel+17}
