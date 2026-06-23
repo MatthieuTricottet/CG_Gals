@@ -102,7 +102,7 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
                 "status": "ok",
                 "columns_used": [dn4000, hdelta, halpha],
                 "classification_thresholds": {
-                    "weak_halpha_emission": f"{halpha} > -3 Angstrom",
+                    "weak_halpha_emission": r"\mathrm{H}\alpha\,\mathrm{EW} > -3\,\text{\AA}",
                     "strong_hdelta_absorption": f"{hdelta} >= 4 Angstrom",
                     "old_continuum": f"{dn4000} >= 1.6",
                 },
@@ -161,7 +161,7 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
         "reason": "Dn4000_and_Hdelta_unavailable",
         "columns_used": [halpha],
         "classification_thresholds": {
-            "strong_halpha_emission": f"{halpha} <= -3 Angstrom",
+            "strong_halpha_emission": r"\mathrm{H}\alpha\,\mathrm{EW} \leq -3\,\text{\AA}",
             "sign_convention": "negative equivalent width denotes emission",
         },
         "fractions_by_sample": fractions,

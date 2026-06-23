@@ -98,6 +98,120 @@ def _load_json(path):
         return {}
 
 
+def deep_merge(base, overlay):
+    """Return a recursive dictionary merge where overlay values take precedence.
+
+    Nested dictionaries are merged without deleting keys that exist only in the
+    base mapping. Lists and scalar values are treated as atomic values: when a
+    key exists in both inputs, the overlay value replaces the base value.
+    Neither input dictionary is modified.
+    """
+
+    merged = dict(base)
+    for key, value in overlay.items():
+        if isinstance(merged.get(key), dict) and isinstance(value, dict):
+            merged[key] = deep_merge(merged[key], value)
+        else:
+            merged[key] = value
+    return merged
+
+
+def _get_path(mapping, dotted_path):
+    """Return a nested value addressed by a dotted path, or None if absent."""
+
+    value = mapping
+    for part in dotted_path.split("."):
+        if not isinstance(value, dict) or part not in value:
+            return None
+        value = value[part]
+    return value
+
+
+def _validate_render_context(ctx):
+    """Fail loudly when the paper context is missing required analysis blocks."""
+
+    required_paths = [
+        "CG4_Groups_nonsplit_N",
+        "pval_MSresiduals_Control4B_Gals",
+        "CG4_Gals_N_Elliptical",
+        "Colour_matching_summary",
+        "extended_specialness",
+        "extended_specialness.specialness_models",
+        "extended_specialness.specialness_models.elliptical_all",
+        "extended_specialness.specialness_models.spiral_all",
+        "extended_specialness.matched_controls",
+        "extended_specialness.matched_controls.effects.elliptical_fraction",
+        "extended_specialness.matched_controls.effects.spiral_fraction",
+        "extended_specialness.morphology_robustness",
+        "extended_specialness.sample_size_audit",
+        "phase_space_segregation",
+    ]
+    missing = [path for path in required_paths if _get_path(ctx, path) is None]
+
+    morphology_robustness = _get_path(ctx, "extended_specialness.morphology_robustness")
+    if isinstance(morphology_robustness, dict) and morphology_robustness.get("status") == "ok":
+        for path in [
+            "extended_specialness.morphology_robustness.concentration_index",
+            "extended_specialness.morphology_robustness.cg_class_split",
+            "extended_specialness.morphology_robustness.adjusted_models_with_close_flag",
+            "extended_specialness.morphology_robustness.exact_tests_after_excluding_close",
+        ]:
+            if _get_path(ctx, path) is None:
+                missing.append(path)
+
+    if missing:
+        joined = "\n  - ".join(missing)
+        raise KeyError(f"Render context missing required keys:\n  - {joined}")
+
+
+def _write_json(path, data):
+    """Write JSON atomically so the persisted build context is never partial."""
+
+    tmp_path = f"{path}.tmp"
+    with open(tmp_path, "w") as f:
+        json.dump(_jsonable(data), f)
+        f.write("\n")
+    os.replace(tmp_path, path)
+
+
+def _build_render_context(build_data, results_data):
+    """Construct the single coherent Jinja context from both result files."""
+
+    render_data = deep_merge(build_data, results_data)
+    ctx = dict(render_data)
+
+    # Template aliases. They intentionally point at the same merged data so
+    # template sections cannot accidentally see different JSON worlds.
+    ctx["r"] = render_data
+    ctx["build"] = render_data
+    ctx["results"] = results_data
+    ctx["results_build"] = build_data
+
+    ctx["samples"] = ["CG4", "Control4B", "Control4C", "RG4"]
+    ctx["statuses"] = ["Passive", "Starforming"]
+    ctx["morphs"] = ["Elliptical", "Spiral", "Uncertain"]
+
+    ctx["quantities"] = ["sSFR", "M_r", "lgm"]
+    ctx["qdefs"] = [
+        {"key": "sSFR", "label": r"$\log_{10}(\mathrm{sSFR}\,[\mathrm{yr}^{-1}])$"},
+        {"key": "M_r", "label": r"$M_r$"},
+        {
+            "key": "lgm",
+            "label": r"$\log(M_\star/M_\odot)$",
+        },
+    ]
+    ctx["lu"] = lu
+    ctx["gu"] = gu
+
+    ctx["extended_specialness"] = render_data.get("extended_specialness", {})
+    ctx["phase_space_segregation"] = render_data.get(
+        "phase_space_segregation",
+        ctx["extended_specialness"].get("phase_space_segregation", {}),
+    )
+    _validate_render_context(ctx)
+    return ctx, render_data
+
+
 def generate_report():
     """
     Generate a LaTeX report with bibliography:
@@ -111,36 +225,14 @@ def generate_report():
         print("[Error] Neither results nor build JSON could be loaded.")
         return
 
-    # 2) Merge for the template (per-run results take precedence)
-    ctx = {**build_data, **results_data}
-
-    # Shortcuts used in the templates
-    ctx["r"] = results_data
-
-    ctx["samples"] = ["CG4", "Control4B", "Control4C", "RG4"]
-    ctx["statuses"] = ["Passive", "Starforming"]
-    ctx["morphs"] = ["Elliptical", "Spiral", "Uncertain"]
-
-    # Quantities used in the passive/star-forming median tables.
-    ctx["quantities"] = ["sSFR", "M_r", "lgm"]
-    ctx["qdefs"] = [
-        {"key": "sSFR", "label": r"$\log_{10}(\mathrm{sSFR}\,[\mathrm{yr}^{-1}])$"},
-        {"key": "M_r", "label": r"$M_r$"},
-        {
-            "key": "lgm",
-            "label": r"$\log(M_\star/M_\odot)$",
-        },
-    ]
-    # >>> NEW: pass the label-utils module so LaTeX can call lu.formatted_label(q) <<<
-    ctx["lu"] = lu
-    ctx["gu"] = gu
-
-    ctx["build"] = build_data
-    ctx["extended_specialness"] = results_data.get("extended_specialness", {})
-    ctx["phase_space_segregation"] = results_data.get(
-        "phase_space_segregation",
-        ctx["extended_specialness"].get("phase_space_segregation", {}),
-    )
+    # 2) Deep-merge for the template and persist the coherent build context.
+    try:
+        ctx, render_data = _build_render_context(build_data, results_data)
+        _write_json(co.RESULTS_BUILD, render_data)
+        print(f"[Info] merged render context written to: {co.RESULTS_BUILD}")
+    except KeyError as e:
+        print(f"[Error] {e}")
+        return
 
     # 3) Render LaTeX via Jinja2
     env = Environment(

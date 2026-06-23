@@ -187,8 +187,9 @@ def _concentration_result(frame: pd.DataFrame) -> dict[str, object]:
             "status": "skipped",
             "reason": "missing_petroR50_r_petroR90_r",
             "future_work": (
-                "Add SDSS r-band Petrosian radii to the enrichment query and rebuild "
-                "the processed sample before using concentration as an independent proxy."
+                "Extend the current matched data products to carry SDSS r-band "
+                "Petrosian radii, then apply the corresponding quality cuts before "
+                "using concentration as an independent proxy."
             ),
         }
     valid = frame[[r50, r90]].apply(pd.to_numeric, errors="coerce")
