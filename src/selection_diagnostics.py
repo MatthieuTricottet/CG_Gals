@@ -45,6 +45,29 @@ AVAILABILITY = {
     ],
 }
 
+AVAILABILITY_LABELS = {
+    "morphology": "secure GZ class",
+    "sSFR": "sSFR class",
+    "stellar_mass": "stellar mass",
+    "colours": "SDSS colour columns",
+    "spectral_lines": "BPT lines",
+    "velocity_data": "velocity data",
+    "group_scale_quantities": "group-scale covariates",
+}
+
+AVAILABILITY_NOTES = {
+    "denominator": "Each fraction uses the final per-sample galaxy count as its denominator.",
+    "morphology": (
+        "The secure GZ class row counts galaxies classified as elliptical/smooth or "
+        "spiral/features; uncertain Galaxy Zoo morphologies remain in the morphology table."
+    ),
+    "colours": (
+        "The SDSS colour-columns row counts complete broad photometric columns in the "
+        "final merged frame. The stricter colour-analysis matched subset is reported "
+        "separately from the colour module."
+    ),
+}
+
 GROUP_SCALE_AUDIT_COLUMNS = [
     "R_scale",
     "velocity_dispersion",
@@ -87,35 +110,44 @@ def _nearest_angular(frame):
     return values
 
 
-def _plot_availability(availability, path):
+def _plot_availability(availability_counts, path):
     samples = ["CG4", "Control4B", "Control4C", "RG4"]
     quantities = list(AVAILABILITY)
     matrix = np.array(
         [
-            [availability.get(sample, {}).get(quantity, 0) for quantity in quantities]
+            [
+                availability_counts.get(sample, {})
+                .get(quantity, {})
+                .get("fraction", 0)
+                for quantity in quantities
+            ]
             for sample in samples
         ]
     )
-    fig, ax = plt.subplots(figsize=(8.5, 4.2))
+    fig, ax = plt.subplots(figsize=(8.8, 4.8))
     image = ax.imshow(matrix, vmin=0, vmax=1, cmap="viridis", aspect="auto")
     ax.set_xticks(
         np.arange(len(quantities)),
-        [value.replace("_", " ") for value in quantities],
+        [AVAILABILITY_LABELS.get(value, value.replace("_", " ")) for value in quantities],
         rotation=35,
         ha="right",
     )
     ax.set_yticks(np.arange(len(samples)), samples)
     for row in range(len(samples)):
         for column in range(len(quantities)):
+            item = availability_counts.get(samples[row], {}).get(quantities[column], {})
+            n_available = item.get("n_available", 0)
+            n_total = item.get("n_total", 0)
             ax.text(
                 column,
                 row,
-                f"{100 * matrix[row, column]:.0f}%",
+                f"{n_available}/{n_total}\n({100 * matrix[row, column]:.0f}%)",
                 ha="center",
                 va="center",
                 color="white" if matrix[row, column] < 0.55 else "black",
+                fontsize=7.5,
             )
-    fig.colorbar(image, ax=ax, label="Available fraction")
+    fig.colorbar(image, ax=ax, label="Available fraction of final sample")
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
@@ -239,12 +271,23 @@ def run_selection_diagnostics(data, output_dir: str | None = None):
     if frame.empty or "sample" not in frame:
         return {"status": "skipped", "reason": "no_galaxy_samples"}
     availability = {}
+    availability_counts = {}
     for sample_name, part in frame.groupby("sample", observed=True):
         availability[sample_name] = {}
+        availability_counts[sample_name] = {}
         for quantity, columns in AVAILABILITY.items():
             existing = [column for column in columns if column in part]
-            availability[sample_name][quantity] = (
-                float(part[existing].notna().all(axis=1).mean()) if existing else 0.0
+            available = part[existing].notna().all(axis=1) if existing else None
+            n_available = int(available.sum()) if available is not None else 0
+            n_total = int(len(part))
+            fraction = float(n_available / n_total) if n_total else 0.0
+            availability[sample_name][quantity] = fraction
+            availability_counts[sample_name][quantity] = (
+                {
+                    "n_available": n_available,
+                    "n_total": n_total,
+                    "fraction": fraction,
+                }
             )
 
     missingness = {}
@@ -334,6 +377,9 @@ def run_selection_diagnostics(data, output_dir: str | None = None):
     result = {
         "status": "ok",
         "availability_by_sample": availability,
+        "availability_counts_by_sample": availability_counts,
+        "availability_labels": AVAILABILITY_LABELS,
+        "availability_notes": AVAILABILITY_NOTES,
         "sample_size_audit": _sample_size_audit(frame),
         "group_scale_column_audit": _group_scale_audit(frame),
         "missingness_comparisons": missingness,
@@ -351,7 +397,7 @@ def run_selection_diagnostics(data, output_dir: str | None = None):
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
         result["availability_figure"] = _plot_availability(
-            availability,
+            availability_counts,
             os.path.join(output_dir, "fig_data_availability_by_sample.pdf"),
         )
         result["colour_bias_figure"] = _plot_colour_bias(

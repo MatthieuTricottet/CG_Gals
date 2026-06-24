@@ -48,6 +48,15 @@ OUTCOMES = {
     "colour_residual_u_minus_r": ("delta_u_minus_r", np.mean),
 }
 
+EFFECT_LABELS = {
+    "passive_fraction": "passive fraction",
+    "starforming_fraction": "star-forming fraction",
+    "elliptical_fraction": "elliptical fraction",
+    "spiral_fraction": "spiral fraction",
+    "residual_sSFR_starforming": "residual sSFR, star-forming",
+    "colour_residual_u_minus_r": r"colour residual $u-r$",
+}
+
 
 def _select_variables(frame):
     variables = []
@@ -115,7 +124,12 @@ def _plot_effects(effects, path):
     ]
     if not rows:
         return None
-    labels = [key.replace("_", " ") for key, _ in rows]
+    labels = [
+        EFFECT_LABELS.get(
+            key, key.replace("starforming", "star-forming").replace("_", " ")
+        )
+        for key, _ in rows
+    ]
     values = np.array([value["delta_cg4_minus_control"] for _, value in rows])
     lows = np.array([value["ci95"][0] for _, value in rows])
     highs = np.array([value["ci95"][1] for _, value in rows])
@@ -156,6 +170,42 @@ def _plot_balance(before, after, path):
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
     return os.path.basename(path)
+
+
+def _complementarity_status(treated, control):
+    """Summarize redundant binary outcomes in the matched complete-case subsets."""
+
+    pairs = {
+        "passive_starforming": ("passive", "starforming"),
+        "elliptical_spiral": ("elliptical", "spiral"),
+    }
+    summary = {}
+    for name, (left, right) in pairs.items():
+        if not {left, right}.issubset(treated.columns) or not {
+            left,
+            right,
+        }.issubset(control.columns):
+            summary[name] = {"status": "skipped", "reason": "missing_columns"}
+            continue
+        mask = (
+            treated[left].notna()
+            & treated[right].notna()
+            & control[left].notna()
+            & control[right].notna()
+        )
+        if int(mask.sum()) == 0:
+            summary[name] = {"status": "skipped", "reason": "no_complete_pairs"}
+            continue
+        treated_sum = treated.loc[mask, left] + treated.loc[mask, right]
+        control_sum = control.loc[mask, left] + control.loc[mask, right]
+        summary[name] = {
+            "status": "ok",
+            "n_pairs": int(mask.sum()),
+            "exact_complements": bool(
+                np.allclose(treated_sum, 1.0) and np.allclose(control_sum, 1.0)
+            ),
+        }
+    return summary
 
 
 def run_matched_control_analysis(
@@ -262,6 +312,14 @@ def run_matched_control_analysis(
             abs(value) for value in after.values() if value is not None
         ),
         "effects": effects,
+        "holm_correction_family": ok_names,
+        "holm_correction_note": (
+            "Passive/star-forming and elliptical/spiral diagnostics are retained "
+            "in the same matched-outcome Holm family. These paired binary outcomes "
+            "are complementary on their complete-case subsets, so the correction is "
+            "conservative rather than anti-conservative."
+        ),
+        "complementarity_audit": _complementarity_status(treated, control),
     }
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)

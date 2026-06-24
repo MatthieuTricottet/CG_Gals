@@ -125,6 +125,14 @@ def test_group_scale_availability_does_not_require_absent_mass():
 
     assert result["availability_by_sample"]["CG4"]["group_scale_quantities"] == 1.0
     assert (
+        result["availability_counts_by_sample"]["CG4"]["group_scale_quantities"][
+            "n_available"
+        ]
+        == result["availability_counts_by_sample"]["CG4"]["group_scale_quantities"][
+            "n_total"
+        ]
+    )
+    assert (
         "log_group_mass"
         in result["group_scale_column_audit"]["missing_or_sparse_columns"]
     )
@@ -164,3 +172,15 @@ def test_all_modules_execute_on_synthetic_data_and_create_figures(tmp_path):
     ]
     for filename in required_figures:
         assert (Path(tmp_path) / filename).is_file()
+
+
+def test_matched_control_reports_conservative_complement_family():
+    frame = synthetic_frame()
+    result = run_matched_control_analysis(frame, n_boot=50)
+
+    assert "holm_correction_note" in result
+    assert (
+        result["complementarity_audit"]["passive_starforming"]["exact_complements"]
+        is True
+    )
+    assert result["complementarity_audit"]["elliptical_spiral"]["exact_complements"] is True
