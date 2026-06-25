@@ -13,6 +13,7 @@ try:
     from extended_stats import safe_json
     from fossilness import run_fossilness_analysis
     from matched_controls import run_matched_control_analysis
+    from morphology_dominance import run_morphology_dominance_analysis
     from morphology_robustness import run_morphology_robustness
     from phase_space_segregation import run_phase_space_segregation_analysis
     from recent_quenching import run_recent_quenching_analysis
@@ -27,6 +28,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from .extended_stats import safe_json
     from .fossilness import run_fossilness_analysis
     from .matched_controls import run_matched_control_analysis
+    from .morphology_dominance import run_morphology_dominance_analysis
     from .morphology_robustness import run_morphology_robustness
     from .phase_space_segregation import run_phase_space_segregation_analysis
     from .recent_quenching import run_recent_quenching_analysis
@@ -53,6 +55,7 @@ def run_extended_specialness(sample, output_dir: str | None = None):
         ("specialness_models", fit_logistic_specialness_models),
         ("matched_controls", run_matched_control_analysis),
         ("morphology_robustness", run_morphology_robustness),
+        ("morphology_dominance", run_morphology_dominance_analysis),
         ("phase_space_segregation", run_phase_space_segregation_analysis),
         ("fossilness", run_fossilness_analysis),
         ("recent_quenching", run_recent_quenching_analysis),
@@ -113,5 +116,6 @@ def run_extended_specialness(sample, output_dir: str | None = None):
     ]
     results = safe_json(results)
     report.append_json("phase_space_segregation", results["phase_space_segregation"])
+    report.append_json("morphology_dominance", results["morphology_dominance"])
     report.append_json("extended_specialness", results)
     return results

@@ -1,0 +1,25 @@
+sample,subset,class,N_E,N_Sp,f_E,f_Sp,n_used,test_used,p_value
+CG4,all,Split,0,0,,,210,chi-square,0.13712341781693038
+CG4,all,Isolated,7,11,0.3888888888888889,0.6111111111111112,210,chi-square,0.13712341781693038
+CG4,all,Predominant,41,22,0.6507936507936508,0.3492063492063492,210,chi-square,0.13712341781693038
+CG4,all,Embedded,76,53,0.5891472868217055,0.4108527131782946,210,chi-square,0.13712341781693038
+CG4,bgg,Split,0,0,,,53,Monte Carlo permutation chi-square,1.0
+CG4,bgg,Isolated,3,1,0.75,0.25,53,Monte Carlo permutation chi-square,1.0
+CG4,bgg,Predominant,11,5,0.6875,0.3125,53,Monte Carlo permutation chi-square,1.0
+CG4,bgg,Embedded,22,11,0.6666666666666666,0.3333333333333333,53,Monte Carlo permutation chi-square,1.0
+CG4,satellites,Split,0,0,,,157,chi-square,0.0656251151861675
+CG4,satellites,Isolated,4,10,0.2857142857142857,0.7142857142857143,157,chi-square,0.0656251151861675
+CG4,satellites,Predominant,30,17,0.6382978723404256,0.3617021276595745,157,chi-square,0.0656251151861675
+CG4,satellites,Embedded,54,42,0.5625,0.4375,157,chi-square,0.0656251151861675
+RG4,all,Split,0,0,,,0,,
+RG4,all,Isolated,0,0,,,0,,
+RG4,all,Predominant,0,0,,,0,,
+RG4,all,Embedded,0,0,,,0,,
+RG4,bgg,Split,0,0,,,0,,
+RG4,bgg,Isolated,0,0,,,0,,
+RG4,bgg,Predominant,0,0,,,0,,
+RG4,bgg,Embedded,0,0,,,0,,
+RG4,satellites,Split,0,0,,,0,,
+RG4,satellites,Isolated,0,0,,,0,,
+RG4,satellites,Predominant,0,0,,,0,,
+RG4,satellites,Embedded,0,0,,,0,,

@@ -143,6 +143,8 @@ def _validate_render_context(ctx):
         "extended_specialness.matched_controls.effects.elliptical_fraction",
         "extended_specialness.matched_controls.effects.spiral_fraction",
         "extended_specialness.morphology_robustness",
+        "extended_specialness.morphology_dominance",
+        "morphology_dominance",
         "extended_specialness.sample_size_audit",
         "phase_space_segregation",
     ]

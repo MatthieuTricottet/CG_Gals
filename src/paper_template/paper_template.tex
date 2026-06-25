@@ -542,6 +542,70 @@ an odds ratio of << item.sat_or_fmt >> (<< p_from_fmt(item.sat_p_fmt) >>)<% if n
 Splitting the samples by both domination and BGG morphology does not reveal any significant modulation of the satellite morphology mix.
 <% endif %>
 
+<% set md = extended_specialness.get('morphology_dominance', {}) %>
+<% if md.get('status') == 'ok' %>
+\subsection{Morphology versus class and continuous BGG dominance}
+
+We next test the morphology mix directly against the Zheng--Shen class, the magnitude gap \(\Delta m_{12}=M_{r,2}-M_{r,1}\), and the continuous BGG luminosity fraction \(f_{L,\mathrm{BGG}}=L_\mathrm{BGG}/L_\mathrm{group}\). These tests use only the existing Galaxy Zoo elliptical/smooth and spiral/features classes; uncertain morphologies are excluded from the binary fits. They are run separately for all galaxies, BGGs only, and satellites only, so that any relation driven by the BGG itself is not folded into the satellite result.
+
+<% set md_audit = md.get('dominance_audit', {}) %>
+<% set rg_class_all = md.get('class_association', {}).get('RG4', {}).get('all', {}) %>
+The dominance quantities are available for << md_audit.get('n_groups') >> \CG{}+\RG{} groups. The \(\Delta m_{12}\) and \(f_{L,\mathrm{BGG}}\) analyses exclude << md_audit.get('n_groups_missing_Delta_m12') >> and << md_audit.get('n_groups_missing_or_invalid_f_L_BGG') >> groups, respectively, for missing or invalid dominance quantities. The \CG{} Split class is absent because the existing sample construction removes split systems before the paper analysis. Conversely, the current \RG{} table has no Zheng--Shen class labels, so the \RG{} class test is reported as unavailable after excluding << rg_class_all.get('n_excluded_class_missing') >> E/Sp-classified galaxies with missing class labels.
+
+<< md.get('overall_result_sentence') or '' >>
+
+\begin{table*}
+\centering
+\begin{tabular}{lccc}
+\toprule
+Zheng--Shen class & All \CG{} E/Sp & \CG{} BGG E/Sp & \CG{} satellites E/Sp \\
+\midrule
+<% set cg_all_class = md.get('class_association', {}).get('CG4', {}).get('all', {}).get('contingency_table', []) %>
+<% set cg_bgg_class = md.get('class_association', {}).get('CG4', {}).get('bgg', {}).get('contingency_table', []) %>
+<% set cg_sat_class = md.get('class_association', {}).get('CG4', {}).get('satellites', {}).get('contingency_table', []) %>
+<% for row in cg_all_class %>
+<% set bgg_row = cg_bgg_class|selectattr('class', 'equalto', row.class)|list|first %>
+<% set sat_row = cg_sat_class|selectattr('class', 'equalto', row.class)|list|first %>
+<< row.class >> & << row.N_E >>/<< row.N_Sp >> & << bgg_row.N_E if bgg_row else 0 >>/<< bgg_row.N_Sp if bgg_row else 0 >> & << sat_row.N_E if sat_row else 0 >>/<< sat_row.N_Sp if sat_row else 0 >> \\
+<% endfor %>
+\bottomrule
+\end{tabular}
+\caption{Elliptical/smooth and spiral/features counts by Zheng--Shen class for the \CG{} sample. Uncertain morphologies are excluded. Split systems have zero counts because they were removed by the existing non-split \CG{} sample definition.}
+\label{tab:morphology_dominance_class_counts}
+\end{table*}
+
+<< md.get('class_result_sentence') or '' >>
+
+\begin{table*}
+\centering
+\begin{tabular}{llccc}
+\toprule
+Subset & Sample & Class test & \(\Delta m_{12}\) model & \(f_{L,\mathrm{BGG}}\) model \\
+\midrule
+<% for subset in ['all', 'bgg', 'satellites'] %>
+<% for sample in ['CG4', 'RG4'] %>
+<% set class_res = md.get('class_association', {}).get(sample, {}).get(subset, {}) %>
+<% set class_test = class_res.get('test', {}) %>
+<% set gap_models = md.get('continuous_association', {}).get('Delta_m12', {}).get(sample, {}).get(subset, {}).get('models', {}) %>
+<% set gap_model = gap_models.get('adjusted', {}) if gap_models.get('adjusted', {}).get('status') == 'ok' else gap_models.get('unadjusted', {}) %>
+<% set fl_models = md.get('continuous_association', {}).get('f_L_BGG', {}).get(sample, {}).get(subset, {}).get('models', {}) %>
+<% set fl_model = fl_models.get('adjusted', {}) if fl_models.get('adjusted', {}).get('status') == 'ok' else fl_models.get('unadjusted', {}) %>
+<< md.get('subsets', {}).get(subset, subset) >> &
+<% if sample == 'CG4' %>\CG{}<% else %>\RG{}<% endif %> &
+<% if class_test.get('status') == 'ok' %><< pval_text(class_test.get('p_value')) >><% elif class_res.get('n_excluded_class_missing', 0) > 0 %>no class labels<% else %>skipped<% endif %> &
+<% if gap_model.get('status') == 'ok' %>OR \(<< gap_model.get('odds_ratio')|fmt(2) >>\), << pval_text(gap_model.get('p_value')) >><% else %>skipped<% endif %> &
+<% if fl_model.get('status') == 'ok' %>OR \(<< fl_model.get('odds_ratio')|fmt(2) >>\), << pval_text(fl_model.get('p_value')) >><% else %>skipped<% endif %> \\
+<% endfor %>
+<% endfor %>
+\bottomrule
+\end{tabular}
+\caption{Morphology--dominance tests for the E-vs-Sp binary comparison. The continuous columns report the available adjusted logistic model for \(P(\mathrm{E})\); all-galaxy and satellite fits use group-clustered standard errors.}
+\label{tab:morphology_dominance_models}
+\end{table*}
+
+<< md.get('gap_result_sentence') or '' >> << md.get('lumfrac_result_sentence') or '' >> << md.get('interaction_result_sentence') or '' >>
+<% endif %>
+
 \subsection{Crossing time}
 <% set tcross_corr = r.get('Tcross_global_correlations', []) %>
 <% set tcross_m_over_l = tcross_corr|selectattr('y_key', 'equalto', 'lg_M_virial_over_L')|list|first %>

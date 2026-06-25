@@ -7,6 +7,7 @@ def _minimal_results_context():
     return {
         "Colour_matching_summary": [],
         "phase_space_segregation": {"status": "ok"},
+        "morphology_dominance": {"status": "ok"},
         "extended_specialness": {
             "specialness_models": {
                 "elliptical_all": {"status": "ok"},
@@ -25,6 +26,7 @@ def _minimal_results_context():
                 "adjusted_models_with_close_flag": {},
                 "exact_tests_after_excluding_close": [],
             },
+            "morphology_dominance": {"status": "ok"},
             "sample_size_audit": {"CG4": {"total_galaxies": 248}},
         },
     }

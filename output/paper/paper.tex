@@ -1905,6 +1905,8 @@ corresponding to \(p = 0.532\).
 
 
 
+
+
 \end{itemize}
 
 Because the raw residual comparison and the matched comparison below condition on different covariate structures, and because the apparent offset changes in strength and sign after matching, we treat SFMS residuals as a secondary diagnostic rather than as evidence for a robust compact-group star-formation offset.
@@ -1976,6 +1978,146 @@ Control$_{4C}$ dominated groups, where the median satellite spiral fraction is
 The association between BGG morphology and satellite spiral fraction has a group-level odds ratio of 1.840 (\(p = 2.1\times 10^{-5}\)) in this sample; the same within-sample contrast under a satellite-level clustered uncertainty treatment gives
 an odds ratio of 1.840 (\(p = 2.7\times 10^{-5}\)).
 
+
+
+
+
+\subsection{Morphology versus class and continuous BGG dominance}
+
+We next test the morphology mix directly against the Zheng--Shen class, the magnitude gap \(\Delta m_{12}=M_{r,2}-M_{r,1}\), and the continuous BGG luminosity fraction \(f_{L,\mathrm{BGG}}=L_\mathrm{BGG}/L_\mathrm{group}\). These tests use only the existing Galaxy Zoo elliptical/smooth and spiral/features classes; uncertain morphologies are excluded from the binary fits. They are run separately for all galaxies, BGGs only, and satellites only, so that any relation driven by the BGG itself is not folded into the satellite result.
+
+
+
+The dominance quantities are available for 118 \CG{}+\RG{} groups. The \(\Delta m_{12}\) and \(f_{L,\mathrm{BGG}}\) analyses exclude 0 and 0 groups, respectively, for missing or invalid dominance quantities. The \CG{} Split class is absent because the existing sample construction removes split systems before the paper analysis. Conversely, the current \RG{} table has no Zheng--Shen class labels, so the \RG{} class test is reported as unavailable after excluding 189 E/Sp-classified galaxies with missing class labels.
+
+The morphology--dominance analysis is dominated by null results; marginal associations are reported as descriptive rather than decisive.
+
+\begin{table*}
+\centering
+\begin{tabular}{lccc}
+\toprule
+Zheng--Shen class & All \CG{} E/Sp & \CG{} BGG E/Sp & \CG{} satellites E/Sp \\
+\midrule
+
+
+
+
+
+
+Split & 0/0 & 0/0 & 0/0 \\
+
+
+
+Isolated & 7/11 & 3/1 & 4/10 \\
+
+
+
+Predominant & 41/22 & 11/5 & 30/17 \\
+
+
+
+Embedded & 76/53 & 22/11 & 54/42 \\
+
+\bottomrule
+\end{tabular}
+\caption{Elliptical/smooth and spiral/features counts by Zheng--Shen class for the \CG{} sample. Uncertain morphologies are excluded. Split systems have zero counts because they were removed by the existing non-split \CG{} sample definition.}
+\label{tab:morphology_dominance_class_counts}
+\end{table*}
+
+No Zheng--Shen class association reaches \(p<0.05\); the closest result is CG4 satellites only (\(p = 0.066\)), so it is treated as marginal and descriptive. The RG4 class test is unavailable because the current RG4 catalogue has no Zheng--Shen class labels.
+
+\begin{table*}
+\centering
+\begin{tabular}{llccc}
+\toprule
+Subset & Sample & Class test & \(\Delta m_{12}\) model & \(f_{L,\mathrm{BGG}}\) model \\
+\midrule
+
+
+
+
+
+
+
+
+all galaxies &
+\CG{} &
+\(p = 0.137\) &
+OR \(1.42\), \(p = 0.160\) &
+OR \(12.58\), \(p = 0.076\) \\
+
+
+
+
+
+
+
+all galaxies &
+\RG{} &
+no class labels &
+OR \(1.33\), \(p = 0.220\) &
+OR \(2.47\), \(p = 0.540\) \\
+
+
+
+
+
+
+
+
+
+BGGs only &
+\CG{} &
+\(p = 1.000\) &
+OR \(1.77\), \(p = 0.426\) &
+OR \(181.71\), \(p = 0.174\) \\
+
+
+
+
+
+
+
+BGGs only &
+\RG{} &
+no class labels &
+OR \(1.58\), \(p = 0.312\) &
+OR \(6.51\), \(p = 0.520\) \\
+
+
+
+
+
+
+
+
+
+satellites only &
+\CG{} &
+\(p = 0.066\) &
+OR \(1.28\), \(p = 0.342\) &
+OR \(5.02\), \(p = 0.318\) \\
+
+
+
+
+
+
+
+satellites only &
+\RG{} &
+no class labels &
+OR \(1.41\), \(p = 0.342\) &
+OR \(3.15\), \(p = 0.584\) \\
+
+
+\bottomrule
+\end{tabular}
+\caption{Morphology--dominance tests for the E-vs-Sp binary comparison. The continuous columns report the available adjusted logistic model for \(P(\mathrm{E})\); all-galaxy and satellite fits use group-clustered standard errors.}
+\label{tab:morphology_dominance_models}
+\end{table*}
+
+For $\Delta m_{12}$, no statistically significant morphology trend is found in CG4 or RG4 for the all-galaxy, BGG-only, or satellite-only fits. For $f_{L,\mathrm{BGG}}$, no fitted trend reaches \(p<0.05\); the marginal result is CG4 all galaxies (OR \(=12.58\), \(p = 0.076\)). The odds ratios are per unit luminosity fraction on a 0--1 scale, so broad-interval estimates should not be overread. The CG4--RG4 interaction models detect no significant difference in the morphology--dominance relation for either \(\Delta m_{12}\) or \(f_{L,\mathrm{BGG}}\), across all galaxies, BGGs only, and satellites only. The class interaction is inconclusive because RG4 class labels are unavailable.
 
 
 \subsection{Crossing time}

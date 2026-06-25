@@ -8,6 +8,7 @@ from src.agn_environment import run_agn_environment_analysis
 from src.extended_stats import safe_json
 from src.fossilness import run_fossilness_analysis
 from src.matched_controls import run_matched_control_analysis
+from src.morphology_dominance import run_morphology_dominance_analysis
 from src.morphology_robustness import run_morphology_robustness
 from src.phase_space import run_phase_space_analysis
 from src.recent_quenching import run_recent_quenching_analysis
@@ -112,6 +113,7 @@ def test_all_modules_skip_gracefully_with_missing_columns():
         run_tidal_indices_analysis,
         run_selection_diagnostics,
         run_morphology_robustness,
+        run_morphology_dominance_analysis,
     ]
     for function in functions:
         assert function(empty)["status"] == "skipped"
@@ -146,6 +148,7 @@ def test_all_modules_execute_on_synthetic_data_and_create_figures(tmp_path):
         "phase_space": run_phase_space_analysis(frame, tmp_path),
         "fossilness": run_fossilness_analysis(frame, tmp_path),
         "morphology_robustness": run_morphology_robustness(frame, tmp_path),
+        "morphology_dominance": run_morphology_dominance_analysis(frame, tmp_path),
         "recent_quenching": run_recent_quenching_analysis(frame, tmp_path),
         "agn_environment": run_agn_environment_analysis(frame, tmp_path),
         "tidal_indices": run_tidal_indices_analysis(frame, tmp_path),
