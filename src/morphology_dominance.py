@@ -20,11 +20,21 @@ except ModuleNotFoundError:  # pragma: no cover
 try:
     import config as co
     from extended_data import ensure_galaxy_frame, first_existing
-    from extended_stats import safe_float, safe_json
+    from extended_stats import (
+        benjamini_hochberg,
+        magnitude_gap,
+        safe_float,
+        safe_json,
+    )
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from .extended_data import ensure_galaxy_frame, first_existing
-    from .extended_stats import safe_float, safe_json
+    from .extended_stats import (
+        benjamini_hochberg,
+        magnitude_gap,
+        safe_float,
+        safe_json,
+    )
 
 
 SAMPLES = ["CG4", "RG4"]
@@ -48,6 +58,26 @@ PREDICTORS = {
 }
 CONTROL_COLUMNS = ["logMstar", "z_numeric"]
 RNG_SEED = 20260625
+
+# Reporting scale for the focal-predictor odds ratios. ``Delta_m12`` is reported
+# per 1 magnitude (already interpretable). ``f_L_BGG`` spans [0, 1], so its
+# native "per full unit of fraction" odds ratio explodes; we report it per 0.1
+# increase in the fraction instead. Rescaling only changes the *reported* odds
+# ratio and CI: the fitted beta, standard error and p-value are unchanged.
+OR_REPORT_SCALE = {
+    "Delta_m12": 1.0,
+    "f_L_BGG": 0.1,
+}
+OR_REPORT_UNIT = {
+    "Delta_m12": "per 1 mag",
+    "f_L_BGG": "per 0.1 increase in f_L_BGG",
+}
+
+# Tolerances for cross-checking the magnitude gap and the BGG luminosity
+# fraction against the existing pipeline quantities. Mismatches beyond these
+# tolerances raise loudly rather than silently diverging from the catalogue.
+GAP_TOL = 1e-6
+FRAC_TOL = 1e-6
 
 
 def _numeric(frame: pd.DataFrame, names: list[str]) -> pd.Series:
@@ -199,13 +229,30 @@ def _gap_from_group(group: pd.DataFrame) -> tuple[float, str]:
         if not bgg.empty and not second.empty:
             return float(second.iloc[0] - bgg.iloc[0]), "rank_1_2_M_r"
 
-    sorted_magnitudes = magnitudes.dropna().sort_values().to_numpy()
-    if len(sorted_magnitudes) >= 2:
-        return float(sorted_magnitudes[1] - sorted_magnitudes[0]), "sorted_M_r"
+    gap = magnitude_gap(magnitudes)
+    if math.isfinite(gap):
+        return gap, "sorted_M_r"
     return np.nan, "insufficient_valid_M_r"
 
 
+def _existing_gap_from_group(group: pd.DataFrame) -> tuple[float, str | None]:
+    """Return the pipeline's precomputed magnitude gap (``DeltaR12``) if present."""
+
+    value, source = _first_finite(group, ["DeltaR12", "group_DeltaR12"])
+    if np.isfinite(value):
+        return float(value), source
+    return np.nan, None
+
+
 def _bgg_fraction_from_group(group: pd.DataFrame) -> tuple[float, str]:
+    # Reuse the pipeline's existing BGG luminosity fraction directly: the
+    # group-level FracLumBGG column is Lum_BGG / Lum_group built in common.py.
+    frac_existing, existing_source = _first_finite(
+        group, ["FracLumBGG", "group_FracLumBGG"]
+    )
+
+    # Independent recomputation from the component luminosities, used as a
+    # cross-check on the existing column and as a fallback when it is absent.
     lum_bgg, lum_bgg_source = _first_finite(
         group,
         ["Lum_BGG", "group_Lum_BGG", "Lum_BGG_CG", "Lum_BGG_LT"],
@@ -221,15 +268,28 @@ def _bgg_fraction_from_group(group: pd.DataFrame) -> tuple[float, str]:
             "Lum_LT",
         ],
     )
+    frac_recomputed = np.nan
     if np.isfinite(lum_bgg) and np.isfinite(lum_group) and lum_bgg > 0 and lum_group > 0:
-        return lum_bgg / lum_group, f"{lum_bgg_source}/{lum_group_source}"
+        frac_recomputed = lum_bgg / lum_group
 
-    frac, frac_source = _first_finite(
-        group,
-        ["FracLumBGG", "group_FracLumBGG", "f_L_BGG", "dominance"],
-    )
+    if np.isfinite(frac_existing):
+        if (
+            np.isfinite(frac_recomputed)
+            and abs(frac_existing - frac_recomputed) > FRAC_TOL
+        ):
+            raise ValueError(
+                "FracLumBGG disagrees with Lum_BGG/Lum_group beyond tolerance "
+                f"({FRAC_TOL:g}): {frac_existing!r} vs {frac_recomputed!r}"
+            )
+        return float(frac_existing), existing_source
+
+    if np.isfinite(frac_recomputed):
+        return float(frac_recomputed), f"{lum_bgg_source}/{lum_group_source}"
+
+    # Remaining fallbacks for catalogues without the precomputed columns.
+    frac, frac_source = _first_finite(group, ["f_L_BGG", "dominance"])
     if np.isfinite(frac):
-        return frac, frac_source or "fraction_column"
+        return float(frac), frac_source or "fraction_column"
 
     luminosity = _numeric(group, ["Lum", "Lum_CG", "Lum_LT"])
     rank = pd.to_numeric(group.get("rank_numeric"), errors="coerce")
@@ -257,9 +317,21 @@ def compute_group_dominance_variables(
     class_source = frame.attrs.get("class_source")
 
     rows = []
+    n_gap_crosschecked = 0
+    max_gap_discrepancy = 0.0
     for group_uid, group in frame.groupby("group_uid", observed=True):
         first = group.iloc[0]
         gap, gap_source = _gap_from_group(group)
+        existing_gap, existing_gap_source = _existing_gap_from_group(group)
+        if np.isfinite(gap) and np.isfinite(existing_gap):
+            discrepancy = abs(gap - existing_gap)
+            if discrepancy > GAP_TOL:
+                raise ValueError(
+                    f"Delta_m12 disagrees with {existing_gap_source} beyond tolerance "
+                    f"({GAP_TOL:g}) for {group_uid}: {gap!r} vs {existing_gap!r}"
+                )
+            n_gap_crosschecked += 1
+            max_gap_discrepancy = max(max_gap_discrepancy, discrepancy)
         frac, frac_source = _bgg_fraction_from_group(group)
         class_values = group["class_label"].dropna()
         rows.append(
@@ -295,15 +367,19 @@ def compute_group_dominance_variables(
         "rank_source": rank_source,
         "class_source": class_source,
         "magnitude_gap_definition": "M_r(rank 2) - M_r(rank 1), with sorted M_r fallback",
-        "bgg_fraction_definition": "Lum_BGG / Lum_group, with FracLumBGG and galaxy-Lum fallbacks",
+        "bgg_fraction_definition": "FracLumBGG (= Lum_BGG / Lum_group), reused from the pipeline catalogue",
         "gap_source_counts": groups["Delta_m12_source"].value_counts(dropna=False).to_dict(),
         "f_L_BGG_source_counts": groups["f_L_BGG_source"].value_counts(dropna=False).to_dict(),
         "n_groups_missing_Delta_m12": int(groups["Delta_m12"].isna().sum()),
         "n_groups_missing_or_invalid_f_L_BGG": int(groups["f_L_BGG"].isna().sum()),
         "n_groups_invalid_f_L_BGG": int((frac.notna() & ~valid_frac).sum()),
+        "n_groups_gap_crosschecked_against_DeltaR12": int(n_gap_crosschecked),
+        "max_gap_discrepancy_vs_DeltaR12": safe_float(max_gap_discrepancy),
         "notes": [
             "The existing pipeline removes Zheng & Shen Split compact groups before analysis, so CG4 Split rows are expected to have zero counts.",
             "The current RG4 catalogue has no Zheng & Shen class labels; RG4 class-association tests are therefore reported as missing-class exclusions.",
+            "The magnitude gap and BGG luminosity fraction reuse the existing pipeline quantities: Delta_m12 is cross-checked against the precomputed DeltaR12 column and f_L_BGG is taken from the FracLumBGG column, both asserted to agree with an independent recomputation within tolerance.",
+            "For satellites, f_L,BGG mechanically includes the satellite's own luminosity in the group-luminosity denominator, so any satellite-level f_L,BGG trend is partly definitional; the satellite models are therefore reported with a stellar-mass control.",
         ],
     }
     return frame, groups, audit
@@ -599,6 +675,16 @@ def _fit_logistic(
 
     target = "interaction" if interaction else predictor_term
     target_term = terms[target]
+    target_low, target_high = map(float, ci.loc[target])
+    # Report the focal odds ratio on an interpretable scale. ``Delta_m12`` keeps
+    # its per-magnitude scale (factor 1.0); ``f_L_BGG`` is reported per 0.1
+    # increase in the fraction (factor 0.1) so the odds ratio does not explode on
+    # the native [0, 1] scale. Rescaling the log-odds slope and its CI before
+    # exponentiating leaves the beta, standard error and p-value untouched.
+    scale = OR_REPORT_SCALE.get(predictor, 1.0)
+    raw_beta = target_term["coefficient"]
+    reported_or = _safe_exp(scale * raw_beta)
+    reported_ci = [_safe_exp(scale * target_low), _safe_exp(scale * target_high)]
     formula_terms = xcols
     return {
         "status": "ok",
@@ -610,10 +696,14 @@ def _fit_logistic(
         "controls_included": [column for column in controls if column in xcols],
         "covariance": covariance,
         "clustered_errors": bool(use_cluster),
-        "beta1": target_term["coefficient"],
+        "beta1": raw_beta,
         "standard_error": target_term["standard_error"],
-        "odds_ratio": target_term["odds_ratio"],
-        "ci95": target_term["ci95"],
+        "odds_ratio": reported_or,
+        "ci95": reported_ci,
+        "odds_ratio_raw": target_term["odds_ratio"],
+        "ci95_raw": target_term["ci95"],
+        "or_report_scale": float(scale),
+        "or_report_unit": OR_REPORT_UNIT.get(predictor, "per 1 unit"),
         "p_value": target_term["p_value"],
         "interpretation_flag": _significance_flag(target_term["p_value"]),
         "terms": terms,
@@ -749,8 +839,37 @@ def _class_interaction(frame: pd.DataFrame, subset: str) -> dict[str, object]:
 def _flatten_class_results(results: dict[str, object]) -> list[dict[str, object]]:
     rows = []
     for sample_name, subset_results in results.items():
+        # Samples without any class-labelled E/Sp galaxies (e.g. RG4) get a
+        # single explicit marker row instead of one all-zero row per class.
+        if not any(
+            result.get("n_galaxies_used", 0) > 0 for result in subset_results.values()
+        ):
+            rows.append(
+                {
+                    "sample": sample_name,
+                    "subset": "-",
+                    "class": "-",
+                    "N_E": None,
+                    "N_Sp": None,
+                    "f_E": None,
+                    "f_Sp": None,
+                    "n_used": 0,
+                    "test_used": None,
+                    "p_value": None,
+                    "p_value_bh": None,
+                    "flag_bh": None,
+                    "note": f"class labels unavailable for {sample_name}",
+                }
+            )
+            continue
         for subset, result in subset_results.items():
+            test = result["test"]
             for row in result["contingency_table"]:
+                note = (
+                    "removed by construction (non-split sample)"
+                    if row["class"] == "Split"
+                    else ""
+                )
                 rows.append(
                     {
                         "sample": sample_name,
@@ -761,8 +880,11 @@ def _flatten_class_results(results: dict[str, object]) -> list[dict[str, object]
                         "f_E": row["f_E"],
                         "f_Sp": row["f_Sp"],
                         "n_used": result["n_galaxies_used"],
-                        "test_used": result["test"].get("test_used"),
-                        "p_value": result["test"].get("p_value"),
+                        "test_used": test.get("test_used"),
+                        "p_value": test.get("p_value"),
+                        "p_value_bh": test.get("p_value_bh"),
+                        "flag_bh": test.get("flag_bh"),
+                        "note": note,
                     }
                 )
     return rows
@@ -784,7 +906,11 @@ def _flatten_model_results(results: dict[str, object]) -> list[dict[str, object]
                             "beta1": model.get("beta1"),
                             "standard_error": model.get("standard_error"),
                             "odds_ratio": model.get("odds_ratio"),
+                            "odds_ratio_raw": model.get("odds_ratio_raw"),
+                            "or_report_unit": model.get("or_report_unit"),
                             "p_value": model.get("p_value"),
+                            "p_value_bh": model.get("p_value_bh"),
+                            "flag_bh": model.get("flag_bh"),
                             "n_used": model.get("n_used"),
                             "covariance": model.get("covariance"),
                             "controls": ",".join(model.get("controls_included", [])),
@@ -807,6 +933,8 @@ def _flatten_interactions(results: dict[str, object]) -> list[dict[str, object]]
                         "status": model.get("status"),
                         "interaction_beta": model.get("beta1"),
                         "interaction_p": model.get("p_value"),
+                        "interaction_p_bh": model.get("p_value_bh"),
+                        "flag_bh": model.get("flag_bh"),
                         "n_used": model.get("n_used"),
                         "interpretation_flag": result.get("interpretation_flag"),
                         "reason": model.get("reason"),
@@ -821,6 +949,8 @@ def _flatten_interactions(results: dict[str, object]) -> list[dict[str, object]]
                 "status": result.get("status"),
                 "interaction_beta": None,
                 "interaction_p": None,
+                "interaction_p_bh": None,
+                "flag_bh": None,
                 "n_used": result.get("n_complete"),
                 "interpretation_flag": result.get("interpretation_flag"),
                 "reason": result.get("reason"),
@@ -938,6 +1068,124 @@ def _summary(
     }
 
 
+def _collect_focal_tests(
+    class_results: dict[str, object],
+    continuous_results: dict[str, object],
+    interaction_results: dict[str, object],
+) -> list[tuple[dict[str, object], dict[str, object]]]:
+    """Return the focal morphology--dominance tests as ``(meta, target)`` pairs.
+
+    ``target`` is the result dict annotated in place with the BH-adjusted
+    p-value; ``meta`` records which test it is. The family covers the class
+    association tests, the focal-predictor slope of each continuous model, and
+    the CG4--RG4 interaction p-values.
+    """
+
+    entries: list[tuple[dict[str, object], dict[str, object]]] = []
+    for sample_name, subset_results in class_results.items():
+        for subset, result in subset_results.items():
+            test = result.get("test", {})
+            if test.get("p_value") is not None:
+                entries.append(
+                    (
+                        {
+                            "family": "class_association",
+                            "sample": sample_name,
+                            "subset": subset,
+                            "predictor": None,
+                        },
+                        test,
+                    )
+                )
+    for predictor, sample_results in continuous_results.items():
+        for sample_name, subset_results in sample_results.items():
+            for subset, result in subset_results.items():
+                model = _preferred_model(result)
+                if model.get("p_value") is not None:
+                    entries.append(
+                        (
+                            {
+                                "family": "continuous_trend",
+                                "sample": sample_name,
+                                "subset": subset,
+                                "predictor": predictor,
+                            },
+                            model,
+                        )
+                    )
+    for predictor, subset_results in interaction_results.get("continuous", {}).items():
+        for subset, result in subset_results.items():
+            model = _preferred_model(result)
+            if model.get("p_value") is not None:
+                entries.append(
+                    (
+                        {
+                            "family": "cg_rg_interaction",
+                            "sample": None,
+                            "subset": subset,
+                            "predictor": predictor,
+                        },
+                        model,
+                    )
+                )
+    return entries
+
+
+def _apply_multiple_testing(
+    class_results: dict[str, object],
+    continuous_results: dict[str, object],
+    interaction_results: dict[str, object],
+) -> dict[str, object]:
+    """BH-FDR-correct the focal p-values in place and summarize the outcome."""
+
+    entries = _collect_focal_tests(class_results, continuous_results, interaction_results)
+    raw_p = [target.get("p_value") for _, target in entries]
+    adjusted = benjamini_hochberg(raw_p)
+    tests = []
+    for (meta, target), p_raw, p_bh in zip(entries, raw_p, adjusted):
+        flag_bh = _significance_flag(p_bh)
+        target["p_value_bh"] = p_bh
+        target["flag_bh"] = flag_bh
+        tests.append({**meta, "p_value": p_raw, "p_value_bh": p_bh, "flag_bh": flag_bh})
+
+    finite_adjusted = [p for p in adjusted if p is not None]
+    n_significant = sum(1 for p in finite_adjusted if p < 0.05)
+    n_marginal = sum(1 for p in finite_adjusted if 0.05 <= p < 0.10)
+    smallest = min(finite_adjusted) if finite_adjusted else None
+    return {
+        "method": "Benjamini-Hochberg FDR",
+        "family": (
+            "morphology-dominance focal tests: class associations, "
+            "continuous-predictor slopes, and CG4-RG4 interactions"
+        ),
+        "n_tests": int(len(finite_adjusted)),
+        "n_significant_after_fdr": int(n_significant),
+        "n_marginal_after_fdr": int(n_marginal),
+        "n_tests_surviving_fdr": int(n_significant),
+        "smallest_adjusted_p": smallest,
+        "tests": tests,
+    }
+
+
+def _multiple_testing_sentence(multiple_testing: dict[str, object]) -> str:
+    n_tests = multiple_testing.get("n_tests", 0)
+    if not n_tests:
+        return ""
+    n_significant = multiple_testing.get("n_significant_after_fdr", 0)
+    smallest = safe_float(multiple_testing.get("smallest_adjusted_p"))
+    if n_significant:
+        return (
+            f"Across the {n_tests} morphology--dominance focal tests, {n_significant} "
+            r"remain significant after Benjamini--Hochberg FDR control."
+        )
+    tail = rf" (smallest adjusted \(p = {smallest:.3f}\))" if smallest is not None else ""
+    return (
+        f"Across the {n_tests} morphology--dominance focal tests (class associations, "
+        "continuous-predictor slopes, and CG4--RG4 interactions), no test remains "
+        r"significant after Benjamini--Hochberg FDR control" + tail + "."
+    )
+
+
 def _class_result_sentence(class_results: dict[str, object]) -> str:
     significant = []
     marginal = []
@@ -1025,8 +1273,7 @@ def _continuous_result_sentence(
         )
     if predictor == "f_L_BGG":
         sentence += (
-            " The odds ratios are per unit luminosity fraction on a 0--1 scale, "
-            "so broad-interval estimates should not be overread."
+            r" The odds ratios are reported per 0.1 increase in \(f_{L,\mathrm{BGG}}\)."
         )
     return sentence
 
@@ -1070,11 +1317,13 @@ def _sentences(
     continuous_results: dict[str, object],
     interaction_results: dict[str, object],
     summary: dict[str, object],
+    multiple_testing: dict[str, object],
 ) -> dict[str, str]:
     class_sentence = _class_result_sentence(class_results)
     gap_sentence = _continuous_result_sentence(continuous_results, "Delta_m12")
     lumfrac_sentence = _continuous_result_sentence(continuous_results, "f_L_BGG")
     interaction_sentence = _interaction_result_sentence(interaction_results)
+    fdr_sentence = _multiple_testing_sentence(multiple_testing)
     if summary.get("n_significant_class_tests") or summary.get("n_significant_continuous_trends"):
         overall = (
             r"The morphology--dominance analysis finds at least one \(p<0.05\) relation, "
@@ -1098,6 +1347,7 @@ def _sentences(
         "gap_result_sentence": gap_sentence,
         "lumfrac_result_sentence": lumfrac_sentence,
         "interaction_result_sentence": interaction_sentence,
+        "multiple_testing_sentence": fdr_sentence,
     }
 
 
@@ -1151,8 +1401,14 @@ def run_morphology_dominance_analysis(data, output_dir: str | None = None) -> di
         },
         "class": {subset: _class_interaction(frame, subset) for subset in SUBSETS},
     }
+    multiple_testing = _apply_multiple_testing(
+        class_results, continuous_results, interaction_results
+    )
     summary = _summary(class_results, continuous_results, interaction_results)
-    sentences = _sentences(class_results, continuous_results, interaction_results, summary)
+    summary["n_tests_surviving_fdr"] = multiple_testing["n_tests_surviving_fdr"]
+    sentences = _sentences(
+        class_results, continuous_results, interaction_results, summary, multiple_testing
+    )
 
     table_dir = output_dir or co.OUTPUT_PATH
     os.makedirs(table_dir, exist_ok=True)
@@ -1178,6 +1434,7 @@ def run_morphology_dominance_analysis(data, output_dir: str | None = None) -> di
         "class_association": class_results,
         "continuous_association": continuous_results,
         "cg_rg_interactions": interaction_results,
+        "multiple_testing": multiple_testing,
         "summary": {**summary, **sentences},
         **sentences,
         "output_tables": {

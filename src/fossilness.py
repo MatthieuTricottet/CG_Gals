@@ -18,6 +18,7 @@ try:
     from extended_stats import (
         fit_logistic_model,
         holm_correction,
+        magnitude_gap,
         safe_json,
         two_sample_summary,
     )
@@ -26,6 +27,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from .extended_stats import (
         fit_logistic_model,
         holm_correction,
+        magnitude_gap,
         safe_json,
         two_sample_summary,
     )
@@ -48,11 +50,7 @@ def _group_summary(frame):
                 "group_uid": group_uid,
                 "sample": first["sample"],
                 "is_CG4": first["is_CG4"],
-                "Delta_m12": (
-                    float(magnitudes[1] - magnitudes[0])
-                    if len(magnitudes) >= 2
-                    else np.nan
-                ),
+                "Delta_m12": magnitude_gap(magnitudes),
                 "Delta_m14": (
                     float(magnitudes[3] - magnitudes[0])
                     if len(magnitudes) >= 4

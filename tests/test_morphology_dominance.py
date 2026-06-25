@@ -1,5 +1,8 @@
+import math
+
 import numpy as np
 import pandas as pd
+import pytest
 
 from src.morphology_dominance import (
     compute_group_dominance_variables,
@@ -55,8 +58,16 @@ def test_compute_group_dominance_uses_ranked_magnitudes_and_luminosities():
     assert first_group["Delta_m12"] == 0.75
     assert first_group["Delta_m12_source"] == "rank_1_2_M_r"
     assert first_group["f_L_BGG"] == first_group["f_L_BGG_raw"]
-    assert first_group["f_L_BGG_source"] == "Lum_BGG/Lum_group"
+    # f_L_BGG is now reused from the existing FracLumBGG column rather than
+    # recomputed, and must match the Lum_BGG/Lum_group recomputation it replaces.
+    assert first_group["f_L_BGG_source"] == "FracLumBGG"
+    fixture_row = frame.loc[frame["group_uid"].eq("CG4:0")].iloc[0]
+    recomputed_fraction = fixture_row["Lum_BGG"] / fixture_row["Lum_group"]
+    assert first_group["f_L_BGG_raw"] == pytest.approx(recomputed_fraction, abs=1e-9)
+    assert first_group["f_L_BGG_raw"] == pytest.approx(fixture_row["FracLumBGG"], abs=1e-9)
     assert audit["n_groups_invalid_f_L_BGG"] == 0
+    # The gap reuse cross-checks the recomputed Delta_m12 against the catalogue.
+    assert audit["n_groups_gap_crosschecked_against_DeltaR12"] >= 0
     assert {"Delta_m12", "f_L_BGG"}.issubset(galaxies.columns)
 
 
@@ -109,3 +120,84 @@ def test_run_morphology_dominance_analysis_is_json_safe(tmp_path, monkeypatch):
     assert result["class_association"]["RG4"]["all"]["n_excluded_class_missing"] > 0
     assert result["dominance_audit"]["n_groups_missing_Delta_m12"] == 0
     assert (tmp_path / "morphology_dominance_class_counts.csv").is_file()
+
+
+def test_f_L_BGG_odds_ratio_reported_per_tenth():
+    frame, _, _ = compute_group_dominance_variables(_dominance_fixture(20))
+
+    result = morphology_vs_continuous(frame, "CG4", "all", "f_L_BGG")
+
+    fitted = [
+        model
+        for model in result["models"].values()
+        if model.get("status") == "ok"
+    ]
+    assert fitted, "expected at least one fitted f_L_BGG model"
+    for model in fitted:
+        odds_ratio = model["odds_ratio"]
+        assert math.isfinite(odds_ratio)
+        # The reported odds ratio is per 0.1 increase in the fraction, so it must
+        # stay in a sane range rather than exploding on the native [0, 1] scale.
+        assert 0.1 <= odds_ratio <= 10.0
+        assert model["or_report_scale"] == pytest.approx(0.1)
+        assert "0.1" in model["or_report_unit"]
+        # exp(0.1 * beta) defines the reported OR; exp(beta) the per-unit raw OR.
+        assert odds_ratio == pytest.approx(math.exp(0.1 * model["beta1"]), rel=1e-9)
+        assert model["odds_ratio_raw"] == pytest.approx(
+            math.exp(model["beta1"]), rel=1e-9
+        )
+
+
+def test_delta_m12_odds_ratio_reported_per_magnitude():
+    frame, _, _ = compute_group_dominance_variables(_dominance_fixture(20))
+
+    result = morphology_vs_continuous(frame, "CG4", "all", "Delta_m12")
+
+    for model in result["models"].values():
+        if model.get("status") != "ok":
+            continue
+        assert model["or_report_scale"] == pytest.approx(1.0)
+        # Per-magnitude odds ratios are left untouched: OR == exp(beta).
+        assert model["odds_ratio"] == pytest.approx(math.exp(model["beta1"]), rel=1e-9)
+        assert model["odds_ratio"] == pytest.approx(model["odds_ratio_raw"], rel=1e-9)
+
+
+def test_multiple_testing_block_has_bh_adjusted_p_values(tmp_path):
+    result = run_morphology_dominance_analysis(_dominance_fixture(20), tmp_path)
+
+    multiple_testing = result["multiple_testing"]
+    assert multiple_testing["method"] == "Benjamini-Hochberg FDR"
+    assert multiple_testing["n_tests"] > 0
+    assert "n_tests_surviving_fdr" in multiple_testing
+    assert multiple_testing["tests"], "expected the FDR family to be populated"
+    for test in multiple_testing["tests"]:
+        assert "p_value_bh" in test
+        assert test["flag_bh"] in {
+            "significant",
+            "marginal",
+            "not_significant",
+            "inconclusive",
+        }
+    # The adjustment is written back onto the focal continuous models too.
+    gap_models = result["continuous_association"]["Delta_m12"]["CG4"]["all"]["models"]
+    preferred = (
+        gap_models["adjusted"]
+        if gap_models["adjusted"].get("status") == "ok"
+        else gap_models["unadjusted"]
+    )
+    assert "p_value_bh" in preferred
+
+
+def test_class_counts_csv_marks_rg4_as_unavailable(tmp_path):
+    run_morphology_dominance_analysis(_dominance_fixture(20), tmp_path)
+
+    counts = pd.read_csv(tmp_path / "morphology_dominance_class_counts.csv")
+    rg4 = counts.loc[counts["sample"] == "RG4"]
+    # RG4 has no class labels, so it must collapse to a single marker row rather
+    # than one all-zero row per class and subset.
+    assert len(rg4) == 1
+    assert "unavailable" in str(rg4.iloc[0]["note"]).lower()
+
+    cg4_split = counts.loc[(counts["sample"] == "CG4") & (counts["class"] == "Split")]
+    assert not cg4_split.empty
+    assert (cg4_split["note"].str.contains("construction")).all()

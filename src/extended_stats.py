@@ -79,6 +79,56 @@ def holm_correction(p_values: Iterable[float | None]) -> list[float | None]:
     return adjusted
 
 
+def benjamini_hochberg(p_values: Iterable[float | None]) -> list[float | None]:
+    """Benjamini-Hochberg FDR-adjust a family of p-values, preserving gaps.
+
+    Returns the step-up adjusted p-values (a.k.a. BH q-values) with the usual
+    monotonicity enforced. Missing entries (``None``/non-finite) are passed
+    through as ``None`` and excluded from the family size.
+    """
+
+    values = list(p_values)
+    valid = [
+        (index, float(value))
+        for index, value in enumerate(values)
+        if safe_float(value) is not None
+    ]
+    adjusted: list[float | None] = [None] * len(values)
+    if not valid:
+        return adjusted
+    ordered = sorted(valid, key=lambda item: item[1])
+    m = len(ordered)
+    running = 1.0
+    # Walk from the largest p-value down, keeping a running minimum of
+    # m / rank * p so the adjusted sequence stays monotone non-decreasing.
+    for rank in range(m, 0, -1):
+        index, p_value = ordered[rank - 1]
+        running = min(running, p_value * m / rank)
+        adjusted[index] = min(1.0, running)
+    return adjusted
+
+
+def magnitude_gap(magnitudes) -> float:
+    """Return the magnitude gap ``Delta m12 = M_r,2 - M_r,1`` (brightest first).
+
+    Magnitudes are sorted ascending (brightest = most negative first) and the
+    difference between the second-brightest and brightest is returned. ``nan``
+    is returned when fewer than two finite magnitudes are available. This is the
+    canonical definition shared by the fossilness and morphology-dominance
+    analyses.
+    """
+
+    values = (
+        pd.to_numeric(pd.Series(magnitudes), errors="coerce")
+        .dropna()
+        .sort_values()
+        .to_numpy()
+    )
+    if values.size < 2:
+        return float("nan")
+    return float(values[1] - values[0])
+
+
 def standardized_mean_difference(treated, control) -> float | None:
     """Return the pooled-standard-deviation mean difference."""
 

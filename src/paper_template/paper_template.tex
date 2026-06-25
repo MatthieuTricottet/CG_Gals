@@ -546,7 +546,7 @@ Splitting the samples by both domination and BGG morphology does not reveal any 
 <% if md.get('status') == 'ok' %>
 \subsection{Morphology versus class and continuous BGG dominance}
 
-We next test the morphology mix directly against the Zheng--Shen class, the magnitude gap \(\Delta m_{12}=M_{r,2}-M_{r,1}\), and the continuous BGG luminosity fraction \(f_{L,\mathrm{BGG}}=L_\mathrm{BGG}/L_\mathrm{group}\). These tests use only the existing Galaxy Zoo elliptical/smooth and spiral/features classes; uncertain morphologies are excluded from the binary fits. They are run separately for all galaxies, BGGs only, and satellites only, so that any relation driven by the BGG itself is not folded into the satellite result.
+We next test the morphology mix directly against the Zheng--Shen class, the magnitude gap \(\Delta m_{12}=M_{r,2}-M_{r,1}\), and the continuous BGG luminosity fraction \(f_{L,\mathrm{BGG}}=L_\mathrm{BGG}/L_\mathrm{group}\). These tests use only the existing Galaxy Zoo elliptical/smooth and spiral/features classes; uncertain morphologies are excluded from the binary fits. They are run separately for all galaxies, BGGs only, and satellites only, so that any relation driven by the BGG itself is not folded into the satellite result. For satellites, \(f_{L,\mathrm{BGG}}\) mechanically includes the satellite's own luminosity in the group-luminosity denominator, so any satellite-level \(f_{L,\mathrm{BGG}}\) trend is partly definitional; we therefore report the satellite models with a stellar-mass control.
 
 <% set md_audit = md.get('dominance_audit', {}) %>
 <% set rg_class_all = md.get('class_association', {}).get('RG4', {}).get('all', {}) %>
@@ -599,11 +599,11 @@ Subset & Sample & Class test & \(\Delta m_{12}\) model & \(f_{L,\mathrm{BGG}}\) 
 <% endfor %>
 \bottomrule
 \end{tabular}
-\caption{Morphology--dominance tests for the E-vs-Sp binary comparison. The continuous columns report the available adjusted logistic model for \(P(\mathrm{E})\); all-galaxy and satellite fits use group-clustered standard errors.}
+\caption{Morphology--dominance tests for the E-vs-Sp binary comparison. The continuous columns report the available adjusted logistic model for \(P(\mathrm{E})\); all-galaxy and satellite fits use group-clustered standard errors. Odds ratios are reported per magnitude for \(\Delta m_{12}\) and per 0.1 increase in luminosity fraction for \(f_{L,\mathrm{BGG}}\).}
 \label{tab:morphology_dominance_models}
 \end{table*}
 
-<< md.get('gap_result_sentence') or '' >> << md.get('lumfrac_result_sentence') or '' >> << md.get('interaction_result_sentence') or '' >>
+<< md.get('gap_result_sentence') or '' >> << md.get('lumfrac_result_sentence') or '' >> << md.get('interaction_result_sentence') or '' >> << md.get('multiple_testing_sentence') or '' >>
 <% endif %>
 
 \subsection{Crossing time}

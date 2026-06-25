@@ -1984,7 +1984,7 @@ an odds ratio of 1.840 (\(p = 2.7\times 10^{-5}\)).
 
 \subsection{Morphology versus class and continuous BGG dominance}
 
-We next test the morphology mix directly against the Zheng--Shen class, the magnitude gap \(\Delta m_{12}=M_{r,2}-M_{r,1}\), and the continuous BGG luminosity fraction \(f_{L,\mathrm{BGG}}=L_\mathrm{BGG}/L_\mathrm{group}\). These tests use only the existing Galaxy Zoo elliptical/smooth and spiral/features classes; uncertain morphologies are excluded from the binary fits. They are run separately for all galaxies, BGGs only, and satellites only, so that any relation driven by the BGG itself is not folded into the satellite result.
+We next test the morphology mix directly against the Zheng--Shen class, the magnitude gap \(\Delta m_{12}=M_{r,2}-M_{r,1}\), and the continuous BGG luminosity fraction \(f_{L,\mathrm{BGG}}=L_\mathrm{BGG}/L_\mathrm{group}\). These tests use only the existing Galaxy Zoo elliptical/smooth and spiral/features classes; uncertain morphologies are excluded from the binary fits. They are run separately for all galaxies, BGGs only, and satellites only, so that any relation driven by the BGG itself is not folded into the satellite result. For satellites, \(f_{L,\mathrm{BGG}}\) mechanically includes the satellite's own luminosity in the group-luminosity denominator, so any satellite-level \(f_{L,\mathrm{BGG}}\) trend is partly definitional; we therefore report the satellite models with a stellar-mass control.
 
 
 
@@ -2044,7 +2044,7 @@ all galaxies &
 \CG{} &
 \(p = 0.137\) &
 OR \(1.42\), \(p = 0.160\) &
-OR \(12.58\), \(p = 0.076\) \\
+OR \(1.29\), \(p = 0.076\) \\
 
 
 
@@ -2056,7 +2056,7 @@ all galaxies &
 \RG{} &
 no class labels &
 OR \(1.33\), \(p = 0.220\) &
-OR \(2.47\), \(p = 0.540\) \\
+OR \(1.09\), \(p = 0.540\) \\
 
 
 
@@ -2070,7 +2070,7 @@ BGGs only &
 \CG{} &
 \(p = 1.000\) &
 OR \(1.77\), \(p = 0.426\) &
-OR \(181.71\), \(p = 0.174\) \\
+OR \(1.68\), \(p = 0.174\) \\
 
 
 
@@ -2082,7 +2082,7 @@ BGGs only &
 \RG{} &
 no class labels &
 OR \(1.58\), \(p = 0.312\) &
-OR \(6.51\), \(p = 0.520\) \\
+OR \(1.21\), \(p = 0.520\) \\
 
 
 
@@ -2096,7 +2096,7 @@ satellites only &
 \CG{} &
 \(p = 0.066\) &
 OR \(1.28\), \(p = 0.342\) &
-OR \(5.02\), \(p = 0.318\) \\
+OR \(1.18\), \(p = 0.318\) \\
 
 
 
@@ -2108,16 +2108,16 @@ satellites only &
 \RG{} &
 no class labels &
 OR \(1.41\), \(p = 0.342\) &
-OR \(3.15\), \(p = 0.584\) \\
+OR \(1.12\), \(p = 0.584\) \\
 
 
 \bottomrule
 \end{tabular}
-\caption{Morphology--dominance tests for the E-vs-Sp binary comparison. The continuous columns report the available adjusted logistic model for \(P(\mathrm{E})\); all-galaxy and satellite fits use group-clustered standard errors.}
+\caption{Morphology--dominance tests for the E-vs-Sp binary comparison. The continuous columns report the available adjusted logistic model for \(P(\mathrm{E})\); all-galaxy and satellite fits use group-clustered standard errors. Odds ratios are reported per magnitude for \(\Delta m_{12}\) and per 0.1 increase in luminosity fraction for \(f_{L,\mathrm{BGG}}\).}
 \label{tab:morphology_dominance_models}
 \end{table*}
 
-For $\Delta m_{12}$, no statistically significant morphology trend is found in CG4 or RG4 for the all-galaxy, BGG-only, or satellite-only fits. For $f_{L,\mathrm{BGG}}$, no fitted trend reaches \(p<0.05\); the marginal result is CG4 all galaxies (OR \(=12.58\), \(p = 0.076\)). The odds ratios are per unit luminosity fraction on a 0--1 scale, so broad-interval estimates should not be overread. The CG4--RG4 interaction models detect no significant difference in the morphology--dominance relation for either \(\Delta m_{12}\) or \(f_{L,\mathrm{BGG}}\), across all galaxies, BGGs only, and satellites only. The class interaction is inconclusive because RG4 class labels are unavailable.
+For $\Delta m_{12}$, no statistically significant morphology trend is found in CG4 or RG4 for the all-galaxy, BGG-only, or satellite-only fits. For $f_{L,\mathrm{BGG}}$, no fitted trend reaches \(p<0.05\); the marginal result is CG4 all galaxies (OR \(=1.29\), \(p = 0.076\)). The odds ratios are reported per 0.1 increase in \(f_{L,\mathrm{BGG}}\). The CG4--RG4 interaction models detect no significant difference in the morphology--dominance relation for either \(\Delta m_{12}\) or \(f_{L,\mathrm{BGG}}\), across all galaxies, BGGs only, and satellites only. The class interaction is inconclusive because RG4 class labels are unavailable. Across the 21 morphology--dominance focal tests (class associations, continuous-predictor slopes, and CG4--RG4 interactions), no test remains significant after Benjamini--Hochberg FDR control (smallest adjusted \(p = 0.605\)).
 
 
 \subsection{Crossing time}
