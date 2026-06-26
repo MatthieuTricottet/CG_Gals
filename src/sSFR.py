@@ -41,24 +41,40 @@ import sys, os
 src_path = os.path.abspath(os.path.join("..", "src"))
 if src_path not in sys.path:
     sys.path.insert(0, src_path)
-from utils import astro_utils as au
-from utils import maths_utils  as mu
-from utils import stats_utils  as su
-from utils import graphics_utils  as gu
-from utils import labels_utils  as lu
-from utils import pandas_utils  as pu
+try:
+    from utils import astro_utils as au
+    from utils import maths_utils as mu
+    from utils import stats_utils as su
+    from utils import graphics_utils as gu
+    from utils import labels_utils as lu
+    from utils import pandas_utils as pu
+except ModuleNotFoundError:  # pragma: no cover
+    from .utils import astro_utils as au
+    from .utils import maths_utils as mu
+    from .utils import stats_utils as su
+    from .utils import graphics_utils as gu
+    from .utils import labels_utils as lu
+    from .utils import pandas_utils as pu
 
 #* --------------------------------------------------------------------------------
 #* Global variables
 #* --------------------------------------------------------------------------------
-import config as co
+try:
+    import config as co
+except ModuleNotFoundError:  # pragma: no cover
+    from . import config as co
 
 #* --------------------------------------------------------------------------------
 #* Project functions imports
 #* --------------------------------------------------------------------------------
-import data_loader as dl
-import generate_report as report
-import analysis as anl
+try:
+    import data_loader as dl
+    import generate_report as report
+    import analysis as anl
+except ModuleNotFoundError:  # pragma: no cover
+    from . import data_loader as dl
+    from . import generate_report as report
+    from . import analysis as anl
 
 
 # endregion
@@ -310,7 +326,7 @@ def compare(sample, Verbose=True):
     #* Initialising variables
     #* --------------------------------------------------------------------------------
     CG = sample['CG4'+co.GASUFF]
-    CG_lgm = CG[CG['lgm'] > 0]
+    CG_lgm = _ranked_ssfr_frame(CG)
     results = {}
     #* --------------------------------------------------------------------------------
     if Verbose:
@@ -327,7 +343,7 @@ def compare(sample, Verbose=True):
             print(control_name)
 
         control = sample[control_name+co.GASUFF]
-        control_lgm = control[control['lgm'] > 0]
+        control_lgm = _ranked_ssfr_frame(control)
         for status in co.sSFR_status:
             control_status = control_lgm[control_lgm['sSFR_status'] == status]
             frac = len(control_status) / len(control_lgm)
@@ -339,12 +355,14 @@ def compare(sample, Verbose=True):
             (co.sSFR_status[2] in CG_lgm['sSFR_status'].unique())): # Star forming
             CG_starforming = CG_lgm[CG_lgm['sSFR_status'] == co.sSFR_status[2]]
             control_starforming = control_lgm[control_lgm['sSFR_status'] == co.sSFR_status[2]]
-            table = [[len(CG_starforming), len(CG_lgm)],[len(control_starforming), len(control_lgm)]]
+            table = _starforming_vs_non_table(
+                _status_counts(CG_lgm), _status_counts(control_lgm)
+            )
             res_fisher = fisher_exact(table, alternative='two-sided')
             # results_old.loc['p_star_forming_diff_Control', df.name] = res_fisher.pvalue
             results = pu.dict_union(results, {control_name+"_"+status+"_vs_CG": res_fisher.pvalue})
             if Verbose:
-                print(f"   {status}: {100*len(control_status)/len(control_lgm):.1f} % (among galaxies having a mass)")
+                print(f"   {status}: {100*len(control_status)/len(control_lgm):.1f} %")
                 print("Exact test p-values of proportion of star forming being different between CG_4 and the control sample:")
                 print(f"   Fisher: {res_fisher.pvalue:.1e}")
                 if res_fisher.pvalue < 0.05:
@@ -357,6 +375,68 @@ def compare(sample, Verbose=True):
 
     
     return results
+
+
+def _ranked_ssfr_frame(df):
+    """Return catalogue rows that participate in the BGG/satellite split."""
+
+    rank = pd.to_numeric(df["rank_M"], errors="coerce")
+    return df.loc[rank.notna() & rank.gt(0)]
+
+
+def _status_counts(df):
+    """Count the configured sSFR classes and the total ranked rows."""
+
+    counts = {
+        status: int((df["sSFR_status"] == status).sum()) for status in co.sSFR_status
+    }
+    counts["Total"] = int(sum(counts.values()))
+    return counts
+
+
+def _starforming_vs_non_table(res1, res2):
+    """Build a Fisher table for star-forming versus non-star-forming rows."""
+
+    sf = co.sSFR_status[2]
+    return [
+        [res1[sf], res1["Total"] - res1[sf]],
+        [res2[sf], res2["Total"] - res2[sf]],
+    ]
+
+
+def validate_ssfr_table_counts(sample):
+    """Assert that all sSFR table totals use the same ranked catalogue rows."""
+
+    audit = {}
+    for name in co.SAMPLE.keys():
+        df = _ranked_ssfr_frame(sample[name + co.GASUFF])
+        rank = pd.to_numeric(df["rank_M"], errors="coerce")
+        all_counts = _status_counts(df)
+        bgg_counts = _status_counts(df.loc[rank.eq(1)])
+        sat_counts = _status_counts(df.loc[rank.gt(1)])
+        combined = {
+            status: bgg_counts[status] + sat_counts[status]
+            for status in co.sSFR_status
+        }
+        combined["Total"] = sum(combined.values())
+        if any(all_counts[key] != combined[key] for key in combined):
+            raise AssertionError(
+                f"{name} sSFR counts are inconsistent: all={all_counts}, "
+                f"BGG+sat={combined}"
+            )
+        if "morphology" in df:
+            morph_total = int(df["morphology"].isin(co.Morphologies).sum())
+            if morph_total != all_counts["Total"]:
+                raise AssertionError(
+                    f"{name} morphology total {morph_total} does not match "
+                    f"sSFR total {all_counts['Total']}"
+                )
+        audit[name] = {
+            "all": all_counts,
+            "bgg": bgg_counts,
+            "satellites": sat_counts,
+        }
+    return audit
     
 
 def plot_classification(non_quenched, sdss_df, fit_results, f_interp, 
@@ -842,7 +922,7 @@ def restrict_analysis(df, df_name, restric_name):
     if co.VERBOSE:
         print(df_name)
     total = len(df)
-    results = {}
+    results = {"Total": int(total)}
     for status in co.sSFR_status:
         n_df = len(df[df['sSFR_status'] == status])
         results[status] = n_df
@@ -857,8 +937,7 @@ def restrict_analysis(df, df_name, restric_name):
 def pval_restrict_analysis(res1, res2, df1_name, df2_name, restric_name):
     """Compare two restricted samples with a Fisher exact test on star-forming counts."""
 
-    matrix = [[res1[co.sSFR_status[1]], res1[co.sSFR_status[2]]],
-                  [res2[co.sSFR_status[1]], res2[co.sSFR_status[2]]]]
+    matrix = _starforming_vs_non_table(res1, res2)
             
     res_fisher = fisher_exact(matrix, alternative='two-sided')
     report.append_json(
@@ -885,6 +964,7 @@ def BGGs_analysis(sample):
     """
 
     report.append_json('BGG_sSFR_tests', 'two-sided Fisher exact test')
+    report.append_json("sSFR_table_consistency", validate_ssfr_table_counts(sample))
 
     CG4 = sample['CG4'+co.GASUFF]
     restrict_CG4 = {}
@@ -1605,19 +1685,17 @@ def plot_main_sequence_models(_df, labelsize = 14, ticksize = 12, figname = "Mai
         linewidths=0,        # no edges
         zorder=1,
     )
-    # --------------------------------------------------
-    # Polynomial fits + χ²
-    # --------------------------------------------------
-    N = len(x)
+    diagnostics = _polyfit_order_diagnostics(x, y)
+    report.append_json("Main_Sequence_polyfit_diagnostics", diagnostics, build=True)
+    selected = next(item for item in diagnostics if item["order"] == 2)
+    order1 = next(item for item in diagnostics if item["order"] == 1)
+    report.append_json("Main_Sequence_polyfit_selected_order", selected["order"], build=True)
+    report.append_json("Main_Sequence_polyfit_selected_cv_rms", selected["cv_rms"], build=True)
+    report.append_json("Main_Sequence_polyfit_order1_cv_rms", order1["cv_rms"], build=True)
 
     for order in range(1, 5):
         coeffs = np.polyfit(x, y, deg=order)
-        y_hat = np.polyval(coeffs, x)
-        resid = y - y_hat
-
-        chi2 = np.sum(resid**2)      # σ = 1 assumption
-        dof = N - (order + 1)
-        red_chi2 = chi2 / dof if dof > 0 else np.nan
+        diag = next(item for item in diagnostics if item["order"] == order)
 
         yg = np.polyval(coeffs, xg)
         ax.plot(
@@ -1625,13 +1703,16 @@ def plot_main_sequence_models(_df, labelsize = 14, ticksize = 12, figname = "Mai
             yg,
             linestyle="--",
             linewidth=1.5,
-            label = fr"Fit to order {order}: $\chi^2_r = {red_chi2:.2f}$",
+            label=(
+                fr"Order {order}: RMS={diag['rms']:.5f}, "
+                fr"CV RMS={diag['cv_rms']:.5f}"
+            ),
             zorder=5,
         )
         if order == 1:
             coeffs_1 = coeffs
-            report.append_json('Main_Sequence_polyfit_order1_coeffs', [f'{c:.4f}' for c in coeffs])
-            report.append_json('Main_Sequence_polyfit_order1_reduced_chi2', f'{red_chi2:.4f}')
+            report.append_json('Main_Sequence_polyfit_order1_coeffs', [f'{c:.4f}' for c in coeffs], build=True)
+            report.append_json('Main_Sequence_polyfit_order1_rms', f"{diag['rms']:.5f}", build=True)
 
     ax.tick_params(
         axis="both",   
@@ -1650,6 +1731,45 @@ def plot_main_sequence_models(_df, labelsize = 14, ticksize = 12, figname = "Mai
         plt.show()
     
     return coeffs_1
+
+
+def _polyfit_order_diagnostics(x, y, max_order=4, n_splits=5, random_state=20260612):
+    """Return in-sample and cross-validated diagnostics for polynomial orders."""
+
+    rng = np.random.default_rng(random_state)
+    n = len(x)
+    shuffled = rng.permutation(n)
+    folds = np.array_split(shuffled, n_splits)
+    diagnostics = []
+    for order in range(1, max_order + 1):
+        coeffs = np.polyfit(x, y, deg=order)
+        y_hat = np.polyval(coeffs, x)
+        resid = y - y_hat
+        rss = float(np.sum(resid**2))
+        k = order + 1
+        rms = float(np.sqrt(rss / n))
+        aic = float(n * np.log(rss / n) + 2 * k)
+        bic = float(n * np.log(rss / n) + k * np.log(n))
+        fold_rms = []
+        for test_idx in folds:
+            train_mask = np.ones(n, dtype=bool)
+            train_mask[test_idx] = False
+            cv_coeffs = np.polyfit(x[train_mask], y[train_mask], deg=order)
+            cv_resid = y[test_idx] - np.polyval(cv_coeffs, x[test_idx])
+            fold_rms.append(float(np.sqrt(np.mean(cv_resid**2))))
+        diagnostics.append(
+            {
+                "order": int(order),
+                "n": int(n),
+                "rms": rms,
+                "rss": rss,
+                "aic": aic,
+                "bic": bic,
+                "cv_rms": float(np.mean(fold_rms)),
+                "cv_rms_std": float(np.std(fold_rms, ddof=0)),
+            }
+        )
+    return diagnostics
 
 def add_MS_residuals(
     sample: dict,

@@ -165,6 +165,59 @@ def _validate_render_context(ctx):
         joined = "\n  - ".join(missing)
         raise KeyError(f"Render context missing required keys:\n  - {joined}")
 
+    _validate_consistent_table_counts(ctx)
+
+
+def _validate_consistent_table_counts(ctx):
+    """Validate table-level count identities before rendering the paper."""
+
+    samples = ["CG4", "Control4B", "Control4C", "RG4"]
+    statuses = ["Quenched", "Passive", "Starforming"]
+    morphs = ["Elliptical", "Spiral", "Uncertain"]
+    sample_totals = {}
+    problems = []
+    for sample in samples:
+        all_counts = {
+            status: _get_path(ctx, f"{sample}_Gals_N{status}") for status in statuses
+        }
+        bgg_counts = {
+            status: _get_path(ctx, f"{sample}_BGG_N{status}") for status in statuses
+        }
+        sat_counts = {
+            status: _get_path(ctx, f"{sample}_Sat_N{status}") for status in statuses
+        }
+        if all(value is not None for value in [*all_counts.values(), *bgg_counts.values(), *sat_counts.values()]):
+            for status in statuses:
+                if int(all_counts[status]) != int(bgg_counts[status]) + int(sat_counts[status]):
+                    problems.append(
+                        f"{sample} {status}: all={all_counts[status]}, "
+                        f"BGG+sat={int(bgg_counts[status]) + int(sat_counts[status])}"
+                    )
+            sample_totals[sample] = int(sum(all_counts.values()))
+
+        morph_counts = {
+            morph: _get_path(ctx, f"{sample}_Gals_N_{morph}") for morph in morphs
+        }
+        if sample in sample_totals and all(value is not None for value in morph_counts.values()):
+            morph_total = int(sum(morph_counts.values()))
+            if morph_total != sample_totals[sample]:
+                problems.append(
+                    f"{sample}: morphology total={morph_total}, "
+                    f"sSFR total={sample_totals[sample]}"
+                )
+
+    tidal_total = _get_path(ctx, "extended_specialness.tidal_indices.n_galaxies_with_pairs")
+    if tidal_total is not None and sample_totals:
+        ssfr_total = int(sum(sample_totals.values()))
+        if int(tidal_total) != ssfr_total:
+            problems.append(
+                f"pairwise-analysis total={tidal_total}, sSFR sample total={ssfr_total}"
+            )
+
+    if problems:
+        joined = "\n  - ".join(problems)
+        raise AssertionError(f"Render context has inconsistent table counts:\n  - {joined}")
+
 
 def _write_json(path, data):
     """Write JSON atomically so the persisted build context is never partial."""

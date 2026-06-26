@@ -110,6 +110,7 @@ def load_data():
     if co.REBUILD_SAMPLE:
         report.initialise_json(build=True)
         sample = load_data_build()
+        sample = clean(sample)
         if co.VERBOSE:
             print("Classifying morphologies")
         sample = morph.classify_all_samples(sample)
@@ -119,8 +120,6 @@ def load_data():
         if co.VERBOSE:
             print("Calculating sSFR properties")
         sample = sSFR_properties(sample)
-
-        sample = clean(sample)
 
         report.finalize_json(build=True)
         if co.VERBOSE:

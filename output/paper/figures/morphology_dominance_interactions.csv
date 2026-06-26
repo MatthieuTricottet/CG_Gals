@@ -1,0 +1,16 @@
+predictor,subset,model,status,interaction_beta,interaction_p,interaction_p_bh,flag_bh,n_used,interpretation_flag,reason
+Delta_m12,all,unadjusted,ok,0.2697159094916932,0.3837908336713177,,,399,no_detected_difference,
+Delta_m12,all,adjusted,ok,0.1035158976697071,0.7409823838047086,0.8189805294683621,not_significant,399,no_detected_difference,
+Delta_m12,bgg,unadjusted,ok,0.5212976710016333,0.4998212295153187,,,100,no_detected_difference,
+Delta_m12,bgg,adjusted,ok,0.35053916625954273,0.6691241585573373,0.7806448516502269,not_significant,100,no_detected_difference,
+Delta_m12,satellites,unadjusted,ok,0.26668432092141414,0.43612412423894986,,,299,no_detected_difference,
+Delta_m12,satellites,adjusted,ok,-0.19982260615228337,0.6057159176823781,0.7482373100782318,not_significant,299,no_detected_difference,
+f_L_BGG,all,unadjusted,ok,2.5844751392952947,0.16525669091949546,,,399,no_detected_difference,
+f_L_BGG,all,adjusted,ok,1.7778095168267667,0.3458913414226281,0.6053098474895992,not_significant,399,no_detected_difference,
+f_L_BGG,bgg,unadjusted,ok,5.739128151713804,0.18653527116829893,,,100,no_detected_difference,
+f_L_BGG,bgg,adjusted,ok,4.585668816907584,0.3213806685599966,0.6053098474895992,not_significant,100,no_detected_difference,
+f_L_BGG,satellites,unadjusted,ok,2.0552710786164283,0.3304823882432246,,,299,no_detected_difference,
+f_L_BGG,satellites,adjusted,ok,-0.3917761766759983,0.8653608219328591,0.9086288630295021,not_significant,299,no_detected_difference,
+class,all,categorical_interaction,skipped,,,,,210,inconclusive,class_labels_not_available_in_both_samples
+class,bgg,categorical_interaction,skipped,,,,,53,inconclusive,class_labels_not_available_in_both_samples
+class,satellites,categorical_interaction,skipped,,,,,157,inconclusive,class_labels_not_available_in_both_samples
