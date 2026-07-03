@@ -61,6 +61,7 @@ import exploration_morph
 import exploration_ssfr
 import exploration_mvt_tcross
 import extended_specialness
+import luminosity_function
 import ssfr_robustness
 
 
@@ -289,6 +290,17 @@ def main():
     report.initialise_json()
     sample = load_data()
 
+    try:
+        lf_results = luminosity_function.run_luminosity_function_analysis(sample)
+    except Exception as exc:
+        lf_results = {
+            "status": "failed",
+            "reason": "analysis_exception",
+            "error": f"{exc.__class__.__name__}: {exc}",
+        }
+        if co.VERBOSE:
+            print(f"[luminosity function] failed: {exc}")
+    report.append_json("luminosity_function", lf_results)
 
     ssfr_report_properties(sample)
     morph_properties(sample)
