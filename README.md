@@ -63,6 +63,28 @@ TRICOTTET-GAM-CG2/
 - **Interactive Exploration:**  
   Open notebooks in the `notebooks/` directory with Jupyter Notebook or VS Code's Jupyter extension for interactive data exploration.
 
+## Size data
+
+The galaxy-size analysis (`src/size_data.py`, `src/size_analysis.py`) uses two
+external catalogues fetched on first run and cached under `data/`:
+
+- **SDSS DR16 Petrosian and seeing columns** (`data/sdss_size_columns.csv`,
+  ~0.5 MB): `petroR50_r`, `petroR90_r`, their uncertainties, `petroRad_r`, the
+  field seeing `psfWidth_r`, and the DR7 cross-match identifier `dr7objid`
+  (via the SkyServer `SpecDR7` bridge table, with `PhotoObjDR7` as fallback).
+  Queried in chunks from `skyserver.sdss.org` via `astroquery.sdss`.
+- **Simard et al. (2011, ApJS 196, 11) structural catalogue subset**
+  (`data/simard2011_subset.csv`, ~0.5 MB): pure-Sersic half-light radii,
+  Sersic indices and related columns from VizieR `J/ApJS/196/11`
+  (tables 1 and 3), queried in chunks via `astroquery.vizier`. If VizieR is
+  unreachable, the bulk tables (~100 MB compressed) are downloaded from the
+  CDS FTP mirror into `data/simard2011_raw/` (gitignored) and filtered
+  locally.
+
+Both fetches are idempotent: once the caches cover the sample's object IDs,
+reruns are fully offline. Identifier columns are written and read as strings
+to protect the 18-digit SDSS IDs from float round-trips.
+
 ## Documentation
 
 Documentation is automatically generated from docstrings using tools like [pdoc](https://pdoc.dev/) or [Sphinx](https://www.sphinx-doc.org/). For example, to generate HTML documentation with pdoc, run:

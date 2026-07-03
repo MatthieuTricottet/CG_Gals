@@ -30,3 +30,7 @@ dist/
 # Logs
 *.log
 
+
+# Bulk raw downloads of the Simard et al. (2011) catalogue (route-B fallback);
+# the filtered subset cache data/simard2011_subset.csv stays tracked.
+data/simard2011_raw/
