@@ -150,6 +150,7 @@
 
 
 
+
 \section{Introduction}\label{sec:intro}
 
 Compact groups of galaxies are useful laboratories for environmental evolution because they combine high projected galaxy densities with relatively low velocity dispersions \citep{Hickson82,Hickson+92}. In such configurations, repeated tidal encounters, dynamical friction, mergers, gas stripping or consumption, and disk heating can plausibly accelerate the transformation of galaxies compared with more diffuse environments \citep{Barnes85,Barnes89,Verdes-Montenegro+01}. This expectation is closely connected to the broader morphology-density and star-formation-environment relation, in which galaxy structure and star-formation activity vary systematically with local density \citep{Dressler80}.
@@ -215,7 +216,7 @@ For satellites, the corresponding p-values are
   \(p = 0.027\) against \CC{} and
   \(p = 4.9\times 10^{-5}\) against \RG. The satellite deficit is clearest in the raw comparison with \RG{} and is revisited below with adjusted and matched analyses.
 
-\begin{table*}
+\begin{table}
 
 
 
@@ -233,29 +234,30 @@ For satellites, the corresponding p-values are
 
 
     \centering
-    \begin{tabular}{llccc}
-        \toprule
-            \textbf{Sample} & & \textbf{  Quenched  } & \textbf{  Passive  } & \textbf{Star-forming} \\
-            \CG & &  18  (7.3 \%) &  146  (58.9 \%)&  84  (33.9 \%) \\
-             & \emph{BGG} &  \emph{6  (9.7 \%)} &  \emph{45  (72.6 \%)} &  \emph{11  (17.7 \%)} \\
-             & \emph{Satellites} &  \emph{12  (6.5 \%)} &  \emph{101  (54.3 \%)} &  \emph{73  (39.2 \%)} \\
-            \CB & &  180  (6.4 \%) &  1594  (57.1 \%) &  1018  (36.5 \%) \\
-             & \emph{BGG} &  \emph{58  (8.3 \%)} &  \emph{533  (76.4 \%)} &  \emph{107  (15.3 \%)} \\
-             & \emph{Satellites} &  \emph{122  (5.8 \%)} &  \emph{1061  (50.7 \%)} &  \emph{911  (43.5 \%)} \\
-            \CC & &  190  (6.3 \%) &  1618  (53.9 \%) &  1196  (39.8 \%) \\
-             & \emph{BGG} &  \emph{65  (8.7 \%)} &  \emph{568  (75.6 \%)} &  \emph{118  (15.7 \%)} \\
-             & \emph{Satellites} &  \emph{125  (5.5 \%)} &  \emph{1050  (46.6 \%)} &  \emph{1078  (47.8 \%)} \\
-            \RG & &  5  (2.2 \%) &  101  (45.1 \%) &  118  (52.7 \%)\\
-            & \emph{BGG} &  \emph{3  (5.4 \%)} &  \emph{38  (67.9 \%)} &  \emph{15  (26.8 \%)}\\
-            & \emph{Satellites} &  \emph{2  (1.2 \%)} &  \emph{63  (37.5 \%)} &  \emph{103  (61.3 \%)}\\
-         \midrule
-            \emph{SDSS selection} & &  \emph{634 (1.2 \%)} &  \emph{7705  (14.7 \%)} &  \emph{44192  (84.1 \%)}\\
-         \midrule
-        \bottomrule
-    \end{tabular}
-    \caption{Number of galaxies in each sSFR status for each sample.}
+    \caption{Number of galaxies in each sSFR status for each sample}
     \label{tab:sSFR_status}
-\end{table*}
+    \tabcolsep=3pt
+    \begin{tabular}{lccc}
+        \hline\hline
+            \textbf{Sample} & \textbf{  Quenched  } & \textbf{  Passive  } & \textbf{Star-forming} \\
+            \hline
+            \CG &  18  (7\%) &  146  (59\%)&  84  (34\%) \\
+             \quad \emph{BGG} &  \emph{6  (10\%)} &  \emph{45  (73\%)} &  \emph{11  (18\%)} \\
+             \quad \emph{Satellites} &  \emph{12  (6\%)} &  \emph{101  (54\%)} &  \emph{73  (39\%)} \\
+            \CB &  180  (6\%) &  1594  (57\%) &  1018  (36\%) \\
+             \quad \emph{BGG} &  \emph{58  (8\%)} &  \emph{533  (76\%)} &  \emph{107  (15\%)} \\
+             \quad \emph{Satellites} &  \emph{122  (6\%)} &  \emph{1061  (51\%)} &  \emph{911  (44\%)} \\
+            \CC &  190  (6\%) &  1618  (54\%) &  1196  (40\%) \\
+             \quad \emph{BGG} &  \emph{65  (9\%)} &  \emph{568  (76\%)} &  \emph{118  (16\%)} \\
+             \quad \emph{Satellites} &  \emph{125  (6\%)} &  \emph{1050  (47\%)} &  \emph{1078  (48\%)} \\
+            \RG &  5  (2\%) &  101  (45\%) &  118  (53\%)\\
+            \quad \emph{BGG} &  \emph{3  (5\%)} &  \emph{38  (68\%)} &  \emph{15  (27\%)}\\
+            \quad \emph{Satellites} &  \emph{2  (1\%)} &  \emph{63  (38\%)} &  \emph{103  (61\%)}\\
+         \hline
+            \emph{SDSS select'n} &  \emph{634 (1\%)} &  \emph{7705  (15\%)} &  \emph{44192  (84\%)}\\
+        \hline
+    \end{tabular}
+\end{table}
 
 
 
@@ -301,22 +303,24 @@ Barnard's two-sided exact tests were used to compare the fraction of each morpho
  \citep{Tricottet+25}, show a robust raw excess of elliptical/smooth classifications and a deficit of spiral/features classifications. Figure~\ref{fig:galaxies_morph_sfr} displays sSFR versus stellar mass for galaxies in the SDSS selection and in \CG.
 
 
-\begin{table*}
+\begin{table}
     \centering
-    \begin{tabular}{lccc}
-        \toprule
-            \textbf{Sample} & \textbf{Elliptical/smooth} & \textbf{Spiral/features} & \textbf{Uncertain} \\
-            \CG &  124  (50.0 \%) &  86  (34.7 \%)&  38  (15.3 \%) \\
-            \CB &  1106  (39.6 \%) &  1266  (45.3 \%) &  420  (15.0 \%) \\
-            \CC &  1215  (40.4 \%) &  1249  (41.6 \%) &  540  (18.0 \%) \\
-            \RG &  60  (26.8 \%) &  129  (57.6 \%) &  35  (15.6 \%)\\
-            \emph{SDSS selection} &  \emph{10091 (19.2 \%)} &  \emph{34715  (66.1 \%)} &  \emph{7725  (14.7 \%)}\\
-         \midrule
-        \bottomrule
-    \end{tabular}
     \caption{Number of galaxies in each Galaxy Zoo vote-fraction morphology proxy for each sample.}
     \label{tab:morphologies}
-\end{table*}
+    \small
+    \tabcolsep=2pt
+    \begin{tabular}{lccc}
+        \hline\hline
+            \textbf{Sample} & \makecell{\textbf{Elliptical/}\\\textbf{smooth}} & \makecell{\textbf{Spiral/}\\\textbf{features}} & \textbf{Uncertain} \\
+            \hline
+            \CG &  124  (50\%) &  86  (35\%)&  38  (15\%) \\
+            \CB &  1106  (40\%) &  1266  (45\%) &  420  (15\%) \\
+            \CC &  1215  (40\%) &  1249  (42\%) &  540  (18\%) \\
+            \RG &  60  (27\%) &  129  (58\%) &  35  (16\%)\\
+            \emph{SDSS selection} &  \emph{10091 (19\%)} &  \emph{34715  (66\%)} &  \emph{7725  (15\%)}\\
+        \hline
+    \end{tabular}
+\end{table}
 
 
 \begin{figure}
@@ -367,277 +371,159 @@ Thus, BGG morphologies differ between \CG{} and \RG: \CG{} BGGs have a higher el
 
 Tables~\ref{tab:passive_starforming_medians}--\ref{tab:split_BGG_ssfr_class_properties_Sat} summarize the typical stellar masses, absolute magnitudes, and sSFRs of passive and star-forming galaxies, including splits by the sSFR class of the BGG. These medians are descriptive and mainly show that star-formation class is entangled with stellar mass and luminosity, motivating the adjusted models below.
 
-\begin{table*}
+\begin{table}
 \centering
-
-% 1 column for Sample + 2 columns per quantity
-\begin{tabular}{l*{6}{c}}
-\toprule
-
-% ---------- Header row 1: quantity names ----------
-Sample
-
-  & \multicolumn{2}{c}{$\log_{10}(\mathrm{sSFR}\,[\mathrm{yr}^{-1}])$}
-
-  & \multicolumn{2}{c}{$M_r$}
-
-  & \multicolumn{2}{c}{$\log(M_\star/M_\odot)$}
-
-\\
-
-% ---------- Header row 2: Passive / Star-forming ----------
-
-  & Passive & Star-forming
-
-  & Passive & Star-forming
-
-  & Passive & Star-forming
-
-\\
-\midrule
-
-% ---------- Data rows ----------
-
-CG4
-
-  & $-12.08$ $\pm$ 0.03
-  & $-10.19$ $\pm$ 0.07
-
-  & $-21.16$ $\pm$ 0.14
-  & $-20.4$ $\pm$ 0.14
-
-  & $10.64$ $\pm$ 0.07
-  & $10.05$ $\pm$ 0.05
-
-\\
-
-Control4B
-
-  & $-12.1$ $\pm$ 0.01
-  & $-10.31$ $\pm$ 0.02
-
-  & $-21.52$ $\pm$ 0.05
-  & $-20.75$ $\pm$ 0.04
-
-  & $10.79$ $\pm$ 0.01
-  & $10.24$ $\pm$ 0.02
-
-\\
-
-Control4C
-
-  & $-11.92$ $\pm$ 0.02
-  & $-10.16$ $\pm$ 0.02
-
-  & $-20.81$ $\pm$ 0.07
-  & $-19.93$ $\pm$ 0.04
-
-  & $10.47$ $\pm$ 0.03
-  & $9.82$ $\pm$ 0.03
-
-\\
-
-RG4
-
-  & $-11.91$ $\pm$ 0.07
-  & $-10.16$ $\pm$ 0.07
-
-  & $-21.11$ $\pm$ 0.25
-  & $-20.32$ $\pm$ 0.12
-
-  & $10.62$ $\pm$ 0.08
-  & $9.97$ $\pm$ 0.09
-
-\\
-
-
-\bottomrule
-\end{tabular}
-
 \caption{Median values of galaxy properties for passive and star-forming populations in each sample.
-Uncertainties are estimated by bootstrapping (10\,000 iterations).
+Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr\(^{-1}\), and stellar mass is in \(M_\odot\).
 }
 \label{tab:passive_starforming_medians}
-\end{table*}
-
-
-\begin{table*}
-    \centering
-
-    % One column for Sample + 2 columns per quantity
-    \begin{tabular}{l*{6}{c}}
-\toprule
- Sample &
-
-  \multicolumn{2}{c}{$\log_{10}(\mathrm{sSFR}\,[\mathrm{yr}^{-1}])$}%
-   & 
-
-  \multicolumn{2}{c}{$M_r$}%
-   & 
-
-  \multicolumn{2}{c}{$\log(M_\star/M_\odot)$}%
-  
- \\
-% --- second header row: BGG sSFR-class split ---
- BGG &
-
-  Passive & Star-forming%
-   & 
-
-  Passive & Star-forming%
-   & 
-
-  Passive & Star-forming%
-  
- \\
-\midrule
-
-
-  CG4 &
-  
-    $-11.53$ $\pm$ 0.09 &
-    $-10.85$ $\pm$ 0.29 &
-  
-    $-20.93$ $\pm$ 0.11 &
-    $-20.77$ $\pm$ 0.32 &
-  
-    $10.46$ $\pm$ 0.06 &
-    $10.32$ $\pm$ 0.12
-   \\
-
-  Control4B &
-  
-    $-11.53$ $\pm$ 0.03 &
-    $-10.86$ $\pm$ 0.06 &
-  
-    $-21.25$ $\pm$ 0.03 &
-    $-21.12$ $\pm$ 0.07 &
-  
-    $10.61$ $\pm$ 0.02 &
-    $10.46$ $\pm$ 0.04
-   \\
-
-  Control4C &
-  
-    $-11.3$ $\pm$ 0.03 &
-    $-10.62$ $\pm$ 0.06 &
-  
-    $-20.42$ $\pm$ 0.05 &
-    $-20.55$ $\pm$ 0.08 &
-  
-    $10.22$ $\pm$ 0.02 &
-    $10.15$ $\pm$ 0.06
-   \\
-
-  RG4 &
-  
-    $-11.14$ $\pm$ 0.19 &
-    $-10.58$ $\pm$ 0.16 &
-  
-    $-20.69$ $\pm$ 0.14 &
-    $-20.74$ $\pm$ 0.27 &
-  
-    $10.32$ $\pm$ 0.07 &
-    $10.19$ $\pm$ 0.12
-   \\
+\small
+\tabcolsep=2pt
+\begin{tabular}{llcc}
+\hline\hline
+Sample & Quantity & Passive & Star-forming\\
+\hline
 
 
 
-\bottomrule
+CG4 & \(\log_{10}\mathrm{sSFR}\) & $-12.08$ $\pm$ 0.03 & $-10.19$ $\pm$ 0.07\\
+
+ & \(M_r\) & $-21.16$ $\pm$ 0.14 & $-20.4$ $\pm$ 0.14\\
+
+ & \(\log M_\star\) & $10.64$ $\pm$ 0.07 & $10.05$ $\pm$ 0.05\\
+
+
+
+Control4B & \(\log_{10}\mathrm{sSFR}\) & $-12.1$ $\pm$ 0.01 & $-10.31$ $\pm$ 0.02\\
+
+ & \(M_r\) & $-21.52$ $\pm$ 0.05 & $-20.75$ $\pm$ 0.04\\
+
+ & \(\log M_\star\) & $10.79$ $\pm$ 0.01 & $10.24$ $\pm$ 0.02\\
+
+
+
+Control4C & \(\log_{10}\mathrm{sSFR}\) & $-11.92$ $\pm$ 0.02 & $-10.16$ $\pm$ 0.02\\
+
+ & \(M_r\) & $-20.81$ $\pm$ 0.07 & $-19.93$ $\pm$ 0.04\\
+
+ & \(\log M_\star\) & $10.47$ $\pm$ 0.03 & $9.82$ $\pm$ 0.03\\
+
+
+
+RG4 & \(\log_{10}\mathrm{sSFR}\) & $-11.91$ $\pm$ 0.07 & $-10.16$ $\pm$ 0.07\\
+
+ & \(M_r\) & $-21.11$ $\pm$ 0.25 & $-20.32$ $\pm$ 0.12\\
+
+ & \(\log M_\star\) & $10.62$ $\pm$ 0.08 & $9.97$ $\pm$ 0.09\\
+
+
+
+\hline
 \end{tabular}
-\caption{Median values of various quantities for galaxies according to the sSFR class of their BGG (BGG included).
-Uncertainties are estimated by bootstrapping (10\,000 iterations).}
-\label{tab:split_BGG_ssfr_class_properties}
-\end{table*}
+\end{table}
 
-\begin{table*}
+
+\begin{table}
     \centering
-
-    % One column for Sample + 2 columns per quantity
-    \begin{tabular}{l*{6}{c}}
-\toprule
- Sample &
-
-  \multicolumn{2}{c}{$\log_{10}(\mathrm{sSFR}\,[\mathrm{yr}^{-1}])$}%
-   & 
-
-  \multicolumn{2}{c}{$M_r$}%
-   & 
-
-  \multicolumn{2}{c}{$\log(M_\star/M_\odot)$}%
-  
- \\
-% --- second header row: BGG sSFR-class split ---
- &
-
-  Passive & Star-forming%
-   & 
-
-  Passive & Star-forming%
-   & 
-
-  Passive & Star-forming%
-  
- \\
-\midrule
-
-
-  CG4 &
-  
-    $-11.23$ $\pm$ 0.16 &
-    $-10.92$ $\pm$ 0.48 &
-  
-    $-20.45$ $\pm$ 0.13 &
-    $-20.34$ $\pm$ 0.18 &
-  
-    $10.22$ $\pm$ 0.05 &
-    $10.09$ $\pm$ 0.07
-   \\
-
-  Control4B &
-  
-    $-11.26$ $\pm$ 0.06 &
-    $-10.91$ $\pm$ 0.13 &
-  
-    $-20.9$ $\pm$ 0.03 &
-    $-20.75$ $\pm$ 0.06 &
-  
-    $10.43$ $\pm$ 0.02 &
-    $10.3$ $\pm$ 0.03
-   \\
-
-  Control4C &
-  
-    $-10.96$ $\pm$ 0.04 &
-    $-10.6$ $\pm$ 0.07 &
-  
-    $-19.8$ $\pm$ 0.04 &
-    $-20.02$ $\pm$ 0.10 &
-  
-    $9.91$ $\pm$ 0.02 &
-    $9.89$ $\pm$ 0.07
-   \\
-
-  RG4 &
-  
-    $-10.82$ $\pm$ 0.19 &
-    $-10.61$ $\pm$ 0.22 &
-  
-    $-20.23$ $\pm$ 0.16 &
-    $-20.3$ $\pm$ 0.13 &
-  
-    $10.09$ $\pm$ 0.08 &
-    $10$ $\pm$ 0.13
-   \\
+    \caption{Median values of various quantities for galaxies according to the sSFR class of their BGG (BGG included).
+Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr\(^{-1}\), and stellar mass is in \(M_\odot\).}
+    \label{tab:split_BGG_ssfr_class_properties}
+    \small
+    \tabcolsep=2pt
+    \begin{tabular}{llcc}
+\hline\hline
+Sample & Quantity & BGG passive & BGG SF\\
+\hline
 
 
 
-\bottomrule
+CG4 & \(\log_{10}\mathrm{sSFR}\) & $-11.53$ $\pm$ 0.09 & $-10.85$ $\pm$ 0.29\\
+
+ & \(M_r\) & $-20.93$ $\pm$ 0.11 & $-20.77$ $\pm$ 0.32\\
+
+ & \(\log M_\star\) & $10.46$ $\pm$ 0.06 & $10.32$ $\pm$ 0.12\\
+
+
+
+Control4B & \(\log_{10}\mathrm{sSFR}\) & $-11.53$ $\pm$ 0.03 & $-10.86$ $\pm$ 0.06\\
+
+ & \(M_r\) & $-21.25$ $\pm$ 0.03 & $-21.12$ $\pm$ 0.07\\
+
+ & \(\log M_\star\) & $10.61$ $\pm$ 0.02 & $10.46$ $\pm$ 0.04\\
+
+
+
+Control4C & \(\log_{10}\mathrm{sSFR}\) & $-11.3$ $\pm$ 0.03 & $-10.62$ $\pm$ 0.06\\
+
+ & \(M_r\) & $-20.42$ $\pm$ 0.05 & $-20.55$ $\pm$ 0.08\\
+
+ & \(\log M_\star\) & $10.22$ $\pm$ 0.02 & $10.15$ $\pm$ 0.06\\
+
+
+
+RG4 & \(\log_{10}\mathrm{sSFR}\) & $-11.14$ $\pm$ 0.19 & $-10.58$ $\pm$ 0.16\\
+
+ & \(M_r\) & $-20.69$ $\pm$ 0.14 & $-20.74$ $\pm$ 0.27\\
+
+ & \(\log M_\star\) & $10.32$ $\pm$ 0.07 & $10.19$ $\pm$ 0.12\\
+
+
+
+
+\hline
 \end{tabular}
-\caption{Median values of various quantities for galaxies according to the sSFR class of their BGG (satellites only).
-Uncertainties are estimated by bootstrapping (10\,000 iterations).}
-\label{tab:split_BGG_ssfr_class_properties_Sat}
-\end{table*}
+\end{table}
+
+\begin{table}
+    \centering
+    \caption{Median values of various quantities for galaxies according to the sSFR class of their BGG (satellites only).
+Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr\(^{-1}\), and stellar mass is in \(M_\odot\).}
+    \label{tab:split_BGG_ssfr_class_properties_Sat}
+    \small
+    \tabcolsep=2pt
+    \begin{tabular}{llcc}
+\hline\hline
+Sample & Quantity & BGG passive & BGG SF\\
+\hline
+
+
+
+CG4 & \(\log_{10}\mathrm{sSFR}\) & $-11.23$ $\pm$ 0.16 & $-10.92$ $\pm$ 0.48\\
+
+ & \(M_r\) & $-20.45$ $\pm$ 0.13 & $-20.34$ $\pm$ 0.18\\
+
+ & \(\log M_\star\) & $10.22$ $\pm$ 0.05 & $10.09$ $\pm$ 0.07\\
+
+
+
+Control4B & \(\log_{10}\mathrm{sSFR}\) & $-11.26$ $\pm$ 0.06 & $-10.91$ $\pm$ 0.13\\
+
+ & \(M_r\) & $-20.9$ $\pm$ 0.03 & $-20.75$ $\pm$ 0.06\\
+
+ & \(\log M_\star\) & $10.43$ $\pm$ 0.02 & $10.3$ $\pm$ 0.03\\
+
+
+
+Control4C & \(\log_{10}\mathrm{sSFR}\) & $-10.96$ $\pm$ 0.04 & $-10.6$ $\pm$ 0.07\\
+
+ & \(M_r\) & $-19.8$ $\pm$ 0.04 & $-20.02$ $\pm$ 0.10\\
+
+ & \(\log M_\star\) & $9.91$ $\pm$ 0.02 & $9.89$ $\pm$ 0.07\\
+
+
+
+RG4 & \(\log_{10}\mathrm{sSFR}\) & $-10.82$ $\pm$ 0.19 & $-10.61$ $\pm$ 0.22\\
+
+ & \(M_r\) & $-20.23$ $\pm$ 0.16 & $-20.3$ $\pm$ 0.13\\
+
+ & \(\log M_\star\) & $10.09$ $\pm$ 0.08 & $10$ $\pm$ 0.13\\
+
+
+
+
+\hline
+\end{tabular}
+\end{table}
 
 
 \subsection{Main sequence}
@@ -2040,12 +1926,16 @@ The magnitude-gap and BGG-luminosity-fraction quantities are available for all 1
 
 Overall, these tests provide little evidence that the E/Sp mix is driven by Zheng--Shen class, magnitude gap, or BGG luminosity fraction. The few marginal associations are therefore treated as descriptive diagnostics rather than as robust secondary trends.
 
-\begin{table*}
+\begin{table}
 \centering
+\caption{Elliptical/smooth and spiral/features counts by Zheng--Shen class for the \CG{} sample. Uncertain morphologies are excluded. Split systems have zero counts because they were removed by the existing non-split \CG{} sample definition.}
+\label{tab:morphology_dominance_class_counts}
+\small
+\tabcolsep=2pt
 \begin{tabular}{lccc}
-\toprule
-Zheng--Shen class & All \CG{} E/Sp & \CG{} BGG E/Sp & \CG{} satellites E/Sp \\
-\midrule
+\hline\hline
+\makecell{Zheng--Shen\\class} & \makecell{All \CG{}\\E/Sp} & \makecell{\CG{} BGG\\E/Sp} & \makecell{\CG{} sat.\\E/Sp} \\
+\hline
 
 
 
@@ -2066,104 +1956,92 @@ Predominant & 41/22 & 11/5 & 30/17 \\
 
 Embedded & 76/53 & 22/11 & 54/42 \\
 
-\bottomrule
+\hline
 \end{tabular}
-\caption{Elliptical/smooth and spiral/features counts by Zheng--Shen class for the \CG{} sample. Uncertain morphologies are excluded. Split systems have zero counts because they were removed by the existing non-split \CG{} sample definition.}
-\label{tab:morphology_dominance_class_counts}
-\end{table*}
+\end{table}
 
 For the Zheng--Shen compact-group class, no \CG{} association reaches the conventional 5\% significance threshold. The closest case is the satellite-only test, which is treated as marginal and descriptive. Because the Zheng--Shen class is not defined for the \RG{} catalogue, we do not attempt an \RG{} class comparison.
 
-\begin{table*}
+\begin{table}
 \centering
-\begin{tabular}{llccc}
-\toprule
-Subset & Sample & Class test & \(\Delta m_{12}\) model & \(f_{L,\mathrm{BGG}}\) model \\
-\midrule
-
-
-
-
-
-
-
-
-all galaxies &
-\CG{} &
-\(p = 0.137\) &
-OR \(1.42\), \(p = 0.160\) &
-OR \(1.29\), \(p = 0.076\) \\
-
-
-
-
-
-
-
-all galaxies &
-\RG{} &
-not defined &
-OR \(1.33\), \(p = 0.220\) &
-OR \(1.09\), \(p = 0.540\) \\
-
-
-
-
-
-
-
-
-
-BGGs only &
-\CG{} &
-\(p = 1.000\) &
-OR \(1.77\), \(p = 0.426\) &
-OR \(1.68\), \(p = 0.174\) \\
-
-
-
-
-
-
-
-BGGs only &
-\RG{} &
-not defined &
-OR \(1.58\), \(p = 0.312\) &
-OR \(1.21\), \(p = 0.520\) \\
-
-
-
-
-
-
-
-
-
-satellites only &
-\CG{} &
-\(p = 0.066\) &
-OR \(1.28\), \(p = 0.342\) &
-OR \(1.18\), \(p = 0.318\) \\
-
-
-
-
-
-
-
-satellites only &
-\RG{} &
-not defined &
-OR \(1.41\), \(p = 0.342\) &
-OR \(1.12\), \(p = 0.584\) \\
-
-
-\bottomrule
-\end{tabular}
 \caption{Tests of the E-vs-Sp morphology mix against compact-group class, magnitude gap, and BGG luminosity fraction. The continuous columns report the available adjusted logistic model for \(P(\mathrm{E})\); all-galaxy and satellite fits use group-clustered standard errors. Odds ratios are reported per magnitude for \(\Delta m_{12}\) and per 0.1 increase in luminosity fraction for \(f_{L,\mathrm{BGG}}\).}
 \label{tab:morphology_dominance_models}
-\end{table*}
+\small
+\tabcolsep=2pt
+\begin{tabular}{lllc}
+\hline\hline
+Subset & Sample & Test & Result \\
+\hline
+
+
+
+
+
+
+
+
+all galaxies & \CG{} & Class & \(p = 0.137\) \\
+ & & \(\Delta m_{12}\) & OR \(1.42\), \(p = 0.160\) \\
+ & & \(f_{L,\mathrm{BGG}}\) & OR \(1.29\), \(p = 0.076\) \\
+
+
+
+
+
+
+
+all galaxies & \RG{} & Class & not defined \\
+ & & \(\Delta m_{12}\) & OR \(1.33\), \(p = 0.220\) \\
+ & & \(f_{L,\mathrm{BGG}}\) & OR \(1.09\), \(p = 0.540\) \\
+
+
+
+
+
+
+
+
+
+BGGs only & \CG{} & Class & \(p = 1.000\) \\
+ & & \(\Delta m_{12}\) & OR \(1.77\), \(p = 0.426\) \\
+ & & \(f_{L,\mathrm{BGG}}\) & OR \(1.68\), \(p = 0.174\) \\
+
+
+
+
+
+
+
+BGGs only & \RG{} & Class & not defined \\
+ & & \(\Delta m_{12}\) & OR \(1.58\), \(p = 0.312\) \\
+ & & \(f_{L,\mathrm{BGG}}\) & OR \(1.21\), \(p = 0.520\) \\
+
+
+
+
+
+
+
+
+
+satellites only & \CG{} & Class & \(p = 0.066\) \\
+ & & \(\Delta m_{12}\) & OR \(1.28\), \(p = 0.342\) \\
+ & & \(f_{L,\mathrm{BGG}}\) & OR \(1.18\), \(p = 0.318\) \\
+
+
+
+
+
+
+
+satellites only & \RG{} & Class & not defined \\
+ & & \(\Delta m_{12}\) & OR \(1.41\), \(p = 0.342\) \\
+ & & \(f_{L,\mathrm{BGG}}\) & OR \(1.12\), \(p = 0.584\) \\
+
+
+\hline
+\end{tabular}
+\end{table}
 
 For \(\Delta m_{12}\), no statistically significant morphology trend is found in \CG{} or \RG{}, whether the fit is run for all galaxies, BGGs only, or satellites only. The same conclusion holds for \(f_{L,\mathrm{BGG}}\): no fitted trend reaches \(p<0.05\). The \CG{}--\RG{} interaction models detect no significant difference in the morphology--dominance relation for either \(\Delta m_{12}\) or \(f_{L,\mathrm{BGG}}\), across all galaxies, BGGs only, and satellites only. A class interaction is not defined because the Zheng--Shen compact-group class has no \RG{} counterpart in the present catalogue. Across the morphology--class, morphology--gap, morphology--luminosity-fraction, and interaction tests, no result remains significant after Benjamini--Hochberg FDR control.
 
@@ -2622,10 +2500,12 @@ The colour-selection mass audit is shown in Appendix Fig.~\ref{fig:colour_select
 
 \begin{table*}
 \centering
+\caption{Result hierarchy. Baseline tests describe where \CG{} differs from the controls; the main interpretation is based on diagnostics that remain after adjusted or matched comparisons.}
+\label{tab:result_hierarchy}
 \begin{tabular}{p{0.22\textwidth}p{0.23\textwidth}p{0.18\textwidth}p{0.28\textwidth}}
-\toprule
+\hline\hline
 Diagnostic & Baseline \CG{} signal & Survives adjusted/matched analysis? & Interpretation \\
-\midrule
+\hline
 Elliptical/smooth fraction & Enhanced in \CG{} & Yes & Robust accumulated morphology signal. \\
 Spiral/features fraction & Reduced in \CG{} & Yes & Reduced late-type vote-fraction population. \\
 Galaxy Zoo crowding check & Smooth excess persists after close-neighbour exclusion & Yes, as a limited robustness check & Morphology result not solely produced by the closest projected pairs. \\
@@ -2640,10 +2520,8 @@ Galaxy size at fixed mass & Hints of smaller \CG{} sizes & Matched pairs only & 
 
 Concentration index & \(R_{90,r}/R_{50,r}\) structural proxy now measured & No & No independent concentration signal at fixed mass. \\
 
-\bottomrule
+\hline
 \end{tabular}
-\caption{Result hierarchy. Baseline tests describe where \CG{} differs from the controls; the main interpretation is based on diagnostics that remain after adjusted or matched comparisons.}
-\label{tab:result_hierarchy}
 \end{table*}
 
 
@@ -2732,6 +2610,8 @@ The input data are drawn from public SDSS spectroscopic and photometric tables, 
 
 The project analysis and paper-generation scripts are publicly available in the GitHub repository \href{https://github.com/MatthieuTricottet/CG_Gals}{\texttt{MatthieuTricottet/CG\_Gals}}. A tagged or archival release corresponding to the final paper version will be made available with the public data products.
 
+\bibliographystyle{aa}
+\bibliography{paper}
 \clearpage
 \begin{appendix}
 
@@ -3070,8 +2950,5 @@ This appendix collects the secondary diagnostic figures referenced in the main t
 % \begin{acknowledgements}
 % Add acknowledgements here before submission.
 % \end{acknowledgements}
-
-\bibliographystyle{aa}
-\bibliography{paper}
 
 \end{document}

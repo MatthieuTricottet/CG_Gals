@@ -149,6 +149,7 @@
 <% macro p_from_fmt(fmt, label='p') -%><% set text = (fmt|string)|replace('$', '')|trim -%>\(<< label >><% if text.startswith('<') %><< text >><% else %> = << text >><% endif %>\)<%- endmacro %>
 <% macro pval_text(x, nd=3) -%><% if x is none -%>\(p\) unavailable<% elif x < 0.000001 -%>\(p<10^{-6}\)<% elif x < 0.001 -%>\(p = << gu.latex_number(x, precision=2, math_mode=False) >>\)<% else -%>\(p = << x|fmt(nd) >>\)<% endif -%><% endmacro %>
 <% macro pholm_text(x, nd=3) -%><% if x is none -%>Holm-corrected \(p\) unavailable<% elif x < 0.000001 -%>Holm-corrected \(p<10^{-6}\)<% elif x < 0.001 -%>Holm-corrected \(p = << gu.latex_number(x, precision=2, math_mode=False) >>\)<% else -%>Holm-corrected \(p = << x|fmt(nd) >>\)<% endif -%><% endmacro %>
+<% macro qlabel_short(q) -%><% if q.key == 'sSFR' -%>\(\log_{10}\mathrm{sSFR}\)<% elif q.key == 'M_r' -%>\(M_r\)<% else -%>\(\log M_\star\)<% endif -%><% endmacro %>
 
 \section{Introduction}\label{sec:intro}
 
@@ -215,7 +216,7 @@ For satellites, the corresponding p-values are
   <<p_from_fmt(Sat_star_forming_pvalue_Control4C_vs_CG4)>> against \CC{} and
   <<p_from_fmt(Sat_star_forming_pvalue_RG4_vs_CG4)>> against \RG. The satellite deficit is clearest in the raw comparison with \RG{} and is revisited below with adjusted and matched analyses.
 
-\begin{table*}
+\begin{table}
 <% set CG4_all_Q = CG4_BGG_NQuenched + CG4_Sat_NQuenched %>
 <% set CG4_all_P = CG4_BGG_NPassive + CG4_Sat_NPassive %>
 <% set CG4_all_SF = CG4_BGG_NStarforming + CG4_Sat_NStarforming %>
@@ -233,29 +234,30 @@ For satellites, the corresponding p-values are
 <% set RG4_all_SF = RG4_BGG_NStarforming + RG4_Sat_NStarforming %>
 <% set RG4_all_N = RG4_all_Q + RG4_all_P + RG4_all_SF %>
     \centering
-    \begin{tabular}{llccc}
-        \toprule
-            \textbf{Sample} & & \textbf{  <<sSFR_status[0]>>  } & \textbf{  <<sSFR_status[1]>>  } & \textbf{Star-forming} \\
-            \CG & &  <<CG4_all_Q>>  (<< (100 * CG4_all_Q / CG4_all_N)|round(1) >> \%) &  <<CG4_all_P>>  (<< (100 * CG4_all_P / CG4_all_N)|round(1) >> \%)&  <<CG4_all_SF>>  (<< (100 * CG4_all_SF / CG4_all_N)|round(1) >> \%) \\
-             & \emph{BGG} &  \emph{<<CG4_BGG_NQuenched>>  (<<CG4_BGG_NQuenched_pc>> \%)} &  \emph{<<CG4_BGG_NPassive>>  (<<CG4_BGG_NPassive_pc>> \%)} &  \emph{<<CG4_BGG_NStarforming>>  (<<CG4_BGG_NStarforming_pc>> \%)} \\
-             & \emph{Satellites} &  \emph{<<CG4_Sat_NQuenched>>  (<<CG4_Sat_NQuenched_pc>> \%)} &  \emph{<<CG4_Sat_NPassive>>  (<<CG4_Sat_NPassive_pc>> \%)} &  \emph{<<CG4_Sat_NStarforming>>  (<<CG4_Sat_NStarforming_pc>> \%)} \\
-            \CB & &  <<Control4B_all_Q>>  (<< (100 * Control4B_all_Q / Control4B_all_N)|round(1) >> \%) &  <<Control4B_all_P>>  (<< (100 * Control4B_all_P / Control4B_all_N)|round(1) >> \%) &  <<Control4B_all_SF>>  (<< (100 * Control4B_all_SF / Control4B_all_N)|round(1) >> \%) \\
-             & \emph{BGG} &  \emph{<<Control4B_BGG_NQuenched>>  (<<Control4B_BGG_NQuenched_pc>> \%)} &  \emph{<<Control4B_BGG_NPassive>>  (<<Control4B_BGG_NPassive_pc>> \%)} &  \emph{<<Control4B_BGG_NStarforming>>  (<<Control4B_BGG_NStarforming_pc>> \%)} \\
-             & \emph{Satellites} &  \emph{<<Control4B_Sat_NQuenched>>  (<<Control4B_Sat_NQuenched_pc>> \%)} &  \emph{<<Control4B_Sat_NPassive>>  (<<Control4B_Sat_NPassive_pc>> \%)} &  \emph{<<Control4B_Sat_NStarforming>>  (<<Control4B_Sat_NStarforming_pc>> \%)} \\
-            \CC & &  <<Control4C_all_Q>>  (<< (100 * Control4C_all_Q / Control4C_all_N)|round(1) >> \%) &  <<Control4C_all_P>>  (<< (100 * Control4C_all_P / Control4C_all_N)|round(1) >> \%) &  <<Control4C_all_SF>>  (<< (100 * Control4C_all_SF / Control4C_all_N)|round(1) >> \%) \\
-             & \emph{BGG} &  \emph{<<Control4C_BGG_NQuenched>>  (<<Control4C_BGG_NQuenched_pc>> \%)} &  \emph{<<Control4C_BGG_NPassive>>  (<<Control4C_BGG_NPassive_pc>> \%)} &  \emph{<<Control4C_BGG_NStarforming>>  (<<Control4C_BGG_NStarforming_pc>> \%)} \\
-             & \emph{Satellites} &  \emph{<<Control4C_Sat_NQuenched>>  (<<Control4C_Sat_NQuenched_pc>> \%)} &  \emph{<<Control4C_Sat_NPassive>>  (<<Control4C_Sat_NPassive_pc>> \%)} &  \emph{<<Control4C_Sat_NStarforming>>  (<<Control4C_Sat_NStarforming_pc>> \%)} \\
-            \RG & &  <<RG4_all_Q>>  (<< (100 * RG4_all_Q / RG4_all_N)|round(1) >> \%) &  <<RG4_all_P>>  (<< (100 * RG4_all_P / RG4_all_N)|round(1) >> \%) &  <<RG4_all_SF>>  (<< (100 * RG4_all_SF / RG4_all_N)|round(1) >> \%)\\
-            & \emph{BGG} &  \emph{<<RG4_BGG_NQuenched>>  (<<RG4_BGG_NQuenched_pc>> \%)} &  \emph{<<RG4_BGG_NPassive>>  (<<RG4_BGG_NPassive_pc>> \%)} &  \emph{<<RG4_BGG_NStarforming>>  (<<RG4_BGG_NStarforming_pc>> \%)}\\
-            & \emph{Satellites} &  \emph{<<RG4_Sat_NQuenched>>  (<<RG4_Sat_NQuenched_pc>> \%)} &  \emph{<<RG4_Sat_NPassive>>  (<<RG4_Sat_NPassive_pc>> \%)} &  \emph{<<RG4_Sat_NStarforming>>  (<<RG4_Sat_NStarforming_pc>> \%)}\\
-         \midrule
-            \emph{SDSS selection} & &  \emph{<<SDSS_NQuenched>> (<<SDSS_NQuenched_pc>> \%)} &  \emph{<<SDSS_NPassive>>  (<<SDSS_NPassive_pc>> \%)} &  \emph{<<SDSS_NStarforming>>  (<<SDSS_NStarforming_pc>> \%)}\\
-         \midrule
-        \bottomrule
-    \end{tabular}
-    \caption{Number of galaxies in each sSFR status for each sample.}
+    \caption{Number of galaxies in each sSFR status for each sample}
     \label{tab:sSFR_status}
-\end{table*}
+    \tabcolsep=3pt
+    \begin{tabular}{lccc}
+        \hline\hline
+            \textbf{Sample} & \textbf{  <<sSFR_status[0]>>  } & \textbf{  <<sSFR_status[1]>>  } & \textbf{Star-forming} \\
+            \hline
+            \CG &  <<CG4_all_Q>>  (<< (100 * CG4_all_Q / CG4_all_N)|fmt(0) >>\%) &  <<CG4_all_P>>  (<< (100 * CG4_all_P / CG4_all_N)|fmt(0) >>\%)&  <<CG4_all_SF>>  (<< (100 * CG4_all_SF / CG4_all_N)|fmt(0) >>\%) \\
+             \quad \emph{BGG} &  \emph{<<CG4_BGG_NQuenched>>  (<<CG4_BGG_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<CG4_BGG_NPassive>>  (<<CG4_BGG_NPassive_pc|fmt(0)>>\%)} &  \emph{<<CG4_BGG_NStarforming>>  (<<CG4_BGG_NStarforming_pc|fmt(0)>>\%)} \\
+             \quad \emph{Satellites} &  \emph{<<CG4_Sat_NQuenched>>  (<<CG4_Sat_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<CG4_Sat_NPassive>>  (<<CG4_Sat_NPassive_pc|fmt(0)>>\%)} &  \emph{<<CG4_Sat_NStarforming>>  (<<CG4_Sat_NStarforming_pc|fmt(0)>>\%)} \\
+            \CB &  <<Control4B_all_Q>>  (<< (100 * Control4B_all_Q / Control4B_all_N)|fmt(0) >>\%) &  <<Control4B_all_P>>  (<< (100 * Control4B_all_P / Control4B_all_N)|fmt(0) >>\%) &  <<Control4B_all_SF>>  (<< (100 * Control4B_all_SF / Control4B_all_N)|fmt(0) >>\%) \\
+             \quad \emph{BGG} &  \emph{<<Control4B_BGG_NQuenched>>  (<<Control4B_BGG_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<Control4B_BGG_NPassive>>  (<<Control4B_BGG_NPassive_pc|fmt(0)>>\%)} &  \emph{<<Control4B_BGG_NStarforming>>  (<<Control4B_BGG_NStarforming_pc|fmt(0)>>\%)} \\
+             \quad \emph{Satellites} &  \emph{<<Control4B_Sat_NQuenched>>  (<<Control4B_Sat_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<Control4B_Sat_NPassive>>  (<<Control4B_Sat_NPassive_pc|fmt(0)>>\%)} &  \emph{<<Control4B_Sat_NStarforming>>  (<<Control4B_Sat_NStarforming_pc|fmt(0)>>\%)} \\
+            \CC &  <<Control4C_all_Q>>  (<< (100 * Control4C_all_Q / Control4C_all_N)|fmt(0) >>\%) &  <<Control4C_all_P>>  (<< (100 * Control4C_all_P / Control4C_all_N)|fmt(0) >>\%) &  <<Control4C_all_SF>>  (<< (100 * Control4C_all_SF / Control4C_all_N)|fmt(0) >>\%) \\
+             \quad \emph{BGG} &  \emph{<<Control4C_BGG_NQuenched>>  (<<Control4C_BGG_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<Control4C_BGG_NPassive>>  (<<Control4C_BGG_NPassive_pc|fmt(0)>>\%)} &  \emph{<<Control4C_BGG_NStarforming>>  (<<Control4C_BGG_NStarforming_pc|fmt(0)>>\%)} \\
+             \quad \emph{Satellites} &  \emph{<<Control4C_Sat_NQuenched>>  (<<Control4C_Sat_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<Control4C_Sat_NPassive>>  (<<Control4C_Sat_NPassive_pc|fmt(0)>>\%)} &  \emph{<<Control4C_Sat_NStarforming>>  (<<Control4C_Sat_NStarforming_pc|fmt(0)>>\%)} \\
+            \RG &  <<RG4_all_Q>>  (<< (100 * RG4_all_Q / RG4_all_N)|fmt(0) >>\%) &  <<RG4_all_P>>  (<< (100 * RG4_all_P / RG4_all_N)|fmt(0) >>\%) &  <<RG4_all_SF>>  (<< (100 * RG4_all_SF / RG4_all_N)|fmt(0) >>\%)\\
+            \quad \emph{BGG} &  \emph{<<RG4_BGG_NQuenched>>  (<<RG4_BGG_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<RG4_BGG_NPassive>>  (<<RG4_BGG_NPassive_pc|fmt(0)>>\%)} &  \emph{<<RG4_BGG_NStarforming>>  (<<RG4_BGG_NStarforming_pc|fmt(0)>>\%)}\\
+            \quad \emph{Satellites} &  \emph{<<RG4_Sat_NQuenched>>  (<<RG4_Sat_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<RG4_Sat_NPassive>>  (<<RG4_Sat_NPassive_pc|fmt(0)>>\%)} &  \emph{<<RG4_Sat_NStarforming>>  (<<RG4_Sat_NStarforming_pc|fmt(0)>>\%)}\\
+         \hline
+            \emph{SDSS select'n} &  \emph{<<SDSS_NQuenched>> (<<SDSS_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<SDSS_NPassive>>  (<<SDSS_NPassive_pc|fmt(0)>>\%)} &  \emph{<<SDSS_NStarforming>>  (<<SDSS_NStarforming_pc|fmt(0)>>\%)}\\
+        \hline
+    \end{tabular}
+\end{table}
 
 
 
@@ -301,22 +303,24 @@ Barnard's two-sided exact tests were used to compare the fraction of each morpho
  \citep{Tricottet+25}, show a robust raw excess of elliptical/smooth classifications and a deficit of spiral/features classifications. Figure~\ref{fig:galaxies_morph_sfr} displays sSFR versus stellar mass for galaxies in the SDSS selection and in \CG.
 
 
-\begin{table*}
+\begin{table}
     \centering
-    \begin{tabular}{lccc}
-        \toprule
-            \textbf{Sample} & \textbf{Elliptical/smooth} & \textbf{Spiral/features} & \textbf{Uncertain} \\
-            \CG &  <<CG4_Gals_N_Elliptical>>  (<<CG4_Gals_fraction_Elliptical_pc>> \%) &  <<CG4_Gals_N_Spiral>>  (<<CG4_Gals_fraction_Spiral_pc>> \%)&  <<CG4_Gals_N_Uncertain>>  (<<CG4_Gals_fraction_Uncertain_pc>> \%) \\
-            \CB &  <<Control4B_Gals_N_Elliptical>>  (<<Control4B_Gals_fraction_Elliptical_pc>> \%) &  <<Control4B_Gals_N_Spiral>>  (<<Control4B_Gals_fraction_Spiral_pc>> \%) &  <<Control4B_Gals_N_Uncertain>>  (<<Control4B_Gals_fraction_Uncertain_pc>> \%) \\
-            \CC &  <<Control4C_Gals_N_Elliptical>>  (<<Control4C_Gals_fraction_Elliptical_pc>> \%) &  <<Control4C_Gals_N_Spiral>>  (<<Control4C_Gals_fraction_Spiral_pc>> \%) &  <<Control4C_Gals_N_Uncertain>>  (<<Control4C_Gals_fraction_Uncertain_pc>> \%) \\
-            \RG &  <<RG4_Gals_N_Elliptical>>  (<<RG4_Gals_fraction_Elliptical_pc>> \%) &  <<RG4_Gals_N_Spiral>>  (<<RG4_Gals_fraction_Spiral_pc>> \%) &  <<RG4_Gals_N_Uncertain>>  (<<RG4_Gals_fraction_Uncertain_pc>> \%)\\
-            \emph{SDSS selection} &  \emph{<<SDSS_N_Elliptical>> (<<SDSS_fraction_Elliptical_pc>> \%)} &  \emph{<<SDSS_N_Spiral>>  (<<SDSS_fraction_Spiral_pc>> \%)} &  \emph{<<SDSS_N_Uncertain>>  (<<SDSS_fraction_Uncertain_pc>> \%)}\\
-         \midrule
-        \bottomrule
-    \end{tabular}
     \caption{Number of galaxies in each Galaxy Zoo vote-fraction morphology proxy for each sample.}
     \label{tab:morphologies}
-\end{table*}
+    \small
+    \tabcolsep=2pt
+    \begin{tabular}{lccc}
+        \hline\hline
+            \textbf{Sample} & \makecell{\textbf{Elliptical/}\\\textbf{smooth}} & \makecell{\textbf{Spiral/}\\\textbf{features}} & \textbf{Uncertain} \\
+            \hline
+            \CG &  <<CG4_Gals_N_Elliptical>>  (<<CG4_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<CG4_Gals_N_Spiral>>  (<<CG4_Gals_fraction_Spiral_pc|fmt(0)>>\%)&  <<CG4_Gals_N_Uncertain>>  (<<CG4_Gals_fraction_Uncertain_pc|fmt(0)>>\%) \\
+            \CB &  <<Control4B_Gals_N_Elliptical>>  (<<Control4B_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<Control4B_Gals_N_Spiral>>  (<<Control4B_Gals_fraction_Spiral_pc|fmt(0)>>\%) &  <<Control4B_Gals_N_Uncertain>>  (<<Control4B_Gals_fraction_Uncertain_pc|fmt(0)>>\%) \\
+            \CC &  <<Control4C_Gals_N_Elliptical>>  (<<Control4C_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<Control4C_Gals_N_Spiral>>  (<<Control4C_Gals_fraction_Spiral_pc|fmt(0)>>\%) &  <<Control4C_Gals_N_Uncertain>>  (<<Control4C_Gals_fraction_Uncertain_pc|fmt(0)>>\%) \\
+            \RG &  <<RG4_Gals_N_Elliptical>>  (<<RG4_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<RG4_Gals_N_Spiral>>  (<<RG4_Gals_fraction_Spiral_pc|fmt(0)>>\%) &  <<RG4_Gals_N_Uncertain>>  (<<RG4_Gals_fraction_Uncertain_pc|fmt(0)>>\%)\\
+            \emph{SDSS selection} &  \emph{<<SDSS_N_Elliptical>> (<<SDSS_fraction_Elliptical_pc|fmt(0)>>\%)} &  \emph{<<SDSS_N_Spiral>>  (<<SDSS_fraction_Spiral_pc|fmt(0)>>\%)} &  \emph{<<SDSS_N_Uncertain>>  (<<SDSS_fraction_Uncertain_pc|fmt(0)>>\%)}\\
+        \hline
+    \end{tabular}
+\end{table}
 
 
 \begin{figure}
@@ -367,116 +371,75 @@ Thus, BGG morphologies differ between \CG{} and \RG: \CG{} BGGs have a higher el
 
 Tables~\ref{tab:passive_starforming_medians}--\ref{tab:split_BGG_ssfr_class_properties_Sat} summarize the typical stellar masses, absolute magnitudes, and sSFRs of passive and star-forming galaxies, including splits by the sSFR class of the BGG. These medians are descriptive and mainly show that star-formation class is entangled with stellar mass and luminosity, motivating the adjusted models below.
 
-\begin{table*}
+\begin{table}
 \centering
-
-% 1 column for Sample + 2 columns per quantity
-\begin{tabular}{l*{<< qdefs|length * 2 >>}{c}}
-\toprule
-
-% ---------- Header row 1: quantity names ----------
-Sample
-<% for q in qdefs %>
-  & \multicolumn{2}{c}{<< q.label >>}
-<% endfor %>
-\\
-
-% ---------- Header row 2: Passive / Star-forming ----------
-<% for q in qdefs %>
-  & Passive & Star-forming
-<% endfor %>
-\\
-\midrule
-
-% ---------- Data rows ----------
-<% for sample in samples %>
-<< sample >>
-<% for q in qdefs %>
-  & << r[sample ~ '_Passive_' ~ q.key ~ '_median'] >> $\pm$ << r[sample ~ '_Passive_' ~ q.key ~ '_median_err'] >>
-  & << r[sample ~ '_Starforming_' ~ q.key ~ '_median'] >> $\pm$ << r[sample ~ '_Starforming_' ~ q.key ~ '_median_err'] >>
-<% endfor %>
-\\
-<% endfor %>
-
-\bottomrule
-\end{tabular}
-
 \caption{Median values of galaxy properties for passive and star-forming populations in each sample.
-Uncertainties are estimated by bootstrapping (10\,000 iterations).
+Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr\(^{-1}\), and stellar mass is in \(M_\odot\).
 }
 \label{tab:passive_starforming_medians}
-\end{table*}
-
-
-\begin{table*}
-    \centering
-
-    % One column for Sample + 2 columns per quantity
-    \begin{tabular}{l*{<< 2 * qdefs|length >>}{c}}
-\toprule
- Sample &
-<% for q in qdefs %>
-  \multicolumn{2}{c}{<< q.label >>}%
-  <% if not loop.last %> & <% endif %>
-<% endfor %> \\
-% --- second header row: BGG sSFR-class split ---
- BGG &
-<% for q in qdefs %>
-  Passive & Star-forming%
-  <% if not loop.last %> & <% endif %>
-<% endfor %> \\
-\midrule
+\small
+\tabcolsep=2pt
+\begin{tabular}{llcc}
+\hline\hline
+Sample & Quantity & Passive & Star-forming\\
+\hline
 
 <% for sample in samples %>
-  << sample >> &
-  <% for q in qdefs %>
-    << r[sample ~ "_BGG_Passive_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Passive_" ~ q.key ~ "_median_err"] >> &
-    << r[sample ~ "_BGG_Starforming_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Starforming_" ~ q.key ~ "_median_err"] >><% if not loop.last %> &<% endif %>
-  <% endfor %> \\
+<% for q in qdefs %>
+<% if loop.first %><< sample >><% endif %> & << qlabel_short(q) >> & << r[sample ~ '_Passive_' ~ q.key ~ '_median'] >> $\pm$ << r[sample ~ '_Passive_' ~ q.key ~ '_median_err'] >> & << r[sample ~ '_Starforming_' ~ q.key ~ '_median'] >> $\pm$ << r[sample ~ '_Starforming_' ~ q.key ~ '_median_err'] >>\\
+<% endfor %>
+<% endfor %>
+
+\hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}
+    \centering
+    \caption{Median values of various quantities for galaxies according to the sSFR class of their BGG (BGG included).
+Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr\(^{-1}\), and stellar mass is in \(M_\odot\).}
+    \label{tab:split_BGG_ssfr_class_properties}
+    \small
+    \tabcolsep=2pt
+    \begin{tabular}{llcc}
+\hline\hline
+Sample & Quantity & BGG passive & BGG SF\\
+\hline
+
+<% for sample in samples %>
+<% for q in qdefs %>
+<% if loop.first %><< sample >><% endif %> & << qlabel_short(q) >> & << r[sample ~ "_BGG_Passive_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Passive_" ~ q.key ~ "_median_err"] >> & << r[sample ~ "_BGG_Starforming_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Starforming_" ~ q.key ~ "_median_err"] >>\\
+<% endfor %>
 <% endfor %>
 
 
-\bottomrule
+\hline
 \end{tabular}
-\caption{Median values of various quantities for galaxies according to the sSFR class of their BGG (BGG included).
-Uncertainties are estimated by bootstrapping (10\,000 iterations).}
-\label{tab:split_BGG_ssfr_class_properties}
-\end{table*}
+\end{table}
 
-\begin{table*}
+\begin{table}
     \centering
-
-    % One column for Sample + 2 columns per quantity
-    \begin{tabular}{l*{<< 2 * qdefs|length >>}{c}}
-\toprule
- Sample &
-<% for q in qdefs %>
-  \multicolumn{2}{c}{<< q.label >>}%
-  <% if not loop.last %> & <% endif %>
-<% endfor %> \\
-% --- second header row: BGG sSFR-class split ---
- &
-<% for q in qdefs %>
-  Passive & Star-forming%
-  <% if not loop.last %> & <% endif %>
-<% endfor %> \\
-\midrule
+    \caption{Median values of various quantities for galaxies according to the sSFR class of their BGG (satellites only).
+Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr\(^{-1}\), and stellar mass is in \(M_\odot\).}
+    \label{tab:split_BGG_ssfr_class_properties_Sat}
+    \small
+    \tabcolsep=2pt
+    \begin{tabular}{llcc}
+\hline\hline
+Sample & Quantity & BGG passive & BGG SF\\
+\hline
 
 <% for sample in samples %>
-  << sample >> &
-  <% for q in qdefs %>
-    << r[sample ~ "_Sat_BGG_Passive_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Passive_" ~ q.key ~ "_median_err"] >> &
-    << r[sample ~ "_Sat_BGG_Starforming_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Starforming_" ~ q.key ~ "_median_err"] >><% if not loop.last %> &<% endif %>
-  <% endfor %> \\
+<% for q in qdefs %>
+<% if loop.first %><< sample >><% endif %> & << qlabel_short(q) >> & << r[sample ~ "_Sat_BGG_Passive_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Passive_" ~ q.key ~ "_median_err"] >> & << r[sample ~ "_Sat_BGG_Starforming_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Starforming_" ~ q.key ~ "_median_err"] >>\\
+<% endfor %>
 <% endfor %>
 
 
-\bottomrule
+\hline
 \end{tabular}
-\caption{Median values of various quantities for galaxies according to the sSFR class of their BGG (satellites only).
-Uncertainties are estimated by bootstrapping (10\,000 iterations).}
-\label{tab:split_BGG_ssfr_class_properties_Sat}
-\end{table*}
+\end{table}
 
 
 \subsection{Main sequence}
@@ -582,12 +545,16 @@ The magnitude-gap and BGG-luminosity-fraction quantities are available for all <
 
 Overall, these tests provide little evidence that the E/Sp mix is driven by Zheng--Shen class, magnitude gap, or BGG luminosity fraction. The few marginal associations are therefore treated as descriptive diagnostics rather than as robust secondary trends.
 
-\begin{table*}
+\begin{table}
 \centering
+\caption{Elliptical/smooth and spiral/features counts by Zheng--Shen class for the \CG{} sample. Uncertain morphologies are excluded. Split systems have zero counts because they were removed by the existing non-split \CG{} sample definition.}
+\label{tab:morphology_dominance_class_counts}
+\small
+\tabcolsep=2pt
 \begin{tabular}{lccc}
-\toprule
-Zheng--Shen class & All \CG{} E/Sp & \CG{} BGG E/Sp & \CG{} satellites E/Sp \\
-\midrule
+\hline\hline
+\makecell{Zheng--Shen\\class} & \makecell{All \CG{}\\E/Sp} & \makecell{\CG{} BGG\\E/Sp} & \makecell{\CG{} sat.\\E/Sp} \\
+\hline
 <% set cg_all_class = md.get('class_association', {}).get('CG4', {}).get('all', {}).get('contingency_table', []) %>
 <% set cg_bgg_class = md.get('class_association', {}).get('CG4', {}).get('bgg', {}).get('contingency_table', []) %>
 <% set cg_sat_class = md.get('class_association', {}).get('CG4', {}).get('satellites', {}).get('contingency_table', []) %>
@@ -596,20 +563,22 @@ Zheng--Shen class & All \CG{} E/Sp & \CG{} BGG E/Sp & \CG{} satellites E/Sp \\
 <% set sat_row = cg_sat_class|selectattr('class', 'equalto', row.class)|list|first %>
 << row.class >> & << row.N_E >>/<< row.N_Sp >> & << bgg_row.N_E if bgg_row else 0 >>/<< bgg_row.N_Sp if bgg_row else 0 >> & << sat_row.N_E if sat_row else 0 >>/<< sat_row.N_Sp if sat_row else 0 >> \\
 <% endfor %>
-\bottomrule
+\hline
 \end{tabular}
-\caption{Elliptical/smooth and spiral/features counts by Zheng--Shen class for the \CG{} sample. Uncertain morphologies are excluded. Split systems have zero counts because they were removed by the existing non-split \CG{} sample definition.}
-\label{tab:morphology_dominance_class_counts}
-\end{table*}
+\end{table}
 
 For the Zheng--Shen compact-group class, no \CG{} association reaches the conventional 5\% significance threshold. The closest case is the satellite-only test, which is treated as marginal and descriptive. Because the Zheng--Shen class is not defined for the \RG{} catalogue, we do not attempt an \RG{} class comparison.
 
-\begin{table*}
+\begin{table}
 \centering
-\begin{tabular}{llccc}
-\toprule
-Subset & Sample & Class test & \(\Delta m_{12}\) model & \(f_{L,\mathrm{BGG}}\) model \\
-\midrule
+\caption{Tests of the E-vs-Sp morphology mix against compact-group class, magnitude gap, and BGG luminosity fraction. The continuous columns report the available adjusted logistic model for \(P(\mathrm{E})\); all-galaxy and satellite fits use group-clustered standard errors. Odds ratios are reported per magnitude for \(\Delta m_{12}\) and per 0.1 increase in luminosity fraction for \(f_{L,\mathrm{BGG}}\).}
+\label{tab:morphology_dominance_models}
+\small
+\tabcolsep=2pt
+\begin{tabular}{lllc}
+\hline\hline
+Subset & Sample & Test & Result \\
+\hline
 <% for subset in ['all', 'bgg', 'satellites'] %>
 <% for sample in ['CG4', 'RG4'] %>
 <% set class_res = md.get('class_association', {}).get(sample, {}).get(subset, {}) %>
@@ -618,18 +587,14 @@ Subset & Sample & Class test & \(\Delta m_{12}\) model & \(f_{L,\mathrm{BGG}}\) 
 <% set gap_model = gap_models.get('adjusted', {}) if gap_models.get('adjusted', {}).get('status') == 'ok' else gap_models.get('unadjusted', {}) %>
 <% set fl_models = md.get('continuous_association', {}).get('f_L_BGG', {}).get(sample, {}).get(subset, {}).get('models', {}) %>
 <% set fl_model = fl_models.get('adjusted', {}) if fl_models.get('adjusted', {}).get('status') == 'ok' else fl_models.get('unadjusted', {}) %>
-<< md.get('subsets', {}).get(subset, subset) >> &
-<% if sample == 'CG4' %>\CG{}<% else %>\RG{}<% endif %> &
-<% if class_test.get('status') == 'ok' %><< pval_text(class_test.get('p_value')) >><% elif sample == 'RG4' %>not defined<% else %>skipped<% endif %> &
-<% if gap_model.get('status') == 'ok' %>OR \(<< gap_model.get('odds_ratio')|fmt(2) >>\), << pval_text(gap_model.get('p_value')) >><% else %>skipped<% endif %> &
-<% if fl_model.get('status') == 'ok' %>OR \(<< fl_model.get('odds_ratio')|fmt(2) >>\), << pval_text(fl_model.get('p_value')) >><% else %>skipped<% endif %> \\
+<< md.get('subsets', {}).get(subset, subset) >> & <% if sample == 'CG4' %>\CG{}<% else %>\RG{}<% endif %> & Class & <% if class_test.get('status') == 'ok' %><< pval_text(class_test.get('p_value')) >><% elif sample == 'RG4' %>not defined<% else %>skipped<% endif %> \\
+ & & \(\Delta m_{12}\) & <% if gap_model.get('status') == 'ok' %>OR \(<< gap_model.get('odds_ratio')|fmt(2) >>\), << pval_text(gap_model.get('p_value')) >><% else %>skipped<% endif %> \\
+ & & \(f_{L,\mathrm{BGG}}\) & <% if fl_model.get('status') == 'ok' %>OR \(<< fl_model.get('odds_ratio')|fmt(2) >>\), << pval_text(fl_model.get('p_value')) >><% else %>skipped<% endif %> \\
 <% endfor %>
 <% endfor %>
-\bottomrule
+\hline
 \end{tabular}
-\caption{Tests of the E-vs-Sp morphology mix against compact-group class, magnitude gap, and BGG luminosity fraction. The continuous columns report the available adjusted logistic model for \(P(\mathrm{E})\); all-galaxy and satellite fits use group-clustered standard errors. Odds ratios are reported per magnitude for \(\Delta m_{12}\) and per 0.1 increase in luminosity fraction for \(f_{L,\mathrm{BGG}}\).}
-\label{tab:morphology_dominance_models}
-\end{table*}
+\end{table}
 
 For \(\Delta m_{12}\), no statistically significant morphology trend is found in \CG{} or \RG{}, whether the fit is run for all galaxies, BGGs only, or satellites only. The same conclusion holds for \(f_{L,\mathrm{BGG}}\): no fitted trend reaches \(p<0.05\). The \CG{}--\RG{} interaction models detect no significant difference in the morphology--dominance relation for either \(\Delta m_{12}\) or \(f_{L,\mathrm{BGG}}\), across all galaxies, BGGs only, and satellites only. A class interaction is not defined because the Zheng--Shen compact-group class has no \RG{} counterpart in the present catalogue. Across the morphology--class, morphology--gap, morphology--luminosity-fraction, and interaction tests, no result remains significant after Benjamini--Hochberg FDR control.
 <% endif %>
@@ -1069,10 +1034,12 @@ The colour-selection mass audit is shown in Appendix Fig.~\ref{fig:colour_select
 
 \begin{table*}
 \centering
+\caption{Result hierarchy. Baseline tests describe where \CG{} differs from the controls; the main interpretation is based on diagnostics that remain after adjusted or matched comparisons.}
+\label{tab:result_hierarchy}
 \begin{tabular}{p{0.22\textwidth}p{0.23\textwidth}p{0.18\textwidth}p{0.28\textwidth}}
-\toprule
+\hline\hline
 Diagnostic & Baseline \CG{} signal & Survives adjusted/matched analysis? & Interpretation \\
-\midrule
+\hline
 Elliptical/smooth fraction & Enhanced in \CG{} & Yes & Robust accumulated morphology signal. \\
 Spiral/features fraction & Reduced in \CG{} & Yes & Reduced late-type vote-fraction population. \\
 Galaxy Zoo crowding check & Smooth excess persists after close-neighbour exclusion & Yes, as a limited robustness check & Morphology result not solely produced by the closest projected pairs. \\
@@ -1087,10 +1054,8 @@ Galaxy size at fixed mass & <% if szv.get('direction') == 'smaller' %>Hints of s
 <% set hierarchy_conc = sz.get('concentration', {}).get('satellites', {}) %>
 Concentration index & \(R_{90,r}/R_{50,r}\) structural proxy now measured & <% if hierarchy_conc.get('status') == 'ok' and hierarchy_conc.get('p_holm') is not none and hierarchy_conc.get('p_holm') < 0.05 %>Yes<% else %>No<% endif %> & <% if hierarchy_conc.get('status') == 'ok' and hierarchy_conc.get('p_holm') is not none and hierarchy_conc.get('p_holm') < 0.05 %>Concentration differs at fixed mass; independent structural signal.<% else %>No independent concentration signal at fixed mass.<% endif %> \\
 <% endif %>
-\bottomrule
+\hline
 \end{tabular}
-\caption{Result hierarchy. Baseline tests describe where \CG{} differs from the controls; the main interpretation is based on diagnostics that remain after adjusted or matched comparisons.}
-\label{tab:result_hierarchy}
 \end{table*}
 
 <% endif %>
@@ -1183,6 +1148,8 @@ The input data are drawn from public SDSS spectroscopic and photometric tables, 
 
 The project analysis and paper-generation scripts are publicly available in the GitHub repository \href{https://github.com/MatthieuTricottet/CG_Gals}{\texttt{MatthieuTricottet/CG\_Gals}}. A tagged or archival release corresponding to the final paper version will be made available with the public data products.
 
+\bibliographystyle{aa}
+\bibliography{<<BIB_FILE>>}
 \clearpage
 \begin{appendix}
 
@@ -1498,8 +1465,5 @@ This appendix collects the secondary diagnostic figures referenced in the main t
 % \begin{acknowledgements}
 % Add acknowledgements here before submission.
 % \end{acknowledgements}
-
-\bibliographystyle{aa}
-\bibliography{<<BIB_FILE>>}
 
 \end{document}
