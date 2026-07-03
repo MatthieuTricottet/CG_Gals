@@ -12,9 +12,11 @@ from scipy import stats
 
 try:
     import statsmodels.api as sm
+    import statsmodels.formula.api as smf
     from statsmodels.tools.sm_exceptions import PerfectSeparationWarning
 except ModuleNotFoundError:  # pragma: no cover - documented fallback
     sm = None
+    smf = None
     PerfectSeparationWarning = Warning
 
 
@@ -227,6 +229,39 @@ def two_sample_summary(
 
 def _skipped(reason: str, **extra) -> dict[str, object]:
     return {"status": "skipped", "reason": reason, **extra}
+
+
+def fit_ols_with_optional_cluster_se(
+    formula: str,
+    data: pd.DataFrame,
+    group_col: str | None = "cluster_id",
+    min_groups: int = 8,
+    on_error: Callable[[str], None] | None = None,
+):
+    """Fit OLS and use cluster-robust errors when enough groups are present.
+
+    Shared implementation used by the colour-robustness exploration and the
+    galaxy-size analysis. Returns the fitted statsmodels result, or ``None``
+    when the fit fails (the failure message goes to ``on_error`` if given).
+    """
+
+    if smf is None:  # pragma: no cover - documented fallback
+        if on_error is not None:
+            on_error(f"Skipping model '{formula}': statsmodels unavailable")
+        return None
+    try:
+        model = smf.ols(formula, data=data, missing="drop")
+        row_labels = model.data.row_labels
+        if group_col and group_col in data.columns:
+            groups = data.loc[row_labels, group_col]
+            valid_groups = groups.dropna().nunique()
+            if valid_groups >= min_groups and groups.notna().all():
+                return model.fit(cov_type="cluster", cov_kwds={"groups": groups})
+        return model.fit(cov_type="HC3")
+    except Exception as error:
+        if on_error is not None:
+            on_error(f"Skipping model '{formula}': {error}")
+        return None
 
 
 def fit_logistic_model(

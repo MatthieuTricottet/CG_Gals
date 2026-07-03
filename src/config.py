@@ -15,6 +15,11 @@ PROCESS_SAMPLES = "processed_sample.pkl"
 RESULTS_BUILD = OUTPUT_PATH + "results_build.json"
 RESULTS = OUTPUT_PATH + "results.json"
 
+#* Galaxy-size data products (cached external fetches, see src/size_data.py)
+SIZE_COLUMNS_FILE = DATA_PATH + "sdss_size_columns.csv"
+SIMARD_SUBSET_FILE = DATA_PATH + "simard2011_subset.csv"
+SIMARD_FTP_URL = "https://cdsarc.cds.unistra.fr/ftp/J/ApJS/196/11/"
+
 REPORT_FILE = "paper.tex"
 REPORT_PATH = OUTPUT_PATH + "paper/"
 SUBFIGURES_PATH = "figures/"
@@ -51,3 +56,11 @@ GRSUFF = "_Groups"
 
 # Limit for statistical significance
 P_LIMIT = 5e-2
+
+#* Galaxy-size quality cuts (Planck15 kpc after the Scale->arcsec re-conversion)
+SIZE_MIN_KPC = 0.1  # smallest physically credible half-light radius
+SIZE_MAX_KPC = 50.0  # largest physically credible half-light radius
+# Sersic indices at the GIM2D fit bounds are flagged as pegged and excluded
+# from the primary Simard size sample (kept for a robustness variant).
+NG_PEG_LOW = 0.55
+NG_PEG_HIGH = 7.9

@@ -19,6 +19,15 @@ from scipy import stats
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 
+try:
+    from extended_stats import (
+        fit_ols_with_optional_cluster_se as _shared_fit_ols_with_optional_cluster_se,
+    )
+except ModuleNotFoundError:  # pragma: no cover
+    from .extended_stats import (
+        fit_ols_with_optional_cluster_se as _shared_fit_ols_with_optional_cluster_se,
+    )
+
 
 SAMPLE_KEYS = {
     "CG4": "CG4_Gals",
@@ -201,20 +210,14 @@ def fit_ols_with_optional_cluster_se(
     group_col: str | None = "cluster_id",
     min_groups: int = 8,
 ):
-    """Fit OLS and use cluster-robust errors when enough groups are present."""
+    """Fit OLS and use cluster-robust errors when enough groups are present.
 
-    try:
-        model = smf.ols(formula, data=data, missing="drop")
-        row_labels = model.data.row_labels
-        if group_col and group_col in data.columns:
-            groups = data.loc[row_labels, group_col]
-            valid_groups = groups.dropna().nunique()
-            if valid_groups >= min_groups and groups.notna().all():
-                return model.fit(cov_type="cluster", cov_kwds={"groups": groups})
-        return model.fit(cov_type="HC3")
-    except Exception as error:
-        _message(f"Skipping model '{formula}': {error}")
-        return None
+    Thin wrapper over the shared implementation in ``extended_stats``.
+    """
+
+    return _shared_fit_ols_with_optional_cluster_se(
+        formula, data, group_col=group_col, min_groups=min_groups, on_error=_message
+    )
 
 
 def _sdss_photometry_lookup(sample: dict[str, pd.DataFrame]) -> pd.DataFrame:
