@@ -1,4 +1,4 @@
-\begin{thebibliography}{33}
+\begin{thebibliography}{36}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Alpaslan} {et~al.}(2015){Alpaslan}, {Driver}, {Robotham},
@@ -27,6 +27,11 @@
 {Bitsakis}, T., {Charmandaris}, V., {Le Floc'h}, E., {et~al.} 2010, \aap, 517,
   A75
 
+\bibitem[{{Blanton} {et~al.}(2001){Blanton}, {Dalcanton}, {Eisenstein},
+  {Loveday}, {Strauss}, \& et~al.}]{Blanton2001}
+{Blanton}, M.~R., {Dalcanton}, J., {Eisenstein}, D., {et~al.} 2001, \aj, 121,
+  2358
+
 \bibitem[{{Brinchmann} {et~al.}(2004){Brinchmann}, {Charlot}, {White},
   {Tremonti}, {Kauffmann}, {Heckman}, \& {Brinkmann}}]{Brinchmann+04}
 {Brinchmann}, J., {Charlot}, S., {White}, S.~D.~M., {et~al.} 2004, \mnras, 351,
@@ -50,6 +55,11 @@
 
 \bibitem[{{Dressler}(1980)}]{Dressler80}
 {Dressler}, A. 1980, \apj, 236, 351
+
+\bibitem[{{Graham} {et~al.}(2005){Graham}, {Driver}, {Petrosian}, {Conselice},
+  {Bershady}, {Crawford}, \& {Goto}}]{Graham2005}
+{Graham}, A.~W., {Driver}, S.~P., {Petrosian}, V., {et~al.} 2005, \aj, 130,
+  1535
 
 \bibitem[{{Hickson}(1982)}]{Hickson82}
 {Hickson}, P. 1982, \apj, 255, 382
@@ -121,6 +131,11 @@ Montaguth, G.~P., Torres-Flores, S., Monachesi, A., {et~al.} 2023, \mnras, 524,
   \& {Torres-Papaqui}}]{Plauchu-Frayn+12}
 {Plauchu-Frayn}, I., {Del Olmo}, A., {Coziol}, R., \& {Torres-Papaqui}, J.~P.
   2012, \aap, 546, A48
+
+\bibitem[{{Simard} {et~al.}(2011){Simard}, {Mendel}, {Patton}, {Ellison}, \&
+  {McConnachie}}]{Simard2011}
+{Simard}, L., {Mendel}, J.~T., {Patton}, D.~R., {Ellison}, S.~L., \&
+  {McConnachie}, A.~W. 2011, \apjs, 196, 11
 
 \bibitem[{{Tempel} {et~al.}(2017){Tempel}, {Tuvikene}, {Kipper}, \&
   {Libeskind}}]{Tempel+17}
