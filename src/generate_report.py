@@ -161,6 +161,19 @@ def _validate_render_context(ctx):
             if _get_path(ctx, path) is None:
                 missing.append(path)
 
+    size_analysis = _get_path(ctx, "extended_specialness.size_analysis")
+    if isinstance(size_analysis, dict) and size_analysis.get("status") == "ok":
+        for path in [
+            "extended_specialness.size_analysis.adjusted",
+            "extended_specialness.size_analysis.matched",
+            "extended_specialness.size_analysis.availability_audit",
+            "extended_specialness.size_analysis.verdicts",
+            "extended_specialness.size_analysis.petrosian",
+            "extended_specialness.size_analysis.concentration",
+        ]:
+            if _get_path(ctx, path) is None:
+                missing.append(path)
+
     if missing:
         joined = "\n  - ".join(missing)
         raise KeyError(f"Render context missing required keys:\n  - {joined}")

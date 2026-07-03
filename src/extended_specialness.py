@@ -18,6 +18,8 @@ try:
     from phase_space_segregation import run_phase_space_segregation_analysis
     from recent_quenching import run_recent_quenching_analysis
     from selection_diagnostics import run_selection_diagnostics
+    from size_analysis import run_size_analysis
+    from size_data import attach_size_columns
     from specialness_models import fit_logistic_specialness_models
     from tidal_indices import run_tidal_indices_analysis
 except ModuleNotFoundError:  # pragma: no cover
@@ -33,6 +35,8 @@ except ModuleNotFoundError:  # pragma: no cover
     from .phase_space_segregation import run_phase_space_segregation_analysis
     from .recent_quenching import run_recent_quenching_analysis
     from .selection_diagnostics import run_selection_diagnostics
+    from .size_analysis import run_size_analysis
+    from .size_data import attach_size_columns
     from .specialness_models import fit_logistic_specialness_models
     from .tidal_indices import run_tidal_indices_analysis
 
@@ -51,6 +55,14 @@ def run_extended_specialness(sample, output_dir: str | None = None):
     output_dir = output_dir or co.FIGURES_PATH
     os.makedirs(output_dir, exist_ok=True)
     galaxies = build_galaxy_frame(sample)
+    try:
+        # Enrich the shared frame with the cached size columns so both the
+        # size analysis and the dormant concentration hook can see them; a
+        # failed fetch must not stop the other analyses.
+        galaxies, _ = attach_size_columns(galaxies)
+    except Exception as exc:
+        if co.VERBOSE:
+            print(f"[extended specialness] size columns unavailable: {exc}")
     analyses = [
         ("specialness_models", fit_logistic_specialness_models),
         ("matched_controls", run_matched_control_analysis),
@@ -62,6 +74,7 @@ def run_extended_specialness(sample, output_dir: str | None = None):
         ("agn_environment", run_agn_environment_analysis),
         ("tidal_indices", run_tidal_indices_analysis),
         ("selection_diagnostics", run_selection_diagnostics),
+        ("size_analysis", run_size_analysis),
     ]
     results = {"status": "ok", "n_galaxies": int(len(galaxies))}
     for name, function in analyses:
@@ -72,6 +85,12 @@ def run_extended_specialness(sample, output_dir: str | None = None):
             if co.VERBOSE:
                 print(f"[extended specialness] {name} failed: {exc}")
                 traceback.print_exc()
+        if name == "matched_controls" and isinstance(results[name], dict):
+            # The size analysis re-derives the same pairs and asserts count
+            # consistency against this run's matched-control block.
+            galaxies.attrs["matched_controls_n_cg4_matched"] = results[name].get(
+                "n_cg4_matched"
+            )
 
     adjusted = results["specialness_models"].get("passive_all", {})
     matched = results["matched_controls"].get("effects", {}).get("passive_fraction", {})

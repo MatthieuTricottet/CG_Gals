@@ -196,7 +196,12 @@ def _concentration_result(frame: pd.DataFrame) -> dict[str, object]:
     good = (valid[r50] > 0) & (valid[r90] > 0)
     if int(good.sum()) < 30:
         return {"status": "skipped", "reason": "too_few_valid_petrosian_radii"}
-    return {"status": "available_not_implemented", "r50_column": r50, "r90_column": r90}
+    return {
+        "status": "implemented_in_size_analysis",
+        "see": "extended_specialness.size_analysis.concentration",
+        "r50_column": r50,
+        "r90_column": r90,
+    }
 
 
 def _cg_class_split(frame: pd.DataFrame) -> dict[str, object]:
