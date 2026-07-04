@@ -260,8 +260,12 @@ No table value, p-value, CI, count, or coefficient changed.
    DOI metadata only; please confirm the exact ADS author lists before
    submission (no ADS API token was available).
 6. **Appendix trim (C7)** — the separate `appendix-trim` commit drops
-   C.3, C.11, C.12, C.16, and C.17 and needs explicit co-author approval;
-   revert it wholesale if declined.
+   C.3, C.11, C.12, C.16, and C.17 (all textual references adjusted; the
+   figure PDFs remain in the repository) and needs explicit co-author
+   approval; revert it wholesale if declined. The suggested C.6+C.7 merge
+   was NOT done: each is already a multi-panel grid figure produced by
+   `exploration_ssfr._make_grid_figure`, so merging them is not a cheap
+   plotting change — TODO(MT): merge if the co-authors want it.
 7. **A&A page-charge policy** — verify the current pricing (main-text /
    appendix page thresholds) on aanda.org; the 12+8 figure quoted during
    this polish was not independently verified.

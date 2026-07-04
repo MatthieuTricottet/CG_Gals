@@ -620,7 +620,7 @@ For \(\Delta m_{12}\), no statistically significant morphology trend is found in
 <% set p_m_over_l = tcross_m_over_l.p_value_fmt|replace('$', '') if tcross_m_over_l else '' %>
 <% set p_mass = tcross_mass.p_value_fmt|replace('$', '') if tcross_mass else '' %>
 <% set p_lum = tcross_lum.p_value_fmt|replace('$', '') if tcross_lum else '' %>
-The crossing-time diagnostic mainly separates systems by dynamical scale rather than by luminosity alone. Shorter \(t_\mathrm{cross}\) systems have larger virial mass-to-light ratios and virial masses: the correlations with \(\log(\mathcal{M}_\mathrm{VT}/L_r)\) and \(\log(\mathcal{M}_\mathrm{VT})\) are \(\rho_\mathrm{S}=<< tcross_m_over_l.rho_fmt >>\) (\(p<% if p_m_over_l.startswith('<') %><< p_m_over_l >><% else %>=<< p_m_over_l >><% endif %>\)) and \(\rho_\mathrm{S}=<< tcross_mass.rho_fmt >>\) (\(p<% if p_mass.startswith('<') %><< p_mass >><% else %>=<< p_mass >><% endif %>\)), respectively, over << tcross_mass.n_groups >> groups. By contrast, the relation with total group luminosity is formally detected but very weak (\(\rho_\mathrm{S}=<< tcross_lum.rho_fmt >>\)). We therefore read \(t_\mathrm{cross}\) as a dynamical compactness indicator tied primarily to virial mass and mass-to-light ratio, with little independent leverage from \(L_\mathrm{group}\). Appendix Figs.~\ref{fig:tcr_vs_mvirial_over_l}--\ref{fig:tcr_mvirial_lgroup_3d} show the corresponding projected and three-dimensional trends.
+The crossing-time diagnostic mainly separates systems by dynamical scale rather than by luminosity alone. Shorter \(t_\mathrm{cross}\) systems have larger virial mass-to-light ratios and virial masses: the correlations with \(\log(\mathcal{M}_\mathrm{VT}/L_r)\) and \(\log(\mathcal{M}_\mathrm{VT})\) are \(\rho_\mathrm{S}=<< tcross_m_over_l.rho_fmt >>\) (\(p<% if p_m_over_l.startswith('<') %><< p_m_over_l >><% else %>=<< p_m_over_l >><% endif %>\)) and \(\rho_\mathrm{S}=<< tcross_mass.rho_fmt >>\) (\(p<% if p_mass.startswith('<') %><< p_mass >><% else %>=<< p_mass >><% endif %>\)), respectively, over << tcross_mass.n_groups >> groups. By contrast, the relation with total group luminosity is formally detected but very weak (\(\rho_\mathrm{S}=<< tcross_lum.rho_fmt >>\)). We therefore read \(t_\mathrm{cross}\) as a dynamical compactness indicator tied primarily to virial mass and mass-to-light ratio, with little independent leverage from \(L_\mathrm{group}\). Appendix Fig.~\ref{fig:tcr_vs_mvirial_over_l} shows the corresponding projected trend.
 
 
 \subsection{Optical colours}\label{sec:optical_colours}
@@ -633,7 +633,7 @@ The raw catalogue colour--mass fits indicate that \CG{} does not simply follow t
 
 We therefore refit the satellite colours with cluster-robust standard errors, using catalogue-qualified group identifiers. In the pooled comparison adjusted only for stellar mass and redshift, <% if r.Colour_robustness_significant_baseline_blue|length == 0 -%>none of the four \CG{} coefficients is significantly negative after Holm correction<% else -%>\CG{} satellites are significantly bluer in <% for item in r.Colour_robustness_significant_baseline_blue -%><< item.colour_label >><% if not loop.last %>, <% else %><% endif %><% endfor %><% endif %>. <% if r.Colour_robustness_significant_full_blue|length > 0 -%>After additionally controlling for morphology and sSFR class, negative coefficients appear in <% for item in r.Colour_robustness_significant_full_blue -%><< item.colour_label >> ($\Delta=<< item.is_CG4_coefficient_fmt >>$ mag, Holm-corrected << p_from_fmt(item.p_holm_fmt) >>)<% if not loop.last %> and <% else %>.<% endif %><% endfor %><% else -%>Adding morphology and sSFR class does not reveal a significant negative coefficient.<% endif %> However, these adjusted coefficients are <% if r.Colour_robustness_summary.control_dependent -%>control-sample dependent<% else -%>consistent across the control catalogues<% endif %>, and <% if r.Colour_robustness_significant_ssfr_splits|length == 0 and r.Colour_robustness_significant_morphology_splits|length == 0 -%>they do not persist within the sSFR or morphology splits<% else -%>their split-sample behaviour is not uniform<% endif %>. The data therefore do not localize the colour effect to the star-forming spiral population expected for a simple interaction-triggered star-formation scenario.
 
-Residual colour trends with projected BGG-centric distance are consistent with stronger processing near the group centre and a less processed outer population, but these trends use the same biased colour subset and are treated as exploratory. The group-level BGG--satellite colour concordance is similarly secondary: redder BGGs tend to have redder mean satellite populations in the combined group sample, but the \CG{} slope is not a robustly distinct population-level signature. Detailed colour--mass, satellite, radial, BGG--satellite, and domination diagnostics are shown in Appendix Figs.~\ref{fig:color_mass}--\ref{fig:bgg_colour_domination}. Figure~\ref{fig:colour_robustness_coefficients} summarizes the model and control-sample dependence that motivates our interpretation: the present data do not establish a robust global blue or red offset for \CG{} satellites.
+Residual colour trends with projected BGG-centric distance are consistent with stronger processing near the group centre and a less processed outer population, but these trends use the same biased colour subset and are treated as exploratory. The group-level BGG--satellite colour concordance is similarly secondary: redder BGGs tend to have redder mean satellite populations in the combined group sample, but the \CG{} slope is not a robustly distinct population-level signature. Detailed colour--mass, satellite, and radial diagnostics are shown in Appendix Figs.~\ref{fig:color_mass}--\ref{fig:colour_residual_distance}. Figure~\ref{fig:colour_robustness_coefficients} summarizes the model and control-sample dependence that motivates our interpretation: the present data do not establish a robust global blue or red offset for \CG{} satellites.
 
 \begin{figure*}
     \centering
@@ -1235,7 +1235,7 @@ This appendix collects the secondary diagnostic figures referenced in the main t
 
 \subsection{sSFR and main-sequence diagnostics}
 
-Figures~\ref{fig:Residual_sSFR}--\ref{fig:Main_Sequence_polyfits} show the residual-sSFR distribution, the property distributions split by sSFR class (for all galaxies, by BGG class with BGGs included, and for satellites by BGG class), and the polynomial-order comparison for the star-forming main sequence.
+Figures~\ref{fig:Residual_sSFR}--\ref{fig:Main_Sequence_polyfits} show the residual-sSFR distribution, the property distributions split by sSFR class (for all galaxies and for satellites by BGG class), and the polynomial-order comparison for the star-forming main sequence.
 
 \begin{figure}
     \centering
@@ -1249,13 +1249,6 @@ Figures~\ref{fig:Residual_sSFR}--\ref{fig:Main_Sequence_polyfits} show the resid
      \includegraphics[width=\columnwidth]{ssfr_class.pdf}
      \caption{Distributions of various quantities for galaxies according to their sSFR class.}
      \label{fig:ssfr_class}
-\end{figure}
-
-\begin{figure}
-    \centering
-     \includegraphics[width=\columnwidth]{BGG_ssfr_class.pdf}
-     \caption{Distributions of various quantities for galaxies according to the BGG sSFR class, with BGGs included.}
-     \label{fig:BGG_ssfr_class}
 \end{figure}
 
 \begin{figure}
@@ -1276,7 +1269,7 @@ Figures~\ref{fig:Residual_sSFR}--\ref{fig:Main_Sequence_polyfits} show the resid
 \clearpage
 \subsection{Group-scale and radial diagnostics}
 
-Figures~\ref{fig:dist2BGG_kpc_vs_sSFR} and \ref{fig:dist2BGG_norm_vs_sSFR} show the sSFR--distance relations, Figs.~\ref{fig:Dom_vs_NonDom} and \ref{fig:Dom_vs_NonDom_XOR} the domination diagnostics, and Figs.~\ref{fig:tcr_vs_mvirial_over_l}--\ref{fig:tcr_mvirial_lgroup_3d} the crossing-time trends.
+Figures~\ref{fig:dist2BGG_kpc_vs_sSFR} and \ref{fig:dist2BGG_norm_vs_sSFR} show the sSFR--distance relations, Figs.~\ref{fig:Dom_vs_NonDom} and \ref{fig:Dom_vs_NonDom_XOR} the domination diagnostics, and Fig.~\ref{fig:tcr_vs_mvirial_over_l} the crossing-time trend.
 
 \begin{figure}
     \centering
@@ -1313,24 +1306,10 @@ Figures~\ref{fig:dist2BGG_kpc_vs_sSFR} and \ref{fig:dist2BGG_norm_vs_sSFR} show 
      \label{fig:tcr_vs_mvirial_over_l}
 \end{figure}
 
-\begin{figure}
-    \centering
-     \includegraphics[width=\columnwidth]{tcr_vs_mvirial.pdf}
-     \caption{Crossing time versus virial mass for the compact groups and their controls.}
-     \label{fig:tcr_vs_mvirial}
-\end{figure}
-
-\begin{figure}
-    \centering
-     \includegraphics[width=\columnwidth]{tcr_mvirial_lgroup_3d.pdf}
-     \caption{Three-dimensional view of the crossing time, virial mass, and group luminosity space.}
-     \label{fig:tcr_mvirial_lgroup_3d}
-\end{figure}
-
 \FloatBarrier
 \subsection{Colour diagnostics}
 
-Figures~\ref{fig:color_mass}--\ref{fig:bgg_colour_domination} show the colour--mass relations of the catalogues, the satellite colour--mass comparison, the mass- and redshift-adjusted colour residuals versus BGG-centric distance, the BGG--satellite colour concordance, and the BGG colour--domination split.
+Figures~\ref{fig:color_mass}--\ref{fig:colour_residual_distance} show the colour--mass relations of the catalogues, the satellite colour--mass comparison, and the mass- and redshift-adjusted colour residuals versus BGG-centric distance.
 
 \begin{figure*}
     \centering
@@ -1351,20 +1330,6 @@ Figures~\ref{fig:color_mass}--\ref{fig:bgg_colour_domination} show the colour--m
     \includegraphics[width=\textwidth]{<< r.Colour_figures.residual_distance >>}
     \caption{Mass- and redshift-adjusted satellite $(u-r)$ and $(u-g)$ residuals as a function of projected distance to the BGG. Lines connect binned medians for \CG{} and the pooled ordinary-group satellites; extreme plotting tails are omitted for readability, while the reported rank correlations use the full matched sample. More negative residuals are bluer than the ordinary-satellite reference relation.}
     \label{fig:colour_residual_distance}
-\end{figure*}
-
-\begin{figure*}
-    \centering
-    \includegraphics[width=\textwidth]{<< r.Colour_figures.bgg_satellite >>}
-    \caption{Mean satellite colour versus BGG colour for groups with matched photometry. The dotted line is the one-to-one relation and dashed lines are catalogue-specific fits.}
-    \label{fig:bgg_satellite_colour}
-\end{figure*}
-
-\begin{figure*}
-    \centering
-    \includegraphics[width=\textwidth]{<< r.Colour_figures.bgg_domination >>}
-    \caption{BGG colour--mass relations split by luminosity domination. Comparing the fitted relations at a common stellar mass separates colour effects from the different mass distributions.}
-    \label{fig:bgg_colour_domination}
 \end{figure*}
 
 <% if sz.get('status') == 'ok' %>
