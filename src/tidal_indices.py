@@ -110,7 +110,7 @@ def _plot(work, path):
                 c=np.where(part["is_CG4"] == 1, "#2864A6", "#777777"),
             )
         ax.set_title(title)
-        ax.set_xlabel(r"$\log_{10}\sum_j(M_{\star,j}/R_{ij}^3)$")
+        ax.set_xlabel(r"$\log_{10}\sum_j(M_{\star,j}/R_{ij}^3)$ [$\mathrm{M_\odot\,kpc^{-3}}$]")
         ax.set_yticks([0, 1], [false_label, true_label])
     axes[0].set_ylabel("Outcome")
     fig.legend(

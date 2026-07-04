@@ -644,7 +644,7 @@ def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsi
     triangle_legend_element = plt.Line2D([0], [0], marker='^', color='w', 
                                         markeredgecolor='black', markerfacecolor='none',
                                         markersize=markerscale * triangle_factor, 
-                                        label='Compact Groups galaxies', alpha=0.7)
+                                        label='CG$_4$ galaxies', alpha=0.7)
     dot_legend_elements.append(triangle_legend_element)
     
     # Create the legend with our custom elements

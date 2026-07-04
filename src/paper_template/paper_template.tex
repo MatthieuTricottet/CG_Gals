@@ -55,7 +55,6 @@
 
 \newcommand{\diazg}{D\'{\i}az-Gim\'enez}
 
-\newcommand{\Quenched}{Quenched}
 \newcommand{\Passive}{Passive}
 
 
@@ -165,7 +164,7 @@ Our previous work \citep{Tricottet+25} addressed the question of whether compact
 The paper is organized as follows. Section~2 describes the samples, the sSFR and morphology classifications, and the statistical hierarchy. Sections~3 and 4 present baseline population differences and group-scale diagnostics. Section~5 tests which signals survive adjusted and matched comparisons and examines secondary diagnostics. Section~6 discusses the physical interpretation of the morphology signal, and Section~7 summarizes the conclusions.
 
 \section{Data and classifications}
-\subsection{Samples}
+\subsection{Samples}\label{sec:samples}
 We use the compact-group and control samples constructed in our previous study \citep{Tricottet+25}.
 We briefly recall their construction here. Galaxy properties are taken from the SDSS DR12 catalogue
 of \citet{Tempel+17}, while regular groups are drawn from the SDSS DR7 group catalogue of \citet{Lim+17}; the two
@@ -189,17 +188,54 @@ dispersion ($1979$ and $1981\, \kms$, respectively).
 
 The three regular-group controls serve different physical purposes. \RG{} contains true regular groups with exactly four selected members and is the most direct four-member regular-group comparison. \CB{} contains the four brightest galaxies in richer regular groups and tests whether the \CG{} population resembles the luminous core of an ordinary group. \CC{} contains the BGG plus the three closest projected companions and is the most compact-core-like ordinary-group analogue. \CG{} is therefore tested against both equal-membership groups and regular-group cores, rather than against a single control definition.
 
-We use SDSS DR <<DATA_RELEASE>> to retrieve stellar masses, star formation rates (SFRs), and Galaxy Zoo morphologies
+We use SDSS DR<<DATA_RELEASE>> to retrieve stellar masses, star formation rates (SFRs), and Galaxy Zoo morphologies
 \citep{GalaxyZoo1}. We specifically extract the columns \texttt{sfr\_tot\_p50},
 \texttt{specsfr\_tot\_p50}, and \texttt{lgm\_tot\_p50} from the \texttt{galSpecExtra} table, and
 \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} from the \texttt{zooSpec} table. In the SDSS query, \texttt{galSpecExtra}, \texttt{galSpecLine}, and \texttt{zooSpec} are joined to \texttt{SpecObj} by \texttt{specObjID}, while the photometric object is linked through \texttt{SpecObj.bestObjID}=\texttt{PhotoObj.objID}; the queried quantities are then merged onto the CG and control catalogue rows by their stored \texttt{objid}.
 
+Throughout, `SDSS selection' denotes the reference sample returned by the query of Appendix~\ref{app:sdss_query}: all spectroscopic galaxies with \(<<Z_MIN>> \le z \le <<Z_MAX>>\), extinction-corrected Petrosian \(r \le <<R_MAX>>\), a valid MPA-JHU stellar mass, and Galaxy Zoo classifications. It serves as a field-dominated reference population, not as a control sample.
 
-\subsection{sSFR classification}
+All projected distances and derived quantities adopt the Planck 2015 cosmology \citep{Planck15}, consistently with our previous paper \citep{Tricottet+25}.
+
+
+\subsection{sSFR classification}\label{sec:ssfr_classification}
+<% set CG4_nosSFR_N = CG4_BGG_NQuenched + CG4_Sat_NQuenched %>
+<% set CG4_total_N = CG4_BGG_NQuenched + CG4_Sat_NQuenched + CG4_BGG_NPassive + CG4_Sat_NPassive + CG4_BGG_NStarforming + CG4_Sat_NStarforming %>
 We classify galaxies from SDSS total sSFRs using the query reported in Appendix~\ref{app:sdss_query} (Listing~\ref{lst:query}).
-Objects with \texttt{specsfr\_tot\_p50} equal to -9999 are labelled quenched; the remaining galaxies are split into passive and star-forming classes with a two-component GMM in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane.
+In the MPA-JHU tables, \texttt{specsfr\_tot\_p50} \(= -9999\) flags galaxies without a valid sSFR estimate rather than measured zero star formation; we therefore place them in a separate `no-sSFR' class and exclude them from the passive/star-forming split. The no-sSFR fraction is markedly higher in \CG{} (<< (100 * CG4_nosSFR_N / CG4_total_N)|fmt(0) >>\%, and << CG4_BGG_NQuenched_pc|fmt(0) >>\% for BGGs) than in the field selection (<< SDSS_NQuenched_pc|fmt(0) >>\%), plausibly reflecting the crowded-field spectroscopy and deblending issues discussed in Sect.~\ref{sec:decoupling} rather than a physical population. The remaining galaxies are split into passive and star-forming classes with a two-component GMM in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane.
 BPT/AGN handling and the exact GMM boundary definition are given in Appendix~\ref{app:ssfr_method}.
 
+\begin{figure}
+    \centering
+     \includegraphics[width=\columnwidth]{sSFR_classification.pdf}
+     \caption{sSFR versus stellar mass, the star-forming/passive limit, and Galaxy Zoo morphologies for the SDSS selection,
+     excluding galaxies without sSFR estimates.}
+     \label{fig:sSFR_classification}
+\end{figure}
+
+\subsection{Morphology classification}
+Morphologies are determined via the Galaxy Zoo citizen‐science decision tree, in which each galaxy image receives multiple
+independent volunteer classifications that are aggregated into debiased vote fractions \citep{GalaxyZoo1}. Those fractions are provided in the
+\texttt{zooSpec} table of the SDSS database through the \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} columns. We classify a galaxy as
+``elliptical/smooth'' if \texttt{p\_el\_debiased} is greater than 0.5, and as ``spiral/features'' if \texttt{p\_cs\_debiased} is greater than 0.5.
+All other cases are classified as ``uncertain''. These are vote-fraction classes, not a full structural decomposition. In particular, the catalogue used here does not provide a clean E/S0 separation, so references below to elliptical or early-type galaxies should be read as Galaxy Zoo smooth/early-type proxies rather than as a bulge-disc structural classification.
+
+<% if sz.get('status') == 'ok' %>
+<% set size_cuts = sz.get('quality_cuts', {}) %>
+<% set size_avail = sz.get('availability_audit', {}) %>
+<% set size_totals = size_avail.get('totals', {}) %>
+\subsection{Galaxy sizes}\label{sec:size_data}
+
+Our primary galaxy-size measure is the circular half-light radius of the pure S\'ersic fit in the $r$ band, \(R_{\rm chl,r}\), from the bulge+disk decomposition catalogue of \citet{Simard2011}. These are PSF-convolved GIM2D fits with re-derived sky levels and deblending designed with crowded fields in mind, which is the relevant regime for compact-group photometry, so the fitted sizes are corrected for seeing. The catalogue is keyed to SDSS DR7 identifiers; we therefore bridge our DR<<DATA_RELEASE>> objects to their DR7 counterparts through the SkyServer \texttt{<< r.get('size_dr7_bridge', 'SpecDR7') >>} cross-match table. Two guards protect this bridge: rows in which the Simard redshift differs from the catalogue redshift by more than << size_cuts.get('z_match_tolerance')|fmt(3) >> are treated as wrong matches and their structural values are dropped (<< size_totals.get('z_mismatch') >> rows), and rows in which two distinct catalogue galaxies of the same group resolve to a single DR7 identifier are treated as blended DR7 detections and dropped (<< size_totals.get('shred_merge') >> rows). The Simard sizes are tabulated in kpc under the catalogue's own cosmology; we convert them back to angular sizes with the catalogue plate scale and then to proper kpc with the same Planck 2015 conversion as every other projected quantity in this paper (Sect.~\ref{sec:samples}).
+
+As a secondary size measure we use the SDSS Petrosian radii \texttt{petroR50\_r} and \texttt{petroR90\_r}, which also define the concentration index \(C = R_{90,r}/R_{50,r}\). Petrosian radii are not corrected for seeing, and the SDSS Petrosian aperture misses a profile-dependent fraction of the flux, roughly 20\,per cent for an \(n=4\) profile, which biases \(R_{50,r}\) low for concentrated galaxies \citep{Blanton2001,Graham2005} -- precisely the smooth/early-type-like population in which \CG{} is enhanced. The Petrosian measure is nevertheless retained because it is model-independent, essentially fully available, and provides the like-for-like bridge to the compact-group size study of \citet{Coenda+12}. All sizes are required to lie between << size_cuts.get('size_min_kpc')|fmt(1) >> and << size_cuts.get('size_max_kpc')|fmt(0) >> kpc after re-conversion; S\'ersic fits pegged at the GIM2D bounds (\(n_g \le << size_cuts.get('ng_peg_low')|fmt(2) >>\) or \(n_g \ge << size_cuts.get('ng_peg_high')|fmt(1) >>\); << size_totals.get('n_pegged') >> galaxies) are excluded from the primary sample, and Petrosian entries must satisfy \(R_{50,r}>0\), \(R_{90,r}>R_{50,r}\), and a finite positive uncertainty. The completeness of both measures, and its difference between \CG{} and the controls, is audited in Sect.~\ref{sec:size_results}.
+<% endif %>
+
+\subsection{Statistical strategy}
+
+The analyses are organized hierarchically. Raw tables and exact tests provide descriptive baseline comparisons. Fisher or Barnard exact tests are used for two-sample categorical comparisons depending on the table structure, while rank-sum or bootstrap comparisons are used for distributional and median differences. Spearman and Pearson correlations are used only as diagnostics of monotonic or linear trends; when the coefficients are small, we interpret them as weak even if the p-values are formally small. Holm or Benjamini--Hochberg corrections are applied where multiple related tests are performed. The primary robustness layer consists of mass-, rank-, and environment-adjusted binomial models with group-clustered standard errors, followed by one-to-one matched control comparisons. Colours, AGN-like fractions, \(\mathrm{H}\alpha\) equivalent widths, magnitude gaps, crossing-time trends, projected phase space, and the pairwise tidal index are secondary diagnostics. The main conclusions below rely on signals that survive the adjusted and matched analyses, not on isolated exploratory tests.
+
+\section{Baseline population differences}
 \subsection{Raw sSFR fractions}
 
 The sSFR status for each sample is shown in Table~\ref{tab:sSFR_status}. In the raw all-galaxy comparison, Fisher's exact test gives star-forming-fraction p-values of
@@ -239,7 +275,7 @@ For satellites, the corresponding p-values are
     \tabcolsep=3pt
     \begin{tabular}{lccc}
         \hline\hline
-            \textbf{Sample} & \textbf{  <<sSFR_status[0]>>  } & \textbf{  <<sSFR_status[1]>>  } & \textbf{Star-forming} \\
+            \textbf{Sample} & \textbf{  No sSFR  } & \textbf{  <<sSFR_status[1]>>  } & \textbf{Star-forming} \\
             \hline
             \CG &  <<CG4_all_Q>>  (<< (100 * CG4_all_Q / CG4_all_N)|fmt(0) >>\%) &  <<CG4_all_P>>  (<< (100 * CG4_all_P / CG4_all_N)|fmt(0) >>\%)&  <<CG4_all_SF>>  (<< (100 * CG4_all_SF / CG4_all_N)|fmt(0) >>\%) \\
              \quad \emph{BGG} &  \emph{<<CG4_BGG_NQuenched>>  (<<CG4_BGG_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<CG4_BGG_NPassive>>  (<<CG4_BGG_NPassive_pc|fmt(0)>>\%)} &  \emph{<<CG4_BGG_NStarforming>>  (<<CG4_BGG_NStarforming_pc|fmt(0)>>\%)} \\
@@ -254,45 +290,11 @@ For satellites, the corresponding p-values are
             \quad \emph{BGG} &  \emph{<<RG4_BGG_NQuenched>>  (<<RG4_BGG_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<RG4_BGG_NPassive>>  (<<RG4_BGG_NPassive_pc|fmt(0)>>\%)} &  \emph{<<RG4_BGG_NStarforming>>  (<<RG4_BGG_NStarforming_pc|fmt(0)>>\%)}\\
             \quad \emph{Satellites} &  \emph{<<RG4_Sat_NQuenched>>  (<<RG4_Sat_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<RG4_Sat_NPassive>>  (<<RG4_Sat_NPassive_pc|fmt(0)>>\%)} &  \emph{<<RG4_Sat_NStarforming>>  (<<RG4_Sat_NStarforming_pc|fmt(0)>>\%)}\\
          \hline
-            \emph{SDSS select'n} &  \emph{<<SDSS_NQuenched>> (<<SDSS_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<SDSS_NPassive>>  (<<SDSS_NPassive_pc|fmt(0)>>\%)} &  \emph{<<SDSS_NStarforming>>  (<<SDSS_NStarforming_pc|fmt(0)>>\%)}\\
+            \emph{SDSS selection} &  \emph{<<SDSS_NQuenched>> (<<SDSS_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<SDSS_NPassive>>  (<<SDSS_NPassive_pc|fmt(0)>>\%)} &  \emph{<<SDSS_NStarforming>>  (<<SDSS_NStarforming_pc|fmt(0)>>\%)}\\
         \hline
     \end{tabular}
 \end{table}
 
-
-
-
-\begin{figure}
-    \centering
-     \includegraphics[width=\columnwidth]{sSFR_classification.pdf}
-     \caption{sSFR vs mass, star-forming/passive limit and Zoo morphologies for the SDSS control sample,
-     excluding quenched galaxies.}
-     \label{fig:sSFR_classification}
-\end{figure}
-
-\subsection{Morphology classification}
-Morphologies are determined via the Galaxy Zoo citizen‐science decision tree, in which each galaxy image receives multiple
-independent volunteer classifications that are aggregated into debiased vote fractions \citep{GalaxyZoo1}. Those fractions are provided in the
-\texttt{zooSpec} table of the SDSS database through the \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} columns. We classify a galaxy as
-``elliptical/smooth'' if \texttt{p\_el\_debiased} is greater than 0.5, and as ``spiral/features'' if \texttt{p\_cs\_debiased} is greater than 0.5.
-All other cases are classified as ``uncertain''. These are vote-fraction classes, not a full structural decomposition. In particular, the catalogue used here does not provide a clean E/S0 separation, so references below to elliptical or early-type galaxies should be read as Galaxy Zoo smooth/early-type proxies rather than as a bulge-disc structural classification.
-
-<% if sz.get('status') == 'ok' %>
-<% set size_cuts = sz.get('quality_cuts', {}) %>
-<% set size_avail = sz.get('availability_audit', {}) %>
-<% set size_totals = size_avail.get('totals', {}) %>
-\subsection{Galaxy sizes}\label{sec:size_data}
-
-Our primary galaxy-size measure is the circular half-light radius of the pure S\'ersic fit in the $r$ band, \(R_{\rm chl,r}\), from the bulge+disk decomposition catalogue of \citet{Simard2011}. These are PSF-convolved GIM2D fits with re-derived sky levels and deblending designed with crowded fields in mind, which is the relevant regime for compact-group photometry, so the fitted sizes are corrected for seeing. The catalogue is keyed to SDSS DR7 identifiers; we therefore bridge our DR<<DATA_RELEASE>> objects to their DR7 counterparts through the SkyServer \texttt{<< r.get('size_dr7_bridge', 'SpecDR7') >>} cross-match table. Two guards protect this bridge: rows in which the Simard redshift differs from the catalogue redshift by more than << size_cuts.get('z_match_tolerance')|fmt(3) >> are treated as wrong matches and their structural values are dropped (<< size_totals.get('z_mismatch') >> rows), and rows in which two distinct catalogue galaxies of the same group resolve to a single DR7 identifier are treated as blended DR7 detections and dropped (<< size_totals.get('shred_merge') >> rows). The Simard sizes are tabulated in kpc under the catalogue's own cosmology; we convert them back to angular sizes with the catalogue plate scale and then to proper kpc with the same Planck15 conversion used for every other projected quantity in this paper.
-
-As a secondary size measure we use the SDSS Petrosian radii \texttt{petroR50\_r} and \texttt{petroR90\_r}, which also define the concentration index \(C = R_{90,r}/R_{50,r}\). Petrosian radii are not corrected for seeing, and the SDSS Petrosian aperture misses a profile-dependent fraction of the flux, roughly 20\,per cent for an \(n=4\) profile, which biases \(R_{50,r}\) low for concentrated galaxies \citep{Blanton2001,Graham2005} -- precisely the smooth/early-type-like population in which \CG{} is enhanced. The Petrosian measure is nevertheless retained because it is model-independent, essentially fully available, and provides the like-for-like bridge to the compact-group size study of \citet{Coenda+12}. All sizes are required to lie between << size_cuts.get('size_min_kpc')|fmt(1) >> and << size_cuts.get('size_max_kpc')|fmt(0) >> kpc after re-conversion; S\'ersic fits pegged at the GIM2D bounds (\(n_g \le << size_cuts.get('ng_peg_low')|fmt(2) >>\) or \(n_g \ge << size_cuts.get('ng_peg_high')|fmt(1) >>\); << size_totals.get('n_pegged') >> galaxies) are excluded from the primary sample, and Petrosian entries must satisfy \(R_{50,r}>0\), \(R_{90,r}>R_{50,r}\), and a finite positive uncertainty. The completeness of both measures, and its difference between \CG{} and the controls, is audited in Sect.~\ref{sec:size_results}.
-<% endif %>
-
-\subsection{Statistical strategy}
-
-The analyses are organized hierarchically. Raw tables and exact tests provide descriptive baseline comparisons. Fisher or Barnard exact tests are used for two-sample categorical comparisons depending on the table structure, while rank-sum or bootstrap comparisons are used for distributional and median differences. Spearman and Pearson correlations are used only as diagnostics of monotonic or linear trends; when the coefficients are small, we interpret them as weak even if the p-values are formally small. Holm or Benjamini--Hochberg corrections are applied where multiple related tests are performed. The primary robustness layer consists of mass-, rank-, and environment-adjusted binomial models with group-clustered standard errors, followed by one-to-one matched control comparisons. Colours, AGN-like fractions, \(\mathrm{H}\alpha\) equivalent widths, magnitude gaps, crossing-time trends, projected phase space, and the pairwise tidal index are secondary diagnostics. The main conclusions below rely on signals that survive the adjusted and matched analyses, not on isolated exploratory tests.
-
-\section{Baseline population differences}
 \subsection{Raw morphology fractions}
 
 The morphologies obtained for each sample are shown in Table~\ref{tab:morphologies}.
@@ -327,7 +329,7 @@ Barnard's two-sided exact tests were used to compare the fraction of each morpho
     \centering
      \includegraphics[width=\columnwidth]{galaxies_sfr.pdf}
      \caption{sSFR and morphologies of galaxies in \CG{} and our SDSS selection.
-     Quenched galaxies are represented at an arbitrary low value of $10^{<<sSFR_QUENCHED>>}$ yr\(^{-1}\).}
+     Galaxies without sSFR estimates are shown at an arbitrary low value of $10^{<<sSFR_QUENCHED>>}$ yr\(^{-1}\).}
      \label{fig:galaxies_morph_sfr}
 \end{figure}
 
@@ -447,6 +449,8 @@ We model the star-forming main sequence as a function of stellar mass using poly
 We then use order 2 to compute the residual of each star-forming galaxy with respect to the main sequence,
 and show their distributions in Fig.~\ref{fig:main_sequence_residuals}. A positive residual means higher sSFR at fixed stellar mass relative to the fitted star-forming main sequence.
 
+In the comparisons below, \(\Delta\) is the \CG{}-minus-control median residual; positive values mean that \CG{} star-forming galaxies lie above the fitted main sequence relative to the control. Each quoted interval is the central 68\% (16th--84th percentile) bootstrap interval on the median difference, and each \(p\) is the two-sided bootstrap sign-crossing probability for the same difference (10\,000 resamples). The 68\% interval and the two-sided \(p\) answer slightly different questions and can therefore appear to disagree near the significance boundary: a 68\% interval that excludes zero is compatible with \(p\) slightly above 0.05, as for \CB{} below.
+
 The median main-sequence residual of \CG{} galaxies is:
 \begin{itemize}
 <% for key, res in build.items() %>
@@ -463,7 +467,7 @@ The median main-sequence residual of \CG{} galaxies is:
 \item <% if p is not none and p < 0.05 %>significantly different<% elif p is not none and p < 0.10 %>marginally different<% else %>not significantly different<% endif %> from that of << name >>,
 with a median offset of
 $\Delta = << "%.3f"|format(delta) >>$
-($<< "%.3f"|format(ci16) >> \le \Delta \le << "%.3f"|format(ci84) >>$, bootstrap),
+($<< "%.3f"|format(ci16) >> \le \Delta \le << "%.3f"|format(ci84) >>$, 16th--84th percentile bootstrap interval),
 corresponding to << pval_text(p) >>.
 
 <% endif %>
@@ -523,13 +527,16 @@ The spiral-fraction correlations show a broader environmental pattern rather tha
 
 \subsection{Morphology and domination}
 <% if r.get('Morphology_domination_effects_count', 0) > 0 %>
-When we further split the samples by domination and by the morphology of the BGG, significant effects only appear in
+When we further split the samples by domination and by the morphology of the BGG, significant effects only appear in the following cases.
+\begin{itemize}
 <% for item in r.get('Morphology_domination_effects', []) %>
-<< item.sample_label >> << item.domination_label >> groups, where the median satellite spiral fraction is
+\item << item.sample_label >> << item.domination_label >> groups, where the median satellite spiral fraction is
 << item.group_median_spiral_bgg_fmt >> for spiral BGGs and << item.group_median_elliptical_bgg_fmt >> for elliptical BGGs.
 The association between BGG morphology and satellite spiral fraction has a group-level odds ratio of << item.group_or_fmt >> (<< p_from_fmt(item.group_p_fmt) >>) in this sample; the same within-sample contrast under a satellite-level clustered uncertainty treatment gives
-an odds ratio of << item.sat_or_fmt >> (<< p_from_fmt(item.sat_p_fmt) >>)<% if not loop.last %>;<% else %>.<% endif %>
+an odds ratio of << item.sat_or_fmt >> (<< p_from_fmt(item.sat_p_fmt) >>).
 <% endfor %>
+\end{itemize}
+In each case the group-level and satellite-level clustered treatments share the same point estimate by construction and differ only in the uncertainty model, which is why the odds ratios coincide.
 <% else %>
 Splitting the samples by both domination and BGG morphology does not reveal any significant modulation of the satellite morphology mix.
 <% endif %>
@@ -610,7 +617,7 @@ For \(\Delta m_{12}\), no statistically significant morphology trend is found in
 The crossing-time diagnostic mainly separates systems by dynamical scale rather than by luminosity alone. Shorter \(t_\mathrm{cross}\) systems have larger virial mass-to-light ratios and virial masses: the correlations with \(\log(\mathcal{M}_\mathrm{VT}/L_r)\) and \(\log(\mathcal{M}_\mathrm{VT})\) are \(\rho_\mathrm{S}=<< tcross_m_over_l.rho_fmt >>\) (\(p<% if p_m_over_l.startswith('<') %><< p_m_over_l >><% else %>=<< p_m_over_l >><% endif %>\)) and \(\rho_\mathrm{S}=<< tcross_mass.rho_fmt >>\) (\(p<% if p_mass.startswith('<') %><< p_mass >><% else %>=<< p_mass >><% endif %>\)), respectively, over << tcross_mass.n_groups >> groups. By contrast, the relation with total group luminosity is formally detected but very weak (\(\rho_\mathrm{S}=<< tcross_lum.rho_fmt >>\)). We therefore read \(t_\mathrm{cross}\) as a dynamical compactness indicator tied primarily to virial mass and mass-to-light ratio, with little independent leverage from \(L_\mathrm{group}\). Appendix Figs.~\ref{fig:tcr_vs_mvirial_over_l}--\ref{fig:tcr_mvirial_lgroup_3d} show the corresponding projected and three-dimensional trends.
 
 
-\subsection{Optical colours}
+\subsection{Optical colours}\label{sec:optical_colours}
 <% set colour_avail_cg4 = extended_specialness.get('selection_diagnostics', {}).get('availability_counts_by_sample', {}).get('CG4', {}).get('colours', {}) %>
 We derive the $(u-r)$, $(u-g)$, $(g-r)$ and $(r-i)$ colours from the matched SDSS photometry. The retained colour-analysis matches include <% for item in r.Colour_matching_summary -%><< item.n_matched >> of << item.n_total >> galaxies in << item.sample_label >><% if not loop.last %>, <% else %>.<% endif %><% endfor %> This stricter subset differs from the availability audit in Fig.~\ref{fig:data_availability}: the figure's colour row only requires the four derived SDSS colour columns to be present in the final catalogue<% if colour_avail_cg4.get('n_available') and colour_avail_cg4.get('n_total') %>, giving << colour_avail_cg4.get('n_available') >> of << colour_avail_cg4.get('n_total') >> \CG{} galaxies<% endif %>, whereas the colour analysis here also requires successful matched-photometry retention and the covariates used below. Stellar mass is a confounding variable in colour comparisons \citep{Alpaslan+15}; we therefore model each colour jointly with $\log(M_\star/M_\odot)$ rather than comparing unadjusted colour distributions.
 
@@ -710,7 +717,7 @@ The complementary close-neighbour-flag model reaches the same qualitative conclu
 <% set cg4_audit = es.get('selection_diagnostics', {}).get('sample_size_audit', {}).get('CG4', {}) %>
 <% set cg4_total_available = cg4_audit.get('total_galaxies', matched.get('n_cg4_matched')) %>
 <% set cg4_unmatched = cg4_total_available - matched.get('n_cg4_matched') if cg4_total_available is not none and matched.get('n_cg4_matched') is not none else none %>
-We matched << matched.get('n_cg4_matched') >> of the << cg4_total_available >> available \CG{} galaxies one-to-one to << matched.get('n_control_matched') >> ordinary-group galaxies <% if not matched.get('replacement') %>without<% else %>with<% endif %> replacement, requiring common propensity-score support, a << matched.get('propensity_caliper_logit_sd')|fmt(1) >>-standard-deviation caliper and exact rank strata. <% if cg4_unmatched is not none and cg4_unmatched > 0 %>The remaining << cg4_unmatched >> \CG{} galaxies were excluded because they lay outside the common propensity-score support or exceeded the adopted caliper. <% endif %>The propensity model uses << matched.get('propensity_variables', [])|join(', ')|replace('_', ' ') >>. Projected distance is retained as a phase-space and interaction diagnostic rather than matched away because it partly defines compactness and has limited overlap. The largest absolute standardized mean difference changed from << matched.get('max_abs_smd_before')|fmt(2) >> before matching to << matched.get('max_abs_smd_after')|fmt(2) >> afterwards.
+We matched << matched.get('n_cg4_matched') >> of the << cg4_total_available >> available \CG{} galaxies one-to-one to << matched.get('n_control_matched') >> ordinary-group galaxies <% if not matched.get('replacement') %>without<% else %>with<% endif %> replacement, requiring common propensity-score support, a << matched.get('propensity_caliper_logit_sd')|fmt(1) >>-standard-deviation caliper and exact rank strata. <% if cg4_unmatched is not none and cg4_unmatched > 0 %>The remaining << cg4_unmatched >> \CG{} galaxies were excluded because they lay outside the common propensity-score support or exceeded the adopted caliper. <% endif %>The propensity model uses << matched.get('propensity_variables', [])|join(', ')|replace('_', ' ') >>. Projected distance is retained as a phase-space and interaction diagnostic rather than matched away because it partly defines compactness and has limited overlap. The largest absolute standardized mean difference changed from << matched.get('max_abs_smd_before')|fmt(2) >> before matching to << matched.get('max_abs_smd_after')|fmt(2) >> afterwards. The residual imbalance is carried by the group-luminosity covariate (\(\log L_\mathrm{group}\)); it lies slightly above the conventional 0.1 threshold, which is why we read the matched contrasts together with the adjusted models rather than in isolation.
 
 <% set m_passive = matched.get('effects', {}).get('passive_fraction', {}) %>
 <% if m_passive.get('status') == 'ok' %>
@@ -879,9 +886,9 @@ The \(\mathrm{H}\alpha\) equivalent-width distributions are shown in Appendix Fi
 
 <% set agn = es.get('agn_environment', {}) %>
 <% if agn.get('status') in ['ok', 'limited'] %>
-\subsection{Emission-line and AGN-like populations}
+\subsection{Emission-line and AGN-like populations}\label{sec:agn_env}
 
-The complementary emission-line analysis classifies BPT-star-forming, composite and broad AGN-like populations for galaxies with the required diagnostic line ratios. BPT-unclassified galaxies are excluded from the AGN-like fraction denominator rather than treated as confirmed non-AGN. Among BPT-classified \CG{} galaxies, the AGN-like fraction is << agn.get('fractions_by_sample', {}).get('CG4', {}).get('agn_like_fraction')|pct(1) >>\%.
+The complementary emission-line analysis classifies BPT star-forming, composite, and AGN-like populations for galaxies with the required diagnostic line ratios: composite galaxies lie between the \citet{Kauffmann+03a} and \citet{Kewley+01} demarcations in the [N\,II] BPT plane, and AGN-like galaxies lie above the \citet{Kewley+01} line; galaxies with a pre-existing AGN flag but no BPT line ratios are also counted as AGN-like. BPT-unclassified galaxies are excluded from the AGN-like fraction denominator rather than treated as confirmed non-AGN. Among BPT-classified \CG{} galaxies, the AGN-like fraction is << agn.get('fractions_by_sample', {}).get('CG4', {}).get('agn_like_fraction')|pct(1) >>\%.
 
 <% set agn_model = agn.get('mass_adjusted_models', {}).get('all', {}) %>
 <% if agn_model.get('status') == 'ok' %>
@@ -900,7 +907,7 @@ The AGN-like fractions are shown in Appendix Fig.~\ref{fig:agn_fraction}.
 <% if tidal.get('status') == 'ok' %>
 \subsection{Pairwise tidal index}\label{sec:tidal_index}
 
-The pairwise analysis reconstructs projected separations and velocity differences for << tidal.get('n_galaxies_with_pairs') >> galaxies and tests whether adding \(\sum_j M_{\star,j}/R_{ij}^3\) changes the adjusted \CG{} coefficient. The baseline models in this subsection are refit on the pairwise-analysis complete-case sample, so their coefficients need not be numerically identical to the corresponding coefficients in Sect.~\ref{sec:adjusted_galaxy_properties}. Because \(R_{ij}\) is projected, this term is used as a local projected-density and immediate-neighbour proxy rather than as a direct tidal-history measurement.
+The pairwise analysis reconstructs projected separations and velocity differences for << tidal.get('n_galaxies_with_pairs') >> galaxies and tests whether adding the pairwise tidal index \(\sum_j M_{\star,j}/R_{ij}^3\) (in \(\msun\,\mathrm{kpc}^{-3}\)) changes the adjusted \CG{} coefficient. The baseline models in this subsection are refit on the pairwise-analysis complete-case sample, so their coefficients need not be numerically identical to the corresponding coefficients in Sect.~\ref{sec:adjusted_galaxy_properties}. Because \(R_{ij}\) is projected, this term is used as a local projected-density and immediate-neighbour proxy rather than as a direct tidal-history measurement.
 
 <% set tidal_passive = tidal.get('models', {}).get('passive', {}) %>
 <% set passive_base = tidal_passive.get('baseline', {}) %>
@@ -1005,7 +1012,7 @@ Within morphology classes, the satellite-only fits give << size_strata_ell.get('
 
 <% set selection = es.get('selection_diagnostics', {}) %>
 <% if selection.get('status') == 'ok' %>
-\subsection{Selection diagnostics}
+\subsection{Selection diagnostics}\label{sec:selection_diagnostics}
 
 The fractions with complete measurements for the major derived quantities are shown in Appendix Fig.~\ref{fig:data_availability}. The colour-matched versus unmatched comparisons quantify shifts in stellar mass, redshift, rank, star-formation class and morphology.
 
@@ -1100,7 +1107,7 @@ The Galaxy Zoo morphology variables used here separate smooth, featureless syste
 
 This caveat is important when comparing with the recent S-PLUS structural studies of compact-group galaxies by \citet{Montaguth2023,Montaguth2025,Montaguth2026MassSize,Montaguth2026NonIsolated}. Those studies identify transition galaxies and trends in the \(R_{\rm e}\)--S\'ersic-index and mass-size planes, with especially strong signals in non-isolated compact groups and host structures. Their transition population can plausibly overlap with the smooth class in our catalogue: systems with faded disks, increasing central concentration, or S0-like structure may be counted as smooth here even if they are not classical ellipticals. The two approaches are therefore complementary. Their structural measurements describe the likely physical form of the transformation, while our regular-group controls show that the strongest residual compact-group signal is the accumulated smooth/featured morphology balance.<% if sz.get('status') == 'ok' %> With the Simard structural parameters now attached to this sample, the \(R_{\rm e}\)--S\'ersic-\(n\) plane is measured directly for \CG{} and its controls (Appendix Fig.~\ref{fig:size_re_n_plane}), turning this comparison with the S-PLUS transition-galaxy studies from a qualitative statement into a direct one.<% endif %>
 
-\subsection{Decoupling between morphology and instantaneous star formation}
+\subsection{Decoupling between morphology and instantaneous star formation}\label{sec:decoupling}
 
 The star-formation diagnostics do not follow the morphology signal one-to-one. \CG{} satellites have a lower raw star-forming fraction, especially relative to \RG, but the adjusted and matched evidence is weaker than for morphology. Among galaxies that remain star-forming, the main-sequence residuals do not show a robust compact-group offset. The colour analysis is also control-sensitive and based on a biased colour-matched subset, while AGN-like fractions, magnitude gaps, and the limited \(\mathrm{H}\alpha\) diagnostic do not identify a simple alternative driver.
 
@@ -1110,13 +1117,13 @@ The star-formation diagnostics do not follow the morphology signal one-to-one. \
 <% set discussion_crowd_rows = discussion_crowd.get('fractions_after_excluding_close', []) %>
 <% set discussion_c4c_crowd_list = discussion_crowd_rows|selectattr('sample', 'equalto', 'Control4C')|list %>
 <% set discussion_c4c_crowd = discussion_c4c_crowd_list|first if discussion_c4c_crowd_list|length > 0 else {} %>
-The star-formation non-detections are also limited by the spectroscopy. <% if discussion_angular.get('status') == 'ok' %>\CG{} has a higher fraction of galaxies with a nearest projected neighbour below the 55-arcsec SDSS fibre-collision scale than the controls (<< discussion_angular.get('cg4_fraction_below_threshold')|pct(1) >>\% versus << discussion_angular.get('control_fraction_below_threshold')|pct(1) >>\%). <% endif %><% if discussion_c4c_crowd.get('close_fraction') is not none %>The control value is pooled over the regular-control comparison; the \CC{}-only exclusion fraction in Sect.~5.2 is larger (<< discussion_c4c_crowd.get('close_fraction')|pct(1) >>\%) because \CC{} is selected as the compact-core analogue. <% endif %>Spectra are therefore preferentially incomplete in the closest projected pairs, and short-lived interaction-triggered starbursts or post-starburst phases could be underrepresented. The MPA-JHU aperture corrections use photometric information outside the fibre \citep{Brinchmann+04,Kauffmann+03a}; these corrections may be less secure for interacting or blended compact-group members. We therefore treat the sSFR, SFMS, and \(\mathrm{H}\alpha\) results as conservative secondary non-detections, not as proof that compact groups have no star-formation effect.
+The star-formation non-detections are also limited by the spectroscopy. <% if discussion_angular.get('status') == 'ok' %>\CG{} has a higher fraction of galaxies with a nearest projected neighbour below the 55-arcsec SDSS fibre-collision scale than the controls (<< discussion_angular.get('cg4_fraction_below_threshold')|pct(1) >>\% versus << discussion_angular.get('control_fraction_below_threshold')|pct(1) >>\%). <% endif %><% if discussion_c4c_crowd.get('close_fraction') is not none %>The control value is pooled over the regular-control comparison; the \CC{}-only exclusion fraction in Sect.~\ref{sec:morph_crowding} is larger (<< discussion_c4c_crowd.get('close_fraction')|pct(1) >>\%) because \CC{} is selected as the compact-core analogue. <% endif %>Spectra are therefore preferentially incomplete in the closest projected pairs, and short-lived interaction-triggered starbursts or post-starburst phases could be underrepresented. The MPA-JHU aperture corrections use photometric information outside the fibre \citep{Brinchmann+04,Kauffmann+03a}; these corrections may be less secure for interacting or blended compact-group members. We therefore treat the sSFR, SFMS, and \(\mathrm{H}\alpha\) results as conservative secondary non-detections, not as proof that compact groups have no star-formation effect.
 
 This decoupling suggests that the dominant observable difference is not an instantaneous quenching event caught at the present epoch. A galaxy can lose visible spiral structure, build a smoother disk or bulge-dominated profile, or fade into an S0-like state on timescales that do not require a simultaneously large sSFR residual in the surviving star-forming subset. The present data therefore favour a cumulative morphology or structure signal over a single ongoing star-formation process.
 
 \subsection{Compact groups as dense cores and preprocessing sites}
 
-The comparison samples were designed to ask whether compact groups remain special relative to ordinary group cores, not merely relative to the field. The answer is mixed but physically useful. \CG{} galaxies retain a robust morphology difference, yet much of the interpretation points toward local density, dense cores, and preprocessing rather than toward an isolated compact-group channel. This is consistent with the construction result that many compact groups are embedded in or associated with larger structures, and with the stronger structural signatures reported for non-isolated compact groups in recent S-PLUS work.
+The comparison samples were designed to ask whether compact groups remain special relative to ordinary group cores, not merely relative to the field. The answer is mixed but physically useful. \CG{} galaxies retain a robust morphology difference, yet much of the interpretation points toward local density, dense cores, and preprocessing rather than toward an isolated compact-group channel. This is consistent with the construction result that many compact groups are embedded in or associated with larger structures, and with the stronger structural signatures reported for non-isolated compact groups in recent S-PLUS work. We note that no harmonised halo-mass estimate is available for these catalogues (Sect.~\ref{sec:selection_diagnostics}), so, although the adjusted models control for group luminosity and velocity dispersion, a residual halo-mass contribution to the morphology signal cannot be fully excluded.
 
 The most conservative interpretation is that compact groups identify the high-density, high-interaction tail of group environments. Some systems may be genuinely compact and dynamically evolved, while others may be dense cores or substructures inside larger haloes. In both cases, the relevant physical quantity is likely the accumulated local interaction history. Future simulations and direct structural measurements, including \(R_{\rm e}\), S\'ersic index, transition-galaxy classifications, and mass-size residuals, are needed to test whether the signal isolated here is unique to compact configurations or is the high-density limit of more general group preprocessing.
 
@@ -1172,7 +1179,7 @@ We identify BPT-classifiable galaxies by requiring measured values of both emiss
 \quad\text{and}\quad
 \log_{10}\!\bigl([\mathrm{O\,III}]\lambda5007/\mathrm{H}\beta\bigr).
 \]
-Among these galaxies, we flag broad AGN-like systems if they satisfy either
+Among these galaxies, we flag AGN-like systems if they satisfy either
 \[
 \log_{10}\frac{[\mathrm{N\,II}]}{\mathrm{H}\alpha} > 0,
 \]
@@ -1181,11 +1188,11 @@ or if they lie above the empirical demarcation of \citet{Kauffmann+03a}:
 \log_{10}\frac{[\mathrm{O\,III}]}{\mathrm{H}\beta}
 > \frac{0.61}{\log_{10}([\mathrm{N\,II}]/\mathrm{H}\alpha)-0.05} \;+\; 1.3,
 \]
-in which case they are excluded from the GMM calibration sample. Galaxies with missing diagnostic line ratios are BPT-unclassified, not proven non-AGN. They are retained for the broad sSFR status assignment when valid SDSS stellar mass and sSFR estimates are available, while the emission-line/AGN-like analysis treats BPT-unclassified objects separately. The BPT-classifiable subset is shown in Fig.~\ref{fig:BPT}.
+in which case they are excluded from the GMM calibration sample. This calibration flag is deliberately more inclusive than the three-class BPT scheme of Sect.~\ref{sec:agn_env}, in which composite galaxies lie between the \citet{Kauffmann+03a} and \citet{Kewley+01} demarcations and only galaxies above the \citet{Kewley+01} line are labelled AGN-like, because its sole purpose is to keep possible AGN contamination out of the sSFR calibration. Galaxies with missing diagnostic line ratios are BPT-unclassified, not proven non-AGN. They are retained for the broad sSFR status assignment when valid SDSS stellar mass and sSFR estimates are available, while the emission-line/AGN-like analysis treats BPT-unclassified objects separately. The BPT-classifiable subset is shown in Fig.~\ref{fig:BPT}.
 
-Galaxies with \texttt{specsfr\_tot\_p50} equal to -9999 in the SDSS are classified as quenched
+Galaxies with \texttt{specsfr\_tot\_p50} equal to -9999 in the SDSS are placed in the no-sSFR class
 (for display purposes, they are assigned the arbitrary low value \(10^{<<sSFR_QUENCHED>>}\,\mathrm{yr}^{-1}\)).
-The remaining non-quenched galaxies are divided into passive and star-forming classes with a two-component Gaussian Mixture Model (GMM) in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane \citep{McLachlanPeel2000}. The calibration excludes galaxies flagged as AGN-like where the required BPT line ratios are available, while BPT-unclassified galaxies with valid SDSS stellar mass and sSFR estimates can still receive a broad sSFR class. The passive/star-forming boundary is the locus where the two component posterior probabilities are equal. A fixed-threshold robustness check confirms that the qualitative hierarchy is not tied to the exact GMM split.
+The remaining galaxies are divided into passive and star-forming classes with a two-component Gaussian Mixture Model (GMM) in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane \citep{McLachlanPeel2000}. The calibration excludes galaxies flagged as AGN-like where the required BPT line ratios are available, while BPT-unclassified galaxies with valid SDSS stellar mass and sSFR estimates can still receive a broad sSFR class. The passive/star-forming boundary is the locus where the two component posterior probabilities are equal. A fixed-threshold robustness check confirms that the qualitative hierarchy is not tied to the exact GMM split.
 
 \begin{center}
      \includegraphics[width=\columnwidth]{BPT_diagram.pdf}
@@ -1266,7 +1273,7 @@ This appendix collects the secondary diagnostic figures referenced in the main t
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{Dom_vs_NonDom_XOR_halfviolin_ONEFIG.pdf}
-     \caption{Bootstrap distributions of the Spearman coefficients for the group-property pairs selected by the XOR domination criterion.}
+     \caption{Bootstrap distributions of the Spearman coefficients for the group-property pairs selected by the XOR domination criterion, i.e. property pairs whose Spearman correlation, after a per-subsample Benjamini--Hochberg adjustment across pairs, is significant (\(p_\mathrm{adj}<0.10\)) in exactly one of the dominated and non-dominated subsamples of at least one sample.}
      \label{fig:Dom_vs_NonDom_XOR}
 \end{figure}
 
@@ -1446,7 +1453,7 @@ This appendix collects the secondary diagnostic figures referenced in the main t
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{<< SUBFIGURES_PATH >><< appendix_selection.get('availability_figure') >>}
-    \caption{Availability fractions for the major derived quantities in each sample. The colour row records completeness of the four derived SDSS colour columns in the final catalogue, rather than the stricter colour-analysis matched subset used in Sect.~4.5.}
+    \caption{Availability fractions for the major derived quantities in each sample. The colour row records completeness of the four derived SDSS colour columns in the final catalogue, rather than the stricter colour-analysis matched subset used in Sect.~\ref{sec:optical_colours}.}
     \label{fig:data_availability}
 \end{figure*}
 <% endif %>
