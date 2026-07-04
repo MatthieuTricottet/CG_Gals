@@ -217,13 +217,14 @@ def plot_domination_distributions(
                 )
 
             row_ymax[row] = max(row_ymax[row], ax.get_ylim()[1])
+            ax.tick_params(axis="both", labelsize=18)
 
             if col == 0:
-                ax.set_ylabel(f"{cat} Groups", fontsize=18)
+                ax.set_ylabel(f"{cat} Groups", fontsize=22)
 
             if row == nrows - 1:
                 label_key = "logLum_group" if quantity == "Lum_group" and col == ncols - 1 else quantity
-                ax.set_xlabel(lu.formatted_label(label_key), fontsize=16)
+                ax.set_xlabel(lu.formatted_label(label_key), fontsize=22)
 
             if np.isfinite(p_value):
                 ptxt = gu.pvalue_label_latex(p_value)
@@ -239,12 +240,12 @@ def plot_domination_distributions(
                 transform=ax.transAxes,
                 ha="left",
                 va="top",
-                fontsize=14,
+                fontsize=20,
                 color=pcol,
             )
 
             if col == ncols - 1 and row == 0:
-                ax.legend(fontsize=13)
+                ax.legend(fontsize=16, loc="center right")
 
     for col in range(ncols):
         if not np.isfinite(col_xmin[col]) or not np.isfinite(col_xmax[col]):

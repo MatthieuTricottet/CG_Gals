@@ -50,7 +50,7 @@ def _plot_halpha(frame, column, path):
             color=colour,
         )
     ax.axvline(-3, color="0.4", linestyle=":", label="strong-emission threshold")
-    ax.set_xlabel(r"H$\alpha$ equivalent width (\AA; emission is negative)")
+    ax.set_xlabel(r"H$\alpha$ equivalent width ($\mathrm{\AA}$; emission is negative)")
     ax.set_ylabel("Density")
     ax.legend(frameon=False)
     fig.tight_layout()

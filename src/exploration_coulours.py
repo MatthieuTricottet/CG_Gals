@@ -1228,8 +1228,10 @@ def plot_colour_residual_distance(
         ax.grid(alpha=0.15)
         ax.set_xlim(0, x_high)
         ax.set_ylim(float(y_low), float(y_high))
-    axes[0].legend(frameon=False, fontsize=7, loc="lower left")
-    fig.tight_layout()
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, frameon=False, fontsize=8, ncol=2,
+               loc="upper center", bbox_to_anchor=(0.5, 1.02))
+    fig.tight_layout(rect=(0, 0, 1, 0.94))
     return _save_figure(fig, output_path)
 
 

@@ -349,7 +349,7 @@ def _plot_availability(audit: dict, path: str) -> str | None:
             for s in rows
         ]
     )
-    fig, ax = plt.subplots(figsize=(6.4, 4.2))
+    fig, ax = plt.subplots(figsize=(5.2, 3.6))
     image = ax.imshow(matrix, vmin=0, vmax=1, cmap="viridis", aspect="auto")
     ax.set_xticks(np.arange(len(measures)), [label for _, label in measures])
     ax.set_yticks(np.arange(len(rows)), rows)
@@ -364,7 +364,7 @@ def _plot_availability(audit: dict, path: str) -> str | None:
                 ha="center",
                 va="center",
                 color="white" if matrix[i, j] < 0.55 else "black",
-                fontsize=8.5,
+                fontsize=10,
             )
     fig.colorbar(image, ax=ax, label="Available fraction of final sample")
     fig.tight_layout()

@@ -145,7 +145,7 @@ def _plot_availability(availability_counts, path):
                 ha="center",
                 va="center",
                 color="white" if matrix[row, column] < 0.55 else "black",
-                fontsize=7.5,
+                fontsize=9,
             )
     fig.colorbar(image, ax=ax, label="Available fraction of final sample")
     fig.tight_layout()

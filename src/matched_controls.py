@@ -153,6 +153,15 @@ def _plot_effects(effects, path):
     return os.path.basename(path)
 
 
+COVARIATE_LABELS = {
+    "logMstar": r"$\log M_\star$",
+    "z_numeric": r"$z$",
+    "rank": "rank",
+    "log_group_luminosity": r"$\log L_{\rm group}$",
+    "velocity_dispersion": r"$\sigma_v$",
+}
+
+
 def _plot_balance(before, after, path):
     if not before:
         return None
@@ -162,7 +171,7 @@ def _plot_balance(before, after, path):
     ax.scatter([abs(before[v]) for v in variables], y, label="Before", color="#A74752")
     ax.scatter([abs(after[v]) for v in variables], y, label="After", color="#25876E")
     ax.axvline(0.1, color="0.45", linestyle=":", linewidth=1)
-    ax.set_yticks(y, variables)
+    ax.set_yticks(y, [COVARIATE_LABELS.get(v, v) for v in variables])
     ax.invert_yaxis()
     ax.set_xlabel("Absolute standardized mean difference")
     ax.legend(frameon=False)
