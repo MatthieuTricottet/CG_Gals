@@ -1,5 +1,10 @@
-\begin{thebibliography}{38}
+\begin{thebibliography}{45}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{{Ahumada} {et~al.}(2020){Ahumada}, {Allende Prieto}, {Almeida},
+  {et~al.}}]{Ahumada+20}
+{Ahumada}, R., {Allende Prieto}, C., {Almeida}, A., {et~al.} 2020, \apjs, 249,
+  3
 
 \bibitem[{{Alpaslan} {et~al.}(2015){Alpaslan}, {Driver}, {Robotham},
   {Obreschkow}, {Andrae}, {Cluver}, {Kelvin}, {Lange}, {Owers}, {Taylor},
@@ -48,6 +53,11 @@
 {D{\'{\i}}az-Gim{\'e}nez}, E., {Mamon}, G.~A., {Pacheco}, M., {Mendes de
   Oliveira}, C., \& {Alonso}, M.~V. 2012, \mnras, 426, 296
 
+\bibitem[{{D{\'\i}az-Gim{\'e}nez} {et~al.}(2020){D{\'\i}az-Gim{\'e}nez},
+  {Taverna}, {Zandivarez}, \& {Mamon}}]{DiazGimenez+20}
+{D{\'\i}az-Gim{\'e}nez}, E., {Taverna}, A., {Zandivarez}, A., \& {Mamon}, G.~A.
+  2020, \mnras, 492, 2588
+
 \bibitem[{{D{\'\i}az-Gim{\'e}nez} {et~al.}(2018){D{\'\i}az-Gim{\'e}nez},
   {Zandivarez}, \& {Taverna}}]{DiazGimenez+18}
 {D{\'\i}az-Gim{\'e}nez}, E., {Zandivarez}, A., \& {Taverna}, A. 2018, \aap,
@@ -74,10 +84,19 @@
 {Johnson}, K.~E., {Hibbard}, J.~E., {Gallagher}, S.~C., {et~al.} 2007, \aj,
   134, 1522
 
-\bibitem[{{Kauffmann} {et~al.}(2003){Kauffmann}, {Heckman}, {Tremonti},
-  {Brinchmann}, {Charlot}, {White}, {Reichard}, \& {Brinkmann}}]{Kauffmann+03a}
-{Kauffmann}, G., {Heckman}, T.~M., {Tremonti}, C., {et~al.} 2003, \mnras, 346,
-  1055
+\bibitem[{{Kauffmann} {et~al.}(2003{\natexlab{a}}){Kauffmann}, {Heckman},
+  {Tremonti}, {Brinchmann}, {Charlot}, {White}, {Reichard}, \&
+  {Brinkmann}}]{Kauffmann+03a}
+{Kauffmann}, G., {Heckman}, T.~M., {Tremonti}, C., {et~al.} 2003{\natexlab{a}},
+  \mnras, 346, 1055
+
+\bibitem[{{Kauffmann} {et~al.}(2003{\natexlab{b}}){Kauffmann}, {Heckman},
+  {White}, {Charlot}, {Tremonti}, {Brinchmann}, {Bruzual}, {Peng}, {Seibert},
+  {Bernardi}, {Blanton}, {Brinkmann}, {Castander}, {Cs{\'a}bai}, {Fukugita},
+  {Ivezic}, {Munn}, {Nichol}, {Padmanabhan}, {Thakar}, {Weinberg}, \&
+  {York}}]{Kauffmann+03b}
+{Kauffmann}, G., {Heckman}, T.~M., {White}, S.~D.~M., {et~al.}
+  2003{\natexlab{b}}, \mnras, 341, 33
 
 \bibitem[{{Kewley} {et~al.}(2001){Kewley}, {Dopita}, {Sutherland}, {Heisler},
   \& {Trevena}}]{Kewley+01}
@@ -93,6 +112,12 @@
   {Andreescu}, {Murray}, \& {Vandenberg}}]{GalaxyZoo1}
 {Lintott}, C., {Schawinski}, K., {Bamford}, S., {et~al.} 2011, \mnras, 410, 166
 
+\bibitem[{{Lintott} {et~al.}(2008){Lintott}, {Schawinski}, {Slosar}, {Land},
+  {Bamford}, {Thomas}, {Raddick}, {Nichol}, {Szalay}, {Andreescu}, {Murray}, \&
+  {Vandenberg}}]{Lintott+08}
+{Lintott}, C.~J., {Schawinski}, K., {Slosar}, A., {et~al.} 2008, \mnras, 389,
+  1179
+
 \bibitem[{{Mahajan} {et~al.}(2011){Mahajan}, {Mamon}, \&
   {Raychaudhury}}]{Mahajan+11}
 {Mahajan}, S., {Mamon}, G.~A., \& {Raychaudhury}, S. 2011, \mnras, 416, 2882
@@ -100,8 +125,16 @@
 \bibitem[{{Mamon}(1986)}]{Mamon86}
 {Mamon}, G.~A. 1986, \apj, 307, 426
 
+\bibitem[{{McConnachie} {et~al.}(2009){McConnachie}, {Patton}, {Ellison}, \&
+  {Simard}}]{McConnachie+09}
+{McConnachie}, A.~W., {Patton}, D.~R., {Ellison}, S.~L., \& {Simard}, L. 2009,
+  \mnras, 395, 255
+
 \bibitem[{McLachlan \& Peel(2000)}]{McLachlanPeel2000}
-McLachlan, G. \& Peel, D. 2000, Finite Mixture Models (Wiley)
+McLachlan, G. \& Peel, D. 2000, Finite Mixture Models (New York: Wiley)
+
+\bibitem[{{Mendes de Oliveira} \& {Hickson}(1994)}]{MendesdeOliveira&Hickson94}
+{Mendes de Oliveira}, C. \& {Hickson}, P. 1994, \apj, 427, 684
 
 \bibitem[{Montaguth {et~al.}(2026{\natexlab{a}})Montaguth, Mendes~de Oliveira,
   Lima-Dias, Monachesi, Torres-Flores, Telles, Herpich, Jim{'e}nez-Teja,
@@ -189,6 +222,12 @@ Montaguth, G.~P., Torres-Flores, S., Monachesi, A., {et~al.} 2023, \mnras, 524,
   {McConnachie}}]{Simard2011}
 {Simard}, L., {Mendel}, J.~T., {Patton}, D.~R., {Ellison}, S.~L., \&
   {McConnachie}, A.~W. 2011, \apjs, 196, 11
+
+\bibitem[{{Taverna} {et~al.}(2023){Taverna}, {Salerno}, {Daza-Perilla},
+  {D{\'\i}az-Gim{\'e}nez}, {Zandivarez}, {Mart{\'\i}nez}, \&
+  {Ruiz}}]{Taverna+23}
+{Taverna}, A., {Salerno}, J.~M., {Daza-Perilla}, I.~V., {et~al.} 2023, \mnras,
+  520, 6367
 
 \bibitem[{{Tempel} {et~al.}(2017){Tempel}, {Tuvikene}, {Kipper}, \&
   {Libeskind}}]{Tempel+17}
