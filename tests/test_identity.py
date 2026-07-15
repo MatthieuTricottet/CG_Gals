@@ -26,17 +26,11 @@ def test_objids_unique_in_catalog(catalog):
 
 
 def test_every_control_group_has_exactly_four_members(frames):
-    # Known defect in the committed Control4C lineage (audit finding A1):
-    # Lim group 3103 contains an exact duplicate row, so it has only three
-    # unique members. Phase 2 regenerates the sample; until then the test
-    # pins the corruption to exactly that group so any *new* corruption
-    # still fails.
-    known_exceptions = {"Control4C": {3103: 3}}
     for name in ["Control4B", "Control4C", "RG4"]:
-        sizes = frames[name].drop_duplicates().groupby("Group")["objid"].nunique()
-        bad = sizes[sizes != 4].to_dict()
-        assert bad == known_exceptions.get(name, {}), (
-            f"{name}: groups without exactly 4 unique members: {bad}"
+        sizes = frames[name].groupby("Group")["objid"].nunique()
+        assert (sizes == 4).all(), (
+            f"{name}: groups without exactly 4 unique members: "
+            f"{sizes[sizes != 4].to_dict()}"
         )
 
 
@@ -83,10 +77,21 @@ def test_physical_group_key_unifies_control_labels(catalog):
         assert (rows["physical_group"] == expected).all()
 
 
-def test_cg4_diagnostic_table_matches_known_contamination(frames):
-    # The committed Control4C still contains 14 CG4 galaxies in 4 embedded
-    # groups. This documents the defect; Phase 2 regenerates the sample and
-    # this test is updated to expect an empty table.
-    table = identity.cg4_in_control4c_table(frames)
-    assert set(table["cg4_group"].astype(int)) <= {206, 309, 315, 323}
-    assert set(table["cg4_class"]) <= {"Embedded"}
+def test_no_cg4_galaxy_in_any_control_sample(frames, catalog):
+    # Paper I exclusion, restored by the Phase 2 regeneration: no control
+    # sample may contain any galaxy of the full CG4 sample.
+    assert identity.cg4_in_control4c_table(frames).empty
+    for name in ["Control4B", "Control4C", "RG4"]:
+        overlap = catalog["in_CG4"] & catalog[f"in_{name}"]
+        assert not overlap.any(), f"CG4 galaxies found in {name}"
+
+
+def test_cg4_in_pc_quartets_matches_paper_i_exclusion_counts(frames):
+    # The Lim groups whose Control4C quartet would contain a CG4 galaxy are
+    # exactly the groups excluded during the regeneration: 60 for the
+    # committed PC_Gals.csv (Paper I quotes 61 from an earlier parent
+    # revision; see OPEN_QUESTIONS.md #1).
+    table = identity.cg4_in_pc_quartets_table(frames)
+    assert table["lim_group"].nunique() == 60
+    c4c = frames["Control4C"]
+    assert not set(table["lim_group"]) & set(c4c["Group"])

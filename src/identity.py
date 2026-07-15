@@ -193,6 +193,32 @@ def cg4_in_control4c_table(frames: dict[str, pd.DataFrame] | None = None) -> pd.
     )
 
 
+def cg4_in_pc_quartets_table(frames: dict[str, pd.DataFrame] | None = None) -> pd.DataFrame:
+    """CG4 galaxies that fall inside a would-be Control4C quartet of PC.
+
+    This is the lineage-independent version of the contamination diagnostic:
+    the groups listed here are exactly the ones the Paper I construction
+    excludes from Control4C (60 groups for the committed PC_Gals.csv). The
+    embedded/predominant classes dominating this table show that compact
+    groups are frequently the projected cores of ordinary groups.
+    """
+
+    if frames is None:
+        frames = load_raw_samples()
+    pc = frames["PC"]
+    quartets = pc[pc["rank_dist"] <= 4]
+    cg4 = frames["CG4"][["objid", "Group", "rank_M"]].rename(
+        columns={"Group": "cg4_group", "rank_M": "cg4_rank_M"}
+    )
+    merged = quartets.merge(cg4, on="objid")
+    classes = cg4_class_map(frames)
+    merged["cg4_class"] = merged["cg4_group"].map(classes)
+    table = merged[
+        ["cg4_group", "Group", "objid", "cg4_rank_M", "rank_M", "rank_dist", "cg4_class"]
+    ].rename(columns={"Group": "lim_group", "rank_M": "pc_rank_M", "rank_dist": "pc_rank_dist"})
+    return table.sort_values(["cg4_group", "cg4_rank_M"]).reset_index(drop=True)
+
+
 def write_audit_products() -> None:
     """Write the identity catalogue and derived audit tables to audit/."""
 
@@ -207,9 +233,15 @@ def write_audit_products() -> None:
     diagnostic.to_csv(
         os.path.join(AUDIT_DIR, "cg4_in_control4c_diagnostic.csv"), index=False
     )
+    quartet_table = cg4_in_pc_quartets_table(frames)
+    quartet_table.to_csv(
+        os.path.join(AUDIT_DIR, "cg4_in_pc_quartets.csv"), index=False
+    )
     print(
         f"identity catalog: {len(catalog)} unique objids; "
-        f"CG4 galaxies in committed Control4C: {len(diagnostic)}"
+        f"CG4 galaxies in current Control4C: {len(diagnostic)}; "
+        f"CG4 galaxies in PC quartets: {len(quartet_table)} "
+        f"({quartet_table['lim_group'].nunique()} Lim groups)"
     )
 
 

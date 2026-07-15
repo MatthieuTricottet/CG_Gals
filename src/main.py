@@ -73,6 +73,11 @@ print("Done")
 def clean(sample):
     """ Removes spurious groups comming from Lim group 3688
 
+        The exclusion is documented in the manuscript methods: one member has
+        z = 0.048 while the six others lie at z = 0.032-0.034, and the
+        outlier enters both the Control4B and Control4C quartets, inflating
+        their velocity dispersions to ~1980 km/s.
+
         Parameters
         ----------
         sample : dict
@@ -83,11 +88,14 @@ def clean(sample):
         sample : dict
             Cleaned dictionary containing the samples of galaxies and groups
     """
-    sample['Control4B_Gals'] = sample['Control4B_Gals'][sample['Control4B_Gals']['Group'] != 3688]
-    sample['Control4B_Groups'] = sample['Control4B_Groups'][sample['Control4B_Groups']['Group'] != 3688]
-
-    sample['Control4C_Gals'] = sample['Control4C_Gals'][sample['Control4C_Gals']['Group'] != 3688]
-    sample['Control4C_Groups'] = sample['Control4C_Groups'][sample['Control4C_Groups']['Group'] != 3688]
+    for name in co.CONTROL:
+        gals, groups = name + co.GASUFF, name + co.GRSUFF
+        report.append_json(f'{name}_Groups_pre3688_N', int(sample[groups]['Group'].nunique()), build=True)
+        report.append_json(f'{name}_Gals_pre3688_N', int(len(sample[gals])), build=True)
+        sample[gals] = sample[gals][sample[gals]['Group'] != 3688]
+        sample[groups] = sample[groups][sample[groups]['Group'] != 3688]
+        report.append_json(f'{name}_Groups_N', int(sample[groups]['Group'].nunique()), build=True)
+        report.append_json(f'{name}_Gals_N', int(len(sample[gals])), build=True)
 
     return sample
 

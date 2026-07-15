@@ -35,6 +35,26 @@ record with reconciliation notes). Status is relative to the *defect*: a
   (spurious group; one z = 0.048 outlier among z ≈ 0.032–0.034 members
   inflates σ_v to ≈ 1,980 km/s). No open question.
 
+## Phase 2 notes
+
+- `src/sample_construction.py` regenerates Control4C (705 groups / 2,820
+  galaxies, zero CG4 contamination, Lim 3688 kept in-file and removed at
+  load). Group-level properties reproduce the committed Control4B/RG4
+  builders at < 1e-6 relative precision for every column except
+  `lMass_200`/`r_200_kpc` (< 3e-3 dex / 0.3 %, legacy solver tolerance).
+- The regenerated Control4C quartet for Lim 3688 has Vdisp = 1980.6 km/s,
+  matching the manuscript's quoted 1981 km/s.
+- `common.py::EqA11` as committed is *not* what produced the committed
+  `lMass_200` columns: the committed values match the correct NFW
+  M_180m -> M_200c conversion (`M_tilde(f1 f2 f3 f4)/M_tilde(f2) * M_200`),
+  while the snippet divides by `M_tilde(c)` inside the argument. The new
+  implementation uses the correct form.
+- Control4C `rank_M` is now the **within-quartet** luminosity rank (1-4,
+  same convention as CG4/Control4B/RG4); the parent-group rank is kept as
+  `rank_M_parent`. The committed file carried parent ranks (up to ~30),
+  which broke exact rank matching in the propensity analysis.
+- `Control4C_Gals_old.csv` retired to `data/attic/` with a README.
+
 ## Conventions established
 
 - "CG4 galaxy" for control-exclusion purposes = any galaxy of the **full**
