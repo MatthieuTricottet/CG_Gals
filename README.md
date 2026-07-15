@@ -1,109 +1,87 @@
------ BEGIN README.md -----
-# TRICOTTET-GAM-CG2
+# CG_Gals — Are galaxies in compact groups special? (Paper II)
 
-TRICOTTET-GAM-CG2 is an astrophysical data analysis project written in Python. It includes tools for statistical testing, spherical trigonometry, and specialized physics computations. The project also automatically generates reports and documentation.
+Analysis pipeline and manuscript source for *"Are galaxies in compact groups
+special?"* (Tricottet, Mamon & Díaz-Giménez, in prep.), the companion paper to
+[Tricottet, Mamon & Díaz-Giménez 2025, A&A 699, A329](https://doi.org/10.1051/0004-6361/202451727)
+(Paper I). It compares the member galaxies of 62 non-split compact groups of
+four galaxies (CG4, 248 galaxies, from the HMCG catalogue of
+Díaz-Giménez et al. 2018) against three control samples drawn from the
+Lim et al. (2017) group catalogue:
 
-## Project Structure
+| Sample | Definition | Groups (after Lim 3688 removal) |
+|---|---|---|
+| Control4B | four brightest members of each parent group | 698 |
+| Control4C | BGG + three closest projected companions | 704 |
+| RG4 | regular groups of exactly four members | 56 |
+
+Control groups containing any CG4 galaxy are excluded, as in Paper I.
+`Control4C` is regenerated from the parent catalogue by
+`src/sample_construction.py`; the audit record for the 2026 statistical
+refactor lives in `audit/` and `CHANGES.md`.
+
+## Repository layout
 
 ```
-TRICOTTET-GAM-CG2/
-├── notebooks/          # Jupyter notebooks for interactive analysis and visualization
-├── output/             # Generated outputs (e.g., LaTeX reports, PDFs, data files)
-├── src/                # Source code for analysis and utilities
-│   ├── __init__.py     # Package initializer
-│   ├── main.py         # Main entry point for running the analysis
-│   ├── astro_utils.py  # Core astrophysical computation functions
-│   └── utils/          # Utility modules
-│       ├── __init__.py
-│       ├── spherical_utils.py
-│       ├── stats_utils.py
-│       └── physics_utils.py
-├── requirements.txt    # List of Python dependencies
-└── README.md           # This file
+CG_Gals/
+├── data/                 # input catalogues (CG4, controls, parent PC, caches)
+│   └── attic/            # retired files — never read by code
+├── src/                  # analysis pipeline
+│   ├── main.py           # entry point: analyses + paper rendering
+│   ├── config.py         # paths, flags (REBUILD_SAMPLE, RENDER_PAPER_ONLY, ...)
+│   ├── identity.py       # canonical objid/group identity layer
+│   ├── sample_construction.py  # Control4C regeneration from PC_Gals
+│   ├── primary_contrasts.py    # CG4 vs each control (primary inference)
+│   ├── matched_controls.py     # deduplicated matching + group-level primary
+│   ├── host_controlled.py      # within-host CG-member experiment
+│   ├── paper_template/   # Jinja2 LaTeX template (A&A)
+│   └── utils/            # shared helpers
+├── audit/                # 2026 statistical-audit records and verification
+├── tests/                # pytest suite (identity, samples, inference, render)
+├── output/               # generated results.json, figures, paper/
+└── notebooks/            # exploratory notebooks (not part of the pipeline)
 ```
 
-## Installation
+## Reproduction
 
-1. **Clone the repository:**
-   ```
-   git clone https://github.com/MattACDC/TRICOTTET-GAM-CG2.git
-   ```
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt        # or requirements.lock for exact pins
+python audit/run_full_pipeline.py      # analyses + paper from cached sample
+python audit/run_full_pipeline.py --rebuild   # additionally rebuild the
+                                              # processed sample (SDSS query,
+                                              # falls back to the cache)
+pytest                                 # invariants and render smoke tests
+```
 
-2. **Navigate to the project directory:**
-   ```
-   cd TRICOTTET-GAM-CG2
-   ```
+`python -m src.main` honours the flags in `src/config.py`
+(`RENDER_PAPER_ONLY = True` renders the paper from the existing JSON without
+re-running analyses). The paper is compiled to `output/paper/paper.pdf`
+(pdflatex + bibtex required). Every stochastic step uses a fixed, documented
+seed; `output/results.json` and `output/results_build.json` are regenerated
+by the pipeline and feed the Jinja2 template — never edit
+`output/paper/paper.tex` by hand.
 
-3. **(Optional) Create and activate a virtual environment:**
-   ```
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
-
-4. **Install dependencies:**
-   ```
-   pip install -r requirements.txt
-   ```
-
-## Usage
-
-- **Run the Analysis:**  
-  Execute the main script to run all analyses:
-  ```
-  python -m src.main
-  ```
-
-- **Generate Reports:**  
-  The main analysis calls the report generation code that creates a LaTeX report in the `output/` directory.  
-  To run the report generation separately:
-  ```
-  python -m src.generate_report
-  ```
-
-- **Interactive Exploration:**  
-  Open notebooks in the `notebooks/` directory with Jupyter Notebook or VS Code's Jupyter extension for interactive data exploration.
-
-## Size data
+## External data caches
 
 The galaxy-size analysis (`src/size_data.py`, `src/size_analysis.py`) uses two
 external catalogues fetched on first run and cached under `data/`:
 
-- **SDSS DR16 Petrosian and seeing columns** (`data/sdss_size_columns.csv`,
-  ~0.5 MB): `petroR50_r`, `petroR90_r`, their uncertainties, `petroRad_r`, the
-  field seeing `psfWidth_r`, and the DR7 cross-match identifier `dr7objid`
-  (via the SkyServer `SpecDR7` bridge table, with `PhotoObjDR7` as fallback).
-  Queried in chunks from `skyserver.sdss.org` via `astroquery.sdss`.
-- **Simard et al. (2011, ApJS 196, 11) structural catalogue subset**
-  (`data/simard2011_subset.csv`, ~0.5 MB): pure-Sersic half-light radii,
-  Sersic indices and related columns from VizieR `J/ApJS/196/11`
-  (tables 1 and 3), queried in chunks via `astroquery.vizier`. If VizieR is
-  unreachable, the bulk tables (~100 MB compressed) are downloaded from the
-  CDS FTP mirror into `data/simard2011_raw/` (gitignored) and filtered
-  locally.
+- **SDSS DR16 Petrosian and seeing columns** (`data/sdss_size_columns.csv`):
+  `petroR50_r`, `petroR90_r`, their uncertainties, `petroRad_r`, the field
+  seeing `psfWidth_r`, and the DR7 cross-match identifier `dr7objid`.
+- **Simard et al. (2011, ApJS 196, 11) structural subset**
+  (`data/simard2011_subset.csv`): pure-Sérsic half-light radii and indices
+  from VizieR `J/ApJS/196/11`, with a CDS FTP fallback into
+  `data/simard2011_raw/` (gitignored).
 
 Both fetches are idempotent: once the caches cover the sample's object IDs,
-reruns are fully offline. Identifier columns are written and read as strings
-to protect the 18-digit SDSS IDs from float round-trips.
+reruns are fully offline. The SDSS spectroscopic sample itself is cached in
+`data/processed_sample.pkl`.
 
-## Documentation
+## Verification
 
-Documentation is automatically generated from docstrings using tools like [pdoc](https://pdoc.dev/) or [Sphinx](https://www.sphinx-doc.org/). For example, to generate HTML documentation with pdoc, run:
-
-```
-pdoc --html src --output-dir docs --force
-```
-
-Then open `docs/index.html` in your browser.
-
-## Contributing
-
-Contributions are welcome! Please fork the repository, make your changes, and submit a pull request. For major changes, please open an issue first to discuss your ideas.
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-For any questions or suggestions, please contact [your.email@example.com](mailto:your.email@example.com).
------ END README.md -----
+`audit/verify_findings.py` re-checks every defect identified by the 2026
+statistical audit against the current data, code and outputs
+(`--write-md` refreshes `audit/FINDINGS_raw.md`; the curated record is
+`audit/FINDINGS.md`). Open questions for the authors are tracked in
+`OPEN_QUESTIONS.md`.

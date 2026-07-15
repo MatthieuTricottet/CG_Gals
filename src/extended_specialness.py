@@ -15,6 +15,7 @@ try:
     from matched_controls import run_matched_control_analysis
     from morphology_dominance import run_morphology_dominance_analysis
     from morphology_robustness import run_morphology_robustness
+    from morphology_threshold_sweep import run_morphology_threshold_sweep
     from phase_space_segregation import run_phase_space_segregation_analysis
     from recent_quenching import run_recent_quenching_analysis
     from selection_diagnostics import run_selection_diagnostics
@@ -33,6 +34,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from .matched_controls import run_matched_control_analysis
     from .morphology_dominance import run_morphology_dominance_analysis
     from .morphology_robustness import run_morphology_robustness
+    from .morphology_threshold_sweep import run_morphology_threshold_sweep
     from .phase_space_segregation import run_phase_space_segregation_analysis
     from .recent_quenching import run_recent_quenching_analysis
     from .selection_diagnostics import run_selection_diagnostics
@@ -70,6 +72,7 @@ def run_extended_specialness(sample, output_dir: str | None = None):
         ("specialness_models", fit_logistic_specialness_models),
         ("matched_controls", run_matched_control_analysis),
         ("morphology_robustness", run_morphology_robustness),
+        ("morphology_threshold_sweep", run_morphology_threshold_sweep),
         ("morphology_dominance", run_morphology_dominance_analysis),
         ("phase_space_segregation", run_phase_space_segregation_analysis),
         ("fossilness", run_fossilness_analysis),
@@ -133,6 +136,19 @@ def run_extended_specialness(sample, output_dir: str | None = None):
                 audit[sample_name]["matched_N"] = count
         selection["sample_size_audit"] = audit
         results["sample_size_audit"] = audit
+    try:
+        try:
+            from host_controlled import run_host_controlled_analysis
+        except ModuleNotFoundError:  # pragma: no cover
+            from .host_controlled import run_host_controlled_analysis
+        results["host_controlled"] = run_host_controlled_analysis(
+            sample if isinstance(sample, dict) else {}, output_dir=output_dir
+        )
+    except Exception as exc:
+        results["host_controlled"] = _failed(exc)
+        if co.VERBOSE:
+            print(f"[extended specialness] host_controlled failed: {exc}")
+            traceback.print_exc()
     results["skipped_analyses"] = [
         name for name, _ in analyses if results[name].get("status") == "skipped"
     ]

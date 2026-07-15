@@ -65,6 +65,11 @@ GRSUFF = "_Groups"
 # Limit for statistical significance
 P_LIMIT = 5e-2
 
+# Host-controlled experiment (audit Phase 5 addition): compare CG members
+# with non-CG members of the same Lim host group for Embedded/Predominant
+# CG4s. Toggle so the authors can disable the new analysis wholesale.
+HOST_CONTROLLED_ANALYSIS = True
+
 #* Galaxy-size quality cuts (Planck15 kpc after the Scale->arcsec re-conversion)
 SIZE_MIN_KPC = 0.1  # smallest physically credible half-light radius
 SIZE_MAX_KPC = 50.0  # largest physically credible half-light radius
