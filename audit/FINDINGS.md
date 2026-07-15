@@ -102,6 +102,15 @@ record with reconciliation notes). Status is relative to the *defect*: a
 - `--write-md` now writes `audit/FINDINGS_raw.md`; this curated file is
   never overwritten.
 
+## Phase 7 closure
+
+Final full rebuild (raw CSVs → processed sample → analyses → paper) on
+2026-07-15. `audit/verify_findings.py`: **0 defects present, 13 absent**
+(the raw table is `audit/FINDINGS_raw.md`). `audit/consistency_gate.py`
+passes; 106 tests pass; the paper builds with 0 undefined
+references/citations. The before/after record of every headline number is
+in `CHANGES.md`.
+
 ## Conventions established
 
 - "CG4 galaxy" for control-exclusion purposes = any galaxy of the **full**

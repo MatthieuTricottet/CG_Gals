@@ -20,6 +20,6 @@
 | E7-data | info | missing-sSFR (BGG miss/N | sat miss/N): CG4 5/62 | 9/186; Control4B 48/698 | 103/2094; Control4C 49/704 | 105/2112; RG4 3/56 | 2/168 -> matches audit; raw files contain -9999 sentinels: True |
 | E7-code | defect absent | flattens_quenched present: False; sentinel-based 3-class config ['Quenched','Passive','Starforming']: False; sSFR_floor fabricates 'Quenched' from sentinel: False; good_sfr no-op -9999 loop in common.py: False |
 | E7-tex | defect absent | template still states the sentinel->class/display-floor rule in 0 place(s) |
-| F8 | DEFECT PRESENT | README describes 'TRICOTTET-GAM-CG2': True |
+| F8 | defect absent | README describes 'TRICOTTET-GAM-CG2': False |
 | F9-json | info | tidal attenuation of elliptical OR: baseline=1.636, with_tidal_index=1.128 |
 | F9-tex | defect absent | 'explains/accounts for' within 400 chars of 'tidal' in paper.tex: 0 |
