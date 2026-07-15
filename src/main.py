@@ -332,6 +332,30 @@ def main():
     run_explorations(sample)
     ssfr_robustness.run(sample)
     extended_specialness.run_extended_specialness(sample)
+
+    # CG4-in-parent-quartet overlap summary (appendix table): the Lim groups
+    # whose would-be Control4C quartet contains a CG4 galaxy, by CG4 class.
+    import identity
+    overlap_table = identity.cg4_in_pc_quartets_table()
+    class_totals = (
+        pd.read_csv(co.DATA_PATH + "CG4_Groups.csv")
+        .groupby("Class")["Group"]
+        .nunique()
+    )
+    overlap = {
+        "n_lim_groups": int(overlap_table["lim_group"].nunique()),
+        "n_galaxies": int(len(overlap_table)),
+        "by_class": {
+            str(class_name): {
+                "n_cg4_groups": int(part["cg4_group"].nunique()),
+                "n_cg4_groups_total": int(class_totals.get(class_name, 0)),
+                "n_lim_groups": int(part["lim_group"].nunique()),
+                "n_galaxies": int(len(part)),
+            }
+            for class_name, part in overlap_table.groupby("cg4_class")
+        },
+    }
+    report.append_json("cg4_pc_quartet_overlap", overlap)
     
 
     # correlations_by_morph(sample)

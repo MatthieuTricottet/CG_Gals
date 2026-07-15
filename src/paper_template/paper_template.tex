@@ -143,7 +143,7 @@
   {Compact groups of galaxies combine high projected densities with low velocity dispersions, but many are embedded in, or projected onto, larger structures. Their evolutionary significance depends on whether their member galaxies remain distinct from those of comparable regular groups, not only from the field.}
   {We test whether galaxies in compact groups of four members (\CG) remain special against regular groups of four members (\RG), the four brightest galaxies of richer regular groups (\CB), and projected compact cores formed by the brightest group galaxy (BGG) and its three nearest projected companions (\CC). We ask which observable carries any residual signal.}
   {From our previously constructed samples, we retain <<CG4_Groups_nonsplit_N>> \CG{} systems after removing split systems. We combine Galaxy Zoo vote-fraction morphologies, Sloan Digital Sky Survey stellar masses and specific star-formation rates, optical colours, emission-line diagnostics, and seeing-corrected half-light radii (with Petrosian radii as a cross-check), analysed with covariate-adjusted, group-clustered binomial models and one-to-one matched controls.}
-  {\CG{} galaxies, especially satellites, are more often smooth/elliptical and less often spiral than their regular-group analogues; this signal survives adjustment for stellar mass, redshift, rank, and group-scale quantities, and is recovered in matched comparisons. The star-formation deficit of \CG{} satellites is weaker and not comparably robust after adjustment and matching, and star-forming \CG{} galaxies show no robust offset from the main sequence. Colours, fractions of active galactic nuclei (AGN), magnitude gaps, and \(\mathrm{H}\alpha\) diagnostics do not support instantaneous-quenching, fossil-group, or AGN-driven explanations. Conditioning on a projected pairwise tidal index attenuates the morphology signal, indicating that the contrast is concentrated in the most extreme local projected configurations. No robust \CG{} size offset at fixed stellar mass is established; the matched-pair preference for smaller sizes is control-dependent.}
+  {\CG{} galaxies, especially satellites, are more often smooth/elliptical and less often spiral than their regular-group analogues. In separate per-control models the signal is strong against \CB{} and \RG{} but not against the projected cores \CC; matched \CG{} groups host a higher smooth-satellite fraction than matched control groups, while the galaxy-level matched contrast is not significant once group membership is respected. The signal is stable against the vote-fraction threshold and a S\'ersic-index cross-check, and \CG{} members show no morphology excess over other members of their own host groups. The star-formation deficit of \CG{} satellites is not comparably robust, and star-forming \CG{} galaxies show no robust main-sequence offset. Colours, active-galactic-nucleus fractions, magnitude gaps, and \(\mathrm{H}\alpha\) diagnostics do not support instantaneous-quenching, fossil-group, or AGN-driven explanations. Conditioning on a projected pairwise tidal index attenuates the morphology signal, indicating a contrast concentrated in the most extreme local projected configurations. No robust \CG{} size offset at fixed stellar mass is established.}
   {Compact groups host a more morphologically evolved population, consistent with accumulated transformation in dense group cores and/or preprocessing, rather than a uniquely isolated compact-group quenching mode at the present epoch.}
 
    \keywords{galaxies: groups: general -- galaxies: evolution -- galaxies: interactions -- galaxies: star formation -- galaxies: elliptical and lenticular, cD -- methods: statistical}
@@ -183,7 +183,7 @@ and BGG-luminosity limits, with at least 4 members and at least 3 satellites wit
 From this parent control catalogue, we define \RG{} groups as regular groups with exactly four members, excluding
 systems identical to a \CG, and we additionally use the \CB{} and \CC{} samples, formed respectively from
 the 4 brightest galaxies and from the BGG plus its 3 closest projected companions in each parent regular group.
-The current input catalogues are treated as fixed selected-core catalogues in this paper; after the explicit Lim group 3688 removal, they contain 698 \CB{} cores and 751 \CC{} cores. These counts differ because the luminosity-ranked and projected-distance-ranked core definitions select different galaxies and therefore retain different Lim groups.
+As in our previous paper, every control group containing at least one \CG{} galaxy is excluded from the control samples, so no galaxy appears on both sides of any comparison. The \CC{} sample is regenerated for this paper directly from the 765 parent groups (BGG plus the three closest projected companions, followed by the compact-group exclusion, which removes 60 groups)\footnote{Our previous paper quotes 61 excluded projected-core groups; the committed parent catalogue reproducibly yields 60. The difference traces to an earlier revision of the parent catalogue and does not affect any comparison in this paper.}. After the explicit Lim group 3688 removal described below, the control samples contain << Control4B_Groups_N >> \CB{}, << Control4C_Groups_N >> \CC{}, and << RG4_Groups_N >> \RG{} groups (<< Control4B_Gals_N >>, << Control4C_Gals_N >>, and << RG4_Gals_N >> galaxies). The \CB{} and \CC{} counts differ because the luminosity-ranked and projected-distance-ranked core definitions select different galaxies and therefore retain different Lim groups after the compact-group exclusion.
 In contrast to our previous study, we remove CGs classified as \emph{split} following \citet{Zheng&Shen21}.
 This reduces the compact-group sample from <<CG4_Groups_withsplit_N>> to
 <<CG4_Groups_nonsplit_N>> groups. We also remove the systems associated with Lim group 3688 from our \CB{} and \CC{} samples. This group contains 6 galaxies
@@ -236,7 +236,9 @@ As a secondary size measure we use the SDSS Petrosian radii \texttt{petroR50\_r}
 
 \subsection{Statistical strategy}
 
-The analyses are organized hierarchically. Raw tables and exact tests provide descriptive baseline comparisons. Fisher or Barnard exact tests are used for two-sample categorical comparisons depending on the table structure, while rank-sum or bootstrap comparisons are used for distributional and median differences. Spearman and Pearson correlations are used only as diagnostics of monotonic or linear trends; when the coefficients are small, we interpret them as weak even if the p-values are formally small. Holm or Benjamini--Hochberg corrections are applied where multiple related tests are performed. The primary robustness layer consists of mass-, rank-, and environment-adjusted binomial models with group-clustered standard errors, followed by one-to-one matched control comparisons. Colours, AGN-like fractions, \(\mathrm{H}\alpha\) equivalent widths, magnitude gaps, crossing-time trends, projected phase space, and the pairwise tidal index are secondary diagnostics. The main conclusions below rely on signals that survive the adjusted and matched analyses, not on isolated exploratory tests.
+The analyses are organized hierarchically. Raw tables and exact tests provide descriptive baseline comparisons. Fisher or Barnard exact tests are used for two-sample categorical comparisons depending on the table structure, while rank-sum or bootstrap comparisons are used for distributional and median differences. Spearman and Pearson correlations are used only as diagnostics of monotonic or linear trends; when the coefficients are small, we interpret them as weak even if the p-values are formally small. Holm or Benjamini--Hochberg corrections are applied where multiple related tests are performed.
+
+The primary inference layer consists of mass-, rank-, and environment-adjusted binomial models fit \emph{separately} for each \CG{}--control pair (Sect.~\ref{sec:primary_contrasts}), and of a group-level matched comparison in which groups, not galaxies, are the units. Throughout, the independence unit is the \emph{physical} group: standard errors are clustered by Lim group (unifying the overlapping control definitions, with \CG{} systems assigned to their host Lim group), and all resampling is blocked at the group level, since the four galaxies of one group are not independent observations. Pooled models across the three controls are reported as secondary summaries only, after deduplicating the overlapping control samples to one row per physical galaxy. Bootstrap p-values use the add-one empirical convention \(p = (k+1)/(B+1)\) with the number of resamples \(B\) reported, so no resampling p-value can fall below its Monte-Carlo resolution; displayed p-values are floored at \(10^{-4}\). Colours, AGN-like fractions, \(\mathrm{H}\alpha\) equivalent widths, magnitude gaps, crossing-time trends, projected phase space, and the pairwise tidal index are secondary diagnostics. The main conclusions below rely on signals that survive the per-control adjusted and matched analyses, not on isolated exploratory tests.
 
 \section{Baseline population differences}
 \subsection{Raw sSFR fractions}
@@ -633,10 +635,37 @@ The previous sections establish that \CG{} galaxies differ from the control cata
 
 <% set sm = es.get('specialness_models', {}) %>
 <% if sm.get('status') == 'ok' %>
-\subsection{Mass-, rank- and environment-adjusted galaxy properties}
+<% set pcx = es.get('primary_contrasts', {}) %>
+<% if pcx.get('status') == 'ok' %>
+\subsection{Per-control adjusted contrasts (primary)}\label{sec:primary_contrasts}
+
+The three control samples answer different questions, so our primary inference fits \CG{} against each control \emph{separately}: against \CB{} (is the \CG{} population special compared with the luminous population of richer ordinary groups?), against \CC{} (compared with BGG-centred projected cores?), and against \RG{} (compared with true four-member ordinary groups?). Each contrast fits the same family of adjusted binomial models (stellar mass, redshift, rank, group luminosity, and velocity dispersion where sufficiently complete), with standard errors clustered by \emph{physical} group: the Lim group for controls, and for \CG{} systems their host Lim group where one exists, so that the same physical system never enters as more than one cluster. Holm correction is applied within each contrast across its model family.
+
+<% for control, tex in [('Control4B', '\\CB'), ('Control4C', '\\CC'), ('RG4', '\\RG')] %>
+<% set contrast = pcx.get('contrasts', {}).get(control, {}) %>
+<% set ell = contrast.get('elliptical_all', {}) %>
+<% set qnc = contrast.get('quenched_all', {}) %>
+<% if ell.get('status') == 'ok' %>
+Against << tex >>{}, the smooth/elliptical odds ratio is \(<< ell.get('cg4_odds_ratio')|fmt(2) >>\) (95\% CI \([<< ell.get('cg4_ci95')[0]|fmt(2) >>, << ell.get('cg4_ci95')[1]|fmt(2) >>]\); << pholm_text(ell.get('cg4_p_adj')) >>)<% if qnc.get('status') == 'ok' %>, and the quenched odds ratio is \(<< qnc.get('cg4_odds_ratio')|fmt(2) >>\) (<< pholm_text(qnc.get('cg4_p_adj')) >>)<% endif %>.
+<% endif %>
+<% endfor %>
+
+The asymmetry between the contrasts is itself informative: the \CG{} morphology excess is strong against the luminosity-selected cores of richer groups and against true four-member groups, but weak and non-significant against the BGG-centred \emph{projected} cores of ordinary groups, which are the control definition that most closely mimics a compact projected configuration. This pattern anticipates the local projected-density interpretation of Sect.~\ref{sec:tidal_index}.
+
+<% if pcx.get('figure') %>
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< pcx.get('figure') >>}
+    \caption{Adjusted \CG{} odds ratios from the three separate per-control contrasts (colour-coded by control sample) for the all-member elliptical, spiral and quenched outcomes. Bars show 95\% confidence intervals; the vertical line marks equal odds.}
+    \label{fig:primary_contrasts}
+\end{figure}
+<% endif %>
+<% endif %>
+
+\subsection{Pooled adjusted models (secondary)}
 \label{sec:adjusted_galaxy_properties}
 
-We fit binomial models to the combined galaxy catalogues, standardizing the continuous predictors and using group-clustered standard errors. The common adjustment set includes stellar mass, redshift, satellite/BGG rank, group luminosity and velocity dispersion when sufficiently complete.
+As a compact summary across the heterogeneous control definitions we also fit binomial models to the pooled catalogue. Because the control samples overlap heavily (all \RG{} galaxies are also \CB{} members, and \CB{} and \CC{} share their cores), the pooled control side is first deduplicated by SDSS objid — one row per physical galaxy, unweighted, with every source label recorded — and standard errors are clustered by physical Lim group. The common adjustment set includes stellar mass, redshift, satellite/BGG rank, group luminosity and velocity dispersion when sufficiently complete. This pooled family is read as a secondary summary; the per-control contrasts above are primary.
 
 <% for key, label in [('quenched_all', 'quenched status'), ('quenched_satellites', 'quenched satellite status'), ('starforming_satellites', 'star-forming satellite status'), ('elliptical_all', 'elliptical morphology'), ('elliptical_satellites', 'elliptical satellite morphology'), ('elliptical_bgg', 'elliptical BGG morphology'), ('spiral_all', 'spiral morphology'), ('spiral_satellites', 'spiral satellite morphology')] %>
 <% set model = sm.get(key, {}) %>
@@ -699,6 +728,17 @@ The complementary close-neighbour-flag model reaches the same qualitative conclu
 <% endif %>
 <% endif %>
 
+<% set sweep = es.get('morphology_threshold_sweep', {}) %>
+<% if sweep.get('status') == 'ok' %>
+\subsection{Morphology robustness to the classification threshold}\label{sec:morph_threshold}
+
+The adopted Galaxy Zoo classification (debiased vote fraction \(> 0.5\)) is one of several defensible cuts, so we repeat the adjusted all-member smooth/elliptical model on the deduplicated pooled sample at thresholds of 0.4, 0.5, 0.6 and 0.8. The \CG{} odds ratio varies from << sweep.get('or_range')[0]|fmt(2) >> to << sweep.get('or_range')[1]|fmt(2) >> across this range<% if sweep.get('qualitatively_stable') %> and never changes sign, so the morphology contrast is not tied to the adopted threshold<% endif %> (the unclassified fraction grows from << sweep.get('thresholds', {}).get('0.4', {}).get('fraction_unclassified')|pct(0) >>\% to << sweep.get('thresholds', {}).get('0.8', {}).get('fraction_unclassified')|pct(0) >>\% over the sweep). A threshold-free check models the debiased elliptical vote fraction \(p_E\) itself: the adjusted \CG{} offset is \(<< sweep.get('continuous', {}).get('cg4_coefficient')|fmt(3) >>\) (95\% CI \([<< sweep.get('continuous', {}).get('cg4_ci95')[0]|fmt(3) >>, << sweep.get('continuous', {}).get('cg4_ci95')[1]|fmt(3) >>]\); << pval_text(sweep.get('continuous', {}).get('cg4_p')) >>).
+<% set sersic = sweep.get('sersic_early_late', {}) %>
+<% if sersic.get('cg4_odds_ratio') %>
+A structural cross-check independent of Galaxy Zoo uses the \citet{Simard2011} pure-S\'ersic index (early type: \(n_g > 2.5\); << sersic.get('coverage')|pct(0) >>\% coverage): the adjusted \CG{} odds ratio is \(<< sersic.get('cg4_odds_ratio')|fmt(2) >>\) (<< pval_text(sersic.get('cg4_p')) >>), consistent in direction with the vote-fraction results, subject to the differential Simard completeness discussed in Sect.~\ref{sec:size_results}.
+<% endif %>
+<% endif %>
+
 <% set matched = es.get('matched_controls', {}) %>
 <% if matched.get('status') == 'ok' %>
 \subsection{Matched-control comparison}
@@ -706,7 +746,14 @@ The complementary close-neighbour-flag model reaches the same qualitative conclu
 <% set cg4_audit = es.get('selection_diagnostics', {}).get('sample_size_audit', {}).get('CG4', {}) %>
 <% set cg4_total_available = cg4_audit.get('total_galaxies', matched.get('n_cg4_matched')) %>
 <% set cg4_unmatched = cg4_total_available - matched.get('n_cg4_matched') if cg4_total_available is not none and matched.get('n_cg4_matched') is not none else none %>
-We matched << matched.get('n_cg4_matched') >> of the << cg4_total_available >> available \CG{} galaxies one-to-one to << matched.get('n_control_matched') >> ordinary-group galaxies <% if not matched.get('replacement') %>without<% else %>with<% endif %> replacement, requiring common propensity-score support, a << matched.get('propensity_caliper_logit_sd')|fmt(1) >>-standard-deviation caliper and exact rank strata. <% if cg4_unmatched is not none and cg4_unmatched > 0 %>The remaining << cg4_unmatched >> \CG{} galaxies were excluded because they lay outside the common propensity-score support or exceeded the adopted caliper. <% endif %>The propensity model uses \(\log M_\star\), redshift, rank, \(\log L_\mathrm{group}\), and \(\sigma_v\). Projected distance is retained as a phase-space and interaction diagnostic rather than matched away because it partly defines compactness and has limited overlap. The largest absolute standardized mean difference changed from << matched.get('max_abs_smd_before')|fmt(2) >> before matching to << matched.get('max_abs_smd_after')|fmt(2) >> afterwards. The residual imbalance is carried by the group-luminosity covariate (\(\log L_\mathrm{group}\)); it lies slightly above the conventional 0.1 threshold, which is why we read the matched contrasts together with the adjusted models rather than in isolation.
+We matched << matched.get('n_cg4_matched') >> of the << cg4_total_available >> available \CG{} galaxies one-to-one to << matched.get('n_control_matched') >> ordinary-group galaxies <% if not matched.get('replacement') %>without<% else %>with<% endif %> replacement, requiring common propensity-score support, a << matched.get('propensity_caliper_logit_sd')|fmt(1) >>-standard-deviation caliper and exact rank strata. <% if cg4_unmatched is not none and cg4_unmatched > 0 %>The remaining << cg4_unmatched >> \CG{} galaxies were excluded because they lay outside the common propensity-score support or exceeded the adopted caliper. <% endif %>The control pool is first deduplicated by SDSS objid (<< matched.get('n_control_rows_before_dedup') >> control rows collapse to << matched.get('n_control_galaxies_unique_pool') >> unique galaxies), and two hard constraints are enforced: no control may share an objid with a \CG{} galaxy, and no control galaxy is used more than once. By kept label, the matched controls comprise <% for key, value in matched.get('matched_control_counts_by_sample', {}).items() %><< value >> << key >><% if not loop.last %>, <% endif %><% endfor %>; by physical provenance, << matched.get('n_matched_controls_physically_RG4') >> of the << matched.get('n_control_matched') >> matched controls are physically \RG{} galaxies (which also appear in \CB{} through the sample overlap), and the full per-galaxy provenance is recorded in the released \texttt{matched\_control\_provenance.csv}. The propensity model uses \(\log M_\star\), redshift, rank, \(\log L_\mathrm{group}\), and \(\sigma_v\). Projected distance is retained as a phase-space and interaction diagnostic rather than matched away because it partly defines compactness and has limited overlap. The largest absolute standardized mean difference changed from << matched.get('max_abs_smd_before')|fmt(2) >> before matching to << matched.get('max_abs_smd_after')|fmt(2) >> afterwards. The residual imbalance is carried by the group-luminosity covariate (\(\log L_\mathrm{group}\)); it lies slightly above the conventional 0.1 threshold, which is why we read the matched contrasts together with the adjusted models rather than in isolation.
+
+Matched differences below are quoted with group-blocked bootstrap intervals: pairs are resampled by the treated galaxy's compact group (never galaxy by galaxy), with \(B = << matched.get('effects', {}).get('elliptical_fraction', {}).get('n_boot', 9999) >>\) resamples and add-one empirical p-values, so the smallest reportable p-value is \(2/(B+1)\).
+
+<% set m_group = matched.get('group_level', {}) %>
+<% if m_group.get('status') == 'ok' %>
+\paragraph{Group-level matched contrast.} Because the four galaxies of a compact group are not independent, the cleanest matched estimand is at the \emph{group} level: for each group we count its smooth/elliptical satellites (\(N_{\rm smooth,sat} \in \{0,1,2,3\}\)) and match \CG{} groups one-to-one to control groups (one quartet per physical Lim group) on redshift, BGG stellar mass, total quartet luminosity, and velocity dispersion. Over << m_group.get('n_matched_groups') >> matched group pairs, the \CG{}--minus--control difference in the smooth-satellite fraction is \(<< m_group.get('delta_smooth_satellite_fraction')|fmt(3) >>\) (95\% bootstrap interval \([<< m_group.get('ci95')[0]|fmt(3) >>, << m_group.get('ci95')[1]|fmt(3) >>]\); << pval_text(m_group.get('p')) >>, \(B = << m_group.get('n_boot') >>\)). The galaxy-level contrasts below are read as secondary checks of this group-level result.
+<% endif %>
 
 <% set m_quenched = matched.get('effects', {}).get('quenched_fraction', {}) %>
 <% if m_quenched.get('status') == 'ok' %>
@@ -771,6 +818,22 @@ The matched comparison is therefore consistent with the adjusted models: the mos
 
 <% set phase = phase_space_segregation if phase_space_segregation else es.get('phase_space_segregation', es.get('phase_space', {})) %>
 <% if phase.get('status') == 'ok' %>
+<% set host = es.get('host_controlled', {}) %>
+<% if host.get('status') == 'ok' %>
+\subsection{Compact-group members versus other members of the same host group}\label{sec:host_controlled}
+
+For the Embedded and Predominant \CG{} systems, whose quartets live inside richer Lim parent groups, the sharpest test of ``compact subconfiguration versus shared host environment'' compares the \CG{} member galaxies with the \emph{non-\CG{} members of the same host group}: every host-level confounder (halo mass, richness, redshift, large-scale environment) cancels by construction. Over << host.get('n_hosts') >> host groups (<< host.get('n_members') >> member galaxies, of which << host.get('n_cg_members') >> belong to a \CG), we model smooth/elliptical morphology and quenched status as functions of \CG{} membership at fixed stellar mass, host luminosity rank, and projected host-centric radius, clustering by host group.
+<% set host_ell = host.get('models', {}).get('elliptical', {}) %>
+<% set host_qnc = host.get('models', {}).get('quenched', {}) %>
+<% if host_ell.get('status') == 'ok' %>
+The within-host smooth/elliptical odds ratio for \CG{} membership is \(<< host_ell.get('cg_member_odds_ratio')|fmt(2) >>\) (95\% CI \([<< host_ell.get('cg_member_ci95')[0]|fmt(2) >>, << host_ell.get('cg_member_ci95')[1]|fmt(2) >>]\); << pholm_text(host_ell.get('cg_member_p_adj')) >>)<% if host_qnc.get('status') == 'ok' %>, and the within-host quenched odds ratio is \(<< host_qnc.get('cg_member_odds_ratio')|fmt(2) >>\) (<< pholm_text(host_qnc.get('cg_member_p_adj')) >>)<% endif %>.
+<% if host_ell.get('cg_member_p_adj') is not none and host_ell.get('cg_member_p_adj') >= 0.05 %>
+At fixed stellar mass, rank, and host-centric radius, membership in the compact subconfiguration therefore adds no detectable morphology excess \emph{within} a shared host. This is consistent with the per-control asymmetry of Sect.~\ref{sec:primary_contrasts}: the \CG{} excess appears against galaxies of \emph{other} groups, not against co-members of the same host, pointing to position within the host (its dense projected core) rather than compact-group membership per se.
+<% endif %>
+<% endif %>
+This analysis is new relative to the rest of the paper and can be disabled wholesale through a configuration toggle.
+<% endif %>
+
 \subsection{Satellite segregation around the brightest group galaxy}
 
 <% set pst = phase.get('text_summary', {}) %>
@@ -1066,7 +1129,7 @@ Concentration index & \(R_{90,r}/R_{50,r}\) structural proxy now measured & <% i
 
 \subsection{Local projected tidal density and morphology signal}
 
-The most robust residual difference between \CG{} and the regular-group controls is morphological. \CG{} galaxies are more likely to be classified as elliptical/smooth and less likely to be classified as spiral/features, and this result persists in both the adjusted binomial models and the one-to-one matched comparison. The result hierarchy therefore points to accumulated structural transformation more strongly than to a present-day star-formation offset.
+The most robust residual difference between \CG{} and the regular-group controls is morphological. \CG{} galaxies are more likely to be classified as elliptical/smooth and less likely to be classified as spiral/features. In the per-control adjusted models the excess is strong against \CB{} and \RG{} but not against \CC{}, and it is recovered at the group level in the matched comparison (higher smooth-satellite fraction in matched \CG{} groups), while the galaxy-level matched contrast is directionally consistent but not significant once the four galaxies of a group are resampled together. The within-host comparison of Sect.~\ref{sec:host_controlled} finds no residual excess of \CG{} members over other members of the same host. The result hierarchy therefore points to accumulated structural transformation in dense projected cores more strongly than to a present-day star-formation offset or to compact-group membership as such.
 
 The pairwise tidal-index experiment strengthens this interpretation while also narrowing it. <% if discussion_ell_base.get('status') == 'ok' and discussion_ell_tidal.get('status') == 'ok' -%>For elliptical/smooth morphology, the pairwise complete-case baseline \CG{} odds ratio is \(<< discussion_ell_base.get('cg4_odds_ratio')|fmt(2) >>\) (<< pval_text(discussion_ell_base.get('cg4_p')) >>), so it is not expected to match exactly the full adjusted-model odds ratio in Sect.~\ref{sec:adjusted_galaxy_properties}. After adding the projected pairwise tidal-index proxy, the \CG{} odds ratio decreases to \(<< discussion_ell_tidal.get('cg4_odds_ratio')|fmt(2) >>\) (<< pval_text(discussion_ell_tidal.get('cg4_p')) >>), while the tidal-index term itself has odds ratio \(<< discussion_tidal_term.get('odds_ratio')|fmt(2) >>\) (<< pval_text(discussion_tidal_term.get('p')) >>).<% else -%>In the available models, adding the projected pairwise tidal-index proxy reduces the \CG{} morphology coefficient while the tidal-index term is itself informative.<% endif %> This behaviour is expected if compact groups are selecting galaxies in locally dense projected configurations where repeated close companions, rather than the catalogue label alone, are linked to the smooth/early-type-like population.
 
@@ -1098,7 +1161,7 @@ This caveat is important when comparing with the recent S-PLUS structural studie
 
 \subsection{Decoupling between morphology and instantaneous star formation}\label{sec:decoupling}
 
-The star-formation diagnostics do not follow the morphology signal one-to-one. \CG{} satellites have a lower raw star-forming fraction, especially relative to \RG, but the adjusted and matched evidence is weaker than for morphology. Among galaxies that remain star-forming, the main-sequence residuals do not show a robust compact-group offset. The colour analysis is also control-sensitive and based on a biased colour-matched subset, while AGN-like fractions, magnitude gaps, and the limited \(\mathrm{H}\alpha\) diagnostic do not identify a simple alternative driver.
+The star-formation diagnostics do not follow the morphology signal one-to-one. \CG{} satellites have a lower raw star-forming fraction, especially relative to \RG, but the adjusted evidence is control-dependent (significant only against \CB) and the matched contrasts provide no evidence for a quenched-fraction difference. Among galaxies that remain star-forming, the main-sequence residuals do not show a robust compact-group offset. The colour analysis is also control-sensitive and based on a biased colour-matched subset, while AGN-like fractions, magnitude gaps, and the limited \(\mathrm{H}\alpha\) diagnostic do not identify a simple alternative driver.
 
 <% set discussion_selection = discussion_es.get('selection_diagnostics', {}) %>
 <% set discussion_angular = discussion_selection.get('nearest_angular_separation', {}) %>
@@ -1120,9 +1183,9 @@ The most conservative interpretation is that compact groups identify the high-de
 
 We have tested whether galaxies in \CG{} compact groups remain special after removing split systems and comparing them with three regular-group analogues: \RG, \CB, and \CC. The comparison was designed to separate compact configurations from ordinary four-member groups, luminous group cores, and projected compact cores around BGGs.
 
-The main result is morphological. \CG{} galaxies have an enhanced elliptical/smooth Galaxy Zoo fraction and a reduced spiral/features fraction. This signal survives the mass-, redshift-, rank-, and group-adjusted binomial models and is also recovered in the one-to-one matched-control analysis. In the adjusted models, the morphology signal is primarily carried by satellites; BGG morphology is not significantly different after the same adjustment.
+The main result is morphological, and it is control-dependent in an informative way. \CG{} galaxies have an enhanced elliptical/smooth Galaxy Zoo fraction and a reduced spiral/features fraction. In the per-control adjusted models this signal is strong against the luminous cores of richer ordinary groups (\CB) and against true four-member groups (\RG), but weak and non-significant against BGG-centred projected cores (\CC). At the group level, matched \CG{} groups host a higher smooth-satellite fraction than matched control groups; the galaxy-level matched contrast points in the same direction but is not significant after correction once the four galaxies of a group are treated as one resampling unit. The signal is robust to the Galaxy Zoo vote threshold, is recovered with a threshold-free vote-fraction model and a S\'ersic-index cross-check, and is primarily carried by satellites; BGG morphology is not significantly different after adjustment. Within shared host groups, \CG{} members show no significant morphology excess over other members of the same host at fixed mass, rank, and host-centric radius.
 
-The star-formation result is weaker. \CG{} satellites have a lower raw star-forming fraction, especially relative to \RG, but the adjusted and matched evidence is weaker or borderline. Among galaxies that remain star-forming, \CG{} galaxies do not show a robust offset from the fitted star-forming main sequence.
+The star-formation result is weaker. \CG{} satellites have a lower raw star-forming fraction, especially relative to \RG, but the adjusted evidence is control-dependent (significant only against \CB) and the matched contrasts provide no evidence for a quenched-fraction difference. Among galaxies that remain star-forming, \CG{} galaxies do not show a robust offset from the fitted star-forming main sequence.
 
 <% if sz.get('status') == 'ok' %>
 <% set conclusion_adj_sat = sz.get('adjusted', {}).get('satellites', {}) %>
@@ -1132,7 +1195,7 @@ The galaxy-size test adds a structural dimension to this comparison. <% if szv.g
 
 The secondary diagnostics do not identify a simple alternative driver. The colour results are control-sensitive and based on a biased colour-matched subset. AGN-like fractions and magnitude gaps do not explain the morphology signal, the \(\mathrm{H}\alpha\) diagnostic is limited by missing age-sensitive spectral indices, and projected phase-space trends do not localize the quenched difference uniquely to the nearest satellites. The Galaxy Zoo crowding check shows that the smooth/elliptical excess persists after excluding the closest projected pairs, so the result is not solely a closest-pair classification artefact.
 
-We therefore interpret \CG{} galaxies as a more morphologically evolved population, consistent with accumulated transformation in very dense environments, dense group cores, and/or preprocessing. The pairwise tidal-index experiment shows that adding a local projected-density proxy reduces the compact-group morphology coefficient, so the result should not be read as evidence for a uniquely isolated compact-group quenching mechanism.
+We therefore interpret \CG{} galaxies as a more morphologically evolved population, consistent with accumulated transformation in dense group cores and/or preprocessing rather than with compact-group membership as such: the excess vanishes against projected-core controls and within shared hosts, and conditioning on a local projected-density proxy attenuates the coefficient (a conditional attenuation that, by construction, cannot establish mediation). The result should not be read as evidence for a uniquely isolated compact-group quenching mechanism.
 
 This paper now connects the regular-group control framework directly to structural measurements -- \(R_{\rm e}\), S\'ersic index, and mass-size residuals through the Simard catalogue -- so the remaining structural future work concerns transition-galaxy classifications and better spectroscopic post-starburst diagnostics. <% if sz.get('status') == 'ok' %><% set final_conc_sat = sz.get('concentration', {}).get('satellites', {}) %>The concentration-index check based on \(R_{90,r}/R_{50,r}\) is likewise measured here<% if final_conc_sat.get('status') == 'ok' %>: the adjusted satellite coefficient is \(<< final_conc_sat.get('cg4_delta')|fmt(3) >>\) (<< pholm_text(final_conc_sat.get('p_holm')) >>), so <% if final_conc_sat.get('p_holm') is not none and final_conc_sat.get('p_holm') < 0.05 %>concentration provides an independent structural signal at fixed mass<% else %>this independent structural proxy shows no significant \CG{} offset at fixed mass<% endif %><% endif %>.<% endif %> Those remaining measurements would test whether the morphology signal isolated here is the same cumulative structural transformation highlighted by recent S-PLUS studies.
 
@@ -1211,6 +1274,29 @@ Galaxies with a measured sSFR are divided into quenched and star-forming classes
 \end{center}
 
 \clearpage
+
+<% set overlap = r.get('cg4_pc_quartet_overlap', {}) %>
+<% if overlap %>
+\section{Compact groups as projected cores of ordinary groups}\label{app:cg_core_overlap}
+
+The compact-group exclusion of Sect.~\ref{sec:samples} is not a technicality: for << overlap.get('n_lim_groups') >> of the 765 parent Lim groups, the would-be \CC{} quartet (BGG plus three closest projected companions) contains at least one \CG{} galaxy — << overlap.get('n_galaxies') >> \CG{} galaxies in total. Table~\ref{tab:cg_core_overlap} breaks this overlap down by the \citet{Zheng&Shen21} embeddedness class: essentially every Embedded and Predominant compact group \emph{is} the projected core of an ordinary group. Had these groups not been excluded, the same galaxies would have appeared on both sides of the comparisons, biasing every contrast toward null.
+
+\begin{table}
+    \centering
+    \caption{\CG{} galaxies inside would-be \CC{} quartets of the parent catalogue, by compact-group class.}
+    \label{tab:cg_core_overlap}
+    \begin{tabular}{lccc}
+        \hline\hline
+        \textbf{\CG{} class} & \textbf{\CG{} groups} & \textbf{Lim groups} & \textbf{Galaxies} \\
+        \hline
+<% for class_name, row in overlap.get('by_class', {}).items() %>
+        << lu.display_label(class_name) >> & << row.get('n_cg4_groups') >> / << row.get('n_cg4_groups_total') >> & << row.get('n_lim_groups') >> & << row.get('n_galaxies') >> \\
+<% endfor %>
+        \hline
+    \end{tabular}
+    \tablefoot{``\CG{} groups'' counts compact groups with at least one member inside a parent-group quartet, over the total number of compact groups of that class (split groups included, as in the exclusion).}
+\end{table}
+<% endif %>
 
 \section{Supplementary diagnostic figures}
 \suppressfloats[t]
