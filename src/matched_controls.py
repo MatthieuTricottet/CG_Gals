@@ -1,4 +1,24 @@
-"""Nearest-neighbour matched comparison of CG4 and ordinary-group galaxies."""
+"""Matched comparison of CG4 and ordinary-group galaxies.
+
+Design (statistical audit, Phase 4):
+
+* the control pool is deduplicated by objid *before* matching (one row per
+  physical galaxy, kept-label priority RG4 > Control4B > Control4C, all
+  source labels recorded), so the same galaxy can never serve as two
+  different controls and a CG4 galaxy can never be matched to its own
+  duplicate row — both failure modes of the pre-audit analysis;
+* hard constraints are enforced and unit-tested: no control objid may
+  coincide with a CG4 objid, and no control objid is used more than once;
+* a provenance table records, for every matched control, its Lim group,
+  the control definitions that contain it, and whether it is physically an
+  RG4 galaxy;
+* the group-level analysis (counts of smooth satellites per group,
+  binomial fractions) is the cleaner primary: groups are the natural
+  independent unit. The galaxy-level matched contrast is kept as a
+  secondary check with group-blocked bootstrap inference (resampling
+  treated CG groups, add-one empirical p-values with an explicit
+  Monte-Carlo floor).
+"""
 
 from __future__ import annotations
 
@@ -10,20 +30,23 @@ if os.environ.get("MPLBACKEND") is None:
     matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
 try:
-    from extended_data import ensure_galaxy_frame
+    from extended_data import dedup_control_pool, ensure_galaxy_frame
     from extended_stats import (
         bootstrap_difference,
+        empirical_p_two_sided,
         holm_correction,
         safe_json,
         standardized_mean_difference,
     )
 except ModuleNotFoundError:  # pragma: no cover
-    from .extended_data import ensure_galaxy_frame
+    from .extended_data import dedup_control_pool, ensure_galaxy_frame
     from .extended_stats import (
         bootstrap_difference,
+        empirical_p_two_sided,
         holm_correction,
         safe_json,
         standardized_mean_difference,
@@ -35,6 +58,12 @@ MATCHING_CANDIDATES = [
     "z_numeric",
     "rank",
     "log_group_mass",
+    "log_group_luminosity",
+    "velocity_dispersion",
+]
+GROUP_MATCHING_CANDIDATES = [
+    "z_group",
+    "logMstar_bgg",
     "log_group_luminosity",
     "velocity_dispersion",
 ]
@@ -56,6 +85,26 @@ EFFECT_LABELS = {
     "residual_sSFR_starforming": "residual sSFR, star-forming",
     "colour_residual_u_minus_r": r"colour residual $u-r$",
 }
+
+N_BOOT_DEFAULT = 9999
+
+
+def _physical_group(frame):
+    if "physical_group" in frame:
+        return frame["physical_group"].astype(str)
+    return frame["group_uid"].astype(str)
+
+
+def prepare_matched_frame(frame: pd.DataFrame) -> pd.DataFrame:
+    """Deduplicate the control pool and enforce the hard constraints."""
+
+    prepared = dedup_control_pool(frame)
+    if "objid" in prepared and "is_CG4" in prepared:
+        controls = prepared.loc[prepared["is_CG4"] == 0, "objid"]
+        assert controls.is_unique, "duplicate control objids after dedup"
+        cg4 = set(prepared.loc[prepared["is_CG4"] == 1, "objid"])
+        assert not (set(controls) & cg4), "control pool contains CG4 objids"
+    return prepared
 
 
 def _select_variables(frame):
@@ -116,6 +165,39 @@ def _greedy_match(frame, variables):
                 }
             )
     return pairs, work, caliper
+
+
+def matched_pairs(frame: pd.DataFrame):
+    """Shared entry point: dedup the control pool, then match.
+
+    Returns ``(pairs, work, caliper, prepared_frame, variables)``. Used by
+    both this module and the size analysis so the two always operate on the
+    identical matched sample.
+    """
+
+    prepared = prepare_matched_frame(frame)
+    variables = _select_variables(prepared)
+    if not variables:
+        return [], None, None, prepared, variables
+    pairs, work, caliper = _greedy_match(prepared, variables)
+    return pairs, work, caliper, prepared, variables
+
+
+def _provenance_table(prepared, control_indices):
+    controls = prepared.loc[control_indices]
+    labels = controls.get(
+        "control_source_labels", pd.Series("", index=controls.index)
+    ).fillna(controls["sample"].astype(str))
+    return pd.DataFrame(
+        {
+            "objid": controls.get("objid"),
+            "lim_group": controls.get("Group"),
+            "physical_group": _physical_group(controls),
+            "kept_label": controls["sample"].astype(str),
+            "control_definitions": labels,
+            "physically_RG4": labels.str.contains("RG4"),
+        }
+    ).reset_index(drop=True)
 
 
 def _plot_effects(effects, path):
@@ -217,16 +299,172 @@ def _complementarity_status(treated, control):
     return summary
 
 
-def run_matched_control_analysis(
-    data, output_dir: str | None = None, n_boot: int = 2000
-):
-    """Run deterministic 1:1 propensity-score matching without replacement."""
+def _group_table(frame, label_priority=("RG4", "Control4B", "Control4C")):
+    """One row per group: smooth-satellite counts and matching covariates.
 
-    frame = ensure_galaxy_frame(data)
-    variables = _select_variables(frame)
+    CG4 groups are label-scoped quartets; on the control side one quartet is
+    kept per *physical* Lim group (priority RG4 > Control4B > Control4C)
+    since different control definitions select different quartets of the
+    same group.
+    """
+
+    rows = []
+    seen_physical = set()
+    order = {"CG4": -1, **{label: i for i, label in enumerate(label_priority)}}
+    for (label, uid), group in sorted(
+        frame.groupby(["sample", "group_uid"], observed=True),
+        key=lambda item: order.get(item[0][0], 99),
+    ):
+        physical = _physical_group(group).iloc[0]
+        is_cg4 = int(group["is_CG4"].iloc[0])
+        if not is_cg4:
+            if physical in seen_physical:
+                continue
+            seen_physical.add(physical)
+        satellites = group.loc[group["rank"] > 1] if "rank" in group else group.iloc[1:]
+        classified = satellites["elliptical"].notna()
+        bgg = group.loc[group["rank"] == 1] if "rank" in group else group.iloc[:1]
+        rows.append(
+            {
+                "group_uid": uid,
+                "physical_group": physical,
+                "sample": label,
+                "is_CG4": is_cg4,
+                "n_sat_classified": int(classified.sum()),
+                "n_smooth_sat": int(satellites.loc[classified, "elliptical"].sum()),
+                "z_group": float(group["z_group_numeric"].median())
+                if "z_group_numeric" in group
+                else np.nan,
+                "logMstar_bgg": float(bgg["logMstar"].median()) if len(bgg) else np.nan,
+                "log_group_luminosity": float(group["log_group_luminosity"].median())
+                if "log_group_luminosity" in group
+                else np.nan,
+                "velocity_dispersion": float(group["velocity_dispersion"].median())
+                if "velocity_dispersion" in group
+                else np.nan,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def group_level_matched_analysis(prepared, n_boot=N_BOOT_DEFAULT, seed=20260612):
+    """Primary group-level contrast: smooth-satellite counts per group.
+
+    CG groups are matched 1:1 without replacement to control groups on
+    redshift, BGG stellar mass, total quartet luminosity and velocity
+    dispersion (propensity caliper 0.2 SD of the logit). The effect is the
+    matched difference in per-group smooth-satellite fraction, with a
+    pair-resampling bootstrap (groups are the independent unit) and an
+    add-one empirical p-value; the smooth-satellite count distribution over
+    {0,1,2,3} is reported for a transparent view of the data.
+    """
+
+    table = _group_table(prepared)
+    if table.empty:
+        return {"status": "skipped", "reason": "no_groups"}
+    variables = [
+        column
+        for column in GROUP_MATCHING_CANDIDATES
+        if column in table and table[column].notna().mean() >= 0.7
+    ]
     if not variables:
         return {"status": "skipped", "reason": "no_matching_variables"}
-    pairs, match_frame, caliper = _greedy_match(frame, variables)
+    work = table.dropna(subset=variables).copy()
+    work = work.loc[work["n_sat_classified"] > 0]
+    if work["is_CG4"].sum() < 10 or (1 - work["is_CG4"]).sum() < 10:
+        return {"status": "skipped", "reason": "too_few_groups"}
+
+    means = work[variables].mean()
+    scales = work[variables].std(ddof=0).replace(0, 1)
+    design = (work[variables] - means) / scales
+    model = LogisticRegression(max_iter=2000, random_state=seed)
+    model.fit(design, work["is_CG4"])
+    propensity = np.clip(model.predict_proba(design)[:, 1], 1e-8, 1 - 1e-8)
+    work["propensity_logit"] = np.log(propensity / (1 - propensity))
+    caliper = 0.2 * float(work["propensity_logit"].std(ddof=0))
+
+    treated = work.loc[work["is_CG4"] == 1]
+    controls = work.loc[work["is_CG4"] == 0]
+    distance = np.abs(
+        treated["propensity_logit"].to_numpy()[:, None]
+        - controls["propensity_logit"].to_numpy()[None, :]
+    )
+    order = np.argsort(distance.min(axis=1))
+    available = set(range(len(controls)))
+    pair_rows = []
+    for position in order:
+        candidates = sorted(available, key=lambda c: distance[position, c])
+        if not candidates:
+            break
+        chosen = candidates[0]
+        if distance[position, chosen] > caliper:
+            continue
+        available.remove(chosen)
+        pair_rows.append((treated.index[position], controls.index[chosen]))
+    if len(pair_rows) < 10:
+        return {
+            "status": "skipped",
+            "reason": "too_few_matched_groups",
+            "n_matched_groups": len(pair_rows),
+        }
+
+    t_idx = [row[0] for row in pair_rows]
+    c_idx = [row[1] for row in pair_rows]
+    t_frac = (
+        work.loc[t_idx, "n_smooth_sat"] / work.loc[t_idx, "n_sat_classified"]
+    ).to_numpy()
+    c_frac = (
+        work.loc[c_idx, "n_smooth_sat"] / work.loc[c_idx, "n_sat_classified"]
+    ).to_numpy()
+
+    rng = np.random.default_rng(seed)
+    n_pairs = len(pair_rows)
+    boot = np.empty(n_boot)
+    for index in range(n_boot):
+        draw = rng.integers(0, n_pairs, n_pairs)
+        boot[index] = float(np.mean(t_frac[draw]) - np.mean(c_frac[draw]))
+    low, high = np.quantile(boot, [0.025, 0.975])
+
+    def _count_distribution(subset):
+        counts = work.loc[subset, "n_smooth_sat"].value_counts().sort_index()
+        return {str(int(k)): int(v) for k, v in counts.items()}
+
+    return {
+        "status": "ok",
+        "unit": "group",
+        "matching_variables": variables,
+        "n_cg4_groups_available": int(treated.shape[0]),
+        "n_control_groups_available": int(controls.shape[0]),
+        "n_matched_groups": n_pairs,
+        "propensity_caliper_logit_sd": 0.2,
+        "delta_smooth_satellite_fraction": float(np.mean(t_frac) - np.mean(c_frac)),
+        "ci95": [float(low), float(high)],
+        "p": empirical_p_two_sided(boot),
+        "n_boot": int(n_boot),
+        "p_floor": float(2 / (n_boot + 1)),
+        "mean_fraction_cg4": float(np.mean(t_frac)),
+        "mean_fraction_control": float(np.mean(c_frac)),
+        "n_smooth_sat_distribution_cg4": _count_distribution(t_idx),
+        "n_smooth_sat_distribution_control": _count_distribution(c_idx),
+        "matched_control_composition": {
+            key: int(value)
+            for key, value in work.loc[c_idx, "sample"].value_counts().items()
+        },
+    }
+
+
+def run_matched_control_analysis(
+    data, output_dir: str | None = None, n_boot: int = N_BOOT_DEFAULT
+):
+    """Run the deduplicated 1:1 matching and the group-level primary."""
+
+    frame = ensure_galaxy_frame(data)
+    if frame.empty or "is_CG4" not in frame:
+        return {"status": "skipped", "reason": "no_galaxy_samples"}
+    n_control_rows = int((frame["is_CG4"] == 0).sum())
+    pairs, match_frame, caliper, prepared, variables = matched_pairs(frame)
+    if not variables:
+        return {"status": "skipped", "reason": "no_matching_variables"}
     if len(pairs) < 10:
         return {
             "status": "skipped",
@@ -237,8 +475,18 @@ def run_matched_control_analysis(
 
     treated_indices = [pair["treated_index"] for pair in pairs]
     control_indices = [pair["control_index"] for pair in pairs]
-    treated = frame.loc[treated_indices].reset_index(drop=True)
-    control = frame.loc[control_indices].reset_index(drop=True)
+    treated = prepared.loc[treated_indices].reset_index(drop=True)
+    control = prepared.loc[control_indices].reset_index(drop=True)
+
+    # Hard constraints (also enforced upstream; asserted here so any
+    # regression fails loudly rather than biasing the effect toward null).
+    if "objid" in prepared:
+        control_objids = prepared.loc[control_indices, "objid"]
+        assert control_objids.is_unique, "a control galaxy was used twice"
+        assert not (
+            set(control_objids) & set(prepared.loc[prepared["is_CG4"] == 1, "objid"])
+        ), "self-match: a CG4 galaxy entered the control side"
+
     before = {
         column: standardized_mean_difference(
             match_frame.loc[match_frame["is_CG4"] == 1, column],
@@ -251,17 +499,20 @@ def run_matched_control_analysis(
         for column in variables
     }
 
+    treated_blocks = _physical_group(prepared.loc[treated_indices]).to_numpy()
     effects = {}
     for name, (column, statistic) in OUTCOMES.items():
         if column not in treated or column not in control:
             effects[name] = {"status": "skipped", "reason": "missing_outcome_column"}
             continue
         tx, cx = treated[column], control[column]
+        blocks = treated_blocks
         if name == "residual_sSFR_starforming":
             mask = treated["starforming"].eq(1) & control["starforming"].eq(1)
             tx, cx = tx[mask], cx[mask]
+            blocks = treated_blocks[mask.to_numpy()]
         effect = bootstrap_difference(
-            tx, cx, statistic=statistic, paired=True, n_boot=n_boot
+            tx, cx, statistic=statistic, paired=True, n_boot=n_boot, blocks=blocks
         )
         if effect["estimate"] is None:
             effects[name] = {"status": "skipped", "reason": "no_complete_matched_pairs"}
@@ -271,6 +522,10 @@ def run_matched_control_analysis(
                 "delta_cg4_minus_control": effect["estimate"],
                 "ci95": effect["ci95"],
                 "p": effect["p"],
+                "p_floor": effect["p_floor"],
+                "n_boot": effect["n_boot"],
+                "resampling_unit": effect["resampling_unit"],
+                "n_blocks": effect["n_blocks"],
                 "n_pairs": effect["n"],
             }
     ok_names = [name for name, value in effects.items() if value.get("status") == "ok"]
@@ -279,9 +534,15 @@ def run_matched_control_analysis(
     ):
         effects[name]["p_adj"] = adjusted
 
+    provenance = _provenance_table(prepared, control_indices)
+    group_level = group_level_matched_analysis(prepared, n_boot=n_boot)
+
     result = {
         "status": "ok",
-        "method": "1:1 propensity-score nearest neighbour without replacement, exact rank strata",
+        "method": (
+            "1:1 propensity-score nearest neighbour without replacement, exact "
+            "rank strata, on the objid-deduplicated control pool"
+        ),
         "replacement": False,
         "common_support": "enforced_by_caliper",
         "propensity_caliper_logit_sd": 0.2,
@@ -290,19 +551,25 @@ def run_matched_control_analysis(
         "propensity_variables": variables,
         "exact_matching_variables": ["rank"],
         "spatial_variables_not_matched": [
-            column for column in SPATIAL_DIAGNOSTICS if column in frame
+            column for column in SPATIAL_DIAGNOSTICS if column in prepared
         ],
         "spatial_exclusion_reason": (
             "Projected distance is a defining compactness/interaction variable and lacks "
             "adequate overlap; it is retained for phase-space and tidal diagnostics."
         ),
+        "control_pool_deduplicated_by_objid": True,
+        "cg4_objids_excluded_from_controls": True,
+        "n_control_rows_before_dedup": n_control_rows,
+        "n_control_galaxies_unique_pool": int((prepared["is_CG4"] == 0).sum()),
         "n_cg4_matched": int(len(treated)),
         "n_control_matched": int(len(control)),
-        "n_control_unique": int(len(set(control_indices))),
+        "n_control_unique": int(control["objid"].nunique())
+        if "objid" in control
+        else int(len(set(control_indices))),
         "matched_counts_by_sample": {
             key: int(value)
             for key, value in (
-                frame.loc[treated_indices + control_indices, "sample"]
+                prepared.loc[treated_indices + control_indices, "sample"]
                 .value_counts()
                 .sort_index()
                 .items()
@@ -312,6 +579,14 @@ def run_matched_control_analysis(
             key: int(value)
             for key, value in control["sample"].value_counts().sort_index().items()
         },
+        "matched_control_counts_by_provenance": {
+            key: int(value)
+            for key, value in provenance["control_definitions"]
+            .value_counts()
+            .sort_index()
+            .items()
+        },
+        "n_matched_controls_physically_RG4": int(provenance["physically_RG4"].sum()),
         "median_match_distance": float(np.median([pair["distance"] for pair in pairs])),
         "balance": {"before": before, "after": after},
         "max_abs_smd_before": max(
@@ -321,6 +596,7 @@ def run_matched_control_analysis(
             abs(value) for value in after.values() if value is not None
         ),
         "effects": effects,
+        "group_level": group_level,
         "holm_correction_family": ok_names,
         "holm_correction_note": (
             "Quenched/star-forming and elliptical/spiral diagnostics are retained "
@@ -338,4 +614,9 @@ def run_matched_control_analysis(
         result["balance_figure"] = _plot_balance(
             before, after, os.path.join(output_dir, "fig_matched_control_balance.pdf")
         )
+        provenance_path = os.path.normpath(
+            os.path.join(output_dir, os.pardir, "matched_control_provenance.csv")
+        )
+        provenance.to_csv(provenance_path, index=False)
+        result["provenance_file"] = os.path.basename(provenance_path)
     return safe_json(result)

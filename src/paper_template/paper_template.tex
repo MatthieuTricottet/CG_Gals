@@ -151,8 +151,8 @@
    \maketitle
 
 <% macro p_from_fmt(fmt, label='p') -%><% set text = (fmt|string)|replace('$', '')|trim -%>\(<< label >><% if text.startswith('<') %><< text >><% else %> = << text >><% endif %>\)<%- endmacro %>
-<% macro pval_text(x, nd=3) -%><% if x is none -%>\(p\) unavailable<% elif x < 0.000001 -%>\(p<10^{-6}\)<% elif x < 0.001 -%>\(p = << gu.latex_number(x, precision=2, math_mode=False) >>\)<% else -%>\(p = << x|fmt(nd) >>\)<% endif -%><% endmacro %>
-<% macro pholm_text(x, nd=3) -%><% if x is none -%>Holm-corrected \(p\) unavailable<% elif x < 0.000001 -%>Holm-corrected \(p<10^{-6}\)<% elif x < 0.001 -%>Holm-corrected \(p = << gu.latex_number(x, precision=2, math_mode=False) >>\)<% else -%>Holm-corrected \(p = << x|fmt(nd) >>\)<% endif -%><% endmacro %>
+<% macro pval_text(x, nd=3) -%><% if x is none -%>\(p\) unavailable<% elif x < 0.0001 -%>\(p<10^{-4}\)<% elif x < 0.001 -%>\(p = << gu.latex_number(x, precision=2, math_mode=False) >>\)<% else -%>\(p = << x|fmt(nd) >>\)<% endif -%><% endmacro %>
+<% macro pholm_text(x, nd=3) -%><% if x is none -%>Holm-corrected \(p\) unavailable<% elif x < 0.0001 -%>Holm-corrected \(p<10^{-4}\)<% elif x < 0.001 -%>Holm-corrected \(p = << gu.latex_number(x, precision=2, math_mode=False) >>\)<% else -%>Holm-corrected \(p = << x|fmt(nd) >>\)<% endif -%><% endmacro %>
 <% macro qlabel_short(q) -%><% if q.key == 'sSFR' -%>\(\log_{10}\mathrm{sSFR}\)<% elif q.key == 'M_r' -%>\(M_r\)<% else -%>\(\log M_\star\)<% endif -%><% endmacro %>
 
 \section{Introduction}\label{sec:intro}

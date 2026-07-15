@@ -170,7 +170,7 @@ def bootstrap_std(sample,n_samples=10000):
     return std
 
 
-def bootstrap_median_error(values, n_samples=10000, ci=0.68, random_state=None):
+def bootstrap_median_error(values, n_samples=10000, ci=0.68, random_state=20260612):
     """
     Bootstrap error on the median of 'values'.
 
@@ -240,7 +240,7 @@ def V_disp_gapper(gals):
     return Vdisp
 
 
-def bootstrap_median_diff_error(values_A, values_B, n_samples=10000, ci=0.68, random_state=None):
+def bootstrap_median_diff_error(values_A, values_B, n_samples=10000, ci=0.68, random_state=20260612):
     """
     Bootstrap error on the difference of medians: median(A) - median(B).
     """
@@ -299,10 +299,14 @@ def bootstrap_median_difference(
     ci_16, ci_84 = np.percentile(boot, [16, 84])
     ci_95_low, ci_95_high = np.percentile(boot, [2.5, 97.5])
 
-    # two-sided p-value: probability of crossing zero
-    p_value = 2 * min(
-        np.mean(boot <= 0),
-        np.mean(boot >= 0),
+    # two-sided add-one empirical p-value: with B draws the smallest
+    # reportable value is 2/(B+1), never 0 (Monte-Carlo floor)
+    p_value = min(
+        1.0,
+        2 * min(
+            (np.sum(boot <= 0) + 1) / (n_boot + 1),
+            (np.sum(boot >= 0) + 1) / (n_boot + 1),
+        ),
     )
 
     if return_ci95:
@@ -310,7 +314,7 @@ def bootstrap_median_difference(
     return delta_obs, ci_16, ci_84, p_value
 
 
-def bootstrap_median_diff_probability(values_A, values_B, n_samples=10000):
+def bootstrap_median_diff_probability(values_A, values_B, n_samples=10000, random_state=20260612):
     """
     Returns:
       diff_hat       = median(A) - median(B)
@@ -334,7 +338,7 @@ def bootstrap_median_diff_probability(values_A, values_B, n_samples=10000):
     if nA == 0 or nB == 0:
         return np.nan, np.nan, np.nan
 
-    rng = np.random.default_rng()
+    rng = np.random.default_rng(random_state)
     boot_diffs = np.empty(n_samples)
 
     for i in range(n_samples):
@@ -345,11 +349,12 @@ def bootstrap_median_diff_probability(values_A, values_B, n_samples=10000):
     diff_hat = np.median(A) - np.median(B)
     sigma_diff = boot_diffs.std(ddof=1)
 
-    # probability that the sign stays the same
+    # probability that the sign stays the same (add-one rule keeps the
+    # estimate away from exactly 0 or 1 at finite n_samples)
     if diff_hat > 0:
-        prob = 1 - np.mean(boot_diffs <= 0)
+        prob = 1 - (np.sum(boot_diffs <= 0) + 1) / (n_samples + 1)
     else:
-        prob = 1 - np.mean(boot_diffs >= 0)
+        prob = 1 - (np.sum(boot_diffs >= 0) + 1) / (n_samples + 1)
 
     return diff_hat, sigma_diff, prob
 

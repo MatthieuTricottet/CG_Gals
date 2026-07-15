@@ -50,6 +50,10 @@ def synthetic_size_frame(seed=20260612, n_cg4_groups=60, n_control_groups=150):
             "sample": sample,
             "is_CG4": is_cg4.astype(int),
             "group_uid": [f"{s}:{g}" for s, g in zip(sample, group_number)],
+            "physical_group": [
+                f"HMCG:{g}" if s == "CG4" else f"Lim:{g}"
+                for s, g in zip(sample, group_number)
+            ],
             "objid": np.arange(n) + 1237650000000000000,
             "rank": rank.astype(float),
             "is_satellite": (rank > 1).astype(float),

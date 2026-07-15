@@ -2,10 +2,17 @@
 
 from __future__ import annotations
 
+import os
+
 import numpy as np
 import pandas as pd
 from astropy import units as u
 from astropy.cosmology import Planck15
+
+try:
+    import config as co
+except ModuleNotFoundError:  # pragma: no cover
+    from . import config as co
 
 
 SAMPLE_KEYS = {
@@ -82,9 +89,52 @@ def _merge_sdss_columns(
     )
 
 
-def build_galaxy_frame(samples: dict[str, pd.DataFrame]) -> pd.DataFrame:
-    """Combine the four galaxy samples and derive common analysis columns."""
+def _cg4_host_lim_map() -> pd.Series:
+    """CG4 group id -> host Lim group id, via shared objids with PC_Gals.
 
+    Every non-split CG4 group lies entirely inside exactly one Lim parent
+    group (see src/identity.py); the map is loaded lazily from the committed
+    CSVs and cached on the function object.
+    """
+
+    cached = getattr(_cg4_host_lim_map, "_cache", None)
+    if cached is not None:
+        return cached
+    cg4 = pd.read_csv(os.path.join(co.DATA_PATH, "CG4_Gals.csv"))
+    pc = pd.read_csv(os.path.join(co.DATA_PATH, "PC_Gals.csv"))
+    merged = cg4[["objid", "Group"]].merge(
+        pc[["objid", "Group"]].rename(columns={"Group": "lim_group"}),
+        on="objid",
+        how="left",
+    )
+    hosts = merged.groupby("Group")["lim_group"].agg(
+        lambda values: values.dropna().mode().iloc[0]
+        if values.notna().any()
+        else np.nan
+    )
+    _cg4_host_lim_map._cache = hosts
+    return hosts
+
+
+def build_galaxy_frame(samples: dict[str, pd.DataFrame]) -> pd.DataFrame:
+    """Combine the four galaxy samples and derive common analysis columns.
+
+    Two group identifiers are attached:
+
+    * ``group_uid`` (label-scoped, e.g. ``Control4B:12``) identifies one
+      *selection* of a group and is the right key for within-sample
+      per-group computations (quartet gaps, distances, ...), because the
+      same Lim group selects different quartets under different control
+      definitions.
+    * ``physical_group`` identifies the *physical* system (``Lim:<id>`` for
+      the controls and for CG4s via their host Lim group; ``HMCG:<id>`` for
+      the CG4s without a Lim counterpart). It is the only valid unit for
+      cluster-robust standard errors and group-level resampling: the same
+      physical group appearing under several control labels is one cluster,
+      not three.
+    """
+
+    host_map = _cg4_host_lim_map()
     pieces = []
     for label, galaxy_key in SAMPLE_KEYS.items():
         if galaxy_key not in samples:
@@ -95,18 +145,33 @@ def build_galaxy_frame(samples: dict[str, pd.DataFrame]) -> pd.DataFrame:
             galaxies = _merge_group_columns(galaxies, samples[group_key])
         galaxies["sample"] = label
         galaxies["is_CG4"] = int(label == "CG4")
-        galaxies["group_uid"] = (
-            label
-            + ":"
-            + galaxies.get(
-                "Group", pd.Series(galaxies.index, index=galaxies.index)
-            ).astype(str)
+        group_ids = galaxies.get(
+            "Group", pd.Series(galaxies.index, index=galaxies.index)
         )
+        galaxies["group_uid"] = label + ":" + group_ids.astype(str)
+        if label == "CG4":
+            hosts = group_ids.map(host_map)
+            galaxies["physical_group"] = np.where(
+                hosts.notna(),
+                "Lim:" + hosts.astype("Int64").astype(str),
+                "HMCG:" + group_ids.astype(str),
+            )
+        else:
+            galaxies["physical_group"] = "Lim:" + group_ids.astype(str)
         pieces.append(galaxies)
     if not pieces:
         return pd.DataFrame()
 
     frame = pd.concat(pieces, ignore_index=True, sort=False)
+    if "objid" in frame:
+        # every control label containing this physical galaxy, for
+        # deduplicated pooled analyses and provenance tables
+        labels_by_objid = (
+            frame.loc[frame["is_CG4"] == 0]
+            .groupby("objid")["sample"]
+            .agg(lambda values: "+".join(sorted(set(values))))
+        )
+        frame["control_source_labels"] = frame["objid"].map(labels_by_objid)
     frame = _merge_sdss_columns(frame, samples)
 
     frame["logMstar"] = _numeric(frame, ["lgm_tot_p50", "lgm", "logMstar"])
@@ -216,6 +281,43 @@ def build_galaxy_frame(samples: dict[str, pd.DataFrame]) -> pd.DataFrame:
                 frame[right], errors="coerce"
             )
     return frame
+
+
+DEDUP_LABEL_PRIORITY = ["CG4", "RG4", "Control4B", "Control4C"]
+
+
+def dedup_control_pool(frame: pd.DataFrame) -> pd.DataFrame:
+    """Return the frame with one row per *physical* control galaxy.
+
+    The three control samples overlap heavily (all RG4 galaxies are also
+    Control4B rows, and Control4B and Control4C share their quartet cores).
+    Pooled analyses must not count the same galaxy several times, so control
+    duplicates collapse to a single row. When a galaxy appears under several
+    labels, the kept row follows the documented priority RG4 > Control4B >
+    Control4C (group-level covariates are those of the kept selection; the
+    full membership is preserved in ``control_source_labels``). CG4 rows are
+    never dropped, and a control row sharing an objid with a CG4 galaxy is a
+    hard error (the Paper I exclusion guarantees there is none).
+    """
+
+    if "objid" not in frame:
+        return frame.copy()
+    cg4_objids = set(frame.loc[frame["is_CG4"] == 1, "objid"])
+    controls = frame.loc[frame["is_CG4"] == 0]
+    overlap = set(controls["objid"]) & cg4_objids
+    if overlap:
+        raise ValueError(
+            f"control pool contains {len(overlap)} CG4 objid(s); the samples "
+            "violate the Paper I exclusion"
+        )
+    priority = {label: rank for rank, label in enumerate(DEDUP_LABEL_PRIORITY)}
+    ordered = frame.sort_values(
+        "sample", key=lambda column: column.map(priority), kind="stable"
+    )
+    keep_control = ~ordered.loc[ordered["is_CG4"] == 0, "objid"].duplicated()
+    mask = pd.Series(True, index=ordered.index)
+    mask.loc[ordered["is_CG4"] == 0] = keep_control
+    return ordered.loc[mask].sort_index().copy()
 
 
 def ensure_galaxy_frame(data) -> pd.DataFrame:

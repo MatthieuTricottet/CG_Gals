@@ -16,12 +16,14 @@ from statsmodels.stats.multitest import multipletests
 try:
     import config as co
     import exploration_colour_robustness as colour_robustness
+    import extended_data as ed
     import generate_report as report
     from utils import graphics_utils as gu
     from utils import labels_utils as lu
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from . import exploration_colour_robustness as colour_robustness
+    from . import extended_data as ed
     from . import generate_report as report
     from .utils import graphics_utils as gu
     from .utils import labels_utils as lu
@@ -268,6 +270,17 @@ def build_satellite_colour_frame(
         merged["catalogue"] = label
         merged["environment"] = "Compact" if label == "CG4" else "Ordinary"
         merged["cluster_id"] = label + "_" + merged["Group"].astype(str)
+        # physical cluster key: the same Lim group under two control labels
+        # is one cluster, and CG4 groups cluster with their host Lim group
+        if label == "CG4":
+            hosts = merged["Group"].map(ed._cg4_host_lim_map())
+            merged["physical_group"] = np.where(
+                hosts.notna(),
+                "Lim:" + hosts.astype("Int64").astype(str),
+                "HMCG:" + merged["Group"].astype(str),
+            )
+        else:
+            merged["physical_group"] = "Lim:" + merged["Group"].astype(str)
         frames.append(merged)
 
     if not frames:
@@ -283,8 +296,27 @@ def compute_satellite_environment_tests(
     reference_mass = float(satellite_frame["lgm"].median())
     rows = []
 
+    # The pooled "Ordinary" side must count each physical galaxy once (the
+    # control samples overlap), and clusters are physical Lim groups, not
+    # label-scoped ids.
+    if {"catalogue", "_objid"}.issubset(satellite_frame.columns):
+        priority = {"CG4": 0, "RG4": 1, "Control4B": 2, "Control4C": 3}
+        ordered = satellite_frame.sort_values(
+            "catalogue", key=lambda column: column.map(priority), kind="stable"
+        )
+        is_ordinary = ordered["environment"].eq("Ordinary")
+        duplicate = ordered["_objid"].duplicated() & is_ordinary
+        satellite_frame = ordered.loc[~duplicate]
+    cluster_column = (
+        "physical_group" if "physical_group" in satellite_frame else "cluster_id"
+    )
+
     for colour_key, colour_label, _ in COLOUR_SPECS:
-        panel = satellite_frame[["environment", "cluster_id", "lgm", colour_key]].dropna().copy()
+        panel = (
+            satellite_frame[["environment", cluster_column, "lgm", colour_key]]
+            .dropna()
+            .copy()
+        )
         panel["environment"] = pd.Categorical(
             panel["environment"],
             categories=["Ordinary", "Compact"],
@@ -293,7 +325,7 @@ def compute_satellite_environment_tests(
         model = smf.ols(
             f'{colour_key} ~ lgm * C(environment, Treatment(reference="Ordinary"))',
             data=panel,
-        ).fit(cov_type="cluster", cov_kwds={"groups": panel["cluster_id"]})
+        ).fit(cov_type="cluster", cov_kwds={"groups": panel[cluster_column]})
 
         offset_term = 'C(environment, Treatment(reference="Ordinary"))[T.Compact]'
         interaction_term = 'lgm:C(environment, Treatment(reference="Ordinary"))[T.Compact]'

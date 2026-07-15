@@ -144,15 +144,19 @@ def check_A3(frames):
 
 # ------------------------------------------------------- B. pseudoreplication
 def check_B4():
+    # The defect is *inference* on label-scoped clusters. A label-scoped
+    # group_uid may legitimately exist for within-sample per-group
+    # computation, provided a physical_group key exists and is the default
+    # clustering unit for the models.
     ext_data = read_src("extended_data.py")
     ext_stats = read_src("extended_stats.py")
-    label_uid = ('group_uid' in ext_data
-                 and re.search(r'label\s*\n?\s*\+\s*"?:"?', ext_data) is not None)
+    physical_defined = "physical_group" in ext_data
     default_uid = 'cluster_col: str | None = "group_uid"' in ext_stats
-    record("B4", bool(label_uid or default_uid),
-           f"label-prefixed group_uid built in extended_data.py: {label_uid}; "
-           f"extended_stats.fit_logistic_model default cluster col is label-scoped "
-           f"group_uid: {default_uid}")
+    default_physical = 'cluster_col: str | None = "physical_group"' in ext_stats
+    record("B4", bool(default_uid or not physical_defined or not default_physical),
+           f"physical_group defined in extended_data.py: {physical_defined}; "
+           f"fit_logistic_model clusters by physical_group by default: "
+           f"{default_physical} (label-scoped default remaining: {default_uid})")
 
 
 # ----------------------------------------------------------------- C. matching
@@ -185,9 +189,11 @@ def check_C5_reimplementation():
     """Reproduce the matching and audit self-matches / duplicate controls."""
 
     import pickle
+    # Prefer the current processed sample; the committed-baseline copy is
+    # only used when the current one is unavailable (pre-Phase-2 state).
     pkl_candidates = [
-        os.path.join(BASE, "baseline", "processed_sample_committed.pkl"),
         os.path.join(DATA, "processed_sample.pkl"),
+        os.path.join(BASE, "baseline", "processed_sample_committed.pkl"),
     ]
     pkl_path = next((p for p in pkl_candidates if os.path.exists(p)), None)
     if pkl_path is None:
@@ -201,8 +207,13 @@ def check_C5_reimplementation():
     import matched_controls as mcmod
 
     frame = build_galaxy_frame(sample)
-    variables = mcmod._select_variables(frame)
-    pairs, work, caliper = mcmod._greedy_match(frame, variables)
+    if hasattr(mcmod, "matched_pairs"):
+        # post-rebuild path: matching runs on the deduplicated pool
+        pairs, work, caliper, prepared, variables = mcmod.matched_pairs(frame)
+        frame = prepared
+    else:
+        variables = mcmod._select_variables(frame)
+        pairs, work, caliper = mcmod._greedy_match(frame, variables)
     t_idx = [p["treated_index"] for p in pairs]
     c_idx = [p["control_index"] for p in pairs]
     treated = frame.loc[t_idx]
@@ -375,15 +386,17 @@ def main():
     check_F9(results)
 
     if args.write_md:
-        lines = ["# Audit findings verification", "",
+        # Raw machine-generated table only; audit/FINDINGS.md is the curated
+        # record and must never be overwritten by this script.
+        lines = ["# Audit findings verification (raw, machine-generated)", "",
                  "| Finding | Status | Detail |", "|---|---|---|"]
         for finding, present, summary in RESULTS:
             status = {True: "DEFECT PRESENT", False: "defect absent",
                       None: "info"}[present]
             lines.append(f"| {finding} | {status} | {summary} |")
-        with open(os.path.join(BASE, "audit", "FINDINGS.md"), "w") as f:
+        with open(os.path.join(BASE, "audit", "FINDINGS_raw.md"), "w") as f:
             f.write("\n".join(lines) + "\n")
-        print("\nWrote audit/FINDINGS.md")
+        print("\nWrote audit/FINDINGS_raw.md")
 
     n_present = sum(1 for _, p, _ in RESULTS if p is True)
     print(f"\n{n_present} defect(s) present, "

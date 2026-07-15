@@ -581,7 +581,8 @@ def _fit_logistic(
     required = ["elliptical_binary", predictor_term, *controls]
     if interaction:
         required = ["elliptical_binary", "is_CG4_numeric", predictor_term, "interaction", *controls]
-    columns = list(dict.fromkeys(required + (["group_uid"] if "group_uid" in frame else [])))
+    cluster_key = "physical_group" if "physical_group" in frame else "group_uid"
+    columns = list(dict.fromkeys(required + ([cluster_key] if cluster_key in frame else [])))
     missing = [column for column in required if column not in frame]
     if missing:
         return {"status": "skipped", "reason": "missing_required_columns", "missing": missing}
@@ -623,7 +624,7 @@ def _fit_logistic(
             work[column] = (work[column] - mean) / std
 
     design = sm.add_constant(work[xcols].astype(float), has_constant="add")
-    groups = work["group_uid"] if "group_uid" in work else None
+    groups = work[cluster_key] if cluster_key in work else None
     use_cluster = subset in {"all", "satellites"} and groups is not None and groups.nunique() >= 2
     covariance = "cluster" if use_cluster else "HC1"
     try:

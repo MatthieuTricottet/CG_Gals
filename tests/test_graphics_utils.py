@@ -19,11 +19,13 @@ def test_latex_float_remains_unwrapped_for_axis_labels():
 
 def test_pvalue_latex_never_rounds_to_zero():
     assert gu.pvalue_latex(0.00023) == r"$2.3\times 10^{-4}$"
-    assert gu.pvalue_latex(2e-8) == r"$<10^{-6}$"
+    # display floor is 1e-4: never claim a smaller p than the
+    # analysis can support (audit finding D6)
+    assert gu.pvalue_latex(2e-8) == r"$<10^{-4}$"
     assert gu.pvalue_latex(0.051) == r"$0.051$"
 
 
 def test_pvalue_label_latex_uses_comparison_operator_once():
-    assert gu.pvalue_label_latex(2e-8) == r"$p < 10^{-6}$"
+    assert gu.pvalue_label_latex(2e-8) == r"$p < 10^{-4}$"
     assert gu.pvalue_label_latex(0.0025) == r"$p = 2.5\times 10^{-3}$"
     assert gu.pvalue_label_latex(0.051) == r"$p = 0.051$"

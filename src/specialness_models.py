@@ -12,10 +12,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 try:
-    from extended_data import ensure_galaxy_frame
+    from extended_data import dedup_control_pool, ensure_galaxy_frame
     from extended_stats import fit_logistic_model, holm_correction, safe_json
 except ModuleNotFoundError:  # pragma: no cover
-    from .extended_data import ensure_galaxy_frame
+    from .extended_data import dedup_control_pool, ensure_galaxy_frame
     from .extended_stats import fit_logistic_model, holm_correction, safe_json
 
 
@@ -100,13 +100,33 @@ def _plot(results, path):
 
 
 def fit_logistic_specialness_models(data, output_dir: str | None = None):
-    """Fit the requested family of adjusted binary-outcome models."""
+    """Fit the pooled family of adjusted binary-outcome models (secondary).
+
+    This pooled analysis is a *summary across heterogeneous control
+    definitions* and is secondary to the per-control contrasts of
+    src/primary_contrasts.py. To make it valid: the control pool is
+    deduplicated by objid (one row per physical galaxy, kept-label priority
+    RG4 > Control4B > Control4C, all labels recorded), every physical galaxy
+    enters with weight one, and standard errors are clustered by physical
+    Lim group.
+    """
 
     frame = ensure_galaxy_frame(data)
     if frame.empty:
         return {"status": "skipped", "reason": "no_galaxy_samples"}
+    n_control_rows = int((frame["is_CG4"] == 0).sum())
+    frame = dedup_control_pool(frame)
     covariates, continuous = _covariates(frame)
-    results = {"status": "ok", "covariates_considered": covariates}
+    results = {
+        "status": "ok",
+        "covariates_considered": covariates,
+        "design": "pooled_secondary",
+        "control_pool_deduplicated_by_objid": True,
+        "n_control_rows_before_dedup": n_control_rows,
+        "n_control_galaxies_unique": int((frame["is_CG4"] == 0).sum()),
+        "weighting": "one row per physical galaxy, unweighted",
+        "cluster_unit": "physical_group",
+    }
     for name, (outcome, subset) in MODEL_SPECS.items():
         panel = frame
         predictors = ["is_CG4", *covariates]

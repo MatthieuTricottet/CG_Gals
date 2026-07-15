@@ -20,6 +20,7 @@ try:
     from selection_diagnostics import run_selection_diagnostics
     from size_analysis import run_size_analysis
     from size_data import attach_size_columns
+    from primary_contrasts import run_primary_contrasts
     from specialness_models import fit_logistic_specialness_models
     from tidal_indices import run_tidal_indices_analysis
 except ModuleNotFoundError:  # pragma: no cover
@@ -37,6 +38,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from .selection_diagnostics import run_selection_diagnostics
     from .size_analysis import run_size_analysis
     from .size_data import attach_size_columns
+    from .primary_contrasts import run_primary_contrasts
     from .specialness_models import fit_logistic_specialness_models
     from .tidal_indices import run_tidal_indices_analysis
 
@@ -64,6 +66,7 @@ def run_extended_specialness(sample, output_dir: str | None = None):
         if co.VERBOSE:
             print(f"[extended specialness] size columns unavailable: {exc}")
     analyses = [
+        ("primary_contrasts", run_primary_contrasts),
         ("specialness_models", fit_logistic_specialness_models),
         ("matched_controls", run_matched_control_analysis),
         ("morphology_robustness", run_morphology_robustness),

@@ -157,22 +157,55 @@ def cliffs_delta(x, y) -> float | None:
     return float(2 * u_stat / (x.size * y.size) - 1)
 
 
+def empirical_p_two_sided(boot: np.ndarray) -> float:
+    """Two-sided add-one empirical p-value for a bootstrap null-crossing.
+
+    Uses p = 2 * min[(k_le + 1)/(B + 1), (k_ge + 1)/(B + 1)], capped at 1,
+    where k_le/k_ge count draws at or across zero. The +1 terms enforce the
+    Monte-Carlo floor: with B draws the smallest reportable value is
+    2/(B + 1), never 0.
+    """
+
+    n_draws = boot.size
+    k_le = int(np.sum(boot <= 0))
+    k_ge = int(np.sum(boot >= 0))
+    return float(
+        min(1.0, 2 * min((k_le + 1) / (n_draws + 1), (k_ge + 1) / (n_draws + 1)))
+    )
+
+
 def bootstrap_difference(
     treated,
     control,
     statistic: Callable[[np.ndarray], float] = np.mean,
     *,
     paired: bool = False,
-    n_boot: int = 2000,
+    n_boot: int = 9999,
     seed: int = DEFAULT_SEED,
+    blocks=None,
 ) -> dict[str, object]:
-    """Bootstrap a treated-minus-control effect and a two-sided sign p-value."""
+    """Bootstrap a treated-minus-control effect with an add-one p-value.
+
+    ``blocks`` (paired mode only) assigns each pair to a resampling block —
+    e.g. the treated galaxy's physical group — and the bootstrap then
+    resamples *blocks* rather than pairs, respecting the dependence of the
+    four galaxies of one compact group. The reported p is the two-sided
+    add-one empirical p-value (floor 2/(B+1)); the Monte-Carlo resolution is
+    reported alongside so callers can never quote a value below it.
+    """
 
     x = pd.to_numeric(pd.Series(treated), errors="coerce").to_numpy(dtype=float)
     y = pd.to_numeric(pd.Series(control), errors="coerce").to_numpy(dtype=float)
+    block_ids = None
+    if blocks is not None:
+        block_ids = pd.Series(blocks).to_numpy()
+        if block_ids.size != x.size:
+            raise ValueError("blocks must align with the treated values")
     if paired:
         mask = np.isfinite(x) & np.isfinite(y)
         x, y = x[mask], y[mask]
+        if block_ids is not None:
+            block_ids = block_ids[mask]
     else:
         x, y = x[np.isfinite(x)], y[np.isfinite(y)]
     if x.size == 0 or y.size == 0 or (paired and x.size != y.size):
@@ -180,7 +213,17 @@ def bootstrap_difference(
 
     rng = np.random.default_rng(seed)
     boot = np.empty(n_boot)
-    if paired:
+    if paired and block_ids is not None:
+        unique_blocks = pd.unique(block_ids)
+        members = {
+            block: np.flatnonzero(block_ids == block) for block in unique_blocks
+        }
+        n_blocks = len(unique_blocks)
+        for index in range(n_boot):
+            drawn = rng.integers(0, n_blocks, n_blocks)
+            rows = np.concatenate([members[unique_blocks[j]] for j in drawn])
+            boot[index] = statistic(x[rows]) - statistic(y[rows])
+    elif paired:
         for index in range(n_boot):
             draw = rng.integers(0, x.size, x.size)
             boot[index] = statistic(x[draw]) - statistic(y[draw])
@@ -191,12 +234,20 @@ def bootstrap_difference(
             boot[index] = statistic(xb) - statistic(yb)
     estimate = float(statistic(x) - statistic(y))
     low, high = np.quantile(boot, [0.025, 0.975])
-    p_value = min(1.0, 2 * min(np.mean(boot <= 0), np.mean(boot >= 0)))
     return {
         "estimate": estimate,
         "ci95": [float(low), float(high)],
-        "p": float(p_value),
+        "p": empirical_p_two_sided(boot),
         "n": int(x.size if paired else min(x.size, y.size)),
+        "n_boot": int(n_boot),
+        "p_floor": float(2 / (n_boot + 1)),
+        "resampling_unit": (
+            "block" if (paired and block_ids is not None) else
+            ("pair" if paired else "observation")
+        ),
+        "n_blocks": int(len(pd.unique(block_ids)))
+        if (paired and block_ids is not None)
+        else None,
     }
 
 
@@ -270,11 +321,16 @@ def fit_logistic_model(
     predictors: list[str],
     *,
     continuous: Iterable[str] = (),
-    cluster_col: str | None = "group_uid",
+    cluster_col: str | None = "physical_group",
     min_n: int = 30,
     min_class: int = 5,
 ) -> dict[str, object]:
-    """Fit a guarded binomial GLM with cluster-robust standard errors."""
+    """Fit a guarded binomial GLM with cluster-robust standard errors.
+
+    Clustering defaults to the *physical* group key so that the same Lim
+    group appearing under several control labels forms a single cluster
+    (never one pseudo-cluster per label).
+    """
 
     if sm is None:
         return _skipped("statsmodels_unavailable")

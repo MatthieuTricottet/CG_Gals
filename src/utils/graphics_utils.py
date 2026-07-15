@@ -355,7 +355,7 @@ def latex_number(f, precision=3, sci_min=1e4, sci_max=1e-3, math_mode=True):
     return formatted
 
 
-def _format_pvalue_parts(p_value, precision=3, lower_bound=1e-6, sci_threshold=1e-2):
+def _format_pvalue_parts(p_value, precision=3, lower_bound=1e-4, sci_threshold=1e-2):
     """Return a p-value comparison operator and LaTeX-formatted value."""
 
     if p_value is None:
@@ -383,7 +383,7 @@ def _format_pvalue_parts(p_value, precision=3, lower_bound=1e-6, sci_threshold=1
 def pvalue_latex(
     p_value,
     precision=3,
-    lower_bound=1e-6,
+    lower_bound=1e-4,
     sci_threshold=1e-2,
     math_mode=True,
 ):
@@ -406,7 +406,7 @@ def pvalue_label_latex(
     p_value,
     label="p",
     precision=3,
-    lower_bound=1e-6,
+    lower_bound=1e-4,
     sci_threshold=1e-2,
     math_mode=True,
 ):
@@ -430,7 +430,7 @@ def form(x,nb_decimal=2):
     nb_str = str(nb_decimal)
     return '.' + nb_str + 'f' if (np.abs(x)>=10**(-nb_decimal)) else '.' + nb_str + 'e' 
 
-def tex_form(x,nb_decimal=2,nb_decimal_exp=1, exp_min=6):
+def tex_form(x,nb_decimal=2,nb_decimal_exp=1, exp_min=4):
     return pvalue_latex(
         x,
         precision=nb_decimal,

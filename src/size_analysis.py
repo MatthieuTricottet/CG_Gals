@@ -32,13 +32,14 @@ try:
     from extended_data import ensure_galaxy_frame
     from extended_stats import (
         benjamini_hochberg,
+        empirical_p_two_sided,
         fit_ols_with_optional_cluster_se,
         holm_correction,
         safe_float,
         safe_json,
         two_sample_summary,
     )
-    from matched_controls import _greedy_match, _select_variables
+    from matched_controls import matched_pairs
     from morphology_robustness import CROWDING_THRESHOLD_ARCSEC, _nearest_angular
     from size_data import Z_MATCH_TOLERANCE, attach_size_columns
     from tidal_indices import _derive as _derive_tidal_indices
@@ -47,13 +48,14 @@ except ModuleNotFoundError:  # pragma: no cover
     from .extended_data import ensure_galaxy_frame
     from .extended_stats import (
         benjamini_hochberg,
+        empirical_p_two_sided,
         fit_ols_with_optional_cluster_se,
         holm_correction,
         safe_float,
         safe_json,
         two_sample_summary,
     )
-    from .matched_controls import _greedy_match, _select_variables
+    from .matched_controls import matched_pairs
     from .morphology_robustness import CROWDING_THRESHOLD_ARCSEC, _nearest_angular
     from .size_data import Z_MATCH_TOLERANCE, attach_size_columns
     from .tidal_indices import _derive as _derive_tidal_indices
@@ -567,27 +569,39 @@ def _morphology_strata(frame: pd.DataFrame) -> dict:
 # ---------------------------------------------------------------------------
 
 
-def _paired_bootstrap(differences: np.ndarray, statistic) -> dict:
+def _paired_bootstrap(differences: np.ndarray, statistic, blocks=None) -> dict:
     rng = np.random.default_rng(SEED)
     n = differences.size
     boot = np.empty(N_BOOT)
-    for index in range(N_BOOT):
-        boot[index] = statistic(differences[rng.integers(0, n, n)])
+    if blocks is not None:
+        unique_blocks = pd.unique(np.asarray(blocks))
+        members = {
+            block: np.flatnonzero(np.asarray(blocks) == block)
+            for block in unique_blocks
+        }
+        n_blocks = len(unique_blocks)
+        for index in range(N_BOOT):
+            drawn = rng.integers(0, n_blocks, n_blocks)
+            rows = np.concatenate([members[unique_blocks[j]] for j in drawn])
+            boot[index] = statistic(differences[rows])
+    else:
+        for index in range(N_BOOT):
+            boot[index] = statistic(differences[rng.integers(0, n, n)])
     low, high = np.quantile(boot, [0.025, 0.975])
-    p_value = min(1.0, 2 * min(np.mean(boot <= 0), np.mean(boot >= 0)))
     return {
         "estimate": float(statistic(differences)),
         "ci95": [float(low), float(high)],
-        "p": float(p_value),
+        "p": empirical_p_two_sided(boot),
+        "n_boot": int(N_BOOT),
+        "p_floor": float(2 / (N_BOOT + 1)),
     }
 
 
 def _matched(frame: pd.DataFrame) -> dict:
-    variables = _select_variables(frame)
+    pairs, _, caliper, prepared, variables = matched_pairs(frame)
     if not variables:
         return _skipped("no_matching_variables")
-    pairs, _, caliper = _greedy_match(frame, variables)
-    pairs_repeat, _, _ = _greedy_match(frame, variables)
+    pairs_repeat, _, _, _, _ = matched_pairs(frame)
     deterministic = pairs == pairs_repeat
     if len(pairs) < 10:
         return _skipped("too_few_matches", n_pairs=len(pairs))
@@ -597,12 +611,16 @@ def _matched(frame: pd.DataFrame) -> dict:
     if expected is not None:
         pair_count_consistent = bool(len(pairs) == int(expected))
 
-    treated = frame.loc[[pair["treated_index"] for pair in pairs]].reset_index(
+    treated = prepared.loc[[pair["treated_index"] for pair in pairs]].reset_index(
         drop=True
     )
-    control = frame.loc[[pair["control_index"] for pair in pairs]].reset_index(
+    control = prepared.loc[[pair["control_index"] for pair in pairs]].reset_index(
         drop=True
     )
+    if "physical_group" in treated:
+        treated_blocks = treated["physical_group"].astype(str).to_numpy()
+    else:
+        treated_blocks = treated["group_uid"].astype(str).to_numpy()
 
     outcomes = {
         "delta_log_Rchl_r": (PRIMARY_OUTCOME, True),
@@ -623,8 +641,9 @@ def _matched(frame: pd.DataFrame) -> dict:
                 "too_few_pairs_with_sizes", n_pairs_with_sizes=int(differences.size)
             )
             continue
-        mean_boot = _paired_bootstrap(differences, np.mean)
-        median_boot = _paired_bootstrap(differences, np.median)
+        pair_blocks = treated_blocks[mask.to_numpy()]
+        mean_boot = _paired_bootstrap(differences, np.mean, blocks=pair_blocks)
+        median_boot = _paired_bootstrap(differences, np.median, blocks=pair_blocks)
         effects[name] = {
             "status": "ok",
             "n_pairs": int(len(pairs)),
@@ -645,9 +664,10 @@ def _matched(frame: pd.DataFrame) -> dict:
         "family": "F3",
         "note": (
             "Pairs recomputed with the paper's matching implementation and "
-            "seed; the published matched-control Holm family is untouched. "
-            "Holm here spans the three size outcomes; p is the two-sided "
-            "sign p-value of the 10000-iteration paired mean bootstrap."
+            "seed on the objid-deduplicated control pool; the published "
+            "matched-control Holm family is untouched. Holm here spans the "
+            "three size outcomes; p is the two-sided add-one empirical "
+            "p-value of the group-blocked paired mean bootstrap."
         ),
         "matching_variables": variables,
         "propensity_caliper": safe_float(caliper),

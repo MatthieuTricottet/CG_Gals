@@ -588,12 +588,13 @@ def _fit_models(satellites: pd.DataFrame, velocity_available: bool) -> dict[str,
         ("early_type", "early_type"),
     ]:
         work, predictors, continuous = _add_model_terms(satellites)
+        cluster_col = "physical_group" if "physical_group" in work else "group_uid"
         models[f"{outcome_name}_distance"] = fit_logistic_model(
             work,
             outcome_col,
             predictors,
             continuous=continuous,
-            cluster_col="group_uid",
+            cluster_col=cluster_col,
             min_n=30,
             min_class=5,
         )
@@ -601,12 +602,15 @@ def _fit_models(satellites: pd.DataFrame, velocity_available: bool) -> dict[str,
             vwork, vpredictors, vcontinuous = _add_model_terms(
                 satellites.dropna(subset=["abs_dv_norm"]), include_velocity=True
             )
+            vcluster_col = (
+                "physical_group" if "physical_group" in vwork else "group_uid"
+            )
             models[f"{outcome_name}_phase_space"] = fit_logistic_model(
                 vwork,
                 outcome_col,
                 vpredictors,
                 continuous=vcontinuous,
-                cluster_col="group_uid",
+                cluster_col=vcluster_col,
                 min_n=30,
                 min_class=5,
             )
@@ -682,8 +686,16 @@ def _balance(frame, treated, control) -> dict[str, object]:
 
 
 def _matched_effect(treated, control, outcome, n_boot):
+    # resample treated CG groups (blocks), not individual pairs, so the four
+    # satellites of one compact group are never treated as independent
+    blocks = treated["group_uid"].astype(str) if "group_uid" in treated else None
     effect = bootstrap_difference(
-        treated[outcome], control[outcome], statistic=np.mean, paired=True, n_boot=n_boot
+        treated[outcome],
+        control[outcome],
+        statistic=np.mean,
+        paired=True,
+        n_boot=n_boot,
+        blocks=blocks,
     )
     if effect["estimate"] is None:
         return {"status": "skipped", "reason": "no_complete_matched_pairs"}
@@ -692,6 +704,9 @@ def _matched_effect(treated, control, outcome, n_boot):
         "delta_CG4_minus_RG4": effect["estimate"],
         "ci95": effect["ci95"],
         "p": effect["p"],
+        "p_floor": effect["p_floor"],
+        "n_boot": effect["n_boot"],
+        "resampling_unit": effect["resampling_unit"],
         "n_pairs": effect["n"],
     }
 

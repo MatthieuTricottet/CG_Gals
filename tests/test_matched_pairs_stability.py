@@ -4,8 +4,7 @@ import numpy as np
 
 from src.extended_stats import safe_json
 from src.matched_controls import (
-    _greedy_match,
-    _select_variables,
+    matched_pairs,
     run_matched_control_analysis,
 )
 from src.size_analysis import _matched
@@ -22,8 +21,7 @@ def add_matched_outcome_columns(frame, seed=20260612):
 
 def test_size_module_reproduces_matched_control_pairs():
     frame = add_matched_outcome_columns(synthetic_size_frame())
-    variables = _select_variables(frame)
-    direct_pairs, _, direct_caliper = _greedy_match(frame, variables)
+    direct_pairs, _, direct_caliper, _, variables = matched_pairs(frame)
 
     size_result = _matched(frame)
     assert size_result["status"] == "ok"
@@ -67,6 +65,13 @@ def test_matched_controls_return_dict_unchanged_by_refactor():
         "n_control_unique",
         "matched_counts_by_sample",
         "matched_control_counts_by_sample",
+        "matched_control_counts_by_provenance",
+        "n_matched_controls_physically_RG4",
+        "control_pool_deduplicated_by_objid",
+        "cg4_objids_excluded_from_controls",
+        "n_control_rows_before_dedup",
+        "n_control_galaxies_unique_pool",
+        "group_level",
         "median_match_distance",
         "balance",
         "max_abs_smd_before",

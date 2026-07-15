@@ -72,6 +72,36 @@ record with reconciliation notes). Status is relative to the *defect*: a
 - `flattens_quenched`, `sSFR_floor` and the -15 display floor are gone; the
   sentinel-based "quenched" class ceases to exist.
 
+## Phase 4 notes
+
+- Cluster-robust inference and group-level resampling now use the
+  **physical group key** (`physical_group`: `Lim:<id>` for controls and for
+  CG4s via their host Lim group, `HMCG:<id>` otherwise); the label-scoped
+  `group_uid` remains only for within-sample per-group computation.
+- New primary analysis: `src/primary_contrasts.py` fits CG4 vs each control
+  separately (Holm within contrast). Elliptical (all members) odds ratios:
+  2.14 vs Control4B (Holm p = 5.7e-6), 1.30 vs Control4C (Holm p = 0.44),
+  2.81 vs RG4 (Holm p = 4.8e-5) — the morphology excess is strong against
+  luminosity-selected and true four-member groups but weak against
+  BGG-centred projected cores.
+- Pooled logistic models demoted to secondary: control pool deduplicated by
+  objid (priority RG4 > C4B > C4C, all labels recorded), one row per
+  physical galaxy, clustered by Lim group. Pooled elliptical OR 1.50
+  [1.13, 1.99].
+- Matching rebuilt: dedup before matching, hard constraints asserted and
+  unit-tested (no CG4 objid among controls, no control reused), provenance
+  table written (`output/matched_control_provenance.csv`; 16/234 matched
+  controls are physically RG4 galaxies). Galaxy-level matched elliptical
+  difference is now +0.087 [-0.005, 0.179], group-blocked bootstrap Holm
+  p = 0.36 — the pre-audit 0.197 with "p<1e-6" **does not survive**.
+- New group-level primary: matched CG-vs-control groups, smooth-satellite
+  fraction difference +0.160 [0.019, 0.299], p = 0.027 (B = 9999).
+- All bootstrap p-values use the add-one rule with reported B and floor
+  2/(B+1); `p<10^{-6}` display purged (display floor now 1e-4 everywhere,
+  including `tex_form`); remaining unseeded bootstraps seeded.
+- `--write-md` now writes `audit/FINDINGS_raw.md`; this curated file is
+  never overwritten.
+
 ## Conventions established
 
 - "CG4 galaxy" for control-exclusion purposes = any galaxy of the **full**
