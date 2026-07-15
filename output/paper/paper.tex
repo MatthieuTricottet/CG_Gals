@@ -56,7 +56,6 @@
 
 \newcommand{\diazg}{D\'{\i}az-Gim\'enez}
 
-\newcommand{\Passive}{Passive}
 
 
 \newcommand{\CB}{Control\textsubscript{4B}}
@@ -202,16 +201,14 @@ All projected distances and derived quantities adopt the Planck 2015 cosmology \
 
 
 \subsection{sSFR classification}\label{sec:ssfr_classification}
-
-
 We classify galaxies from SDSS total sSFRs using the query reported in Appendix~\ref{app:sdss_query} (Listing~\ref{lst:query}).
-In the MPA-JHU tables, \texttt{specsfr\_tot\_p50} \(= -9999\) flags galaxies without a valid sSFR estimate rather than measured zero star formation; we therefore place them in a separate `no-sSFR' class and exclude them from the passive/star-forming split. The no-sSFR fraction is markedly higher in \CG{} (7\%, and 10\% for BGGs) than in the field selection (1\%), plausibly reflecting the crowded-field spectroscopy and deblending issues discussed in Sect.~\ref{sec:decoupling} rather than a physical population. The remaining galaxies are split into passive and star-forming classes with a two-component GMM in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane.
+In the MPA-JHU tables, \texttt{specsfr\_tot\_p50} \(= -9999\) flags galaxies without a valid sSFR estimate rather than measured zero star formation; we therefore treat such galaxies as \emph{missing data}: they are excluded from the star-formation classification, from every sSFR-based figure and fraction, and are reported as counts only (Table~\ref{tab:sSFR_status}). All quenched and star-forming fractions quoted in this paper are computed among classified galaxies only. The missing-sSFR incidence is markedly higher in \CG{} (7\% of members, and 10\% of BGGs) than in the field selection (1\%), plausibly reflecting the crowded-field spectroscopy and deblending issues discussed in Sect.~\ref{sec:decoupling} rather than a physical population. Galaxies with a measured sSFR are split into quenched and star-forming classes with a two-component GMM in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane.
 BPT/AGN handling and the exact GMM boundary definition are given in Appendix~\ref{app:ssfr_method}.
 
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{sSFR_classification.pdf}
-     \caption{sSFR versus stellar mass, the star-forming/passive limit, and Galaxy Zoo morphologies for the SDSS selection,
+     \caption{sSFR versus stellar mass, the star-forming/quenched limit, and Galaxy Zoo morphologies for the SDSS selection,
      excluding galaxies without sSFR estimates.}
      \label{fig:sSFR_classification}
 \end{figure}
@@ -242,58 +239,71 @@ The analyses are organized hierarchically. Raw tables and exact tests provide de
 \subsection{Raw sSFR fractions}
 
 The sSFR status for each sample is shown in Table~\ref{tab:sSFR_status}. In the raw all-galaxy comparison, Fisher's exact test gives star-forming-fraction p-values of
-\(p = 0.449\) versus the \CB{} sample,
- \(p = 0.153\) versus \CC, and  \(p = 4.1\times 10^{-5}\) versus \RG. We treat these raw tests as descriptive because they do not adjust for stellar mass, rank, or group-scale differences.
+\(p = 0.481\) versus the \CB{} sample,
+ \(p = 0.184\) versus \CC, and  \(p = 3\times 10^{-4}\) versus \RG. We treat these raw tests as descriptive because they do not adjust for stellar mass, rank, or group-scale differences.
 
  The same comparison restricted to BGGs and satellites is also shown in Table~\ref{tab:sSFR_status}.
 For BGGs, the p-values obtained with two-sided Fisher exact test are
-  \(p = 0.585\) against \CB,
-  \(p = 0.583\) against \CC{} and
-  \(p = 0.271\)  against \RG.
+  \(p = 0.578\) against \CB,
+  \(p = 0.576\) against \CC{} and
+  \(p = 0.37\)  against \RG.
 For satellites, the corresponding p-values are
-  \(p = 0.28\) against \CB,
-  \(p = 0.066\) against \CC{} and
-  \(p = 4.9\times 10^{-5}\) against \RG. The satellite deficit is clearest in the raw comparison with \RG{} and is revisited below with adjusted and matched analyses.
+  \(p = 0.302\) against \CB,
+  \(p = 0.069\) against \CC{} and
+  \(p = 2.3\times 10^{-4}\) against \RG. The satellite deficit is clearest in the raw comparison with \RG{} and is revisited below with adjusted and matched analyses.
 
 \begin{table}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     \centering
-    \caption{Number of galaxies in each sSFR status for each sample}
+    \caption{Number of galaxies in each sSFR class for each sample.
+    Galaxies without a valid sSFR estimate (`No sSFR') are excluded from the
+    classification: their percentages are quoted with respect to all galaxies
+    of the (sub)sample, while the quenched and star-forming percentages are
+    quoted with respect to classified galaxies only.}
     \label{tab:sSFR_status}
     \tabcolsep=3pt
     \begin{tabular}{lccc}
         \hline\hline
-            \textbf{Sample} & \textbf{  No sSFR  } & \textbf{  Passive  } & \textbf{Star-forming} \\
+            \textbf{Sample} & \textbf{  No sSFR  } & \textbf{  Quenched  } & \textbf{Star-forming} \\
             \hline
-            \CG &  18  (7\%) &  146  (59\%)&  84  (34\%) \\
-             \quad \emph{BGG} &  \emph{6  (10\%)} &  \emph{45  (73\%)} &  \emph{11  (18\%)} \\
-             \quad \emph{Satellites} &  \emph{12  (6\%)} &  \emph{101  (54\%)} &  \emph{73  (39\%)} \\
-            \CB &  180  (6\%) &  1593  (57\%) &  1019  (36\%) \\
-             \quad \emph{BGG} &  \emph{58  (8\%)} &  \emph{533  (76\%)} &  \emph{107  (15\%)} \\
-             \quad \emph{Satellites} &  \emph{122  (6\%)} &  \emph{1060  (51\%)} &  \emph{912  (44\%)} \\
-            \CC &  179  (6\%) &  1551  (55\%) &  1086  (39\%) \\
-             \quad \emph{BGG} &  \emph{59  (8\%)} &  \emph{538  (76\%)} &  \emph{107  (15\%)} \\
-             \quad \emph{Satellites} &  \emph{120  (6\%)} &  \emph{1013  (48\%)} &  \emph{979  (46\%)} \\
-            \RG &  5  (2\%) &  101  (45\%) &  118  (53\%)\\
-            \quad \emph{BGG} &  \emph{3  (5\%)} &  \emph{38  (68\%)} &  \emph{15  (27\%)}\\
-            \quad \emph{Satellites} &  \emph{2  (1\%)} &  \emph{63  (38\%)} &  \emph{103  (61\%)}\\
+
+
+
+
+
+
+            \CG &  18  (7\%) &  146  (63\%) &  84  (37\%) \\
+             \quad \emph{BGG} &  \emph{6  (10\%)} &  \emph{45  (80\%)} &  \emph{11  (20\%)} \\
+             \quad \emph{Satellites} &  \emph{12  (6\%)} &  \emph{101  (58\%)} &  \emph{73  (42\%)} \\
+
+
+
+
+
+
+            \CB &  180  (6\%) &  1593  (61\%) &  1019  (39\%) \\
+             \quad \emph{BGG} &  \emph{58  (8\%)} &  \emph{533  (83\%)} &  \emph{107  (17\%)} \\
+             \quad \emph{Satellites} &  \emph{122  (6\%)} &  \emph{1060  (54\%)} &  \emph{912  (46\%)} \\
+
+
+
+
+
+
+            \CC &  179  (6\%) &  1551  (59\%) &  1086  (41\%) \\
+             \quad \emph{BGG} &  \emph{59  (8\%)} &  \emph{538  (83\%)} &  \emph{107  (17\%)} \\
+             \quad \emph{Satellites} &  \emph{120  (6\%)} &  \emph{1013  (51\%)} &  \emph{979  (49\%)} \\
+
+
+
+
+
+
+            \RG &  5  (2\%) &  101  (46\%) &  118  (54\%) \\
+             \quad \emph{BGG} &  \emph{3  (5\%)} &  \emph{38  (72\%)} &  \emph{15  (28\%)} \\
+             \quad \emph{Satellites} &  \emph{2  (1\%)} &  \emph{63  (38\%)} &  \emph{103  (62\%)} \\
+
          \hline
-            \emph{SDSS selection} &  \emph{634 (1\%)} &  \emph{7705  (15\%)} &  \emph{44192  (84\%)}\\
+            \emph{SDSS selection} &  \emph{634 (1\%)} &  \emph{7705  (15\%)} &  \emph{44192  (85\%)}\\
         \hline
     \end{tabular}
 \end{table}
@@ -332,7 +342,7 @@ Barnard's two-sided exact tests were used to compare the fraction of each morpho
     \centering
      \includegraphics[width=\columnwidth]{galaxies_sfr.pdf}
      \caption{sSFR and morphologies of galaxies in \CG{} and our SDSS selection.
-     Galaxies without sSFR estimates are shown at an arbitrary low value of \(10^{-14.0}\,\mathrm{yr}^{-1}\).}
+     Galaxies without a valid sSFR estimate are excluded from this figure.}
      \label{fig:galaxies_morph_sfr}
 \end{figure}
 
@@ -374,19 +384,19 @@ Thus, BGG morphologies differ between \CG{} and \RG: \CG{} BGGs have a higher el
 
 \subsection{Population medians by sSFR class}
 
-Tables~\ref{tab:passive_starforming_medians}--\ref{tab:split_BGG_ssfr_class_properties_Sat} summarize the typical stellar masses, absolute magnitudes, and sSFRs of passive and star-forming galaxies, including splits by the sSFR class of the BGG. These medians are descriptive and mainly show that star-formation class is entangled with stellar mass and luminosity, motivating the adjusted models below.
+Tables~\ref{tab:quenched_starforming_medians}--\ref{tab:split_BGG_ssfr_class_properties_Sat} summarize the typical stellar masses, absolute magnitudes, and sSFRs of quenched and star-forming galaxies, including splits by the sSFR class of the BGG. These medians are descriptive and mainly show that star-formation class is entangled with stellar mass and luminosity, motivating the adjusted models below.
 
 \begin{table}
 \centering
-\caption{Median values of galaxy properties for passive and star-forming populations in each sample.
+\caption{Median values of galaxy properties for quenched and star-forming populations in each sample.
 Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr\(^{-1}\), and stellar mass is in \(M_\odot\).
 }
-\label{tab:passive_starforming_medians}
+\label{tab:quenched_starforming_medians}
 \small
 \tabcolsep=2pt
 \begin{tabular}{llcc}
 \hline\hline
-Sample & Quantity & Passive & Star-forming\\
+Sample & Quantity & Quenched & Star-forming\\
 \hline
 
 
@@ -437,7 +447,7 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr
     \tabcolsep=2pt
     \begin{tabular}{llcc}
 \hline\hline
-Sample & Quantity & BGG passive & BGG SF\\
+Sample & Quantity & BGG quenched & BGG SF\\
 \hline
 
 
@@ -450,7 +460,7 @@ CG4 & \(\log_{10}\mathrm{sSFR}\) & $-11.53$ $\pm$ 0.09 & $-10.85$ $\pm$ 0.29\\
 
 
 
-Control4B & \(\log_{10}\mathrm{sSFR}\) & $-11.53$ $\pm$ 0.03 & $-10.86$ $\pm$ 0.06\\
+Control4B & \(\log_{10}\mathrm{sSFR}\) & $-11.52$ $\pm$ 0.03 & $-10.86$ $\pm$ 0.06\\
 
  & \(M_r\) & $-21.25$ $\pm$ 0.03 & $-21.12$ $\pm$ 0.07\\
 
@@ -468,9 +478,9 @@ Control4C & \(\log_{10}\mathrm{sSFR}\) & $-11.33$ $\pm$ 0.03 & $-10.65$ $\pm$ 0.
 
 RG4 & \(\log_{10}\mathrm{sSFR}\) & $-11.14$ $\pm$ 0.19 & $-10.58$ $\pm$ 0.16\\
 
- & \(M_r\) & $-20.69$ $\pm$ 0.14 & $-20.74$ $\pm$ 0.27\\
+ & \(M_r\) & $-20.69$ $\pm$ 0.14 & $-20.74$ $\pm$ 0.28\\
 
- & \(\log M_\star\) & $10.32$ $\pm$ 0.07 & $10.19$ $\pm$ 0.12\\
+ & \(\log M_\star\) & $10.32$ $\pm$ 0.07 & $10.19$ $\pm$ 0.13\\
 
 
 
@@ -488,20 +498,20 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr
     \tabcolsep=2pt
     \begin{tabular}{llcc}
 \hline\hline
-Sample & Quantity & BGG passive & BGG SF\\
+Sample & Quantity & BGG quenched & BGG SF\\
 \hline
 
 
 
-CG4 & \(\log_{10}\mathrm{sSFR}\) & $-11.23$ $\pm$ 0.16 & $-10.92$ $\pm$ 0.49\\
+CG4 & \(\log_{10}\mathrm{sSFR}\) & $-11.23$ $\pm$ 0.16 & $-10.92$ $\pm$ 0.48\\
 
  & \(M_r\) & $-20.45$ $\pm$ 0.13 & $-20.34$ $\pm$ 0.18\\
 
- & \(\log M_\star\) & $10.22$ $\pm$ 0.05 & $10.09$ $\pm$ 0.06\\
+ & \(\log M_\star\) & $10.22$ $\pm$ 0.05 & $10.09$ $\pm$ 0.07\\
 
 
 
-Control4B & \(\log_{10}\mathrm{sSFR}\) & $-11.26$ $\pm$ 0.06 & $-10.91$ $\pm$ 0.13\\
+Control4B & \(\log_{10}\mathrm{sSFR}\) & $-11.25$ $\pm$ 0.06 & $-10.91$ $\pm$ 0.13\\
 
  & \(M_r\) & $-20.9$ $\pm$ 0.03 & $-20.75$ $\pm$ 0.06\\
 
@@ -511,13 +521,13 @@ Control4B & \(\log_{10}\mathrm{sSFR}\) & $-11.26$ $\pm$ 0.06 & $-10.91$ $\pm$ 0.
 
 Control4C & \(\log_{10}\mathrm{sSFR}\) & $-10.99$ $\pm$ 0.04 & $-10.62$ $\pm$ 0.09\\
 
- & \(M_r\) & $-19.82$ $\pm$ 0.04 & $-20.05$ $\pm$ 0.09\\
+ & \(M_r\) & $-19.82$ $\pm$ 0.04 & $-20.05$ $\pm$ 0.10\\
 
  & \(\log M_\star\) & $9.92$ $\pm$ 0.02 & $9.93$ $\pm$ 0.06\\
 
 
 
-RG4 & \(\log_{10}\mathrm{sSFR}\) & $-10.82$ $\pm$ 0.19 & $-10.61$ $\pm$ 0.22\\
+RG4 & \(\log_{10}\mathrm{sSFR}\) & $-10.82$ $\pm$ 0.18 & $-10.61$ $\pm$ 0.22\\
 
  & \(M_r\) & $-20.23$ $\pm$ 0.16 & $-20.3$ $\pm$ 0.13\\
 
@@ -1871,6 +1881,84 @@ corresponding to \(p = 0.532\).
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \end{itemize}
 
 Because the raw residual comparison and the matched comparison below condition on different covariate structures, and because the apparent offset changes in strength and sign after matching, we treat SFMS residuals as a secondary diagnostic rather than as evidence for a robust compact-group star-formation offset.
@@ -1893,20 +1981,20 @@ We also compare the sSFR of satellite galaxies with their distance to the BGG, e
 Significant monotonic trends are detected in the following cases.
 
 In CG$_4$, sSFR correlates with projected distance to the BGG with Spearman coefficient
-$\rho_\mathrm{S} = 0.24$ for 177 satellites (\(p = 1.2\times 10^{-3}\)) and Pearson coefficient
-$r = 0.21$ (\(p = 4.1\times 10^{-3}\)).
+$\rho_\mathrm{S} = 0.24$ for 174 satellites (\(p = 1.5\times 10^{-3}\)) and Pearson coefficient
+$r = 0.21$ (\(p = 5.5\times 10^{-3}\)).
 
 In Control$_{4B}$, sSFR correlates with distance to the BGG normalized by $\langle R_{ij}\rangle$ with Spearman coefficient
-$\rho_\mathrm{S} = 0.08$ for 1991 satellites (\(p = 3.6\times 10^{-4}\)) and Pearson coefficient
-$r = 0.08$ (\(p = 2.3\times 10^{-4}\)).
+$\rho_\mathrm{S} = 0.08$ for 1972 satellites (\(p = 3.7\times 10^{-4}\)) and Pearson coefficient
+$r = 0.08$ (\(p = 2.4\times 10^{-4}\)).
 
 In Control$_{4C}$, sSFR correlates with projected distance to the BGG with Spearman coefficient
-$\rho_\mathrm{S} = 0.26$ for 2007 satellites (\(p<10^{-6}\)) and Pearson coefficient
-$r = 0.22$ (\(p<10^{-6}\)).
+$\rho_\mathrm{S} = 0.27$ for 1992 satellites (\(p<10^{-6}\)) and Pearson coefficient
+$r = 0.23$ (\(p<10^{-6}\)).
 
 In Control$_{4C}$, sSFR correlates with distance to the BGG normalized by $\langle R_{ij}\rangle$ with Spearman coefficient
-$\rho_\mathrm{S} = 0.11$ for 2007 satellites (\(p = 2.1\times 10^{-6}\)) and Pearson coefficient
-$r = 0.10$ (\(p = 4.6\times 10^{-6}\)).
+$\rho_\mathrm{S} = 0.10$ for 1992 satellites (\(p = 3.8\times 10^{-6}\)) and Pearson coefficient
+$r = 0.10$ (\(p = 1\times 10^{-5}\)).
 
 
 The supporting distance plots are shown in Appendix Figs.~\ref{fig:dist2BGG_kpc_vs_sSFR} and \ref{fig:dist2BGG_norm_vs_sSFR}.
@@ -2097,7 +2185,7 @@ The colour-analysis subset is not representative of the full galaxy catalogues: 
 
 The raw catalogue colour--mass fits indicate that \CG{} does not simply follow the same colour--mass relation as every comparison sample: common slopes are rejected in all four colours, with the significant directional slope differences concentrated in the bluer colours and dependent on the adopted comparison catalogue. In the satellite-only comparison, the fitted offsets and slopes likewise depend on the control definition. These tests motivate the robustness analysis rather than establishing a stand-alone compact-group colour effect.
 
-We therefore refit the satellite colours with cluster-robust standard errors, using catalogue-qualified group identifiers. In the pooled comparison adjusted only for stellar mass and redshift, none of the four \CG{} coefficients is significantly negative after Holm correction. After additionally controlling for morphology and sSFR class, negative coefficients appear in $(u-r)$ ($\Delta=-0.128$ mag, Holm-corrected \(p = 0.018\)) and $(u-g)$ ($\Delta=-0.102$ mag, Holm-corrected \(p = 0.028\)). However, these adjusted coefficients are control-sample dependent, and they do not persist within the sSFR or morphology splits. The data therefore do not localize the colour effect to the star-forming spiral population expected for a simple interaction-triggered star-formation scenario.
+We therefore refit the satellite colours with cluster-robust standard errors, using catalogue-qualified group identifiers. In the pooled comparison adjusted only for stellar mass and redshift, none of the four \CG{} coefficients is significantly negative after Holm correction. Adding morphology and sSFR class does not reveal a significant negative coefficient. However, these adjusted coefficients are control-sample dependent, and they do not persist within the sSFR or morphology splits. The data therefore do not localize the colour effect to the star-forming spiral population expected for a simple interaction-triggered star-formation scenario.
 
 Residual colour trends with projected BGG-centric distance are consistent with stronger processing near the group centre and a less processed outer population, but these trends use the same biased colour subset and are treated as exploratory. The group-level BGG--satellite colour concordance is similarly secondary: redder BGGs tend to have redder mean satellite populations in the combined group sample, but the \CG{} slope is not a robustly distinct population-level signature. Detailed colour--mass, satellite, and radial diagnostics are shown in Appendix Figs.~\ref{fig:color_mass}--\ref{fig:colour_residual_distance}. Figure~\ref{fig:colour_robustness_coefficients} summarizes the model and control-sample dependence that motivates our interpretation: the present data do not establish a robust global blue or red offset for \CG{} satellites.
 
@@ -2124,17 +2212,17 @@ We fit binomial models to the combined galaxy catalogues, standardizing the cont
 
 
 
-For passive status, the \CG{} odds ratio is \(1.18\), with 95\% confidence interval \([0.87, 1.60]\) and Holm-corrected \(p = 0.590\).
+For quenched status, the \CG{} odds ratio is \(1.16\), with 95\% confidence interval \([0.85, 1.57]\) and Holm-corrected \(p = 0.692\).
 
 
 
 
-For passive satellite status, the \CG{} odds ratio is \(1.28\), with 95\% confidence interval \([0.93, 1.76]\) and Holm-corrected \(p = 0.502\).
+For quenched satellite status, the \CG{} odds ratio is \(1.26\), with 95\% confidence interval \([0.92, 1.73]\) and Holm-corrected \(p = 0.601\).
 
 
 
 
-For star-forming satellite status, the \CG{} odds ratio is \(0.78\), with 95\% confidence interval \([0.57, 1.07]\) and Holm-corrected \(p = 0.502\).
+For star-forming satellite status, the \CG{} odds ratio is \(0.79\), with 95\% confidence interval \([0.58, 1.09]\) and Holm-corrected \(p = 0.601\).
 
 
 
@@ -2165,7 +2253,7 @@ For spiral satellite morphology, the \CG{} odds ratio is \(0.55\), with 95\% con
 
 
 
-Compact-group membership therefore remains independently associated with morphology after the available adjustments: \CG{} galaxies have a higher probability of being elliptical and a lower probability of being spiral. In contrast, the adjusted passive and star-forming satellite coefficients are weaker and do not provide evidence for an instantaneous star-formation difference that remains significant after correction.
+Compact-group membership therefore remains independently associated with morphology after the available adjustments: \CG{} galaxies have a higher probability of being elliptical and a lower probability of being spiral. In contrast, the adjusted quenched and star-forming satellite coefficients are weaker and do not provide evidence for an instantaneous star-formation difference that remains significant after correction.
 
 
 
@@ -2224,15 +2312,15 @@ We matched 234 of the 248 available \CG{} galaxies one-to-one to 234 ordinary-gr
 
 
 
-The matched \CG{}--minus--control difference in passive fraction is \(0.000\), with 95\% bootstrap interval \([-0.081, 0.081]\) and Holm-corrected \(p = 1.000\).
+The matched \CG{}--minus--control difference in quenched fraction is \(-0.004\), with 95\% bootstrap interval \([-0.093, 0.079]\) and Holm-corrected \(p = 1.000\).
 
-After matching, this does not provide evidence for an enhanced passive fraction in \CG{} that remains significant after correction.
-
-
+After matching, this does not provide evidence for an enhanced quenched fraction in \CG{} that remains significant after correction.
 
 
 
-The corresponding \CG{}--minus--control difference in star-forming fraction is \(0.000\), with 95\% bootstrap interval \([-0.081, 0.081]\) and Holm-corrected \(p = 1.000\).
+
+
+The corresponding \CG{}--minus--control difference in star-forming fraction is \(0.004\), with 95\% bootstrap interval \([-0.079, 0.093]\) and Holm-corrected \(p = 1.000\).
 
 
 
@@ -2251,15 +2339,15 @@ Among matched star-forming galaxies, the residual-sSFR difference is \(-0.019\),
 
 
 
-The matched-outcome Holm correction is intentionally conservative: passive/star-forming and elliptical/spiral diagnostics are retained in the same family even though the audit finds that they are exact complements on their complete-case subsets. Using a non-redundant family would not weaken the morphology conclusion.
+The matched-outcome Holm correction is intentionally conservative: quenched/star-forming and elliptical/spiral diagnostics are retained in the same family even though the audit finds that they are exact complements on their complete-case subsets. Using a non-redundant family would not weaken the morphology conclusion.
 
 
 
 
-The main interpretation does not rely on the exact GMM division of the sSFR plane. Repeating the key satellite comparison with a fixed threshold, $\log_{10}(\mathrm{sSFR}/\mathrm{yr}^{-1})=-11.0$, gives \CG{} and \RG{} satellite star-forming fractions of 40.7\% and 60.2\%, respectively, a \CG{}--\RG{} difference of \(-19.6\) percentage points (\(p = 3.6\times 10^{-4}\)). The qualitative hierarchy is unchanged: the morphology result is independent of the sSFR threshold, whereas the passive/star-forming contrast remains more sensitive to modelling choices.
+The main interpretation does not rely on the exact GMM division of the sSFR plane. Repeating the key satellite comparison with a fixed threshold, $\log_{10}(\mathrm{sSFR}/\mathrm{yr}^{-1})=-11.0$, gives \CG{} and \RG{} satellite star-forming fractions of 41.4\% and 60.2\%, respectively, a \CG{}--\RG{} difference of \(-18.9\) percentage points (\(p = 5.3\times 10^{-4}\)). The qualitative hierarchy is unchanged: the morphology result is independent of the sSFR threshold, whereas the quenched/star-forming contrast remains more sensitive to modelling choices.
 
 
-The matched comparison is therefore consistent with the adjusted models: the most robust compact-group signal is morphological, while the passive and star-forming-fraction signals are more model-dependent.
+The matched comparison is therefore consistent with the adjusted models: the most robust compact-group signal is morphological, while the quenched and star-forming-fraction signals are more model-dependent.
 
 
 \begin{figure}
@@ -2284,24 +2372,24 @@ The matched comparison is therefore consistent with the adjusted models: the mos
 \subsection{Satellite segregation around the brightest group galaxy}
 
 
-The previous sections show global differences between \CG{} and \RG{} satellites. We now ask whether these differences are concentrated near the BGG, as expected for accelerated evolution in the dense inner group, or whether they persist across the satellite population. The analysis uses 177 \CG{} and 166 \RG{} satellites, excludes rank-1 galaxies, ranks satellites by projected BGG-centric distance, and measures passive and early-type fractions with group-cluster bootstrap uncertainties. When available, we also use \(|\Delta v_{\rm BGG}|/\sigma_v\), with \(\Delta v_{\rm BGG}=c(z_{\rm gal}-z_{\rm BGG})/(1+z_{\rm group})\), as a projected phase-space diagnostic. Similar projected phase-space coordinates are often used as observational proxies for satellite infall state or quenching time, but only statistically \citep{Mahajan+11,Oman&Hudson16,Wetzel+13}.
+The previous sections show global differences between \CG{} and \RG{} satellites. We now ask whether these differences are concentrated near the BGG, as expected for accelerated evolution in the dense inner group, or whether they persist across the satellite population. The analysis uses 174 \CG{} and 166 \RG{} satellites, excludes rank-1 galaxies, ranks satellites by projected BGG-centric distance, and measures quenched and early-type fractions with group-cluster bootstrap uncertainties. When available, we also use \(|\Delta v_{\rm BGG}|/\sigma_v\), with \(\Delta v_{\rm BGG}=c(z_{\rm gal}-z_{\rm BGG})/(1+z_{\rm group})\), as a projected phase-space diagnostic. Similar projected phase-space coordinates are often used as observational proxies for satellite infall state or quenching time, but only statistically \citep{Mahajan+11,Oman&Hudson16,Wetzel+13}.
 
-In the innermost satellite-distance bin, the passive fractions are 68.9\% for \CG{} and 48.2\% for \RG, a \CG{}--\RG{} difference of \(20.6\) percentage points. The corresponding early-type fractions are 65.4\% and 35.6\%, with a difference of \(29.8\) percentage points.
+In the innermost satellite-distance bin, the quenched fractions are 68.3\% for \CG{} and 48.2\% for \RG, a \CG{}--\RG{} difference of \(20.1\) percentage points. The corresponding early-type fractions are 64.7\% and 35.6\%, with a difference of \(29.2\) percentage points.
 
-The passive-fraction contrast is similar between the inner and outer distance ranks, so the data do not isolate the \CG{} offset to the immediate BGG environment.
-
-
-
-
-After adjusting for stellar mass, redshift, distance bin, and available group-scale controls, the passive-status model gives a \CG{} odds ratio of 1.27 (95\% CI 0.47--3.46; \(p = 0.640\)).
+The quenched-fraction contrast is similar between the inner and outer distance ranks, so the data do not isolate the \CG{} offset to the immediate BGG environment.
 
 
 
-The analogous early-type model gives a \CG{} odds ratio of 2.57 (\(p = 0.058\)).
+
+After adjusting for stellar mass, redshift, distance bin, and available group-scale controls, the quenched-status model gives a \CG{} odds ratio of 1.18 (95\% CI 0.43--3.24; \(p = 0.742\)).
 
 
 
-A nearest-neighbour mass--redshift matched check uses 128 \CG{}--\RG{} satellite pairs. The matched passive-fraction difference is \(9.4\) percentage points, and the matched early-type difference is \(19.6\) percentage points.
+The analogous early-type model gives a \CG{} odds ratio of 2.42 (\(p = 0.077\)).
+
+
+
+A nearest-neighbour mass--redshift matched check uses 126 \CG{}--\RG{} satellite pairs. The matched quenched-fraction difference is \(9.5\) percentage points, and the matched early-type difference is \(18.7\) percentage points.
 
 
 Projected phase-space coordinates should not be read as orbital reconstructions for individual galaxies. In compact groups the member counts are small, velocity dispersions are noisy, and projection mixes recently accreted and long-resident satellites. We therefore treat these bins as an observational diagnostic of where the \CG{}--\RG{} population contrast appears, rather than as a direct dynamical clock.
@@ -2310,9 +2398,9 @@ Projected phase-space coordinates should not be read as orbital reconstructions 
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{figures/phase_space_satellite_passive_fraction_by_distance.pdf}
-    \caption{Passive satellite fraction as a function of projected-distance rank from the BGG. Points show \CG{} and \RG{} fractions; bars show group-cluster bootstrap 16th--84th percentile intervals.}
-    \label{fig:phase_space_passive_distance}
+    \includegraphics[width=\columnwidth]{figures/phase_space_satellite_quenched_fraction_by_distance.pdf}
+    \caption{Quenched satellite fraction as a function of projected-distance rank from the BGG. Points show \CG{} and \RG{} fractions; bars show group-cluster bootstrap 16th--84th percentile intervals.}
+    \label{fig:phase_space_quenched_distance}
 \end{figure}
 
 
@@ -2347,10 +2435,10 @@ The compact-group morphology signal is therefore not accompanied by a significan
 
 
 
-The correlation between \(\Delta m_{12}\) and passive satellite fraction is \(\rho_{\rm S}=-0.14\) (Holm-corrected \(p<10^{-6}\)).
+The correlation between \(\Delta m_{12}\) and quenched satellite fraction is \(\rho_{\rm S}=-0.14\) (Holm-corrected \(p<10^{-6}\)).
 
 
-The supporting magnitude-gap distributions are shown in Appendix Figs.~\ref{fig:magnitude_gap} and \ref{fig:magnitude_gap_passive_fraction}.
+The supporting magnitude-gap distributions are shown in Appendix Figs.~\ref{fig:magnitude_gap} and \ref{fig:magnitude_gap_quenched_fraction}.
 
 
 
@@ -2410,7 +2498,7 @@ The pairwise analysis reconstructs projected separations and velocity difference
 
 
 
-For passive status, the baseline \CG{} odds ratio is 1.18 (\(p = 0.258\)), while the model including the tidal index gives a \CG{} odds ratio of 0.79 (\(p = 0.136\)). The tidal-index term itself has odds ratio 1.66 (\(p<10^{-6}\)).
+For quenched status, the baseline \CG{} odds ratio is 1.17 (\(p = 0.288\)), while the model including the tidal index gives a \CG{} odds ratio of 0.77 (\(p = 0.100\)). The tidal-index term itself has odds ratio 1.68 (\(p<10^{-6}\)).
 
 
 
@@ -2424,7 +2512,7 @@ For elliptical morphology, the baseline \CG{} odds ratio is 1.64 (\(p = 5.3\time
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{figures/fig_tidal_index_outcomes.pdf}
-    \caption{Passive status and elliptical/smooth morphology as functions of the reconstructed pairwise tidal index. Colours distinguish \CG{} from control galaxies.}
+    \caption{Quenched status and elliptical/smooth morphology as functions of the reconstructed pairwise tidal index. Colours distinguish \CG{} from control galaxies.}
     \label{fig:tidal_index_outcomes}
 \end{figure*}
 
@@ -2626,7 +2714,7 @@ The star-formation result is weaker. \CG{} satellites have a lower raw star-form
 The galaxy-size test adds a structural dimension to this comparison. At fixed stellar mass, redshift, and group-scale covariates, we find no significant \CG{} offset in seeing-corrected half-light radius, in either the adjusted models or the matched pairs.
 
 
-The secondary diagnostics do not identify a simple alternative driver. The colour results are control-sensitive and based on a biased colour-matched subset. AGN-like fractions and magnitude gaps do not explain the morphology signal, the \(\mathrm{H}\alpha\) diagnostic is limited by missing age-sensitive spectral indices, and projected phase-space trends do not localize the passive difference uniquely to the nearest satellites. The Galaxy Zoo crowding check shows that the smooth/elliptical excess persists after excluding the closest projected pairs, so the result is not solely a closest-pair classification artefact.
+The secondary diagnostics do not identify a simple alternative driver. The colour results are control-sensitive and based on a biased colour-matched subset. AGN-like fractions and magnitude gaps do not explain the morphology signal, the \(\mathrm{H}\alpha\) diagnostic is limited by missing age-sensitive spectral indices, and projected phase-space trends do not localize the quenched difference uniquely to the nearest satellites. The Galaxy Zoo crowding check shows that the smooth/elliptical excess persists after excluding the closest projected pairs, so the result is not solely a closest-pair classification artefact.
 
 We therefore interpret \CG{} galaxies as a more morphologically evolved population, consistent with accumulated transformation in very dense environments, dense group cores, and/or preprocessing. The pairwise tidal-index experiment shows that adding a local projected-density proxy reduces the compact-group morphology coefficient, so the result should not be read as evidence for a uniquely isolated compact-group quenching mechanism.
 
@@ -2716,9 +2804,10 @@ or if they lie above the empirical demarcation of \citet{Kauffmann+03a}:
 \]
 in which case they are excluded from the GMM calibration sample. This calibration flag is deliberately more inclusive than the three-class BPT scheme of Sect.~\ref{sec:agn_env}, in which composite galaxies lie between the \citet{Kauffmann+03a} and \citet{Kewley+01} demarcations and only galaxies above the \citet{Kewley+01} line are labelled AGN-like, because its sole purpose is to keep possible AGN contamination out of the sSFR calibration. Galaxies with missing diagnostic line ratios are BPT-unclassified, not proven non-AGN. They are retained for the broad sSFR status assignment when valid SDSS stellar mass and sSFR estimates are available, while the emission-line/AGN-like analysis treats BPT-unclassified objects separately. The BPT-classifiable subset is shown in Fig.~\ref{fig:BPT}.
 
-Galaxies with \texttt{specsfr\_tot\_p50} equal to \(-9999\) in the SDSS are placed in the no-sSFR class
-(for display purposes, they are assigned the arbitrary low value \(10^{-14.0}\,\mathrm{yr}^{-1}\)).
-The remaining galaxies are divided into passive and star-forming classes with a two-component Gaussian Mixture Model (GMM) in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane \citep{McLachlanPeel2000}. The calibration excludes galaxies flagged as AGN-like where the required BPT line ratios are available, while BPT-unclassified galaxies with valid SDSS stellar mass and sSFR estimates can still receive a broad sSFR class. The passive/star-forming boundary is the locus where the two component posterior probabilities are equal. A fixed-threshold robustness check confirms that the qualitative hierarchy is not tied to the exact GMM split.
+Galaxies with \texttt{specsfr\_tot\_p50} equal to \(-9999\) in the SDSS have no valid sSFR estimate;
+they are treated as missing data throughout: excluded from the GMM calibration, never assigned an sSFR class,
+omitted from every sSFR figure, and reported as counts only (Sect.~\ref{sec:ssfr_classification}).
+Galaxies with a measured sSFR are divided into quenched and star-forming classes with a two-component Gaussian Mixture Model (GMM) in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane \citep{McLachlanPeel2000}. The calibration excludes galaxies flagged as AGN-like where the required BPT line ratios are available, while BPT-unclassified galaxies with valid SDSS stellar mass and sSFR estimates can still receive a broad sSFR class. The quenched/star-forming boundary is the locus where the two component posterior probabilities are equal. A fixed-threshold robustness check confirms that the qualitative hierarchy is not tied to the exact GMM split.
 
 \begin{center}
      \includegraphics[width=\columnwidth]{BPT_diagram.pdf}
@@ -2901,7 +2990,7 @@ Figures~\ref{fig:size_availability}--\ref{fig:size_radial} show the availability
 \clearpage
 \subsection{Robustness and selection diagnostics}
 
-Figures~\ref{fig:phase_space_passive_projected}--\ref{fig:colour_selection_bias} show the projected phase-space bins, the magnitude-gap diagnostics, the \(\mathrm{H}\alpha\) equivalent-width distributions, the AGN-like fractions, the availability audit, and the colour-selection mass audit.
+Figures~\ref{fig:phase_space_quenched_projected}--\ref{fig:colour_selection_bias} show the projected phase-space bins, the magnitude-gap diagnostics, the \(\mathrm{H}\alpha\) equivalent-width distributions, the AGN-like fractions, the availability audit, and the colour-selection mass audit.
 
 
 
@@ -2909,9 +2998,9 @@ Figures~\ref{fig:phase_space_passive_projected}--\ref{fig:colour_selection_bias}
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{figures/phase_space_satellite_passive_fraction_projected_phase_space.pdf}
-    \caption{Passive satellite fraction in coarse projected phase-space bins. Inner and outer refer to projected-distance rank from the BGG; low and high velocity are split at \(|\Delta v_{\rm BGG}|/\sigma_v=1\).}
-    \label{fig:phase_space_passive_projected}
+    \includegraphics[width=\columnwidth]{figures/phase_space_satellite_quenched_fraction_projected_phase_space.pdf}
+    \caption{Quenched satellite fraction in coarse projected phase-space bins. Inner and outer refer to projected-distance rank from the BGG; low and high velocity are split at \(|\Delta v_{\rm BGG}|/\sigma_v=1\).}
+    \label{fig:phase_space_quenched_projected}
 \end{figure}
 
 
@@ -2927,9 +3016,9 @@ Figures~\ref{fig:phase_space_passive_projected}--\ref{fig:colour_selection_bias}
 
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{figures/fig_magnitude_gap_vs_passive_fraction.pdf}
-    \caption{Passive satellite fraction as a function of the first--second magnitude gap.}
-    \label{fig:magnitude_gap_passive_fraction}
+    \includegraphics[width=\columnwidth]{figures/fig_magnitude_gap_vs_quenched_fraction.pdf}
+    \caption{Quenched satellite fraction as a function of the first--second magnitude gap.}
+    \label{fig:magnitude_gap_quenched_fraction}
 \end{figure}
 
 

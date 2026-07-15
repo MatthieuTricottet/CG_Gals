@@ -166,7 +166,7 @@ def load_data_build():
         print("\n")
 
     for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]:
-        sample[cat] = dl.sSFR_floor(sample[cat])
+        sample[cat] = dl.sanitize_ssfr(sample[cat])
 
     if co.VERBOSE:
         print("Loading SDSS data")
@@ -217,10 +217,21 @@ def sSFR_properties(sample):
         report.append_json('pval_MSresiduals_'+name, pval, build=True)
 
  
-    for status in co.sSFR_status:
-        for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]+['SDSS']:
-            report.append_json(f'{cat}_N{status}', len(sample[cat][sample[cat]['sSFR_status'] == status]),build=True)
-            report.append_json(f'{cat}_N{status}_pc', f'{(100*len(sample[cat][sample[cat]['sSFR_status'] == status])/len(sample[cat])):.1f}',build=True)
+    for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]+['SDSS']:
+        status_series = sample[cat]['sSFR_status']
+        n_classified = int(status_series.isin(co.sSFR_status).sum())
+        n_missing = int((status_series == co.NosSFR_LABEL).sum())
+        for status in co.sSFR_status:
+            n_status = int((status_series == status).sum())
+            report.append_json(f'{cat}_N{status}', n_status, build=True)
+            # fractions are quoted among *classified* galaxies only
+            report.append_json(f'{cat}_N{status}_pc',
+                               f'{100*n_status/n_classified:.1f}', build=True)
+        # missing sSFR: counts only, never a class; percentage of the whole
+        report.append_json(f'{cat}_N{co.NosSFR_LABEL}', n_missing, build=True)
+        report.append_json(f'{cat}_N{co.NosSFR_LABEL}_pc',
+                           f'{100*n_missing/len(sample[cat]):.1f}', build=True)
+        report.append_json(f'{cat}_Nclassified', n_classified, build=True)
         
     for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]:
         sSFR.add_excess(sample[cat], f_interp)
@@ -263,7 +274,8 @@ def ssfr_report_properties(sample):
         report.append_json('pval_' + name, gu.pvalue_latex(pval))
 
     sSFR.BGGs_analysis(sample)
-    
+    sSFR.missingness_summary(sample)
+
 def correlations_by_morph(sample):
     """Generate the morphology-split correlation products."""
 

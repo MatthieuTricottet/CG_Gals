@@ -55,6 +55,23 @@ record with reconciliation notes). Status is relative to the *defect*: a
   which broke exact rank matching in the propensity analysis.
 - `Control4C_Gals_old.csv` retired to `data/attic/` with a README.
 
+## Phase 3 notes
+
+- Missing sSFR is now missing data end-to-end: `sanitize_ssfr` converts
+  sentinels/unphysical values to NaN at load; the GMM is fitted on measured
+  SDSS galaxies only; unmeasured galaxies carry the internal `NosSFR` token,
+  are excluded from every sSFR figure and fraction, and are reported as
+  counts (results key family `*_NNosSFR*`, `sSFR_missingness`).
+- Classification requires both a valid sSFR and a valid stellar mass, so the
+  unclassified counts slightly exceed the raw sSFR-NaN counts (CG4: 18 vs
+  14; the extra 4 have sSFR outside [-25, -5] and no valid mass).
+- The measured low-sSFR class is named **Quenched** (config
+  `sSFR_status = ['Quenched', 'Starforming']`); every `*Passive*` results
+  key, figure label, column and template placeholder was renamed in
+  lockstep (`quenched` in the extended pipeline).
+- `flattens_quenched`, `sSFR_floor` and the -15 display floor are gone; the
+  sentinel-based "quenched" class ceases to exist.
+
 ## Conventions established
 
 - "CG4 galaxy" for control-exclusion purposes = any galaxy of the **full**

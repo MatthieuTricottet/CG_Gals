@@ -118,20 +118,20 @@ def build_galaxy_frame(samples: dict[str, pd.DataFrame]) -> pd.DataFrame:
         frame["rank"].notna(), (frame["rank"] == 1).astype(float), np.nan
     )
 
+    # Two-class scheme among galaxies with a measured sSFR: quenched vs
+    # star-forming. Unmeasured galaxies (NosSFR) are NaN in both indicator
+    # columns, so they never enter any fraction, model or matched outcome.
     status = (
         frame.get("sSFR_status", pd.Series("", index=frame.index))
         .astype(str)
         .str.lower()
     )
-    frame["passive"] = np.where(
-        status.ne("nan") & status.ne(""),
-        status.isin(["passive", "quenched"]).astype(float),
-        np.nan,
+    classified = status.isin(["quenched", "starforming"])
+    frame["quenched"] = np.where(
+        classified, status.eq("quenched").astype(float), np.nan
     )
     frame["starforming"] = np.where(
-        status.ne("nan") & status.ne(""),
-        status.eq("starforming").astype(float),
-        np.nan,
+        classified, status.eq("starforming").astype(float), np.nan
     )
     morphology = (
         frame.get("morphology", pd.Series("", index=frame.index))

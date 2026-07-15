@@ -40,7 +40,7 @@ MATCHING_CANDIDATES = [
 ]
 SPATIAL_DIAGNOSTICS = ["dist2BGG_kpc", "R_norm"]
 OUTCOMES = {
-    "passive_fraction": ("passive", np.mean),
+    "quenched_fraction": ("quenched", np.mean),
     "starforming_fraction": ("starforming", np.mean),
     "elliptical_fraction": ("elliptical", np.mean),
     "spiral_fraction": ("spiral", np.mean),
@@ -49,7 +49,7 @@ OUTCOMES = {
 }
 
 EFFECT_LABELS = {
-    "passive_fraction": "passive fraction",
+    "quenched_fraction": "quenched fraction",
     "starforming_fraction": "star-forming fraction",
     "elliptical_fraction": "elliptical fraction",
     "spiral_fraction": "spiral fraction",
@@ -185,7 +185,7 @@ def _complementarity_status(treated, control):
     """Summarize redundant binary outcomes in the matched complete-case subsets."""
 
     pairs = {
-        "passive_starforming": ("passive", "starforming"),
+        "quenched_starforming": ("quenched", "starforming"),
         "elliptical_spiral": ("elliptical", "spiral"),
     }
     summary = {}
@@ -323,7 +323,7 @@ def run_matched_control_analysis(
         "effects": effects,
         "holm_correction_family": ok_names,
         "holm_correction_note": (
-            "Passive/star-forming and elliptical/spiral diagnostics are retained "
+            "Quenched/star-forming and elliptical/spiral diagnostics are retained "
             "in the same matched-outcome Holm family. These paired binary outcomes "
             "are complementary on their complete-case subsets, so the correction is "
             "conservative rather than anti-conservative."

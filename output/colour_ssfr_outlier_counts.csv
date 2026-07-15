@@ -1,5 +1,5 @@
 sample,outlier_class,count,fraction_of_satellites
-CG4,blue + low sSFR,2,0.010752688172043012
+CG4,blue + low sSFR,1,0.005376344086021506
 CG4,red + high sSFR,6,0.03225806451612903
 CG4,blue elliptical,9,0.04838709677419355
 CG4,red spiral,11,0.05913978494623656

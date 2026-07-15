@@ -85,7 +85,7 @@ def _derive(frame):
 
 def _plot(work, path):
     outcomes = [
-        ("passive", "Passive status", "Not passive", "Passive"),
+        ("quenched", "Quenched status", "Not quenched", "Quenched"),
         ("elliptical", "Elliptical/smooth morphology", "Not smooth", "Smooth"),
     ]
     outcomes = [item for item in outcomes if item[0] in work]
@@ -166,7 +166,7 @@ def run_tidal_indices_analysis(data, output_dir: str | None = None):
     baseline_predictors = ["is_CG4", "logMstar", "is_satellite"]
     tidal_predictors = [*baseline_predictors, "log_tidal_index"]
     models = {}
-    for outcome in ["passive", "elliptical"]:
+    for outcome in ["quenched", "elliptical"]:
         baseline = fit_logistic_model(
             work, outcome, baseline_predictors, continuous=["logMstar"]
         )

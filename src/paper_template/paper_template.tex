@@ -56,7 +56,6 @@
 
 \newcommand{\diazg}{D\'{\i}az-Gim\'enez}
 
-\newcommand{\Passive}{Passive}
 
 
 \newcommand{\CB}{Control\textsubscript{4B}}
@@ -205,16 +204,14 @@ All projected distances and derived quantities adopt the Planck 2015 cosmology \
 
 
 \subsection{sSFR classification}\label{sec:ssfr_classification}
-<% set CG4_nosSFR_N = CG4_BGG_NQuenched + CG4_Sat_NQuenched %>
-<% set CG4_total_N = CG4_BGG_NQuenched + CG4_Sat_NQuenched + CG4_BGG_NPassive + CG4_Sat_NPassive + CG4_BGG_NStarforming + CG4_Sat_NStarforming %>
 We classify galaxies from SDSS total sSFRs using the query reported in Appendix~\ref{app:sdss_query} (Listing~\ref{lst:query}).
-In the MPA-JHU tables, \texttt{specsfr\_tot\_p50} \(= -9999\) flags galaxies without a valid sSFR estimate rather than measured zero star formation; we therefore place them in a separate `no-sSFR' class and exclude them from the passive/star-forming split. The no-sSFR fraction is markedly higher in \CG{} (<< (100 * CG4_nosSFR_N / CG4_total_N)|fmt(0) >>\%, and << CG4_BGG_NQuenched_pc|fmt(0) >>\% for BGGs) than in the field selection (<< SDSS_NQuenched_pc|fmt(0) >>\%), plausibly reflecting the crowded-field spectroscopy and deblending issues discussed in Sect.~\ref{sec:decoupling} rather than a physical population. The remaining galaxies are split into passive and star-forming classes with a two-component GMM in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane.
+In the MPA-JHU tables, \texttt{specsfr\_tot\_p50} \(= -9999\) flags galaxies without a valid sSFR estimate rather than measured zero star formation; we therefore treat such galaxies as \emph{missing data}: they are excluded from the star-formation classification, from every sSFR-based figure and fraction, and are reported as counts only (Table~\ref{tab:sSFR_status}). All quenched and star-forming fractions quoted in this paper are computed among classified galaxies only. The missing-sSFR incidence is markedly higher in \CG{} (<< CG4_Gals_NNosSFR_pc|fmt(0) >>\% of members, and << CG4_BGG_NNosSFR_pc|fmt(0) >>\% of BGGs) than in the field selection (<< SDSS_NNosSFR_pc|fmt(0) >>\%), plausibly reflecting the crowded-field spectroscopy and deblending issues discussed in Sect.~\ref{sec:decoupling} rather than a physical population. Galaxies with a measured sSFR are split into quenched and star-forming classes with a two-component GMM in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane.
 BPT/AGN handling and the exact GMM boundary definition are given in Appendix~\ref{app:ssfr_method}.
 
 \begin{figure}
     \centering
      \includegraphics[width=\columnwidth]{sSFR_classification.pdf}
-     \caption{sSFR versus stellar mass, the star-forming/passive limit, and Galaxy Zoo morphologies for the SDSS selection,
+     \caption{sSFR versus stellar mass, the star-forming/quenched limit, and Galaxy Zoo morphologies for the SDSS selection,
      excluding galaxies without sSFR estimates.}
      \label{fig:sSFR_classification}
 \end{figure}
@@ -259,44 +256,30 @@ For satellites, the corresponding p-values are
   <<p_from_fmt(Sat_star_forming_pvalue_RG4_vs_CG4)>> against \RG. The satellite deficit is clearest in the raw comparison with \RG{} and is revisited below with adjusted and matched analyses.
 
 \begin{table}
-<% set CG4_all_Q = CG4_BGG_NQuenched + CG4_Sat_NQuenched %>
-<% set CG4_all_P = CG4_BGG_NPassive + CG4_Sat_NPassive %>
-<% set CG4_all_SF = CG4_BGG_NStarforming + CG4_Sat_NStarforming %>
-<% set CG4_all_N = CG4_all_Q + CG4_all_P + CG4_all_SF %>
-<% set Control4B_all_Q = Control4B_BGG_NQuenched + Control4B_Sat_NQuenched %>
-<% set Control4B_all_P = Control4B_BGG_NPassive + Control4B_Sat_NPassive %>
-<% set Control4B_all_SF = Control4B_BGG_NStarforming + Control4B_Sat_NStarforming %>
-<% set Control4B_all_N = Control4B_all_Q + Control4B_all_P + Control4B_all_SF %>
-<% set Control4C_all_Q = Control4C_BGG_NQuenched + Control4C_Sat_NQuenched %>
-<% set Control4C_all_P = Control4C_BGG_NPassive + Control4C_Sat_NPassive %>
-<% set Control4C_all_SF = Control4C_BGG_NStarforming + Control4C_Sat_NStarforming %>
-<% set Control4C_all_N = Control4C_all_Q + Control4C_all_P + Control4C_all_SF %>
-<% set RG4_all_Q = RG4_BGG_NQuenched + RG4_Sat_NQuenched %>
-<% set RG4_all_P = RG4_BGG_NPassive + RG4_Sat_NPassive %>
-<% set RG4_all_SF = RG4_BGG_NStarforming + RG4_Sat_NStarforming %>
-<% set RG4_all_N = RG4_all_Q + RG4_all_P + RG4_all_SF %>
     \centering
-    \caption{Number of galaxies in each sSFR status for each sample}
+    \caption{Number of galaxies in each sSFR class for each sample.
+    Galaxies without a valid sSFR estimate (`No sSFR') are excluded from the
+    classification: their percentages are quoted with respect to all galaxies
+    of the (sub)sample, while the quenched and star-forming percentages are
+    quoted with respect to classified galaxies only.}
     \label{tab:sSFR_status}
     \tabcolsep=3pt
     \begin{tabular}{lccc}
         \hline\hline
-            \textbf{Sample} & \textbf{  No sSFR  } & \textbf{  <<sSFR_status[1]>>  } & \textbf{Star-forming} \\
+            \textbf{Sample} & \textbf{  No sSFR  } & \textbf{  Quenched  } & \textbf{Star-forming} \\
             \hline
-            \CG &  <<CG4_all_Q>>  (<< (100 * CG4_all_Q / CG4_all_N)|fmt(0) >>\%) &  <<CG4_all_P>>  (<< (100 * CG4_all_P / CG4_all_N)|fmt(0) >>\%)&  <<CG4_all_SF>>  (<< (100 * CG4_all_SF / CG4_all_N)|fmt(0) >>\%) \\
-             \quad \emph{BGG} &  \emph{<<CG4_BGG_NQuenched>>  (<<CG4_BGG_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<CG4_BGG_NPassive>>  (<<CG4_BGG_NPassive_pc|fmt(0)>>\%)} &  \emph{<<CG4_BGG_NStarforming>>  (<<CG4_BGG_NStarforming_pc|fmt(0)>>\%)} \\
-             \quad \emph{Satellites} &  \emph{<<CG4_Sat_NQuenched>>  (<<CG4_Sat_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<CG4_Sat_NPassive>>  (<<CG4_Sat_NPassive_pc|fmt(0)>>\%)} &  \emph{<<CG4_Sat_NStarforming>>  (<<CG4_Sat_NStarforming_pc|fmt(0)>>\%)} \\
-            \CB &  <<Control4B_all_Q>>  (<< (100 * Control4B_all_Q / Control4B_all_N)|fmt(0) >>\%) &  <<Control4B_all_P>>  (<< (100 * Control4B_all_P / Control4B_all_N)|fmt(0) >>\%) &  <<Control4B_all_SF>>  (<< (100 * Control4B_all_SF / Control4B_all_N)|fmt(0) >>\%) \\
-             \quad \emph{BGG} &  \emph{<<Control4B_BGG_NQuenched>>  (<<Control4B_BGG_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<Control4B_BGG_NPassive>>  (<<Control4B_BGG_NPassive_pc|fmt(0)>>\%)} &  \emph{<<Control4B_BGG_NStarforming>>  (<<Control4B_BGG_NStarforming_pc|fmt(0)>>\%)} \\
-             \quad \emph{Satellites} &  \emph{<<Control4B_Sat_NQuenched>>  (<<Control4B_Sat_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<Control4B_Sat_NPassive>>  (<<Control4B_Sat_NPassive_pc|fmt(0)>>\%)} &  \emph{<<Control4B_Sat_NStarforming>>  (<<Control4B_Sat_NStarforming_pc|fmt(0)>>\%)} \\
-            \CC &  <<Control4C_all_Q>>  (<< (100 * Control4C_all_Q / Control4C_all_N)|fmt(0) >>\%) &  <<Control4C_all_P>>  (<< (100 * Control4C_all_P / Control4C_all_N)|fmt(0) >>\%) &  <<Control4C_all_SF>>  (<< (100 * Control4C_all_SF / Control4C_all_N)|fmt(0) >>\%) \\
-             \quad \emph{BGG} &  \emph{<<Control4C_BGG_NQuenched>>  (<<Control4C_BGG_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<Control4C_BGG_NPassive>>  (<<Control4C_BGG_NPassive_pc|fmt(0)>>\%)} &  \emph{<<Control4C_BGG_NStarforming>>  (<<Control4C_BGG_NStarforming_pc|fmt(0)>>\%)} \\
-             \quad \emph{Satellites} &  \emph{<<Control4C_Sat_NQuenched>>  (<<Control4C_Sat_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<Control4C_Sat_NPassive>>  (<<Control4C_Sat_NPassive_pc|fmt(0)>>\%)} &  \emph{<<Control4C_Sat_NStarforming>>  (<<Control4C_Sat_NStarforming_pc|fmt(0)>>\%)} \\
-            \RG &  <<RG4_all_Q>>  (<< (100 * RG4_all_Q / RG4_all_N)|fmt(0) >>\%) &  <<RG4_all_P>>  (<< (100 * RG4_all_P / RG4_all_N)|fmt(0) >>\%) &  <<RG4_all_SF>>  (<< (100 * RG4_all_SF / RG4_all_N)|fmt(0) >>\%)\\
-            \quad \emph{BGG} &  \emph{<<RG4_BGG_NQuenched>>  (<<RG4_BGG_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<RG4_BGG_NPassive>>  (<<RG4_BGG_NPassive_pc|fmt(0)>>\%)} &  \emph{<<RG4_BGG_NStarforming>>  (<<RG4_BGG_NStarforming_pc|fmt(0)>>\%)}\\
-            \quad \emph{Satellites} &  \emph{<<RG4_Sat_NQuenched>>  (<<RG4_Sat_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<RG4_Sat_NPassive>>  (<<RG4_Sat_NPassive_pc|fmt(0)>>\%)} &  \emph{<<RG4_Sat_NStarforming>>  (<<RG4_Sat_NStarforming_pc|fmt(0)>>\%)}\\
+<% for tex, s in [('\\CG', 'CG4'), ('\\CB', 'Control4B'), ('\\CC', 'Control4C'), ('\\RG', 'RG4')] %>
+<% set all_M = r[s ~ '_BGG_NNosSFR'] + r[s ~ '_Sat_NNosSFR'] %>
+<% set all_Q = r[s ~ '_BGG_NQuenched'] + r[s ~ '_Sat_NQuenched'] %>
+<% set all_SF = r[s ~ '_BGG_NStarforming'] + r[s ~ '_Sat_NStarforming'] %>
+<% set all_C = all_Q + all_SF %>
+<% set all_N = all_C + all_M %>
+            << tex >> &  <<all_M>>  (<< (100 * all_M / all_N)|fmt(0) >>\%) &  <<all_Q>>  (<< (100 * all_Q / all_C)|fmt(0) >>\%) &  <<all_SF>>  (<< (100 * all_SF / all_C)|fmt(0) >>\%) \\
+             \quad \emph{BGG} &  \emph{<< r[s ~ '_BGG_NNosSFR'] >>  (<< r[s ~ '_BGG_NNosSFR_pc']|fmt(0) >>\%)} &  \emph{<< r[s ~ '_BGG_NQuenched'] >>  (<< r[s ~ '_BGG_NQuenched_pc']|fmt(0) >>\%)} &  \emph{<< r[s ~ '_BGG_NStarforming'] >>  (<< r[s ~ '_BGG_NStarforming_pc']|fmt(0) >>\%)} \\
+             \quad \emph{Satellites} &  \emph{<< r[s ~ '_Sat_NNosSFR'] >>  (<< r[s ~ '_Sat_NNosSFR_pc']|fmt(0) >>\%)} &  \emph{<< r[s ~ '_Sat_NQuenched'] >>  (<< r[s ~ '_Sat_NQuenched_pc']|fmt(0) >>\%)} &  \emph{<< r[s ~ '_Sat_NStarforming'] >>  (<< r[s ~ '_Sat_NStarforming_pc']|fmt(0) >>\%)} \\
+<% endfor %>
          \hline
-            \emph{SDSS selection} &  \emph{<<SDSS_NQuenched>> (<<SDSS_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<SDSS_NPassive>>  (<<SDSS_NPassive_pc|fmt(0)>>\%)} &  \emph{<<SDSS_NStarforming>>  (<<SDSS_NStarforming_pc|fmt(0)>>\%)}\\
+            \emph{SDSS selection} &  \emph{<<SDSS_NNosSFR>> (<<SDSS_NNosSFR_pc|fmt(0)>>\%)} &  \emph{<<SDSS_NQuenched>>  (<<SDSS_NQuenched_pc|fmt(0)>>\%)} &  \emph{<<SDSS_NStarforming>>  (<<SDSS_NStarforming_pc|fmt(0)>>\%)}\\
         \hline
     \end{tabular}
 \end{table}
@@ -335,7 +318,7 @@ Barnard's two-sided exact tests were used to compare the fraction of each morpho
     \centering
      \includegraphics[width=\columnwidth]{galaxies_sfr.pdf}
      \caption{sSFR and morphologies of galaxies in \CG{} and our SDSS selection.
-     Galaxies without sSFR estimates are shown at an arbitrary low value of \(10^{<<sSFR_QUENCHED>>}\,\mathrm{yr}^{-1}\).}
+     Galaxies without a valid sSFR estimate are excluded from this figure.}
      \label{fig:galaxies_morph_sfr}
 \end{figure}
 
@@ -377,24 +360,24 @@ Thus, BGG morphologies differ between \CG{} and \RG: \CG{} BGGs have a higher el
 
 \subsection{Population medians by sSFR class}
 
-Tables~\ref{tab:passive_starforming_medians}--\ref{tab:split_BGG_ssfr_class_properties_Sat} summarize the typical stellar masses, absolute magnitudes, and sSFRs of passive and star-forming galaxies, including splits by the sSFR class of the BGG. These medians are descriptive and mainly show that star-formation class is entangled with stellar mass and luminosity, motivating the adjusted models below.
+Tables~\ref{tab:quenched_starforming_medians}--\ref{tab:split_BGG_ssfr_class_properties_Sat} summarize the typical stellar masses, absolute magnitudes, and sSFRs of quenched and star-forming galaxies, including splits by the sSFR class of the BGG. These medians are descriptive and mainly show that star-formation class is entangled with stellar mass and luminosity, motivating the adjusted models below.
 
 \begin{table}
 \centering
-\caption{Median values of galaxy properties for passive and star-forming populations in each sample.
+\caption{Median values of galaxy properties for quenched and star-forming populations in each sample.
 Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr\(^{-1}\), and stellar mass is in \(M_\odot\).
 }
-\label{tab:passive_starforming_medians}
+\label{tab:quenched_starforming_medians}
 \small
 \tabcolsep=2pt
 \begin{tabular}{llcc}
 \hline\hline
-Sample & Quantity & Passive & Star-forming\\
+Sample & Quantity & Quenched & Star-forming\\
 \hline
 
 <% for sample in samples %>
 <% for q in qdefs %>
-<% if loop.first %><< sample >><% endif %> & << qlabel_short(q) >> & << r[sample ~ '_Passive_' ~ q.key ~ '_median'] >> $\pm$ << r[sample ~ '_Passive_' ~ q.key ~ '_median_err'] >> & << r[sample ~ '_Starforming_' ~ q.key ~ '_median'] >> $\pm$ << r[sample ~ '_Starforming_' ~ q.key ~ '_median_err'] >>\\
+<% if loop.first %><< sample >><% endif %> & << qlabel_short(q) >> & << r[sample ~ '_Quenched_' ~ q.key ~ '_median'] >> $\pm$ << r[sample ~ '_Quenched_' ~ q.key ~ '_median_err'] >> & << r[sample ~ '_Starforming_' ~ q.key ~ '_median'] >> $\pm$ << r[sample ~ '_Starforming_' ~ q.key ~ '_median_err'] >>\\
 <% endfor %>
 <% endfor %>
 
@@ -412,12 +395,12 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr
     \tabcolsep=2pt
     \begin{tabular}{llcc}
 \hline\hline
-Sample & Quantity & BGG passive & BGG SF\\
+Sample & Quantity & BGG quenched & BGG SF\\
 \hline
 
 <% for sample in samples %>
 <% for q in qdefs %>
-<% if loop.first %><< sample >><% endif %> & << qlabel_short(q) >> & << r[sample ~ "_BGG_Passive_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Passive_" ~ q.key ~ "_median_err"] >> & << r[sample ~ "_BGG_Starforming_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Starforming_" ~ q.key ~ "_median_err"] >>\\
+<% if loop.first %><< sample >><% endif %> & << qlabel_short(q) >> & << r[sample ~ "_BGG_Quenched_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Quenched_" ~ q.key ~ "_median_err"] >> & << r[sample ~ "_BGG_Starforming_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_BGG_Starforming_" ~ q.key ~ "_median_err"] >>\\
 <% endfor %>
 <% endfor %>
 
@@ -435,12 +418,12 @@ Uncertainties are estimated by bootstrapping (10\,000 iterations). sSFR is in yr
     \tabcolsep=2pt
     \begin{tabular}{llcc}
 \hline\hline
-Sample & Quantity & BGG passive & BGG SF\\
+Sample & Quantity & BGG quenched & BGG SF\\
 \hline
 
 <% for sample in samples %>
 <% for q in qdefs %>
-<% if loop.first %><< sample >><% endif %> & << qlabel_short(q) >> & << r[sample ~ "_Sat_BGG_Passive_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Passive_" ~ q.key ~ "_median_err"] >> & << r[sample ~ "_Sat_BGG_Starforming_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Starforming_" ~ q.key ~ "_median_err"] >>\\
+<% if loop.first %><< sample >><% endif %> & << qlabel_short(q) >> & << r[sample ~ "_Sat_BGG_Quenched_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Quenched_" ~ q.key ~ "_median_err"] >> & << r[sample ~ "_Sat_BGG_Starforming_" ~ q.key ~ "_median"] >> $\pm$ << r[sample ~ "_Sat_BGG_Starforming_" ~ q.key ~ "_median_err"] >>\\
 <% endfor %>
 <% endfor %>
 
@@ -655,7 +638,7 @@ The previous sections establish that \CG{} galaxies differ from the control cata
 
 We fit binomial models to the combined galaxy catalogues, standardizing the continuous predictors and using group-clustered standard errors. The common adjustment set includes stellar mass, redshift, satellite/BGG rank, group luminosity and velocity dispersion when sufficiently complete.
 
-<% for key, label in [('passive_all', 'passive status'), ('passive_satellites', 'passive satellite status'), ('starforming_satellites', 'star-forming satellite status'), ('elliptical_all', 'elliptical morphology'), ('elliptical_satellites', 'elliptical satellite morphology'), ('elliptical_bgg', 'elliptical BGG morphology'), ('spiral_all', 'spiral morphology'), ('spiral_satellites', 'spiral satellite morphology')] %>
+<% for key, label in [('quenched_all', 'quenched status'), ('quenched_satellites', 'quenched satellite status'), ('starforming_satellites', 'star-forming satellite status'), ('elliptical_all', 'elliptical morphology'), ('elliptical_satellites', 'elliptical satellite morphology'), ('elliptical_bgg', 'elliptical BGG morphology'), ('spiral_all', 'spiral morphology'), ('spiral_satellites', 'spiral satellite morphology')] %>
 <% set model = sm.get(key, {}) %>
 <% if model.get('status') == 'ok' %>
 For << label >>, the \CG{} odds ratio is \(<< model.get('cg4_odds_ratio')|fmt(2) >>\), with 95\% confidence interval \([<< model.get('cg4_ci95')[0]|fmt(2) >>, << model.get('cg4_ci95')[1]|fmt(2) >>]\) and << pholm_text(model.get('cg4_p_adj')) >>.
@@ -664,7 +647,7 @@ For << label >>, the \CG{} odds ratio is \(<< model.get('cg4_odds_ratio')|fmt(2)
 
 <% set sig = sm.get('significant_models', []) %>
 <% if ('elliptical_all' in sig) or ('spiral_all' in sig) %>
-Compact-group membership therefore remains independently associated with morphology after the available adjustments: \CG{} galaxies have a higher probability of being elliptical and a lower probability of being spiral. In contrast, the adjusted passive and star-forming satellite coefficients are weaker and do not provide evidence for an instantaneous star-formation difference that remains significant after correction.
+Compact-group membership therefore remains independently associated with morphology after the available adjustments: \CG{} galaxies have a higher probability of being elliptical and a lower probability of being spiral. In contrast, the adjusted quenched and star-forming satellite coefficients are weaker and do not provide evidence for an instantaneous star-formation difference that remains significant after correction.
 <% elif sig %>
 Compact-group membership remains independently associated with <% for item in sig -%><< item|replace('_', ' ') >><% if not loop.last %>, <% else %> after the available adjustments.<% endif %><% endfor %>
 <% else %>
@@ -725,15 +708,15 @@ The complementary close-neighbour-flag model reaches the same qualitative conclu
 <% set cg4_unmatched = cg4_total_available - matched.get('n_cg4_matched') if cg4_total_available is not none and matched.get('n_cg4_matched') is not none else none %>
 We matched << matched.get('n_cg4_matched') >> of the << cg4_total_available >> available \CG{} galaxies one-to-one to << matched.get('n_control_matched') >> ordinary-group galaxies <% if not matched.get('replacement') %>without<% else %>with<% endif %> replacement, requiring common propensity-score support, a << matched.get('propensity_caliper_logit_sd')|fmt(1) >>-standard-deviation caliper and exact rank strata. <% if cg4_unmatched is not none and cg4_unmatched > 0 %>The remaining << cg4_unmatched >> \CG{} galaxies were excluded because they lay outside the common propensity-score support or exceeded the adopted caliper. <% endif %>The propensity model uses \(\log M_\star\), redshift, rank, \(\log L_\mathrm{group}\), and \(\sigma_v\). Projected distance is retained as a phase-space and interaction diagnostic rather than matched away because it partly defines compactness and has limited overlap. The largest absolute standardized mean difference changed from << matched.get('max_abs_smd_before')|fmt(2) >> before matching to << matched.get('max_abs_smd_after')|fmt(2) >> afterwards. The residual imbalance is carried by the group-luminosity covariate (\(\log L_\mathrm{group}\)); it lies slightly above the conventional 0.1 threshold, which is why we read the matched contrasts together with the adjusted models rather than in isolation.
 
-<% set m_passive = matched.get('effects', {}).get('passive_fraction', {}) %>
-<% if m_passive.get('status') == 'ok' %>
-The matched \CG{}--minus--control difference in passive fraction is \(<< m_passive.get('delta_cg4_minus_control')|fmt(3) >>\), with 95\% bootstrap interval \([<< m_passive.get('ci95')[0]|fmt(3) >>, << m_passive.get('ci95')[1]|fmt(3) >>]\) and << pholm_text(m_passive.get('p_adj')) >>.
-<% if m_passive.get('p_adj') is not none and m_passive.get('p_adj') < 0.05 %>
-This supports an enhanced passive fraction in \CG{} after matching.
-<% elif m_passive.get('p_adj') is not none and m_passive.get('p_adj') < 0.10 %>
-This is suggestive but not formally significant after correction, so we treat the passive-fraction excess as borderline.
+<% set m_quenched = matched.get('effects', {}).get('quenched_fraction', {}) %>
+<% if m_quenched.get('status') == 'ok' %>
+The matched \CG{}--minus--control difference in quenched fraction is \(<< m_quenched.get('delta_cg4_minus_control')|fmt(3) >>\), with 95\% bootstrap interval \([<< m_quenched.get('ci95')[0]|fmt(3) >>, << m_quenched.get('ci95')[1]|fmt(3) >>]\) and << pholm_text(m_quenched.get('p_adj')) >>.
+<% if m_quenched.get('p_adj') is not none and m_quenched.get('p_adj') < 0.05 %>
+This supports an enhanced quenched fraction in \CG{} after matching.
+<% elif m_quenched.get('p_adj') is not none and m_quenched.get('p_adj') < 0.10 %>
+This is suggestive but not formally significant after correction, so we treat the quenched-fraction excess as borderline.
 <% else %>
-After matching, this does not provide evidence for an enhanced passive fraction in \CG{} that remains significant after correction.
+After matching, this does not provide evidence for an enhanced quenched fraction in \CG{} that remains significant after correction.
 <% endif %>
 <% endif %>
 
@@ -758,15 +741,15 @@ Among matched star-forming galaxies, the residual-sSFR difference is \(<< m_resi
 <% endif %>
 
 <% if matched.get('holm_correction_note') %>
-The matched-outcome Holm correction is intentionally conservative: passive/star-forming and elliptical/spiral diagnostics are retained in the same family even though the audit finds that they are exact complements on their complete-case subsets. Using a non-redundant family would not weaken the morphology conclusion.
+The matched-outcome Holm correction is intentionally conservative: quenched/star-forming and elliptical/spiral diagnostics are retained in the same family even though the audit finds that they are exact complements on their complete-case subsets. Using a non-redundant family would not weaken the morphology conclusion.
 <% endif %>
 
 <% set ssfr_alt = r.get('sSFR_robustness', {}) %>
 <% if ssfr_alt.get('status') == 'ok' and ssfr_alt.get('primary_comparison') %>
-The main interpretation does not rely on the exact GMM division of the sSFR plane. Repeating the key satellite comparison with a fixed threshold, << ssfr_alt.get('threshold_label') >>, gives \CG{} and \RG{} satellite star-forming fractions of << ssfr_alt.get('cg4', {}).get('starforming_fraction_fmt') >>\% and << ssfr_alt.get('primary_comparison', {}).get('control', {}).get('starforming_fraction_fmt') >>\%, respectively, a \CG{}--\RG{} difference of \(<< ssfr_alt.get('primary_comparison', {}).get('delta_starforming_fraction_pct_fmt') >>\) percentage points (<< p_from_fmt(ssfr_alt.get('primary_comparison', {}).get('fisher_p_fmt')) >>). The qualitative hierarchy is unchanged: the morphology result is independent of the sSFR threshold, whereas the passive/star-forming contrast remains more sensitive to modelling choices.
+The main interpretation does not rely on the exact GMM division of the sSFR plane. Repeating the key satellite comparison with a fixed threshold, << ssfr_alt.get('threshold_label') >>, gives \CG{} and \RG{} satellite star-forming fractions of << ssfr_alt.get('cg4', {}).get('starforming_fraction_fmt') >>\% and << ssfr_alt.get('primary_comparison', {}).get('control', {}).get('starforming_fraction_fmt') >>\%, respectively, a \CG{}--\RG{} difference of \(<< ssfr_alt.get('primary_comparison', {}).get('delta_starforming_fraction_pct_fmt') >>\) percentage points (<< p_from_fmt(ssfr_alt.get('primary_comparison', {}).get('fisher_p_fmt')) >>). The qualitative hierarchy is unchanged: the morphology result is independent of the sSFR threshold, whereas the quenched/star-forming contrast remains more sensitive to modelling choices.
 <% endif %>
 
-The matched comparison is therefore consistent with the adjusted models: the most robust compact-group signal is morphological, while the passive and star-forming-fraction signals are more model-dependent.
+The matched comparison is therefore consistent with the adjusted models: the most robust compact-group signal is morphological, while the quenched and star-forming-fraction signals are more model-dependent.
 
 <% if matched.get('effects_figure') %>
 \begin{figure}
@@ -791,22 +774,22 @@ The matched comparison is therefore consistent with the adjusted models: the mos
 \subsection{Satellite segregation around the brightest group galaxy}
 
 <% set pst = phase.get('text_summary', {}) %>
-The previous sections show global differences between \CG{} and \RG{} satellites. We now ask whether these differences are concentrated near the BGG, as expected for accelerated evolution in the dense inner group, or whether they persist across the satellite population. The analysis uses << pst.get('cg_satellite_n') >> \CG{} and << pst.get('rg_satellite_n') >> \RG{} satellites, excludes rank-1 galaxies, ranks satellites by projected BGG-centric distance, and measures passive and early-type fractions with group-cluster bootstrap uncertainties. When available, we also use \(|\Delta v_{\rm BGG}|/\sigma_v\), with \(\Delta v_{\rm BGG}=c(z_{\rm gal}-z_{\rm BGG})/(1+z_{\rm group})\), as a projected phase-space diagnostic. Similar projected phase-space coordinates are often used as observational proxies for satellite infall state or quenching time, but only statistically \citep{Mahajan+11,Oman&Hudson16,Wetzel+13}.
+The previous sections show global differences between \CG{} and \RG{} satellites. We now ask whether these differences are concentrated near the BGG, as expected for accelerated evolution in the dense inner group, or whether they persist across the satellite population. The analysis uses << pst.get('cg_satellite_n') >> \CG{} and << pst.get('rg_satellite_n') >> \RG{} satellites, excludes rank-1 galaxies, ranks satellites by projected BGG-centric distance, and measures quenched and early-type fractions with group-cluster bootstrap uncertainties. When available, we also use \(|\Delta v_{\rm BGG}|/\sigma_v\), with \(\Delta v_{\rm BGG}=c(z_{\rm gal}-z_{\rm BGG})/(1+z_{\rm group})\), as a projected phase-space diagnostic. Similar projected phase-space coordinates are often used as observational proxies for satellite infall state or quenching time, but only statistically \citep{Mahajan+11,Oman&Hudson16,Wetzel+13}.
 
-In the innermost satellite-distance bin, the passive fractions are << pst.get('cg_passive_fraction_inner')|pct(1) >>\% for \CG{} and << pst.get('rg_passive_fraction_inner')|pct(1) >>\% for \RG, a \CG{}--\RG{} difference of \(<< pst.get('delta_passive_fraction_inner')|pct(1) >>\) percentage points. The corresponding early-type fractions are << pst.get('cg_earlytype_fraction_inner')|pct(1) >>\% and << pst.get('rg_earlytype_fraction_inner')|pct(1) >>\%, with a difference of \(<< pst.get('delta_earlytype_fraction_inner')|pct(1) >>\) percentage points.
-<% if pst.get('passive_radial_trend') == 'stronger_inner' %>
-The passive-fraction contrast is larger in the inner bin than in the outer bin, favouring a centrally concentrated environmental component.
-<% elif pst.get('passive_radial_trend') == 'stronger_outer' %>
-The passive-fraction contrast is not confined to the inner bin; it is at least as large at larger projected distance, which is more consistent with preprocessing or a global sample difference.
-<% elif pst.get('passive_radial_trend') == 'similar_at_inner_and_outer_ranks' %>
-The passive-fraction contrast is similar between the inner and outer distance ranks, so the data do not isolate the \CG{} offset to the immediate BGG environment.
+In the innermost satellite-distance bin, the quenched fractions are << pst.get('cg_quenched_fraction_inner')|pct(1) >>\% for \CG{} and << pst.get('rg_quenched_fraction_inner')|pct(1) >>\% for \RG, a \CG{}--\RG{} difference of \(<< pst.get('delta_quenched_fraction_inner')|pct(1) >>\) percentage points. The corresponding early-type fractions are << pst.get('cg_earlytype_fraction_inner')|pct(1) >>\% and << pst.get('rg_earlytype_fraction_inner')|pct(1) >>\%, with a difference of \(<< pst.get('delta_earlytype_fraction_inner')|pct(1) >>\) percentage points.
+<% if pst.get('quenched_radial_trend') == 'stronger_inner' %>
+The quenched-fraction contrast is larger in the inner bin than in the outer bin, favouring a centrally concentrated environmental component.
+<% elif pst.get('quenched_radial_trend') == 'stronger_outer' %>
+The quenched-fraction contrast is not confined to the inner bin; it is at least as large at larger projected distance, which is more consistent with preprocessing or a global sample difference.
+<% elif pst.get('quenched_radial_trend') == 'similar_at_inner_and_outer_ranks' %>
+The quenched-fraction contrast is similar between the inner and outer distance ranks, so the data do not isolate the \CG{} offset to the immediate BGG environment.
 <% else %>
-The radial dependence of the passive-fraction contrast cannot be determined robustly with the available bin counts.
+The radial dependence of the quenched-fraction contrast cannot be determined robustly with the available bin counts.
 <% endif %>
 
-<% set passive_model = phase.get('regression_results', {}).get('passive_distance', {}) %>
-<% if passive_model.get('status') == 'ok' %>
-After adjusting for stellar mass, redshift, distance bin, and available group-scale controls, the passive-status model gives a \CG{} odds ratio of << pst.get('passive_model_sample_cg_or')|fmt(2) >> (95\% CI << pst.get('passive_model_sample_cg_ci_low')|fmt(2) >>--<< pst.get('passive_model_sample_cg_ci_high')|fmt(2) >>; << pval_text(pst.get('passive_model_sample_cg_p')) >>).
+<% set quenched_model = phase.get('regression_results', {}).get('quenched_distance', {}) %>
+<% if quenched_model.get('status') == 'ok' %>
+After adjusting for stellar mass, redshift, distance bin, and available group-scale controls, the quenched-status model gives a \CG{} odds ratio of << pst.get('quenched_model_sample_cg_or')|fmt(2) >> (95\% CI << pst.get('quenched_model_sample_cg_ci_low')|fmt(2) >>--<< pst.get('quenched_model_sample_cg_ci_high')|fmt(2) >>; << pval_text(pst.get('quenched_model_sample_cg_p')) >>).
 <% endif %>
 <% set early_model = phase.get('regression_results', {}).get('early_type_distance', {}) %>
 <% if early_model.get('status') == 'ok' %>
@@ -814,18 +797,18 @@ The analogous early-type model gives a \CG{} odds ratio of << pst.get('earlytype
 <% endif %>
 <% set matched_phase = phase.get('matched_robustness', {}) %>
 <% if matched_phase.get('status') == 'ok' %>
-A nearest-neighbour mass--redshift matched check uses << matched_phase.get('n_cg4_matched') >> \CG{}--\RG{} satellite pairs. The matched passive-fraction difference is \(<< pst.get('matched_delta_passive')|pct(1) >>\) percentage points, and the matched early-type difference is \(<< pst.get('matched_delta_earlytype')|pct(1) >>\) percentage points.
+A nearest-neighbour mass--redshift matched check uses << matched_phase.get('n_cg4_matched') >> \CG{}--\RG{} satellite pairs. The matched quenched-fraction difference is \(<< pst.get('matched_delta_quenched')|pct(1) >>\) percentage points, and the matched early-type difference is \(<< pst.get('matched_delta_earlytype')|pct(1) >>\) percentage points.
 <% endif %>
 
 Projected phase-space coordinates should not be read as orbital reconstructions for individual galaxies. In compact groups the member counts are small, velocity dispersions are noisy, and projection mixes recently accreted and long-resident satellites. We therefore treat these bins as an observational diagnostic of where the \CG{}--\RG{} population contrast appears, rather than as a direct dynamical clock.
 
 <% set pfigs = phase.get('figure_paths', {}) %>
-<% if pfigs.get('passive_fraction_by_distance') %>
+<% if pfigs.get('quenched_fraction_by_distance') %>
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< pfigs.get('passive_fraction_by_distance') >>}
-    \caption{Passive satellite fraction as a function of projected-distance rank from the BGG. Points show \CG{} and \RG{} fractions; bars show group-cluster bootstrap 16th--84th percentile intervals.}
-    \label{fig:phase_space_passive_distance}
+    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< pfigs.get('quenched_fraction_by_distance') >>}
+    \caption{Quenched satellite fraction as a function of projected-distance rank from the BGG. Points show \CG{} and \RG{} fractions; bars show group-cluster bootstrap 16th--84th percentile intervals.}
+    \label{fig:phase_space_quenched_distance}
 \end{figure}
 <% endif %>
 <% if pfigs.get('earlytype_fraction_by_distance') %>
@@ -858,12 +841,12 @@ For \(\Delta m_{14}\), the \CG{} and control medians are \(<< dm14.get('median_c
 The compact-group morphology signal is therefore not accompanied by a significant excess in these simple fossil-like magnitude-gap indicators.
 <% endif %>
 
-<% set gap_passive = fossil.get('correlations', {}).get('Delta_m12_vs_passive_satellite_fraction', {}) %>
-<% if gap_passive.get('status') == 'ok' %>
-The correlation between \(\Delta m_{12}\) and passive satellite fraction is \(\rho_{\rm S}=<< gap_passive.get('spearman_rho')|fmt(2) >>\) (<< pholm_text(gap_passive.get('p_adj')) >>).
+<% set gap_quenched = fossil.get('correlations', {}).get('Delta_m12_vs_quenched_satellite_fraction', {}) %>
+<% if gap_quenched.get('status') == 'ok' %>
+The correlation between \(\Delta m_{12}\) and quenched satellite fraction is \(\rho_{\rm S}=<< gap_quenched.get('spearman_rho')|fmt(2) >>\) (<< pholm_text(gap_quenched.get('p_adj')) >>).
 <% endif %>
 
-The supporting magnitude-gap distributions are shown in Appendix Figs.~\ref{fig:magnitude_gap} and \ref{fig:magnitude_gap_passive_fraction}.
+The supporting magnitude-gap distributions are shown in Appendix Figs.~\ref{fig:magnitude_gap} and \ref{fig:magnitude_gap_quenched_fraction}.
 <% endif %>
 
 <% set recent = es.get('recent_quenching', {}) %>
@@ -915,11 +898,11 @@ The AGN-like fractions are shown in Appendix Fig.~\ref{fig:agn_fraction}.
 
 The pairwise analysis reconstructs projected separations and velocity differences for << tidal.get('n_galaxies_with_pairs') >> galaxies and tests whether adding the pairwise tidal index \(\sum_j M_{\star,j}/R_{ij}^3\) (in \(\msun\,\mathrm{kpc}^{-3}\)) changes the adjusted \CG{} coefficient. The baseline models in this subsection are refit on the pairwise-analysis complete-case sample, so their coefficients need not be numerically identical to the corresponding coefficients in Sect.~\ref{sec:adjusted_galaxy_properties}. Because \(R_{ij}\) is projected, this term is used as a local projected-density and immediate-neighbour proxy rather than as a direct tidal-history measurement.
 
-<% set tidal_passive = tidal.get('models', {}).get('passive', {}) %>
-<% set passive_base = tidal_passive.get('baseline', {}) %>
-<% set passive_tidal = tidal_passive.get('with_tidal_index', {}) %>
-<% if passive_base.get('status') == 'ok' and passive_tidal.get('status') == 'ok' %>
-For passive status, the baseline \CG{} odds ratio is << passive_base.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(passive_base.get('cg4_p')) >>), while the model including the tidal index gives a \CG{} odds ratio of << passive_tidal.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(passive_tidal.get('cg4_p')) >>). The tidal-index term itself has odds ratio << passive_tidal.get('terms', {}).get('log_tidal_index', {}).get('odds_ratio')|fmt(2) >> (<< pval_text(passive_tidal.get('terms', {}).get('log_tidal_index', {}).get('p')) >>).
+<% set tidal_quenched = tidal.get('models', {}).get('quenched', {}) %>
+<% set quenched_base = tidal_quenched.get('baseline', {}) %>
+<% set quenched_tidal = tidal_quenched.get('with_tidal_index', {}) %>
+<% if quenched_base.get('status') == 'ok' and quenched_tidal.get('status') == 'ok' %>
+For quenched status, the baseline \CG{} odds ratio is << quenched_base.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(quenched_base.get('cg4_p')) >>), while the model including the tidal index gives a \CG{} odds ratio of << quenched_tidal.get('cg4_odds_ratio')|fmt(2) >> (<< pval_text(quenched_tidal.get('cg4_p')) >>). The tidal-index term itself has odds ratio << quenched_tidal.get('terms', {}).get('log_tidal_index', {}).get('odds_ratio')|fmt(2) >> (<< pval_text(quenched_tidal.get('terms', {}).get('log_tidal_index', {}).get('p')) >>).
 <% endif %>
 
 <% set tidal_ell = tidal.get('models', {}).get('elliptical', {}) %>
@@ -933,7 +916,7 @@ For elliptical morphology, the baseline \CG{} odds ratio is << ell_base.get('cg4
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{<< SUBFIGURES_PATH >><< tidal.get('figure') >>}
-    \caption{Passive status and elliptical/smooth morphology as functions of the reconstructed pairwise tidal index. Colours distinguish \CG{} from control galaxies.}
+    \caption{Quenched status and elliptical/smooth morphology as functions of the reconstructed pairwise tidal index. Colours distinguish \CG{} from control galaxies.}
     \label{fig:tidal_index_outcomes}
 \end{figure*}
 <% endif %>
@@ -1147,7 +1130,7 @@ The star-formation result is weaker. \CG{} satellites have a lower raw star-form
 The galaxy-size test adds a structural dimension to this comparison. <% if szv.get('primary_satellites_significant') %>At fixed stellar mass, redshift, and group-scale covariates, \CG{} satellites are systematically << szv.get('direction') >> in seeing-corrected half-light radius (\(<< conclusion_adj_sat.get('cg4_delta_dex')|fmt(3) >>\) dex; Holm-corrected), a size offset that complements the morphology signal.<% elif szv.get('survives_matching') %>At fixed stellar mass, redshift, and group-scale covariates, the pooled adjusted models show no significant \CG{} offset in seeing-corrected half-light radius (satellite coefficient \(<< conclusion_adj_sat.get('cg4_delta_dex')|fmt(3) >>\) dex). The one-to-one matched pairs formally prefer << szv.get('direction') >> \CG{} sizes (\(<< conclusion_m_simard.get('mean_delta')|fmt(3) >>\) dex), but the contrast is control-dependent, so we do not claim a robust compact-group size effect.<% else %>At fixed stellar mass, redshift, and group-scale covariates, we find no significant \CG{} offset in seeing-corrected half-light radius, in either the adjusted models or the matched pairs.<% endif %>
 <% endif %>
 
-The secondary diagnostics do not identify a simple alternative driver. The colour results are control-sensitive and based on a biased colour-matched subset. AGN-like fractions and magnitude gaps do not explain the morphology signal, the \(\mathrm{H}\alpha\) diagnostic is limited by missing age-sensitive spectral indices, and projected phase-space trends do not localize the passive difference uniquely to the nearest satellites. The Galaxy Zoo crowding check shows that the smooth/elliptical excess persists after excluding the closest projected pairs, so the result is not solely a closest-pair classification artefact.
+The secondary diagnostics do not identify a simple alternative driver. The colour results are control-sensitive and based on a biased colour-matched subset. AGN-like fractions and magnitude gaps do not explain the morphology signal, the \(\mathrm{H}\alpha\) diagnostic is limited by missing age-sensitive spectral indices, and projected phase-space trends do not localize the quenched difference uniquely to the nearest satellites. The Galaxy Zoo crowding check shows that the smooth/elliptical excess persists after excluding the closest projected pairs, so the result is not solely a closest-pair classification artefact.
 
 We therefore interpret \CG{} galaxies as a more morphologically evolved population, consistent with accumulated transformation in very dense environments, dense group cores, and/or preprocessing. The pairwise tidal-index experiment shows that adding a local projected-density proxy reduces the compact-group morphology coefficient, so the result should not be read as evidence for a uniquely isolated compact-group quenching mechanism.
 
@@ -1214,9 +1197,10 @@ or if they lie above the empirical demarcation of \citet{Kauffmann+03a}:
 \]
 in which case they are excluded from the GMM calibration sample. This calibration flag is deliberately more inclusive than the three-class BPT scheme of Sect.~\ref{sec:agn_env}, in which composite galaxies lie between the \citet{Kauffmann+03a} and \citet{Kewley+01} demarcations and only galaxies above the \citet{Kewley+01} line are labelled AGN-like, because its sole purpose is to keep possible AGN contamination out of the sSFR calibration. Galaxies with missing diagnostic line ratios are BPT-unclassified, not proven non-AGN. They are retained for the broad sSFR status assignment when valid SDSS stellar mass and sSFR estimates are available, while the emission-line/AGN-like analysis treats BPT-unclassified objects separately. The BPT-classifiable subset is shown in Fig.~\ref{fig:BPT}.
 
-Galaxies with \texttt{specsfr\_tot\_p50} equal to \(-9999\) in the SDSS are placed in the no-sSFR class
-(for display purposes, they are assigned the arbitrary low value \(10^{<<sSFR_QUENCHED>>}\,\mathrm{yr}^{-1}\)).
-The remaining galaxies are divided into passive and star-forming classes with a two-component Gaussian Mixture Model (GMM) in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane \citep{McLachlanPeel2000}. The calibration excludes galaxies flagged as AGN-like where the required BPT line ratios are available, while BPT-unclassified galaxies with valid SDSS stellar mass and sSFR estimates can still receive a broad sSFR class. The passive/star-forming boundary is the locus where the two component posterior probabilities are equal. A fixed-threshold robustness check confirms that the qualitative hierarchy is not tied to the exact GMM split.
+Galaxies with \texttt{specsfr\_tot\_p50} equal to \(-9999\) in the SDSS have no valid sSFR estimate;
+they are treated as missing data throughout: excluded from the GMM calibration, never assigned an sSFR class,
+omitted from every sSFR figure, and reported as counts only (Sect.~\ref{sec:ssfr_classification}).
+Galaxies with a measured sSFR are divided into quenched and star-forming classes with a two-component Gaussian Mixture Model (GMM) in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane \citep{McLachlanPeel2000}. The calibration excludes galaxies flagged as AGN-like where the required BPT line ratios are available, while BPT-unclassified galaxies with valid SDSS stellar mass and sSFR estimates can still receive a broad sSFR class. The quenched/star-forming boundary is the locus where the two component posterior probabilities are equal. A fixed-threshold robustness check confirms that the qualitative hierarchy is not tied to the exact GMM split.
 
 \begin{center}
      \includegraphics[width=\columnwidth]{BPT_diagram.pdf}
@@ -1399,17 +1383,17 @@ Figures~\ref{fig:size_availability}--\ref{fig:size_radial} show the availability
 \clearpage
 \subsection{Robustness and selection diagnostics}
 
-Figures~\ref{fig:phase_space_passive_projected}--\ref{fig:colour_selection_bias} show the projected phase-space bins, the magnitude-gap diagnostics, the \(\mathrm{H}\alpha\) equivalent-width distributions, the AGN-like fractions, the availability audit, and the colour-selection mass audit.
+Figures~\ref{fig:phase_space_quenched_projected}--\ref{fig:colour_selection_bias} show the projected phase-space bins, the magnitude-gap diagnostics, the \(\mathrm{H}\alpha\) equivalent-width distributions, the AGN-like fractions, the availability audit, and the colour-selection mass audit.
 
 <% set appendix_es = extended_specialness if extended_specialness else {} %>
 <% set appendix_phase = phase_space_segregation if phase_space_segregation else appendix_es.get('phase_space_segregation', appendix_es.get('phase_space', {})) %>
 <% set appendix_pfigs = appendix_phase.get('figure_paths', {}) %>
-<% if appendix_phase.get('status') == 'ok' and appendix_pfigs.get('passive_fraction_projected_phase_space') %>
+<% if appendix_phase.get('status') == 'ok' and appendix_pfigs.get('quenched_fraction_projected_phase_space') %>
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< appendix_pfigs.get('passive_fraction_projected_phase_space') >>}
-    \caption{Passive satellite fraction in coarse projected phase-space bins. Inner and outer refer to projected-distance rank from the BGG; low and high velocity are split at \(|\Delta v_{\rm BGG}|/\sigma_v=1\).}
-    \label{fig:phase_space_passive_projected}
+    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< appendix_pfigs.get('quenched_fraction_projected_phase_space') >>}
+    \caption{Quenched satellite fraction in coarse projected phase-space bins. Inner and outer refer to projected-distance rank from the BGG; low and high velocity are split at \(|\Delta v_{\rm BGG}|/\sigma_v=1\).}
+    \label{fig:phase_space_quenched_projected}
 \end{figure}
 <% endif %>
 
@@ -1422,12 +1406,12 @@ Figures~\ref{fig:phase_space_passive_projected}--\ref{fig:colour_selection_bias}
     \label{fig:magnitude_gap}
 \end{figure}
 <% endif %>
-<% if appendix_fossil.get('status') == 'ok' and appendix_fossil.get('passive_fraction_figure') %>
+<% if appendix_fossil.get('status') == 'ok' and appendix_fossil.get('quenched_fraction_figure') %>
 \begin{figure}
     \centering
-    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< appendix_fossil.get('passive_fraction_figure') >>}
-    \caption{Passive satellite fraction as a function of the first--second magnitude gap.}
-    \label{fig:magnitude_gap_passive_fraction}
+    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< appendix_fossil.get('quenched_fraction_figure') >>}
+    \caption{Quenched satellite fraction as a function of the first--second magnitude gap.}
+    \label{fig:magnitude_gap_quenched_fraction}
 \end{figure}
 <% endif %>
 

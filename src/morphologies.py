@@ -228,7 +228,7 @@ def morph_sSFR(sample):
     dict
         
     """
-    status = co.sSFR_status[2] # 'Starforming'
+    status = co.sSFR_status[-1] # 'Starforming'
 
     CG = sample['CG4_Gals']
     CG = CG.loc[CG['morphology'] != co.Morphologies[2]]  # Remove 'Uncertain' morphologies

@@ -32,7 +32,7 @@ except ModuleNotFoundError:  # pragma: no cover
 
 AVAILABILITY = {
     "morphology": ["elliptical"],
-    "sSFR": ["passive"],
+    "sSFR": ["quenched"],
     "stellar_mass": ["logMstar"],
     "colours": ["u_minus_r", "u_minus_g", "g_minus_r", "r_minus_i"],
     "spectral_lines": ["h_alpha_eqw", "h_beta_eqw", "oiii_5007_eqw", "nii_6584_eqw"],
@@ -226,7 +226,7 @@ def _sample_size_audit(frame):
 
         row = {
             "total_galaxies": int(len(part)),
-            "sSFR_table_N": int(part["passive"].notna().sum()) if "passive" in part else 0,
+            "sSFR_table_N": int(part["quenched"].notna().sum()) if "quenched" in part else 0,
             "morphology_table_N": morphology_table,
             "secure_morphology_N": (
                 int((part["elliptical"].notna() | part["spiral"].notna()).sum())
@@ -337,7 +337,7 @@ def run_selection_diagnostics(data, output_dir: str | None = None):
                     frame.loc[~frame["colour_matched"], column],
                 )
             )
-    for column in ["passive", "starforming", "elliptical", "spiral"]:
+    for column in ["quenched", "starforming", "elliptical", "spiral"]:
         if column in frame:
             matched = frame.loc[frame["colour_matched"], column].dropna()
             unmatched = frame.loc[~frame["colour_matched"], column].dropna()

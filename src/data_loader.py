@@ -175,12 +175,22 @@ def remove_AGN(df):
     df = df[~df['is_AGN']].copy()
     return df
 
-def sSFR_floor(cat, sSFR="sSFR"):
-    """Clamp floor-valued sSFR entries to the quenched sentinel used downstream."""
+def sanitize_ssfr(cat, sSFR="sSFR", lgm="lgm"):
+    """Mark unmeasured or unphysical sSFR/mass entries as missing (NaN).
 
-    # if cat[sSFR] < co.sSFR_THRESHOLD, replace by co.sSFR_QUENCHED
-    cat.loc[cat[sSFR]<co.sSFR_THRESHOLD, 'sSFR_status'] = co.sSFR_status[0]
-    cat.loc[cat[sSFR]<co.sSFR_THRESHOLD, sSFR] = co.sSFR_QUENCHED
+    Legacy catalogues encoded missing measurements as -9999 sentinels; those
+    values (and anything outside the configured sanity ranges) mean "no
+    measurement", not "very low star formation". They become NaN so that no
+    downstream step can mistake them for data.
+    """
+
+    ssfr_values = pd.to_numeric(cat[sSFR], errors="coerce")
+    bad_ssfr = ~ssfr_values.between(*co.sSFR_VALID_RANGE)
+    cat[sSFR] = ssfr_values.where(~bad_ssfr)
+    if lgm in cat:
+        lgm_values = pd.to_numeric(cat[lgm], errors="coerce")
+        bad_lgm = ~lgm_values.between(*co.LGM_VALID_RANGE)
+        cat[lgm] = lgm_values.where(~bad_lgm)
     return cat
 
 
@@ -303,8 +313,7 @@ def load_SDSS():
         'lgm_tot_p50': 'lgm'
         }, inplace=True)
 
-    SDSS_withAGN_df['sSFR_status'] = ''
-    SDSS_withAGN_df = sSFR_floor(SDSS_withAGN_df)
+    SDSS_withAGN_df = sanitize_ssfr(SDSS_withAGN_df)
 
     SDSS_withAGN_df['log_NII_Ha'] = mu.safe_log_ratio(SDSS_withAGN_df['nii_6584_flux'], 
                                                       SDSS_withAGN_df['h_alpha_flux'])

@@ -32,7 +32,7 @@ def _small_phase_frame():
                         "logMstar": 10.0 + 0.12 * rank + 0.02 * is_cg4,
                         "z_numeric": z_bgg + 0.0001 * (rank - 1),
                         "z_group_numeric": z_bgg + 0.00015,
-                        "passive": int((rank + is_cg4) % 2 == 0),
+                        "quenched": int((rank + is_cg4) % 2 == 0),
                         "elliptical": int(rank <= 2 or is_cg4),
                         "early_type": int(rank <= 2 or is_cg4),
                         "dist2BGG_projected_kpc": 30.0 * (rank - 1),
@@ -91,7 +91,7 @@ def test_binned_fraction_calculation_returns_clustered_summaries():
         min_per_sample=1,
     )
 
-    inner = summary["inner"]["passive"]
+    inner = summary["inner"]["quenched"]
     assert inner["CG4"]["status"] == "ok"
     assert inner["RG4"]["status"] == "ok"
     assert inner["delta_CG4_minus_RG4"]["delta"] is not None
@@ -101,11 +101,11 @@ def test_cluster_bootstrap_fraction_returns_finite_uncertainty():
     frame = pd.DataFrame(
         {
             "group_uid": np.repeat(["a", "b", "c", "d"], 3),
-            "passive": [1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0],
+            "quenched": [1, 0, 1, 0, 0, 1, 1, 1, 0, 0, 1, 0],
         }
     )
 
-    result = cluster_bootstrap_fraction(frame, "passive", n_boot=50)
+    result = cluster_bootstrap_fraction(frame, "quenched", n_boot=50)
 
     assert result["status"] == "ok"
     assert np.isfinite(result["stderr"])
@@ -131,5 +131,5 @@ def test_phase_space_json_contains_expected_keys(tmp_path):
     assert result["text_summary"]["cg_satellite_n"] > 0
     assert json.dumps(result, allow_nan=False)
     assert (
-        tmp_path / "phase_space_satellite_passive_fraction_by_distance.pdf"
+        tmp_path / "phase_space_satellite_quenched_fraction_by_distance.pdf"
     ).is_file()

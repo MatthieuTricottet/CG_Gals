@@ -20,8 +20,8 @@ except ModuleNotFoundError:  # pragma: no cover
 
 
 MODEL_SPECS = {
-    "passive_all": ("passive", None),
-    "passive_satellites": ("passive", ("is_satellite", 1)),
+    "quenched_all": ("quenched", None),
+    "quenched_satellites": ("quenched", ("is_satellite", 1)),
     "starforming_satellites": ("starforming", ("is_satellite", 1)),
     "elliptical_all": ("elliptical", None),
     "elliptical_satellites": ("elliptical", ("is_satellite", 1)),
@@ -30,8 +30,8 @@ MODEL_SPECS = {
     "spiral_satellites": ("spiral", ("is_satellite", 1)),
 }
 LABELS = {
-    "passive_all": "Passive, all",
-    "passive_satellites": "Passive, satellites",
+    "quenched_all": "Quenched, all",
+    "quenched_satellites": "Quenched, satellites",
     "starforming_satellites": "Star-forming, satellites",
     "elliptical_all": "Elliptical, all",
     "elliptical_satellites": "Elliptical, satellites",

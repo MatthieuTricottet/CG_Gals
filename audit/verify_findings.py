@@ -251,10 +251,12 @@ def check_D6(results):
 # -------------------------------------------------------------------- E. sSFR
 def check_E7(frames):
     counts = {}
+    # Control4C expectation updated after the Phase 2 regeneration
+    # (704 clean groups); the committed-lineage numbers were 55/751 | 110/2253.
     expected = {
         "CG4": (5, 62, 9, 186),
         "Control4B": (48, 698, 103, 2094),
-        "Control4C": (55, 751, 110, 2253),
+        "Control4C": (49, 704, 105, 2112),
         "RG4": (3, 56, 2, 168),
     }
     cg_gals, _ = nonsplit_cg4(frames)
@@ -298,9 +300,17 @@ def check_E7_code():
 
     template = open(os.path.join(BASE, "src", "paper_template",
                                  "paper_template.tex")).read()
-    mentions = len(re.findall(r"-?9999", template))
-    record("E7-tex", mentions > 0,
-           f"template mentions the -9999 sentinel rule {mentions} time(s)")
+    # The defect is the *rule* (sentinel treated as a class / display floor),
+    # not any mention of -9999: the corrected methods legitimately explain
+    # that -9999 flags a missing measurement.
+    harmful = (
+        len(re.findall(r"arbitrary low value", template))
+        + len(re.findall(r"placed in the no-sSFR class", template))
+        + len(re.findall(r"sSFR_QUENCHED", template))
+    )
+    record("E7-tex", harmful > 0,
+           f"template still states the sentinel->class/display-floor rule "
+           f"in {harmful} place(s)")
 
 
 # ------------------------------------------------------------------ F. hygiene

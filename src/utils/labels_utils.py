@@ -163,8 +163,8 @@ def display_label(value):
     switcher = {
         "Starforming": "Star-forming",
         "Star forming": "Star-forming",
-        # -9999 sSFR flags missing estimates, not measured zero star formation
-        "Quenched": "No sSFR",
+        # Missing sSFR estimates are reported as counts, never as a class
+        "NosSFR": "No sSFR",
         "Predom": "Predominant",
         "CG4_Gals": "CG4",
         "Control4B_Gals": "Control4B",

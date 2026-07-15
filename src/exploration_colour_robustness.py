@@ -307,8 +307,14 @@ def build_harmonized_colour_frame(
         merged["logM"] = _numeric(merged["lgm"]) if "lgm" in merged else np.nan
         merged["z_harmonized"] = _numeric(merged["z"]) if "z" in merged else np.nan
         merged["sSFR_harmonized"] = _numeric(merged["sSFR"]) if "sSFR" in merged else np.nan
+        # Only the measured classes; unmeasured (NosSFR) galaxies must not
+        # form a regression category, so they become NA here.
         merged["sSFR_class"] = (
-            merged["sSFR_status"].astype("string") if "sSFR_status" in merged else pd.NA
+            merged["sSFR_status"].astype("string").where(
+                merged["sSFR_status"].isin(["Quenched", "Starforming"])
+            )
+            if "sSFR_status" in merged
+            else pd.NA
         )
         merged["morphology_harmonized"] = (
             merged["morphology"].astype("string") if "morphology" in merged else pd.NA
@@ -1096,7 +1102,7 @@ def colour_ssfr_outliers(
     residual = satellites["delta_u_minus_r"]
     conditions = {
         "blue + low sSFR": (residual < blue_threshold)
-        & satellites["sSFR_class"].isin(["Quenched", "Passive"]),
+        & satellites["sSFR_class"].isin(["Quenched"]),
         "red + high sSFR": (residual > red_threshold)
         & satellites["sSFR_class"].eq("Starforming"),
         "blue elliptical": (residual < blue_threshold)

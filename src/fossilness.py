@@ -56,7 +56,7 @@ def _group_summary(frame):
                     if len(magnitudes) >= 4
                     else np.nan
                 ),
-                "passive_satellite_fraction": satellites["passive"].mean(),
+                "quenched_satellite_fraction": satellites["quenched"].mean(),
                 "elliptical_satellite_fraction": satellites["elliptical"].mean(),
                 "bgg_elliptical": bgg["elliptical"].mean(),
                 "crossing_time": pd.to_numeric(
@@ -103,7 +103,7 @@ def _plot(groups, path):
 
 
 def _plot_fraction(groups, path):
-    clean = groups[["Delta_m12", "passive_satellite_fraction", "is_CG4"]].dropna()
+    clean = groups[["Delta_m12", "quenched_satellite_fraction", "is_CG4"]].dropna()
     if len(clean) < 10:
         return None
     fig, ax = plt.subplots(figsize=(6.2, 4.6))
@@ -111,14 +111,14 @@ def _plot_fraction(groups, path):
         part = clean.loc[clean["is_CG4"] == is_cg4]
         ax.scatter(
             part["Delta_m12"],
-            part["passive_satellite_fraction"],
+            part["quenched_satellite_fraction"],
             s=18,
             alpha=0.55,
             label=name,
             color=colour,
         )
     ax.set_xlabel(r"$\Delta m_{12}$")
-    ax.set_ylabel("Passive satellite fraction")
+    ax.set_ylabel("Quenched satellite fraction")
     ax.legend(frameon=False)
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
@@ -153,7 +153,7 @@ def run_fossilness_analysis(data, output_dir: str | None = None):
     correlation_p = []
     correlation_keys = []
     outcomes = [
-        "passive_satellite_fraction",
+        "quenched_satellite_fraction",
         "elliptical_satellite_fraction",
         "bgg_elliptical",
         "crossing_time",
@@ -194,7 +194,7 @@ def run_fossilness_analysis(data, output_dir: str | None = None):
             predictors,
             continuous=["Delta_m12", "logMstar"],
         )
-        for outcome in ["passive", "elliptical"]
+        for outcome in ["quenched", "elliptical"]
     }
     result = {
         "status": "ok",
@@ -212,8 +212,8 @@ def run_fossilness_analysis(data, output_dir: str | None = None):
         result["figure"] = _plot(
             groups, os.path.join(output_dir, "fig_magnitude_gap_comparison.pdf")
         )
-        result["passive_fraction_figure"] = _plot_fraction(
+        result["quenched_fraction_figure"] = _plot_fraction(
             groups,
-            os.path.join(output_dir, "fig_magnitude_gap_vs_passive_fraction.pdf"),
+            os.path.join(output_dir, "fig_magnitude_gap_vs_quenched_fraction.pdf"),
         )
     return safe_json(result)

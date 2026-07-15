@@ -29,18 +29,18 @@ def synthetic_frame(seed=20260612):
     log_mass = rng.normal(10.5 + 0.1 * is_cg4_group, 0.45, n)
     z_group = np.repeat(rng.uniform(0.02, 0.045, n_groups), members)
     z = z_group + rng.normal(0, 0.00035, n)
-    passive_probability = 1 / (
+    quenched_probability = 1 / (
         1 + np.exp(-(-0.4 + 0.6 * is_cg4_group + 0.7 * (log_mass - 10.5)))
     )
-    passive = rng.binomial(1, passive_probability)
+    quenched = rng.binomial(1, quenched_probability)
     elliptical = rng.binomial(
-        1, np.clip(0.25 + 0.2 * is_cg4_group + 0.2 * passive, 0.05, 0.9)
+        1, np.clip(0.25 + 0.2 * is_cg4_group + 0.2 * quenched, 0.05, 0.9)
     )
     base_ra = np.repeat(rng.uniform(150, 151, n_groups), members)
     base_dec = np.repeat(rng.uniform(1, 2, n_groups), members)
-    h_alpha = np.where(passive == 1, rng.normal(-1, 0.5, n), rng.normal(-15, 5, n))
-    log_nii = rng.normal(-0.35 + 0.3 * passive, 0.25, n)
-    log_oiii = rng.normal(-0.1 + 0.25 * passive, 0.25, n)
+    h_alpha = np.where(quenched == 1, rng.normal(-1, 0.5, n), rng.normal(-15, 5, n))
+    log_nii = rng.normal(-0.35 + 0.3 * quenched, 0.25, n)
+    log_oiii = rng.normal(-0.1 + 0.25 * quenched, 0.25, n)
     frame = pd.DataFrame(
         {
             "sample": sample,
@@ -53,8 +53,8 @@ def synthetic_frame(seed=20260612):
             "logMstar": log_mass,
             "z_numeric": z,
             "z_group_numeric": z_group,
-            "passive": passive,
-            "starforming": 1 - passive,
+            "quenched": quenched,
+            "starforming": 1 - quenched,
             "elliptical": elliptical,
             "spiral": 1 - elliptical,
             "R_norm": rng.uniform(0.05, 2.0, n),
@@ -76,10 +76,10 @@ def synthetic_frame(seed=20260612):
             "log_NII_Ha": log_nii,
             "log_OIII_Hb": log_oiii,
             "is_AGN": (log_nii > -0.1),
-            "u_minus_r": rng.normal(2.0 + 0.3 * passive, 0.2, n),
-            "u_minus_g": rng.normal(1.2 + 0.2 * passive, 0.15, n),
-            "g_minus_r": rng.normal(0.8 + 0.1 * passive, 0.1, n),
-            "r_minus_i": rng.normal(0.4 + 0.05 * passive, 0.08, n),
+            "u_minus_r": rng.normal(2.0 + 0.3 * quenched, 0.2, n),
+            "u_minus_g": rng.normal(1.2 + 0.2 * quenched, 0.15, n),
+            "g_minus_r": rng.normal(0.8 + 0.1 * quenched, 0.1, n),
+            "r_minus_i": rng.normal(0.4 + 0.05 * quenched, 0.08, n),
         }
     )
     frame.loc[
@@ -161,9 +161,9 @@ def test_all_modules_execute_on_synthetic_data_and_create_figures(tmp_path):
         "fig_specialness_logistic_coefficients.pdf",
         "fig_matched_control_effects.pdf",
         "fig_matched_control_balance.pdf",
-        "phase_space_satellite_passive_fraction_by_distance.pdf",
+        "phase_space_satellite_quenched_fraction_by_distance.pdf",
         "phase_space_satellite_earlytype_fraction_by_distance.pdf",
-        "phase_space_satellite_passive_fraction_projected_phase_space.pdf",
+        "phase_space_satellite_quenched_fraction_projected_phase_space.pdf",
         "phase_space_mass_redshift_balance.pdf",
         "fig_magnitude_gap_comparison.pdf",
         "fig_morphology_crowding_robustness.pdf",
@@ -183,7 +183,7 @@ def test_matched_control_reports_conservative_complement_family():
 
     assert "holm_correction_note" in result
     assert (
-        result["complementarity_audit"]["passive_starforming"]["exact_complements"]
+        result["complementarity_audit"]["quenched_starforming"]["exact_complements"]
         is True
     )
     assert result["complementarity_audit"]["elliptical_spiral"]["exact_complements"] is True

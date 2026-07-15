@@ -31,15 +31,15 @@ def _summary(frame: pd.DataFrame, threshold: float) -> dict[str, object]:
     is_starforming = frame["_ssfr_alt"] >= threshold
     n_total = int(len(frame))
     n_starforming = int(is_starforming.sum())
-    n_passive = int(n_total - n_starforming)
+    n_quenched = int(n_total - n_starforming)
     return {
         "n_total": n_total,
         "n_starforming": n_starforming,
-        "n_passive_or_quenched": n_passive,
+        "n_quenched": n_quenched,
         "starforming_fraction": float(n_starforming / n_total) if n_total else None,
-        "passive_or_quenched_fraction": float(n_passive / n_total) if n_total else None,
+        "quenched_fraction": float(n_quenched / n_total) if n_total else None,
         "starforming_fraction_fmt": f"{100 * n_starforming / n_total:.1f}" if n_total else "NA",
-        "passive_or_quenched_fraction_fmt": f"{100 * n_passive / n_total:.1f}" if n_total else "NA",
+        "quenched_fraction_fmt": f"{100 * n_quenched / n_total:.1f}" if n_total else "NA",
     }
 
 
@@ -73,11 +73,11 @@ def fixed_threshold_satellite_check(
         table = [
             [
                 cg_summary["n_starforming"],
-                cg_summary["n_passive_or_quenched"],
+                cg_summary["n_quenched"],
             ],
             [
                 control_summary["n_starforming"],
-                control_summary["n_passive_or_quenched"],
+                control_summary["n_quenched"],
             ],
         ]
         p_value = float(fisher_exact(table, alternative="two-sided").pvalue)

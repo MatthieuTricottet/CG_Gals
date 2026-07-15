@@ -56,7 +56,7 @@ PHASE_BIN_LABELS = {
     "outer_high_velocity": "Outer, high |dv|",
 }
 OUTCOMES = {
-    "passive": "passive",
+    "quenched": "quenched",
     "early_type": "early_type",
     "elliptical": "elliptical",
 }
@@ -216,20 +216,21 @@ def _prepare_frame(data) -> tuple[pd.DataFrame, dict[str, str | None], list[str]
     if "is_bgg" not in frame:
         frame["is_bgg"] = np.where(frame["rank"].notna(), frame["rank"].eq(1), np.nan)
 
-    if "passive" not in frame:
+    if "quenched" not in frame:
         status_column = first_existing(frame, ["sSFR_status", "SFRcategory"])
         mapping["sfr_class"] = status_column
         status = frame.get(status_column, pd.Series("", index=frame.index)).astype(str)
         status = status.str.lower()
-        valid = status.ne("") & status.ne("nan")
-        frame["passive"] = np.where(
+        # only measured classes count; missing sSFR (NosSFR) stays NaN
+        valid = status.isin(["quenched", "starforming", "q", "m", "g"])
+        frame["quenched"] = np.where(
             valid,
-            status.isin(["quenched", "passive", "q"]).astype(float),
+            status.isin(["quenched", "q"]).astype(float),
             np.nan,
         )
     else:
-        mapping["sfr_class"] = "passive"
-        frame["passive"] = pd.to_numeric(frame["passive"], errors="coerce")
+        mapping["sfr_class"] = "quenched"
+        frame["quenched"] = pd.to_numeric(frame["quenched"], errors="coerce")
 
     if "elliptical" not in frame:
         morphology_column = first_existing(frame, ["morphology", "morph_class"])
@@ -348,7 +349,7 @@ def _cut_counts(frame: pd.DataFrame) -> dict[str, list[dict[str, int | str]]]:
             & ~pd.to_numeric(value["is_bgg"], errors="coerce").eq(1),
         ),
         ("valid_stellar_mass", lambda value: value["logMstar"].notna()),
-        ("valid_sfr_class", lambda value: value["passive"].notna()),
+        ("valid_sfr_class", lambda value: value["quenched"].notna()),
         (
             "valid_projected_distance",
             lambda value: value["dist2BGG_projected_kpc"].notna(),
@@ -524,8 +525,8 @@ def _global_statistics(satellites: pd.DataFrame, n_boot: int) -> dict[str, objec
             "n_groups": int(part["group_uid"].nunique()),
             "median_logMstar": _finite_median(part["logMstar"]),
             "median_redshift": _finite_median(part["z_numeric"]),
-            "passive_fraction": cluster_bootstrap_fraction(
-                part, "passive", n_boot=n_boot
+            "quenched_fraction": cluster_bootstrap_fraction(
+                part, "quenched", n_boot=n_boot
             ),
             "early_type_fraction": cluster_bootstrap_fraction(
                 part, "early_type", n_boot=n_boot
@@ -583,7 +584,7 @@ def _add_model_terms(satellites: pd.DataFrame, include_velocity: bool = False):
 def _fit_models(satellites: pd.DataFrame, velocity_available: bool) -> dict[str, object]:
     models = {}
     for outcome_name, outcome_col in [
-        ("passive", "passive"),
+        ("quenched", "quenched"),
         ("early_type", "early_type"),
     ]:
         work, predictors, continuous = _add_model_terms(satellites)
@@ -609,8 +610,8 @@ def _fit_models(satellites: pd.DataFrame, velocity_available: bool) -> dict[str,
                 min_n=30,
                 min_class=5,
             )
-    models["passive"] = models.get("passive_phase_space") or models.get(
-        "passive_distance"
+    models["quenched"] = models.get("quenched_phase_space") or models.get(
+        "quenched_distance"
     )
     models["elliptical"] = models.get("early_type_phase_space") or models.get(
         "early_type_distance"
@@ -718,7 +719,7 @@ def _matched_robustness(satellites: pd.DataFrame, n_boot: int) -> dict[str, obje
     treated = complete.loc[[pair["treated_index"] for pair in pairs]].reset_index(drop=True)
     control = complete.loc[[pair["control_index"] for pair in pairs]].reset_index(drop=True)
     effects = {
-        "passive": _matched_effect(treated, control, "passive", n_boot),
+        "quenched": _matched_effect(treated, control, "quenched", n_boot),
         "early_type": _matched_effect(treated, control, "early_type", n_boot),
     }
     distance_bin_effects = {}
@@ -735,7 +736,7 @@ def _matched_robustness(satellites: pd.DataFrame, n_boot: int) -> dict[str, obje
             }
             continue
         distance_bin_effects[bin_name] = {
-            "passive": _matched_effect(treated.loc[mask], control.loc[mask], "passive", n_boot),
+            "quenched": _matched_effect(treated.loc[mask], control.loc[mask], "quenched", n_boot),
             "early_type": _matched_effect(
                 treated.loc[mask], control.loc[mask], "early_type", n_boot
             ),
@@ -878,16 +879,16 @@ def _text_summary(
     matched: dict[str, object],
     velocity_available: bool,
 ) -> dict[str, object]:
-    inner_passive = distance_bins["inner"]["passive"]
-    outer_passive = distance_bins["outer"]["passive"]
+    inner_quenched = distance_bins["inner"]["quenched"]
+    outer_quenched = distance_bins["outer"]["quenched"]
     inner_early = distance_bins["inner"]["early_type"]
-    passive_model = models.get("passive_distance", {})
+    quenched_model = models.get("quenched_distance", {})
     early_model = models.get("early_type_distance", {})
-    matched_passive = matched.get("effects", {}).get("passive", {})
+    matched_quenched = matched.get("effects", {}).get("quenched", {})
     matched_early = matched.get("effects", {}).get("early_type", {})
     trend = "undetermined"
-    inner_delta = inner_passive["delta_CG4_minus_RG4"]["delta"]
-    outer_delta = outer_passive["delta_CG4_minus_RG4"]["delta"]
+    inner_delta = inner_quenched["delta_CG4_minus_RG4"]["delta"]
+    outer_delta = outer_quenched["delta_CG4_minus_RG4"]["delta"]
     if inner_delta is not None and outer_delta is not None:
         if abs(inner_delta - outer_delta) < 0.05:
             trend = "similar_at_inner_and_outer_ranks"
@@ -896,43 +897,43 @@ def _text_summary(
         else:
             trend = "stronger_outer"
 
-    passive_terms = passive_model.get("terms", {})
+    quenched_terms = quenched_model.get("terms", {})
     early_terms = early_model.get("terms", {})
-    passive_cg = passive_terms.get("is_CG4", {})
+    quenched_cg = quenched_terms.get("is_CG4", {})
     early_cg = early_terms.get("is_CG4", {})
     return {
         "cg_satellite_n": global_stats["CG4"]["n_satellites"],
         "rg_satellite_n": global_stats["RG4"]["n_satellites"],
-        "cg_passive_fraction_inner": inner_passive["CG4"]["fraction"],
-        "rg_passive_fraction_inner": inner_passive["RG4"]["fraction"],
-        "delta_passive_fraction_inner": inner_delta,
-        "delta_passive_fraction_inner_err": inner_passive["delta_CG4_minus_RG4"][
+        "cg_quenched_fraction_inner": inner_quenched["CG4"]["fraction"],
+        "rg_quenched_fraction_inner": inner_quenched["RG4"]["fraction"],
+        "delta_quenched_fraction_inner": inner_delta,
+        "delta_quenched_fraction_inner_err": inner_quenched["delta_CG4_minus_RG4"][
             "stderr"
         ],
-        "cg_passive_fraction_outer": outer_passive["CG4"]["fraction"],
-        "rg_passive_fraction_outer": outer_passive["RG4"]["fraction"],
-        "delta_passive_fraction_outer": outer_delta,
+        "cg_quenched_fraction_outer": outer_quenched["CG4"]["fraction"],
+        "rg_quenched_fraction_outer": outer_quenched["RG4"]["fraction"],
+        "delta_quenched_fraction_outer": outer_delta,
         "cg_earlytype_fraction_inner": inner_early["CG4"]["fraction"],
         "rg_earlytype_fraction_inner": inner_early["RG4"]["fraction"],
         "delta_earlytype_fraction_inner": inner_early["delta_CG4_minus_RG4"]["delta"],
         "delta_earlytype_fraction_inner_err": inner_early["delta_CG4_minus_RG4"][
             "stderr"
         ],
-        "passive_model_sample_cg_or": passive_cg.get("odds_ratio"),
-        "passive_model_sample_cg_ci_low": (
-            passive_cg.get("ci95", [None, None])[0] if passive_cg else None
+        "quenched_model_sample_cg_or": quenched_cg.get("odds_ratio"),
+        "quenched_model_sample_cg_ci_low": (
+            quenched_cg.get("ci95", [None, None])[0] if quenched_cg else None
         ),
-        "passive_model_sample_cg_ci_high": (
-            passive_cg.get("ci95", [None, None])[1] if passive_cg else None
+        "quenched_model_sample_cg_ci_high": (
+            quenched_cg.get("ci95", [None, None])[1] if quenched_cg else None
         ),
-        "passive_model_sample_cg_p": passive_cg.get("p"),
+        "quenched_model_sample_cg_p": quenched_cg.get("p"),
         "earlytype_model_sample_cg_or": early_cg.get("odds_ratio"),
         "earlytype_model_sample_cg_p": early_cg.get("p"),
-        "matched_delta_passive": matched_passive.get("delta_CG4_minus_RG4"),
-        "matched_delta_passive_ci95": matched_passive.get("ci95"),
+        "matched_delta_quenched": matched_quenched.get("delta_CG4_minus_RG4"),
+        "matched_delta_quenched_ci95": matched_quenched.get("ci95"),
         "matched_delta_earlytype": matched_early.get("delta_CG4_minus_RG4"),
         "matched_delta_earlytype_ci95": matched_early.get("ci95"),
-        "passive_radial_trend": trend,
+        "quenched_radial_trend": trend,
         "velocity_analysis_available": bool(velocity_available),
     }
 
@@ -940,17 +941,17 @@ def _text_summary(
 def _legacy_bin_results(phase_bins: dict[str, dict[str, object]]) -> dict[str, object]:
     legacy = {}
     for bin_name in PHASE_BIN_ORDER:
-        passive = phase_bins.get(bin_name, {}).get("passive", {})
+        quenched = phase_bins.get(bin_name, {}).get("quenched", {})
         legacy[bin_name] = {
             "cg4": {
-                "n": passive.get("CG4", {}).get("n", 0),
-                "passive_fraction": passive.get("CG4", {}).get("fraction"),
+                "n": quenched.get("CG4", {}).get("n", 0),
+                "quenched_fraction": quenched.get("CG4", {}).get("fraction"),
             },
             "control": {
-                "n": passive.get("RG4", {}).get("n", 0),
-                "passive_fraction": passive.get("RG4", {}).get("fraction"),
+                "n": quenched.get("RG4", {}).get("n", 0),
+                "quenched_fraction": quenched.get("RG4", {}).get("fraction"),
             },
-            "low_N": passive.get("low_N", True),
+            "low_N": quenched.get("low_N", True),
         }
     return legacy
 
@@ -971,7 +972,7 @@ def run_phase_space_segregation_analysis(
         return {"status": "skipped", "reason": "no_input_rows"}
     missing = [
         column
-        for column in ["sample", "is_satellite", "logMstar", "passive", "dist2BGG_projected_kpc"]
+        for column in ["sample", "is_satellite", "logMstar", "quenched", "dist2BGG_projected_kpc"]
         if column not in frame
     ]
     if missing:
@@ -983,7 +984,7 @@ def run_phase_space_segregation_analysis(
 
     satellites = prepare_phase_space_satellite_sample(frame)
     baseline = satellites.dropna(
-        subset=["logMstar", "passive", "dist2BGG_projected_kpc", "z_numeric"]
+        subset=["logMstar", "quenched", "dist2BGG_projected_kpc", "z_numeric"]
     ).copy()
     if len(baseline) < min_satellites:
         return {
@@ -1029,13 +1030,13 @@ def run_phase_space_segregation_analysis(
     figures = {}
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
-        figures["passive_fraction_by_distance"] = _plot_distance_fraction(
+        figures["quenched_fraction_by_distance"] = _plot_distance_fraction(
             distance_bins,
-            "passive",
-            "Passive satellite fraction",
+            "quenched",
+            "Quenched satellite fraction",
             os.path.join(
                 output_dir,
-                "phase_space_satellite_passive_fraction_by_distance.pdf",
+                "phase_space_satellite_quenched_fraction_by_distance.pdf",
             ),
         )
         figures["earlytype_fraction_by_distance"] = _plot_distance_fraction(
@@ -1048,13 +1049,13 @@ def run_phase_space_segregation_analysis(
             ),
         )
         if velocity_available:
-            figures["passive_fraction_projected_phase_space"] = _plot_phase_bins(
+            figures["quenched_fraction_projected_phase_space"] = _plot_phase_bins(
                 phase_bins,
-                "passive",
-                "Passive satellite fraction",
+                "quenched",
+                "Quenched satellite fraction",
                 os.path.join(
                     output_dir,
-                    "phase_space_satellite_passive_fraction_projected_phase_space.pdf",
+                    "phase_space_satellite_quenched_fraction_projected_phase_space.pdf",
                 ),
             )
         figures["mass_redshift_balance"] = _plot_matching_balance(
@@ -1064,7 +1065,7 @@ def run_phase_space_segregation_analysis(
 
     fixed_signal = False
     for bin_name in PHASE_BIN_ORDER:
-        block = phase_bins.get(bin_name, {}).get("passive", {})
+        block = phase_bins.get(bin_name, {}).get("quenched", {})
         delta = block.get("delta_CG4_minus_RG4", {})
         stderr = delta.get("stderr")
         estimate = delta.get("delta")
@@ -1116,13 +1117,13 @@ def run_phase_space_segregation_analysis(
         "velocity_analysis_available": bool(velocity_available),
         "bin_results": _legacy_bin_results(phase_bins),
         "logistic_models": {
-            "passive": models.get("passive_phase_space", models.get("passive_distance")),
+            "quenched": models.get("quenched_phase_space", models.get("quenched_distance")),
             "elliptical": models.get(
                 "early_type_phase_space", models.get("early_type_distance")
             ),
         },
         "fixed_phase_space_cg4_significant": bool(fixed_signal),
-        "figure": figures.get("passive_fraction_projected_phase_space"),
+        "figure": figures.get("quenched_fraction_projected_phase_space"),
     }
     return safe_json(result)
 

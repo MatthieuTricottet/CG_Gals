@@ -151,7 +151,7 @@ def plot_group_relation_3d(data: pd.DataFrame, output_path: str) -> str | None:
 
 
 def add_group_ssfr_excess_summary(sample: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
-    """Add median sSFR excess and quenched flags to each group catalogue."""
+    """Add median sSFR excess and missing-sSFR flags to each group catalogue."""
 
     def loc_agg(group: pd.DataFrame) -> pd.Series:
         """Summarize the member-level star-formation state for one group."""
@@ -159,7 +159,7 @@ def add_group_ssfr_excess_summary(sample: dict[str, pd.DataFrame]) -> dict[str, 
         return pd.Series(
             {
                 "sSFR_excess_median": float(np.nanmedian(group["sSFR_excess"])),
-                "has_quenched": bool((group["sSFR_status"] == "Quenched").sum() > 0),
+                "has_nossfr": bool((group["sSFR_status"] == co.NosSFR_LABEL).sum() > 0),
             }
         )
 
@@ -177,7 +177,7 @@ def add_group_ssfr_excess_summary(sample: dict[str, pd.DataFrame]) -> dict[str, 
             .apply(loc_agg)
             .reset_index()
         )
-        groups = sample[grp_key].drop(columns=["sSFR_excess_median", "has_quenched"], errors="ignore")
+        groups = sample[grp_key].drop(columns=["sSFR_excess_median", "has_nossfr"], errors="ignore")
         sample[grp_key] = groups.merge(group_stats, on="Group", how="left")
 
     return sample

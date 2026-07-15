@@ -85,7 +85,7 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
         work.loc[
             (work[dn4000] >= 1.6) & (work[halpha] > -3) & (work[hdelta] < 4),
             "classification",
-        ] = "old_passive"
+        ] = "old_quenched"
         fractions = {}
         for sample_name, part in work.groupby("sample", observed=True):
             denominator = int(part["classification"].ne("unclassified").sum())
@@ -95,7 +95,7 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
                     if denominator
                     else None
                 )
-                for category in ["old_passive", "recently_quenched", "starforming"]
+                for category in ["old_quenched", "recently_quenched", "starforming"]
             }
         return safe_json(
             {

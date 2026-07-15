@@ -181,16 +181,6 @@ def get_decision_boundary_interp(non_quenched, fit_results, boundary_margin=0.5,
     return f_interp
 
 
-def flattens_quenched(row):
-    """Replace the legacy quenched sentinel by the plotting floor value."""
-
-    # set sSFR to -15 if it is -9999
-    if row['sSFR'] == -9999:
-        return -15
-    else:
-        return row['sSFR']
-
-
 def compute_component_prob(x, comp_idx, fit_results):
     """Evaluate the weighted Gaussian-mixture density of one component."""
 
@@ -244,29 +234,26 @@ def is_star_forming(cat, fit_results):
     return star_forming
 
 
+def measured_mask(df, ssfr_col='sSFR', lgm_col='lgm'):
+    """Rows with a usable sSFR measurement (finite sSFR and stellar mass)."""
+
+    ssfr = pd.to_numeric(df[ssfr_col], errors='coerce')
+    lgm = pd.to_numeric(df[lgm_col], errors='coerce')
+    return ssfr.notna() & lgm.notna()
+
+
 def sSFR_status(df):
+    """Classify galaxies with a measured sSFR as Quenched or Starforming.
+
+    Galaxies without a usable sSFR measurement are labelled with
+    ``co.NosSFR_LABEL``: they are *not* a physical class, are excluded from
+    every fraction and figure, and are reported as counts only.
     """
-    Classify galaxies based on their sSFR status.
-    
-    Parameters
-    ----------
-    df : pandas.DataFrame
-        DataFrame containing the data to classify.
-    
-    Returns
-    -------
-    None
-    """
-    
-    
-    if 'sSFR_status' not in df.columns:
-        df['sSFR_status'] = pd.Series(pd.NA, index=df.index, dtype=object)
-    current_status = df['sSFR_status']
-    blank_mask = current_status.apply(lambda val: isinstance(val, str) and val.strip() == '')
-    needs_update = current_status.isna() | blank_mask
-    df.loc[needs_update, 'sSFR_status'] = co.sSFR_status[0]  # Default to 'quenched'
-    df.loc[needs_update & (df['sSFR'] > -9999), 'sSFR_status'] = co.sSFR_status[1]  # Set to 'passive'
-    df.loc[needs_update & (df['is_star_forming']), 'sSFR_status'] = co.sSFR_status[2]  # Set to 'star-forming'
+
+    measured = measured_mask(df)
+    df['sSFR_status'] = co.NosSFR_LABEL
+    df.loc[measured, 'sSFR_status'] = co.sSFR_status[0]  # 'Quenched'
+    df.loc[measured & df['is_star_forming'], 'sSFR_status'] = co.sSFR_status[-1]
 
     return df['sSFR_status']
 
@@ -291,30 +278,37 @@ def add_MS_offset(df, MS_coeffs):
 
 def add_status(df, fit_results):
     """
-    Add the sSFR status to the dataframes
+    Add the sSFR status to the dataframes. Only galaxies with a measured
+    sSFR enter the GMM decision; the rest are flagged as missing.
     """
-    df['is_star_forming'] = is_star_forming(df, fit_results)
-    #    set df['sSFR_status'] as sSFR_status(df) if df['sSFR_status'] is nan else keep df['sSFR_status']
-    
+    measured = measured_mask(df)
+    df['is_star_forming'] = False
+    if measured.any():
+        df.loc[measured, 'is_star_forming'] = is_star_forming(
+            df.loc[measured], fit_results
+        )
 
     df['sSFR_status'] = sSFR_status(df)
-    
+
     df.drop(columns=['is_star_forming'], inplace=True)
-    df['sSFR_raw'] = df['sSFR']
-    df['sSFR'] = df.apply(flattens_quenched, axis=1)
 
     return df
     
 
 def compute_status(sample):
-    """Classify all samples in sSFR space and build the decision boundary."""
+    """Classify all samples in sSFR space and build the decision boundary.
 
-    non_quenched = sample['SDSS'][sample['SDSS']['sSFR_status'] != co.sSFR_status[0]]
-    fit_results = get_fit(non_quenched)
-    f_interp = get_decision_boundary_interp(non_quenched, fit_results)
+    The GMM is fitted on SDSS galaxies with a *measured* sSFR only;
+    unmeasured galaxies are never used in the fit and never classified.
+    """
+
+    sdss = sample['SDSS']
+    classified = sdss[measured_mask(sdss)]
+    fit_results = get_fit(classified)
+    f_interp = get_decision_boundary_interp(classified, fit_results)
     for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]+['SDSS']:
         sample[cat] = add_status(sample[cat], fit_results)
-    return sample, non_quenched, fit_results, f_interp
+    return sample, classified, fit_results, f_interp
 
 
 def compare(sample, Verbose=True):
@@ -326,54 +320,40 @@ def compare(sample, Verbose=True):
     #* Initialising variables
     #* --------------------------------------------------------------------------------
     CG = sample['CG4'+co.GASUFF]
-    CG_lgm = _ranked_ssfr_frame(CG)
+    CG_counts = _status_counts(_ranked_ssfr_frame(CG))
     results = {}
     #* --------------------------------------------------------------------------------
     if Verbose:
-            print("CG")
-    for status in co.sSFR_status:
-        CG_status = CG_lgm[CG_lgm['sSFR_status'] == status]
-        frac = len(CG_status) / len(CG_lgm)
-        # results = pu.dict_union(results, {df.name : {'sSFR_status': status, 'fraction': f'{100*frac:.1f}\%'}})
-        if Verbose:
-            print(f"   {status}: {100*frac:.1f} % ")
+        print("CG")
+        for status in co.sSFR_status:
+            print(f"   {status}: {100*CG_counts[status]/CG_counts['Total']:.1f} % "
+                  "(of classified)")
+        print(f"   {co.NosSFR_LABEL}: {CG_counts[co.NosSFR_LABEL]} galaxies excluded")
 
+    sf = co.sSFR_status[-1]
     for control_name in co.CONTROL:
+        control_counts = _status_counts(
+            _ranked_ssfr_frame(sample[control_name+co.GASUFF])
+        )
         if Verbose:
             print(control_name)
-
-        control = sample[control_name+co.GASUFF]
-        control_lgm = _ranked_ssfr_frame(control)
-        for status in co.sSFR_status:
-            control_status = control_lgm[control_lgm['sSFR_status'] == status]
-            frac = len(control_status) / len(control_lgm)
-            # results = pu.dict_union(results, {df.name : {'sSFR_status': status, 'fraction': f'{100*frac:.1f}\%'}})
-            if Verbose:
-                print(f"   {status}: {100*frac:.1f} % ")
-        # Calculate the p-value for the proportion of star forming galaxies
-        if ((co.sSFR_status[2] in control_lgm['sSFR_status'].unique()) and
-            (co.sSFR_status[2] in CG_lgm['sSFR_status'].unique())): # Star forming
-            CG_starforming = CG_lgm[CG_lgm['sSFR_status'] == co.sSFR_status[2]]
-            control_starforming = control_lgm[control_lgm['sSFR_status'] == co.sSFR_status[2]]
-            table = _starforming_vs_non_table(
-                _status_counts(CG_lgm), _status_counts(control_lgm)
-            )
+            for status in co.sSFR_status:
+                print(f"   {status}: "
+                      f"{100*control_counts[status]/control_counts['Total']:.1f} % "
+                      "(of classified)")
+            print(f"   {co.NosSFR_LABEL}: {control_counts[co.NosSFR_LABEL]} "
+                  "galaxies excluded")
+        # Fisher exact test on star-forming vs quenched, classified rows only
+        if CG_counts[sf] and control_counts[sf]:
+            table = _starforming_vs_non_table(CG_counts, control_counts)
             res_fisher = fisher_exact(table, alternative='two-sided')
-            # results_old.loc['p_star_forming_diff_Control', df.name] = res_fisher.pvalue
-            results = pu.dict_union(results, {control_name+"_"+status+"_vs_CG": res_fisher.pvalue})
+            results = pu.dict_union(
+                results, {control_name+"_"+sf+"_vs_CG": res_fisher.pvalue}
+            )
             if Verbose:
-                print(f"   {status}: {100*len(control_status)/len(control_lgm):.1f} %")
-                print("Exact test p-values of proportion of star forming being different between CG_4 and the control sample:")
-                print(f"   Fisher: {res_fisher.pvalue:.1e}")
-                if res_fisher.pvalue < 0.05:
-                    print("   Reject null hypothesis: the proportion of star forming galaxies is different between CG_4 and the control sample")
-                    print(f"   CG_4 proportion of star forming ({100*len(control_starforming)/len(control_lgm):.1f}%) " + 
-                        f"is different from {control_name} proportion of star forming ({100*len(CG_starforming)/len(CG_lgm):.1f}%)")
-                else:
-                    print("   Fail to reject null hypothesis: the proportion of star forming galaxies is not different between " + 
-                        "CG_4 and control sample")
+                print(f"   Fisher (star-forming fraction vs CG4): "
+                      f"{res_fisher.pvalue:.1e}")
 
-    
     return results
 
 
@@ -385,19 +365,29 @@ def _ranked_ssfr_frame(df):
 
 
 def _status_counts(df):
-    """Count the configured sSFR classes and the total ranked rows."""
+    """Count the measured sSFR classes, the unmeasured rows and the totals.
+
+    ``Total`` is the number of *classified* (measured) galaxies: fractions
+    and tests are always computed among classified galaxies only. The
+    unmeasured count is carried separately under ``co.NosSFR_LABEL``.
+    """
 
     counts = {
         status: int((df["sSFR_status"] == status).sum()) for status in co.sSFR_status
     }
     counts["Total"] = int(sum(counts.values()))
+    counts[co.NosSFR_LABEL] = int((df["sSFR_status"] == co.NosSFR_LABEL).sum())
     return counts
 
 
 def _starforming_vs_non_table(res1, res2):
-    """Build a Fisher table for star-forming versus non-star-forming rows."""
+    """Build a Fisher table for star-forming versus quenched galaxies.
 
-    sf = co.sSFR_status[2]
+    Only classified galaxies enter the table; unmeasured galaxies are
+    excluded from the test entirely.
+    """
+
+    sf = co.sSFR_status[-1]
     return [
         [res1[sf], res1["Total"] - res1[sf]],
         [res2[sf], res2["Total"] - res2[sf]],
@@ -416,20 +406,23 @@ def validate_ssfr_table_counts(sample):
         sat_counts = _status_counts(df.loc[rank.gt(1)])
         combined = {
             status: bgg_counts[status] + sat_counts[status]
-            for status in co.sSFR_status
+            for status in [*co.sSFR_status, co.NosSFR_LABEL]
         }
-        combined["Total"] = sum(combined.values())
+        combined["Total"] = sum(combined[status] for status in co.sSFR_status)
         if any(all_counts[key] != combined[key] for key in combined):
             raise AssertionError(
                 f"{name} sSFR counts are inconsistent: all={all_counts}, "
                 f"BGG+sat={combined}"
             )
         if "morphology" in df:
+            # The morphology table covers all ranked galaxies, i.e. the
+            # classified ones plus those without an sSFR measurement.
             morph_total = int(df["morphology"].isin(co.Morphologies).sum())
-            if morph_total != all_counts["Total"]:
+            expected = all_counts["Total"] + all_counts[co.NosSFR_LABEL]
+            if morph_total != expected:
                 raise AssertionError(
                     f"{name} morphology total {morph_total} does not match "
-                    f"sSFR total {all_counts['Total']}"
+                    f"classified+unmeasured total {expected}"
                 )
         audit[name] = {
             "all": all_counts,
@@ -528,7 +521,7 @@ def plot_classification(non_quenched, sdss_df, fit_results, f_interp,
     x_vals = np.linspace(non_quenched['lgm'].min()-0.5, 
                          non_quenched['lgm'].max()+0.5, 200)
     y_vals = f_interp(x_vals)
-    ax.plot(x_vals, y_vals, 'k--', linewidth=2, label='Star-forming - passive limit')
+    ax.plot(x_vals, y_vals, 'k--', linewidth=2, label='Star-forming \u2013 quenched limit')
     
     # Add quenched galaxies as red points.
     # sdss_quenched = sdss_df[sdss_df['sSFR_status'] == 'Q'].copy()
@@ -538,11 +531,11 @@ def plot_classification(non_quenched, sdss_df, fit_results, f_interp,
     
     # Create proxy artists for the legend.
     # boundary_proxy = mlines.Line2D([], [], color='black', linestyle='--', linewidth=2,
-    #                                label='Star forming – Passive limit')
+
     # star_proxy = mlines.Line2D([], [], color='blue', marker='o', linestyle='None', markersize=5,
     #                            label='Star Forming')
     # green_proxy = mlines.Line2D([], [], color='green', marker='o', linestyle='None', markersize=5,
-    #                             label='Passive')
+
     # red_proxy = mlines.Line2D([], [], color='red', marker='o', linestyle='None', markersize=5,
     #                           label='Quenched')
     
@@ -560,7 +553,7 @@ def plot_classification(non_quenched, sdss_df, fit_results, f_interp,
  
 def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsize=(10, 8),
                    fontsize_labels=16, fontsize_legend=14, 
-                   xmin = 7.5, xmax = 11.8, ymin = co.sSFR_QUENCHED - 0.2, ymax = -8):
+                   xmin = 7.5, xmax = 11.8, ymin = -14.2, ymax = -8):
     """
     Create a scatter plot of galaxy sSFR vs stellar mass using subplots.
     
@@ -590,43 +583,45 @@ def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsi
     # Filter Control for valid mass values
     # Control = Control.loc[Control['lgm'] > 0]
     
-    # Create a copy of the dataframe with capitalized sSFR_status for the legend
-    plot_data = SDSS.copy()
+    # Galaxies without an sSFR measurement are excluded from this figure:
+    # missing means "no measurement", not "very low star formation".
+    plot_data = SDSS[SDSS['sSFR_status'].isin(co.sSFR_status)].copy()
     plot_data['sSFR_status'] = plot_data['sSFR_status'].apply(lu.display_label)
-    
+
+    status_colours = {
+        co.sSFR_status[0]: 'red',    # Quenched
+        co.sSFR_status[-1]: 'blue',  # Starforming
+    }
+
     # Create figure and axis objects
     fig, ax = plt.subplots(figsize=figsize)
-    
-    # Create the scatter plot for main Control with capitalized labels
+
     sns.scatterplot(
         data=plot_data,
         x='lgm',
         y='sSFR',
         hue='sSFR_status',
         palette={
-            lu.display_label(co.sSFR_status[0]): 'red',
-            lu.display_label(co.sSFR_status[1]): 'green',
-            lu.display_label(co.sSFR_status[2]): 'blue',
+            lu.display_label(status): colour
+            for status, colour in status_colours.items()
         },
         alpha=0.5,
         s=1,
         ax=ax,
         legend=False  # Don't create a legend yet
     )
-    
+
     # Create a new legend with proper sizes for dot markers
     dot_legend_elements = [
-        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='red', 
-                  markersize=markerscale, label=lu.display_label(co.sSFR_status[0]), alpha=0.7),
-        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='green', 
-                  markersize=markerscale, label=lu.display_label(co.sSFR_status[1]), alpha=0.7),
-        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor='blue', 
-                  markersize=markerscale, label=lu.display_label(co.sSFR_status[2]), alpha=0.7)
+        plt.Line2D([0], [0], marker='o', color='w', markerfacecolor=colour,
+                   markersize=markerscale, label=lu.display_label(status),
+                   alpha=0.7)
+        for status, colour in status_colours.items()
     ]
-    
-        
-    # Filter CG data for valid mass values
-    CG_filtered = CG[CG['lgm'] > 0]
+
+
+    # Filter CG data for valid mass values and measured sSFR
+    CG_filtered = CG[(CG['lgm'] > 0) & CG['sSFR'].notna()]
     
     # Plot CG data as empty triangles
     ax.scatter(
@@ -921,15 +916,26 @@ def restrict_analysis(df, df_name, restric_name):
 
     if co.VERBOSE:
         print(df_name)
-    total = len(df)
-    results = {"Total": int(total)}
+    results = _status_counts(df)
+    classified = results["Total"]
     for status in co.sSFR_status:
-        n_df = len(df[df['sSFR_status'] == status])
-        results[status] = n_df
+        n_df = results[status]
         report.append_json(f'{df_name}_{restric_name}_N{status}', n_df)
-        report.append_json(f'{df_name}_{restric_name}_N{status}_pc', f"{100*n_df/total:.1f}")
+        report.append_json(
+            f'{df_name}_{restric_name}_N{status}_pc',
+            f"{100*n_df/classified:.1f}" if classified else "n/a",
+        )
         if co.VERBOSE:
-            print(f".  {status}: {n_df} / {total} = {n_df/total:.1f}")
+            print(f".  {status}: {n_df} / {classified} classified")
+    # Unmeasured galaxies: counts only, never a class. Their percentage is
+    # quoted with respect to *all* galaxies in the subsample (missingness).
+    n_missing = results[co.NosSFR_LABEL]
+    total_all = classified + n_missing
+    report.append_json(f'{df_name}_{restric_name}_N{co.NosSFR_LABEL}', n_missing)
+    report.append_json(
+        f'{df_name}_{restric_name}_N{co.NosSFR_LABEL}_pc',
+        f"{100*n_missing/total_all:.1f}" if total_all else "n/a",
+    )
 
     return results
 
@@ -951,6 +957,35 @@ def pval_restrict_analysis(res1, res2, df1_name, df2_name, restric_name):
             print("   Reject null hypothesis: the proportion is different")
         else:
             print("   Fail to reject null hypothesis: the proportion is not different")
+
+
+def missingness_summary(sample):
+    """Report missing-sSFR counts and fractions by sample and BGG/satellite.
+
+    Quenched/star-forming fractions in the paper are computed among
+    classified galaxies only; this table makes the exclusions transparent.
+    Written to the report JSON as ``sSFR_missingness`` plus flat keys
+    ``{sample}_{BGG|Sat}_missing_N`` / ``_pc`` for template macros.
+    """
+
+    summary = {}
+    for name in co.SAMPLE.keys():
+        df = _ranked_ssfr_frame(sample[name + co.GASUFF])
+        rank = pd.to_numeric(df["rank_M"], errors="coerce")
+        entry = {}
+        for part, mask in [("BGG", rank.eq(1)), ("Sat", rank.gt(1)),
+                           ("All", rank.gt(0))]:
+            sub = df.loc[mask, "sSFR_status"]
+            n_total = int(len(sub))
+            n_missing = int((sub == co.NosSFR_LABEL).sum())
+            pc = f"{100*n_missing/n_total:.1f}" if n_total else "n/a"
+            entry[part] = {"N": n_total, "missing": n_missing, "missing_pc": pc}
+            report.append_json(f"{name}_{part}_missing_N", n_missing)
+            report.append_json(f"{name}_{part}_total_N", n_total)
+            report.append_json(f"{name}_{part}_missing_pc", pc)
+        summary[name] = entry
+    report.append_json("sSFR_missingness", summary)
+    return summary
 
 
 def BGGs_analysis(sample):
@@ -1053,7 +1088,7 @@ def split_by_fertility(sample, make_plots=True,
             co.sSFR_status[index]: sample[cat][
                 sample[cat]['sSFR_status'] == co.sSFR_status[index]
             ]
-            for index in [1, 2]
+            for index in [0, 1]
         }
 
         stats = anl.stats_comp_split(split)
@@ -1061,7 +1096,7 @@ def split_by_fertility(sample, make_plots=True,
         # ================================================================
         # A) Store per-population medians + errors (already working)
         # ================================================================
-        for part in split.keys():  # Passive / Starforming
+        for part in split.keys():  # Quenched / Starforming
             for quantity in QUANTITIES_FERTILITY:
                 median_val = stats[part][quantity]
 
@@ -1095,10 +1130,10 @@ def split_by_fertility(sample, make_plots=True,
                 report.append_json(f'{name}_{part}_morphology_{morpho}_N', count)
 
         # ================================================================
-        # B) NEW : Difference Passive – Starforming (per sample)
+        # B) Difference Quenched – Starforming (per sample)
         # ================================================================
-        if co.sSFR_status[1] in split and co.sSFR_status[-1] in split:
-            A = split[co.sSFR_status[1]] # Passive
+        if co.sSFR_status[0] in split and co.sSFR_status[-1] in split:
+            A = split[co.sSFR_status[0]] # Quenched
             B = split[co.sSFR_status[-1]] # Starforming
 
             for quantity in QUANTITIES_FERTILITY:
@@ -1143,7 +1178,7 @@ def split_by_fertility(sample, make_plots=True,
         df_plot = pd.concat(plot_rows, ignore_index=True)
 
         sample_order = list(co.SAMPLE.keys())
-        fertility_order = [co.sSFR_status[1], co.sSFR_status[2]]  # Passive, Starforming
+        fertility_order = list(co.sSFR_status)  # Quenched, Starforming
 
         quantities = QUANTITIES_PLOT
 
@@ -1258,7 +1293,7 @@ def split_by_BGG_fertility(sample, make_plots=True,
                 (sample[cat]['sSFR_status'] == co.sSFR_status[index]) &
                 (sample[cat]['rank_M'] == 1)
             ]
-            for index in [1, 2]
+            for index in [0, 1]
         }
 
         # split: all group members whose BGG is of given fertility
@@ -1268,12 +1303,12 @@ def split_by_BGG_fertility(sample, make_plots=True,
                     BGG_split[co.sSFR_status[index]]['Group']
                 )
             ]
-            for index in [1, 2]
+            for index in [0, 1]
         }
 
         # Stats for all desired quantities
         stats = anl.stats_comp_split(split)
-        for part in split.keys():  # e.g. 'Passive', 'Starforming'
+        for part in split.keys():  # e.g. 'Quenched', 'Starforming'
             for quantity in QUANTITIES_BGG:
                 report.append_json(
                     f'{name}_BGG_{part}_{quantity}_median',
@@ -1313,7 +1348,7 @@ def split_by_BGG_fertility(sample, make_plots=True,
         df_plot = pd.concat(plot_rows, ignore_index=True)
 
         sample_order = list(co.SAMPLE.keys())
-        fertility_order = [co.sSFR_status[1], co.sSFR_status[2]]  # Passive, Starforming
+        fertility_order = list(co.sSFR_status)  # Quenched, Starforming
 
         quantities = QUANTITIES_BGG
 
@@ -1428,7 +1463,7 @@ def satellites_split_by_BGG_fertility(sample, make_plots=True,
                 (sample[cat]['sSFR_status'] == co.sSFR_status[index]) &
                 (sample[cat]['rank_M'] == 1)
             ]
-            for index in [1, 2]
+            for index in [0, 1]
         }
 
         # split: all group members whose BGG is of given fertility
@@ -1437,12 +1472,12 @@ def satellites_split_by_BGG_fertility(sample, make_plots=True,
                 sample[cat]['Group'].isin(BGG_split[co.sSFR_status[index]]['Group']) &
                 (sample[cat]['rank_M'] > 1)  # Only satellites)
             ]
-            for index in [1, 2]
+            for index in [0, 1]
         }
 
         # Stats for all desired quantities
         stats = anl.stats_comp_split(split)
-        for part in split.keys():  # e.g. 'Passive', 'Starforming'
+        for part in split.keys():  # e.g. 'Quenched', 'Starforming'
             for quantity in QUANTITIES_BGG:
                 report.append_json(
                     f'{name}_Sat_BGG_{part}_{quantity}_median',
@@ -1482,7 +1517,7 @@ def satellites_split_by_BGG_fertility(sample, make_plots=True,
         df_plot = pd.concat(plot_rows, ignore_index=True)
 
         sample_order = list(co.SAMPLE.keys())
-        fertility_order = [co.sSFR_status[1], co.sSFR_status[2]]  # Passive, Starforming
+        fertility_order = list(co.sSFR_status)  # Quenched, Starforming
 
         quantities = QUANTITIES_BGG
 

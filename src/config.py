@@ -42,10 +42,18 @@ R_MAX = 17.77
 DATA_RELEASE = 16
 
 
-sSFR_status = ['Quenched', 'Passive', 'Starforming']
+# Measured sSFR classes (GMM separation in the logM*-log sSFR plane).
+# Galaxies without an sSFR measurement carry sSFR_status = NosSFR_LABEL and
+# are excluded from the classification, from every sSFR figure, and from all
+# quenched/star-forming fractions; they are reported as counts only.
+sSFR_status = ['Quenched', 'Starforming']
+NosSFR_LABEL = 'NosSFR'
 Morphologies = ['Elliptical', 'Spiral', 'Uncertain']
 
-sSFR_THRESHOLD, sSFR_QUENCHED = -1000, -14.0  # Log(sSFR) floor for quenched galaxies, in yr^-1
+# Sanity range for measured log sSFR (yr^-1) and log stellar mass: values
+# outside are treated as unmeasured (legacy catalogues used -9999 sentinels).
+sSFR_VALID_RANGE = (-25.0, -5.0)
+LGM_VALID_RANGE = (5.0, 14.0)
 
 DOMINATIION_CRITERIA = 0.6
 

@@ -55,9 +55,8 @@ def initialise_json(build=False):
         append_json("R_MAX", co.R_MAX)
         append_json("DATA_RELEASE", co.DATA_RELEASE)
         append_json("sSFR_status", co.sSFR_status)
+        append_json("NosSFR_LABEL", co.NosSFR_LABEL)
         append_json("Morphologies", co.Morphologies)
-        append_json("sSFR_THRESHOLD", co.sSFR_THRESHOLD)
-        append_json("sSFR_QUENCHED", co.sSFR_QUENCHED)
         append_json("DOMINATIION_CRITERIA", co.DOMINATIION_CRITERIA)
 
 
@@ -185,7 +184,7 @@ def _validate_consistent_table_counts(ctx):
     """Validate table-level count identities before rendering the paper."""
 
     samples = ["CG4", "Control4B", "Control4C", "RG4"]
-    statuses = ["Quenched", "Passive", "Starforming"]
+    statuses = ["Quenched", "Starforming", "NosSFR"]
     morphs = ["Elliptical", "Spiral", "Uncertain"]
     sample_totals = {}
     problems = []
@@ -256,7 +255,7 @@ def _build_render_context(build_data, results_data):
     ctx["results_build"] = build_data
 
     ctx["samples"] = ["CG4", "Control4B", "Control4C", "RG4"]
-    ctx["statuses"] = ["Passive", "Starforming"]
+    ctx["statuses"] = ["Quenched", "Starforming"]
     ctx["morphs"] = ["Elliptical", "Spiral", "Uncertain"]
 
     ctx["quantities"] = ["sSFR", "M_r", "lgm"]

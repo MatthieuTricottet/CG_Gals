@@ -440,11 +440,15 @@ def BuidSelector(col,labelinf,labelsup):
     medGapMag = col.median()
     return col.apply(lambda x: labelsup if x > medGapMag else labelinf)
 
-def good_sfr(ssfr,lgm_tot_p50):
-    for col in [ssfr,lgm_tot_p50]:
-        col = np.where(col.isnull(),-9999,col)
-    return ((ssfr>=-25) & (ssfr<=-5) & 
-            (lgm_tot_p50>=5)  & (lgm_tot_p50<=14))
+def good_sfr(ssfr, lgm_tot_p50):
+    """Mask of rows with a usable (measured, physically sane) sSFR and mass.
+
+    NaN entries mean "no measurement" and always yield False (NaN fails every
+    comparison below); the historical -9999 sentinel reassignment loop was a
+    no-op and has been removed.
+    """
+    return ((ssfr >= -25) & (ssfr <= -5) &
+            (lgm_tot_p50 >= 5) & (lgm_tot_p50 <= 14))
 
 def match_cat(df1,df2,ra1="RA",dec1="Dec",ra2="RA",dec2="Dec",suff="2"):
     Astrodf1 = Table.from_pandas(df1[[ra1,dec1]])

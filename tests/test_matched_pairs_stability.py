@@ -15,8 +15,8 @@ from tests.test_size_models import synthetic_size_frame
 def add_matched_outcome_columns(frame, seed=20260612):
     rng = np.random.default_rng(seed)
     frame = frame.copy()
-    frame["passive"] = rng.binomial(1, 0.5, len(frame)).astype(float)
-    frame["starforming"] = 1 - frame["passive"]
+    frame["quenched"] = rng.binomial(1, 0.5, len(frame)).astype(float)
+    frame["starforming"] = 1 - frame["quenched"]
     return frame
 
 
@@ -78,7 +78,7 @@ def test_matched_controls_return_dict_unchanged_by_refactor():
     }
     assert set(first.keys()) == expected_keys
     assert set(first["effects"].keys()) == {
-        "passive_fraction",
+        "quenched_fraction",
         "starforming_fraction",
         "elliptical_fraction",
         "spiral_fraction",

@@ -31,9 +31,9 @@ def test_add_group_ssfr_excess_summary_merges_group_medians():
         "CG4_Gals": pd.DataFrame(
             [
                 {"Group": 1, "sSFR_excess": 0.2, "sSFR_status": "Starforming"},
-                {"Group": 1, "sSFR_excess": 0.4, "sSFR_status": "Quenched"},
-                {"Group": 2, "sSFR_excess": -0.2, "sSFR_status": "Passive"},
-                {"Group": 2, "sSFR_excess": 0.0, "sSFR_status": "Passive"},
+                {"Group": 1, "sSFR_excess": float("nan"), "sSFR_status": "NosSFR"},
+                {"Group": 2, "sSFR_excess": -0.2, "sSFR_status": "Quenched"},
+                {"Group": 2, "sSFR_excess": 0.0, "sSFR_status": "Quenched"},
             ]
         ),
         "CG4_Groups": pd.DataFrame([{"Group": 1}, {"Group": 2}]),
@@ -42,10 +42,10 @@ def test_add_group_ssfr_excess_summary_merges_group_medians():
     enriched = tcross.add_group_ssfr_excess_summary(sample)
     groups = enriched["CG4_Groups"].set_index("Group")
 
-    assert groups.loc[1, "sSFR_excess_median"] == pytest.approx(0.3)
+    assert groups.loc[1, "sSFR_excess_median"] == pytest.approx(0.2)
     assert groups.loc[2, "sSFR_excess_median"] == pytest.approx(-0.1)
-    assert bool(groups.loc[1, "has_quenched"]) is True
-    assert bool(groups.loc[2, "has_quenched"]) is False
+    assert bool(groups.loc[1, "has_nossfr"]) is True
+    assert bool(groups.loc[2, "has_nossfr"]) is False
 
 
 def test_compare_main_sequence_offset_by_sample_sets_direction_against_cg(monkeypatch):

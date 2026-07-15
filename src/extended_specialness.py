@@ -92,12 +92,12 @@ def run_extended_specialness(sample, output_dir: str | None = None):
                 "n_cg4_matched"
             )
 
-    adjusted = results["specialness_models"].get("passive_all", {})
-    matched = results["matched_controls"].get("effects", {}).get("passive_fraction", {})
+    adjusted = results["specialness_models"].get("quenched_all", {})
+    matched = results["matched_controls"].get("effects", {}).get("quenched_fraction", {})
     results["interpretation"] = {
-        "adjusted_passive_signal": adjusted.get("cg4_p_adj", 1) is not None
+        "adjusted_quenched_signal": adjusted.get("cg4_p_adj", 1) is not None
         and adjusted.get("cg4_p_adj", 1) < 0.05,
-        "matched_passive_signal": matched.get("p_adj", 1) is not None
+        "matched_quenched_signal": matched.get("p_adj", 1) is not None
         and matched.get("p_adj", 1) < 0.05,
         "independent_compact_group_signal": (
             adjusted.get("cg4_p_adj", 1) is not None

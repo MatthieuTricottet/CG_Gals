@@ -220,7 +220,7 @@ def _cg_class_split(frame: pd.DataFrame) -> dict[str, object]:
                 "n_galaxies": int(len(part)),
                 "elliptical_fraction": float(part["elliptical"].eq(1).mean()),
                 "spiral_fraction": float(part["spiral"].eq(1).mean()),
-                "passive_fraction": float(part["passive"].eq(1).mean()) if "passive" in part else None,
+                "quenched_fraction": float(part["quenched"].eq(1).mean()) if "quenched" in part else None,
                 "starforming_fraction": (
                     float(part["starforming"].eq(1).mean()) if "starforming" in part else None
                 ),
@@ -246,7 +246,7 @@ def _cg_class_split(frame: pd.DataFrame) -> dict[str, object]:
                 }
             )
             continue
-        for outcome in ["elliptical", "spiral", "passive", "starforming"]:
+        for outcome in ["elliptical", "spiral", "quenched", "starforming"]:
             if outcome not in cg.columns:
                 continue
             a_success = int(a[outcome].eq(1).sum())
