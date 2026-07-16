@@ -58,9 +58,17 @@ def check_vocabulary(tex: str) -> None:
     else:
         ok("no p<10^{-6}-style claims")
 
+    # The whitelisted methods sentences that legitimately document the
+    # MPA-JHU missing-value flag (author wording of 2026-07; update this
+    # pattern in lockstep with any approved rephrasing).
     allowed_context = re.compile(
         r"-9999\\\)\s*(flags galaxies without a valid sSFR estimate"
-        r"|in the SDSS have no valid sSFR estimate)"
+        r"|in the SDSS have no valid sSFR estimate"
+        r"|in the SDSS carry the MPA-JHU missing-value sentinel"
+        r"|in the sSFR fields are sentinel values indicating that no valid"
+        r"|as \\emph\{missing data\})"
+        r"|values of \\\(-9999\\\) in the sSFR fields are sentinel values"
+        r"|treat \\texttt\{specsfr\\_tot\\_p50\} \\\(= -9999\\\) as"
     )
     for match in re.finditer(r"-9999", tex):
         window = tex[match.start() - 60 : match.end() + 80]
