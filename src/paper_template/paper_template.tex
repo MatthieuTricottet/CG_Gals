@@ -920,7 +920,7 @@ The supporting magnitude-gap distributions are shown in Appendix Figs.~\ref{fig:
 <% set strong_halpha_threshold = recent.get('classification_thresholds', {}).get('strong_halpha_emission')|replace('_', '\\_')|replace('\\,\\AA', '\\,\\text{\\AA}') %>
 
 <% if recent.get('status') == 'limited' %>
-The catalogues do not contain both \(D_n4000\) and H\(\delta_A\), so a post-starburst classification is not possible. We therefore perform only a limited \(\mathrm{H}\alpha\)-equivalent-width comparison, using the SDSS convention in which negative equivalent width denotes emission. We classify strong \(\mathrm{H}\alpha\) emission using \(<< strong_halpha_threshold >>\).
+Our retrieved catalogues do not include the age-sensitive indices \(D_n4000\) and H\(\delta_A\), which are available in the MPA-JHU \texttt{galSpecIndx} product, so we defer a post-starburst classification to follow-up work. We therefore perform only a limited \(\mathrm{H}\alpha\)-equivalent-width comparison, using the SDSS convention in which negative equivalent width denotes emission. We classify strong \(\mathrm{H}\alpha\) emission using \(<< strong_halpha_threshold >>\).
 <% elif recent.get('status') == 'ok' %>
 The available \(D_n4000\), H\(\delta_A\), and \(\mathrm{H}\alpha\) measurements permit a direct recently-quenched classification.
 <% endif %>
