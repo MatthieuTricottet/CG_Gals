@@ -35,3 +35,6 @@ dist/
 # the filtered subset cache data/simard2011_subset.csv stays tracked.
 data/simard2011_raw/
 baseline/
+# latexmk artifacts from compiling the template directly
+src/paper_template/paper_template.fdb_latexmk
+src/paper_template/paper_template.fls

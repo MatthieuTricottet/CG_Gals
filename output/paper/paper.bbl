@@ -1,4 +1,4 @@
-\begin{thebibliography}{53}
+\begin{thebibliography}{54}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Ahumada} {et~al.}(2020){Ahumada}, {Allende Prieto}, {Almeida},
@@ -86,9 +86,6 @@
 {Harris}, C.~R., {Millman}, K.~J., {van der Walt}, S.~J., {et~al.} 2020,
   Nature, 585, 357
 
-\bibitem[{{Hickson}(1982)}]{Hickson82}
-{Hickson}, P. 1982, \apj, 255, 382
-
 \bibitem[{{Hickson} {et~al.}(1992){Hickson}, {Mendes de Oliveira}, {Huchra}, \&
   {Palumbo}}]{Hickson+92}
 {Hickson}, P., {Mendes de Oliveira}, C., {Huchra}, J.~P., \& {Palumbo}, G.~G.
@@ -142,6 +139,9 @@
 
 \bibitem[{{Mamon}(1986)}]{Mamon86}
 {Mamon}, G.~A. 1986, \apj, 307, 426
+
+\bibitem[{{Mamon}(1992)}]{Mamon92}
+{Mamon}, G.~A. 1992, \apjl, 401, L3
 
 \bibitem[{{McConnachie} {et~al.}(2009){McConnachie}, {Patton}, {Ellison}, \&
   {Simard}}]{McConnachie+09}
@@ -295,6 +295,13 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
   Bosch}}]{Wetzel+13}
 {Wetzel}, A.~R., {Tinker}, J.~L., {Conroy}, C., \& {van den Bosch}, F.~C. 2013,
   \mnras, 432, 336
+
+\bibitem[{{Zeraatgari} {et~al.}(2024){Zeraatgari}, {Hafezianzadeh}, {Zhang},
+  {Mosallanezhad}, \& {Zhang}}]{Zeraatgari+24}
+{Zeraatgari}, F.~Z., {Hafezianzadeh}, F., {Zhang}, Y.-X., {Mosallanezhad}, A.,
+  \& {Zhang}, J.-Y. 2024, Exploring galactic properties with machine learning:
+  Predicting star formation, stellar mass, and metallicity from photometric
+  data, arXiv e-prints, accepted for publication in A\&A
 
 \bibitem[{{Zheng} \& {Shen}(2021)}]{Zheng&Shen21}
 {Zheng}, Y.-L. \& {Shen}, S.-Y. 2021, \apj, 911, 105
