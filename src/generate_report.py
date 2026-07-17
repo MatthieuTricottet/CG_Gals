@@ -28,6 +28,15 @@ except ModuleNotFoundError:  # pragma: no cover
 
 # endregion
 
+RESULT_BLOCK_KEYS = {
+    "extended_specialness",
+    "phase_space_segregation",
+    "morphology_dominance",
+    "luminosity_function",
+    "sSFR_robustness",
+    "cg4_pc_quartet_overlap",
+}
+
 
 def _has_non_ascii(path):
     """Return whether the file contains any non-ASCII byte."""
@@ -245,6 +254,9 @@ def _build_render_context(build_data, results_data):
     """Construct the single coherent Jinja context from both result files."""
 
     render_data = deep_merge(build_data, results_data)
+    for key in RESULT_BLOCK_KEYS:
+        if isinstance(results_data.get(key), dict):
+            render_data[key] = results_data[key]
     ctx = dict(render_data)
 
     # Template aliases. They intentionally point at the same merged data so
@@ -480,7 +492,10 @@ def _format_number(value, digits=2):
         return "n/a"
     if not np.isfinite(number):
         return "n/a"
-    return f"{number:.{int(digits)}f}"
+    digits = int(digits)
+    if abs(number) < 0.5 * 10 ** (-digits):
+        number = 0.0
+    return f"{number:.{digits}f}"
 
 
 def _format_percent(value, digits=1):

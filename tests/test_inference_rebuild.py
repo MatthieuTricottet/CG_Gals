@@ -114,6 +114,13 @@ def test_group_level_analysis_reports_counts():
     distribution = group_level["n_smooth_sat_distribution_cg4"]
     assert set(distribution) <= {"0", "1", "2", "3"}
     assert group_level["p"] >= group_level["p_floor"]
+    assert set(result["group_level_per_control"]) == {"Control4B", "Control4C", "RG4"}
+    ok_per_control = [
+        item
+        for item in result["group_level_per_control"].values()
+        if item.get("status") == "ok"
+    ]
+    assert ok_per_control
 
 
 def test_primary_contrasts_fit_three_families():

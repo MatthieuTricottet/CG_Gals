@@ -77,6 +77,27 @@ def test_build_render_context_uses_single_merged_results_world():
     assert ctx["extended_specialness"] is render_data["extended_specialness"]
 
 
+def test_build_render_context_replaces_stale_persisted_result_dicts():
+    build_data = {
+        "build": {},
+        "results": {},
+        "CG4_Groups_nonsplit_N": 62,
+        "pval_MSresiduals_Control4B_Gals": {"p_value": 0.1},
+        "CG4_Gals_N_Elliptical": 124,
+        "extended_specialness": {
+            "host_controlled": {
+                "models": {"elliptical": {"stale_pooled_field": True}}
+            },
+        },
+    }
+    results_data = _minimal_results_context()
+
+    _, render_data = _build_render_context(build_data, results_data)
+
+    host = render_data["extended_specialness"].get("host_controlled", {})
+    assert "stale_pooled_field" not in host.get("models", {}).get("elliptical", {})
+
+
 def test_build_render_context_fails_loudly_for_missing_robustness_block():
     build_data = {
         "CG4_Groups_nonsplit_N": 62,

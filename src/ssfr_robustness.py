@@ -87,12 +87,18 @@ def fixed_threshold_satellite_check(
             and control_summary["starforming_fraction"] is not None
             else None
         )
+        # Use rounded display values for the delta so that the displayed
+        # difference is arithmetically consistent with the two shown percentages.
+        if delta is not None:
+            cg_pct_rounded = round(100 * cg_summary["starforming_fraction"], 1)
+            ctrl_pct_rounded = round(100 * control_summary["starforming_fraction"], 1)
+            delta_pct_fmt = f"{cg_pct_rounded - ctrl_pct_rounded:.1f}"
+        else:
+            delta_pct_fmt = "NA"
         result["comparisons"][control] = {
             "control": control_summary,
             "delta_starforming_fraction": float(delta) if delta is not None else None,
-            "delta_starforming_fraction_pct_fmt": (
-                f"{100 * delta:.1f}" if delta is not None else "NA"
-            ),
+            "delta_starforming_fraction_pct_fmt": delta_pct_fmt,
             "fisher_p": p_value,
             "fisher_p_fmt": gu.pvalue_latex(p_value, math_mode=False),
         }

@@ -110,6 +110,17 @@ def test_recovers_injected_offset_within_its_confidence_interval():
     assert result["verdicts"]["primary_all_significant"] is True
 
 
+def test_adjusted_size_models_cluster_by_physical_group():
+    frame = synthetic_size_frame()
+    result = run_size_analysis(frame, output_dir=None)
+    fit = result["adjusted"]["all"]
+    assert fit["status"] == "ok"
+    assert fit["cluster_unit"] == "physical_group"
+    assert fit["covariance"] == "cluster"
+    assert fit["n_groups"] == frame["physical_group"].nunique()
+    assert fit["n_clusters"] == fit["n_groups"]
+
+
 def test_holm_family_sizes_match_preregistration():
     frame = synthetic_size_frame()
     result = run_size_analysis(frame, output_dir=None)

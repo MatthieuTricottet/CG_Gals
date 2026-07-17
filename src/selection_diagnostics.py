@@ -58,8 +58,8 @@ AVAILABILITY_LABELS = {
 AVAILABILITY_NOTES = {
     "denominator": "Each fraction uses the final per-sample galaxy count as its denominator.",
     "morphology": (
-        "The secure GZ class row counts galaxies classified as elliptical/smooth or "
-        "spiral/features; uncertain Galaxy Zoo morphologies remain in the morphology table."
+        "The secure GZ class row counts galaxies classified as elliptical or "
+        "spiral; uncertain Galaxy Zoo morphologies remain in the morphology table."
     ),
     "colours": (
         "The SDSS colour-columns row counts complete broad photometric columns in the "

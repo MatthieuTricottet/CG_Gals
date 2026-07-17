@@ -299,9 +299,7 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
 \bibitem[{{Zeraatgari} {et~al.}(2024){Zeraatgari}, {Hafezianzadeh}, {Zhang},
   {Mosallanezhad}, \& {Zhang}}]{Zeraatgari+24}
 {Zeraatgari}, F.~Z., {Hafezianzadeh}, F., {Zhang}, Y.-X., {Mosallanezhad}, A.,
-  \& {Zhang}, J.-Y. 2024, Exploring galactic properties with machine learning:
-  Predicting star formation, stellar mass, and metallicity from photometric
-  data, arXiv e-prints, accepted for publication in A\&A
+  \& {Zhang}, J.-Y. 2024, \aap, 688, A33
 
 \bibitem[{{Zheng} \& {Shen}(2021)}]{Zheng&Shen21}
 {Zheng}, Y.-L. \& {Shen}, S.-Y. 2021, \apj, 911, 105

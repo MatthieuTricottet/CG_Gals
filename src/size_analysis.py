@@ -29,7 +29,7 @@ from scipy import stats
 
 try:
     import config as co
-    from extended_data import ensure_galaxy_frame
+    from extended_data import dedup_control_pool, ensure_galaxy_frame
     from extended_stats import (
         benjamini_hochberg,
         empirical_p_two_sided,
@@ -45,7 +45,7 @@ try:
     from tidal_indices import _derive as _derive_tidal_indices
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
-    from .extended_data import ensure_galaxy_frame
+    from .extended_data import dedup_control_pool, ensure_galaxy_frame
     from .extended_stats import (
         benjamini_hochberg,
         empirical_p_two_sided,
@@ -62,7 +62,7 @@ except ModuleNotFoundError:  # pragma: no cover
 
 
 SEED = 20260612
-N_BOOT = 10000
+N_BOOT = 9999
 REFERENCE_LOGMSTAR = 10.3
 SAMPLES = ["CG4", "Control4B", "Control4C", "RG4"]
 CONTROL_SAMPLES = ["Control4B", "Control4C", "RG4"]
@@ -133,7 +133,8 @@ def fit_size_model(
     binary = ["is_satellite"] if include_satellite_flag else []
     group_covariates = list(GROUP_COVARIATES) if include_group_covariates else []
 
-    required = [outcome, "is_CG4", "group_uid", *base_continuous, *binary]
+    cluster_col = "physical_group" if "physical_group" in frame.columns else "group_uid"
+    required = [outcome, "is_CG4", "group_uid", cluster_col, *base_continuous, *binary]
     missing = [column for column in required if column not in frame.columns]
     if missing:
         return _skipped("missing_required_columns", missing_columns=missing)
@@ -149,7 +150,7 @@ def fit_size_model(
         )
     )
     work = frame[columns].replace([np.inf, -np.inf], np.nan).copy()
-    work = work.dropna(subset=[outcome, "is_CG4", *base_continuous, *binary])
+    work = work.dropna(subset=[outcome, "is_CG4", cluster_col, *base_continuous, *binary])
     if interaction_with is not None:
         work = work.dropna(subset=[interaction_with])
 
@@ -207,7 +208,9 @@ def fit_size_model(
         covariates_used.append(interaction_with)
 
     formula = f"{outcome} ~ " + " + ".join(terms)
-    fitted = fit_ols_with_optional_cluster_se(formula, work, group_col="group_uid")
+    # Cluster by physical Lim group so the same group under multiple control
+    # labels counts as one cluster, consistent with the Sect. 5.2 convention.
+    fitted = fit_ols_with_optional_cluster_se(formula, work, group_col=cluster_col)
     if fitted is None:
         return _skipped("model_fit_failed", n=int(len(work)))
 
@@ -219,7 +222,10 @@ def fit_size_model(
         "outcome": outcome,
         "formula": formula,
         "n": int(fitted.nobs),
-        "n_groups": int(work["group_uid"].nunique()),
+        "cluster_unit": cluster_col,
+        "n_groups": int(work[cluster_col].nunique()),
+        "n_clusters": int(work[cluster_col].nunique()),
+        "n_label_groups": int(work["group_uid"].nunique()),
         "n_cg4": int((work["is_CG4"] == 1).sum()),
         "covariance": fitted.cov_type,
         "covariates_used": covariates_used,
@@ -362,7 +368,7 @@ def _plot_availability(audit: dict, path: str) -> str | None:
             ax.text(
                 j,
                 i,
-                f"{n_ok}/{n}\n({100 * matrix[i, j]:.0f}%)",
+                f"{n_ok}/{n}\n({100 * matrix[i, j]:.1f}%)",
                 ha="center",
                 va="center",
                 color="white" if matrix[i, j] < 0.55 else "black",
@@ -1149,6 +1155,13 @@ def run_size_analysis(data, output_dir: str | None = None) -> dict[str, object]:
             frame["nearest_angular_separation_arcsec"] < CROWDING_THRESHOLD_ARCSEC
         ).astype(float)
 
+    # Deduplicate the control pool for all *pooled* adjusted models: one row
+    # per physical galaxy, kept-label priority RG4 > Control4B > Control4C.
+    # This mirrors the Sect. 5.2 convention (specialness_models.py) and ensures
+    # cluster-robust SEs are by physical group rather than label-scoped group.
+    # The full non-deduped frame is retained for per-control fits only.
+    frame_dedup = dedup_control_pool(frame)
+
     results: dict[str, object] = {
         "status": "ok",
         "seed": SEED,
@@ -1178,28 +1191,36 @@ def run_size_analysis(data, output_dir: str | None = None) -> dict[str, object]:
     }
 
     blocks = [
+        # availability_audit and mass_size use the full (non-deduped) frame
+        # for descriptive counts and availability fractions that should reflect
+        # all rows; the fitted models below use frame_dedup.
         ("availability_audit", lambda: _availability_audit(frame, output_dir)),
-        ("mass_size", lambda: _mass_size(frame, output_dir)),
-        ("adjusted", lambda: _adjusted(frame)),
+        ("mass_size", lambda: _mass_size(frame_dedup, output_dir)),
+        # Primary and secondary adjusted models use the deduped frame:
+        # one row per physical galaxy, clustered by physical_group.
+        ("adjusted", lambda: _adjusted(frame_dedup)),
+        # Per-control fits are label-scoped by design (one control type at a
+        # time); they use the full frame so all galaxies within each label are
+        # present and clustering is by physical_group within each label.
         ("per_control", lambda: _per_control(frame, output_dir)),
-        ("morphology_strata", lambda: _morphology_strata(frame)),
+        ("morphology_strata", lambda: _morphology_strata(frame_dedup)),
         (
             "luminosity_version",
             lambda: {
                 "status": "ok",
                 "note": "descriptive analogue of the Coenda size-luminosity test",
                 "all": fit_size_model(
-                    frame, PRIMARY_OUTCOME, use_mass=False, use_luminosity=True
+                    frame_dedup, PRIMARY_OUTCOME, use_mass=False, use_luminosity=True
                 ),
                 "satellites": fit_size_model(
-                    frame.loc[frame["is_satellite"] == 1],
+                    frame_dedup.loc[frame_dedup["is_satellite"] == 1],
                     PRIMARY_OUTCOME,
                     use_mass=False,
                     use_luminosity=True,
                     include_satellite_flag=False,
                 ),
                 "bgg": fit_size_model(
-                    frame.loc[frame["is_bgg"] == 1],
+                    frame_dedup.loc[frame_dedup["is_bgg"] == 1],
                     PRIMARY_OUTCOME,
                     use_mass=False,
                     use_luminosity=True,
@@ -1207,13 +1228,13 @@ def run_size_analysis(data, output_dir: str | None = None) -> dict[str, object]:
                 ),
             },
         ),
-        ("matched", lambda: _matched(frame)),
-        ("crowding", lambda: _crowding(frame)),
-        ("petrosian", lambda: _petrosian(frame)),
-        ("measure_delta", lambda: _measure_delta(frame, output_dir)),
-        ("tidal", lambda: _tidal(frame)),
-        ("radial", lambda: _radial(frame, output_dir)),
-        ("concentration", lambda: _concentration(frame)),
+        ("matched", lambda: _matched(frame_dedup)),
+        ("crowding", lambda: _crowding(frame_dedup)),
+        ("petrosian", lambda: _petrosian(frame_dedup)),
+        ("measure_delta", lambda: _measure_delta(frame_dedup, output_dir)),
+        ("tidal", lambda: _tidal(frame_dedup)),
+        ("radial", lambda: _radial(frame_dedup, output_dir)),
+        ("concentration", lambda: _concentration(frame_dedup)),
     ]
     for name, function in blocks:
         try:
@@ -1230,7 +1251,7 @@ def run_size_analysis(data, output_dir: str | None = None) -> dict[str, object]:
     if output_dir:
         try:
             results["re_n_plane_figure"] = _plot_re_n_plane(
-                frame, os.path.join(output_dir, "size_re_n_plane.pdf")
+                frame_dedup, os.path.join(output_dir, "size_re_n_plane.pdf")
             )
         except Exception:
             results["re_n_plane_figure"] = None

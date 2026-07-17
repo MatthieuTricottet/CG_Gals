@@ -86,7 +86,7 @@ def _derive(frame):
 def _plot(work, path):
     outcomes = [
         ("quenched", "Quenched status", "Not quenched", "Quenched"),
-        ("elliptical", "Elliptical/smooth morphology", "Not smooth", "Smooth"),
+        ("elliptical", "Elliptical morphology", "Non-elliptical", "Elliptical"),
     ]
     outcomes = [item for item in outcomes if item[0] in work]
     columns = ["log_tidal_index", "is_CG4"] + [item[0] for item in outcomes]

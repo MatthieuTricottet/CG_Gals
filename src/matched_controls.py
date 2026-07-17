@@ -12,7 +12,7 @@ Design (statistical audit, Phase 4):
 * a provenance table records, for every matched control, its Lim group,
   the control definitions that contain it, and whether it is physically an
   RG4 galaxy;
-* the group-level analysis (counts of smooth satellites per group,
+* the group-level analysis (counts of elliptical-vote satellites per group,
   binomial fractions) is the cleaner primary: groups are the natural
   independent unit. The galaxy-level matched contrast is kept as a
   secondary check with group-blocked bootstrap inference (resampling
@@ -300,7 +300,7 @@ def _complementarity_status(treated, control):
 
 
 def _group_table(frame, label_priority=("RG4", "Control4B", "Control4C")):
-    """One row per group: smooth-satellite counts and matching covariates.
+    """One row per group: elliptical-vote satellite counts and matching covariates.
 
     CG4 groups are label-scoped quartets; on the control side one quartet is
     kept per *physical* Lim group (priority RG4 > Control4B > Control4C)
@@ -347,33 +347,82 @@ def _group_table(frame, label_priority=("RG4", "Control4B", "Control4C")):
     return pd.DataFrame(rows)
 
 
-def group_level_matched_analysis(prepared, n_boot=N_BOOT_DEFAULT, seed=20260612):
-    """Primary group-level contrast: smooth-satellite counts per group.
+def _permutation_p_sign_flip(differences, seed=20260612, n_perm=9999):
+    """Paired sign-flip permutation p-value (add-one convention).
 
-    CG groups are matched 1:1 without replacement to control groups on
-    redshift, BGG stellar mass, total quartet luminosity and velocity
-    dispersion (propensity caliper 0.2 SD of the logit). The effect is the
-    matched difference in per-group smooth-satellite fraction, with a
-    pair-resampling bootstrap (groups are the independent unit) and an
-    add-one empirical p-value; the smooth-satellite count distribution over
-    {0,1,2,3} is reported for a transparent view of the data.
+    Under the sharp null hypothesis of no effect, the sign of each pair
+    difference is exchangeable. ``n_perm`` random sign assignments are drawn
+    and the fraction at least as extreme as the observed mean difference is
+    returned (two-sided, adding one to numerator and denominator).
+    """
+    rng = np.random.default_rng(seed)
+    n = len(differences)
+    obs = float(np.mean(differences))
+    signs = 2 * rng.integers(0, 2, (n_perm, n)) - 1
+    null_means = np.mean(signs * differences[np.newaxis, :], axis=1)
+    n_extreme = int(np.sum(np.abs(null_means) >= abs(obs)))
+    return float((n_extreme + 1) / (n_perm + 1))
+
+
+def _group_table_for_control(prepared, control_label):
+    """One row per group for CG4 vs a single control label (no cross-label dedup).
+
+    Unlike _group_table, which keeps only one quartet per physical group across
+    all control types, this function retains all CG4 groups and all groups of
+    the specified control type, because each control type selects a different
+    quartet of the same physical group.
     """
 
-    table = _group_table(prepared)
-    if table.empty:
-        return {"status": "skipped", "reason": "no_groups"}
-    variables = [
-        column
-        for column in GROUP_MATCHING_CANDIDATES
-        if column in table and table[column].notna().mean() >= 0.7
-    ]
+    rows = []
+    for (label, uid), group in prepared.groupby(["sample", "group_uid"], observed=True):
+        if label not in ("CG4", control_label):
+            continue
+        is_cg4 = int(group["is_CG4"].iloc[0])
+        satellites = group.loc[group["rank"] > 1] if "rank" in group else group.iloc[1:]
+        classified = satellites["elliptical"].notna()
+        bgg = group.loc[group["rank"] == 1] if "rank" in group else group.iloc[:1]
+        rows.append(
+            {
+                "group_uid": uid,
+                "physical_group": _physical_group(group).iloc[0],
+                "sample": label,
+                "is_CG4": is_cg4,
+                "n_sat_classified": int(classified.sum()),
+                "n_smooth_sat": int(satellites.loc[classified, "elliptical"].sum()),
+                "mean_sat_logMstar": float(satellites["logMstar"].mean())
+                if "logMstar" in satellites
+                else np.nan,
+                "z_group": float(group["z_group_numeric"].median())
+                if "z_group_numeric" in group
+                else np.nan,
+                "logMstar_bgg": float(bgg["logMstar"].median()) if len(bgg) else np.nan,
+                "log_group_luminosity": float(group["log_group_luminosity"].median())
+                if "log_group_luminosity" in group
+                else np.nan,
+                "velocity_dispersion": float(group["velocity_dispersion"].median())
+                if "velocity_dispersion" in group
+                else np.nan,
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT):
+    """Fit 1:1 propensity group match and return full diagnostics.
+
+    Returns a dict with n_matched, delta, CI, bootstrap p, sign-flip
+    permutation p, SMD before/after for the four matching covariates, and the
+    SMD of mean satellite log M* per group (diagnostic only).
+    """
+
     if not variables:
         return {"status": "skipped", "reason": "no_matching_variables"}
     work = table.dropna(subset=variables).copy()
     work = work.loc[work["n_sat_classified"] > 0]
-    if work["is_CG4"].sum() < 10 or (1 - work["is_CG4"]).sum() < 10:
+    if work["is_CG4"].sum() < 5 or (1 - work["is_CG4"]).sum() < 5:
         return {"status": "skipped", "reason": "too_few_groups"}
 
+    # Propensity score model
     means = work[variables].mean()
     scales = work[variables].std(ddof=0).replace(0, 1)
     design = (work[variables] - means) / scales
@@ -383,8 +432,21 @@ def group_level_matched_analysis(prepared, n_boot=N_BOOT_DEFAULT, seed=20260612)
     work["propensity_logit"] = np.log(propensity / (1 - propensity))
     caliper = 0.2 * float(work["propensity_logit"].std(ddof=0))
 
-    treated = work.loc[work["is_CG4"] == 1]
-    controls = work.loc[work["is_CG4"] == 0]
+    # SMD before matching for each covariate
+    treated_all = work.loc[work["is_CG4"] == 1]
+    controls_all = work.loc[work["is_CG4"] == 0]
+    smd_before = {
+        col: standardized_mean_difference(treated_all[col], controls_all[col])
+        for col in variables
+    }
+    if "mean_sat_logMstar" in work.columns:
+        smd_before["mean_sat_logMstar"] = standardized_mean_difference(
+            treated_all["mean_sat_logMstar"], controls_all["mean_sat_logMstar"]
+        )
+
+    # Greedy 1:1 nearest-neighbour matching without replacement
+    treated = treated_all
+    controls = controls_all
     distance = np.abs(
         treated["propensity_logit"].to_numpy()[:, None]
         - controls["propensity_logit"].to_numpy()[None, :]
@@ -401,31 +463,50 @@ def group_level_matched_analysis(prepared, n_boot=N_BOOT_DEFAULT, seed=20260612)
             continue
         available.remove(chosen)
         pair_rows.append((treated.index[position], controls.index[chosen]))
-    if len(pair_rows) < 10:
+
+    n_pairs = len(pair_rows)
+    if n_pairs < 5:
         return {
             "status": "skipped",
             "reason": "too_few_matched_groups",
-            "n_matched_groups": len(pair_rows),
+            "n_matched_groups": n_pairs,
         }
 
     t_idx = [row[0] for row in pair_rows]
     c_idx = [row[1] for row in pair_rows]
+
+    # SMD after matching
+    smd_after = {
+        col: standardized_mean_difference(work.loc[t_idx, col], work.loc[c_idx, col])
+        for col in variables
+    }
+    if "mean_sat_logMstar" in work.columns:
+        smd_after["mean_sat_logMstar"] = standardized_mean_difference(
+            work.loc[t_idx, "mean_sat_logMstar"],
+            work.loc[c_idx, "mean_sat_logMstar"],
+        )
+
     t_frac = (
         work.loc[t_idx, "n_smooth_sat"] / work.loc[t_idx, "n_sat_classified"]
     ).to_numpy()
     c_frac = (
         work.loc[c_idx, "n_smooth_sat"] / work.loc[c_idx, "n_sat_classified"]
     ).to_numpy()
+    differences = t_frac - c_frac
+    obs_delta = float(np.mean(differences))
 
+    # Bootstrap CI and p
     rng = np.random.default_rng(seed)
-    n_pairs = len(pair_rows)
     boot = np.empty(n_boot)
     for index in range(n_boot):
         draw = rng.integers(0, n_pairs, n_pairs)
         boot[index] = float(np.mean(t_frac[draw]) - np.mean(c_frac[draw]))
-    low, high = np.quantile(boot, [0.025, 0.975])
+    low, high = float(np.quantile(boot, 0.025)), float(np.quantile(boot, 0.975))
 
-    def _count_distribution(subset):
+    # Sign-flip permutation p
+    p_perm = _permutation_p_sign_flip(differences, seed=seed, n_perm=n_boot)
+
+    def _count_dist(subset):
         counts = work.loc[subset, "n_smooth_sat"].value_counts().sort_index()
         return {str(int(k)): int(v) for k, v in counts.items()}
 
@@ -433,24 +514,105 @@ def group_level_matched_analysis(prepared, n_boot=N_BOOT_DEFAULT, seed=20260612)
         "status": "ok",
         "unit": "group",
         "matching_variables": variables,
-        "n_cg4_groups_available": int(treated.shape[0]),
-        "n_control_groups_available": int(controls.shape[0]),
+        "n_cg4_groups_available": int(treated_all.shape[0]),
+        "n_control_groups_available": int(controls_all.shape[0]),
         "n_matched_groups": n_pairs,
         "propensity_caliper_logit_sd": 0.2,
-        "delta_smooth_satellite_fraction": float(np.mean(t_frac) - np.mean(c_frac)),
+        "delta_smooth_satellite_fraction": obs_delta,
         "ci95": [float(low), float(high)],
         "p": empirical_p_two_sided(boot),
+        "p_permutation": p_perm,
         "n_boot": int(n_boot),
         "p_floor": float(2 / (n_boot + 1)),
         "mean_fraction_cg4": float(np.mean(t_frac)),
         "mean_fraction_control": float(np.mean(c_frac)),
-        "n_smooth_sat_distribution_cg4": _count_distribution(t_idx),
-        "n_smooth_sat_distribution_control": _count_distribution(c_idx),
+        "n_smooth_sat_distribution_cg4": _count_dist(t_idx),
+        "n_smooth_sat_distribution_control": _count_dist(c_idx),
         "matched_control_composition": {
             key: int(value)
             for key, value in work.loc[c_idx, "sample"].value_counts().items()
         },
+        "balance": {
+            "before": smd_before,
+            "after": smd_after,
+            "max_abs_smd_before": float(
+                max((abs(v) for v in smd_before.values() if v is not None), default=0)
+            ),
+            "max_abs_smd_after": float(
+                max((abs(v) for v in smd_after.values() if v is not None), default=0)
+            ),
+        },
     }
+
+
+def group_level_matched_analysis(prepared, n_boot=N_BOOT_DEFAULT, seed=20260612):
+    """Primary group-level contrast: elliptical-vote satellite counts per group.
+
+    CG groups are matched 1:1 without replacement to control groups on
+    redshift, BGG stellar mass, total quartet luminosity and velocity
+    dispersion (propensity caliper 0.2 SD of the logit). The effect is the
+    matched difference in per-group elliptical-vote satellite fraction, with a
+    pair-resampling bootstrap (groups are the independent unit) and an
+    add-one empirical p-value, plus a paired sign-flip permutation p
+    (9999 permutations, add-one). SMD diagnostics are stored for the four
+    matching covariates before and after matching, plus mean satellite
+    log M* per group as an unrestricted balance diagnostic.
+    The pooled match draws from all three control types combined;
+    its 47/5/2 (Control4B/RG4/Control4C) composition is reported.
+    """
+
+    table = _group_table(prepared)
+    # Augment with per-group mean satellite stellar mass (balance diagnostic).
+    if "logMstar" in prepared.columns and "rank" in prepared.columns:
+        sat_mass = (
+            prepared.loc[prepared["rank"] > 1]
+            .groupby("group_uid", observed=True)["logMstar"]
+            .mean()
+        )
+        table["mean_sat_logMstar"] = table["group_uid"].map(sat_mass)
+    if table.empty:
+        return {"status": "skipped", "reason": "no_groups"}
+    variables = [
+        column
+        for column in GROUP_MATCHING_CANDIDATES
+        if column in table and table[column].notna().mean() >= 0.7
+    ]
+    if not variables:
+        return {"status": "skipped", "reason": "no_matching_variables"}
+    result = _run_one_group_match(table, variables, seed=seed, n_boot=n_boot)
+    return result
+
+
+def per_control_group_level_matches(prepared, n_boot=N_BOOT_DEFAULT, seed=20260612):
+    """Per-control group-level matched contrasts.
+
+    Runs 1:1 propensity group matching three times, each time restricting the
+    control pool to a single control type (Control4B, Control4C, RG4). Within
+    one control type, each physical Lim group contributes at most one quartet,
+    so no cross-label deduplication is needed. Returns a dict keyed by control
+    label, each with the same diagnostics as group_level_matched_analysis
+    (n pairs, delta, CI, bootstrap p, sign-flip permutation p, SMD balance).
+    """
+
+    results = {}
+    for control_label in ("Control4B", "Control4C", "RG4"):
+        table = _group_table_for_control(prepared, control_label)
+        if "logMstar" in prepared.columns and "rank" in prepared.columns:
+            sat_mass = (
+                prepared.loc[prepared["rank"] > 1]
+                .groupby("group_uid", observed=True)["logMstar"]
+                .mean()
+            )
+            table["mean_sat_logMstar"] = table["group_uid"].map(sat_mass)
+        variables = [
+            column
+            for column in GROUP_MATCHING_CANDIDATES
+            if column in table and table[column].notna().mean() >= 0.7
+        ]
+        results[control_label] = _run_one_group_match(
+            table, variables, seed=seed, n_boot=n_boot
+        )
+    return results
 
 
 def run_matched_control_analysis(
@@ -535,7 +697,8 @@ def run_matched_control_analysis(
         effects[name]["p_adj"] = adjusted
 
     provenance = _provenance_table(prepared, control_indices)
-    group_level = group_level_matched_analysis(prepared, n_boot=n_boot)
+    group_level = group_level_matched_analysis(frame, n_boot=n_boot)
+    per_control_group = per_control_group_level_matches(frame, n_boot=n_boot)
 
     result = {
         "status": "ok",
@@ -597,6 +760,7 @@ def run_matched_control_analysis(
         ),
         "effects": effects,
         "group_level": group_level,
+        "group_level_per_control": per_control_group,
         "holm_correction_family": ok_names,
         "holm_correction_note": (
             "Quenched/star-forming and elliptical/spiral diagnostics are retained "

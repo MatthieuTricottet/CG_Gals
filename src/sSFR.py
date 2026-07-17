@@ -647,7 +647,7 @@ def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsi
     
     # Set axis labels with larger font
     ax.set_xlabel(r'$\log(M_*/M_\odot)$', fontsize=fontsize_labels)
-    ax.set_ylabel('sSFR [yr⁻¹]', fontsize=fontsize_labels)
+    ax.set_ylabel(r'$\log_{10}(\mathrm{sSFR}/\mathrm{yr}^{-1})$', fontsize=fontsize_labels)
 
     # Also increase tick label size
     ax.tick_params(axis='both', which='major', labelsize=fontsize_labels-2)

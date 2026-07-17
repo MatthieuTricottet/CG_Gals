@@ -166,8 +166,8 @@ def _plot_fraction_rows(rows: list[dict[str, object]], path: str) -> str | None:
     x = np.arange(len(labels))
     width = 0.34
     fig, ax = plt.subplots(figsize=(7.2, 4.4))
-    ax.bar(x - width / 2, elliptical, width, label="Elliptical/smooth", color="#2864A6")
-    ax.bar(x + width / 2, spiral, width, label="Spiral/features", color="#A74752")
+    ax.bar(x - width / 2, elliptical, width, label="Elliptical", color="#2864A6")
+    ax.bar(x + width / 2, spiral, width, label="Spiral", color="#A74752")
     ax.set_xticks(x, labels)
     ax.set_ylabel("Fraction after excluding <55 arcsec neighbours")
     ax.set_ylim(0, max(0.05, max(elliptical + spiral) * 1.25))
