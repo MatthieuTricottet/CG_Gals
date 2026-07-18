@@ -140,6 +140,29 @@ def test_group_scale_availability_does_not_require_absent_mass():
     )
 
 
+def test_size_availability_counts_positive_quality_flags_only():
+    frame = synthetic_frame()
+    frame["size_ok_simard"] = 1.0
+    frame["size_ok_petro"] = 1.0
+    cg4_indices = frame.index[frame["sample"] == "CG4"][:5]
+    rg4_indices = frame.index[frame["sample"] == "RG4"][:7]
+    frame.loc[cg4_indices, "size_ok_simard"] = 0.0
+    frame.loc[rg4_indices, "size_ok_petro"] = 0.0
+
+    result = run_selection_diagnostics(frame)
+
+    cg4_simard = result["availability_counts_by_sample"]["CG4"]["simard_size"]
+    rg4_petro = result["availability_counts_by_sample"]["RG4"]["petrosian_size"]
+    assert cg4_simard["n_available"] == int(
+        (frame.loc[frame["sample"] == "CG4", "size_ok_simard"] == 1).sum()
+    )
+    assert rg4_petro["n_available"] == int(
+        (frame.loc[frame["sample"] == "RG4", "size_ok_petro"] == 1).sum()
+    )
+    assert cg4_simard["n_available"] < cg4_simard["n_total"]
+    assert rg4_petro["n_available"] < rg4_petro["n_total"]
+
+
 def test_all_modules_execute_on_synthetic_data_and_create_figures(tmp_path):
     frame = synthetic_frame()
     results = {

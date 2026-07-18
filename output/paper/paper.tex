@@ -627,7 +627,7 @@ A broader set of environmental diagnostics is reported in Appendix~\ref{app:env_
 
 
 
-We now test whether \CG{} galaxies differ in size at fixed stellar mass, using the seeing-corrected Simard half-light radii as the primary measure and the Petrosian radii as the model-independent cross-check (Sect.~\ref{sec:size_data}). The Simard measure resolves 77.4\% of the \CG{} galaxies and 72.2\% of the pooled control galaxies, while the Petrosian radius is essentially complete in every sample (Appendix Fig.~\ref{fig:size_availability}). Because the \CG{}--control difference in Simard completeness exceeds five percentage points, every Simard-based coefficient below carries a differential-completeness caveat and is read together with the Petrosian rerun, which does not share this incompleteness.
+We now test whether \CG{} galaxies differ in size at fixed stellar mass, using the seeing-corrected Simard half-light radii as the primary measure and the Petrosian radii as the model-independent cross-check (Sect.~\ref{sec:size_data}). The Simard measure resolves 77.4\% of the \CG{} galaxies and 72.2\% of the pooled control galaxies, while the Petrosian radius is essentially complete in every sample (Appendix Fig.~\ref{fig:data_availability}). Because the \CG{}--control difference in Simard completeness exceeds five percentage points, every Simard-based coefficient below carries a differential-completeness caveat and is read together with the Petrosian rerun, which does not share this incompleteness.
 
 
 For satellite galaxy size, the \CG{} offset at fixed stellar mass, redshift, and available group-scale covariates is \(0.009\) dex (\(2.0\)\%), with 95\% confidence interval \([-0.021, 0.039]\) and Holm-corrected \(p = 1.000\), over 2928 satellites in 757 physical groups.
@@ -680,7 +680,7 @@ This reading is consistent with compact groups identifying the high-density, hig
 
 The Galaxy Zoo morphology variables used here identify galaxies with high elliptical vote fractions and galaxies with high combined-spiral vote fractions. They do not cleanly distinguish classical ellipticals from S0 galaxies, faded disks, or other bulge-dominated disk systems. The enhanced \CG{} elliptical fraction should therefore be interpreted as a shift toward early-type-like appearances, not as proof that compact groups specifically build classical elliptical galaxies.
 
-This caveat matters when comparing with the recent S-PLUS structural studies of compact-group galaxies by \citet{Montaguth2023,Montaguth2025,Montaguth2026MassSize,Montaguth2026NonIsolated}, which identify transition galaxies and trends in the \(R_{\rm e}\)--S\'ersic-index and mass-size planes, with especially strong signals in non-isolated compact groups and host structures. Their transition population can plausibly overlap with the elliptical-vote class in our catalogue: systems with faded disks, increasing central concentration, or S0-like structure may receive high elliptical vote fractions here even if they are not classical ellipticals. The two approaches are therefore complementary: their structural measurements describe the likely physical form of the transformation, while our regular-group controls show that the strongest residual compact-group signal is the accumulated elliptical/spiral vote-fraction balance. With the Simard structural parameters now attached to this sample, the \(R_{\rm e}\)--S\'ersic-\(n\) plane is measured directly for \CG{} and its controls (Appendix Fig.~\ref{fig:size_re_n_plane}), turning this comparison from a qualitative statement into a direct one.
+This caveat matters when comparing with the recent S-PLUS structural studies of compact-group galaxies by \citet{Montaguth2023,Montaguth2025,Montaguth2026MassSize,Montaguth2026NonIsolated}, which identify transition galaxies and trends in the \(R_{\rm e}\)--S\'ersic-index and mass-size planes, with especially strong signals in non-isolated compact groups and host structures. Their transition population can plausibly overlap with the elliptical-vote class in our catalogue: systems with faded disks, increasing central concentration, or S0-like structure may receive high elliptical vote fractions here even if they are not classical ellipticals. The two approaches are therefore complementary: their structural measurements describe the likely physical form of the transformation, while our regular-group controls show that the strongest residual compact-group signal is the accumulated elliptical/spiral vote-fraction balance. With the Simard structural parameters now attached to this sample, the \(R_{\rm e}\)--S\'ersic-\(n\) plane can be inspected directly for \CG{} and its controls (Appendix Fig.~\ref{fig:size_re_n_plane}), providing contextual structural information rather than a primary inferential test.
 
 \subsection{Why the star-formation and size signals are weaker}\label{sec:decoupling}
 
@@ -2607,7 +2607,7 @@ The \CG{}--minus--control difference in spiral fraction is \(-0.087\), with 95\%
 % MOVED: relocated here from old Sect. 5.12.
 
 
-The fractions with complete measurements for the major derived quantities are shown in Fig.~\ref{fig:data_availability}. The colour-matched versus unmatched comparisons quantify shifts in stellar mass, redshift, rank, star-formation class and morphology.
+The fractions with complete measurements for the major derived quantities are shown in Fig.~\ref{fig:data_availability}; this consolidated audit includes the Simard and Petrosian size availability used by Sect.~\ref{sec:size_results}. The colour-matched versus unmatched comparisons quantify shifts in stellar mass, redshift, rank, star-formation class and morphology.
 
 
 
@@ -2631,7 +2631,7 @@ The colour-selection mass audit is provided in the online supplement.
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{figures/fig_data_availability_by_sample.pdf}
-    \caption{Availability fractions for the major derived quantities in each sample. The colour row records completeness of the four derived SDSS colour columns in the final catalogue, rather than the stricter colour-analysis matched subset used in Appendix~\ref{sec:optical_colours}.}
+    \caption{Availability fractions for the major derived quantities in each sample, including the Simard and Petrosian size-availability columns used by the size analysis. Cell labels give the number available over the final per-sample galaxy count and the corresponding percentage. The colour row records completeness of the four derived SDSS colour columns in the final catalogue, rather than the stricter colour-analysis matched subset used in Appendix~\ref{sec:optical_colours}. The Simard-size column reflects the DR7 bridge, redshift, quality-window, blending, and pegged-S\'ersic-index cuts described in Sect.~\ref{sec:size_data}.}
     \label{fig:data_availability}
 \end{figure*}
 
@@ -2643,6 +2643,9 @@ The colour-selection mass audit is provided in the online supplement.
 \section{Extended size diagnostics}\label{app:size_details}
 % MOVED: crowding, measure-difference, tidal, radial, and morphology-strata
 % size diagnostics relocated here from old Sect. 5.11, with the size figures.
+% The former size-availability figure is now consolidated into Fig. F.2.
+% Start the retained substantive size figures at G.2 for cross-version continuity.
+\setcounter{figure}{1}
 
 
 
@@ -2652,7 +2655,7 @@ The colour-selection mass audit is provided in the online supplement.
 
 
 
-The descriptive mass--size relations and the per-sample sizes predicted at \(\log(M_\star/M_\odot) = 10.3\) are provided in the online supplement.
+The size-availability counts are included in the consolidated audit of Fig.~\ref{fig:data_availability}. This appendix therefore focuses on the extended size-effect diagnostics and on the contextual \(R_{\rm e}\)--S\'ersic-\(n\) plane; the descriptive mass--size relations and the per-sample sizes predicted at \(\log(M_\star/M_\odot) = 10.3\) are provided in the online supplement.
 
 
 The crowding checks mirror Sect.~\ref{sec:morph_crowding}: excluding galaxies with a projected neighbour within 55 arcsec leaves a satellite coefficient of \(0.009\) dex (\(p = 0.625\)), and adding the close-neighbour flag as a covariate gives \(0.010\) dex (\(p = 0.542\)).
@@ -2677,16 +2680,6 @@ Within morphology classes, the satellite-only fits give \(0.038\) dex for ellipt
 
 
 
-
-\begin{figure}
-    \centering
-    \includegraphics[width=\columnwidth]{figures/size_availability.pdf}
-    \caption{Availability of the seeing-corrected Simard half-light radius and the Petrosian half-light radius in each sample, after the bridge, quality, and blending cuts of Sect.~\ref{sec:size_data}.}
-    \label{fig:size_availability}
-\end{figure}
-
-
-
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/size_forest_per_control.pdf}
@@ -2699,7 +2692,7 @@ Within morphology classes, the satellite-only fits give \(0.038\) dex for ellipt
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/size_re_n_plane.pdf}
-    \caption{Half-light radius versus S\'ersic index for \CG{} and the pooled controls, shown for galaxies with both valid Simard size and stellar mass in the mass--size analysis. This is the plane used by the S-PLUS transition-galaxy studies.}
+    \caption{Half-light radius versus S\'ersic index for \CG{} and the pooled controls, shown for galaxies with both valid Simard size and stellar mass in the mass--size analysis. The pooled controls are shown as a grey logarithmic hexbin density, while \CG{} galaxies are overplotted as foreground points; lines show binned medians where bins are sufficiently populated. This is the plane used by the S-PLUS transition-galaxy studies.}
     \label{fig:size_re_n_plane}
 \end{figure}
 

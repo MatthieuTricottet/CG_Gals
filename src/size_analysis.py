@@ -25,6 +25,7 @@ if os.environ.get("MPLBACKEND") is None:
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from matplotlib.lines import Line2D
 from scipy import stats
 
 try:
@@ -336,49 +337,7 @@ def _availability_audit(frame: pd.DataFrame, output_dir: str | None) -> dict:
         "available_vs_unavailable_shifts": shifts,
         "completeness_caveat": completeness_caveat,
     }
-    if output_dir:
-        result["figure"] = _plot_availability(
-            audit, os.path.join(output_dir, "size_availability.pdf")
-        )
     return result
-
-
-def _plot_availability(audit: dict, path: str) -> str | None:
-    rows = [s for s in SAMPLES if s in audit]
-    if not rows:
-        return None
-    measures = [("size_ok_simard", "Simard size"), ("size_ok_petro", "Petrosian size")]
-    matrix = np.array(
-        [
-            [
-                audit[s].get(key, 0) / max(int(audit[s].get("n_rows", 0)), 1)
-                for key, _ in measures
-            ]
-            for s in rows
-        ]
-    )
-    fig, ax = plt.subplots(figsize=(5.2, 3.6))
-    image = ax.imshow(matrix, vmin=0, vmax=1, cmap="viridis", aspect="auto")
-    ax.set_xticks(np.arange(len(measures)), [label for _, label in measures])
-    ax.set_yticks(np.arange(len(rows)), rows)
-    for i, sample_name in enumerate(rows):
-        for j, (key, _) in enumerate(measures):
-            n_ok = int(audit[sample_name].get(key, 0))
-            n = int(audit[sample_name].get("n_rows", 0))
-            ax.text(
-                j,
-                i,
-                f"{n_ok}/{n}\n({100 * matrix[i, j]:.1f}%)",
-                ha="center",
-                va="center",
-                color="white" if matrix[i, j] < 0.55 else "black",
-                fontsize=10,
-            )
-    fig.colorbar(image, ax=ax, label="Available fraction of final sample")
-    fig.tight_layout()
-    fig.savefig(path, bbox_inches="tight")
-    plt.close(fig)
-    return os.path.basename(path)
 
 
 # ---------------------------------------------------------------------------
@@ -1100,23 +1059,125 @@ def _plot_re_n_plane(frame: pd.DataFrame, path: str) -> str | None:
     panel = frame[[PRIMARY_OUTCOME, "simard_ng", "is_CG4"]].dropna()
     if len(panel) < 30:
         return None
-    fig, ax = plt.subplots(figsize=(7.0, 4.6))
-    for is_cg4, label, colour, size in [
-        (0, "Pooled controls", "#777777", 8),
-        (1, "CG$_4$", "#2864A6", 16),
-    ]:
-        part = panel.loc[panel["is_CG4"] == is_cg4]
-        ax.scatter(
-            part["simard_ng"],
-            part[PRIMARY_OUTCOME],
-            s=size,
-            alpha=0.4,
-            color=colour,
-            label=label,
+    controls = panel.loc[panel["is_CG4"] == 0]
+    cg4 = panel.loc[panel["is_CG4"] == 1]
+    fig, ax = plt.subplots(figsize=(7.0, 4.8))
+    if len(controls):
+        ax.hexbin(
+            controls["simard_ng"],
+            controls[PRIMARY_OUTCOME],
+            gridsize=36,
+            mincnt=1,
+            bins="log",
+            cmap="Greys",
+            linewidths=0,
+            alpha=0.62,
         )
+    if len(cg4):
+        ax.scatter(
+            cg4["simard_ng"],
+            cg4[PRIMARY_OUTCOME],
+            s=28,
+            alpha=0.9,
+            facecolor="#D55E00",
+            edgecolor="black",
+            linewidth=0.35,
+            label="CG$_4$ galaxies",
+            zorder=4,
+        )
+
+    bins = np.array([0.5, 1.25, 2.0, 3.0, 4.5, 6.0, 8.0])
+
+    def binned_median(part: pd.DataFrame, minimum: int):
+        x_values = []
+        y_values = []
+        for left, right in zip(bins[:-1], bins[1:]):
+            in_bin = part["simard_ng"].between(left, right, inclusive="left")
+            values = part.loc[in_bin, PRIMARY_OUTCOME].dropna()
+            if len(values) >= minimum:
+                x_values.append((left + right) / 2)
+                y_values.append(float(values.median()))
+        return np.array(x_values), np.array(y_values)
+
+    ctrl_x, ctrl_y = binned_median(controls, minimum=25)
+    if len(ctrl_x):
+        ax.plot(
+            ctrl_x,
+            ctrl_y,
+            color="0.20",
+            linewidth=1.9,
+            marker="s",
+            markersize=4.2,
+            label="Control median",
+            zorder=3,
+        )
+    cg_x, cg_y = binned_median(cg4, minimum=4)
+    if len(cg_x):
+        ax.plot(
+            cg_x,
+            cg_y,
+            color="#0072B2",
+            linewidth=2.1,
+            marker="o",
+            markersize=4.8,
+            markeredgecolor="black",
+            markeredgewidth=0.35,
+            label="CG$_4$ median",
+            zorder=5,
+        )
+
     ax.set_xlabel("Sersic index $n_g$")
     ax.set_ylabel(r"$\log_{10}(R_{\rm chl,r}/{\rm kpc})$")
-    ax.legend(frameon=False)
+    ax.set_xlim(0.45, 8.05)
+    y_min = float(panel[PRIMARY_OUTCOME].min())
+    y_max = float(panel[PRIMARY_OUTCOME].max())
+    padding = max(0.06, 0.04 * (y_max - y_min))
+    ax.set_ylim(y_min - padding, y_max + padding)
+    legend_handles = [
+        Line2D(
+            [0],
+            [0],
+            marker="h",
+            color="none",
+            markerfacecolor="0.72",
+            markeredgecolor="0.72",
+            markersize=9,
+            label="Pooled-control density",
+        ),
+        Line2D(
+            [0],
+            [0],
+            marker="o",
+            color="none",
+            markerfacecolor="#D55E00",
+            markeredgecolor="black",
+            markersize=6,
+            label="CG$_4$ galaxies",
+        ),
+    ]
+    if len(ctrl_x):
+        legend_handles.append(
+            Line2D(
+                [0],
+                [0],
+                color="0.20",
+                marker="s",
+                markersize=4,
+                label="Control median",
+            )
+        )
+    if len(cg_x):
+        legend_handles.append(
+            Line2D(
+                [0],
+                [0],
+                color="#0072B2",
+                marker="o",
+                markersize=4,
+                label="CG$_4$ median",
+            )
+        )
+    ax.legend(handles=legend_handles, frameon=False, loc="best", fontsize=9)
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)

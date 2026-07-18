@@ -10,6 +10,7 @@ if os.environ.get("MPLBACKEND") is None:
     matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from scipy import stats
 
 try:
@@ -34,6 +35,8 @@ AVAILABILITY = {
     "morphology": ["elliptical"],
     "sSFR": ["quenched"],
     "stellar_mass": ["logMstar"],
+    "simard_size": ["size_ok_simard"],
+    "petrosian_size": ["size_ok_petro"],
     "colours": ["u_minus_r", "u_minus_g", "g_minus_r", "r_minus_i"],
     "spectral_lines": ["h_alpha_eqw", "h_beta_eqw", "oiii_5007_eqw", "nii_6584_eqw"],
     "velocity_data": ["V_norm"],
@@ -49,6 +52,8 @@ AVAILABILITY_LABELS = {
     "morphology": "secure GZ class",
     "sSFR": "sSFR class",
     "stellar_mass": "stellar mass",
+    "simard_size": "Simard size",
+    "petrosian_size": "Petrosian size",
     "colours": "SDSS colour columns",
     "spectral_lines": "BPT lines",
     "velocity_data": "velocity data",
@@ -65,6 +70,14 @@ AVAILABILITY_NOTES = {
         "The SDSS colour-columns row counts complete broad photometric columns in the "
         "final merged frame. The stricter colour-analysis matched subset is reported "
         "separately from the colour module."
+    ),
+    "simard_size": (
+        "The Simard-size column counts galaxies that pass the DR7 bridge, redshift, "
+        "quality-window, blending, and pegged-Sersic-index cuts used in the size analysis."
+    ),
+    "petrosian_size": (
+        "The Petrosian-size column counts galaxies that pass the Petrosian radius and "
+        "quality-window cuts used in the size analysis."
     ),
 }
 
@@ -83,6 +96,17 @@ MATCHING_AUDIT_COLUMNS = [
     "log_group_luminosity",
     "velocity_dispersion",
 ]
+
+SIZE_AVAILABILITY_FLAGS = {"simard_size", "petrosian_size"}
+
+
+def _availability_mask(part, quantity, columns):
+    existing = [column for column in columns if column in part]
+    if not existing:
+        return None
+    if quantity in SIZE_AVAILABILITY_FLAGS:
+        return pd.to_numeric(part[existing[0]], errors="coerce").eq(1)
+    return part[existing].notna().all(axis=1)
 
 
 def _nearest_angular(frame):
@@ -124,15 +148,18 @@ def _plot_availability(availability_counts, path):
             for sample in samples
         ]
     )
-    fig, ax = plt.subplots(figsize=(8.8, 4.8))
+    fig, ax = plt.subplots(figsize=(10.8, 4.9))
     image = ax.imshow(matrix, vmin=0, vmax=1, cmap="viridis", aspect="auto")
     ax.set_xticks(
         np.arange(len(quantities)),
         [AVAILABILITY_LABELS.get(value, value.replace("_", " ")) for value in quantities],
-        rotation=35,
+        rotation=32,
         ha="right",
+        rotation_mode="anchor",
     )
     ax.set_yticks(np.arange(len(samples)), samples)
+    ax.tick_params(axis="x", labelsize=9)
+    ax.tick_params(axis="y", labelsize=10)
     for row in range(len(samples)):
         for column in range(len(quantities)):
             item = availability_counts.get(samples[row], {}).get(quantities[column], {})
@@ -141,11 +168,11 @@ def _plot_availability(availability_counts, path):
             ax.text(
                 column,
                 row,
-                f"{n_available}/{n_total}\n({100 * matrix[row, column]:.0f}%)",
+                f"{n_available}/{n_total}\n({100 * matrix[row, column]:.1f}%)",
                 ha="center",
                 va="center",
                 color="white" if matrix[row, column] < 0.55 else "black",
-                fontsize=9,
+                fontsize=8.2,
             )
     fig.colorbar(image, ax=ax, label="Available fraction of final sample")
     fig.tight_layout()
@@ -276,8 +303,7 @@ def run_selection_diagnostics(data, output_dir: str | None = None):
         availability[sample_name] = {}
         availability_counts[sample_name] = {}
         for quantity, columns in AVAILABILITY.items():
-            existing = [column for column in columns if column in part]
-            available = part[existing].notna().all(axis=1) if existing else None
+            available = _availability_mask(part, quantity, columns)
             n_available = int(available.sum()) if available is not None else 0
             n_total = int(len(part))
             fraction = float(n_available / n_total) if n_total else 0.0
@@ -294,10 +320,9 @@ def run_selection_diagnostics(data, output_dir: str | None = None):
     tests = []
     keys = []
     for quantity, columns in AVAILABILITY.items():
-        existing = [column for column in columns if column in frame]
-        if not existing:
+        available = _availability_mask(frame, quantity, columns)
+        if available is None:
             continue
-        available = frame[existing].notna().all(axis=1)
         cg = available[frame["is_CG4"] == 1]
         control = available[frame["is_CG4"] == 0]
         table = [
