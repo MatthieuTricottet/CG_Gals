@@ -1,4 +1,4 @@
-\begin{thebibliography}{54}
+\begin{thebibliography}{47}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Ahumada} {et~al.}(2020){Ahumada}, {Allende Prieto}, {Almeida},
@@ -21,21 +21,10 @@
 {Astropy Collaboration}, {Price-Whelan}, A.~M., {Lim}, P.~L., {et~al.} 2022,
   \apj, 935, 167
 
-\bibitem[{{Barnes}(1985)}]{Barnes85}
-{Barnes}, J. 1985, \mnras, 215, 517
-
-\bibitem[{{Barnes}(1989)}]{Barnes89}
-{Barnes}, J.~E. 1989, \nat, 338, 123
-
 \bibitem[{{Bitsakis} {et~al.}(2011){Bitsakis}, {Charmandaris}, {da Cunha},
   {Diaz-Santos}, {Le Floc'h}, \& {Magdis}}]{Bitsakis+11}
 {Bitsakis}, T., {Charmandaris}, V., {da Cunha}, E., {et~al.} 2011, \aap, 533,
   A142
-
-\bibitem[{{Bitsakis} {et~al.}(2010){Bitsakis}, {Charmandaris}, {Le Floc'h},
-  {Diaz-Santos}, {Slater}, {Xilouris}, \& {Haynes}}]{Bitsakis+10}
-{Bitsakis}, T., {Charmandaris}, V., {Le Floc'h}, E., {et~al.} 2010, \aap, 517,
-  A75
 
 \bibitem[{{Blanton} {et~al.}(2001){Blanton}, {Dalcanton}, {Eisenstein},
   {Loveday}, {Strauss}, \& et~al.}]{Blanton2001}
@@ -52,11 +41,6 @@
 
 \bibitem[{{D{\'\i}az-Gim{\'e}nez} \& {Mamon}(2010)}]{DiazGimenez&Mamon10}
 {D{\'\i}az-Gim{\'e}nez}, E. \& {Mamon}, G.~A. 2010, \mnras, 409, 1227
-
-\bibitem[{{D{\'{\i}}az-Gim{\'e}nez} {et~al.}(2012){D{\'{\i}}az-Gim{\'e}nez},
-  {Mamon}, {Pacheco}, {Mendes de Oliveira}, \& {Alonso}}]{DiazGimenez+12}
-{D{\'{\i}}az-Gim{\'e}nez}, E., {Mamon}, G.~A., {Pacheco}, M., {Mendes de
-  Oliveira}, C., \& {Alonso}, M.~V. 2012, \mnras, 426, 296
 
 \bibitem[{{D{\'\i}az-Gim{\'e}nez} {et~al.}(2020){D{\'\i}az-Gim{\'e}nez},
   {Taverna}, {Zandivarez}, \& {Mamon}}]{DiazGimenez+20}
@@ -240,11 +224,6 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
 {Planck Collaboration}, {Ade}, P.~A.~R., {Aghanim}, N., {et~al.} 2016, \aap,
   594, A13
 
-\bibitem[{{Plauchu-Frayn} {et~al.}(2012){Plauchu-Frayn}, {Del Olmo}, {Coziol},
-  \& {Torres-Papaqui}}]{Plauchu-Frayn+12}
-{Plauchu-Frayn}, I., {Del Olmo}, A., {Coziol}, R., \& {Torres-Papaqui}, J.~P.
-  2012, \aap, 546, A48
-
 \bibitem[{{Seabold} \& {Perktold}(2010)}]{Seabold2010}
 {Seabold}, S. \& {Perktold}, J. 2010, in Proceedings of the 9th Python in
   Science Conference, 92--96
@@ -276,20 +255,10 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
 {Tzanavaris}, P., {Hornschemeier}, A.~E., {Gallagher}, S.~C., {et~al.} 2010,
   \apj, 716, 556
 
-\bibitem[{{Verdes-Montenegro} {et~al.}(2001){Verdes-Montenegro}, {Yun},
-  {Williams}, {Huchtmeier}, {Del Olmo}, \& {Perea}}]{Verdes-Montenegro+01}
-{Verdes-Montenegro}, L., {Yun}, M.~S., {Williams}, B.~A., {et~al.} 2001, \aap,
-  377, 812
-
 \bibitem[{{Virtanen} {et~al.}(2020){Virtanen}, {Gommers}, {Oliphant},
   {et~al.}}]{Virtanen2020}
 {Virtanen}, P., {Gommers}, R., {Oliphant}, T.~E., {et~al.} 2020, Nature
   Methods, 17, 261
-
-\bibitem[{{Walker} {et~al.}(2010){Walker}, {Johnson}, {Gallagher}, {Hibbard},
-  {Hornschemeier}, {Tzanavaris}, {Charlton}, \& {Jarrett}}]{Walker+10}
-{Walker}, L.~M., {Johnson}, K.~E., {Gallagher}, S.~C., {et~al.} 2010, \aj, 140,
-  1254
 
 \bibitem[{{Wetzel} {et~al.}(2013){Wetzel}, {Tinker}, {Conroy}, \& {van den
   Bosch}}]{Wetzel+13}

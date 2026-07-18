@@ -615,6 +615,40 @@ def per_control_group_level_matches(prepared, n_boot=N_BOOT_DEFAULT, seed=202606
     return results
 
 
+def _group_level_holm_sensitivity(per_control_group):
+    """Holm sensitivity for the three per-control group-level p-value sets."""
+
+    control_labels = ["Control4B", "Control4C", "RG4"]
+    ok_rows = [
+        (label, per_control_group.get(label, {}))
+        for label in control_labels
+        if per_control_group.get(label, {}).get("status") == "ok"
+    ]
+    boot_adjusted = holm_correction([row.get("p") for _, row in ok_rows])
+    perm_adjusted = holm_correction([row.get("p_permutation") for _, row in ok_rows])
+    return {
+        "status": "ok" if ok_rows else "skipped",
+        "family": control_labels,
+        "note": (
+            "Sensitivity only: the three control-specific group-level matches are "
+            "kept as distinct estimands in the main analysis, while the pooled "
+            "match is a secondary summary and is not part of this Holm family."
+        ),
+        "rows": [
+            {
+                "control": label,
+                "p_bootstrap": row.get("p"),
+                "p_bootstrap_holm": boot_adj,
+                "p_permutation": row.get("p_permutation"),
+                "p_permutation_holm": perm_adj,
+            }
+            for (label, row), boot_adj, perm_adj in zip(
+                ok_rows, boot_adjusted, perm_adjusted
+            )
+        ],
+    }
+
+
 def run_matched_control_analysis(
     data, output_dir: str | None = None, n_boot: int = N_BOOT_DEFAULT
 ):
@@ -699,6 +733,7 @@ def run_matched_control_analysis(
     provenance = _provenance_table(prepared, control_indices)
     group_level = group_level_matched_analysis(frame, n_boot=n_boot)
     per_control_group = per_control_group_level_matches(frame, n_boot=n_boot)
+    group_level_holm_sensitivity = _group_level_holm_sensitivity(per_control_group)
 
     result = {
         "status": "ok",
@@ -761,6 +796,16 @@ def run_matched_control_analysis(
         "effects": effects,
         "group_level": group_level,
         "group_level_per_control": per_control_group,
+        "group_level_multiplicity_policy": (
+            "The three per-control group-level satellite-composition contrasts "
+            "are treated as separate scientific estimands because Control4B, "
+            "Control4C, and RG4 answer different control questions. P-values are "
+            "therefore reported without adjustment across control definitions; "
+            "the pooled group match is a secondary summary. The paired sign-flip "
+            "permutation p-value is the primary paired test, while the bootstrap "
+            "p-value and interval describe robustness and effect-size uncertainty."
+        ),
+        "group_level_holm_sensitivity": group_level_holm_sensitivity,
         "holm_correction_family": ok_names,
         "holm_correction_note": (
             "Quenched/star-forming and elliptical/spiral diagnostics are retained "

@@ -73,6 +73,8 @@ def test_matched_controls_return_dict_unchanged_by_refactor():
             "n_control_galaxies_unique_pool",
             "group_level",
             "group_level_per_control",
+            "group_level_multiplicity_policy",
+            "group_level_holm_sensitivity",
             "median_match_distance",
         "balance",
         "max_abs_smd_before",
