@@ -510,6 +510,42 @@ def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT)
         counts = work.loc[subset, "n_smooth_sat"].value_counts().sort_index()
         return {str(int(k)): int(v) for k, v in counts.items()}
 
+    # Satellite-mass balance audit: the match conditions on group covariates
+    # but never on satellite stellar mass, so quantify the per-pair gap in
+    # mean satellite log M* (CG4 minus control) with a pair-resampling
+    # bootstrap CI (each pair contains exactly one CG4 group, so pair
+    # resampling is group-blocked). A fresh generator keeps the existing
+    # bootstrap and permutation streams untouched.
+    satellite_mass_balance = {"status": "skipped", "reason": "no_mean_sat_logMstar"}
+    if "mean_sat_logMstar" in work.columns:
+        t_mass = work.loc[t_idx, "mean_sat_logMstar"].to_numpy(dtype=float)
+        c_mass = work.loc[c_idx, "mean_sat_logMstar"].to_numpy(dtype=float)
+        mass_mask = np.isfinite(t_mass) & np.isfinite(c_mass)
+        if int(mass_mask.sum()) < 5:
+            satellite_mass_balance = {
+                "status": "skipped",
+                "reason": "too_few_complete_pairs",
+            }
+        else:
+            mass_diff = t_mass[mass_mask] - c_mass[mass_mask]
+            mass_rng = np.random.default_rng(seed + 1)
+            n_mass = int(mass_diff.size)
+            mass_boot = np.empty(n_boot)
+            for index in range(n_boot):
+                draw = mass_rng.integers(0, n_mass, n_mass)
+                mass_boot[index] = float(np.mean(mass_diff[draw]))
+            satellite_mass_balance = {
+                "status": "ok",
+                "n_pairs": n_mass,
+                "mean_paired_diff_dex": float(np.mean(mass_diff)),
+                "ci95": [
+                    float(np.quantile(mass_boot, 0.025)),
+                    float(np.quantile(mass_boot, 0.975)),
+                ],
+                "smd_before": smd_before.get("mean_sat_logMstar"),
+                "smd_after": smd_after.get("mean_sat_logMstar"),
+            }
+
     return {
         "status": "ok",
         "unit": "group",
@@ -532,6 +568,7 @@ def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT)
             key: int(value)
             for key, value in work.loc[c_idx, "sample"].value_counts().items()
         },
+        "satellite_mass_balance": satellite_mass_balance,
         "balance": {
             "before": smd_before,
             "after": smd_after,
@@ -612,6 +649,29 @@ def per_control_group_level_matches(prepared, n_boot=N_BOOT_DEFAULT, seed=202606
         results[control_label] = _run_one_group_match(
             table, variables, seed=seed, n_boot=n_boot
         )
+        # Sensitivity variant (satellite-mass audit follow-up): repeat the
+        # match with per-group mean satellite log M* added to the matching
+        # covariates. The published primary match above is unchanged; this
+        # variant asks whether the contrast survives when the audited
+        # variable is balanced by design rather than modelled away.
+        if (
+            results[control_label].get("status") == "ok"
+            and "mean_sat_logMstar" in table.columns
+            and variables
+        ):
+            variant = _run_one_group_match(
+                table,
+                variables + ["mean_sat_logMstar"],
+                seed=seed,
+                n_boot=n_boot,
+            )
+            if isinstance(variant, dict):
+                variant["role"] = (
+                    "Sensitivity variant with mean satellite log M* added to "
+                    "the matching covariates; unadjusted p, reported as a "
+                    "diagnostic of the corresponding primary per-control match."
+                )
+            results[control_label]["satellite_mass_balanced_variant"] = variant
     return results
 
 
@@ -730,6 +790,49 @@ def run_matched_control_analysis(
     ):
         effects[name]["p_adj"] = adjusted
 
+    # Post-hoc decomposition of the all-pair matched elliptical-fraction
+    # difference into its satellite component (audit question: is the
+    # all-pair value diluted by BGG pairs, whose adjusted elliptical OR is
+    # below 1?). Exact rank matching means both members of a pair share the
+    # same rank, so restricting to treated satellites restricts both sides.
+    # Reported with its own unadjusted p and kept OUT of the published
+    # matched-outcome Holm family above, which is untouched.
+    satellite_decomposition = {"status": "skipped", "reason": "missing_columns"}
+    if "rank" in treated and "elliptical" in treated and "elliptical" in control:
+        sat_mask = treated["rank"].gt(1) & control["rank"].gt(1)
+        effect = bootstrap_difference(
+            treated.loc[sat_mask, "elliptical"],
+            control.loc[sat_mask, "elliptical"],
+            statistic=np.mean,
+            paired=True,
+            n_boot=n_boot,
+            blocks=treated_blocks[sat_mask.to_numpy()],
+        )
+        if effect["estimate"] is None:
+            satellite_decomposition = {
+                "status": "skipped",
+                "reason": "no_complete_satellite_pairs",
+            }
+        else:
+            satellite_decomposition = {
+                "status": "ok",
+                "outcome": "elliptical_fraction",
+                "n_satellite_pairs_total": int(sat_mask.sum()),
+                "n_pairs": effect["n"],
+                "delta_cg4_minus_control": effect["estimate"],
+                "ci95": effect["ci95"],
+                "p": effect["p"],
+                "p_floor": effect["p_floor"],
+                "n_boot": effect["n_boot"],
+                "resampling_unit": effect["resampling_unit"],
+                "n_blocks": effect["n_blocks"],
+                "multiplicity": (
+                    "Unadjusted post-hoc decomposition diagnostic of the "
+                    "published all-pair matched elliptical-fraction outcome; "
+                    "not a member of the matched-outcome Holm family."
+                ),
+            }
+
     provenance = _provenance_table(prepared, control_indices)
     group_level = group_level_matched_analysis(frame, n_boot=n_boot)
     per_control_group = per_control_group_level_matches(frame, n_boot=n_boot)
@@ -794,6 +897,7 @@ def run_matched_control_analysis(
             abs(value) for value in after.values() if value is not None
         ),
         "effects": effects,
+        "satellite_decomposition": satellite_decomposition,
         "group_level": group_level,
         "group_level_per_control": per_control_group,
         "group_level_multiplicity_policy": (
