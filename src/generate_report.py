@@ -250,6 +250,24 @@ def _write_json(path, data):
     os.replace(tmp_path, path)
 
 
+def _load_referee_values():
+    """Referee-revision sensitivity values (referee/values/*.json).
+
+    Each file becomes ``referee[<stem>]`` in the render context, so the
+    manuscript cites sensitivity numbers without hand-copied literals.
+    Absent directory or files simply yield an empty mapping; template
+    blocks must guard with ``<% if referee.get(...) %>``.
+    """
+
+    directory = os.path.join(co.BASE_PATH, "referee", "values")
+    values = {}
+    if os.path.isdir(directory):
+        for name in sorted(os.listdir(directory)):
+            if name.endswith(".json"):
+                values[name[:-5]] = _load_json(os.path.join(directory, name))
+    return values
+
+
 def _build_render_context(build_data, results_data):
     """Construct the single coherent Jinja context from both result files."""
 
@@ -287,6 +305,7 @@ def _build_render_context(build_data, results_data):
         "phase_space_segregation",
         ctx["extended_specialness"].get("phase_space_segregation", {}),
     )
+    ctx["referee"] = _load_referee_values()
     _validate_render_context(ctx)
     return ctx, render_data
 

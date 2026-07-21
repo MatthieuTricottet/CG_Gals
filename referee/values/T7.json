@@ -1,0 +1,107 @@
+{
+ "size_convention": {
+  "example_group": {
+   "group": 1,
+   "z_group": 0.0247361085,
+   "csv_size_kpc": 71.63196083639482,
+   "recomputed_with_D_L": 71.63196083639481,
+   "recomputed_with_D_A": 68.2154518650187,
+   "csv_matches_D_L": true,
+   "bias_factor_(1+z)^2": 1.0500840920637238,
+   "csv_t_cr": 0.0675574898970305,
+   "t_cr_with_D_A": 0.06433531410256886
+  },
+  "bias_range_pct": [
+   3.3497330603650344,
+   9.575549279626049
+  ],
+  "bias_median_pct": 7.229053134028818,
+  "conclusion": "size_Group_Bary_kpc and t_cr use D_L (proper size needs D_A: values high by (1+z)^2); M_virial uses D_A - internal inconsistency, inherited from the published Paper I pipeline (its <Rij>=313 kpc matches only under D_L)",
+  "models_using_size_or_tcr_as_covariate": "none (verified: adjusted families and matching use logMstar, z, rank, log L_group, sigma_v only); size/t_cr appear in descriptive diagnostics and in R_norm"
+ },
+ "group_mass_provenance": {
+  "control4c_lmass200_vs_host_logM180_corr": 0.99999494709112,
+  "control4c_mean_offset_dex": -0.1332863631135953,
+  "cg4_lmass200_n_finite": 78,
+  "cg4_lmass200_vs_log_Mvirial_corr": 0.19113792367238647,
+  "cg4_lmass200_completeness": 1.0
+ },
+ "log_M200_completeness_by_sample": {
+  "CG4": 1.0,
+  "Control4B": 1.0,
+  "Control4C": 1.0,
+  "RG4": 1.0
+ },
+ "logM200_sensitivity": {
+  "pooled_elliptical_published_covariates": {
+   "status": "ok",
+   "n": 3260,
+   "cg4_odds_ratio": 1.7656431700560324,
+   "cg4_ci95": [
+    1.3173259528614114,
+    2.366533352807549
+   ],
+   "cg4_p": 0.00014230946184455787
+  },
+  "pooled_elliptical_plus_logM200": {
+   "status": "ok",
+   "n": 3260,
+   "cg4_odds_ratio": 1.6175816999962436,
+   "cg4_ci95": [
+    1.192739189697928,
+    2.1937491270203067
+   ],
+   "cg4_p": 0.001976288444871514
+  },
+  "Control4B_elliptical_plus_logM200": {
+   "status": "ok",
+   "n": 2582,
+   "cg4_odds_ratio": 2.0037997948613557,
+   "cg4_ci95": [
+    1.443315786349715,
+    2.7819370202007385
+   ],
+   "cg4_p": 3.296548941458579e-05
+  },
+  "Control4C_elliptical_plus_logM200": {
+   "status": "ok",
+   "n": 2557,
+   "cg4_odds_ratio": 1.5575384867479634,
+   "cg4_ci95": [
+    1.1504220741173194,
+    2.1087270422574838
+   ],
+   "cg4_p": 0.00415093063046857
+  },
+  "RG4_elliptical_plus_logM200": {
+   "status": "ok",
+   "n": 399,
+   "cg4_odds_ratio": 2.6463454657437766,
+   "cg4_ci95": [
+    1.6156253187255396,
+    4.334633929596354
+   ],
+   "cg4_p": 0.00011091997724377638
+  }
+ },
+ "kpc_conversion_inventory": {
+  "tidal_R_ij": "angular x D_A(median z): correct",
+  "host_centric_dist (host_controlled)": "dist2BGG/3600 rad -> arcmin x kpc_proper_per_arcmin: correct",
+  "dist2BGG_kpc (extended_data)": "same, correct",
+  "radial diagnostics (exploration_ssfr)": "same, correct",
+  "simard/petrosian sizes (size_data)": "arcsec x kpc_proper_per_arcmin/60: correct",
+  "R_norm": "dist2BGG_kpc (D_A) / size_Group_Bary_kpc (D_L): low by (1+z)^2, ~4.7% at median z, diagnostics only",
+  "dist2BGG_export_unit": "radians x 3600 (+4.72% as arcmin); rankings unaffected; every in-repo consumer divides by 3600"
+ },
+ "np_clip_audit": {
+  "defective_calls_found": [
+   "src/utils/spherical_utils.py:356 (cosNBC)",
+   "src/utils/spherical_utils.py:358 (cosOBC)",
+   "src/utils/spherical_utils.py:365 (sindelta0)",
+   "common.py:373 (Offset_Circ; benign: equals min(1, x) for x >= 0)"
+  ],
+  "semantics": "np.clip(-1, 1, x) == minimum(1, x): the lower floor is lost, so cos/sin values below -1 pass through and NaN the subsequent arccos/arcsin",
+  "shipped_quantities_affected": "none: the only caller of the affected circumcircle helper (circ3_sph via hcirc_sph) is the legacy common.py Group_agg 'Circ' branch, which the current pipeline never executes; shipped tables carry Bary quantities computed by calc_bary/calc_diameter_arcmin",
+  "action": "fixed in src/utils/spherical_utils.py (np.clip(x, -1, 1)) and annotated in common.py"
+ }
+}

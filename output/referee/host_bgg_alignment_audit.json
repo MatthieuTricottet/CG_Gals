@@ -1,0 +1,33 @@
+{
+ "n_total": 62,
+ "n_equal": 56,
+ "n_different": 6,
+ "n_no_reliable_mapping": 0,
+ "n_ambiguous_or_duplicate": 0,
+ "by_class": {
+  "Embedded": {
+   "CG4 BGG equals Lim-host BGG": 37
+  },
+  "Isolated": {
+   "CG4 BGG equals Lim-host BGG": 6
+  },
+  "Predom": {
+   "CG4 BGG equals Lim-host BGG": 13,
+   "CG4 BGG differs from Lim-host BGG": 6
+  }
+ },
+ "n_isolated_trivial_equal": 6,
+ "satellite_status": {
+  "n_cg4_galaxies": 248,
+  "n_quartet_rank_satellites": 186,
+  "n_quartet_rank_satellites_that_are_host_halo_satellites": 186,
+  "n_quartet_rank_satellites_not_host_halo_satellites": 0,
+  "n_all_cg4_galaxies_with_host_status_different_from_quartet_rank": 6,
+  "n_cg4_bggs_that_are_host_halo_satellites": 6
+ },
+ "outputs": {
+  "summary_csv": "output/referee/host_bgg_alignment_summary.csv",
+  "per_group_csv": "output/referee/host_bgg_alignment_per_group.csv",
+  "per_galaxy_csv": "output/referee/host_bgg_alignment_per_galaxy.csv"
+ }
+}

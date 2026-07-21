@@ -370,6 +370,11 @@ def Group_agg(y, z_group_label=None, Id="Id", z='z', seed=1e12, circ=False, morp
     if circ:
         (RA_Circ, Dec_Circ,Radius_Circ_arcmin) = su.hcirc_sph(x)
         Offset_Circ_abs_arcmin = su.r2d(su.calc_sep(su.d2r(RA_Circ),su.d2r(Dec_Circ),su.d2r(RA_BGG),su.d2r(Dec_BGG)))*60
+        # NB (referee audit T7.4): np.clip(0, 1, x) is positional
+        # np.clip(a=0, a_min=1, a_max=x) == minimum(1, x); for the
+        # non-negative ratio below that coincides with the intended
+        # clip-to-[0,1], so the legacy behaviour is preserved unchanged.
+        # No shipped table carries these 'Circ' quantities.
         Offset_Circ = np.clip(0,1,Offset_Circ_abs_arcmin / Radius_Circ_arcmin)
 
 

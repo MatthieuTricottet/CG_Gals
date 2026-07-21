@@ -1,4 +1,4 @@
-\begin{thebibliography}{47}
+\begin{thebibliography}{56}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Ahumada} {et~al.}(2020){Ahumada}, {Allende Prieto}, {Almeida},
@@ -21,6 +21,12 @@
 {Astropy Collaboration}, {Price-Whelan}, A.~M., {Lim}, P.~L., {et~al.} 2022,
   \apj, 935, 167
 
+\bibitem[{{Bamford} {et~al.}(2009){Bamford}, {Nichol}, {Baldry}, {Land},
+  {Lintott}, {Schawinski}, {Slosar}, {Szalay}, {Thomas}, {Torki}, {Andreescu},
+  {Edmondson}, {Miller}, {Murray}, {Raddick}, \& {Vandenberg}}]{Bamford+09}
+{Bamford}, S.~P., {Nichol}, R.~C., {Baldry}, I.~K., {et~al.} 2009, \mnras, 393,
+  1324
+
 \bibitem[{{Bitsakis} {et~al.}(2011){Bitsakis}, {Charmandaris}, {da Cunha},
   {Diaz-Santos}, {Le Floc'h}, \& {Magdis}}]{Bitsakis+11}
 {Bitsakis}, T., {Charmandaris}, V., {da Cunha}, E., {et~al.} 2011, \aap, 533,
@@ -38,6 +44,11 @@
 
 \bibitem[{{Coenda} {et~al.}(2012){Coenda}, {Muriel}, \& {Martinez}}]{Coenda+12}
 {Coenda}, V., {Muriel}, H., \& {Martinez}, H.~J. 2012, \aap, 543, A119
+
+\bibitem[{{Dariush} {et~al.}(2010){Dariush}, {Raychaudhury}, {Ponman},
+  {Khosroshahi}, {Benson}, {Bower}, \& {Pearce}}]{Dariush+10}
+{Dariush}, A.~A., {Raychaudhury}, S., {Ponman}, T.~J., {et~al.} 2010, \mnras,
+  405, 1873
 
 \bibitem[{{D{\'\i}az-Gim{\'e}nez} \& {Mamon}(2010)}]{DiazGimenez&Mamon10}
 {D{\'\i}az-Gim{\'e}nez}, E. \& {Mamon}, G.~A. 2010, \mnras, 409, 1227
@@ -70,6 +81,12 @@
 {Harris}, C.~R., {Millman}, K.~J., {van der Walt}, S.~J., {et~al.} 2020,
   Nature, 585, 357
 
+\bibitem[{{Hickson}(1982)}]{Hickson82}
+{Hickson}, P. 1982, \apj, 255, 382
+
+\bibitem[{{Hickson} {et~al.}(1989){Hickson}, {Kindl}, \& {Auman}}]{HKA89}
+{Hickson}, P., {Kindl}, E., \& {Auman}, J.~R. 1989, \apjs, 70, 687
+
 \bibitem[{{Hickson} {et~al.}(1992){Hickson}, {Mendes de Oliveira}, {Huchra}, \&
   {Palumbo}}]{Hickson+92}
 {Hickson}, P., {Mendes de Oliveira}, C., {Huchra}, J.~P., \& {Palumbo}, G.~G.
@@ -82,6 +99,10 @@
   {Charlton}, {Hornschemeier}, {Jarrett}, \& {Reines}}]{Johnson+07}
 {Johnson}, K.~E., {Hibbard}, J.~E., {Gallagher}, S.~C., {et~al.} 2007, \aj,
   134, 1522
+
+\bibitem[{{Jones} {et~al.}(2003){Jones}, {Ponman}, {Horton}, {Babul},
+  {Ebeling}, \& {Burke}}]{Jones+03}
+{Jones}, L.~R., {Ponman}, T.~J., {Horton}, A., {et~al.} 2003, \mnras, 343, 627
 
 \bibitem[{{Kauffmann} {et~al.}(2003{\natexlab{a}}){Kauffmann}, {Heckman},
   {Tremonti}, {Brinchmann}, {Charlot}, {White}, {Reichard}, \&
@@ -224,6 +245,10 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
 {Planck Collaboration}, {Ade}, P.~A.~R., {Aghanim}, N., {et~al.} 2016, \aap,
   594, A13
 
+\bibitem[{{Ponman} {et~al.}(1994){Ponman}, {Allan}, {Jones}, {Merrifield},
+  {McHardy}, {Lehto}, \& {Luppino}}]{Ponman+94}
+{Ponman}, T.~J., {Allan}, D.~J., {Jones}, L.~R., {et~al.} 1994, \nat, 369, 462
+
 \bibitem[{{Seabold} \& {Perktold}(2010)}]{Seabold2010}
 {Seabold}, S. \& {Perktold}, J. 2010, in Proceedings of the 9th Python in
   Science Conference, 92--96
@@ -255,15 +280,26 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
 {Tzanavaris}, P., {Hornschemeier}, A.~E., {Gallagher}, S.~C., {et~al.} 2010,
   \apj, 716, 556
 
+\bibitem[{{Verdes-Montenegro} {et~al.}(2001){Verdes-Montenegro}, {Yun},
+  {Williams}, {Huchtmeier}, {Del Olmo}, \& {Perea}}]{VerdesMontenegro+01}
+{Verdes-Montenegro}, L., {Yun}, M.~S., {Williams}, B.~A., {et~al.} 2001, \aap,
+  377, 812
+
 \bibitem[{{Virtanen} {et~al.}(2020){Virtanen}, {Gommers}, {Oliphant},
   {et~al.}}]{Virtanen2020}
 {Virtanen}, P., {Gommers}, R., {Oliphant}, T.~E., {et~al.} 2020, Nature
   Methods, 17, 261
 
+\bibitem[{{Wainer} \& {Thissen}(1976)}]{Wainer&Thissen76}
+{Wainer}, H. \& {Thissen}, D. 1976, Psychometrica, 41, 9
+
 \bibitem[{{Wetzel} {et~al.}(2013){Wetzel}, {Tinker}, {Conroy}, \& {van den
   Bosch}}]{Wetzel+13}
 {Wetzel}, A.~R., {Tinker}, J.~L., {Conroy}, C., \& {van den Bosch}, F.~C. 2013,
   \mnras, 432, 336
+
+\bibitem[{{Zepf} \& {Whitmore}(1993)}]{ZepfWhitmore93}
+{Zepf}, S.~E. \& {Whitmore}, B.~C. 1993, \apj, 418, 72
 
 \bibitem[{{Zeraatgari} {et~al.}(2024){Zeraatgari}, {Hafezianzadeh}, {Zhang},
   {Mosallanezhad}, \& {Zhang}}]{Zeraatgari+24}

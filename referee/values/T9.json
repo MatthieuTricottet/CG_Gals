@@ -1,0 +1,819 @@
+{
+ "implementation_path": {
+  "manuscript_source": "src/paper_template/paper_template.tex",
+  "rendered_manuscript": "output/paper/paper.tex and output/paper/paper.pdf",
+  "catalogue_generation": [
+   "src/main.py::load_data/load_data_build",
+   "src/data_loader.py::load_previous_samples",
+   "src/data_loader.py::remove_split_CG",
+   "src/main.py::clean (Lim 3688 removal)",
+   "src/sample_construction.py (Control4C regeneration)"
+  ],
+  "projected_pairwise_separations": [
+   "src/tidal_indices.py::_angular_matrix/_derive for pairwise diagnostics",
+   "this audit uses the same angular-diameter/proper-kpc principle but the mean-redshift/Paper-I cosmology convention that exactly reproduces Sect. 2.1 values"
+  ],
+  "cg4_to_lim_mapping": [
+   "src/identity.py::cg4_host_lim_map",
+   "src/extended_data.py::_cg4_host_lim_map",
+   "this audit recomputes the mapping from shared objid values in data/PC_Gals.csv"
+  ],
+  "per_control_morphology_models": [
+   "src/primary_contrasts.py::run_primary_contrasts",
+   "src/specialness_models.MODEL_SPECS/_covariates",
+   "src/extended_stats.fit_logistic_model"
+  ],
+  "build_and_checks": [
+   "python audit/run_full_pipeline.py",
+   "python -m src.main",
+   "pytest",
+   "audit/verify_findings.py",
+   "audit/consistency_gate.py"
+  ],
+  "canonical_identifiers": {
+   "physical_galaxy": "objid",
+   "cg4_quartet": "CG4_Gals.Group",
+   "lim_parent_group": "PC_Gals.Group and control Group values, physical_group='Lim:<Group>'",
+   "quartet_bgg": "CG4_Gals rank_M == 1, compared by objid",
+   "lim_group_bgg": "PC_Gals rank_M == 1 within the Lim parent group, compared by objid",
+   "zheng_shen_class": "CG4_Groups.Class (Embedded, Predom, Isolated, Split; Split removed from article sample)"
+  },
+  "unit_ambiguity_record": {
+   "dist2BGG": "angle in radians multiplied by 3600; not used for the compactness audit",
+   "new_pairwise_summary": "proper kpc from angular-diameter distances",
+   "legacy_group_size": "size_Group_Bary_kpc uses luminosity distance and is not reused here",
+   "redshift_cosmology_note": "The Sect. 2.1 CG4/RG4 values are reproduced only with the quartet mean redshift and the Paper-I FlatLambdaCDM constants. Planck15 at the median redshift differs by <1 kpc but does not match the rendered values at numerical precision."
+  }
+ },
+ "compactness": {
+  "summary_by_sample": {
+   "CG4": {
+    "n_quartets": 62,
+    "median_R_pair_med_kpc": 143.14844751421015,
+    "q25_R_pair_med_kpc": 114.17602593373125,
+    "q75_R_pair_med_kpc": 177.10467924650555,
+    "min_R_pair_med_kpc": 50.076370688618866,
+    "max_R_pair_med_kpc": 286.9695409135541,
+    "n_dropped_missing_coordinates_or_redshift": 0
+   },
+   "Control4B": {
+    "n_quartets": 698,
+    "median_R_pair_med_kpc": 447.4604040437556,
+    "q25_R_pair_med_kpc": 323.4102691226027,
+    "q75_R_pair_med_kpc": 604.383855201292,
+    "min_R_pair_med_kpc": 57.16329785802837,
+    "max_R_pair_med_kpc": 2065.1475680656604,
+    "n_dropped_missing_coordinates_or_redshift": 0
+   },
+   "Control4C": {
+    "n_quartets": 703,
+    "median_R_pair_med_kpc": 293.09299167198543,
+    "q25_R_pair_med_kpc": 187.07393701796138,
+    "q75_R_pair_med_kpc": 436.24641579307365,
+    "min_R_pair_med_kpc": 32.319177245432115,
+    "max_R_pair_med_kpc": 1100.859946281545,
+    "n_dropped_missing_coordinates_or_redshift": 0
+   },
+   "RG4": {
+    "n_quartets": 56,
+    "median_R_pair_med_kpc": 429.5835442673599,
+    "q25_R_pair_med_kpc": 292.25011157174356,
+    "q75_R_pair_med_kpc": 493.9419848448288,
+    "min_R_pair_med_kpc": 187.08497711089203,
+    "max_R_pair_med_kpc": 773.3771271601322,
+    "n_dropped_missing_coordinates_or_redshift": 0
+   }
+  },
+  "definition": {
+   "quantity": "median over the six proper projected pairwise separations within each selected quartet",
+   "distance": "great-circle separation times angular-diameter distance at the quartet mean member redshift; Paper-I/Control4C cosmology H0=67.8, Om0=0.308",
+   "unit_guard": "does not use dist2BGG or the inherited luminosity-distance group-size convention",
+   "compactness_score": "-log10(R_pair_med/kpc), so larger is more compact"
+  },
+  "cg4_vs_control4c": {
+   "overlap_coefficient_compactness_score": 0.3385949616849425,
+   "control4c_p95_compactness_score": -1.9740034013556842,
+   "control4c_equivalent_R_pair_med_p05_kpc": 94.1896973347121,
+   "fraction_cg4_above_control4c_p95_compactness": 0.1774193548387097,
+   "ks_statistic_descriptive": 0.6125820217501032,
+   "ks_pvalue_descriptive": 6.492149468831995e-21
+  },
+  "outputs": {
+   "summary_csv": "output/referee/compactness_summary.csv",
+   "group_values_csv": "output/referee/compactness_group_values.csv",
+   "figure": "output/referee/compactness_ecdf.pdf"
+  }
+ },
+ "host_bgg_alignment": {
+  "n_total": 62,
+  "n_equal": 56,
+  "n_different": 6,
+  "n_no_reliable_mapping": 0,
+  "n_ambiguous_or_duplicate": 0,
+  "by_class": {
+   "Embedded": {
+    "CG4 BGG equals Lim-host BGG": 37
+   },
+   "Isolated": {
+    "CG4 BGG equals Lim-host BGG": 6
+   },
+   "Predom": {
+    "CG4 BGG equals Lim-host BGG": 13,
+    "CG4 BGG differs from Lim-host BGG": 6
+   }
+  },
+  "n_isolated_trivial_equal": 6,
+  "satellite_status": {
+   "n_cg4_galaxies": 248,
+   "n_quartet_rank_satellites": 186,
+   "n_quartet_rank_satellites_that_are_host_halo_satellites": 186,
+   "n_quartet_rank_satellites_not_host_halo_satellites": 0,
+   "n_all_cg4_galaxies_with_host_status_different_from_quartet_rank": 6,
+   "n_cg4_bggs_that_are_host_halo_satellites": 6
+  },
+  "outputs": {
+   "summary_csv": "output/referee/host_bgg_alignment_summary.csv",
+   "per_group_csv": "output/referee/host_bgg_alignment_per_group.csv",
+   "per_galaxy_csv": "output/referee/host_bgg_alignment_per_galaxy.csv"
+  }
+ },
+ "host_bgg_sensitivity": {
+  "role": "Labelled sensitivity only: CG4 is restricted to systems whose quartet BGG objid equals the Lim parent-group BGG objid. Control definitions, covariates, complete-case handling, physical-group clustering, model specs, and per-control Holm families are unchanged.",
+  "n_aligned_cg4_groups": 56,
+  "holm_family": [
+   "quenched_all",
+   "quenched_satellites",
+   "starforming_satellites",
+   "elliptical_all",
+   "elliptical_satellites",
+   "elliptical_bgg",
+   "spiral_all",
+   "spiral_satellites"
+  ],
+  "reported_models": [
+   "elliptical_satellites",
+   "spiral_satellites"
+  ],
+  "classification_rule": "Stable requires same direction, overlapping 95% CIs, and less than 30% attenuation in absolute log-odds coefficient. Compatible but less precise keeps the same direction and no large attenuation, but has a wider interval. Materially attenuated means at least 30% movement toward zero with |Delta beta| >= 0.20. Inconsistent means the direction reverses.",
+  "classification_counts": {
+   "Stable": 6
+  },
+  "rows": [
+   {
+    "control": "Control4B",
+    "model": "elliptical_satellites",
+    "outcome": "elliptical",
+    "n_cg4_systems_retained": 56,
+    "n_cg4_satellite_galaxies_raw": 168,
+    "n_cg4_complete": 143,
+    "n_control_complete": 1772,
+    "n_model_complete": 1915,
+    "n_physical_groups_complete": 731,
+    "primary_n_cg4_complete": 157,
+    "primary_n_control_complete": 1772,
+    "primary_odds_ratio": 2.6329422557428486,
+    "primary_ci95_low": 1.8831238208263272,
+    "primary_ci95_high": 3.6813218787887583,
+    "primary_raw_p": 1.5036813787072624e-08,
+    "primary_family_holm_p": 1.202945102965766e-07,
+    "aligned_odds_ratio": 2.712920449682239,
+    "aligned_ci95_low": 1.8908354845436341,
+    "aligned_ci95_high": 3.8924260870217657,
+    "aligned_raw_p": 6.012122541686058e-08,
+    "sensitivity_family_holm_p": 4.809698033348846e-07,
+    "primary_beta": 0.968101949298694,
+    "aligned_beta": 0.9980257113457711,
+    "delta_beta_aligned_minus_primary": 0.02992376204707714,
+    "attenuation_fraction_abs_beta": -0.030909721924177836,
+    "decision_classification": "Stable"
+   },
+   {
+    "control": "Control4B",
+    "model": "spiral_satellites",
+    "outcome": "spiral",
+    "n_cg4_systems_retained": 56,
+    "n_cg4_satellite_galaxies_raw": 168,
+    "n_cg4_complete": 143,
+    "n_control_complete": 1772,
+    "n_model_complete": 1915,
+    "n_physical_groups_complete": 731,
+    "primary_n_cg4_complete": 157,
+    "primary_n_control_complete": 1772,
+    "primary_odds_ratio": 0.3798032402035579,
+    "primary_ci95_low": 0.2716415551060214,
+    "primary_ci95_high": 0.5310325263482633,
+    "primary_raw_p": 1.5036813787072075e-08,
+    "primary_family_holm_p": 1.202945102965766e-07,
+    "aligned_odds_ratio": 0.3686064588134639,
+    "aligned_ci95_low": 0.2569091814830416,
+    "aligned_ci95_high": 0.5288667407473352,
+    "aligned_raw_p": 6.012122541686101e-08,
+    "sensitivity_family_holm_p": 4.809698033348846e-07,
+    "primary_beta": -0.9681019492986953,
+    "aligned_beta": -0.9980257113457709,
+    "delta_beta_aligned_minus_primary": -0.029923762047075586,
+    "attenuation_fraction_abs_beta": -0.030909721924176188,
+    "decision_classification": "Stable"
+   },
+   {
+    "control": "Control4C",
+    "model": "elliptical_satellites",
+    "outcome": "elliptical",
+    "n_cg4_systems_retained": 56,
+    "n_cg4_satellite_galaxies_raw": 168,
+    "n_cg4_complete": 143,
+    "n_control_complete": 1744,
+    "n_model_complete": 1887,
+    "n_physical_groups_complete": 733,
+    "primary_n_cg4_complete": 157,
+    "primary_n_control_complete": 1744,
+    "primary_odds_ratio": 1.9320387373593795,
+    "primary_ci95_low": 1.4032726121748909,
+    "primary_ci95_high": 2.660048838886629,
+    "primary_raw_p": 5.4226720085294193e-05,
+    "primary_family_holm_p": 0.00043381376068234796,
+    "aligned_odds_ratio": 1.979734289409119,
+    "aligned_ci95_low": 1.3980984378132977,
+    "aligned_ci95_high": 2.80334184679607,
+    "aligned_raw_p": 0.00011900647785998729,
+    "sensitivity_family_holm_p": 0.000952051822879883,
+    "primary_beta": 0.6585757859823733,
+    "aligned_beta": 0.6829626384330632,
+    "delta_beta_aligned_minus_primary": 0.024386852450689833,
+    "attenuation_fraction_abs_beta": -0.03702968279392912,
+    "decision_classification": "Stable"
+   },
+   {
+    "control": "Control4C",
+    "model": "spiral_satellites",
+    "outcome": "spiral",
+    "n_cg4_systems_retained": 56,
+    "n_cg4_satellite_galaxies_raw": 168,
+    "n_cg4_complete": 143,
+    "n_control_complete": 1744,
+    "n_model_complete": 1887,
+    "n_physical_groups_complete": 733,
+    "primary_n_cg4_complete": 157,
+    "primary_n_control_complete": 1744,
+    "primary_odds_ratio": 0.517587965843145,
+    "primary_ci95_low": 0.3759329473133104,
+    "primary_ci95_high": 0.7126199081517945,
+    "primary_raw_p": 5.4226720085293496e-05,
+    "primary_family_holm_p": 0.00043381376068234796,
+    "aligned_odds_ratio": 0.5051182905451742,
+    "aligned_ci95_low": 0.35671710931112316,
+    "aligned_ci95_high": 0.7152572186290788,
+    "aligned_raw_p": 0.00011900647785998538,
+    "sensitivity_family_holm_p": 0.000952051822879883,
+    "primary_beta": -0.6585757859823738,
+    "aligned_beta": -0.6829626384330638,
+    "delta_beta_aligned_minus_primary": -0.024386852450690055,
+    "attenuation_fraction_abs_beta": -0.03702968279392943,
+    "decision_classification": "Stable"
+   },
+   {
+    "control": "RG4",
+    "model": "elliptical_satellites",
+    "outcome": "elliptical",
+    "n_cg4_systems_retained": 56,
+    "n_cg4_satellite_galaxies_raw": 168,
+    "n_cg4_complete": 143,
+    "n_control_complete": 142,
+    "n_model_complete": 285,
+    "n_physical_groups_complete": 109,
+    "primary_n_cg4_complete": 157,
+    "primary_n_control_complete": 142,
+    "primary_odds_ratio": 3.0309818230595447,
+    "primary_ci95_low": 1.718967402388407,
+    "primary_ci95_high": 5.344400829796283,
+    "primary_raw_p": 0.00012709680487124202,
+    "primary_family_holm_p": 0.0007625808292274521,
+    "aligned_odds_ratio": 3.0302660479384773,
+    "aligned_ci95_low": 1.6621077327321807,
+    "aligned_ci95_high": 5.524619217187817,
+    "aligned_raw_p": 0.0002967458059388154,
+    "sensitivity_family_holm_p": 0.0017804748356328925,
+    "primary_beta": 1.1088866010466463,
+    "aligned_beta": 1.108650420266837,
+    "delta_beta_aligned_minus_primary": -0.00023618077980924745,
+    "attenuation_fraction_abs_beta": 0.00021298911862252027,
+    "decision_classification": "Stable"
+   },
+   {
+    "control": "RG4",
+    "model": "spiral_satellites",
+    "outcome": "spiral",
+    "n_cg4_systems_retained": 56,
+    "n_cg4_satellite_galaxies_raw": 168,
+    "n_cg4_complete": 143,
+    "n_control_complete": 142,
+    "n_model_complete": 285,
+    "n_physical_groups_complete": 109,
+    "primary_n_cg4_complete": 157,
+    "primary_n_control_complete": 142,
+    "primary_odds_ratio": 0.32992609602342543,
+    "primary_ci95_low": 0.18711171408116828,
+    "primary_ci95_high": 0.5817445977221893,
+    "primary_raw_p": 0.00012709680487124294,
+    "primary_family_holm_p": 0.0007625808292274521,
+    "aligned_odds_ratio": 0.33000402742865137,
+    "aligned_ci95_low": 0.18100795017489513,
+    "aligned_ci95_high": 0.6016457178477806,
+    "aligned_raw_p": 0.0002967458059388154,
+    "sensitivity_family_holm_p": 0.0017804748356328925,
+    "primary_beta": -1.1088866010466458,
+    "aligned_beta": -1.1086504202668368,
+    "delta_beta_aligned_minus_primary": 0.0002361807798090254,
+    "attenuation_fraction_abs_beta": 0.00021298911862232013,
+    "decision_classification": "Stable"
+   }
+  ],
+  "outputs": {
+   "morphology_csv": "output/referee/host_bgg_sensitivity_morphology.csv"
+  }
+ },
+ "aligned_group_level_match_diagnostic": {
+  "Control4B": {
+   "status": "ok",
+   "unit": "group",
+   "matching_variables": [
+    "z_group",
+    "logMstar_bgg",
+    "log_group_luminosity",
+    "velocity_dispersion"
+   ],
+   "n_cg4_groups_available": 49,
+   "n_control_groups_available": 630,
+   "n_matched_groups": 49,
+   "propensity_caliper_logit_sd": 0.2,
+   "delta_smooth_satellite_fraction": 0.09183673469387756,
+   "ci95": [
+    -0.04081632653061229,
+    0.22789115646258506
+   ],
+   "p": 0.1846,
+   "p_permutation": 0.1943,
+   "n_boot": 9999,
+   "p_floor": 0.0002,
+   "mean_fraction_cg4": 0.5510204081632653,
+   "mean_fraction_control": 0.45918367346938777,
+   "n_smooth_sat_distribution_cg4": {
+    "0": 7,
+    "1": 17,
+    "2": 20,
+    "3": 5
+   },
+   "n_smooth_sat_distribution_control": {
+    "0": 13,
+    "1": 19,
+    "2": 14,
+    "3": 3
+   },
+   "matched_control_composition": {
+    "Control4B": 49
+   },
+   "satellite_mass_balance": {
+    "status": "ok",
+    "n_pairs": 49,
+    "mean_paired_diff_dex": 0.0011897346938777242,
+    "ci95": [
+     -0.11113536598639447,
+     0.10762145442176894
+    ],
+    "smd_before": -0.5828043608452799,
+    "smd_after": 0.0037122075529096798
+   },
+   "balance": {
+    "before": {
+     "z_group": 0.1258226478668747,
+     "logMstar_bgg": 0.14920903266980973,
+     "log_group_luminosity": -0.349842758871606,
+     "velocity_dispersion": 0.17746182243833808,
+     "mean_sat_logMstar": -0.5828043608452799
+    },
+    "after": {
+     "z_group": -0.08963740881321682,
+     "logMstar_bgg": 0.11415923361331949,
+     "log_group_luminosity": 0.18318126056942124,
+     "velocity_dispersion": 0.31152158113502587,
+     "mean_sat_logMstar": 0.0037122075529096798
+    },
+    "max_abs_smd_before": 0.5828043608452799,
+    "max_abs_smd_after": 0.31152158113502587
+   },
+   "satellite_mass_balanced_variant": {
+    "status": "ok",
+    "unit": "group",
+    "matching_variables": [
+     "z_group",
+     "logMstar_bgg",
+     "log_group_luminosity",
+     "velocity_dispersion",
+     "mean_sat_logMstar"
+    ],
+    "n_cg4_groups_available": 49,
+    "n_control_groups_available": 630,
+    "n_matched_groups": 49,
+    "propensity_caliper_logit_sd": 0.2,
+    "delta_smooth_satellite_fraction": 0.24149659863945575,
+    "ci95": [
+     0.12585034013605434,
+     0.35034013605442177
+    ],
+    "p": 0.0002,
+    "p_permutation": 0.0004,
+    "n_boot": 9999,
+    "p_floor": 0.0002,
+    "mean_fraction_cg4": 0.5510204081632653,
+    "mean_fraction_control": 0.3095238095238095,
+    "n_smooth_sat_distribution_cg4": {
+     "0": 7,
+     "1": 17,
+     "2": 20,
+     "3": 5
+    },
+    "n_smooth_sat_distribution_control": {
+     "0": 20,
+     "1": 20,
+     "2": 9
+    },
+    "matched_control_composition": {
+     "Control4B": 49
+    },
+    "satellite_mass_balance": {
+     "status": "ok",
+     "n_pairs": 49,
+     "mean_paired_diff_dex": 0.02773887074829925,
+     "ci95": [
+      -0.0630721738095238,
+      0.1175703282312923
+     ],
+     "smd_before": -0.5828043608452799,
+     "smd_after": 0.09131527928749743
+    },
+    "balance": {
+     "before": {
+      "z_group": 0.1258226478668747,
+      "logMstar_bgg": 0.14920903266980973,
+      "log_group_luminosity": -0.349842758871606,
+      "velocity_dispersion": 0.17746182243833808,
+      "mean_sat_logMstar": -0.5828043608452799
+     },
+     "after": {
+      "z_group": -0.15650263788165097,
+      "logMstar_bgg": 0.06772058225116803,
+      "log_group_luminosity": 0.21758334632629478,
+      "velocity_dispersion": 0.27607396806164275,
+      "mean_sat_logMstar": 0.09131527928749743
+     },
+     "max_abs_smd_before": 0.5828043608452799,
+     "max_abs_smd_after": 0.27607396806164275
+    },
+    "role": "Sensitivity variant with mean satellite log M* added to the matching covariates; unadjusted p, reported as a diagnostic of the corresponding primary per-control match."
+   }
+  },
+  "Control4C": {
+   "status": "ok",
+   "unit": "group",
+   "matching_variables": [
+    "z_group",
+    "logMstar_bgg",
+    "log_group_luminosity",
+    "velocity_dispersion"
+   ],
+   "n_cg4_groups_available": 49,
+   "n_control_groups_available": 632,
+   "n_matched_groups": 47,
+   "propensity_caliper_logit_sd": 0.2,
+   "delta_smooth_satellite_fraction": 0.1524822695035461,
+   "ci95": [
+    0.01773049645390057,
+    0.2872340425531915
+   ],
+   "p": 0.0274,
+   "p_permutation": 0.0369,
+   "n_boot": 9999,
+   "p_floor": 0.0002,
+   "mean_fraction_cg4": 0.5638297872340424,
+   "mean_fraction_control": 0.41134751773049644,
+   "n_smooth_sat_distribution_cg4": {
+    "0": 6,
+    "1": 16,
+    "2": 20,
+    "3": 5
+   },
+   "n_smooth_sat_distribution_control": {
+    "0": 14,
+    "1": 19,
+    "2": 12,
+    "3": 2
+   },
+   "matched_control_composition": {
+    "Control4C": 47
+   },
+   "satellite_mass_balance": {
+    "status": "ok",
+    "n_pairs": 47,
+    "mean_paired_diff_dex": 0.008453581560283828,
+    "ci95": [
+     -0.09924683617021261,
+     0.11882131897163159
+    ],
+    "smd_before": 0.09387217192160076,
+    "smd_after": 0.026317426086862435
+   },
+   "balance": {
+    "before": {
+     "z_group": 0.13479943063065417,
+     "logMstar_bgg": 0.15137897692889055,
+     "log_group_luminosity": 0.09088351807082073,
+     "velocity_dispersion": 0.013866011616369337,
+     "mean_sat_logMstar": 0.09387217192160076
+    },
+    "after": {
+     "z_group": 0.04683812740284601,
+     "logMstar_bgg": 0.017979980881290422,
+     "log_group_luminosity": -0.14877561464820613,
+     "velocity_dispersion": 0.070106598481548,
+     "mean_sat_logMstar": 0.026317426086862435
+    },
+    "max_abs_smd_before": 0.15137897692889055,
+    "max_abs_smd_after": 0.14877561464820613
+   },
+   "satellite_mass_balanced_variant": {
+    "status": "ok",
+    "unit": "group",
+    "matching_variables": [
+     "z_group",
+     "logMstar_bgg",
+     "log_group_luminosity",
+     "velocity_dispersion",
+     "mean_sat_logMstar"
+    ],
+    "n_cg4_groups_available": 49,
+    "n_control_groups_available": 632,
+    "n_matched_groups": 49,
+    "propensity_caliper_logit_sd": 0.2,
+    "delta_smooth_satellite_fraction": 0.15306122448979592,
+    "ci95": [
+     0.017006802721088343,
+     0.282312925170068
+    ],
+    "p": 0.028,
+    "p_permutation": 0.0369,
+    "n_boot": 9999,
+    "p_floor": 0.0002,
+    "mean_fraction_cg4": 0.5510204081632653,
+    "mean_fraction_control": 0.3979591836734694,
+    "n_smooth_sat_distribution_cg4": {
+     "0": 7,
+     "1": 17,
+     "2": 20,
+     "3": 5
+    },
+    "n_smooth_sat_distribution_control": {
+     "0": 16,
+     "1": 18,
+     "2": 14,
+     "3": 1
+    },
+    "matched_control_composition": {
+     "Control4C": 49
+    },
+    "satellite_mass_balance": {
+     "status": "ok",
+     "n_pairs": 49,
+     "mean_paired_diff_dex": -0.03825242857142846,
+     "ci95": [
+      -0.13600833180272118,
+      0.06662376836734708
+     ],
+     "smd_before": 0.09387217192160076,
+     "smd_after": -0.13364220995098
+    },
+    "balance": {
+     "before": {
+      "z_group": 0.13479943063065417,
+      "logMstar_bgg": 0.15137897692889055,
+      "log_group_luminosity": 0.09088351807082073,
+      "velocity_dispersion": 0.013866011616369337,
+      "mean_sat_logMstar": 0.09387217192160076
+     },
+     "after": {
+      "z_group": 0.05709172349524249,
+      "logMstar_bgg": -0.034481588569821475,
+      "log_group_luminosity": 0.03505715476285042,
+      "velocity_dispersion": -0.14885965596219103,
+      "mean_sat_logMstar": -0.13364220995098
+     },
+     "max_abs_smd_before": 0.15137897692889055,
+     "max_abs_smd_after": 0.14885965596219103
+    },
+    "role": "Sensitivity variant with mean satellite log M* added to the matching covariates; unadjusted p, reported as a diagnostic of the corresponding primary per-control match."
+   }
+  },
+  "RG4": {
+   "status": "ok",
+   "unit": "group",
+   "matching_variables": [
+    "z_group",
+    "logMstar_bgg",
+    "log_group_luminosity",
+    "velocity_dispersion"
+   ],
+   "n_cg4_groups_available": 49,
+   "n_control_groups_available": 52,
+   "n_matched_groups": 25,
+   "propensity_caliper_logit_sd": 0.2,
+   "delta_smooth_satellite_fraction": 0.2533333333333333,
+   "ci95": [
+    0.07333333333333336,
+    0.42000000000000004
+   ],
+   "p": 0.0054,
+   "p_permutation": 0.0117,
+   "n_boot": 9999,
+   "p_floor": 0.0002,
+   "mean_fraction_cg4": 0.48666666666666664,
+   "mean_fraction_control": 0.23333333333333328,
+   "n_smooth_sat_distribution_cg4": {
+    "0": 4,
+    "1": 12,
+    "2": 7,
+    "3": 2
+   },
+   "n_smooth_sat_distribution_control": {
+    "0": 12,
+    "1": 9,
+    "2": 4
+   },
+   "matched_control_composition": {
+    "RG4": 25
+   },
+   "satellite_mass_balance": {
+    "status": "ok",
+    "n_pairs": 25,
+    "mean_paired_diff_dex": 0.03374298666666661,
+    "ci95": [
+     -0.10924779666666685,
+     0.1705852606666665
+    ],
+    "smd_before": 0.575741226793585,
+    "smd_after": 0.12221141422978371
+   },
+   "balance": {
+    "before": {
+     "z_group": -0.5035232640695886,
+     "logMstar_bgg": 0.7528308941570258,
+     "log_group_luminosity": 0.7467305339035273,
+     "velocity_dispersion": 0.6851535188553833,
+     "mean_sat_logMstar": 0.575741226793585
+    },
+    "after": {
+     "z_group": -0.1416131600016137,
+     "logMstar_bgg": -0.295541408362688,
+     "log_group_luminosity": -0.17979980574348606,
+     "velocity_dispersion": 0.1341722246394812,
+     "mean_sat_logMstar": 0.12221141422978371
+    },
+    "max_abs_smd_before": 0.7528308941570258,
+    "max_abs_smd_after": 0.295541408362688
+   },
+   "satellite_mass_balanced_variant": {
+    "status": "ok",
+    "unit": "group",
+    "matching_variables": [
+     "z_group",
+     "logMstar_bgg",
+     "log_group_luminosity",
+     "velocity_dispersion",
+     "mean_sat_logMstar"
+    ],
+    "n_cg4_groups_available": 49,
+    "n_control_groups_available": 52,
+    "n_matched_groups": 25,
+    "propensity_caliper_logit_sd": 0.2,
+    "delta_smooth_satellite_fraction": 0.21333333333333332,
+    "ci95": [
+     0.05333333333333329,
+     0.3799999999999999
+    ],
+    "p": 0.0132,
+    "p_permutation": 0.0273,
+    "n_boot": 9999,
+    "p_floor": 0.0002,
+    "mean_fraction_cg4": 0.4799999999999999,
+    "mean_fraction_control": 0.2666666666666666,
+    "n_smooth_sat_distribution_cg4": {
+     "0": 4,
+     "1": 10,
+     "2": 9,
+     "3": 2
+    },
+    "n_smooth_sat_distribution_control": {
+     "0": 10,
+     "1": 11,
+     "2": 4
+    },
+    "matched_control_composition": {
+     "RG4": 25
+    },
+    "satellite_mass_balance": {
+     "status": "ok",
+     "n_pairs": 25,
+     "mean_paired_diff_dex": -0.044955506666666596,
+     "ci95": [
+      -0.18338773399999989,
+      0.0898260280000004
+     ],
+     "smd_before": 0.575741226793585,
+     "smd_after": -0.19896264387297652
+    },
+    "balance": {
+     "before": {
+      "z_group": -0.5035232640695886,
+      "logMstar_bgg": 0.7528308941570258,
+      "log_group_luminosity": 0.7467305339035273,
+      "velocity_dispersion": 0.6851535188553833,
+      "mean_sat_logMstar": 0.575741226793585
+     },
+     "after": {
+      "z_group": 0.0927634358667157,
+      "logMstar_bgg": -0.026246308558710983,
+      "log_group_luminosity": 0.050712297469607856,
+      "velocity_dispersion": 0.18261629004729166,
+      "mean_sat_logMstar": -0.19896264387297652
+     },
+     "max_abs_smd_before": 0.7528308941570258,
+     "max_abs_smd_after": 0.19896264387297652
+    },
+    "role": "Sensitivity variant with mean satellite log M* added to the matching covariates; unadjusted p, reported as a diagnostic of the corresponding primary per-control match."
+   }
+  }
+ },
+ "influence_checks": {
+  "model_checked": "elliptical_satellites",
+  "covariates": [
+   "logMstar",
+   "z_numeric",
+   "is_satellite",
+   "log_group_luminosity",
+   "velocity_dispersion"
+  ],
+  "leave_one_cg4_group": {
+   "n_rows": 186,
+   "n_direction_changes": 0
+  },
+  "leave_one_lim_host": {
+   "n_rows": 180,
+   "n_direction_changes": 0
+  },
+  "per_control_integrity": [
+   {
+    "control": "Control4B",
+    "full_status": "ok",
+    "full_beta": 0.968101949298694,
+    "full_odds_ratio": 2.6329422557428486,
+    "full_covariance": "cluster",
+    "full_n_clusters": 735,
+    "complete_case_physical_groups": 735,
+    "control_duplicate_objids": 0,
+    "cg4_objids_on_control_side": 0,
+    "clustered_by_physical_group": true
+   },
+   {
+    "control": "Control4C",
+    "full_status": "ok",
+    "full_beta": 0.6585757859823733,
+    "full_odds_ratio": 1.9320387373593795,
+    "full_covariance": "cluster",
+    "full_n_clusters": 734,
+    "complete_case_physical_groups": 734,
+    "control_duplicate_objids": 0,
+    "cg4_objids_on_control_side": 0,
+    "clustered_by_physical_group": true
+   },
+   {
+    "control": "RG4",
+    "full_status": "ok",
+    "full_beta": 1.1088866010466463,
+    "full_odds_ratio": 3.0309818230595447,
+    "full_covariance": "cluster",
+    "full_n_clusters": 113,
+    "complete_case_physical_groups": 113,
+    "control_duplicate_objids": 0,
+    "cg4_objids_on_control_side": 0,
+    "clustered_by_physical_group": true
+   }
+  ],
+  "all_control_objids_unique_within_per_control_models": true,
+  "no_cg4_objids_on_control_side": true,
+  "all_models_clustered_by_physical_group": true,
+  "no_cg4_host_changes_elliptical_direction": true,
+  "outputs": {
+   "leave_one_cg4_group_csv": "output/referee/morphology_influence_leave_one_cg4_group.csv",
+   "leave_one_lim_host_csv": "output/referee/morphology_influence_leave_one_lim_host.csv",
+   "audit_json": "output/referee/morphology_influence_audit.json"
+  }
+ }
+}

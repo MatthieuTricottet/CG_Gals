@@ -352,17 +352,21 @@ def circ3_sph(group,Id="Id"):
     sep0 = separation.iloc[0]['sep']
        
     
+    # np.clip signature is (a, a_min, a_max): the historical positional
+    # form np.clip(-1, 1, x) evaluated to minimum(1, x), losing the lower
+    # floor, so cosines below -1 could NaN the arccos (referee audit T7.4;
+    # only the legacy common.py 'Circ' branch ever called this helper).
     cosNBC = (np.sin(Dec1)-np.sin(Dec2)*np.cos(sep0))/(np.cos(Dec2)*np.sin(sep0))
-    cosNBC = np.clip(-1,1,cosNBC)
+    cosNBC = np.clip(cosNBC, -1, 1)
     cosOBC = np.cos(theta)*(1-np.cos(sep0))/(np.sin(theta)*np.sin(sep0))
-    cosOBC = np.clip(-1,1,cosOBC)
+    cosOBC = np.clip(cosOBC, -1, 1)
     
     
     sign = pd.DataFrame([-1,1])
     deltadelta = np.arccos(cosOBC)
     sindelta0 = np.sin(Dec2)*np.cos(theta) + \
                 np.cos(Dec2)*np.sin(theta)*np.cos(np.arccos(cosNBC)-sign*deltadelta)
-    sindelta0 = np.clip(-1,1,sindelta0)
+    sindelta0 = np.clip(sindelta0, -1, 1)
 
     delta0t =  np.arcsin(sindelta0)
 

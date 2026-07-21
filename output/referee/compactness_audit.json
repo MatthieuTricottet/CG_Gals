@@ -1,0 +1,59 @@
+{
+ "summary_by_sample": {
+  "CG4": {
+   "n_quartets": 62,
+   "median_R_pair_med_kpc": 143.14844751421015,
+   "q25_R_pair_med_kpc": 114.17602593373125,
+   "q75_R_pair_med_kpc": 177.10467924650555,
+   "min_R_pair_med_kpc": 50.076370688618866,
+   "max_R_pair_med_kpc": 286.9695409135541,
+   "n_dropped_missing_coordinates_or_redshift": 0
+  },
+  "Control4B": {
+   "n_quartets": 698,
+   "median_R_pair_med_kpc": 447.4604040437556,
+   "q25_R_pair_med_kpc": 323.4102691226027,
+   "q75_R_pair_med_kpc": 604.383855201292,
+   "min_R_pair_med_kpc": 57.16329785802837,
+   "max_R_pair_med_kpc": 2065.1475680656604,
+   "n_dropped_missing_coordinates_or_redshift": 0
+  },
+  "Control4C": {
+   "n_quartets": 703,
+   "median_R_pair_med_kpc": 293.09299167198543,
+   "q25_R_pair_med_kpc": 187.07393701796138,
+   "q75_R_pair_med_kpc": 436.24641579307365,
+   "min_R_pair_med_kpc": 32.319177245432115,
+   "max_R_pair_med_kpc": 1100.859946281545,
+   "n_dropped_missing_coordinates_or_redshift": 0
+  },
+  "RG4": {
+   "n_quartets": 56,
+   "median_R_pair_med_kpc": 429.5835442673599,
+   "q25_R_pair_med_kpc": 292.25011157174356,
+   "q75_R_pair_med_kpc": 493.9419848448288,
+   "min_R_pair_med_kpc": 187.08497711089203,
+   "max_R_pair_med_kpc": 773.3771271601322,
+   "n_dropped_missing_coordinates_or_redshift": 0
+  }
+ },
+ "definition": {
+  "quantity": "median over the six proper projected pairwise separations within each selected quartet",
+  "distance": "great-circle separation times angular-diameter distance at the quartet mean member redshift; Paper-I/Control4C cosmology H0=67.8, Om0=0.308",
+  "unit_guard": "does not use dist2BGG or the inherited luminosity-distance group-size convention",
+  "compactness_score": "-log10(R_pair_med/kpc), so larger is more compact"
+ },
+ "cg4_vs_control4c": {
+  "overlap_coefficient_compactness_score": 0.3385949616849425,
+  "control4c_p95_compactness_score": -1.9740034013556842,
+  "control4c_equivalent_R_pair_med_p05_kpc": 94.1896973347121,
+  "fraction_cg4_above_control4c_p95_compactness": 0.1774193548387097,
+  "ks_statistic_descriptive": 0.6125820217501032,
+  "ks_pvalue_descriptive": 6.492149468831995e-21
+ },
+ "outputs": {
+  "summary_csv": "output/referee/compactness_summary.csv",
+  "group_values_csv": "output/referee/compactness_group_values.csv",
+  "figure": "output/referee/compactness_ecdf.pdf"
+ }
+}

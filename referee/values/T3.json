@@ -1,0 +1,1083 @@
+{
+ "mc_gapper": {
+  "n_draws": 100000,
+  "seed": 20260721,
+  "median_ratio": 0.9608310568245633,
+  "p16_ratio": 0.5736207040945553,
+  "p84_ratio": 1.4230628226971513,
+  "mean_ratio": 0.9988711810055089,
+  "prob_below_half": 0.11286,
+  "prob_above_1p5": 0.12632
+ },
+ "sigma_v_completeness": {
+  "rule_adjusted_models": "covariate used when notna fraction >= 0.65 of the model frame (specialness_models._covariates)",
+  "rule_matching": "variable used when notna fraction >= 0.70 (both arms for the galaxy match; group tables >= 0.70)",
+  "realized": {
+   "CG4+Control4B": 1.0,
+   "CG4+Control4C": 1.0,
+   "CG4+RG4": 1.0,
+   "pooled_frame": 1.0
+  }
+ },
+ "sigma_v_model_families": {
+  "primary_contrasts_covariates": [
+   "logMstar",
+   "z_numeric",
+   "is_satellite",
+   "log_group_luminosity",
+   "velocity_dispersion"
+  ],
+  "pooled_covariates": [
+   "logMstar",
+   "z_numeric",
+   "is_satellite",
+   "log_group_luminosity",
+   "velocity_dispersion"
+  ],
+  "galaxy_match_variables": [
+   "logMstar",
+   "z_numeric",
+   "rank",
+   "log_group_luminosity",
+   "velocity_dispersion"
+  ],
+  "group_match_variables_by_control": {
+   "Control4B": [
+    "z_group",
+    "logMstar_bgg",
+    "log_group_luminosity",
+    "velocity_dispersion"
+   ],
+   "Control4C": [
+    "z_group",
+    "logMstar_bgg",
+    "log_group_luminosity",
+    "velocity_dispersion"
+   ],
+   "RG4": [
+    "z_group",
+    "logMstar_bgg",
+    "log_group_luminosity",
+    "velocity_dispersion"
+   ]
+  },
+  "other_uses_grep": [
+   {
+    "file": "src/extended_data.py",
+    "line": 228,
+    "code": "frame[\"velocity_dispersion\"] = _numeric(frame, [\"Vdisp\", \"sigma_v\", \"group_Vdisp\"])"
+   },
+   {
+    "file": "src/extended_data.py",
+    "line": 271,
+    "code": "frame[\"V_norm\"] = frame[\"delta_v\"].abs() / frame[\"velocity_dispersion\"]"
+   },
+   {
+    "file": "src/fossilness.py",
+    "line": 66,
+    "code": "\"velocity_dispersion\": first.get(\"velocity_dispersion\", np.nan),"
+   },
+   {
+    "file": "src/fossilness.py",
+    "line": 160,
+    "code": "\"velocity_dispersion\","
+   },
+   {
+    "file": "src/matched_controls.py",
+    "line": 62,
+    "code": "\"velocity_dispersion\","
+   },
+   {
+    "file": "src/matched_controls.py",
+    "line": 68,
+    "code": "\"velocity_dispersion\","
+   },
+   {
+    "file": "src/matched_controls.py",
+    "line": 243,
+    "code": "\"velocity_dispersion\": r\"$\\sigma_v$\","
+   },
+   {
+    "file": "src/matched_controls.py",
+    "line": 342,
+    "code": "\"velocity_dispersion\": float(group[\"velocity_dispersion\"].median())"
+   },
+   {
+    "file": "src/matched_controls.py",
+    "line": 343,
+    "code": "if \"velocity_dispersion\" in group"
+   },
+   {
+    "file": "src/matched_controls.py",
+    "line": 402,
+    "code": "\"velocity_dispersion\": float(group[\"velocity_dispersion\"].median())"
+   },
+   {
+    "file": "src/matched_controls.py",
+    "line": 403,
+    "code": "if \"velocity_dispersion\" in group"
+   },
+   {
+    "file": "src/morphology_robustness.py",
+    "line": 142,
+    "code": "(\"velocity_dispersion\", True),"
+   },
+   {
+    "file": "src/phase_space_segregation.py",
+    "line": 162,
+    "code": "if \"velocity_dispersion\" not in work:"
+   },
+   {
+    "file": "src/phase_space_segregation.py",
+    "line": 164,
+    "code": "work[\"velocity_dispersion\"] = _numeric(work, sigma_column)"
+   },
+   {
+    "file": "src/phase_space_segregation.py",
+    "line": 165,
+    "code": "sigma = pd.to_numeric(work[\"velocity_dispersion\"], errors=\"coerce\")"
+   },
+   {
+    "file": "src/phase_space_segregation.py",
+    "line": 291,
+    "code": "sigma_column = first_existing(frame, [\"velocity_dispersion\", \"Vdisp\", \"sigma_v\"])"
+   },
+   {
+    "file": "src/phase_space_segregation.py",
+    "line": 292,
+    "code": "mapping[\"velocity_dispersion\"] = sigma_column"
+   },
+   {
+    "file": "src/phase_space_segregation.py",
+    "line": 293,
+    "code": "if sigma_column and sigma_column != \"velocity_dispersion\":"
+   },
+   {
+    "file": "src/phase_space_segregation.py",
+    "line": 294,
+    "code": "frame[\"velocity_dispersion\"] = _numeric(frame, sigma_column)"
+   },
+   {
+    "file": "src/phase_space_segregation.py",
+    "line": 564,
+    "code": "\"velocity_dispersion\","
+   },
+   {
+    "file": "src/selection_diagnostics.py",
+    "line": 45,
+    "code": "\"velocity_dispersion\","
+   },
+   {
+    "file": "src/selection_diagnostics.py",
+    "line": 86,
+    "code": "\"velocity_dispersion\","
+   },
+   {
+    "file": "src/selection_diagnostics.py",
+    "line": 97,
+    "code": "\"velocity_dispersion\","
+   },
+   {
+    "file": "src/size_analysis.py",
+    "line": 81,
+    "code": "GROUP_COVARIATES = [\"log_group_luminosity\", \"velocity_dispersion\"]"
+   },
+   {
+    "file": "src/specialness_models.py",
+    "line": 51,
+    "code": "(\"velocity_dispersion\", True),"
+   }
+  ]
+ },
+ "published": {
+  "primary": {
+   "Control4B": {
+    "quenched_all": {
+     "odds_ratio": 1.8030038182893915,
+     "ci95": [
+      1.2599178203575507,
+      2.5801863552049586
+     ],
+     "p": 0.0012665657286651743,
+     "p_adj": 0.0025331314573303486,
+     "n": 2842
+    },
+    "quenched_satellites": {
+     "odds_ratio": 2.1605832625720294,
+     "ci95": [
+      1.5129950565623458,
+      3.08535048694261
+     ],
+     "p": 2.256070205988096e-05,
+     "p_adj": 9.024280823952385e-05,
+     "n": 2146
+    },
+    "starforming_satellites": {
+     "odds_ratio": 0.4628379832997351,
+     "ci95": [
+      0.3241122861833885,
+      0.6609406922135527
+     ],
+     "p": 2.256070205988096e-05,
+     "p_adj": 9.024280823952385e-05,
+     "n": 2146
+    },
+    "elliptical_all": {
+     "odds_ratio": 2.1400497065588597,
+     "ci95": [
+      1.5786057193129137,
+      2.901175822760872
+     ],
+     "p": 9.553097242993727e-07,
+     "p_adj": 5.731858345796236e-06,
+     "n": 2582
+    },
+    "elliptical_satellites": {
+     "odds_ratio": 2.6329422557428486,
+     "ci95": [
+      1.8831238208263272,
+      3.6813218787887583
+     ],
+     "p": 1.5036813787072624e-08,
+     "p_adj": 1.202945102965766e-07,
+     "n": 1929
+    },
+    "elliptical_bgg": {
+     "odds_ratio": 0.7831032794008098,
+     "ci95": [
+      0.3980517560761843,
+      1.540630676406138
+     ],
+     "p": 0.4788519319082867,
+     "p_adj": 0.4788519319082867,
+     "n": 653
+    },
+    "spiral_all": {
+     "odds_ratio": 0.4672788659698826,
+     "ci95": [
+      0.3446878304150367,
+      0.6334704022453767
+     ],
+     "p": 9.55309724299466e-07,
+     "p_adj": 5.731858345796236e-06,
+     "n": 2582
+    },
+    "spiral_satellites": {
+     "odds_ratio": 0.3798032402035579,
+     "ci95": [
+      0.2716415551060214,
+      0.5310325263482633
+     ],
+     "p": 1.5036813787072075e-08,
+     "p_adj": 1.202945102965766e-07,
+     "n": 1929
+    }
+   },
+   "Control4C": {
+    "quenched_all": {
+     "odds_ratio": 1.245295350163563,
+     "ci95": [
+      0.9082761392452099,
+      1.7073667821194713
+     ],
+     "p": 0.17305463316051417,
+     "p_adj": 0.34610926632102834,
+     "n": 2851
+    },
+    "quenched_satellites": {
+     "odds_ratio": 1.3751251874979524,
+     "ci95": [
+      0.9974024161316942,
+      1.8958940250267056
+     ],
+     "p": 0.05188457350944697,
+     "p_adj": 0.2075382940377871,
+     "n": 2151
+    },
+    "starforming_satellites": {
+     "odds_ratio": 0.7272065184257913,
+     "ci95": [
+      0.5274556419290963,
+      1.0026043488829512
+     ],
+     "p": 0.05188457350944677,
+     "p_adj": 0.2075382940377871,
+     "n": 2151
+    },
+    "elliptical_all": {
+     "odds_ratio": 1.6706461703756417,
+     "ci95": [
+      1.2468499415757777,
+      2.238487995647205
+     ],
+     "p": 0.0005864042942453806,
+     "p_adj": 0.003518425765472283,
+     "n": 2557
+    },
+    "elliptical_satellites": {
+     "odds_ratio": 1.9320387373593795,
+     "ci95": [
+      1.4032726121748909,
+      2.660048838886629
+     ],
+     "p": 5.4226720085294193e-05,
+     "p_adj": 0.00043381376068234796,
+     "n": 1901
+    },
+    "elliptical_bgg": {
+     "odds_ratio": 0.8748934735812663,
+     "ci95": [
+      0.43778109266542015,
+      1.7484505451223094
+     ],
+     "p": 0.7051789852751147,
+     "p_adj": 0.7051789852751147,
+     "n": 656
+    },
+    "spiral_all": {
+     "odds_ratio": 0.5985707911898258,
+     "ci95": [
+      0.44673011512437194,
+      0.802021130735422
+     ],
+     "p": 0.0005864042942453834,
+     "p_adj": 0.003518425765472283,
+     "n": 2557
+    },
+    "spiral_satellites": {
+     "odds_ratio": 0.517587965843145,
+     "ci95": [
+      0.3759329473133104,
+      0.7126199081517945
+     ],
+     "p": 5.4226720085293496e-05,
+     "p_adj": 0.00043381376068234796,
+     "n": 1901
+    }
+   },
+   "RG4": {
+    "quenched_all": {
+     "odds_ratio": 1.4040766683135368,
+     "ci95": [
+      0.7989632956580507,
+      2.4674866808226907
+     ],
+     "p": 0.23809575079256584,
+     "p_adj": 0.4761915015851317,
+     "n": 449
+    },
+    "quenched_satellites": {
+     "odds_ratio": 1.85379947515056,
+     "ci95": [
+      0.9943159995810626,
+      3.4562176365626516
+     ],
+     "p": 0.052133559149246965,
+     "p_adj": 0.20853423659698786,
+     "n": 340
+    },
+    "starforming_satellites": {
+     "odds_ratio": 0.5394326697167627,
+     "ci95": [
+      0.28933363148813174,
+      1.0057164929673588
+     ],
+     "p": 0.05213355914924705,
+     "p_adj": 0.20853423659698786,
+     "n": 340
+    },
+    "elliptical_all": {
+     "odds_ratio": 2.8054220033141632,
+     "ci95": [
+      1.7948630047452372,
+      4.384954503976964
+     ],
+     "p": 5.986749710263143e-06,
+     "p_adj": 4.789399768210515e-05,
+     "n": 399
+    },
+    "elliptical_satellites": {
+     "odds_ratio": 3.0309818230595447,
+     "ci95": [
+      1.718967402388407,
+      5.344400829796283
+     ],
+     "p": 0.00012709680487124202,
+     "p_adj": 0.0007625808292274521,
+     "n": 299
+    },
+    "elliptical_bgg": {
+     "odds_ratio": 1.8700390270808254,
+     "ci95": [
+      0.6338196151573614,
+      5.517415174879325
+     ],
+     "p": 0.25682317033239666,
+     "p_adj": 0.4761915015851317,
+     "n": 100
+    },
+    "spiral_all": {
+     "odds_ratio": 0.3564526116992951,
+     "ci95": [
+      0.22805253716841206,
+      0.5571455856832603
+     ],
+     "p": 5.986749710263275e-06,
+     "p_adj": 4.789399768210515e-05,
+     "n": 399
+    },
+    "spiral_satellites": {
+     "odds_ratio": 0.32992609602342543,
+     "ci95": [
+      0.18711171408116828,
+      0.5817445977221893
+     ],
+     "p": 0.00012709680487124294,
+     "p_adj": 0.0007625808292274521,
+     "n": 299
+    }
+   }
+  },
+  "pooled": {
+   "quenched_all": {
+    "odds_ratio": 1.3482561250211782,
+    "ci95": [
+     0.9778748984960276,
+     1.8589234486465422
+    ],
+    "p": 0.06823762009535347,
+    "p_adj": 0.13647524019070695,
+    "n": 3608
+   },
+   "quenched_satellites": {
+    "odds_ratio": 1.5264697101986,
+    "ci95": [
+     1.1028862256935543,
+     2.1127381246315764
+    ],
+    "p": 0.0107568326502254,
+    "p_adj": 0.04302733060090128,
+    "n": 2908
+   },
+   "starforming_satellites": {
+    "odds_ratio": 0.6551063498468603,
+    "ci95": [
+     0.47331942768552143,
+     0.9067118408983171
+    ],
+    "p": 0.01075683265022532,
+    "p_adj": 0.04302733060090128,
+    "n": 2908
+   },
+   "elliptical_all": {
+    "odds_ratio": 1.7656431700560324,
+    "ci95": [
+     1.3173259528614114,
+     2.366533352807549
+    ],
+    "p": 0.00014230946184455787,
+    "p_adj": 0.0008538567710673472,
+    "n": 3260
+   },
+   "elliptical_satellites": {
+    "odds_ratio": 2.0820317256210927,
+    "ci95": [
+     1.5076790057114657,
+     2.8751850294865307
+    ],
+    "p": 8.465326157483702e-06,
+    "p_adj": 6.77226092598685e-05,
+    "n": 2604
+   },
+   "elliptical_bgg": {
+    "odds_ratio": 0.7755905223685292,
+    "ci95": [
+     0.3926178364005672,
+     1.532127689110303
+    ],
+    "p": 0.464392766729127,
+    "p_adj": 0.464392766729127,
+    "n": 656
+   },
+   "spiral_all": {
+    "odds_ratio": 0.5663658529419997,
+    "ci95": [
+     0.42255901393219153,
+     0.7591135647391329
+    ],
+    "p": 0.00014230946184456178,
+    "p_adj": 0.0008538567710673472,
+    "n": 3260
+   },
+   "spiral_satellites": {
+    "odds_ratio": 0.48030007789707846,
+    "ci95": [
+     0.34780370297719104,
+     0.6632711579930136
+    ],
+    "p": 8.465326157483562e-06,
+    "p_adj": 6.77226092598685e-05,
+    "n": 2604
+   }
+  },
+  "matched": {
+   "matching_variables": [
+    "logMstar",
+    "z_numeric",
+    "rank",
+    "log_group_luminosity",
+    "velocity_dispersion"
+   ],
+   "n_cg4_matched": 234,
+   "effects": {
+    "quenched_fraction": {
+     "delta": 0.030701754385964897,
+     "ci95": [
+      -0.05628929041972518,
+      0.12186489980607605
+     ],
+     "p": 0.5258,
+     "p_adj": 1.0,
+     "n_pairs": 228
+    },
+    "starforming_fraction": {
+     "delta": -0.030701754385964897,
+     "ci95": [
+      -0.12186489980607623,
+      0.05628929041972506
+     ],
+     "p": 0.5258,
+     "p_adj": 1.0,
+     "n_pairs": 228
+    },
+    "elliptical_fraction": {
+     "delta": 0.13888888888888895,
+     "ci95": [
+      0.03702729044834313,
+      0.23976608187134502
+     ],
+     "p": 0.0072,
+     "p_adj": 0.036,
+     "n_pairs": 180
+    },
+    "spiral_fraction": {
+     "delta": -0.1388888888888889,
+     "ci95": [
+      -0.23976608187134502,
+      -0.03702729044834327
+     ],
+     "p": 0.0072,
+     "p_adj": 0.036,
+     "n_pairs": 180
+    },
+    "residual_sSFR_starforming": {
+     "delta": -0.1474850672422085,
+     "ci95": [
+      -0.3109662648088732,
+      0.008402292009361613
+     ],
+     "p": 0.0638,
+     "p_adj": 0.1914,
+     "n_pairs": 39
+    }
+   },
+   "per_control_group": {
+    "Control4B": {
+     "variables": [
+      "z_group",
+      "logMstar_bgg",
+      "log_group_luminosity",
+      "velocity_dispersion"
+     ],
+     "n_pairs": 54,
+     "delta": 0.16049382716049382,
+     "ci95": [
+      0.03395061728395066,
+      0.2839506172839505
+     ],
+     "p_bootstrap": 0.012,
+     "p_permutation": 0.0158,
+     "satellite_mass_balance": 0.0017055030864197593
+    },
+    "Control4C": {
+     "variables": [
+      "z_group",
+      "logMstar_bgg",
+      "log_group_luminosity",
+      "velocity_dispersion"
+     ],
+     "n_pairs": 54,
+     "delta": 0.11419753086419754,
+     "ci95": [
+      -0.015432098765431949,
+      0.23765432098765443
+     ],
+     "p_bootstrap": 0.082,
+     "p_permutation": 0.0801,
+     "satellite_mass_balance": 0.02545144444444428
+    },
+    "RG4": {
+     "variables": [
+      "z_group",
+      "logMstar_bgg",
+      "log_group_luminosity",
+      "velocity_dispersion"
+     ],
+     "n_pairs": 28,
+     "delta": 0.19642857142857137,
+     "ci95": [
+      0.035714285714285754,
+      0.35119047619047616
+     ],
+     "p_bootstrap": 0.019,
+     "p_permutation": 0.0263,
+     "satellite_mass_balance": -0.014451095238095337
+    }
+   }
+  }
+ },
+ "no_sigma_v": {
+  "primary": {
+   "Control4B": {
+    "quenched_all": {
+     "odds_ratio": 1.9365579922742486,
+     "ci95": [
+      1.3492088895254337,
+      2.77959690790384
+     ],
+     "p": 0.0003379103067920487,
+     "p_adj": 0.0006758206135840974,
+     "n": 2842
+    },
+    "quenched_satellites": {
+     "odds_ratio": 2.290435408772688,
+     "ci95": [
+      1.6073687241390389,
+      3.263777802177716
+     ],
+     "p": 4.50582900193149e-06,
+     "p_adj": 1.802331600772596e-05,
+     "n": 2146
+    },
+    "starforming_satellites": {
+     "odds_ratio": 0.4365982101786679,
+     "ci95": [
+      0.3063934068467417,
+      0.6221347877324384
+     ],
+     "p": 4.505829001931649e-06,
+     "p_adj": 1.802331600772596e-05,
+     "n": 2146
+    },
+    "elliptical_all": {
+     "odds_ratio": 2.216910991720153,
+     "ci95": [
+      1.6391858100264813,
+      2.998253349405358
+     ],
+     "p": 2.3636527715744075e-07,
+     "p_adj": 1.4181916629446445e-06,
+     "n": 2582
+    },
+    "elliptical_satellites": {
+     "odds_ratio": 2.6793284744068315,
+     "ci95": [
+      1.9231745080907658,
+      3.7327871410348528
+     ],
+     "p": 5.6939164504960985e-09,
+     "p_adj": 4.555133160396879e-08,
+     "n": 1929
+    },
+    "elliptical_bgg": {
+     "odds_ratio": 0.866159713633892,
+     "ci95": [
+      0.4468122111068516,
+      1.6790782142320042
+     ],
+     "p": 0.6705077855047127,
+     "p_adj": 0.6705077855047127,
+     "n": 653
+    },
+    "spiral_all": {
+     "odds_ratio": 0.451078100895732,
+     "ci95": [
+      0.33352751867961056,
+      0.610058965788537
+     ],
+     "p": 2.3636527715744636e-07,
+     "p_adj": 1.4181916629446445e-06,
+     "n": 2582
+    },
+    "spiral_satellites": {
+     "odds_ratio": 0.37322784778054796,
+     "ci95": [
+      0.26789633649529965,
+      0.5199736143511762
+     ],
+     "p": 5.693916450496327e-09,
+     "p_adj": 4.555133160396879e-08,
+     "n": 1929
+    }
+   },
+   "Control4C": {
+    "quenched_all": {
+     "odds_ratio": 1.2430739444377596,
+     "ci95": [
+      0.9048749691155247,
+      1.7076755177021272
+     ],
+     "p": 0.17927272733040744,
+     "p_adj": 0.3585454546608149,
+     "n": 2851
+    },
+    "quenched_satellites": {
+     "odds_ratio": 1.3660649918727175,
+     "ci95": [
+      0.9943072304737635,
+      1.8768178535029258
+     ],
+     "p": 0.05426222379901052,
+     "p_adj": 0.21704889519604187,
+     "n": 2151
+    },
+    "starforming_satellites": {
+     "odds_ratio": 0.7320295929911176,
+     "ci95": [
+      0.5328167558367916,
+      1.005725362696522
+     ],
+     "p": 0.05426222379901047,
+     "p_adj": 0.21704889519604187,
+     "n": 2151
+    },
+    "elliptical_all": {
+     "odds_ratio": 1.68096106183727,
+     "ci95": [
+      1.2649950868925655,
+      2.233708352460233
+     ],
+     "p": 0.00034288646668301004,
+     "p_adj": 0.002057318800098051,
+     "n": 2557
+    },
+    "elliptical_satellites": {
+     "odds_ratio": 1.9364929015507473,
+     "ci95": [
+      1.4153731626293349,
+      2.6494813217950655
+     ],
+     "p": 3.5973653042179966e-05,
+     "p_adj": 0.00028778922433743594,
+     "n": 1901
+    },
+    "elliptical_bgg": {
+     "odds_ratio": 0.9330232941300995,
+     "ci95": [
+      0.47486740514780834,
+      1.8332116669882164
+     ],
+     "p": 0.8405591650147586,
+     "p_adj": 0.8405591650147586,
+     "n": 656
+    },
+    "spiral_all": {
+     "odds_ratio": 0.5948977776481104,
+     "ci95": [
+      0.44768601903582794,
+      0.7905169042644105
+     ],
+     "p": 0.00034288646668300846,
+     "p_adj": 0.002057318800098051,
+     "n": 2557
+    },
+    "spiral_satellites": {
+     "odds_ratio": 0.5163974519086528,
+     "ci95": [
+      0.3774323645061532,
+      0.7065274560825375
+     ],
+     "p": 3.597365304217949e-05,
+     "p_adj": 0.00028778922433743594,
+     "n": 1901
+    }
+   },
+   "RG4": {
+    "quenched_all": {
+     "odds_ratio": 1.741843797047037,
+     "ci95": [
+      1.0105845029836282,
+      3.0022425678937923
+     ],
+     "p": 0.0457308338377658,
+     "p_adj": 0.0914616676755316,
+     "n": 449
+    },
+    "quenched_satellites": {
+     "odds_ratio": 2.1452441113174454,
+     "ci95": [
+      1.175701126465127,
+      3.9143215852644504
+     ],
+     "p": 0.012864761526996846,
+     "p_adj": 0.051459046107987384,
+     "n": 340
+    },
+    "starforming_satellites": {
+     "odds_ratio": 0.4661474163823144,
+     "ci95": [
+      0.25547211137800313,
+      0.850556299972774
+     ],
+     "p": 0.012864761526996903,
+     "p_adj": 0.051459046107987384,
+     "n": 340
+    },
+    "elliptical_all": {
+     "odds_ratio": 2.758496010817398,
+     "ci95": [
+      1.8028289978900631,
+      4.220755407529515
+     ],
+     "p": 2.9282264042845275e-06,
+     "p_adj": 2.342581123427622e-05,
+     "n": 399
+    },
+    "elliptical_satellites": {
+     "odds_ratio": 2.826657471410878,
+     "ci95": [
+      1.6689978666595957,
+      4.787299385034238
+     ],
+     "p": 0.00011089060457213394,
+     "p_adj": 0.0006653436274327917,
+     "n": 299
+    },
+    "elliptical_bgg": {
+     "odds_ratio": 2.182109554097435,
+     "ci95": [
+      0.781462844035385,
+      6.093190664696145
+     ],
+     "p": 0.13640521904550995,
+     "p_adj": 0.13640521904550995,
+     "n": 100
+    },
+    "spiral_all": {
+     "odds_ratio": 0.3625163843190339,
+     "ci95": [
+      0.2369244136289149,
+      0.5546837782010103
+     ],
+     "p": 2.928226404284625e-06,
+     "p_adj": 2.342581123427622e-05,
+     "n": 399
+    },
+    "spiral_satellites": {
+     "odds_ratio": 0.35377473574853274,
+     "ci95": [
+      0.2088860377368789,
+      0.599161940213526
+     ],
+     "p": 0.00011089060457213194,
+     "p_adj": 0.0006653436274327917,
+     "n": 299
+    }
+   }
+  },
+  "pooled": {
+   "quenched_all": {
+    "odds_ratio": 1.4024613234316976,
+    "ci95": [
+     1.0180829006633627,
+     1.931962281696507
+    ],
+    "p": 0.03848748627953629,
+    "p_adj": 0.07697497255907258,
+    "n": 3608
+   },
+   "quenched_satellites": {
+    "odds_ratio": 1.567990454949596,
+    "ci95": [
+     1.141093210502985,
+     2.154595298774333
+    ],
+    "p": 0.005538127841274015,
+    "p_adj": 0.022152511365095637,
+    "n": 2908
+   },
+   "starforming_satellites": {
+    "odds_ratio": 0.637758984337787,
+    "ci95": [
+     0.4641242838359765,
+     0.8763525983641659
+    ],
+    "p": 0.005538127841273909,
+    "p_adj": 0.022152511365095637,
+    "n": 2908
+   },
+   "elliptical_all": {
+    "odds_ratio": 1.8282873641396382,
+    "ci95": [
+     1.3738265864687667,
+     2.4330834173652525
+    ],
+    "p": 3.501003995773154e-05,
+    "p_adj": 0.00021006023974638922,
+    "n": 3260
+   },
+   "elliptical_satellites": {
+    "odds_ratio": 2.13151577966459,
+    "ci95": [
+     1.5573657407695538,
+     2.9173362428751624
+    ],
+    "p": 2.2837715269338258e-06,
+    "p_adj": 1.8270172215470196e-05,
+    "n": 2604
+   },
+   "elliptical_bgg": {
+    "odds_ratio": 0.8589441027086997,
+    "ci95": [
+     0.44139933258048486,
+     1.6714682536216232
+    ],
+    "p": 0.6544159907177169,
+    "p_adj": 0.6544159907177169,
+    "n": 656
+   },
+   "spiral_all": {
+    "odds_ratio": 0.5469599689929396,
+    "ci95": [
+     0.4110011160582747,
+     0.7278939058606831
+    ],
+    "p": 3.501003995773173e-05,
+    "p_adj": 0.00021006023974638922,
+    "n": 3260
+   },
+   "spiral_satellites": {
+    "odds_ratio": 0.4691497053600779,
+    "ci95": [
+     0.34277845155567505,
+     0.6421099256401139
+    ],
+    "p": 2.2837715269337745e-06,
+    "p_adj": 1.8270172215470196e-05,
+    "n": 2604
+   }
+  },
+  "matched": {
+   "matching_variables": [
+    "logMstar",
+    "z_numeric",
+    "rank",
+    "log_group_luminosity"
+   ],
+   "n_cg4_matched": 234,
+   "effects": {
+    "quenched_fraction": {
+     "delta": 0.07488986784140972,
+     "ci95": [
+      -0.004524886877828038,
+      0.15838200410628478
+     ],
+     "p": 0.0786,
+     "p_adj": 0.2358,
+     "n_pairs": 227
+    },
+    "starforming_fraction": {
+     "delta": -0.07488986784140972,
+     "ci95": [
+      -0.15838200410628506,
+      0.004524886877828038
+     ],
+     "p": 0.0786,
+     "p_adj": 0.2358,
+     "n_pairs": 227
+    },
+    "elliptical_fraction": {
+     "delta": 0.15508021390374327,
+     "ci95": [
+      0.05977855288773517,
+      0.25
+     ],
+     "p": 0.0012,
+     "p_adj": 0.005999999999999999,
+     "n_pairs": 187
+    },
+    "spiral_fraction": {
+     "delta": -0.15508021390374332,
+     "ci95": [
+      -0.25,
+      -0.05977855288773528
+     ],
+     "p": 0.0012,
+     "p_adj": 0.005999999999999999,
+     "n_pairs": 187
+    },
+    "residual_sSFR_starforming": {
+     "delta": 0.13754626985407437,
+     "ci95": [
+      -0.014143922620642421,
+      0.2852040305647377
+     ],
+     "p": 0.0786,
+     "p_adj": 0.2358,
+     "n_pairs": 46
+    }
+   },
+   "per_control_group": {
+    "Control4B": {
+     "variables": [
+      "z_group",
+      "logMstar_bgg",
+      "log_group_luminosity"
+     ],
+     "n_pairs": 54,
+     "delta": 0.2839506172839506,
+     "ci95": [
+      0.17592592592592593,
+      0.3919753086419753
+     ],
+     "p_bootstrap": 0.0002,
+     "p_permutation": 0.0001,
+     "satellite_mass_balance": 0.005175311728395043
+    },
+    "Control4C": {
+     "variables": [
+      "z_group",
+      "logMstar_bgg",
+      "log_group_luminosity"
+     ],
+     "n_pairs": 54,
+     "delta": 0.10185185185185185,
+     "ci95": [
+      0.0,
+      0.20061728395061723
+     ],
+     "p_bootstrap": 0.0506,
+     "p_permutation": 0.0559,
+     "satellite_mass_balance": -0.013270592592592322
+    },
+    "RG4": {
+     "variables": [
+      "z_group",
+      "logMstar_bgg",
+      "log_group_luminosity"
+     ],
+     "n_pairs": 31,
+     "delta": 0.25268817204301075,
+     "ci95": [
+      0.11827956989247312,
+      0.3870967741935484
+     ],
+     "p_bootstrap": 0.0002,
+     "p_permutation": 0.0016,
+     "satellite_mass_balance": 0.04539163440860204
+    }
+   }
+  }
+ },
+ "holm_significance_flips": []
+}

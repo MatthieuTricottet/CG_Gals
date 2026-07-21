@@ -1,0 +1,9 @@
+sample,satellite_projected_distance_rank,n_satellites,n_lacking_sf_classification,fraction_lacking_sf_classification,n_missing_sSFR,n_missing_lgm
+CG4,1,62,2,0.03225806451612903,2,1
+CG4,2,62,6,0.0967741935483871,6,5
+Control4B,1,698,50,0.07163323782234957,50,44
+Control4B,2,698,36,0.05157593123209169,36,28
+Control4C,1,704,46,0.06534090909090909,46,41
+Control4C,2,704,33,0.046875,33,28
+RG4,1,56,0,0.0,0,0
+RG4,2,56,1,0.017857142857142856,1,1

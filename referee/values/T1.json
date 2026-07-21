@@ -1,0 +1,682 @@
+{
+ "threshold_arcsec": 55.0,
+ "excluded_by_sample": {
+  "CG4": {
+   "n_close": 48,
+   "n_total": 248,
+   "pct_close": 19.35483870967742
+  },
+  "Control4B": {
+   "n_close": 161,
+   "n_total": 2792,
+   "pct_close": 5.76647564469914
+  },
+  "Control4C": {
+   "n_close": 278,
+   "n_total": 2812,
+   "pct_close": 9.88620199146515
+  },
+  "RG4": {
+   "n_close": 12,
+   "n_total": 224,
+   "pct_close": 5.357142857142857
+  }
+ },
+ "family_note": "sensitivity family: 55-arcsec exclusion; Holm within each contrast across the same eight outcomes as the published Sect. 3.2 families, which stay frozen",
+ "contrasts": {
+  "Control4B": {
+   "quenched_all": {
+    "label": "Quenched, all",
+    "full": {
+     "cg4_odds_ratio": 1.8030038182893915,
+     "cg4_ci95": [
+      1.2599178203575507,
+      2.5801863552049586
+     ],
+     "cg4_p": 0.0012665657286651743,
+     "cg4_p_adj": 0.0025331314573303486,
+     "n": 2842,
+     "n_clusters": 755
+    },
+    "excluded": {
+     "cg4_odds_ratio": 1.727891145670846,
+     "cg4_ci95": [
+      1.1597526965170315,
+      2.574348669551779
+     ],
+     "cg4_p": 0.007176499983892487,
+     "cg4_p_adj": 0.014352999967784974,
+     "n": 2688,
+     "n_clusters": 753
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "quenched_satellites": {
+    "label": "Quenched, satellites",
+    "full": {
+     "cg4_odds_ratio": 2.1605832625720294,
+     "cg4_ci95": [
+      1.5129950565623458,
+      3.08535048694261
+     ],
+     "cg4_p": 2.256070205988096e-05,
+     "cg4_p_adj": 9.024280823952385e-05,
+     "n": 2146,
+     "n_clusters": 755
+    },
+    "excluded": {
+     "cg4_odds_ratio": 2.0983459785289464,
+     "cg4_ci95": [
+      1.4345437312485225,
+      3.0693075085110872
+     ],
+     "cg4_p": 0.0001336362499453131,
+     "cg4_p_adj": 0.00053454499978125,
+     "n": 2038,
+     "n_clusters": 751
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "starforming_satellites": {
+    "label": "Star-forming, satellites",
+    "full": {
+     "cg4_odds_ratio": 0.4628379832997351,
+     "cg4_ci95": [
+      0.3241122861833885,
+      0.6609406922135527
+     ],
+     "cg4_p": 2.256070205988096e-05,
+     "cg4_p_adj": 9.024280823952385e-05,
+     "n": 2146,
+     "n_clusters": 755
+    },
+    "excluded": {
+     "cg4_odds_ratio": 0.47656583339085656,
+     "cg4_ci95": [
+      0.3258063902776222,
+      0.69708575501541
+     ],
+     "cg4_p": 0.0001336362499453125,
+     "cg4_p_adj": 0.00053454499978125,
+     "n": 2038,
+     "n_clusters": 751
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "elliptical_all": {
+    "label": "Elliptical, all",
+    "full": {
+     "cg4_odds_ratio": 2.1400497065588597,
+     "cg4_ci95": [
+      1.5786057193129137,
+      2.901175822760872
+     ],
+     "cg4_p": 9.553097242993727e-07,
+     "cg4_p_adj": 5.731858345796236e-06,
+     "n": 2582,
+     "n_clusters": 738
+    },
+    "excluded": {
+     "cg4_odds_ratio": 2.155367562774454,
+     "cg4_ci95": [
+      1.5573890565369848,
+      2.982947203308518
+     ],
+     "cg4_p": 3.621202238217448e-06,
+     "cg4_p_adj": 2.1727213429304568e-05,
+     "n": 2467,
+     "n_clusters": 735
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "elliptical_satellites": {
+    "label": "Elliptical, satellites",
+    "full": {
+     "cg4_odds_ratio": 2.6329422557428486,
+     "cg4_ci95": [
+      1.8831238208263272,
+      3.6813218787887583
+     ],
+     "cg4_p": 1.5036813787072624e-08,
+     "cg4_p_adj": 1.202945102965766e-07,
+     "n": 1929,
+     "n_clusters": 735
+    },
+    "excluded": {
+     "cg4_odds_ratio": 2.559436185390985,
+     "cg4_ci95": [
+      1.8130793869018489,
+      3.613031858622846
+     ],
+     "cg4_p": 9.15752720863688e-08,
+     "cg4_p_adj": 7.326021766909504e-07,
+     "n": 1853,
+     "n_clusters": 729
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "elliptical_bgg": {
+    "label": "Elliptical, BGG",
+    "full": {
+     "cg4_odds_ratio": 0.7831032794008098,
+     "cg4_ci95": [
+      0.3980517560761843,
+      1.540630676406138
+     ],
+     "cg4_p": 0.4788519319082867,
+     "cg4_p_adj": 0.4788519319082867,
+     "n": 653,
+     "n_clusters": 651
+    },
+    "excluded": {
+     "cg4_odds_ratio": 0.8595330143514367,
+     "cg4_ci95": [
+      0.40616974948073664,
+      1.8189365498158696
+     ],
+     "cg4_p": 0.6922789871292792,
+     "cg4_p_adj": 0.6922789871292792,
+     "n": 614,
+     "n_clusters": 612
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "spiral_all": {
+    "label": "Spiral, all",
+    "full": {
+     "cg4_odds_ratio": 0.4672788659698826,
+     "cg4_ci95": [
+      0.3446878304150367,
+      0.6334704022453767
+     ],
+     "cg4_p": 9.55309724299466e-07,
+     "cg4_p_adj": 5.731858345796236e-06,
+     "n": 2582,
+     "n_clusters": 738
+    },
+    "excluded": {
+     "cg4_odds_ratio": 0.4639579890089696,
+     "cg4_ci95": [
+      0.3352389203841274,
+      0.6421003125728922
+     ],
+     "cg4_p": 3.6212022382174283e-06,
+     "cg4_p_adj": 2.1727213429304568e-05,
+     "n": 2467,
+     "n_clusters": 735
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "spiral_satellites": {
+    "label": "Spiral, satellites",
+    "full": {
+     "cg4_odds_ratio": 0.3798032402035579,
+     "cg4_ci95": [
+      0.2716415551060214,
+      0.5310325263482633
+     ],
+     "cg4_p": 1.5036813787072075e-08,
+     "cg4_p_adj": 1.202945102965766e-07,
+     "n": 1929,
+     "n_clusters": 735
+    },
+    "excluded": {
+     "cg4_odds_ratio": 0.3907110502336038,
+     "cg4_ci95": [
+      0.2767758600338397,
+      0.5515478291928403
+     ],
+     "cg4_p": 9.157527208637039e-08,
+     "cg4_p_adj": 7.326021766909504e-07,
+     "n": 1853,
+     "n_clusters": 729
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   }
+  },
+  "Control4C": {
+   "quenched_all": {
+    "label": "Quenched, all",
+    "full": {
+     "cg4_odds_ratio": 1.245295350163563,
+     "cg4_ci95": [
+      0.9082761392452099,
+      1.7073667821194713
+     ],
+     "cg4_p": 0.17305463316051417,
+     "cg4_p_adj": 0.34610926632102834,
+     "n": 2851,
+     "n_clusters": 758
+    },
+    "excluded": {
+     "cg4_odds_ratio": 1.2231972676921214,
+     "cg4_ci95": [
+      0.8613763228997419,
+      1.7370010248860994
+     ],
+     "cg4_p": 0.26017616152069234,
+     "cg4_p_adj": 0.5203523230413847,
+     "n": 2611,
+     "n_clusters": 754
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "quenched_satellites": {
+    "label": "Quenched, satellites",
+    "full": {
+     "cg4_odds_ratio": 1.3751251874979524,
+     "cg4_ci95": [
+      0.9974024161316942,
+      1.8958940250267056
+     ],
+     "cg4_p": 0.05188457350944697,
+     "cg4_p_adj": 0.2075382940377871,
+     "n": 2151,
+     "n_clusters": 757
+    },
+    "excluded": {
+     "cg4_odds_ratio": 1.3617541732747784,
+     "cg4_ci95": [
+      0.968117292505709,
+      1.9154439681908066
+     ],
+     "cg4_p": 0.0760924438811561,
+     "cg4_p_adj": 0.3043697755246244,
+     "n": 1982,
+     "n_clusters": 752
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "starforming_satellites": {
+    "label": "Star-forming, satellites",
+    "full": {
+     "cg4_odds_ratio": 0.7272065184257913,
+     "cg4_ci95": [
+      0.5274556419290963,
+      1.0026043488829512
+     ],
+     "cg4_p": 0.05188457350944677,
+     "cg4_p_adj": 0.2075382940377871,
+     "n": 2151,
+     "n_clusters": 757
+    },
+    "excluded": {
+     "cg4_odds_ratio": 0.7343469325268732,
+     "cg4_ci95": [
+      0.5220721757496939,
+      1.0329326908434544
+     ],
+     "cg4_p": 0.07609244388115756,
+     "cg4_p_adj": 0.3043697755246244,
+     "n": 1982,
+     "n_clusters": 752
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "elliptical_all": {
+    "label": "Elliptical, all",
+    "full": {
+     "cg4_odds_ratio": 1.6706461703756417,
+     "cg4_ci95": [
+      1.2468499415757777,
+      2.238487995647205
+     ],
+     "cg4_p": 0.0005864042942453806,
+     "cg4_p_adj": 0.003518425765472283,
+     "n": 2557,
+     "n_clusters": 740
+    },
+    "excluded": {
+     "cg4_odds_ratio": 1.7059844711615602,
+     "cg4_ci95": [
+      1.251213501530884,
+      2.3260482821544666
+     ],
+     "cg4_p": 0.0007333809992715164,
+     "cg4_p_adj": 0.004400285995629099,
+     "n": 2376,
+     "n_clusters": 735
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "elliptical_satellites": {
+    "label": "Elliptical, satellites",
+    "full": {
+     "cg4_odds_ratio": 1.9320387373593795,
+     "cg4_ci95": [
+      1.4032726121748909,
+      2.660048838886629
+     ],
+     "cg4_p": 5.4226720085294193e-05,
+     "cg4_p_adj": 0.00043381376068234796,
+     "n": 1901,
+     "n_clusters": 734
+    },
+    "excluded": {
+     "cg4_odds_ratio": 1.894251081661929,
+     "cg4_ci95": [
+      1.3630072871028456,
+      2.6325517070450126
+     ],
+     "cg4_p": 0.00014227262574982003,
+     "cg4_p_adj": 0.0011381810059985602,
+     "n": 1783,
+     "n_clusters": 728
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "elliptical_bgg": {
+    "label": "Elliptical, BGG",
+    "full": {
+     "cg4_odds_ratio": 0.8748934735812663,
+     "cg4_ci95": [
+      0.43778109266542015,
+      1.7484505451223094
+     ],
+     "cg4_p": 0.7051789852751147,
+     "cg4_p_adj": 0.7051789852751147,
+     "n": 656,
+     "n_clusters": 651
+    },
+    "excluded": {
+     "cg4_odds_ratio": 0.9905523801601099,
+     "cg4_ci95": [
+      0.45642174751249026,
+      2.149752993121801
+     ],
+     "cg4_p": 0.9808436230379991,
+     "cg4_p_adj": 0.9808436230379991,
+     "n": 593,
+     "n_clusters": 589
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "spiral_all": {
+    "label": "Spiral, all",
+    "full": {
+     "cg4_odds_ratio": 0.5985707911898258,
+     "cg4_ci95": [
+      0.44673011512437194,
+      0.802021130735422
+     ],
+     "cg4_p": 0.0005864042942453834,
+     "cg4_p_adj": 0.003518425765472283,
+     "n": 2557,
+     "n_clusters": 740
+    },
+    "excluded": {
+     "cg4_odds_ratio": 0.58617180689759,
+     "cg4_ci95": [
+      0.42991368995735835,
+      0.79922411225301
+     ],
+     "cg4_p": 0.0007333809992715332,
+     "cg4_p_adj": 0.004400285995629099,
+     "n": 2376,
+     "n_clusters": 735
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "spiral_satellites": {
+    "label": "Spiral, satellites",
+    "full": {
+     "cg4_odds_ratio": 0.517587965843145,
+     "cg4_ci95": [
+      0.3759329473133104,
+      0.7126199081517945
+     ],
+     "cg4_p": 5.4226720085293496e-05,
+     "cg4_p_adj": 0.00043381376068234796,
+     "n": 1901,
+     "n_clusters": 734
+    },
+    "excluded": {
+     "cg4_odds_ratio": 0.5279131207477769,
+     "cg4_ci95": [
+      0.3798595854067691,
+      0.7336717928526715
+     ],
+     "cg4_p": 0.00014227262574982246,
+     "cg4_p_adj": 0.0011381810059985602,
+     "n": 1783,
+     "n_clusters": 728
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   }
+  },
+  "RG4": {
+   "quenched_all": {
+    "label": "Quenched, all",
+    "full": {
+     "cg4_odds_ratio": 1.4040766683135368,
+     "cg4_ci95": [
+      0.7989632956580507,
+      2.4674866808226907
+     ],
+     "cg4_p": 0.23809575079256584,
+     "cg4_p_adj": 0.4761915015851317,
+     "n": 449,
+     "n_clusters": 115
+    },
+    "excluded": {
+     "cg4_odds_ratio": 1.1948442167204947,
+     "cg4_ci95": [
+      0.6414304502754999,
+      2.2257326598966785
+     ],
+     "cg4_p": 0.5748817817284877,
+     "cg4_p_adj": 0.6428524154492457,
+     "n": 402,
+     "n_clusters": 115
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "quenched_satellites": {
+    "label": "Quenched, satellites",
+    "full": {
+     "cg4_odds_ratio": 1.85379947515056,
+     "cg4_ci95": [
+      0.9943159995810626,
+      3.4562176365626516
+     ],
+     "cg4_p": 0.052133559149246965,
+     "cg4_p_adj": 0.20853423659698786,
+     "n": 340,
+     "n_clusters": 115
+    },
+    "excluded": {
+     "cg4_odds_ratio": 1.6041206593129378,
+     "cg4_ci95": [
+      0.8288174368166333,
+      3.1046681396060767
+     ],
+     "cg4_p": 0.1607131038623122,
+     "cg4_p_adj": 0.6428524154492457,
+     "n": 301,
+     "n_clusters": 114
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "starforming_satellites": {
+    "label": "Star-forming, satellites",
+    "full": {
+     "cg4_odds_ratio": 0.5394326697167627,
+     "cg4_ci95": [
+      0.28933363148813174,
+      1.0057164929673588
+     ],
+     "cg4_p": 0.05213355914924705,
+     "cg4_p_adj": 0.20853423659698786,
+     "n": 340,
+     "n_clusters": 115
+    },
+    "excluded": {
+     "cg4_odds_ratio": 0.6233945022741056,
+     "cg4_ci95": [
+      0.3220956169978541,
+      1.2065383226502244
+     ],
+     "cg4_p": 0.1607131038623114,
+     "cg4_p_adj": 0.6428524154492457,
+     "n": 301,
+     "n_clusters": 114
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "elliptical_all": {
+    "label": "Elliptical, all",
+    "full": {
+     "cg4_odds_ratio": 2.8054220033141632,
+     "cg4_ci95": [
+      1.7948630047452372,
+      4.384954503976964
+     ],
+     "cg4_p": 5.986749710263143e-06,
+     "cg4_p_adj": 4.789399768210515e-05,
+     "n": 399,
+     "n_clusters": 113
+    },
+    "excluded": {
+     "cg4_odds_ratio": 2.7099433883402204,
+     "cg4_ci95": [
+      1.6964531349897476,
+      4.328910134056405
+     ],
+     "cg4_p": 3.024262418709426e-05,
+     "cg4_p_adj": 0.00024194099349675408,
+     "n": 362,
+     "n_clusters": 113
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "elliptical_satellites": {
+    "label": "Elliptical, satellites",
+    "full": {
+     "cg4_odds_ratio": 3.0309818230595447,
+     "cg4_ci95": [
+      1.718967402388407,
+      5.344400829796283
+     ],
+     "cg4_p": 0.00012709680487124202,
+     "cg4_p_adj": 0.0007625808292274521,
+     "n": 299,
+     "n_clusters": 113
+    },
+    "excluded": {
+     "cg4_odds_ratio": 2.7338752639337325,
+     "cg4_ci95": [
+      1.5138029877206758,
+      4.937283133522153
+     ],
+     "cg4_p": 0.0008536529632080193,
+     "cg4_p_adj": 0.005121917779248072,
+     "n": 269,
+     "n_clusters": 111
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "elliptical_bgg": {
+    "label": "Elliptical, BGG",
+    "full": {
+     "cg4_odds_ratio": 1.8700390270808254,
+     "cg4_ci95": [
+      0.6338196151573614,
+      5.517415174879325
+     ],
+     "cg4_p": 0.25682317033239666,
+     "cg4_p_adj": 0.4761915015851317,
+     "n": 100,
+     "n_clusters": 98
+    },
+    "excluded": {
+     "cg4_odds_ratio": 2.0509145316171167,
+     "cg4_ci95": [
+      0.6336731361875525,
+      6.637886594506516
+     ],
+     "cg4_p": 0.23066721050064998,
+     "cg4_p_adj": 0.6428524154492457,
+     "n": 93,
+     "n_clusters": 91
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "spiral_all": {
+    "label": "Spiral, all",
+    "full": {
+     "cg4_odds_ratio": 0.3564526116992951,
+     "cg4_ci95": [
+      0.22805253716841206,
+      0.5571455856832603
+     ],
+     "cg4_p": 5.986749710263275e-06,
+     "cg4_p_adj": 4.789399768210515e-05,
+     "n": 399,
+     "n_clusters": 113
+    },
+    "excluded": {
+     "cg4_odds_ratio": 0.3690113986523089,
+     "cg4_ci95": [
+      0.2310050264459873,
+      0.5894651490069279
+     ],
+     "cg4_p": 3.0242624187094883e-05,
+     "cg4_p_adj": 0.00024194099349675408,
+     "n": 362,
+     "n_clusters": 113
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   },
+   "spiral_satellites": {
+    "label": "Spiral, satellites",
+    "full": {
+     "cg4_odds_ratio": 0.32992609602342543,
+     "cg4_ci95": [
+      0.18711171408116828,
+      0.5817445977221893
+     ],
+     "cg4_p": 0.00012709680487124294,
+     "cg4_p_adj": 0.0007625808292274521,
+     "n": 299,
+     "n_clusters": 113
+    },
+    "excluded": {
+     "cg4_odds_ratio": 0.36578113610096247,
+     "cg4_ci95": [
+      0.20254054162103938,
+      0.6605879418336288
+     ],
+     "cg4_p": 0.0008536529632080119,
+     "cg4_p_adj": 0.005121917779248072,
+     "n": 269,
+     "n_clusters": 111
+    },
+    "full_status": "ok",
+    "excluded_status": "ok"
+   }
+  }
+ }
+}

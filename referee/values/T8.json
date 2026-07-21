@@ -1,0 +1,26 @@
+{
+ "quartet_mean_pairwise_sep_DA_kpc": {
+  "CG4": {
+   "n_groups": 62,
+   "median_Rij_med_kpc": 143.14844751808846,
+   "q25": 114.17602594725022,
+   "q75": 177.10467924993995,
+   "p90": 202.64046933560687
+  },
+  "RG4": {
+   "n_groups": 56,
+   "median_Rij_med_kpc": 429.5835442703844,
+   "q25": 292.2501115685054,
+   "q75": 493.9419848464603,
+   "p90": 554.0053173897763
+  },
+  "Control4C": {
+   "n_groups": 703,
+   "median_Rij_med_kpc": 293.09299167351446,
+   "q25": 187.0739370141631,
+   "q75": 436.246415793464,
+   "p90": 572.3165149473989
+  }
+ },
+ "note": "median over groups of the median pairwise projected separation of the quartet, angular-diameter distance (proper kpc), non-split CG4 / post-3688 samples"
+}

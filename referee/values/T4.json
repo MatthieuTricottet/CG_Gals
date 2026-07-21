@@ -1,0 +1,146 @@
+{
+ "definition": {
+  "co_members": "selected quartet only (sample-scoped group_uid), not the full Lim host",
+  "velocity_window": "none: all quartet co-members enter regardless of velocity difference",
+  "distance": "great-circle separation x angular-diameter distance at the median member redshift (proper kpc; astropy Planck15)",
+  "missing_mass_rule": "co-members with missing logM* contribute zero to T_i (nansum): T_i is a lower bound there",
+  "group_completeness_rule": "groups with any member missing RA/Dec/z are skipped whole",
+  "pooling": "models pool all control labels without objid deduplication (rows duplicated across labels), clustered by physical group"
+ },
+ "n_rows_total": 6076,
+ "n_galaxies_with_pairs": 6076,
+ "n_groups_with_missing_mass_member": 301,
+ "n_groups_total": 1519,
+ "support": {
+  "quantiles_logT": {
+   "CG4": {
+    "0.05": 3.8424875039458137,
+    "0.16": 4.266060035352707,
+    "0.25": 4.564275164726072,
+    "0.5": 5.065757841919673,
+    "0.75": 5.636884070919096,
+    "0.84": 5.9794052423177835,
+    "0.95": 6.768266063297472
+   },
+   "controls_pooled_rows": {
+    "0.05": 2.498107550773282,
+    "0.16": 2.9709633076457376,
+    "0.25": 3.271385312929511,
+    "0.5": 3.9928399523861646,
+    "0.75": 4.817660214546443,
+    "0.84": 5.23962826287654,
+    "0.95": 6.071233698172182
+   },
+   "controls_unique_objid": {
+    "0.05": 2.46073836322406,
+    "0.16": 2.922137963277447,
+    "0.25": 3.2129664436544134,
+    "0.5": 3.913755728872256,
+    "0.75": 4.759539870661307,
+    "0.84": 5.184772683583128,
+    "0.95": 6.046530990640825
+   }
+  },
+  "overlap_coefficient_rows": 0.5423577395550192,
+  "overlap_coefficient_unique": 0.523097498190009,
+  "cg4_above_control_p95_rows": 0.14919354838709678,
+  "cg4_above_control_p95_unique": 0.14919354838709678,
+  "point_biserial_r": 0.18237143504935632,
+  "vif_is_cg4": 1.0348803268504154,
+  "r2_is_cg4_on_covariates": 0.03370469603627613
+ },
+ "models": {
+  "elliptical": {
+   "published_linear_fullpool": {
+    "status": "ok",
+    "n": 5117,
+    "cg4_odds_ratio": 1.3931206638699014,
+    "cg4_ci95": [
+     1.0303720335802897,
+     1.8835771166629618
+    ],
+    "cg4_p": 0.031210125009132155
+   },
+   "trimmed_common_support": {
+    "status": "ok",
+    "n": 2958,
+    "cg4_odds_ratio": 1.2196701702791013,
+    "cg4_ci95": [
+     0.8994886050055849,
+     1.6538234236546165
+    ],
+    "cg4_p": 0.20119431245980046
+   },
+   "trim_window_logT": [
+    3.7229835411839467,
+    6.625349989135616
+   ],
+   "spline_logT": {
+    "status": "ok",
+    "n": 5117,
+    "cg4_odds_ratio": 1.3993815044273203,
+    "cg4_ci95": [
+     1.030911089879482,
+     1.8995513911507154
+    ],
+    "cg4_p": 0.03114479212221017
+   },
+   "dedup_control_pool": {
+    "status": "ok",
+    "n": 3260,
+    "cg4_odds_ratio": 1.2672229121706329,
+    "cg4_ci95": [
+     0.9364782282263541,
+     1.7147797575301154
+    ],
+    "cg4_p": 0.12486280992746514
+   }
+  },
+  "quenched": {
+   "published_linear_fullpool": {
+    "status": "ok",
+    "n": 5681,
+    "cg4_odds_ratio": 1.0157142964850954,
+    "cg4_ci95": [
+     0.7226746024906028,
+     1.4275796167855883
+    ],
+    "cg4_p": 0.9284622733714568
+   },
+   "trimmed_common_support": {
+    "status": "ok",
+    "n": 3278,
+    "cg4_odds_ratio": 0.8731454320695122,
+    "cg4_ci95": [
+     0.6195096635419408,
+     1.230623169274004
+    ],
+    "cg4_p": 0.4384850586318211
+   },
+   "trim_window_logT": [
+    3.7229835411839467,
+    6.625349989135616
+   ],
+   "spline_logT": {
+    "status": "ok",
+    "n": 5681,
+    "cg4_odds_ratio": 1.0245854702499018,
+    "cg4_ci95": [
+     0.7271340164996811,
+     1.4437165117108404
+    ],
+    "cg4_p": 0.8895971778305053
+   },
+   "dedup_control_pool": {
+    "status": "ok",
+    "n": 3608,
+    "cg4_odds_ratio": 0.8972307899001277,
+    "cg4_ci95": [
+     0.6387128786999061,
+     1.2603833697285451
+    ],
+    "cg4_p": 0.5317173015841626
+   }
+  }
+ }
+}

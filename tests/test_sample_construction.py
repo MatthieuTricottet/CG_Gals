@@ -44,13 +44,22 @@ def test_committed_control4c_matches_reconstruction(pc_gals, cg4_full, c4c_gals)
 
 
 def test_control4c_counts(c4c_gals, c4c_groups):
-    # 765 PC groups - 60 CG-contaminated = 705; Lim 3688 stays in the file
-    # and is removed at load time (src/main.py::clean).
-    assert c4c_gals["Group"].nunique() == 705
-    assert len(c4c_gals) == 2820
+    # 765 PC groups - 61 CG-contaminated = 704 (matches Paper I's published
+    # counts under the Delta_m <= 3-restricted construction; referee/T0).
+    # Lim 3688 stays in the file and is removed at load time
+    # (src/main.py::clean).
+    assert c4c_gals["Group"].nunique() == 704
+    assert len(c4c_gals) == 2816
     assert c4c_gals["objid"].is_unique
-    assert len(c4c_groups) == 705
+    assert len(c4c_groups) == 704
     assert (c4c_gals.groupby("Group").size() == 4).all()
+
+
+def test_control4c_companions_within_3_mag(c4c_gals):
+    # Companion eligibility (Paper I cell 59): Delta_m = M_r - M_BGG <= 3
+    # for every selected companion.
+    dmag = c4c_gals["M_r"] - c4c_gals["M_BGG"]
+    assert float(dmag.max()) <= 3.0
 
 
 def test_control4c_excludes_all_cg4_galaxies(c4c_gals, cg4_full):
@@ -88,6 +97,7 @@ def test_group_builder_reproduces_committed_rg4_groups(pc_gals):
 
 def test_group_3688_velocity_dispersion_matches_manuscript(c4c_groups):
     # The manuscript justifies the Lim 3688 exclusion by its inflated
-    # velocity dispersion (~1981 km/s in Control4C).
+    # velocity dispersion (~2042 km/s in the Delta_m <= 3-restricted
+    # Control4C quartet; ~1979 km/s in Control4B).
     vdisp = float(c4c_groups.loc[c4c_groups["Group"] == 3688, "Vdisp"].iloc[0])
-    assert abs(vdisp - 1981) < 2
+    assert abs(vdisp - 2042) < 2

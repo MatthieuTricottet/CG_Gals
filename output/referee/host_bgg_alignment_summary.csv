@@ -1,0 +1,8 @@
+scope,mapping_status,n_groups,n_total,fraction
+All,CG4 BGG differs from Lim-host BGG,6,62,0.0967741935483871
+All,CG4 BGG equals Lim-host BGG,56,62,0.9032258064516129
+Embedded,CG4 BGG equals Lim-host BGG,37,37,1.0
+Isolated,CG4 BGG equals Lim-host BGG,6,6,1.0
+Isolated,isolated equality trivial because Lim group is quartet itself,6,6,1.0
+Predom,CG4 BGG differs from Lim-host BGG,6,19,0.3157894736842105
+Predom,CG4 BGG equals Lim-host BGG,13,19,0.6842105263157895

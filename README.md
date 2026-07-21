@@ -11,7 +11,7 @@ Lim et al. (2017) group catalogue:
 | Sample | Definition | Groups (after Lim 3688 removal) |
 |---|---|---|
 | Control4B | four brightest members of each parent group | 698 |
-| Control4C | BGG + three closest projected companions | 704 |
+| Control4C | BGG + three closest projected companions among members within 3 mag of the BGG | 703 |
 | RG4 | regular groups of exactly four members | 56 |
 
 Control groups containing any CG4 galaxy are excluded, as in Paper I.

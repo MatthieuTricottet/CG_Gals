@@ -1,0 +1,111 @@
+{
+ "note": "complete cases fixed on the full covariate set incl. dist_host_kpc for both specifications; Holm across the two outcomes within each estimator x specification",
+ "grid": {
+  "elliptical": {
+   "with_radius": {
+    "conditional_logit": {
+     "status": "ok",
+     "n": 791,
+     "odds_ratio": 1.4682395707223481,
+     "ci95": [
+      0.9188760270404845,
+      2.346048186694032
+     ],
+     "p": 0.10824075280729994,
+     "p_holm": 0.2164815056145999
+    },
+    "fe_glm": {
+     "status": "ok",
+     "n": 791,
+     "odds_ratio": 1.574331152941849,
+     "ci95": [
+      1.0179600928320518,
+      2.434789533082541
+     ],
+     "p": 0.04135245607739346,
+     "p_holm": 0.08270491215478692
+    }
+   },
+   "without_radius": {
+    "conditional_logit": {
+     "status": "ok",
+     "n": 791,
+     "odds_ratio": 1.9015411473805761,
+     "ci95": [
+      1.2273270498426385,
+      2.946124861865502
+     ],
+     "p": 0.004015505679796536,
+     "p_holm": 0.008031011359593072
+    },
+    "fe_glm": {
+     "status": "ok",
+     "n": 791,
+     "odds_ratio": 2.058082260798121,
+     "ci95": [
+      1.3596348662822777,
+      3.1153236043393124
+     ],
+     "p": 0.0006438610149975282,
+     "p_holm": 0.0012877220299950564
+    }
+   }
+  },
+  "quenched": {
+   "with_radius": {
+    "conditional_logit": {
+     "status": "ok",
+     "n": 915,
+     "odds_ratio": 0.7517229237647886,
+     "ci95": [
+      0.45311395555236983,
+      1.2471197304541435
+     ],
+     "p": 0.2691839975724981,
+     "p_holm": 0.2691839975724981
+    },
+    "fe_glm": {
+     "status": "ok",
+     "n": 915,
+     "odds_ratio": 0.7692369335696534,
+     "ci95": [
+      0.44646510043008103,
+      1.3253565830736436
+     ],
+     "p": 0.34457152824345727,
+     "p_holm": 0.34457152824345727
+    }
+   },
+   "without_radius": {
+    "conditional_logit": {
+     "status": "ok",
+     "n": 915,
+     "odds_ratio": 1.2158682560837724,
+     "ci95": [
+      0.7621827672112256,
+      1.939607768306442
+     ],
+     "p": 0.41205856585369294,
+     "p_holm": 0.41205856585369294
+    },
+    "fe_glm": {
+     "status": "ok",
+     "n": 915,
+     "odds_ratio": 1.2736756394863704,
+     "ci95": [
+      0.7458825392126486,
+      2.1749398187192535
+     ],
+     "p": 0.37558176402033305,
+     "p_holm": 0.37558176402033305
+    }
+   }
+  }
+ },
+ "with_radius_matches_published": {
+  "elliptical/conditional_logit": true,
+  "elliptical/fe_glm": true,
+  "quenched/conditional_logit": true,
+  "quenched/fe_glm": true
+ }
+}

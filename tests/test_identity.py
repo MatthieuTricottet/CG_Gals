@@ -88,10 +88,11 @@ def test_no_cg4_galaxy_in_any_control_sample(frames, catalog):
 
 def test_cg4_in_pc_quartets_matches_paper_i_exclusion_counts(frames):
     # The Lim groups whose Control4C quartet would contain a CG4 galaxy are
-    # exactly the groups excluded during the regeneration: 60 for the
-    # committed PC_Gals.csv (Paper I quotes 61 from an earlier parent
-    # revision; see OPEN_QUESTIONS.md #1).
+    # exactly the groups excluded during the regeneration: 61 for the
+    # committed PC_Gals.csv under the Delta_m <= 3-restricted quartet
+    # selection, matching Paper I's published count (referee/T0; resolves
+    # OPEN_QUESTIONS.md #1).
     table = identity.cg4_in_pc_quartets_table(frames)
-    assert table["lim_group"].nunique() == 60
+    assert table["lim_group"].nunique() == 61
     c4c = frames["Control4C"]
     assert not set(table["lim_group"]) & set(c4c["Group"])

@@ -6,15 +6,18 @@ excludes every control group that contains at least one galaxy of the
 *full* CG4 sample (split compact groups included):
 
 * Control4B: the four brightest members       (66 excluded -> 699 groups)
-* Control4C: BGG + 3 closest projected members (Paper I: 61 -> 704 groups)
+* Control4C: BGG + 3 closest projected members *among members within 3 mag
+  of the BGG*                                  (61 excluded -> 704 groups)
 * RG4:       groups of exactly four members     (6 excluded -> 56 groups)
 
-The committed ``Control4C_Gals.csv`` predates that exclusion and derives
-from an older parent-catalogue revision (752 groups, 14 CG4 galaxies, one
-duplicated row). This module regenerates Control4C from the committed
-``PC_Gals.csv``; that reproducibly yields 60 exclusions -> 705 groups (the
-61 -> 704 of Paper I is not reproducible from the committed parent file;
-see OPEN_QUESTIONS.md #1).
+The Delta_m <= 3 filter is applied *before* the distance ranking
+(Paper I notebook cell 59). The ``rank_dist`` column of ``PC_Gals.csv``
+is the *unrestricted* distance rank and must not be used for this
+selection: the CSV distributed with Paper I was generated from that
+deprecated unrestricted variant and does not match the sample behind
+Paper I's published statistics, which the present construction reproduces
+exactly (61 exclusions -> 704 groups; Table 2 medians; Table 3 T1/T2).
+See referee/T0_control4c_audit.md and referee/T0_paper1_table2_check.py.
 
 Group-level quartet properties reproduce the committed ``Control4B_Groups``
 / ``RG4_Groups`` generation (originally ``common.py::Group_agg``) exactly;
@@ -71,6 +74,7 @@ MSUN_KG = 1.98892e30
 MR_SUN = 4.68
 T_CR_COEFF = 0.887
 SSFR_WIDTH = 0.4
+DMAG_MAX = 3.0  # companion eligibility: M_r - M_r,BGG <= 3 (Paper I)
 # Projected virial-mass constant: physically 3*pi, calibrated on the
 # committed Control4B_Groups at 1.4e-9 relative scatter. The 1.9e-4 excess
 # over 3*pi absorbs the legacy unit constants (G = 6.673e-11 etc.) of the
@@ -258,18 +262,51 @@ def build_group_table(gals: pd.DataFrame,
     return table[GROUP_COLUMNS]
 
 
-def build_control4c_gals(pc_gals: pd.DataFrame,
-                         cg4_gals_full: pd.DataFrame) -> pd.DataFrame:
-    """Control4C member table: BGG + 3 closest projected companions.
+def select_control4c_quartets(pc_gals: pd.DataFrame) -> pd.DataFrame:
+    """BGG + 3 nearest projected Delta_m <= 3 companions for every PC group.
 
-    Quartets are the ``rank_dist`` <= 4 members of each PC group (the BGG has
-    rank_dist = 1). Every group containing at least one galaxy of the *full*
-    CG4 sample (split groups included) is excluded, as in Paper I. The Lim
-    group 3688 is intentionally kept: the pipeline removes it explicitly at
-    load time (src/main.py::clean) and the manuscript documents why.
+    Implements the Paper I cell-59 construction: restrict each group's
+    members to Delta_m = M_r - M_r,BGG <= 3 *first*, then rank the
+    recomputed great-circle separation to the BGG within that subset and
+    keep the 3 nearest. ``rank_dist`` is rewritten as the within-subset
+    rank (1 = BGG). No contamination exclusion is applied here.
     """
 
-    quartets = pc_gals[pc_gals["rank_dist"] <= 4].copy()
+    quartets = []
+    for group, parent in pc_gals.groupby("Group"):
+        bgg_rows = parent[parent["rank_M"] == 1]
+        assert len(bgg_rows) == 1, f"group {group}: non-unique BGG"
+        bgg = bgg_rows.iloc[0]
+        members = parent[parent["objid"] != bgg["objid"]]
+        eligible = members[members["M_r"] - bgg["M_r"] <= DMAG_MAX].copy()
+        cosv = (np.sin(np.deg2rad(bgg["Dec"])) * np.sin(np.deg2rad(eligible["Dec"]))
+                + np.cos(np.deg2rad(bgg["Dec"])) * np.cos(np.deg2rad(eligible["Dec"]))
+                * np.cos(np.deg2rad(eligible["RA"] - bgg["RA"])))
+        eligible["_sep_rad"] = np.arccos(np.clip(cosv, -1.0, 1.0))
+        chosen = eligible.nsmallest(3, "_sep_rad").drop(columns="_sep_rad")
+        quartet = pd.concat([bgg_rows, chosen]).copy()
+        assert len(quartet) == 4, (
+            f"group {group}: only {len(quartet)} members with Delta_m <= 3 "
+            "(violates the PC eligibility rule)"
+        )
+        quartet["rank_dist"] = np.arange(1, 5)
+        quartets.append(quartet)
+    return pd.concat(quartets, ignore_index=True)
+
+
+def build_control4c_gals(pc_gals: pd.DataFrame,
+                         cg4_gals_full: pd.DataFrame) -> pd.DataFrame:
+    """Control4C member table: BGG + 3 closest eligible projected companions.
+
+    Quartets come from :func:`select_control4c_quartets` (Delta_m <= 3
+    filter before distance ranking). Every group whose quartet contains at
+    least one galaxy of the *full* CG4 sample (split groups included) is
+    excluded, as in Paper I (61 exclusions -> 704 groups). The Lim group
+    3688 is intentionally kept: the pipeline removes it explicitly at load
+    time (src/main.py::clean) and the manuscript documents why.
+    """
+
+    quartets = select_control4c_quartets(pc_gals)
     contaminated = set(
         quartets.loc[quartets["objid"].isin(set(cg4_gals_full["objid"])), "Group"]
     )

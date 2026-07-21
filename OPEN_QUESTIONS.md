@@ -1,33 +1,30 @@
 # Open questions for the authors
 
-## 1. Control4C off-by-one vs Paper I (705 vs 704 groups)
+## 1. Control4C off-by-one vs Paper I (705 vs 704 groups) — RESOLVED 2026-07-21
 
-Rebuilding Control4C from the committed `data/PC_Gals.csv` (BGG + 3 closest
-projected companions, i.e. `rank_dist` ≤ 4) and excluding every group that
-contains at least one galaxy of the full CG4 sample (split groups included —
-the convention that exactly reproduces Paper I's Control4B 66 → 699 and
-RG4 6 → 56) flags **60** contaminated groups → **705** clean groups.
-Paper I (Sect. 2.4) reports **61** → **704**.
+**Resolution (referee task T0):** the off-by-one was caused by the quartet
+selection, not by a parent-catalogue revision. `PC_Gals.rank_dist` is the
+*unrestricted* projected-distance rank; the construction behind Paper I's
+published statistics filters members to Δm ≤ 3 **before** ranking
+(notebook cell 59). Rebuilding Control4C with the restricted construction
+from the committed `PC_Gals.csv` flags **61** contaminated groups → **704**
+clean groups, exactly Paper I's published counts (the exclusion set is a
+strict superset of the unrestricted one: the same 60 groups + Lim 442),
+and reproduces every published Control4C statistic (Table 2 medians,
+Table 3 T1/T2 — `referee/T0_paper1_table2_check.py`). The CSV distributed
+with Paper I (and this repo's Phase 2 regeneration, which trusted
+`rank_dist ≤ 4`) implemented the deprecated unrestricted variant: 457 of
+its 705 groups contained companions with Δm > 3 (up to 5.76 mag;
+`referee/T0_control4c_audit_shipped_FAIL.md`).
 
-Ruled out by direct checks on the committed files:
+**Decision taken (2026-07-21, author-approved):** `sample_construction.py`
+now implements the restricted construction (61 excluded → 704 groups; 703
+after the Lim-3688 removal), the manuscript documents the Δm ≤ 3
+eligibility explicitly, and `referee/T0_control4c_audit.py` is the
+acceptance gate (exit 0 on the committed data).
 
-- no projected-distance tie at any quartet boundary that involves a CG4
-  galaxy (nearest miss: Lim group 51, CG4 member at rank_dist 8);
-- no CG4 galaxy present in an unflagged quartet under a different objid
-  (positional cross-match at 2 arcsec) or via a shared specobjid;
-- no PC group hosting members of two distinct CG4 groups (60 group-pairs =
-  60 groups, so pair-counting cannot give 61).
-
-What we did find: the *committed* `Control4C_Gals.csv` contains 75 groups
-that do not exist in the committed `PC_Gals.csv` at all, and only 200/224
-RG4 galaxies, so it derives from an **earlier revision of the parent
-catalogue**. Paper I's "61" was presumably counted on that earlier revision
-and is not reproducible from the data in this repository.
-
-**Decision taken (flagged for author sign-off):** the pipeline now uses the
-reproducible construction from the committed `PC_Gals.csv` (60 excluded →
-705 groups; 704 after the Lim-3688 removal), and the manuscript reports
-those counts. If the authors can recover the Paper I parent catalogue, the
-discrepant group can be identified by diffing the two PC revisions.
-(Coincidentally 705 − 1 = 704 after removing Lim 3688, but that is *not*
-the same accounting as Paper I's pre-removal 704.)
+The earlier investigation notes are kept below for the record: the
+*pre-Phase-2 committed* `Control4C_Gals.csv` additionally derived from an
+earlier parent-catalogue revision (75 groups absent from the committed
+`PC_Gals.csv`, 200/224 RG4 galaxies), which compounded the discrepancy but
+was not the cause of the 60-vs-61 gap.

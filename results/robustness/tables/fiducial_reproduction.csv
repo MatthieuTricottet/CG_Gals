@@ -1,0 +1,8 @@
+family,contrast,model,stored_or,refit_or,delta_or,stored_p_holm,refit_p_holm,stored_n,refit_n,status,formula
+primary,RG4,elliptical_all,2.8054220033141632,2.8054220033141632,0.0,4.789399768210515e-05,4.789399768210515e-05,399,399,ok,elliptical ~ is_CG4 + logMstar + z_numeric + is_satellite + log_group_luminosity + velocity_dispersion
+primary,RG4,elliptical_satellites,3.0309818230595447,3.0309818230595447,0.0,0.0007625808292274521,0.0007625808292274521,299,299,ok,elliptical ~ is_CG4 + logMstar + z_numeric + log_group_luminosity + velocity_dispersion
+primary,RG4,quenched_all,1.4040766683135368,1.4040766683135368,0.0,0.4761915015851317,0.4761915015851317,449,449,ok,quenched ~ is_CG4 + logMstar + z_numeric + is_satellite + log_group_luminosity + velocity_dispersion
+primary,Control4C,elliptical_all,1.2983486258056267,1.2983486258056267,0.0,0.44344535798702356,0.44344535798702356,2493,2493,ok,elliptical ~ is_CG4 + logMstar + z_numeric + is_satellite + log_group_luminosity + velocity_dispersion
+primary,Control4C,quenched_all,0.9079278882728103,0.9079278882728103,0.0,1.0,1.0,2867,2867,ok,quenched ~ is_CG4 + logMstar + z_numeric + is_satellite + log_group_luminosity + velocity_dispersion
+pooled,pooled_controls,quenched_satellites,1.1660988599354167,1.1660988599354167,0.0,1.0,1.0,3268,3268,ok,quenched ~ is_CG4 + logMstar + z_numeric + log_group_luminosity + velocity_dispersion
+pooled,pooled_controls,elliptical_satellites,1.707264670655805,1.707264670655805,0.0,0.007272790082244483,0.007272790082244483,2848,2848,ok,elliptical ~ is_CG4 + logMstar + z_numeric + log_group_luminosity + velocity_dispersion

@@ -84,10 +84,16 @@ def _plot(results, path):
     return os.path.basename(path)
 
 
-def run_primary_contrasts(data, output_dir: str | None = None):
-    """Fit the three separate CG4-vs-control model families."""
+def run_primary_contrasts(data, output_dir: str | None = None, frame=None):
+    """Fit the three separate CG4-vs-control model families.
 
-    frame = ensure_galaxy_frame(data)
+    ``frame`` overrides the galaxy frame (referee sensitivity reruns on
+    restricted subsets, e.g. the 55-arcsec crowding exclusion); the default
+    ``ensure_galaxy_frame(data)`` is the published analysis.
+    """
+
+    if frame is None:
+        frame = ensure_galaxy_frame(data)
     if frame.empty:
         return {"status": "skipped", "reason": "no_galaxy_samples"}
     covariates, continuous = _covariates(frame)

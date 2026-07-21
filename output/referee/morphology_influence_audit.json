@@ -1,0 +1,65 @@
+{
+ "model_checked": "elliptical_satellites",
+ "covariates": [
+  "logMstar",
+  "z_numeric",
+  "is_satellite",
+  "log_group_luminosity",
+  "velocity_dispersion"
+ ],
+ "leave_one_cg4_group": {
+  "n_rows": 186,
+  "n_direction_changes": 0
+ },
+ "leave_one_lim_host": {
+  "n_rows": 180,
+  "n_direction_changes": 0
+ },
+ "per_control_integrity": [
+  {
+   "control": "Control4B",
+   "full_status": "ok",
+   "full_beta": 0.968101949298694,
+   "full_odds_ratio": 2.6329422557428486,
+   "full_covariance": "cluster",
+   "full_n_clusters": 735,
+   "complete_case_physical_groups": 735,
+   "control_duplicate_objids": 0,
+   "cg4_objids_on_control_side": 0,
+   "clustered_by_physical_group": true
+  },
+  {
+   "control": "Control4C",
+   "full_status": "ok",
+   "full_beta": 0.6585757859823733,
+   "full_odds_ratio": 1.9320387373593795,
+   "full_covariance": "cluster",
+   "full_n_clusters": 734,
+   "complete_case_physical_groups": 734,
+   "control_duplicate_objids": 0,
+   "cg4_objids_on_control_side": 0,
+   "clustered_by_physical_group": true
+  },
+  {
+   "control": "RG4",
+   "full_status": "ok",
+   "full_beta": 1.1088866010466463,
+   "full_odds_ratio": 3.0309818230595447,
+   "full_covariance": "cluster",
+   "full_n_clusters": 113,
+   "complete_case_physical_groups": 113,
+   "control_duplicate_objids": 0,
+   "cg4_objids_on_control_side": 0,
+   "clustered_by_physical_group": true
+  }
+ ],
+ "all_control_objids_unique_within_per_control_models": true,
+ "no_cg4_objids_on_control_side": true,
+ "all_models_clustered_by_physical_group": true,
+ "no_cg4_host_changes_elliptical_direction": true,
+ "outputs": {
+  "leave_one_cg4_group_csv": "output/referee/morphology_influence_leave_one_cg4_group.csv",
+  "leave_one_lim_host_csv": "output/referee/morphology_influence_leave_one_lim_host.csv",
+  "audit_json": "output/referee/morphology_influence_audit.json"
+ }
+}

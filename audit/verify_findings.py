@@ -87,10 +87,27 @@ def check_A1(frames):
            f"{len(contaminated)} CG4 galaxies in groups {contaminated_groups} "
            f"(CG4 groups {cg_of_contam}, classes {classes})")
 
-    # Rebuild C4C from PC (BGG + 3 closest in projection = rank_dist 1..4)
-    rebuilt = pc[pc["rank_dist"] <= 4]
+    # Rebuild C4C from PC: Delta_m <= 3 filter first, then the 3 closest
+    # recomputed projected separations (Paper I cell 59; referee/T0).
+    # Kept independent of src/sample_construction.py on purpose; note
+    # PC_Gals.rank_dist is the *unrestricted* rank and must not be used.
+    parts = []
+    for _, parent in pc.groupby("Group"):
+        bgg = parent[parent["rank_M"] == 1].iloc[0]
+        sats = parent[parent["objid"] != bgg["objid"]]
+        el = sats[sats["M_r"] - bgg["M_r"] <= 3].copy()
+        cosv = (np.sin(np.deg2rad(bgg["Dec"])) * np.sin(np.deg2rad(el["Dec"]))
+                + np.cos(np.deg2rad(bgg["Dec"])) * np.cos(np.deg2rad(el["Dec"]))
+                * np.cos(np.deg2rad(el["RA"] - bgg["RA"])))
+        el["_sep"] = np.arccos(np.clip(cosv, -1.0, 1.0))
+        parts.append(pd.concat([parent[parent["objid"] == bgg["objid"]],
+                                el.nsmallest(3, "_sep")]))
+    rebuilt = pd.concat(parts, ignore_index=True)
     quartet_sizes = rebuilt.groupby("Group").size()
-    contam_rebuilt = rebuilt[rebuilt["objid"].isin(cg_objids)]["Group"].nunique()
+    # Paper I's construction exclusion uses the *full* CG4 sample (split
+    # groups included), not the non-split analysis subset used above.
+    cg_full_objids = set(frames["CG4_Gals"]["objid"])
+    contam_rebuilt = rebuilt[rebuilt["objid"].isin(cg_full_objids)]["Group"].nunique()
     clean_rebuilt = rebuilt["Group"].nunique() - contam_rebuilt
     record("A1-rebuild", None,
            f"Rebuilt C4C from PC: {rebuilt['Group'].nunique()} groups "
@@ -166,15 +183,18 @@ def check_C5(results):
         record("C5-json", None, "no matched_controls block in results.json")
         return
     comp = mc.get("matched_control_counts_by_sample", {})
+    # Reference composition updated after the Delta_m <= 3 Control4C
+    # regeneration (referee/T0); the audit-closure snapshot on the
+    # unrestricted sample was {Control4B: 164, Control4C: 70, no RG4}.
     saved_matches_audit = (mc.get("n_cg4_matched") == 234
-                           and comp.get("Control4B") == 164
-                           and comp.get("Control4C") == 70
-                           and "RG4" not in comp)
+                           and comp.get("Control4B") == 159
+                           and comp.get("Control4C") == 57
+                           and comp.get("RG4") == 18)
     record("C5-json", None,
            f"results.json matched_controls: n={mc.get('n_cg4_matched')}, "
            f"composition={comp} -> "
-           + ("matches audited composition {164,70,0}" if saved_matches_audit
-              else "differs from audited composition"))
+           + ("matches post-T0 reference {159,57,18}" if saved_matches_audit
+              else "differs from post-T0 reference {159,57,18}"))
     # Hard-constraint markers written by the rebuilt matching (Phase 4).
     dedup = mc.get("control_pool_deduplicated_by_objid")
     provenance = mc.get("provenance_table") or mc.get("provenance_file")
@@ -262,12 +282,14 @@ def check_D6(results):
 # -------------------------------------------------------------------- E. sSFR
 def check_E7(frames):
     counts = {}
-    # Control4C expectation updated after the Phase 2 regeneration
-    # (704 clean groups); the committed-lineage numbers were 55/751 | 110/2253.
+    # Control4C expectation updated after the Delta_m <= 3 regeneration
+    # (704 groups -> 703 after the 3688 removal; referee/T0). The Phase 2
+    # unrestricted-lineage numbers were 49/704 | 105/2112, and the
+    # committed-lineage numbers before that were 55/751 | 110/2253.
     expected = {
         "CG4": (5, 62, 9, 186),
         "Control4B": (48, 698, 103, 2094),
-        "Control4C": (49, 704, 105, 2112),
+        "Control4C": (49, 703, 115, 2109),
         "RG4": (3, 56, 2, 168),
     }
     cg_gals, _ = nonsplit_cg4(frames)

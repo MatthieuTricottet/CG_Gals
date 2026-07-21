@@ -30,8 +30,10 @@ import pandas as pd
 
 try:
     import config as co
+    import sample_construction as sc
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
+    from . import sample_construction as sc
 
 SAMPLES = ["CG4", "Control4B", "Control4C", "RG4", "PC"]
 AUDIT_DIR = os.path.join(co.BASE_PATH, "audit")
@@ -198,15 +200,17 @@ def cg4_in_pc_quartets_table(frames: dict[str, pd.DataFrame] | None = None) -> p
 
     This is the lineage-independent version of the contamination diagnostic:
     the groups listed here are exactly the ones the Paper I construction
-    excludes from Control4C (60 groups for the committed PC_Gals.csv). The
-    embedded/predominant classes dominating this table show that compact
-    groups are frequently the projected cores of ordinary groups.
+    excludes from Control4C (61 groups for the committed PC_Gals.csv under
+    the Delta_m <= 3-restricted quartet selection, matching Paper I's
+    published count). The embedded/predominant classes dominating this
+    table show that compact groups are frequently the projected cores of
+    ordinary groups.
     """
 
     if frames is None:
         frames = load_raw_samples()
     pc = frames["PC"]
-    quartets = pc[pc["rank_dist"] <= 4]
+    quartets = sc.select_control4c_quartets(pc)
     cg4 = frames["CG4"][["objid", "Group", "rank_M"]].rename(
         columns={"Group": "cg4_group", "rank_M": "cg4_rank_M"}
     )

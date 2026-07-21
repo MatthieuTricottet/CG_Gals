@@ -1,0 +1,161 @@
+{
+ "note": "consistent denominators: all galaxies incl. missing on both sides; corners assign every missing-sSFR galaxy on a side to Q or SF",
+ "comparisons": {
+  "all:Control4B": {
+   "cg4_counts": {
+    "n_total": 248,
+    "n_quenched": 146,
+    "n_starforming": 84,
+    "n_missing": 18
+   },
+   "control_counts": {
+    "n_total": 2792,
+    "n_quenched": 1593,
+    "n_starforming": 1019,
+    "n_missing": 180
+   },
+   "cg4_missing_pct": 7.258064516129032,
+   "control_missing_pct": 6.446991404011461,
+   "observed_classified_only_diff": 0.024905120181103912,
+   "corners": {
+    "both_quenched": 0.02626166928551621,
+    "cg4_quenched_control_sf": 0.0907315833256308,
+    "cg4_sf_control_quenched": -0.04631897587577405,
+    "both_sf": 0.018150938164340547
+   },
+   "min_diff": -0.04631897587577405,
+   "max_diff": 0.0907315833256308,
+   "sign_preserved_at_worst_case": false
+  },
+  "all:Control4C": {
+   "cg4_counts": {
+    "n_total": 248,
+    "n_quenched": 146,
+    "n_starforming": 84,
+    "n_missing": 18
+   },
+   "control_counts": {
+    "n_total": 2812,
+    "n_quenched": 1560,
+    "n_starforming": 1061,
+    "n_missing": 191
+   },
+   "cg4_missing_pct": 7.258064516129032,
+   "control_missing_pct": 6.792318634423897,
+   "observed_classified_only_diff": 0.0395899341439544,
+   "corners": {
+    "both_quenched": 0.038601844629009285,
+    "cg4_quenched_control_sf": 0.10652503097324828,
+    "cg4_sf_control_quenched": -0.03397880053228097,
+    "both_sf": 0.03394438581195802
+   },
+   "min_diff": -0.03397880053228097,
+   "max_diff": 0.10652503097324828,
+   "sign_preserved_at_worst_case": false
+  },
+  "all:RG4": {
+   "cg4_counts": {
+    "n_total": 248,
+    "n_quenched": 146,
+    "n_starforming": 84,
+    "n_missing": 18
+   },
+   "control_counts": {
+    "n_total": 224,
+    "n_quenched": 101,
+    "n_starforming": 118,
+    "n_missing": 5
+   },
+   "cg4_missing_pct": 7.258064516129032,
+   "control_missing_pct": 2.232142857142857,
+   "observed_classified_only_diff": 0.17359539408378005,
+   "corners": {
+    "both_quenched": 0.18807603686635943,
+    "cg4_quenched_control_sf": 0.21039746543778798,
+    "cg4_sf_control_quenched": 0.11549539170506917,
+    "both_sf": 0.13781682027649772
+   },
+   "min_diff": 0.11549539170506917,
+   "max_diff": 0.21039746543778798,
+   "sign_preserved_at_worst_case": true
+  },
+  "satellites:Control4B": {
+   "cg4_counts": {
+    "n_total": 186,
+    "n_quenched": 101,
+    "n_starforming": 73,
+    "n_missing": 12
+   },
+   "control_counts": {
+    "n_total": 2094,
+    "n_quenched": 1060,
+    "n_starforming": 912,
+    "n_missing": 122
+   },
+   "cg4_missing_pct": 6.451612903225806,
+   "control_missing_pct": 5.826170009551098,
+   "observed_classified_only_diff": 0.042934415145368554,
+   "corners": {
+    "both_quenched": 0.04305696768031553,
+    "cg4_quenched_control_sf": 0.10131866777582654,
+    "cg4_sf_control_quenched": -0.02145916135194259,
+    "both_sf": 0.036802538743568425
+   },
+   "min_diff": -0.02145916135194259,
+   "max_diff": 0.10131866777582654,
+   "sign_preserved_at_worst_case": false
+  },
+  "satellites:Control4C": {
+   "cg4_counts": {
+    "n_total": 186,
+    "n_quenched": 101,
+    "n_starforming": 73,
+    "n_missing": 12
+   },
+   "control_counts": {
+    "n_total": 2109,
+    "n_quenched": 1023,
+    "n_starforming": 954,
+    "n_missing": 132
+   },
+   "cg4_missing_pct": 6.451612903225806,
+   "control_missing_pct": 6.2588904694167855,
+   "observed_classified_only_diff": 0.06300908726213528,
+   "corners": {
+    "both_quenched": 0.05987396564646141,
+    "cg4_quenched_control_sf": 0.12246287034062925,
+    "cg4_sf_control_quenched": -0.004642163385796705,
+    "both_sf": 0.05794674130837113
+   },
+   "min_diff": -0.004642163385796705,
+   "max_diff": 0.12246287034062925,
+   "sign_preserved_at_worst_case": false
+  },
+  "satellites:RG4": {
+   "cg4_counts": {
+    "n_total": 186,
+    "n_quenched": 101,
+    "n_starforming": 73,
+    "n_missing": 12
+   },
+   "control_counts": {
+    "n_total": 168,
+    "n_quenched": 63,
+    "n_starforming": 103,
+    "n_missing": 2
+   },
+   "cg4_missing_pct": 6.451612903225806,
+   "control_missing_pct": 1.1904761904761905,
+   "observed_classified_only_diff": 0.20094169782578591,
+   "corners": {
+    "both_quenched": 0.2206221198156682,
+    "cg4_quenched_control_sf": 0.23252688172043012,
+    "cg4_sf_control_quenched": 0.1561059907834101,
+    "both_sf": 0.168010752688172
+   },
+   "min_diff": 0.1561059907834101,
+   "max_diff": 0.23252688172043012,
+   "sign_preserved_at_worst_case": true
+  }
+ }
+}

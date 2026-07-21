@@ -76,7 +76,7 @@ def clean(sample):
         The exclusion is documented in the manuscript methods: one member has
         z = 0.048 while the six others lie at z = 0.032-0.034, and the
         outlier enters both the Control4B and Control4C quartets, inflating
-        their velocity dispersions to ~1980 km/s.
+        their velocity dispersions to ~2000 km/s (1979 and 2042 km/s).
 
         Parameters
         ----------
