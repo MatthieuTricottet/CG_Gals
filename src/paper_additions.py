@@ -601,8 +601,10 @@ def _fmt(x: float, nd: int, sign: bool = False) -> str:
 
 
 def _cell(entry: dict, nd: int = 3) -> str:
-    return (f"{entry['p']:.{nd}f}\\,[{entry['wilson_lo']:.{nd}f}, "
-            f"{entry['wilson_hi']:.{nd}f}]")
+    """Math-mode cell with asymmetric Wilson offsets, e.g. 0.908^{+0.039}_{-0.063}."""
+
+    p, lo, hi = entry["p"], entry["wilson_lo"], entry["wilson_hi"]
+    return (f"{p:.{nd}f}^{{+{hi - p:.{nd}f}}}_{{-{p - lo:.{nd}f}}}")
 
 
 def build_macros(sep, quench, zheng, tidal) -> dict:
