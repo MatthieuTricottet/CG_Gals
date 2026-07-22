@@ -1,0 +1,824 @@
+{
+ "meta": {
+  "script": "src/paper_additions.py",
+  "seed": 42,
+  "generated_utc": "2026-07-22T08:44:30.897908+00:00",
+  "git_head": "84f7485",
+  "runtime_s": 12.2
+ },
+ "canonical_gate": {
+  "CG4": {
+   "groups": 62,
+   "gals": 248,
+   "E": 124,
+   "Sp": 86,
+   "U": 38,
+   "Q": 146,
+   "SF": 84,
+   "N": 18
+  },
+  "Control4B": {
+   "groups": 698,
+   "gals": 2792,
+   "E": 1106,
+   "Sp": 1266,
+   "U": 420,
+   "Q": 1593,
+   "SF": 1019,
+   "N": 180
+  },
+  "Control4C": {
+   "groups": 703,
+   "gals": 2812,
+   "E": 1118,
+   "Sp": 1229,
+   "U": 465,
+   "Q": 1560,
+   "SF": 1061,
+   "N": 191
+  },
+  "RG4": {
+   "groups": 56,
+   "gals": 224,
+   "E": 60,
+   "Sp": 129,
+   "U": 35,
+   "Q": 101,
+   "SF": 118,
+   "N": 5
+  },
+  "CG4_BGG_Q_SF_N": [
+   45,
+   11,
+   6
+  ]
+ },
+ "separations": {
+  "CG4": {
+   "n_groups": 62,
+   "median_kpc": 143.1621561045922,
+   "q25_kpc": 114.14684549250879,
+   "q75_kpc": 176.94544368146364
+  },
+  "Control4B": {
+   "n_groups": 698,
+   "median_kpc": 448.2522653659966,
+   "q25_kpc": 323.1601348795873,
+   "q75_kpc": 607.1164073109852
+  },
+  "Control4C": {
+   "n_groups": 703,
+   "median_kpc": 293.3928139585739,
+   "q25_kpc": 187.37336053468965,
+   "q75_kpc": 436.8449493995754
+  },
+  "RG4": {
+   "n_groups": 56,
+   "median_kpc": 429.89846355064844,
+   "q25_kpc": 292.3629386065869,
+   "q75_kpc": 492.2113394107523
+  },
+  "span_factor": 3.1310807098945195,
+  "loose_pair_mean_kpc": 439.0753644583225
+ },
+ "quenched_by_morphology": {
+  "per_sample": {
+   "CG4": {
+    "Elliptical": {
+     "quenched": 109,
+     "classified": 120,
+     "p": 0.9083333333333333,
+     "wilson_lo": 0.843291530273291,
+     "wilson_hi": 0.9480428171514347
+    },
+    "Spiral": {
+     "quenched": 28,
+     "classified": 86,
+     "p": 0.32558139534883723,
+     "wilson_lo": 0.23585699457311415,
+     "wilson_hi": 0.43022144634051696
+    },
+    "Uncertain": {
+     "quenched": 9,
+     "classified": 24,
+     "p": 0.375,
+     "wilson_lo": 0.21159367559548778,
+     "wilson_hi": 0.5729003755732572
+    }
+   },
+   "Control4B": {
+    "Elliptical": {
+     "quenched": 988,
+     "classified": 1094,
+     "p": 0.903107861060329,
+     "wilson_lo": 0.8841424283068877,
+     "wilson_hi": 0.9192522630791053
+    },
+    "Spiral": {
+     "quenched": 450,
+     "classified": 1260,
+     "p": 0.35714285714285715,
+     "wilson_lo": 0.33115671633139465,
+     "wilson_hi": 0.3839974293983075
+    },
+    "Uncertain": {
+     "quenched": 155,
+     "classified": 258,
+     "p": 0.6007751937984496,
+     "wilson_lo": 0.5399593304321115,
+     "wilson_hi": 0.658634124684593
+    }
+   },
+   "Control4C": {
+    "Elliptical": {
+     "quenched": 983,
+     "classified": 1108,
+     "p": 0.8871841155234657,
+     "wilson_lo": 0.8672023612862642,
+     "wilson_hi": 0.904490395080333
+    },
+    "Spiral": {
+     "quenched": 402,
+     "classified": 1225,
+     "p": 0.32816326530612244,
+     "wilson_lo": 0.3024420618682293,
+     "wilson_hi": 0.3549588200941768
+    },
+    "Uncertain": {
+     "quenched": 175,
+     "classified": 288,
+     "p": 0.6076388888888888,
+     "wilson_lo": 0.5501844971476608,
+     "wilson_hi": 0.6622596163464827
+    }
+   },
+   "RG4": {
+    "Elliptical": {
+     "quenched": 51,
+     "classified": 60,
+     "p": 0.85,
+     "wilson_lo": 0.7388541093022145,
+     "wilson_hi": 0.9190255941983225
+    },
+    "Spiral": {
+     "quenched": 38,
+     "classified": 129,
+     "p": 0.29457364341085274,
+     "wilson_lo": 0.22276853425208776,
+     "wilson_hi": 0.3782596351875599
+    },
+    "Uncertain": {
+     "quenched": 12,
+     "classified": 30,
+     "p": 0.4,
+     "wilson_lo": 0.24590628116801852,
+     "wilson_hi": 0.5767963974667752
+    }
+   }
+  },
+  "chi2_homogeneity_PQE": {
+   "chi2": 2.992500132626825,
+   "p": 0.3927829542867437,
+   "dof": 3
+  },
+  "kitagawa": {
+   "Control4B": {
+    "raw_delta_fQ": 0.024905120181103912,
+    "mix_term": 0.05889075163116275,
+    "conditional_term": -0.033985631450058805,
+    "conditional_ci95": [
+     -0.08571622056589838,
+     0.019244982873631616
+    ],
+    "mix_ci95": [
+     0.022126220290585013,
+     0.09501504206504939
+    ],
+    "n_boot": 4000,
+    "seed": 42,
+    "blocked_by": "group within each sample (multinomial group weights)"
+   },
+   "Control4C": {
+    "raw_delta_fQ": 0.0395899341439544,
+    "mix_term": 0.05560755839498478,
+    "conditional_term": -0.016017624251030427,
+    "conditional_ci95": [
+     -0.06832624114914977,
+     0.03851765131417142
+    ],
+    "mix_ci95": [
+     0.018736337810087877,
+     0.09143473844541047
+    ],
+    "n_boot": 4000,
+    "seed": 42,
+    "blocked_by": "group within each sample (multinomial group weights)"
+   },
+   "RG4": {
+    "raw_delta_fQ": 0.17359539408378005,
+    "mix_term": 0.1384742902521342,
+    "conditional_term": 0.03512110383164582,
+    "conditional_ci95": [
+     -0.04687151312939062,
+     0.12109576591561308
+    ],
+    "mix_ci95": [
+     0.08641285244014307,
+     0.18922132595854219
+    ],
+    "n_boot": 4000,
+    "seed": 42,
+    "blocked_by": "group within each sample (multinomial group weights)"
+   }
+  }
+ },
+ "zheng_shen": {
+  "per_class": {
+   "Isolated": {
+    "n_groups": 6,
+    "median_host_lM200": 12.863515744439251,
+    "fE_all": {
+     "n_E": 7,
+     "n_classified": 18,
+     "p": 0.3888888888888889,
+     "wilson_lo": 0.2030524657216362,
+     "wilson_hi": 0.613809583977621
+    },
+    "fE_sat": {
+     "n_E": 4,
+     "n_classified": 14,
+     "p": 0.2857142857142857,
+     "wilson_lo": 0.11721378644576919,
+     "wilson_hi": 0.5464908432989318
+    }
+   },
+   "Embedded": {
+    "n_groups": 37,
+    "median_host_lM200": 13.134806937099691,
+    "fE_all": {
+     "n_E": 76,
+     "n_classified": 129,
+     "p": 0.5891472868217055,
+     "wilson_lo": 0.5028661010486245,
+     "wilson_hi": 0.6702726178737927
+    },
+    "fE_sat": {
+     "n_E": 54,
+     "n_classified": 96,
+     "p": 0.5625,
+     "wilson_lo": 0.46275882627554077,
+     "wilson_hi": 0.6574317252422498
+    }
+   },
+   "Predominant": {
+    "n_groups": 19,
+    "median_host_lM200": 13.825752463831812,
+    "fE_all": {
+     "n_E": 41,
+     "n_classified": 63,
+     "p": 0.6507936507936508,
+     "wilson_lo": 0.5275146077366178,
+     "wilson_hi": 0.7567401098476968
+    },
+    "fE_sat": {
+     "n_E": 30,
+     "n_classified": 47,
+     "p": 0.6382978723404256,
+     "wilson_lo": 0.4953589653479511,
+     "wilson_hi": 0.7603378675428585
+    }
+   }
+  },
+  "permutations": {
+   "isolated_vs_rest_of_CG4": {
+    "observed_diff_of_group_means": -0.32901234567901233,
+    "p": 0.02279886005699715,
+    "n_perm": 20000,
+    "seed": 42,
+    "n_a": 5,
+    "n_b": 54
+   },
+   "isolated_vs_RG4": {
+    "observed_diff_of_group_means": -0.0030303030303029943,
+    "p": 1.0,
+    "n_perm": 20000,
+    "seed": 42,
+    "n_a": 5,
+    "n_b": 55
+   },
+   "isolated_vs_Control4C": {
+    "observed_diff_of_group_means": -0.1427589592538046,
+    "p": 0.4007799610019499,
+    "n_perm": 20000,
+    "seed": 42,
+    "n_a": 5,
+    "n_b": 679
+   }
+  },
+  "statistic": "difference of the means over groups of the per-group satellite elliptical fraction E/(E+Sp); two-sided, add-one convention p=(k+1)/(B+1)"
+ },
+ "tidal": {
+  "published_inputs": {
+   "baseline_or": 1.9515787213371922,
+   "residual_or": 1.3931206638699014,
+   "tidal_term_or": 1.422160671710952,
+   "pooled_median_gap_dex": 1.0729178895335085
+  },
+  "median_logT_by_sample": {
+   "CG4": 5.065757841919673,
+   "Control4B": 3.730320590704564,
+   "Control4C": 4.255280576557494,
+   "RG4": 3.842056854415917
+  },
+  "gap_vs_control_dex": {
+   "Control4B": 1.3354372512151094,
+   "Control4C": 0.810477265362179,
+   "RG4": 1.223700987503756
+  },
+  "logT_sd_in_elliptical_model_frame": {
+   "sd_dex": 1.0654237731409062,
+   "n": 5117,
+   "note": "population SD (ddof=0) of log10 T_i over the with-tidal-index elliptical model complete cases; the model standardises the regressor, so the published OR 1.42 is per this SD, not per dex"
+  },
+  "internal_consistency": {
+   "product_or": 1.9861554157254586,
+   "exponent_gap_over_sd": 1.00703393014266,
+   "formula": "residual_OR * tidal_OR^(pooled median gap / SD of log T)",
+   "compare_to_baseline_or": 1.9515787213371922
+  },
+  "host_halo_tide_diagnostic": {
+   "n_embedded_predominant_satellites": 168,
+   "median_log10_ratio_pointmass_at_bgg_distance": 2.0303567537135767,
+   "median_log10_ratio_mean_within_r200": -0.17473357912887189,
+   "note": "supports the qualitative 'order of magnitude' host-tide clause; convention-dependent (point-mass at the galaxy's BGG-centric distance versus mean density within r200), diagnostic only"
+  },
+  "host_inclusive": {
+   "per_sample": {
+    "CG4": {
+     "n": 248,
+     "median_delta_dex": 0.0020326673239545734,
+     "q90_delta_dex": 0.10864216644096539,
+     "frac_delta_above_03": 0.06451612903225806,
+     "max_delta_dex": 1.7488580348938951,
+     "spearman_rho": 0.9738391990319906,
+     "median_extra_members": 4.0
+    },
+    "Control4B": {
+     "n": 2792,
+     "median_delta_dex": 0.023232478055238204,
+     "q90_delta_dex": 0.8379919241892632,
+     "frac_delta_above_03": 0.1937679083094556,
+     "max_delta_dex": 4.995400500279405,
+     "spearman_rho": 0.8539666693480762,
+     "median_extra_members": 3.0
+    },
+    "Control4C": {
+     "n": 2811,
+     "median_delta_dex": 0.0062923295679486735,
+     "q90_delta_dex": 0.2613601876132403,
+     "frac_delta_above_03": 0.09000355745286374,
+     "max_delta_dex": 4.995400500279405,
+     "spearman_rho": 0.9483942966126485,
+     "median_extra_members": 3.0
+    },
+    "RG4": {
+     "n": 224,
+     "median_delta_dex": 0.0,
+     "q90_delta_dex": 0.0,
+     "frac_delta_above_03": 0.0,
+     "max_delta_dex": 0.0,
+     "spearman_rho": 1.0,
+     "median_extra_members": 0.0
+    }
+   },
+   "n_lim_members_catalogue": 586025,
+   "pooled": {
+    "n": 6075,
+    "median_delta_dex": 0.008854727590274614,
+    "spearman_rho": 0.9111478885786152
+   },
+   "refit_elliptical_with_host_T": {
+    "cg4_odds_ratio": 1.3287910684643205,
+    "cg4_ci95": [
+     0.9863216174194235,
+     1.7901723661397861
+    ],
+    "cg4_p": 0.06156824645685956,
+    "n": 5117,
+    "note": "identical specification to the published with-tidal-index model (fit_logistic_model, standardised continuous terms, cluster-robust by physical_group), with log T_i replaced by the host-inclusive log T_i"
+   }
+  }
+ },
+ "regression_checks": [
+  {
+   "name": "sep_median_CG4_kpc",
+   "computed": 143.1621561045922,
+   "reference": 143.0,
+   "tol": 2.0,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "sep_q25_CG4_kpc",
+   "computed": 114.14684549250879,
+   "reference": 114.0,
+   "tol": 2.0,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "sep_q75_CG4_kpc",
+   "computed": 176.94544368146364,
+   "reference": 177.0,
+   "tol": 2.0,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "sep_median_RG4_kpc",
+   "computed": 429.89846355064844,
+   "reference": 430.0,
+   "tol": 2.0,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "sep_q25_RG4_kpc",
+   "computed": 292.3629386065869,
+   "reference": 292.0,
+   "tol": 2.0,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "sep_q75_RG4_kpc",
+   "computed": 492.2113394107523,
+   "reference": 494.0,
+   "tol": 2.0,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "sep_median_Control4B_kpc",
+   "computed": 448.2522653659966,
+   "reference": 448.0,
+   "tol": 10.0,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "sep_median_Control4C_kpc",
+   "computed": 293.3928139585739,
+   "reference": 212.0,
+   "tol": 40.0,
+   "status": "FLAG",
+   "note": "reference is the pre-repair pickle variant; the canonical Delta_m<=3 Control4C is expected less compact (see report)"
+  },
+  {
+   "name": "PQE_CG4",
+   "computed": 0.9083333333333333,
+   "reference": 0.908,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "PQSp_CG4",
+   "computed": 0.32558139534883723,
+   "reference": 0.326,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "PQE_Control4B",
+   "computed": 0.903107861060329,
+   "reference": 0.903,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "PQSp_Control4B",
+   "computed": 0.35714285714285715,
+   "reference": 0.357,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "PQE_Control4C",
+   "computed": 0.8871841155234657,
+   "reference": 0.874,
+   "tol": 0.03,
+   "status": "PASS",
+   "note": "reference from the pre-repair pickle variant"
+  },
+  {
+   "name": "PQSp_Control4C",
+   "computed": 0.32816326530612244,
+   "reference": 0.315,
+   "tol": 0.03,
+   "status": "PASS",
+   "note": "reference from the pre-repair pickle variant"
+  },
+  {
+   "name": "PQE_RG4",
+   "computed": 0.85,
+   "reference": 0.85,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "PQSp_RG4",
+   "computed": 0.29457364341085274,
+   "reference": 0.295,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "chi2_PQE_homogeneity_p",
+   "computed": 0.3927829542867437,
+   "reference": 0.1,
+   "tol": 0.0,
+   "status": "FLAG",
+   "note": "outside the stated 0.03-0.3 plausibility window"
+  },
+  {
+   "name": "kitagawa_conditional_Control4B",
+   "computed": -0.033985631450058805,
+   "reference": -0.034,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "kitagawa_conditional_Control4C",
+   "computed": -0.016017624251030427,
+   "reference": 0.001,
+   "tol": 0.03,
+   "status": "PASS",
+   "note": "reference from the pre-repair pickle variant"
+  },
+  {
+   "name": "kitagawa_conditional_RG4",
+   "computed": 0.03512110383164582,
+   "reference": 0.035,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "fE_isolated_all",
+   "computed": 0.3888888888888889,
+   "reference": 0.3888888888888889,
+   "tol": 1e-09,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "fE_isolated_sat",
+   "computed": 0.2857142857142857,
+   "reference": 0.2857142857142857,
+   "tol": 1e-09,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "lM200_isolated",
+   "computed": 12.863515744439251,
+   "reference": 12.86,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "lM200_embedded",
+   "computed": 13.134806937099691,
+   "reference": 13.13,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "lM200_predominant",
+   "computed": 13.825752463831812,
+   "reference": 13.83,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "perm_iso_vs_rest_p",
+   "computed": 0.02279886005699715,
+   "reference": 0.022,
+   "tol": 0.01,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "perm_iso_vs_RG4_p",
+   "computed": 1.0,
+   "reference": 1.0,
+   "tol": 0.1,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "perm_iso_vs_C4C_p",
+   "computed": 0.4007799610019499,
+   "reference": 0.3,
+   "tol": 0.15,
+   "status": "PASS",
+   "note": "reference approximate; Control4C is the repaired sample"
+  },
+  {
+   "name": "tidal_median_logT_CG4_recomputed",
+   "computed": 5.065757841919673,
+   "reference": 5.065757841919673,
+   "tol": 1e-06,
+   "status": "PASS",
+   "note": "recomputation must reproduce the published pipeline value"
+  },
+  {
+   "name": "tidal_gap_Control4B",
+   "computed": 1.3354372512151094,
+   "reference": 1.34,
+   "tol": 0.1,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "tidal_gap_Control4C",
+   "computed": 0.810477265362179,
+   "reference": 0.53,
+   "tol": 0.2,
+   "status": "FLAG",
+   "note": "reference from the pre-repair pickle variant"
+  },
+  {
+   "name": "tidal_gap_RG4",
+   "computed": 1.223700987503756,
+   "reference": 1.22,
+   "tol": 0.1,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "hostT_median_delta_CG4",
+   "computed": 0.0020326673239545734,
+   "reference": 0.0,
+   "tol": 0.03,
+   "status": "PASS",
+   "note": "criterion: median shift <= 0.03 dex"
+  },
+  {
+   "name": "hostT_spearman_CG4",
+   "computed": 0.9738391990319906,
+   "reference": 1.0,
+   "tol": 0.05,
+   "status": "PASS",
+   "note": "criterion: rho >= 0.95"
+  },
+  {
+   "name": "hostT_median_delta_Control4B",
+   "computed": 0.023232478055238204,
+   "reference": 0.0,
+   "tol": 0.03,
+   "status": "PASS",
+   "note": "criterion: median shift <= 0.03 dex"
+  },
+  {
+   "name": "hostT_spearman_Control4B",
+   "computed": 0.8539666693480762,
+   "reference": 1.0,
+   "tol": 0.05,
+   "status": "FLAG",
+   "note": "criterion: rho >= 0.95"
+  },
+  {
+   "name": "hostT_median_delta_Control4C",
+   "computed": 0.0062923295679486735,
+   "reference": 0.0,
+   "tol": 0.03,
+   "status": "PASS",
+   "note": "criterion: median shift <= 0.03 dex"
+  },
+  {
+   "name": "hostT_spearman_Control4C",
+   "computed": 0.9483942966126485,
+   "reference": 1.0,
+   "tol": 0.05,
+   "status": "FLAG",
+   "note": "criterion: rho >= 0.95"
+  },
+  {
+   "name": "hostT_median_delta_RG4",
+   "computed": 0.0,
+   "reference": 0.0,
+   "tol": 0.03,
+   "status": "PASS",
+   "note": "criterion: median shift <= 0.03 dex"
+  },
+  {
+   "name": "hostT_spearman_RG4",
+   "computed": 1.0,
+   "reference": 1.0,
+   "tol": 0.05,
+   "status": "PASS",
+   "note": "criterion: rho >= 0.95"
+  },
+  {
+   "name": "hostT_refit_or_shift",
+   "computed": -0.06432959540558092,
+   "reference": 0.0,
+   "tol": 0.05,
+   "status": "FLAG",
+   "note": "criterion: refitted CG4 OR shift <= 0.05"
+  }
+ ],
+ "macros": {
+  "SepCG": "143",
+  "SepCGIqr": "114--177",
+  "SepCB": "448",
+  "SepCBIqr": "323--607",
+  "SepCC": "293",
+  "SepCCIqr": "187--437",
+  "SepRG": "430",
+  "SepRGIqr": "292--492",
+  "SepSpan": "3.1",
+  "SepLoose": "440",
+  "qEcg": "0.908",
+  "qSpcg": "0.326",
+  "qUcg": "0.375",
+  "qEcgCell": "0.908\\,[0.843, 0.948]",
+  "qSpcgCell": "0.326\\,[0.236, 0.430]",
+  "qUcgCell": "0.375\\,[0.212, 0.573]",
+  "nUcg": "24",
+  "qEcb": "0.903",
+  "qSpcb": "0.357",
+  "qUcb": "0.601",
+  "qEcbCell": "0.903\\,[0.884, 0.919]",
+  "qSpcbCell": "0.357\\,[0.331, 0.384]",
+  "qUcbCell": "0.601\\,[0.540, 0.659]",
+  "nUcb": "258",
+  "qEcc": "0.887",
+  "qSpcc": "0.328",
+  "qUcc": "0.608",
+  "qEccCell": "0.887\\,[0.867, 0.904]",
+  "qSpccCell": "0.328\\,[0.302, 0.355]",
+  "qUccCell": "0.608\\,[0.550, 0.662]",
+  "nUcc": "288",
+  "qErg": "0.850",
+  "qSprg": "0.295",
+  "qUrg": "0.400",
+  "qErgCell": "0.850\\,[0.739, 0.919]",
+  "qSprgCell": "0.295\\,[0.223, 0.378]",
+  "qUrgCell": "0.400\\,[0.246, 0.577]",
+  "nUrg": "30",
+  "pQEhom": "0.39",
+  "condCB": "-0.034",
+  "condCBlo": "-0.086",
+  "condCBhi": "+0.019",
+  "condBoundCB": "0.09",
+  "condCC": "-0.016",
+  "condCClo": "-0.068",
+  "condCChi": "+0.039",
+  "condBoundCC": "0.07",
+  "condRG": "+0.035",
+  "condRGlo": "-0.047",
+  "condRGhi": "+0.121",
+  "condBoundRG": "0.12",
+  "feAllIso": "0.389\\,[0.203, 0.614]",
+  "feSatIso": "0.286\\,[0.117, 0.546]",
+  "lMIso": "12.86",
+  "nGrIso": "6",
+  "feAllEmb": "0.589\\,[0.503, 0.670]",
+  "feSatEmb": "0.562\\,[0.463, 0.657]",
+  "lMEmb": "13.13",
+  "nGrEmb": "37",
+  "feAllPre": "0.651\\,[0.528, 0.757]",
+  "feSatPre": "0.638\\,[0.495, 0.760]",
+  "lMPre": "13.83",
+  "nGrPre": "19",
+  "pIsoRest": "0.023",
+  "pIsoRG": "1.00",
+  "pIsoCC": "0.40",
+  "gapCB": "+1.34",
+  "gapCC": "+0.81",
+  "gapRG": "+1.22",
+  "sdlogT": "1.07",
+  "ORbase": "1.95",
+  "ORresid": "1.39",
+  "ORtidal": "1.42",
+  "gapPooled": "1.07",
+  "ORconsistency": "1.99",
+  "expTid": "1.01",
+  "dTall": "0.009",
+  "dTmaxSamp": "0.02",
+  "rhoTT": "0.91",
+  "ORresidAll": "1.33"
+ }
+}
