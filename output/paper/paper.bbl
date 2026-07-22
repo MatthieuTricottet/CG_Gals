@@ -1,4 +1,4 @@
-\begin{thebibliography}{56}
+\begin{thebibliography}{55}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Ahumada} {et~al.}(2020){Ahumada}, {Allende Prieto}, {Almeida},
@@ -147,11 +147,6 @@
 
 \bibitem[{{Mamon}(1992)}]{Mamon92}
 {Mamon}, G.~A. 1992, \apjl, 401, L3
-
-\bibitem[{{McConnachie} {et~al.}(2009){McConnachie}, {Patton}, {Ellison}, \&
-  {Simard}}]{McConnachie+09}
-{McConnachie}, A.~W., {Patton}, D.~R., {Ellison}, S.~L., \& {Simard}, L. 2009,
-  \mnras, 395, 255
 
 \bibitem[{{McKinney}(2010)}]{McKinney2010}
 {McKinney}, W. 2010, in Proceedings of the 9th Python in Science Conference,

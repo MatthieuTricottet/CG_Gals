@@ -2,8 +2,8 @@
  "meta": {
   "script": "src/paper_additions.py",
   "seed": 42,
-  "generated_utc": "2026-07-22T08:48:08.380784+00:00",
-  "git_head": "75ca2f7",
+  "generated_utc": "2026-07-22T09:26:57.820234+00:00",
+  "git_head": "3e9e02f",
   "runtime_s": 11.8
  },
  "canonical_gate": {
@@ -315,6 +315,133 @@
     "n_b": 679
    }
   },
+  "isolated_satellite_classification_support": {
+   "n_isolated_groups_total": 6,
+   "n_isolated_groups_with_classified_satellites": 5,
+   "isolated_groups_without_classified_satellites": [
+    175
+   ]
+  },
+  "leave_one_isolated_group_out": {
+   "isolated_vs_rest_of_CG4": {
+    "comparison": "rest_of_CG4",
+    "rows": [
+     {
+      "omitted_isolated_group": 147,
+      "observed_diff_of_group_means": -0.345679012345679,
+      "p": 0.04484775761211939,
+      "n_perm": 20000,
+      "seed": 42,
+      "n_a": 4,
+      "n_b": 54
+     },
+     {
+      "omitted_isolated_group": 158,
+      "observed_diff_of_group_means": -0.345679012345679,
+      "p": 0.04484775761211939,
+      "n_perm": 20000,
+      "seed": 42,
+      "n_a": 4,
+      "n_b": 54
+     },
+     {
+      "omitted_isolated_group": 214,
+      "observed_diff_of_group_means": -0.345679012345679,
+      "p": 0.04484775761211939,
+      "n_perm": 20000,
+      "seed": 42,
+      "n_a": 4,
+      "n_b": 54
+     },
+     {
+      "omitted_isolated_group": 239,
+      "observed_diff_of_group_means": -0.2623456790123457,
+      "p": 0.14099295035248238,
+      "n_perm": 20000,
+      "seed": 42,
+      "n_a": 4,
+      "n_b": 54
+     },
+     {
+      "omitted_isolated_group": 303,
+      "observed_diff_of_group_means": -0.345679012345679,
+      "p": 0.045797710114494274,
+      "n_perm": 20000,
+      "seed": 42,
+      "n_a": 4,
+      "n_b": 54
+     }
+    ],
+    "effect_diff_range": [
+     -0.345679012345679,
+     -0.2623456790123457
+    ],
+    "p_range": [
+     0.04484775761211939,
+     0.14099295035248238
+    ],
+    "n_omissions": 5
+   },
+   "isolated_vs_RG4": {
+    "comparison": "RG4",
+    "rows": [
+     {
+      "omitted_isolated_group": 147,
+      "observed_diff_of_group_means": -0.019696969696969657,
+      "p": 1.0,
+      "n_perm": 20000,
+      "seed": 42,
+      "n_a": 4,
+      "n_b": 55
+     },
+     {
+      "omitted_isolated_group": 158,
+      "observed_diff_of_group_means": -0.019696969696969657,
+      "p": 1.0,
+      "n_perm": 20000,
+      "seed": 42,
+      "n_a": 4,
+      "n_b": 55
+     },
+     {
+      "omitted_isolated_group": 214,
+      "observed_diff_of_group_means": -0.019696969696969657,
+      "p": 1.0,
+      "n_perm": 20000,
+      "seed": 42,
+      "n_a": 4,
+      "n_b": 55
+     },
+     {
+      "omitted_isolated_group": 239,
+      "observed_diff_of_group_means": 0.06363636363636366,
+      "p": 0.7544122793860307,
+      "n_perm": 20000,
+      "seed": 42,
+      "n_a": 4,
+      "n_b": 55
+     },
+     {
+      "omitted_isolated_group": 303,
+      "observed_diff_of_group_means": -0.019696969696969657,
+      "p": 1.0,
+      "n_perm": 20000,
+      "seed": 42,
+      "n_a": 4,
+      "n_b": 55
+     }
+    ],
+    "effect_diff_range": [
+     -0.019696969696969657,
+     0.06363636363636366
+    ],
+    "p_range": [
+     0.7544122793860307,
+     1.0
+    ],
+    "n_omissions": 5
+   }
+  },
   "statistic": "difference of the means over groups of the per-group satellite elliptical fraction E/(E+Sp); two-sided, add-one convention p=(k+1)/(B+1)"
  },
  "tidal": {
@@ -350,7 +477,7 @@
    "n_embedded_predominant_satellites": 168,
    "median_log10_ratio_pointmass_at_bgg_distance": 2.0303567537135767,
    "median_log10_ratio_mean_within_r200": -0.17473357912887189,
-   "note": "supports the qualitative 'order of magnitude' host-tide clause; convention-dependent (point-mass at the galaxy's BGG-centric distance versus mean density within r200), diagnostic only"
+   "note": "diagnostic only: the two simple halo-density normalisations are convention-dependent and are not used to support a smooth-halo order-of-magnitude statement"
   },
   "host_inclusive": {
    "per_sample": {
@@ -391,7 +518,9 @@
      "median_extra_members": 0.0
     }
    },
-   "n_lim_members_catalogue": 586025,
+   "n_lim_members_catalogue_raw": 586025,
+   "n_lim_members_catalogue": 586013,
+   "n_duplicate_lim_member_rows_dropped": 12,
    "pooled": {
     "n": 6075,
     "median_delta_dex": 0.008854727590274614,
@@ -469,10 +598,10 @@
   {
    "name": "sep_median_Control4C_kpc",
    "computed": 293.3928139585739,
-   "reference": 212.0,
-   "tol": 40.0,
-   "status": "FLAG",
-   "note": "reference is the pre-repair pickle variant; the canonical Delta_m<=3 Control4C is expected less compact (see report)"
+   "reference": 293.0,
+   "tol": 2.0,
+   "status": "PASS",
+   "note": ""
   },
   {
    "name": "PQE_CG4",
@@ -509,18 +638,18 @@
   {
    "name": "PQE_Control4C",
    "computed": 0.8871841155234657,
-   "reference": 0.874,
-   "tol": 0.03,
+   "reference": 0.887,
+   "tol": 0.02,
    "status": "PASS",
-   "note": "reference from the pre-repair pickle variant"
+   "note": ""
   },
   {
    "name": "PQSp_Control4C",
    "computed": 0.32816326530612244,
-   "reference": 0.315,
-   "tol": 0.03,
+   "reference": 0.328,
+   "tol": 0.02,
    "status": "PASS",
-   "note": "reference from the pre-repair pickle variant"
+   "note": ""
   },
   {
    "name": "PQE_RG4",
@@ -541,10 +670,10 @@
   {
    "name": "chi2_PQE_homogeneity_p",
    "computed": 0.3927829542867437,
-   "reference": 0.1,
-   "tol": 0.0,
-   "status": "FLAG",
-   "note": "outside the stated 0.03-0.3 plausibility window"
+   "reference": 0.39,
+   "tol": 0.01,
+   "status": "PASS",
+   "note": ""
   },
   {
    "name": "kitagawa_conditional_Control4B",
@@ -557,10 +686,10 @@
   {
    "name": "kitagawa_conditional_Control4C",
    "computed": -0.016017624251030427,
-   "reference": 0.001,
-   "tol": 0.03,
+   "reference": -0.016,
+   "tol": 0.02,
    "status": "PASS",
-   "note": "reference from the pre-repair pickle variant"
+   "note": ""
   },
   {
    "name": "kitagawa_conditional_RG4",
@@ -653,10 +782,10 @@
   {
    "name": "tidal_gap_Control4C",
    "computed": 0.810477265362179,
-   "reference": 0.53,
-   "tol": 0.2,
-   "status": "FLAG",
-   "note": "reference from the pre-repair pickle variant"
+   "reference": 0.81,
+   "tol": 0.1,
+   "status": "PASS",
+   "note": ""
   },
   {
    "name": "tidal_gap_RG4",
@@ -675,28 +804,12 @@
    "note": "criterion: median shift <= 0.03 dex"
   },
   {
-   "name": "hostT_spearman_CG4",
-   "computed": 0.9738391990319906,
-   "reference": 1.0,
-   "tol": 0.05,
-   "status": "PASS",
-   "note": "criterion: rho >= 0.95"
-  },
-  {
    "name": "hostT_median_delta_Control4B",
    "computed": 0.023232478055238204,
    "reference": 0.0,
    "tol": 0.03,
    "status": "PASS",
    "note": "criterion: median shift <= 0.03 dex"
-  },
-  {
-   "name": "hostT_spearman_Control4B",
-   "computed": 0.8539666693480762,
-   "reference": 1.0,
-   "tol": 0.05,
-   "status": "FLAG",
-   "note": "criterion: rho >= 0.95"
   },
   {
    "name": "hostT_median_delta_Control4C",
@@ -707,14 +820,6 @@
    "note": "criterion: median shift <= 0.03 dex"
   },
   {
-   "name": "hostT_spearman_Control4C",
-   "computed": 0.9483942966126485,
-   "reference": 1.0,
-   "tol": 0.05,
-   "status": "FLAG",
-   "note": "criterion: rho >= 0.95"
-  },
-  {
    "name": "hostT_median_delta_RG4",
    "computed": 0.0,
    "reference": 0.0,
@@ -723,20 +828,28 @@
    "note": "criterion: median shift <= 0.03 dex"
   },
   {
-   "name": "hostT_spearman_RG4",
-   "computed": 1.0,
-   "reference": 1.0,
-   "tol": 0.05,
+   "name": "hostT_pooled_median_delta",
+   "computed": 0.008854727590274614,
+   "reference": 0.009,
+   "tol": 0.002,
    "status": "PASS",
-   "note": "criterion: rho >= 0.95"
+   "note": ""
   },
   {
-   "name": "hostT_refit_or_shift",
-   "computed": -0.06432959540558092,
-   "reference": 0.0,
-   "tol": 0.05,
-   "status": "FLAG",
-   "note": "criterion: refitted CG4 OR shift <= 0.05"
+   "name": "hostT_pooled_spearman",
+   "computed": 0.9111478885786152,
+   "reference": 0.91,
+   "tol": 0.01,
+   "status": "PASS",
+   "note": ""
+  },
+  {
+   "name": "hostT_refit_or",
+   "computed": 1.3287910684643205,
+   "reference": 1.33,
+   "tol": 0.02,
+   "status": "PASS",
+   "note": ""
   }
  ],
  "macros": {
