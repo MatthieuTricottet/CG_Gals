@@ -17,7 +17,6 @@ SIZE_STUB_OK = {
         "z_match_tolerance": 0.005,
         "close_neighbour_arcsec": 55.0,
     },
-    "holm_families": {"F1": [], "F2": [], "F3": []},
     "availability_audit": {
         "status": "ok",
         "totals": {"z_mismatch": 0, "shred_merge": 0, "n_pegged": 0},

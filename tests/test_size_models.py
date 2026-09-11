@@ -121,22 +121,16 @@ def test_adjusted_size_models_cluster_by_physical_group():
     assert fit["n_clusters"] == fit["n_groups"]
 
 
-def test_holm_family_sizes_match_preregistration():
+def test_size_results_use_effect_specific_unadjusted_p_values():
     frame = synthetic_size_frame()
     result = run_size_analysis(frame, output_dir=None)
-    families = result["holm_families"]
-    assert len(families["F1"]) == 3
-    assert len(families["F2"]) == 3
-    assert len(families["F3"]) == 3
-    # F1: the three primary variants carry Holm-adjusted p-values.
+    assert "holm_families" not in result
     for variant in ["all", "satellites", "bgg"]:
-        assert result["adjusted"][variant]["p_holm"] is not None
-    # F2: Petrosian all/satellites plus concentration satellites.
-    assert result["petrosian"]["all"]["p_holm"] is not None
-    assert result["petrosian"]["satellites"]["p_holm"] is not None
-    assert result["concentration"]["satellites"]["p_holm"] is not None
-    assert "p_holm" not in result["concentration"]["all"]
-    # F3: the three matched size outcomes.
+        assert result["adjusted"][variant]["p"] is not None
+        assert "p_holm" not in result["adjusted"][variant]
+    assert result["petrosian"]["all"]["p"] is not None
+    assert result["petrosian"]["satellites"]["p"] is not None
+    assert result["concentration"]["satellites"]["p"] is not None
     for outcome in [
         "delta_log_Rchl_r",
         "delta_log_petroR50",
@@ -144,9 +138,11 @@ def test_holm_family_sizes_match_preregistration():
     ]:
         effect = result["matched"]["effects"][outcome]
         assert effect["status"] == "ok"
-        assert effect["p_holm"] is not None
+        assert effect["p"] is not None
+        assert "p_holm" not in effect
         sensitivity = effect["two_sided_cluster_sensitivity"]
-        assert sensitivity["p_holm"] is not None
+        assert sensitivity["p"] is not None
+        assert "p_holm" not in sensitivity
         assert sensitivity["n_components"] > 0
 
 

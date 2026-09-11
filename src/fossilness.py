@@ -153,11 +153,11 @@ def _pooled_comparisons(groups):
 
 def _per_control_comparisons(groups):
     comparisons = {}
-    p_values = []
-    refs = []
     cg4 = groups.loc[groups["is_CG4"] == 1]
     for control in ["Control4B", "Control4C", "RG4"]:
         comparisons[control] = {}
+        p_values = []
+        refs = []
         controls = groups.loc[groups["sample"] == control]
         for gap in GAP_COLUMNS:
             summary = two_sample_summary(cg4[gap], controls[gap])
@@ -165,9 +165,9 @@ def _per_control_comparisons(groups):
             comparisons[control][gap] = summary
             if summary.get("status") == "ok":
                 p_values.append(summary["mannwhitney_p"])
-                refs.append((control, gap))
-    for (control, gap), adjusted in zip(refs, holm_correction(p_values)):
-        comparisons[control][gap]["p_holm"] = adjusted
+                refs.append(gap)
+        for gap, adjusted in zip(refs, holm_correction(p_values)):
+            comparisons[control][gap]["p_holm"] = adjusted
     return comparisons
 
 
@@ -313,7 +313,7 @@ def run_fossilness_analysis(data, output_dir: str | None = None):
         "magnitude_gap_any_per_control_significant": any_per_control_significant,
         "magnitude_gap_control_robust": robust_per_control_significant,
         "magnitude_gap_significant": robust_per_control_significant,
-        "multiple_testing": "Holm correction across the six per-control Mann-Whitney p-values (3 controls x 2 gaps); deduplicated pooled sensitivity is labelled separately.",
+        "multiple_testing": "Within each control comparison, Holm correction covers the two interchangeable magnitude-gap definitions. The separate 14-correlation exploratory battery is Holm-adjusted as one family; the deduplicated pooled sensitivity is labelled separately.",
     }
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)

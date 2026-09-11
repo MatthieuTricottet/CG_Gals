@@ -18,9 +18,8 @@ Three parts.
     covariate/matching-variable auto-selection): the three per-control
     adjusted families, the pooled secondary models, the galaxy-level
     propensity match, and the group-level matched satellite-composition
-    contrasts (pooled + per-control). Same seeds, B = 9999, cluster and
-    Holm conventions; a labelled sensitivity family, never folded into
-    the published ones.
+    contrasts (pooled + per-control). Same seeds, B = 9999, clustering,
+    and outcome definitions; this remains a labelled sensitivity.
 
 Outputs: referee/values/T3.json, referee/T3_no_sigma_table.csv,
 referee/T3_summary.md (hand-written afterwards).
@@ -85,7 +84,6 @@ def _model_digest(block: dict) -> dict:
             "odds_ratio": block[key].get("cg4_odds_ratio"),
             "ci95": block[key].get("cg4_ci95"),
             "p": block[key].get("cg4_p"),
-            "p_adj": block[key].get("cg4_p_adj"),
             "n": block[key].get("n"),
         }
         for key in MODEL_SPECS
@@ -106,7 +104,6 @@ def _matched_digest(mc: dict) -> dict:
                 "delta": effect.get("delta_cg4_minus_control"),
                 "ci95": effect.get("ci95"),
                 "p": effect.get("p"),
-                "p_adj": effect.get("p_adj"),
                 "n_pairs": effect.get("n_pairs"),
             }
     for label, row in (mc.get("group_level_per_control") or {}).items():
@@ -196,33 +193,24 @@ def main() -> None:
             rows.append({
                 "family": f"primary:{family}", "model": model,
                 "published_or": pub.get(model, {}).get("odds_ratio"),
-                "published_p_adj": pub.get(model, {}).get("p_adj"),
+                "published_p": pub.get(model, {}).get("p"),
                 "no_sigma_or": alt.get(model, {}).get("odds_ratio"),
-                "no_sigma_p_adj": alt.get(model, {}).get("p_adj"),
+                "no_sigma_p": alt.get(model, {}).get("p"),
             })
     for model in sorted(set(values["published"]["pooled"]) | set(values["no_sigma_v"]["pooled"])):
         rows.append({
             "family": "pooled", "model": model,
             "published_or": values["published"]["pooled"].get(model, {}).get("odds_ratio"),
-            "published_p_adj": values["published"]["pooled"].get(model, {}).get("p_adj"),
+            "published_p": values["published"]["pooled"].get(model, {}).get("p"),
             "no_sigma_or": values["no_sigma_v"]["pooled"].get(model, {}).get("odds_ratio"),
-            "no_sigma_p_adj": values["no_sigma_v"]["pooled"].get(model, {}).get("p_adj"),
+            "no_sigma_p": values["no_sigma_v"]["pooled"].get(model, {}).get("p"),
         })
     table = pd.DataFrame(rows)
-    flips = []
-    for _, row in table.iterrows():
-        a, b = row["published_p_adj"], row["no_sigma_p_adj"]
-        if a is not None and b is not None and not (pd.isna(a) or pd.isna(b)):
-            if (a < 0.05) != (b < 0.05):
-                flips.append(f"{row['family']}/{row['model']}")
-    values["holm_significance_flips"] = flips
-
     (OUT / "values").mkdir(exist_ok=True)
     with open(OUT / "values" / "T3.json", "w") as handle:
         json.dump(values, handle, indent=1, default=float)
     table.to_csv(OUT / "T3_no_sigma_table.csv", index=False)
     print(table.to_string(index=False))
-    print("\nHolm significance flips (published vs no-sigma_v):", flips or "none")
     print("matched effects (no sigma):", json.dumps(values["no_sigma_v"]["matched"], indent=1)[:1200])
 
 

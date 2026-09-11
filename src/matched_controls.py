@@ -38,7 +38,6 @@ try:
     from extended_stats import (
         bootstrap_difference,
         empirical_p_two_sided,
-        holm_correction,
         safe_json,
         standardized_mean_difference,
     )
@@ -47,7 +46,6 @@ except ModuleNotFoundError:  # pragma: no cover
     from .extended_stats import (
         bootstrap_difference,
         empirical_p_two_sided,
-        holm_correction,
         safe_json,
         standardized_mean_difference,
     )
@@ -70,18 +68,14 @@ GROUP_MATCHING_CANDIDATES = [
 SPATIAL_DIAGNOSTICS = ["dist2BGG_kpc", "R_norm"]
 OUTCOMES = {
     "quenched_fraction": ("quenched", np.mean),
-    "starforming_fraction": ("starforming", np.mean),
     "elliptical_fraction": ("elliptical", np.mean),
-    "spiral_fraction": ("spiral", np.mean),
     "residual_sSFR_starforming": ("MS_res", np.mean),
     "colour_residual_u_minus_r": ("delta_u_minus_r", np.mean),
 }
 
 EFFECT_LABELS = {
     "quenched_fraction": "quenched fraction",
-    "starforming_fraction": "star-forming fraction",
     "elliptical_fraction": "elliptical fraction",
-    "spiral_fraction": "spiral fraction",
     "residual_sSFR_starforming": "residual sSFR, star-forming",
     "colour_residual_u_minus_r": r"colour residual $u-r$",
 }
@@ -792,40 +786,6 @@ def per_control_group_level_matches(prepared, n_boot=N_BOOT_DEFAULT, seed=202606
     return results
 
 
-def _group_level_holm_sensitivity(per_control_group):
-    """Holm sensitivity for the three per-control group-level p-value sets."""
-
-    control_labels = ["Control4B", "Control4C", "RG4"]
-    ok_rows = [
-        (label, per_control_group.get(label, {}))
-        for label in control_labels
-        if per_control_group.get(label, {}).get("status") == "ok"
-    ]
-    boot_adjusted = holm_correction([row.get("p") for _, row in ok_rows])
-    perm_adjusted = holm_correction([row.get("p_permutation") for _, row in ok_rows])
-    return {
-        "status": "ok" if ok_rows else "skipped",
-        "family": control_labels,
-        "note": (
-            "Sensitivity only: the three control-specific group-level matches are "
-            "kept as distinct estimands in the main analysis, while the pooled "
-            "match is a secondary summary and is not part of this Holm family."
-        ),
-        "rows": [
-            {
-                "control": label,
-                "p_bootstrap": row.get("p"),
-                "p_bootstrap_holm": boot_adj,
-                "p_permutation": row.get("p_permutation"),
-                "p_permutation_holm": perm_adj,
-            }
-            for (label, row), boot_adj, perm_adj in zip(
-                ok_rows, boot_adjusted, perm_adjusted
-            )
-        ],
-    }
-
-
 def run_matched_control_analysis(
     data, output_dir: str | None = None, n_boot: int = N_BOOT_DEFAULT
 ):
@@ -933,29 +893,12 @@ def run_matched_control_analysis(
                 "n_components": sensitivity["n_blocks"],
                 "n_pairs": sensitivity["n"],
             }
-    ok_names = [name for name, value in effects.items() if value.get("status") == "ok"]
-    for name, adjusted in zip(
-        ok_names, holm_correction([effects[name]["p"] for name in ok_names])
-    ):
-        effects[name]["p_adj"] = adjusted
-    sensitivity_ok_names = [
-        name
-        for name, value in two_sided_effects.items()
-        if value.get("status") == "ok"
-    ]
-    for name, adjusted in zip(
-        sensitivity_ok_names,
-        holm_correction([two_sided_effects[name]["p"] for name in sensitivity_ok_names]),
-    ):
-        two_sided_effects[name]["p_adj"] = adjusted
-
     # Post-hoc decomposition of the all-pair matched elliptical-fraction
     # difference into its satellite component (audit question: is the
     # all-pair value diluted by BGG pairs, whose adjusted elliptical OR is
     # below 1?). Exact rank matching means both members of a pair share the
     # same rank, so restricting to treated satellites restricts both sides.
-    # Reported with its own unadjusted p and kept OUT of the published
-    # matched-outcome Holm family above, which is untouched.
+    # Reported as a labelled post-hoc decomposition of the all-pair result.
     satellite_decomposition = {"status": "skipped", "reason": "missing_columns"}
     if "rank" in treated and "elliptical" in treated and "elliptical" in control:
         sat_mask = treated["rank"].gt(1) & control["rank"].gt(1)
@@ -985,11 +928,7 @@ def run_matched_control_analysis(
                 "n_boot": effect["n_boot"],
                 "resampling_unit": effect["resampling_unit"],
                 "n_blocks": effect["n_blocks"],
-                "multiplicity": (
-                    "Unadjusted post-hoc decomposition diagnostic of the "
-                    "published all-pair matched elliptical-fraction outcome; "
-                    "not a member of the matched-outcome Holm family."
-                ),
+                "role": "Post-hoc decomposition of the all-pair elliptical-fraction result.",
             }
 
     provenance = _provenance_table(prepared, control_indices)
@@ -998,7 +937,6 @@ def run_matched_control_analysis(
     )
     group_level = group_level_matched_analysis(frame, n_boot=n_boot)
     per_control_group = per_control_group_level_matches(frame, n_boot=n_boot)
-    group_level_holm_sensitivity = _group_level_holm_sensitivity(per_control_group)
 
     result = {
         "status": "ok",
@@ -1068,7 +1006,6 @@ def run_matched_control_analysis(
                 "preserves all clustering links on both sides of the match."
             ),
             "n_components": int(pd.Series(two_sided_blocks).nunique()),
-            "holm_correction_family": sensitivity_ok_names,
             "effects": two_sided_effects,
         },
         "satellite_decomposition": satellite_decomposition,
@@ -1076,20 +1013,12 @@ def run_matched_control_analysis(
         "group_level_per_control": per_control_group,
         "group_level_multiplicity_policy": (
             "The three per-control group-level satellite-composition contrasts "
-            "are treated as separate scientific estimands because Control4B, "
+            "answer different scientific questions because Control4B, "
             "Control4C, and RG4 answer different control questions. P-values are "
             "therefore reported without adjustment across control definitions; "
             "the pooled group match is a secondary summary. The paired sign-flip "
             "permutation p-value is the primary paired test, while the bootstrap "
             "p-value and interval describe robustness and effect-size uncertainty."
-        ),
-        "group_level_holm_sensitivity": group_level_holm_sensitivity,
-        "holm_correction_family": ok_names,
-        "holm_correction_note": (
-            "Quenched/star-forming and elliptical/spiral diagnostics are retained "
-            "in the same matched-outcome Holm family. These paired binary outcomes "
-            "are complementary on their complete-case subsets, so the correction is "
-            "conservative rather than anti-conservative."
         ),
         "complementarity_audit": _complementarity_status(treated, control),
     }

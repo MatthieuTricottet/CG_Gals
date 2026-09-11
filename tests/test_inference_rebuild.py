@@ -143,7 +143,7 @@ def test_group_level_analysis_reports_counts():
     assert ok_per_control
 
 
-def test_primary_contrasts_fit_three_families():
+def test_primary_contrasts_fit_three_control_specific_comparisons():
     frame = add_matched_outcome_columns(synthetic_size_frame())
     result = run_primary_contrasts(frame)
     assert result["status"] == "ok"
@@ -157,5 +157,5 @@ def test_primary_contrasts_fit_three_families():
         ]
         assert ok_models, "every contrast should fit at least one model"
         for model in ok_models:
-            if model.get("cg4_p_adj") is not None and model.get("cg4_p") is not None:
-                assert model["cg4_p_adj"] >= model["cg4_p"]
+            assert "cg4_p_adj" not in model
+            assert model.get("cg4_p") is not None

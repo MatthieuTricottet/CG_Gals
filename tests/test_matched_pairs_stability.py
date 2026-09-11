@@ -74,7 +74,6 @@ def test_matched_controls_return_dict_unchanged_by_refactor():
             "group_level",
             "group_level_per_control",
             "group_level_multiplicity_policy",
-            "group_level_holm_sensitivity",
             "median_match_distance",
         "balance",
         "max_abs_smd_before",
@@ -83,16 +82,12 @@ def test_matched_controls_return_dict_unchanged_by_refactor():
         "control_host_dependence_audit",
         "two_sided_cluster_sensitivity",
         "satellite_decomposition",
-        "holm_correction_family",
-        "holm_correction_note",
         "complementarity_audit",
     }
     assert set(first.keys()) == expected_keys
     assert set(first["effects"].keys()) == {
         "quenched_fraction",
-        "starforming_fraction",
         "elliptical_fraction",
-        "spiral_fraction",
         "residual_sSFR_starforming",
         "colour_residual_u_minus_r",
     }

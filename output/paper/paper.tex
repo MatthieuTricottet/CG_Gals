@@ -1,7 +1,7 @@
 % =====================================================================
 % RESTRUCTURED FOR THE 12-PAGE A&A FREE LIMIT (2026-07-17)
-% Main text spine: complementary morphology estimands.
-%   MOVED to appendices: pooled model family + fig (App F), galaxy-level
+% Main text spine: complementary morphology comparisons.
+%   MOVED to appendices: pooled models + fig (App F), galaxy-level
 %     matching details/figs (App F), Sect. 4 environmental diagnostics
 %     (App E), full colour analysis (App E), SFMS details (App D),
 %     extended size diagnostics (App G), selection diagnostics (App F),
@@ -11,12 +11,11 @@
 %   CUT outright (resurrect from git if wanted): Tables 3-5 (medians),
 %     fig galaxies_morph_sfr, fig Dom_vs_NonDom_XOR, Table 9
 %     (result hierarchy; replaced by tab:morph_robustness).
-%   NEW: tab:morph_robustness
-%     (Sect. 3.5), estimand-resolution text (Sect. 4.1, Conclusion),
-%     fixed-Holm-family statement (Sect. 2.5).
+%   NEW: tab:morph_robustness and a science-led synthesis of the
+%     morphology hierarchy (Sect. 4.1, Conclusion).
 %   Search "% BUDGET:" for toggles if the compile lands over/under.
-%   All Jinja variable keys unchanged; verdict prose gated on the same
-%   data fields as before wherever feasible.
+%   Verdict prose is gated on the corresponding analysis fields wherever
+%   feasible.
 % =====================================================================
 \documentclass{aa}
 %
@@ -158,14 +157,13 @@
   \abstract
   {Compact groups combine high projected densities with low velocity dispersions, but many are embedded in larger structures. Their significance depends on whether their galaxies differ from comparable regular-group members, not only from field galaxies.}
   {We test whether galaxies in compact groups of four members (\CG) remain special against regular groups of four members (\RG), the four brightest eligible members of regular groups (\CB), and projected compact cores formed by the brightest group galaxy and its three nearest projected companions (\CC).}
-  {From previous samples, we retain 62 non-split \CG{} systems. We combine Galaxy Zoo~1 vote fractions, Sloan Digital Sky Survey stellar masses and specific star-formation rates, optical colours, emission-line diagnostics, and seeing-corrected half-light radii. Inference uses per-control adjusted galaxy-level models, galaxy-level matching, group-level satellite-composition matching, and within-host stratified comparisons.}
-  {The main residual signal is morphological and graded by control construction. \CG{} galaxies, especially satellites, have higher elliptical-vote and lower spiral-vote fractions than regular-group analogues. The adjusted individual-galaxy excess is strongest against \CB{} and \RG{} and smallest against \CC{}. The matched satellite-composition contrast is positive against all controls, clearest against \CB{} and \RG{} and weakest against \CC{}, with the same hierarchy under satellite-mass balancing. No additional within-host excess is detected after conditioning on host-centric radius. The morphology result is stable to vote-threshold, vote-fraction, S\'ersic-index, and close-pair checks, and is attenuated by a projected pairwise tidal-density proxy. Star-formation, colour, active-galactic-nucleus, magnitude-gap, \(\mathrm{H}\alpha\), and fixed-mass size diagnostics show no comparably robust \CG{} offsets.}
+  {From previous samples, we retain 62 non-split \CG{} systems. We combine Galaxy Zoo~1 vote fractions, Sloan Digital Sky Survey stellar masses and specific star-formation rates, optical colours, emission-line diagnostics, and seeing-corrected half-light radii. We compare each control separately with covariate-adjusted models, galaxy- and group-level matching, and within-host analyses.}
+  {The clearest difference is morphological. \CG{} galaxies, especially satellites, have higher elliptical-vote and lower spiral-vote fractions than regular-group analogues. After accounting for galaxy and group properties, the excess is strongest against \CB{} and \RG{} and smallest against \CC{}. Matched \CG{} quartets likewise contain more elliptical-vote satellites than their controls, most clearly against \CB{} and \RG{} and least clearly against \CC{}; adding satellite mass to the match preserves this ordering. No additional within-host excess is detected after accounting for host-centric radius. The morphology result is stable to vote-threshold, vote-fraction, S\'ersic-index, and close-pair checks, and is attenuated by a projected pairwise tidal-density proxy. Star-formation, colour, active-galactic-nucleus, magnitude-gap, \(\mathrm{H}\alpha\), and fixed-mass size diagnostics show no comparably robust \CG{} offsets.}
   {\CG{} systems therefore host a population shifted towards early-type-like morphologies, consistent with accumulated transformation in dense group cores and/or preprocessing, without establishing a present-day quenching mechanism unique to compact groups.}
 
    \keywords{galaxies: groups: general -- galaxies: evolution -- galaxies: interactions -- galaxies: star formation -- galaxies: elliptical and lenticular, cD -- methods: statistical}
 
    \maketitle
-
 
 
 
@@ -211,23 +209,23 @@ As a secondary size measure we use the SDSS Petrosian radii \texttt{petroR50\_r}
 
 \subsection{Statistical design}\label{sec:stats}
 
-Descriptive baseline comparisons use Fisher or Barnard exact tests for two-sample categorical tables, and rank-sum or bootstrap comparisons for distributional and median differences. Spearman and Pearson coefficients are used only as diagnostics of monotonic or linear trends; when the coefficients are small, we interpret them as weak even if the p-values are formally small.
+Descriptive baseline comparisons use two-sided Fisher exact tests for ordinary $2\times2$ categorical tables, and rank-sum or bootstrap comparisons for distributions and median differences. Spearman and Pearson coefficients are used only as diagnostics of monotonic or linear trends; small coefficients are interpreted as weak even when precisely estimated.
 
-The primary inference combines four complementary, non-hierarchical estimands: (i) per-control covariate-adjusted galaxy-level associations; (ii) one-to-one matched individual-galaxy contrasts; (iii) matched group-level differences in satellite composition; and (iv) within-host comparisons of \CG{} members with non-\CG{} co-members of the same host group. These analyses differ in statistical unit, conditioning set, outcome, effect scale, and interpretation.
+We organize the inference around a single astrophysical question: after accounting for stellar mass, redshift, galaxy rank, and group-scale differences, do compact groups retain a distinct galaxy population? Separate \CB{}, \CC{}, and \RG{} comparisons reveal how the answer changes from luminous ordinary-group members to projected cores and true four-member groups. Galaxy-level models establish the adjusted population contrast; group-level matching tests whether whole quartets contain a different satellite mix; and within-host models ask whether compact-subconfiguration members differ from their non-compact co-members. Binary complements are represented once: elliptical versus spiral among usable Galaxy Zoo classifications, and quenched versus star-forming among galaxies with valid sSFR.
 
 Throughout, the independence unit for inferential contrasts among grouped catalogues is the \emph{physical} group: standard errors are clustered by Lim group (unifying the overlapping control definitions, with \CG{} systems assigned to their host Lim group), and resampling of grouped contrasts is blocked by physical group or matched group/pair block, since the four galaxies of one group are not independent observations. Pooled models across the three controls are reported only as secondary summaries, after deduplicating the overlapping control samples to one row per physical galaxy (Appendix~\ref{app:pooled_models}). Paired sign-flip permutation p-values use add-one tail counts, and bootstrap sign-crossing p-values use \(2\min[(k_{\le 0}+1)/(B+1),(k_{\ge 0}+1)/(B+1)]\), capped at unity; displayed p-values are floored at \(10^{-4}\). Purely descriptive reference-sample diagnostics report their own unit in the relevant appendix.
 
 
 
-Throughout, the velocity dispersion \(\sigma_v\) that enters models and matching is the quartet-level gapper estimate \citep{Wainer&Thissen76} on the four selected members' redshifts, converted as \(c\,\sigma_z/(1+\bar z)\) --- for \emph{all} samples, including \CB{} and \CC{} quartets embedded in richer hosts, whose \(\sigma_v\) therefore describes the selected quartet rather than the host halo (this is how the spurious Lim 3688 quartets of Sect.~\ref{sec:samples} reach \({\simeq}2000\kms\)). With four tracers this estimator is intrinsically noisy: in a Gaussian Monte Carlo of \(10^5\) quartets, \(\sigma_{\rm gapper}/\sigma_{\rm true}\) has median 0.96 with a 16--84\% range of 0.57--1.42. Candidate covariates enter an adjusted model when non-missing for at least 65\% of that model's frame (matching variables require 70\%); in practice \(\sigma_v\) is complete for every quartet and always enters, the group-luminosity, stellar-mass, redshift, and rank covariates are likewise complete, and no harmonised group-mass covariate is available (Appendix~\ref{app:selection}). Because \(\sigma_v\) is noisy, every family that uses it --- the per-control adjusted families, the pooled models, the galaxy-level propensity model, and the group-level matching --- is also refit without it as a labelled sensitivity; no Holm-significant conclusion changes (Sects.~\ref{sec:primary_contrasts}, \ref{sec:matched}).
+Throughout, the velocity dispersion \(\sigma_v\) that enters models and matching is the quartet-level gapper estimate \citep{Wainer&Thissen76} on the four selected members' redshifts, converted as \(c\,\sigma_z/(1+\bar z)\) --- for \emph{all} samples, including \CB{} and \CC{} quartets embedded in richer hosts, whose \(\sigma_v\) therefore describes the selected quartet rather than the host halo (this is how the spurious Lim 3688 quartets of Sect.~\ref{sec:samples} reach \({\simeq}2000\kms\)). With four tracers this estimator is intrinsically noisy: in a Gaussian Monte Carlo of \(10^5\) quartets, \(\sigma_{\rm gapper}/\sigma_{\rm true}\) has median 0.96 with a 16--84\% range of 0.57--1.42. Candidate covariates enter an adjusted model when non-missing for at least 65\% of that model's frame (matching variables require 70\%); in practice \(\sigma_v\) is complete for every quartet and always enters, the group-luminosity, stellar-mass, redshift, and rank covariates are likewise complete, and no harmonised group-mass covariate is available (Appendix~\ref{app:selection}). Because \(\sigma_v\) is noisy, all analyses that use it are repeated without it; the scientific conclusions are unchanged (Sects.~\ref{sec:primary_contrasts}, \ref{sec:matched}).
 
 
-Holm or Benjamini--Hochberg corrections are applied within pre-defined families of related tests. These families are defined over the full set of computed diagnostics -- including those reported only in the appendices -- and are \emph{not} recomputed over the subset of results shown in the main text. For the per-control group-level satellite-composition matches, the three control definitions are treated as separate scientific estimands because \CB{}, \CC{}, and \RG{} answer different control questions; their p-values are therefore not adjusted across control definitions, and the pooled match is a secondary summary rather than a fourth confirmatory comparison. The paired sign-flip permutation p-value is the primary paired test for these group-level matches; the bootstrap sign-crossing p-value and interval are used for robustness and effect-size uncertainty. A Holm sensitivity calculation for the three per-control bootstrap and permutation p-value sets is reported in Appendix~\ref{app:pooled_models}. Colours, AGN-like fractions, \(\mathrm{H}\alpha\) equivalent widths, magnitude gaps, crossing-time trends, projected phase space, and the pairwise tidal index are secondary diagnostics: the conclusions below rely on signals that survive the adjusted, matched, and within-host analyses, not on isolated exploratory tests.
+Each control sample is analysed as a separate physical comparison, while elliptical/spiral and quenched/star-forming are each represented by one binary outcome. We report ordinary two-sided p-values for the planned morphology, star-formation, matching, host, and size analyses, together with effect sizes and confidence intervals. Multiplicity control is reserved for broad exploratory batteries: Holm adjustment for the colour and measurement-availability screens and for the magnitude-gap batteries, and Benjamini--Hochberg false-discovery-rate control for the larger dominance and morphology--environment screens. The paired sign-flip permutation p-value is used for group-level matches; bootstrap intervals quantify effect-size uncertainty. Colours, AGN-like fractions, \(\mathrm{H}\alpha\) equivalent widths, magnitude gaps, crossing-time trends, projected phase space, and the pairwise tidal index remain secondary diagnostics.
 
 \section{Results}\label{sec:results}
 \subsection{Raw population contrasts}\label{sec:raw}
 
-The sSFR status and Galaxy Zoo morphology mix of each sample are shown in Tables~\ref{tab:sSFR_status} and \ref{tab:morphologies}. For the morphologies, Barnard's two-sided exact tests are computed among rows with finite Galaxy Zoo vote fractions and give p-values of \(p = 3.2\times 10^{-4}\) for ellipticals and \(p = 1.5\times 10^{-3}\) for spirals versus the \CB{} sample, \(p = 5.1\times 10^{-4}\) and \(p = 6.1\times 10^{-3}\) versus \CC{}, and \(p<10^{-4}\) and \(p<10^{-4}\) versus \RG{}. The galaxies in \CG{} systems, which we identified as frequent cores of eligible regular groups in \citet{Tricottet+25}, show a clear raw excess of elliptical classifications and a deficit of spiral classifications. Restricted to BGGs with finite Galaxy Zoo vote fractions, \CG{} BGGs have a higher elliptical fraction (66.7\%) than \RG{} BGGs (42.9\%); the p-values obtained with two-sided Fisher exact test are 1.00 against \CB, 1.00 against \CC{} and 0.03 against \RG. Restricted instead to star-forming galaxies with elliptical or spiral vote classes, the elliptical/spiral mix of \CG{} is statistically consistent with that of every control (Barnard two-sided exact test: \(p = 0.283\) against \CB, \(p = 0.531\) against \CC, and \(p = 0.186\) against \RG): we detect neither an excess nor a deficit of \emph{star-forming} elliptical galaxies, so the raw morphology excess is not carried by star-forming ellipticals.
+The sSFR status and Galaxy Zoo morphology mix of each sample are shown in Tables~\ref{tab:sSFR_status} and \ref{tab:morphologies}. Among galaxies with a usable elliptical or spiral vote classification, a single two-sided Fisher test of the E/Sp mix gives \(p = 6.8\times 10^{-4}\) against \CB{}, \(p = 1.9\times 10^{-3}\) against \CC{}, and \(p<10^{-4}\) against \RG{}. Thus \CG{} galaxies show a clear early-type-like shift, with more elliptical-vote and fewer spiral-vote classifications. The usable comparison contains 210 \CG{} galaxies; 38 rows with uncertain or missing Galaxy Zoo classifications are excluded rather than assigned to either outcome. Among usable BGG classifications, the elliptical fraction is 67.9\% in \CG{} and 44.7\% in \RG{}; the Fisher p-values are 1.00, 1.00, and 0.03 against \CB{}, \CC{}, and \RG{}. Restricted to star-forming galaxies with usable E/Sp classifications, the mix is compatible with every control (two-sided Fisher exact test: \(p = 0.332\), \(p = 0.468\), and \(p = 0.226\), same control order). The raw morphology excess is therefore not carried by star-forming ellipticals.
 
 \begin{table}
     \centering
@@ -291,7 +289,7 @@ The sSFR status and Galaxy Zoo morphology mix of each sample are shown in Tables
 
 \begin{table}
     \centering
-    \caption{Number of galaxies in each Galaxy Zoo vote-fraction morphology proxy for each sample. Percentages are quoted with respect to each sample's final row count. The No GZ column counts rows without finite Galaxy Zoo vote fractions after merging and is separated from the finite-vote uncertain class. As in Table~\ref{tab:sSFR_status}, the SDSS non-AGN reference extends to substantially fainter absolute magnitudes than the \CG{} sample and is not a control sample.}
+    \caption{Number of galaxies in each Galaxy Zoo vote-fraction morphology proxy for each sample. Percentages are quoted with respect to each sample's final row count; the inferential E/Sp comparison instead conditions on the usable E/Sp subset. The No GZ column counts rows without finite Galaxy Zoo vote fractions after merging and is separated from the finite-vote uncertain class. As in Table~\ref{tab:sSFR_status}, the SDSS non-AGN reference extends to substantially fainter absolute magnitudes than the \CG{} sample and is not a control sample.}
     \label{tab:morphologies}
     \scriptsize
     \tabcolsep=1pt
@@ -315,30 +313,30 @@ For the star-forming subset, we fit the star-forming main sequence with polynomi
 
 
 
-\subsection{Per-control adjusted contrasts (primary)}\label{sec:primary_contrasts}
+\subsection{Morphology and star formation at fixed galaxy properties}\label{sec:primary_contrasts}
 
-The three control samples answer different questions, so our primary galaxy-level inference fits \CG{} against each control \emph{separately}: against \CB{} (is the \CG{} population special compared with the luminous population of eligible ordinary groups?), against \CC{} (compared with BGG-centred projected cores?), and against \RG{} (compared with true four-member ordinary groups?). Each contrast fits the same family of adjusted binomial models (stellar mass, redshift, rank, group luminosity, and velocity dispersion; the completeness rule of Sect.~\ref{sec:stats} retains all five for every contrast), with standard errors clustered by \emph{physical} group: the Lim group for controls, and for \CG{} systems their host Lim group where one exists, so that the same physical system never enters as more than one cluster. Holm correction is applied within each contrast across its model family.
-
-
-
-
-
-
-Against \CB{}, the elliptical odds ratio is \(2.14\) (95\% CI \([1.58, 2.90]\); Holm-corrected \(p<10^{-4}\)), and the quenched odds ratio is \(1.80\) (Holm-corrected \(p = 0.003\)).
+The three control samples answer different questions, so we fit \CG{} against each control \emph{separately}: \CB{} represents the luminous population of eligible ordinary groups, \CC{} their BGG-centred projected cores, and \RG{} true four-member ordinary groups. Each contrast uses the same covariate set (stellar mass, redshift, rank, group luminosity, and velocity dispersion) and clusters standard errors by physical group. We model one outcome from each binary pair: elliptical rather than spiral morphology among usable Galaxy Zoo classifications, and quenched rather than star-forming status among valid sSFR measurements.
 
 
 
 
 
 
-Against \CC{}, the elliptical odds ratio is \(1.67\) (95\% CI \([1.25, 2.24]\); Holm-corrected \(p = 0.004\)), and the quenched odds ratio is \(1.25\) (Holm-corrected \(p = 0.346\)).
+Against \CB{}, the elliptical odds ratio is \(2.14\) (95\% CI \([1.58, 2.90]\); \(p<10^{-4}\)), and the quenched odds ratio is \(1.80\) (95\% CI \([1.26, 2.58]\); \(p = 0.001\)).
 
 
 
 
 
 
-Against \RG{}, the elliptical odds ratio is \(2.81\) (95\% CI \([1.79, 4.38]\); Holm-corrected \(p<10^{-4}\)), and the quenched odds ratio is \(1.40\) (Holm-corrected \(p = 0.476\)).
+Against \CC{}, the elliptical odds ratio is \(1.67\) (95\% CI \([1.25, 2.24]\); \(p = 5.9\times 10^{-4}\)), and the quenched odds ratio is \(1.25\) (95\% CI \([0.91, 1.71]\); \(p = 0.173\)).
+
+
+
+
+
+
+Against \RG{}, the elliptical odds ratio is \(2.81\) (95\% CI \([1.79, 4.38]\); \(p<10^{-4}\)), and the quenched odds ratio is \(1.40\) (95\% CI \([0.80, 2.47]\); \(p = 0.238\)).
 
 
 
@@ -348,7 +346,7 @@ The gradation across the contrasts is itself informative, but it is not by itsel
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/fig_primary_contrasts.pdf}
-    \caption{Adjusted \CG{} odds ratios from the three separate per-control contrasts (colour-coded by control sample) for the all-member elliptical, spiral and quenched outcomes. Bars show 95\% confidence intervals; the vertical line marks equal odds.}
+    \caption{Adjusted \CG{} odds ratios from the three separate per-control contrasts (colour-coded by control sample) for the all-member elliptical and quenched outcomes. Bars show 95\% confidence intervals; the vertical line marks equal odds.}
     \label{fig:primary_contrasts}
 \end{figure}
 
@@ -359,21 +357,20 @@ The gradation across the contrasts is itself informative, but it is not by itsel
 
 
 
-
-As a compact secondary summary, a pooled model over the deduplicated control catalogues (one row per physical galaxy, cluster-robust by physical Lim group; full family in Appendix~\ref{app:pooled_models}) gives the same qualitative picture: the pooled elliptical odds ratio is \(1.77\) (Holm-corrected \(p = 8.5\times 10^{-4}\)), and the pooled quenched odds ratio is \(1.35\) (Holm-corrected \(p = 0.136\)). The adjusted morphology signal is primarily carried by satellites rather than BGGs: the satellite-only models give an elliptical odds ratio of \(2.08\) and a spiral odds ratio of \(0.48\), whereas the BGG elliptical coefficient is not detected after adjustment (OR \(0.78\); Holm-corrected \(p = 0.464\)) (Fig.~\ref{fig:specialness_logistic}).
+As a compact secondary summary, a pooled model over the deduplicated control catalogues (one row per physical galaxy, cluster-robust by physical Lim group; Appendix~\ref{app:pooled_models}) gives the same qualitative picture: the pooled elliptical odds ratio is \(1.77\) (\(p = 1.4\times 10^{-4}\)), and the pooled quenched odds ratio is \(1.35\) (\(p = 0.068\)). The adjusted morphology signal is primarily carried by satellites: their elliptical odds ratio is \(2.08\) (95\% CI \([1.51, 2.88]\); \(p<10^{-4}\)), whereas the BGG estimate is \(0.78\) (95\% CI \([0.39, 1.53]\); \(p = 0.464\)) (Fig.~\ref{fig:specialness_logistic}).
 
 
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{figures/fig_specialness_logistic_coefficients.pdf}
-    \caption{Adjusted \CG{} odds ratios for star-formation and morphology diagnostics from the pooled secondary models, including all-galaxy, satellite-only, and BGG-only morphology rows. Bars show 95\% confidence intervals; the vertical line marks equal odds.}
+    \caption{Adjusted \CG{} odds ratios for the unique star-formation and morphology outcomes in the pooled secondary models, including all-galaxy, satellite-only, and BGG-only rows. Bars show 95\% confidence intervals; the vertical line marks equal odds.}
     \label{fig:specialness_logistic}
 \end{figure}
 
 
 
 
-As announced in Sect.~\ref{sec:stats}, all per-control and pooled families were refit without the noisy \(\sigma_v\) covariate (identical samples, clustering, and Holm families; a labelled sensitivity); no model changes Holm-level significance in either direction, and the elliptical odds ratios move by less than their standard errors.
+As announced in Sect.~\ref{sec:stats}, the per-control and pooled models were refit without the noisy \(\sigma_v\) covariate on identical samples and with identical clustering. The elliptical odds ratios move by less than their standard errors and the scientific interpretation is unchanged.
 
 
 
@@ -382,9 +379,7 @@ As announced in Sect.~\ref{sec:stats}, all per-control and pooled families were 
 
 
 
-
-
-A host-BGG alignment audit supports the satellite interpretation: 56 of 62 non-split \CG{} systems have the same quartet and Lim-host BGG objid, the 6 differences are Predominant systems, the Isolated equalities are trivial quartet=host cases, and all 186 quartet-rank \CG{} satellites are Lim-host satellites. Restricting \CG{} to the 56 BGG-aligned systems leaves all six labelled satellite elliptical/spiral sensitivity contrasts stable; against \CC{} the aligned odds ratios are \(1.98\) and \(0.51\).
+A host-BGG alignment audit supports the satellite interpretation: 56 of 62 non-split \CG{} systems have the same quartet and Lim-host BGG objid, the 6 differences are Predominant systems, the Isolated equalities are trivial quartet=host cases, and all 186 quartet-rank \CG{} satellites are Lim-host satellites. Restricting \CG{} to the 56 BGG-aligned systems leaves the three satellite elliptical contrasts stable; against \CC{} the aligned odds ratio is \(1.98\).
 
 
 
@@ -394,12 +389,12 @@ A host-BGG alignment audit supports the satellite interpretation: 56 of 62 non-s
 
 
 
-\paragraph{Group-level matched satellite-composition contrast (primary).} Because the four galaxies of a compact group are not independent, the group-level matched estimand treats each quartet as the statistical unit: for each group we count its elliptical-vote satellites (\(N_{\rm ell,sat} \in \{0,1,2,3\}\)) and match \CG{} groups one-to-one to control groups on redshift, BGG stellar mass, total quartet luminosity, and velocity dispersion (propensity caliper 0.2\,SD of the logit). We run the matching three times with the pool restricted to a single control type (one quartet per physical Lim group within each type), and once with the pool drawn from all three types combined. For the per-control matches, the paired sign-flip permutation p-value is the primary p-value; the bootstrap sign-crossing probability and bootstrap interval quantify robustness and effect-size uncertainty.
+\paragraph{Satellite composition of matched quartets.} Because the four galaxies of a compact group are not independent, we treat each quartet as the statistical unit: for each group we count its elliptical-vote satellites (\(N_{\rm ell,sat} \in \{0,1,2,3\}\)) and match \CG{} groups one-to-one to controls on redshift, BGG stellar mass, total quartet luminosity, and velocity dispersion (propensity caliper 0.2\,SD of the logit). We repeat the match separately for each control type and report paired sign-flip permutation p-values with group-bootstrap confidence intervals. A deduplicated pooled match is retained only as a compact secondary summary.
 
 
 The pooled control match covers 54 \CG{} groups and 633 control groups, yielding 54 matched pairs, drawn predominantly from \CB{} (46 Control4B, 6 RG4, 2 Control4C, reflecting the pool composition after deduplication). This pooled match is a secondary summary because the control catalogues overlap. Its elliptical-vote satellite fraction difference is \(\Delta = 0.167\) (95\% bootstrap interval \([0.040, 0.290]\); permutation \(p = 0.016\), bootstrap \(p = 0.010\); \(B = 9999\)).
 
-The per-control matches (Table~\ref{tab:group_match_per_control}) give a consistent picture: the \CG{}-minus-control fraction difference is positive against all three control types; without cross-control adjustment it is significant against \CB{} and \RG{} and marginal against \CC{}, while under the Holm sensitivity of Table~\ref{tab:group_match_holm_sensitivity} \CB{} remains significant in both p-value definitions, \RG{} is significant by bootstrap and marginal by permutation, and \CC{} remains marginal. \CC{} is the physically most stringent comparison, since its projected-core definition most closely mirrors the \CG{} compactness criterion; against \CC{}, the match yields 54 pairs with \(\Delta = 0.114\) (95\% CI \([-0.015, 0.238]\); primary permutation \(p = 0.080\), bootstrap \(p = 0.082\); \(0.080\) and \(0.082\) under Holm across the three control definitions, Table~\ref{tab:group_match_holm_sensitivity}). A post-hoc audit of these matches, which condition on group covariates but never on satellite properties, shows the matched pairs are close to balanced in mean satellite stellar mass: the paired \CG{}-minus-control difference in mean satellite \(\log M_\star\) is \(0.03\) dex against \CC{} (95\% CI \([-0.08, 0.13]\); standardized mean difference \(0.09\)), \(0.00\) dex against \CB{}, and \(-0.01\) dex against \RG{}. Repeating each match with mean satellite stellar mass added to the matching covariates estimates a \emph{different quantity} --- satellite composition at matched satellite mass rather than at matched group scale --- and the two are complementary estimands, not ordered levels of bias correction, because present-day satellite mass may itself encode the accumulated environmental history whose imprint is under test (Sect.~\ref{sec:morph_estimands}). Under the mass-balanced estimand the \CB{} and \RG{} contrasts strengthen (\(\Delta = 0.198\) and \(0.256\); permutation \(p = 0.003\) and \(p = 3\times 10^{-4}\)) while the already marginal \CC{} contrast weakens (\(\Delta = 0.086\), permutation \(p = 0.202\)); both estimands agree that the composition contrast is clear against \CB{} and \RG{} and weakest against \CC{}. The near-balance in satellite mass is a construction property rather than an accident of the matching: within the shared \(\Delta m \le 3\) window, the distance-ranked \CC{} satellites sample the eligible-satellite magnitude-gap distribution of their parent groups nearly democratically (KS \(D = 0.04\)), as do the \CG{} satellites themselves (\(D = 0.06\), \(p = 0.44\)), whereas the brightness-ranked \CB{} selection is strongly weighted toward the bright end (\(D = 0.30\), mean satellite \(\log M_\star\) higher by 0.21 dex than in \CG{}). The galaxy-level match below estimates a different individual-galaxy contrast rather than a weaker version of this group-composition result.
+The per-control matches (Table~\ref{tab:group_match_per_control}) give a consistent ordering: the \CG{}-minus-control elliptical-satellite fraction is positive against every control, clearest against \CB{} and \RG{}, and weakest against \CC{}. The physically most stringent \CC{} match yields 54 pairs with \(\Delta = 0.114\) (95\% CI \([-0.015, 0.238]\); permutation \(p = 0.080\)). The pairs are already close to balanced in mean satellite stellar mass (paired differences of \(0.00\), \(0.03\), and \(-0.01\) dex against \CB{}, \CC{}, and \RG{}). Adding satellite mass to the match preserves the same hierarchy: \(\Delta = 0.198\), \(0.086\), and \(0.256\), respectively. Within the common \(\Delta m \le 3\) window, distance-ranked \CC{} satellites sample their parents' eligible satellite distribution much more democratically than brightness-ranked \CB{} satellites (KS \(D = 0.04\) and 0.30), which helps explain why \CC{} is the closest ordinary-group analogue.
 
 
 
@@ -410,7 +405,7 @@ Because \(\sigma_v\) is a noisy matching covariate (Sect.~\ref{sec:stats}), all 
 
 \begin{table}[ht]
 \centering
-\caption{Per-control group-level matched satellite-composition contrasts. \(\Delta\) is the matched mean difference in elliptical-vote satellite fraction (\CG{} minus control). The paired sign-flip permutation p-value is primary; the bootstrap p-value is the add-one sign-crossing probability used as a robustness check, with \(B = 9999\) resamples. P-values are not adjusted across the three control definitions; Appendix~\ref{app:pooled_models} reports the Holm sensitivity. The pooled row is secondary. Pair counts: 54 \CG{} groups have complete matching covariates and classified satellites; against \CB{} and \CC{} (630 and 632 available control groups) every \CG{} group finds a within-caliper partner, whereas against \RG{} only 52 control groups exist for the 1:1 match without replacement, and the propensity caliper retains 28 pairs on common support.}
+\caption{Per-control group-level matched satellite-composition contrasts. \(\Delta\) is the matched mean difference in elliptical-vote satellite fraction (\CG{} minus control). The paired sign-flip permutation p-value is the inferential test; the bootstrap p-value is an add-one sign-crossing diagnostic, with \(B = 9999\) resamples. The pooled row is secondary. Pair counts: 54 \CG{} groups have complete matching covariates and classified satellites; against \CB{} and \CC{} (630 and 632 available control groups) every \CG{} group finds a within-caliper partner, whereas the \RG{} pool retains 28 pairs on common support.}
 \label{tab:group_match_per_control}
 \small
 \tabcolsep=3pt
@@ -442,19 +437,13 @@ Pooled & 54 & \(0.167\) & \([0.040, 0.290]\) & \(0.016\) / \(0.010\) \\
 
 
 
-\paragraph{Galaxy-level matched contrast (secondary).} We matched 234 of the 248 available \CG{} galaxies one-to-one to 234 ordinary-group galaxies without replacement, requiring common propensity-score support, a 0.2-standard-deviation caliper and exact rank strata; the control pool is first deduplicated by SDSS objid, no control may share an objid with a \CG{} galaxy, and no control galaxy is used more than once. The propensity model uses \(\log M_\star\), redshift, rank, \(\log L_\mathrm{group}\), and \(\sigma_v\); projected distance is retained as a phase-space and interaction diagnostic rather than matched away, because it partly defines compactness and has limited overlap. The largest absolute standardized mean difference changed from 0.37 before matching to 0.08 afterwards; all post-match covariate SMDs are below the conventional 0.1 threshold, with the maximum carried by velocity dispersion. Matched differences are quoted with group-blocked bootstrap intervals: pairs are resampled by the treated galaxy's compact group (never galaxy by galaxy), with \(B = 9999\) resamples and add-one empirical p-values. Pool composition, provenance, and balance details are given in Appendix~\ref{app:pooled_models}.
+\paragraph{Matched individual galaxies.} We matched 234 of the 248 available \CG{} galaxies one-to-one to 234 ordinary-group galaxies without replacement, requiring common propensity-score support, a 0.2-standard-deviation caliper, and exact rank strata. The propensity model uses \(\log M_\star\), redshift, rank, \(\log L_\mathrm{group}\), and \(\sigma_v\). The maximum absolute covariate standardized mean difference falls from 0.37 to 0.08. Confidence intervals and p-values come from a bootstrap blocked by the treated galaxy's compact group; pool provenance and balance are documented in Appendix~\ref{app:pooled_models}.
 
 
 
 
 
-The matched \CG{}-minus-control difference in elliptical fraction is \(0.139\), with 95\% bootstrap interval \([0.037, 0.240]\) and Holm-corrected \(p = 0.036\). Restricted to the satellite pairs --- a post-hoc decomposition of this all-pair outcome, reported without family adjustment --- the matched elliptical-fraction difference is \(0.192\) (95\% bootstrap interval \([0.067, 0.313]\); unadjusted \(p = 0.004\); 130 complete pairs). The matched quenched-fraction difference is \(0.031\) (\([-0.056, 0.122]\); Holm-corrected \(p = 1.000\)), so the matched data do not establish an enhanced quenched fraction after correction; the star-forming and spiral fractions are exact complements of these outcomes on their complete-case subsets and are reported in Appendix~\ref{app:pooled_models}. Among matched star-forming galaxies, the residual-sSFR difference is \(-0.147\) (\([-0.311, 0.008]\); \(p = 0.064\)).
-
-
-The matched-outcome Holm correction is intentionally conservative: quenched/star-forming and elliptical/spiral diagnostics are retained in the same family even though they are exact complements on their complete-case subsets. Using a non-redundant family would not weaken the morphology conclusion.
-
-
-The matched individual-galaxy comparison is therefore compatible with the adjusted models but less decisive for morphology than the group-composition estimand; the quenched and star-forming-fraction contrasts are more model-dependent.
+The matched \CG{}-minus-control difference in elliptical fraction is \(0.139\), with 95\% bootstrap interval \([0.037, 0.240]\) and \(p = 0.007\). For satellite pairs alone, the difference rises to \(0.192\) (95\% CI \([0.067, 0.313]\); \(p = 0.004\); 130 pairs), reinforcing the conclusion that satellites carry the morphology shift. The matched quenched-fraction difference is \(0.031\) (95\% CI \([-0.056, 0.122]\); \(p = 0.526\)), which does not establish an independent quenching excess. Among matched star-forming galaxies, the residual-sSFR difference is \(-0.147\) (\([-0.311, 0.008]\); \(p = 0.064\)).
 
 
 
@@ -468,17 +457,15 @@ For the Embedded and Predominant \CG{} systems, whose quartets live inside riche
 
 
 
-For the elliptical-vote outcome, the complete-case conditional-logit sample contains 791 galaxies in 53 host strata; the remaining design host has no usable Galaxy Zoo elliptical/spiral classification after the model complete-case filters. All 53 complete-case host strata are informative; no concordant strata are dropped. The elliptical-vote odds ratio for \CG{} membership is \(1.47\) (95\% CI \([0.92, 2.35]\); Holm-corrected \(p = 0.216\)), and the quenched odds ratio is \(0.75\) (Holm-corrected \(p = 0.269\); 915 complete cases in 54 host strata).
+For the elliptical-vote outcome, the complete-case conditional-logit sample contains 791 galaxies in 53 host strata; all complete-case host strata are informative. The elliptical-vote odds ratio for \CG{} membership is \(1.47\) (95\% CI \([0.92, 2.35]\); \(p = 0.108\)), and the quenched odds ratio is \(0.75\) (95\% CI \([0.45, 1.25]\); \(p = 0.269\); 915 complete cases).
 
- The FE-GLM yields a similar elliptical-vote point estimate but a smaller estimated uncertainty and nominal significance: OR \(1.57\) (95\% CI \([1.02, 2.43]\); nominal \(p = 0.041\), Holm \(p = 0.083\) under the same two-outcome family convention as the conditional logit, so the two estimators agree once the correction is applied like for like). We retain the conditional-logit estimator as primary because it conditions out the host-specific intercept directly.
-
-At fixed stellar mass, rank, and host-centric radius, no residual excess is detected for compact-subconfiguration membership \emph{within} a shared host under the primary conditional estimator. The confidence interval nevertheless permits a range of moderate effects, so this result does not establish equality. It is consistent with the per-control asymmetry of Sect.~\ref{sec:primary_contrasts}: the \CG{} excess appears more clearly against galaxies of \emph{other} groups than against co-members of the same host, pointing to dense projected-core location rather than compact-group membership alone.
-
+ The FE-GLM gives OR \(1.57\) (95\% CI \([1.02, 2.43]\); \(p = 0.041\)). Its smaller uncertainty makes this alternate estimator weak evidence for an excess, but the conditional-logit estimate is preferred because it directly conditions out the host intercept.
+At fixed stellar mass, rank, and host-centric radius, the preferred within-host estimator does not show a clear additional morphology excess for compact-subconfiguration membership. Its confidence interval still permits moderate effects. Together with the smaller \CG{}--\CC{} contrast, this points to dense projected-core location and host environment rather than a categorical effect of the compact-group label alone.
 
 
 
 
-The radius covariate defines the estimand: conditioning on projected host-centric radius asks whether \CG{} members differ from other members of the same host \emph{beyond their central location}. Refitting the identical complete-case sample and strata \emph{without} the radius term --- asking whether they differ \emph{including} location --- yields a strong elliptical excess: OR \(1.90\) (95\% CI \([1.23, 2.95]\); Holm \(p = 0.008\)) for the conditional logit and \(2.06\) (Holm \(p = 0.0013\)) for the FE-GLM, while the quenched outcome remains null in all four specifications (radius-free conditional-logit OR \(1.22\), \(p = 0.41\)). Under the local-density interpretation this is the expected pattern --- \CG{} members are preferentially the early types of the dense projected core, so the radius term absorbs the excess --- and the positive radius-free coefficient supports the location reading rather than contradicting the conditioned null.
+The radius covariate defines the question: conditioning on projected host-centric radius asks whether \CG{} members differ \emph{beyond their central location}. Without that term, the conditional-logit elliptical odds ratio rises to \(1.90\) (95\% CI \([1.23, 2.95]\); \(p = 0.004\)), with a similar direction from the FE-GLM, while the quenched outcome remains weak (radius-free conditional-logit OR \(1.22\); \(p = 0.412\)). This is the pattern expected if \CG{} galaxies preferentially occupy the early-type-rich central regions of their hosts.
 
 
 
@@ -501,7 +488,7 @@ Because Galaxy Zoo morphology is image-based and the adopted vote-fraction cut i
 
 
 
-After excluding galaxies whose nearest projected neighbour within the catalogue group lies within 55 arcsec (retaining 200 \CG{} and 2534 \CC{} galaxies), the \CG{} elliptical fraction \emph{rises} relative to the raw full-sample value in Table~\ref{tab:morphologies}, rather than falling, and the \CG{}--\CC{} contrast remains significant in this unadjusted diagnostic. This argues against the simplest interpretation that the elliptical excess is produced solely by crowding in the closest pairs. The close-neighbour flag is itself associated with elliptical-vote morphology (OR \(1.98\); \(p = 6.1\times 10^{-4}\)), so this test does not prove that Galaxy Zoo classifications are immune to crowding; it rules out the closest-pair artefact as the sole origin of the result.
+After excluding galaxies whose nearest projected neighbour within the catalogue group lies within 55 arcsec (retaining 200 \CG{} and 2534 \CC{} galaxies), the \CG{} elliptical fraction \emph{rises} relative to the raw full-sample value in Table~\ref{tab:morphologies}, rather than falling, and the \CG{}--\CC{} contrast remains clear in this unadjusted diagnostic. This argues against the simplest interpretation that the elliptical excess is produced solely by crowding in the closest pairs. The close-neighbour flag is itself associated with elliptical-vote morphology (OR \(1.98\); \(p = 6.1\times 10^{-4}\)), so this test does not prove that Galaxy Zoo classifications are immune to crowding; it rules out the closest-pair artefact as the sole origin of the result.
 
 
 
@@ -509,7 +496,7 @@ After excluding galaxies whose nearest projected neighbour within the catalogue 
 
 
 
-Because the headline results of Sect.~\ref{sec:primary_contrasts} are adjusted rather than raw, we additionally refit the full per-control adjusted families on the sample after the same 55-arcsec exclusion, which removes 19\% of \CG{} members against 6--10\% of the controls (identical covariates and clustering; a separately labelled sensitivity family with its own Holm correction). Every contrast that is Holm-significant in the published families remains so on the adjusted estimand: the all-member elliptical odds ratio moves from 2.14 to 2.16 against \CB{}, from 1.67 to 1.71 against \CC{}, and from 2.81 to 2.71 against \RG{} (Holm \(p \le 0.0044\) in all three cases), with the satellite-only elliptical, spiral-deficit, and \CB{} quenched families equally stable, and no null result becoming significant. The adjusted excess is therefore not carried by the crowded closest pairs.
+We also refit the per-control adjusted models after the same 55-arcsec exclusion, which removes 19\% of \CG{} members against 6--10\% of the controls. The all-member elliptical odds ratio moves from 2.14 to 2.16 against \CB{}, from 1.67 to 1.71 against \CC{}, and from 2.81 to 2.71 against \RG{}. The adjusted excess is therefore not carried by the crowded closest pairs.
 
 
 Across classification thresholds of 0.4--0.8 on the deduplicated pooled sample, the adjusted \CG{} elliptical odds ratio varies only mildly and never changes sign (Table~\ref{tab:morph_robustness}; the unclassified fraction grows from 13\% to 46\% over the sweep). A threshold-free check models the debiased elliptical vote fraction \(p_E\) itself, and a structural cross-check independent of Galaxy Zoo uses the \citet{Simard2011} pure-S\'ersic index (early type: \(n_g > 2.5\); 75\% coverage); both confirm the direction of the contrast, the latter subject to the differential Simard completeness discussed in Sect.~\ref{sec:size_results}.
@@ -526,7 +513,7 @@ Across classification thresholds of 0.4--0.8 on the deduplicated pooled sample, 
 Test & Result \\
 \hline
 
-\makecell[l]{Exclude neighbours\\within 55 arcsec} & \makecell[l]{elliptical fraction 52.5\% (\CG) vs\\40.1\% (\CC); \(p = 6.2\times 10^{-4}\)} \\
+\makecell[l]{Exclude neighbours\\within 55 arcsec} & \makecell[l]{elliptical fraction 52.5\% (\CG) vs\\40.1\% (\CC); \(p = 0.002\)} \\
 
 \makecell[l]{Close-neighbour-flag\\model} & \makecell[l]{OR \(1.76\) \([1.30, 2.39]\);\\\(p = 2.6\times 10^{-4}\)} \\
 
@@ -571,7 +558,7 @@ Common-support diagnostics quantify how far the index can be conditioned on. The
 
 \subsection{Secondary outcomes}\label{sec:secondary}
 
-\paragraph{Star formation.} The adjusted and matched analyses above already bound the star-formation contrast: the per-control quenched odds ratios are control-dependent (Sect.~\ref{sec:primary_contrasts}), the matched quenched and star-forming fractions show no detected offset after correction (Sect.~\ref{sec:matched}), and the main-sequence residuals are a secondary diagnostic (Sect.~\ref{sec:raw}). The largest per-control main-sequence offset is against \CC{} (\(\Delta = 0.058\), 68\% interval \(0.039\)--\(0.103\); \(p = 0.030\); Appendix~\ref{app:baseline_details}), whereas the matched residual-sSFR contrast, which pools the control catalogues, shows no offset (\(-0.147\); \(p = 0.064\); Sect.~\ref{sec:matched}); the per-control comparison is unadjusted and is not read as a detection.
+\paragraph{Star formation.} The per-control quenched odds ratios vary with the comparison sample (Sect.~\ref{sec:primary_contrasts}), the matched quenched fraction shows no clear offset (Sect.~\ref{sec:matched}), and main-sequence residuals provide only a secondary check. The largest per-control main-sequence offset is against \CC{} (\(\Delta = 0.058\), 68\% interval \(0.039\)--\(0.103\); \(p = 0.030\); Appendix~\ref{app:baseline_details}), whereas the matched residual-sSFR difference is \(-0.147\) (\(p = 0.064\)). Because the two comparisons account for different galaxy properties, they do not support a stable compact-group main-sequence displacement.
 
 
 The interpretation does not rely on the exact GMM division of the sSFR plane: repeating the key satellite comparison with a fixed threshold, $\log_{10}(\mathrm{sSFR}/\mathrm{yr}^{-1})=-11.0$, gives \CG{} and \RG{} satellite star-forming fractions of 41.4\% and 60.2\%, respectively, a difference of \(-18.8\) percentage points (\(p = 5.3\times 10^{-4}\)). The qualitative hierarchy is unchanged: the morphology result is independent of the sSFR threshold, whereas the quenched/star-forming contrast remains more sensitive to modelling choices.
@@ -588,15 +575,15 @@ Our retrieved catalogues do not include the age-sensitive indices \(D_n4000\) an
 The strong-emission fraction is 32.3\% in \CG{}, 41.0\% in \CB{}, 43.3\% in \CC{}, 56.9\% in \RG{}.
 
 
-Relative to \CB{}, the \CG{} strong-emission fraction differs by \(-0.087\) (Holm-corrected \(p = 0.012\)).
+Relative to \CB{}, the \CG{} strong-emission fraction differs by \(-0.087\) (\(p = 0.012\)).
 
 
 
-Relative to \CC{}, the \CG{} strong-emission fraction differs by \(-0.110\) (Holm-corrected \(p = 0.003\)).
+Relative to \CC{}, the \CG{} strong-emission fraction differs by \(-0.110\) (\(p = 0.002\)).
 
 
 
-Relative to \RG{}, the \CG{} strong-emission fraction differs by \(-0.246\) (Holm-corrected \(p<10^{-4}\)).
+Relative to \RG{}, the \CG{} strong-emission fraction differs by \(-0.246\) (\(p<10^{-4}\)).
 
 
 These strong-\(\mathrm{H}\alpha\) fractions are reported as \emph{descriptive} diagnostics only: they are not adjusted for the samples' different morphology mixes, and since LINER-like emission is common in early-type galaxies, a morphology-blind emission fraction partially restates the morphology contrast itself. They indicate a lower strong-emission fraction in \CG{} than in each control, but provide neither a direct post-starburst or recently-quenched classification nor an independent star-formation test.
@@ -619,19 +606,19 @@ After mass and environment adjustment, the \CG{} AGN-like odds ratio is 1.17 (\(
 We define \(\Delta m_{12}=M_{r,2}-M_{r,1}\) and \(\Delta m_{14}=M_{r,4}-M_{r,1}\), so that a more dominant BGG has a positive, larger gap; large gaps are the classic optical signature of fossil-like assembly \citep{Ponman+94,Jones+03,Dariush+10}.
 
 
-Per-control group-level comparisons detect larger gaps only against \CB{}: for \(\Delta m_{12}\), the \CG{} and \CB{} medians are \(1.17\) and \(0.85\) mag (Holm-corrected \(p = 3.6\times 10^{-4}\) across the six per-control gap tests), and for \(\Delta m_{14}\) they are \(2.56\) and \(1.90\) mag (Holm-corrected \(p<10^{-4}\)).
+Under the magnitude-gap adjustment described in Sect.~\ref{sec:stats}, larger gaps appear only against \CB{}: for \(\Delta m_{12}\), the \CG{} and \CB{} medians are \(1.17\) and \(0.85\) mag (adjusted \(p<10^{-4}\)), and for \(\Delta m_{14}\) they are \(2.56\) and \(1.90\) mag (adjusted \(p<10^{-4}\)).
 
 
-The corresponding \CC{} and \RG{} comparisons are not detected after the same six-test Holm family for either \(\Delta m_{12}\) or \(\Delta m_{14}\).
+The corresponding \CC{} and \RG{} differences are weak for both gap definitions.
 
 
 
-A deduplicated pooled sensitivity, keeping one control row per physical group with priority \RG{} \(>\) \CB{} \(>\) \CC{}, gives control medians of \(0.86\) mag for \(\Delta m_{12}\) and \(1.91\) mag for \(\Delta m_{14}\) (Holm-corrected \(p<10^{-4}\) and Holm-corrected \(p<10^{-4}\)). Because that deduplicated control side is dominated by \CB{}-selected systems, we treat it as a sensitivity rather than as a control-robust magnitude-gap offset.
+A deduplicated pooled sensitivity gives control medians of \(0.86\) mag for \(\Delta m_{12}\) and \(1.91\) mag for \(\Delta m_{14}\) (adjusted \(p<10^{-4}\) and \(p<10^{-4}\)). Because the deduplicated control side is dominated by \CB{}-selected systems, it is not evidence for a control-robust gap excess.
 
 The compact-group morphology signal is therefore not accompanied by a comparably robust excess in these simple fossil-like magnitude-gap indicators.
 
 
-The correlation between \(\Delta m_{12}\) and quenched satellite fraction is \(\rho_{\rm S}=-0.18\) (Holm-corrected \(p<10^{-4}\)).
+In the separate 14-test gap-correlation screen, the relation between \(\Delta m_{12}\) and quenched satellite fraction is \(\rho_{\rm S}=-0.18\) (adjusted \(p<10^{-4}\)).
 
 
 
@@ -656,10 +643,10 @@ In compact groups the member counts are small, velocity dispersions are noisy, a
 
 
 \paragraph{Optical colours.}
-We derive the $(u-r)$, $(u-g)$, $(g-r)$ and $(r-i)$ colours from the matched SDSS photometry and, because stellar mass confounds colour comparisons \citep{Alpaslan+15}, model each colour jointly with $\log(M_\star/M_\odot)$ and redshift, with cluster-robust standard errors. The colour-analysis subset is not representative of the full galaxy catalogues -- matched galaxies are systematically less massive, more actively star-forming, and more frequently satellites than unmatched galaxies -- so colours are treated as a secondary diagnostic. In the pooled satellite comparison, no blue \CG{} coefficient is detected after Holm correction, and the adjusted coefficients are control-sample dependent. The data therefore do not establish a robust global blue or red offset for \CG{} satellites; the full colour--mass, model-dependence, and radial diagnostics are given in Appendix~\ref{sec:optical_colours}.
+We derive the $(u-r)$, $(u-g)$, $(g-r)$ and $(r-i)$ colours from the matched SDSS photometry and model each colour jointly with $\log(M_\star/M_\odot)$ and redshift. The colour subset is not representative of the full catalogues -- matched galaxies are systematically less massive, more actively star-forming, and more frequently satellites than unmatched galaxies -- and the coefficients depend on the control sample. It therefore provides no robust global blue or red offset for \CG{} satellites (Appendix~\ref{sec:optical_colours}).
 
 \paragraph{Group-scale diagnostics.}
-A broader set of environmental diagnostics is reported in Appendix~\ref{app:env_diagnostics}: significant monotonic sSFR--distance trends in individual samples (Appendix~\ref{app:dist2bgg}); dominance splits whose clearest separation is in group luminosity rather than in any \CG{}-specific property; morphology tests against the Zheng--Shen class, \(\Delta m_{12}\), and the BGG luminosity fraction, none of which survives false-discovery-rate control; and a crossing-time diagnostic that primarily tracks virial mass and mass-to-light ratio.
+A broader set of environmental diagnostics is reported in Appendix~\ref{app:env_diagnostics}: sample-specific monotonic sSFR--distance trends (Appendix~\ref{app:dist2bgg}); dominance splits whose clearest separation is in group luminosity rather than in any \CG{}-specific property; morphology tests against the Zheng--Shen class, \(\Delta m_{12}\), and the BGG luminosity fraction, none of which survives false-discovery-rate control; and a crossing-time diagnostic that primarily tracks virial mass and mass-to-light ratio.
 
 
 \subsection{Galaxy sizes at fixed stellar mass}\label{sec:size_results}
@@ -689,26 +676,22 @@ A broader set of environmental diagnostics is reported in Appendix~\ref{app:env_
 We now test whether \CG{} galaxies differ in size at fixed stellar mass, using the seeing-corrected Simard half-light radii as the primary measure and the Petrosian radii as the model-independent cross-check (Sect.~\ref{sec:size_data}). The Simard measure resolves 77.4\% of the \CG{} galaxies and 71.1\% of the pooled control galaxies, while the Petrosian radius is essentially complete in every sample (Appendix Fig.~\ref{fig:data_availability}). Because the \CG{}--control difference in Simard completeness exceeds five percentage points, every Simard-based coefficient below carries a differential-completeness caveat and is read together with the Petrosian rerun, which does not share this incompleteness.
 
 
-For satellite galaxy size, the \CG{} offset at fixed stellar mass, redshift, and available group-scale covariates is \(-0.010\) dex (\(-2.3\)\%), with 95\% confidence interval \([-0.039, 0.019]\) and Holm-corrected \(p = 1.000\), over 2575 satellites in 754 physical groups.
+For satellites, the \CG{} size offset at fixed stellar mass, redshift, and available group-scale covariates is \(-0.010\) dex (\(-2.3\)\%), with 95\% confidence interval \([-0.039, 0.019]\) and \(p = 0.507\), over 2575 satellites in 754 physical groups.
 
 
-The all-galaxy model gives \(-0.006\) dex (95\% CI \([-0.032, 0.020]\); Holm-corrected \(p = 1.000\)), and the BGG-only model gives \(0.019\) dex (Holm-corrected \(p = 1.000\)).
+The all-galaxy model gives \(-0.006\) dex (95\% CI \([-0.032, 0.020]\); \(p = 0.653\)), and the BGG-only model gives \(0.019\) dex (95\% CI \([-0.037, 0.075]\); \(p = 0.503\)).
+
+The pooled adjusted models therefore show no meaningful fixed-mass size displacement. The per-control estimates are \(-0.035\) dex against \CB{}, \(0.000\) dex against \CC{}, \(-0.006\) dex against \RG{} (Appendix Fig.~\ref{fig:size_forest_per_control}). The isolated negative \CB{} estimate is not repeated for the two physically different controls and is not promoted to a general compact-group size effect.
 
 
-No coefficient in this primary family is detected after Holm correction, so the pooled adjusted models do not establish a \CG{} size offset at fixed stellar mass.
-
-The per-control versions of the fit are descriptive (Appendix Fig.~\ref{fig:size_forest_per_control}); the fitted \CG{} coefficient is \(-0.035\) dex against \CB{}, \(0.000\) dex against \CC{}, \(-0.006\) dex against \RG{} (raw p-values corrected with Benjamini--Hochberg within a family defined as exactly the per-control size coefficients displayed in Fig.~\ref{fig:size_forest_per_control} --- the three control contrasts of each size measure shown --- and containing no test outside that figure). The sign and significance of the \CG{} coefficient depend on the adopted control, so we do not interpret any single per-control contrast on its own.
-
-
-The one-to-one matched comparison re-derives the same 234 propensity pairs as the matched-control analysis, with a separate Holm family for the three size outcomes so that the published matched-outcome family is untouched. On the 166 pairs in which both members have valid Simard sizes, the mean \CG{}-minus-control difference in \(\log_{10} R_{\rm chl,r}\) is \(-0.019\) dex (95\% bootstrap interval \([-0.064, 0.026]\); Holm-corrected \(p = 0.800\)). The corresponding Petrosian difference is \(-0.033\) dex (Holm-corrected \(p = 0.089\)), and the matched concentration difference is \(-0.008\) (Holm-corrected \(p = 0.904\)).
+The one-to-one matched comparison uses the same 234 propensity pairs as the galaxy-property analysis. For the 166 pairs with valid Simard sizes, the mean \CG{}-minus-control difference is \(-0.019\) dex (95\% bootstrap interval \([-0.064, 0.026]\); \(p = 0.400\)). The Petrosian difference is \(-0.033\) dex (95\% CI \([-0.065, -0.003]\); \(p = 0.030\)), and the concentration difference is \(-0.008\) (\(p = 0.904\)). The Petrosian-only offset is small, depends on the size definition and matched control composition, and does not overturn the near-null seeing-corrected result.
 
 
 
+The Petrosian rerun, with seeing as an additional standardized covariate, gives a satellite coefficient of \(-0.019\) dex (\(p = 0.111\)) and an all-galaxy coefficient of \(-0.012\) dex (\(p = 0.206\)).
 
-The Petrosian rerun, with the field seeing as an additional standardized covariate, gives a satellite coefficient of \(-0.019\) dex (Holm-corrected \(p = 0.332\)) and an all-galaxy coefficient of \(-0.012\) dex (Holm-corrected \(p = 0.332\)).
 
-
-The concentration index \(C = R_{90,r}/R_{50,r}\) provides a model-independent structural proxy: the adjusted satellite coefficient is \(0.068\) (Holm-corrected \(p = 0.332\)), so no \CG{} concentration-index shift is detected at fixed mass.
+The concentration index \(C = R_{90,r}/R_{50,r}\) provides a model-independent structural proxy: the adjusted satellite coefficient is \(0.068\) (\(p = 0.124\)), offering no evidence for an additional fixed-mass concentration shift.
 
 Crowding, measure-difference, tidal-index, radial, and morphology-stratified size diagnostics are given in Appendix~\ref{app:size_details}.
 
@@ -723,11 +706,11 @@ Crowding, measure-difference, tidal-index, radial, and morphology-stratified siz
 
 
 
-\subsection{The morphology hierarchy and its estimands}\label{sec:morph_estimands}
+\subsection{An early-type-like satellite excess linked to dense group cores}\label{sec:morph_local_density}
 
-The clearest residual difference between \CG{} and the regular-group controls is morphological: a higher Galaxy~Zoo~1 elliptical-vote fraction and a lower spiral-vote fraction, carried primarily by satellites. Its strength is graded by control construction and estimand. At the galaxy level, the per-control adjusted excess is strong against \CB{} and \RG{} and smallest against the projected cores \CC{}; at the group level, the matched satellite fraction is higher in \CG{} than in every control (Table~\ref{tab:group_match_per_control}), passes the 5\% threshold against \CB{} and \RG{}, and is marginal against \CC{}. This ordering is consistent with compactness or projected density mattering, but it does not establish a causal compactness sequence or a statistically demonstrated difference between the three control-specific estimates. The secondary galaxy-level matched contrast is also detected and directionally consistent, although it is less direct than the group-level satellite-composition estimand, and the primary within-host estimator detects no additional residual excess over co-members of the same host after conditioning on projected host-centric radius.
+The clearest residual difference between \CG{} and regular-group controls is morphological: a higher Galaxy~Zoo~1 elliptical-vote fraction, carried primarily by satellites. The adjusted excess is largest against the luminosity-selected \CB{} population and true four-member \RG{} groups, and smallest against the projected cores \CC{}. Matched quartet composition follows the same ordering. The galaxy-level matched estimate points in the same direction, especially for satellite pairs, whereas the preferred within-host model shows no clear additional excess after accounting for host-centric radius. The convergent pattern is that \CG{} identifies an early-type-rich dense-core population, not that every galaxy property changes discontinuously at the compact-group boundary.
 
-These results are not contradictory: the analyses differ in matched populations, conditioning sets, outcomes, effect scales, and uncertainty units. The satellites-only decomposition of Sect.~\ref{sec:matched} also shows BGG dilution: restricted to satellite pairs, the matched difference rises to \(0.192\), close to the group-level per-control differences. The group-level analysis estimates system-level satellite composition, whereas the galaxy-level analyses estimate conditional individual-galaxy contrasts; the odds-ratio scale is also non-collapsible. We therefore read the pattern as estimand dependence: the morphology contrast is visible at both levels, smallest for the control closest to dense projected cores, and not detected within shared hosts once central location is conditioned away. A fixed-mass caution remains: present-day stellar mass may encode part of the environmental history under test, so contrasts at matched or adjusted \(M_\star\) estimate the residual beyond that history, not the total historical effect.
+The scale of the morphology difference depends on what is held fixed. For example, restricting the individual-galaxy match to satellites increases the elliptical-fraction difference to \(0.192\), showing the dilution produced by BGGs. Likewise, conditioning on host-centric radius removes the location contrast by construction. Present-day stellar mass may also encode part of a galaxy's environmental history, so fixed-mass estimates describe the remaining association rather than the total accumulated transformation. These qualifications narrow the physical claim without erasing it: the result is a satellite population shift associated with the dense configurations selected as compact groups.
 
 The pairwise tidal-index experiment strengthens this interpretation while also narrowing it. For elliptical morphology, the pairwise complete-case baseline \CG{} odds ratio is \(1.95\) (\(p<10^{-4}\)). After adding the projected pairwise tidal-index proxy, the \CG{} odds ratio decreases to \(1.39\) (\(p = 0.031\)), while the tidal-index term itself has odds ratio \(1.42\) (\(p<10^{-4}\)). This behaviour is expected if compact groups are selecting galaxies in locally dense projected configurations where repeated close companions, rather than the catalogue label alone, are linked to the elliptical/early-type-like population.
 
@@ -758,10 +741,8 @@ The star-formation non-detections are also limited by the spectroscopy. \CG{} ha
 
 
 
-The size test carries a parallel message. \citet{Coenda+12} found compact-group galaxies to be smaller at fixed luminosity than loose-group and field samples, especially for early types, using SDSS Petrosian half-light radii. We re-pose that question with the non-split HMCG-based \CG{} sample against three regular-group controls, seeing-corrected model sizes, a Petrosian cross-check, cluster-robust adjusted models, one-to-one matching, crowding tests, and Holm-corrected intervals.
-
-Under this stricter design, we find no compact-group size offset at fixed stellar mass relative to regular groups; the primary satellite fit bounds any mean \CG{} size deficit to roughly \(0.04\) dex at the 95\% level. This does not contradict \citet{Coenda+12} directly, because their comparison was against loose groups and the field, whereas ours is against regular-group cores selected from the same parent catalogues.
-
+The size test carries a parallel message. \citet{Coenda+12} found compact-group galaxies to be smaller at fixed luminosity than loose-group and field samples, especially for early types, using SDSS Petrosian half-light radii. We re-pose that question with the non-split HMCG-based \CG{} sample against three regular-group controls, seeing-corrected model sizes, a Petrosian cross-check, cluster-robust adjusted models, one-to-one matching, and crowding tests.
+Under this design, the pooled adjusted models do not show a compact-group size offset at fixed stellar mass relative to regular groups (satellite coefficient \(-0.010\) dex, 95\% interval including zero); the satellite fit bounds any mean \CG{} size deficit to roughly \(0.04\) dex. The seeing-corrected matched difference is likewise small (\(-0.019\) dex). This is compatible with a compact-group versus field offset if ordinary-group cores have already undergone comparable structural processing.
 Two guardrails apply: a negative \(\Delta\) at fixed mass can reflect tidal truncation or stripping, but also higher bulge dominance or residual blending in crowded fields. The morphology-stratified fits address the former, and the Petrosian cross-check, measure-difference diagnostic, and crowding exclusions bound the latter (Appendix~\ref{app:size_details}); future claims of compact-group size evolution should be read through these blocks together, not through a single pooled coefficient.
 
 
@@ -770,7 +751,7 @@ Two guardrails apply: a negative \(\Delta\) at fixed mass can reflect tidal trun
 
 We have tested whether galaxies in \CG{} compact groups remain special after removing split systems, comparing them with \RG, \CB, and \CC{} through the individual-galaxy, group-composition, and shared-host contrasts defined in Sect.~\ref{sec:stats}. The inference applies to this luminous, volume-limited, exactly four-member non-split HMCG sample rather than to all compact groups.
 
-The main result is morphological and graded by control construction. \CG{} galaxies -- primarily satellites -- have higher Galaxy~Zoo~1 elliptical-vote and lower spiral-vote fractions. The adjusted individual-galaxy excess is strong against \CB{} and \RG{} and smallest against \CC{}; matched group-level satellite-composition contrasts are positive against all three controls, pass the 5\% threshold against \CB{} and \RG{}, and are marginal against \CC{}, with the same hierarchy in satellite-mass-balanced variants. This ordering is consistent with compactness or projected density mattering, but it does not prove a causal compactness sequence. No additional residual excess is detected within shared hosts after conditioning on projected host-centric radius. The morphology result is stable to vote-threshold, vote-fraction, S\'ersic-index, and close-pair checks; BGG morphology is not detected as different after adjustment. Conditioning on a local projected-density proxy attenuates the galaxy-level coefficient, but this conditional attenuation does not establish mediation.
+The main result is an early-type-like satellite excess. \CG{} galaxies have a higher Galaxy~Zoo~1 elliptical-vote fraction than all three regular-group comparisons after accounting for observed galaxy and group properties. The excess is strongest against \CB{} and \RG{} and weakest against the projected cores \CC{}; matched quartet composition and satellite-mass-balanced variants show the same hierarchy. BGGs do not show a corresponding adjusted difference, and the preferred within-host analysis shows no clear excess beyond the central locations occupied by \CG{} members. Vote-threshold, continuous-vote, S\'ersic-index, and close-pair checks support the morphology result. A projected tidal-density proxy attenuates the coefficient, consistent with local density contributing to the pattern, although the projected data do not identify mediation or a unique causal mechanism.
 
 The star-formation result is weaker and consistent with being largely associated with the differing vote-based morphology mix, with no additional conditional offset detected at fixed vote-based morphology. \CG{} satellites have a lower raw star-forming fraction, especially relative to \RG, but adjusted evidence is control-dependent, matched contrasts provide no evidence for a quenched-fraction difference, and star-forming \CG{} galaxies show no robust main-sequence offset.
 
@@ -778,7 +759,7 @@ The star-formation result is weaker and consistent with being largely associated
 
 
 
-At fixed stellar mass, redshift, and group-scale covariates, no \CG{} offset is detected in seeing-corrected half-light radius, in either the adjusted models or the matched pairs; the primary satellite fit bounds any mean size deficit to roughly \(0.04\) dex.
+At fixed stellar mass, redshift, and group-scale covariates, the seeing-corrected satellite size estimate is \(-0.010\) dex and its confidence interval includes zero; the matched Simard difference is \(-0.019\) dex. The small Petrosian-only matched offset is not reproduced by the preferred size measure or across controls, so we do not claim a compact-group size effect.
 
 The remaining secondary diagnostics do not identify a simple alternative driver: colours are control-sensitive and based on a biased matched subset, AGN-like fractions and control-specific magnitude gaps do not provide comparably robust parallel offsets, the \(\mathrm{H}\alpha\) diagnostic lacks age-sensitive spectral indices, and projected phase-space trends do not localize the contrast uniquely to the innermost satellites.
 
@@ -945,7 +926,7 @@ The compact-group exclusion of Sect.~\ref{sec:samples} is not a technicality: fo
 We model the star-forming main sequence as a function of stellar mass using polynomial orders 1--4; the polynomial-order comparison is provided in the online supplement. The diagnostic shown there is the residual RMS scatter, not a formal reduced \(\chi^2\), because no per-galaxy uncertainty model is used. We adopt order 2 because it is the lowest-order model with the smallest five-fold cross-validated RMS scatter (0.305 dex, compared with 0.306 dex for order 1).
 We then use order 2 to compute the residual of each star-forming galaxy with respect to the main sequence. A positive residual means higher sSFR at fixed stellar mass relative to the fitted star-forming main sequence.
 
-In the comparisons below, \(\Delta\) is the \CG{}-minus-control median residual; positive values mean that \CG{} star-forming galaxies lie above the fitted main sequence relative to the control. Each quoted interval is the central 68\% (16th--84th percentile) bootstrap interval on the median difference, resampling whole catalogue groups within each sample, and each \(p\) is the two-sided group-blocked bootstrap sign-crossing probability for the same difference (10\,000 resamples). The 68\% interval and the two-sided \(p\) answer slightly different questions and can therefore appear to disagree near the significance boundary: a 68\% interval that excludes zero is compatible with \(p\) slightly above 0.05.
+In the comparisons below, \(\Delta\) is the \CG{}-minus-control median residual; positive values place \CG{} star-forming galaxies above the fitted main sequence relative to the control. Each quoted interval is the central 68\% group-bootstrap interval on the median difference, and each \(p\) is the corresponding two-sided group-bootstrap sign-crossing probability (10\,000 resamples).
 
 The median main-sequence residual of \CG{} galaxies is:
 \begin{itemize}
@@ -1090,11 +1071,10 @@ The median main-sequence residual of \CG{} galaxies is:
 
 
 
-\item marginally different from that of Control4B,
-with a median offset of
+\item Relative to Control4B, the median offset is
 $\Delta = 0.056$
 ($0.027 \le \Delta \le 0.098$, 16th--84th percentile bootstrap interval),
-corresponding to \(p = 0.064\).
+with \(p = 0.064\).
 
 
 
@@ -1106,11 +1086,10 @@ corresponding to \(p = 0.064\).
 
 
 
-\item significantly different from that of Control4C,
-with a median offset of
+\item Relative to Control4C, the median offset is
 $\Delta = 0.058$
 ($0.039 \le \Delta \le 0.103$, 16th--84th percentile bootstrap interval),
-corresponding to \(p = 0.030\).
+with \(p = 0.030\).
 
 
 
@@ -1122,11 +1101,48 @@ corresponding to \(p = 0.030\).
 
 
 
-\item not significantly different from that of RG4,
-with a median offset of
+\item Relative to RG4, the median offset is
 $\Delta = 0.046$
 ($-0.043 \le \Delta \le 0.098$, 16th--84th percentile bootstrap interval),
-corresponding to \(p = 0.589\).
+with \(p = 0.589\).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2476,7 +2492,7 @@ This appendix collects the group-scale and colour diagnostics summarized in Sect
 \subsection{Distance to the BGG}\label{app:dist2bgg}
 We compare the sSFR of satellite galaxies with their distance to the BGG, expressed both in projected kpc and in units of $\langle R_{ij}\rangle$.
 
-Significant monotonic trends are detected in the following cases.
+The following sample-specific monotonic trends have small p-values.
 
 In CG$_4$, sSFR correlates with projected distance to the BGG with Spearman coefficient
 $\rho_\mathrm{S} = 0.24$ for 174 satellites (\(p = 1.5\times 10^{-3}\)) and Pearson coefficient
@@ -2506,17 +2522,17 @@ $r = 0.11$ (\(p<10^{-4}\)).
 
 
 
-We split groups into dominated systems, where the BGG contributes more than 60\% of the group luminosity, and non-dominated systems. This split does not produce a strong compact-group signal by itself: CG$_4$ shows no significant dominated/non-dominated difference after the Benjamini--Hochberg false-discovery-rate (FDR) correction. Here \(p_\mathrm{adj}\) denotes the FDR-adjusted p-value, and Cliff's \(\delta\) is a rank-based effect size ranging from -1 to 1.
+We split groups into dominated systems, where the BGG contributes more than 60\% of the group luminosity, and non-dominated systems. Because this appendix screens many group properties, \(p_\mathrm{adj}\) denotes the exploratory-battery adjustment defined in Sect.~\ref{sec:stats}; Cliff's \(\delta\) is the rank-based effect size. The split does not produce a strong compact-group signal by itself.
 
 Across the control and reference samples, the clearest binary separation is instead in group luminosity. Dominated systems have lower \(L_\mathrm{group}\) than their non-dominated counterparts: Control$_{4B}$ gives $9.1\times 10^{10}$ versus $1.28\times 10^{11}$ $L_\odot$ (\(p_\mathrm{adj}<10^{-4}\), \(\delta=-0.55\)); Control$_{4C}$ gives $9.66\times 10^{10}$ versus $1.07\times 10^{11}$ $L_\odot$ (\(p_\mathrm{adj}<10^{-4}\), \(\delta=-0.25\)); and RG$_4$ gives $7.09\times 10^{10}$ versus $9.82\times 10^{10}$ $L_\odot$ (\(p_\mathrm{adj}=1\times 10^{-4}\), \(\delta=-0.59\)). The negative \(\delta\) values mean that dominated groups tend to occupy the lower-luminosity side of each comparison.
 
-The spiral-fraction correlations show a broader environmental pattern rather than a clean dominated/non-dominated dichotomy. The most coherent set appears in \CC, where \(S_\mathrm{frac}\) increases with \(\left\langle R_{ij}\right\rangle\) in both dominated and non-dominated groups (\(\rho_\mathrm{S}=0.30\), \(p<10^{-4}\) and \(\rho_\mathrm{S}=0.26\), \(p<10^{-4}\)), while weaker negative trends are found with \(\sigma_v\) and \(L_\mathrm{group}\). \CB{} contributes only weaker non-dominated-group correlations. In \CG, the significant trends occur in small subsets, with \(S_\mathrm{frac}\) decreasing with \(L_\mathrm{group}\) among dominated groups (\(\rho_\mathrm{S}=-0.40\), 36 groups) and with \(\Delta V_\mathrm{BGG}/\sigma_v\) among non-dominated groups (\(\rho_\mathrm{S}=-0.45\), 24 groups); we therefore treat these as supporting diagnostics rather than the main dominance result. The full distributional diagnostics are provided in the online supplement.
+The spiral-fraction correlations show a broader environmental pattern rather than a clean dominated/non-dominated dichotomy. The most coherent set appears in \CC, where \(S_\mathrm{frac}\) increases with \(\left\langle R_{ij}\right\rangle\) in both dominated and non-dominated groups (\(\rho_\mathrm{S}=0.30\), \(p<10^{-4}\) and \(\rho_\mathrm{S}=0.26\), \(p<10^{-4}\)), while weaker negative trends are found with \(\sigma_v\) and \(L_\mathrm{group}\). \CB{} contributes only weaker non-dominated-group correlations. In \CG, the reported trends occur in small subsets, with \(S_\mathrm{frac}\) decreasing with \(L_\mathrm{group}\) among dominated groups (\(\rho_\mathrm{S}=-0.40\), 36 groups) and with \(\Delta V_\mathrm{BGG}/\sigma_v\) among non-dominated groups (\(\rho_\mathrm{S}=-0.45\), 24 groups); we therefore treat these as supporting diagnostics rather than the main dominance result. The full distributional diagnostics are provided in the online supplement.
 % CUT: fig:Dom_vs_NonDom_XOR (bootstrap Spearman half-violins) removed to
 % respect the 8-page free appendix budget; resurrect from git if a referee asks.
 
 \subsection{Morphology and domination}
 
-When we further split the samples by domination and by the morphology of the BGG, significant effects only appear in the following cases.
+When we further split the samples by domination and by the morphology of the BGG, the following cases have small p-values.
 \begin{itemize}
 
 \item Control$_{4B}$ dominated groups, where the median satellite spiral fraction is
@@ -2542,7 +2558,7 @@ We next test whether the E/Sp morphology mix is associated with three group-leve
 
 The magnitude-gap and BGG-luminosity-fraction quantities are available for all 118 \CG{}+\RG{} groups used in this test. The Zheng--Shen class is available only for compact groups. Split systems are absent from the current \CG{} sample because they are removed before the paper analysis, and no corresponding Zheng--Shen class is defined for the \RG{} catalogue used here. We therefore report the \RG{} class test as unavailable, while retaining \RG{} in the \(\Delta m_{12}\) and \(f_{L,\mathrm{BGG}}\) comparisons.
 
-Overall, these tests provide little evidence that the E/Sp mix is driven by Zheng--Shen class, magnitude gap, or BGG luminosity fraction. The few marginal associations are therefore treated as descriptive diagnostics rather than as robust secondary trends (Tables~\ref{tab:morphology_dominance_class_counts} and \ref{tab:morphology_dominance_models}).
+Overall, these tests provide little evidence that the E/Sp mix is driven by Zheng--Shen class, magnitude gap, or BGG luminosity fraction. The few weak associations are treated as descriptive diagnostics (Tables~\ref{tab:morphology_dominance_class_counts} and \ref{tab:morphology_dominance_models}).
 
 \begin{table}
 \centering
@@ -2578,7 +2594,7 @@ Embedded & 76/53 & 22/11 & 54/42 \\
 \end{tabular}
 \end{table}
 
-For the Zheng--Shen compact-group class, no \CG{} association reaches the conventional 5\% significance threshold. The closest case is the satellite-only test, which is treated as marginal and descriptive. Because the Zheng--Shen class is not defined for the \RG{} catalogue, we do not attempt an \RG{} class comparison.
+For the Zheng--Shen compact-group class, the \CG{} associations are weak, including the satellite-only test. Because the class is not defined for the \RG{} catalogue, no \RG{} class comparison is attempted.
 
 The class structure of the early-type fraction itself is summarized in Table~\ref{tab:zheng_shen_fe}. Group-level permutation tests on the difference of per-group mean satellite \(f_{\rm E}\) (20\,000 permutations, two-sided, add-one convention) give \(p = \pIsoRest\) for Isolated versus the rest of \CG{}, \(p = \pIsoRG\) for Isolated versus \RG{}, and \(p = \pIsoCC\) for Isolated versus \CC{}: the isolated systems are compatible with the loose \RG{} groups and sit below the embedded classes of their own sample.
 
@@ -2681,7 +2697,7 @@ satellites only & \RG{} & Class & not defined \\
 \end{tabular}
 \end{table}
 
-For \(\Delta m_{12}\), no statistically significant morphology trend is found in \CG{} or \RG{}, whether the fit is run for all galaxies, BGGs only, or satellites only. The same conclusion holds for \(f_{L,\mathrm{BGG}}\): no fitted trend reaches \(p<0.05\). The \CG{}--\RG{} interaction models detect no significant difference in the morphology--dominance relation for either \(\Delta m_{12}\) or \(f_{L,\mathrm{BGG}}\), across all galaxies, BGGs only, and satellites only. A class interaction is not defined because the Zheng--Shen compact-group class has no \RG{} counterpart in the present catalogue. Across the morphology--class, morphology--gap, morphology--luminosity-fraction, and interaction tests, no result remains significant after Benjamini--Hochberg FDR control.
+The \(\Delta m_{12}\), \(f_{L,\mathrm{BGG}}\), and \CG{}--\RG{} interaction coefficients are all weak across the all-galaxy, BGG, and satellite fits. A class interaction is undefined because the Zheng--Shen compact-group class has no \RG{} counterpart, and no result survives the exploratory FDR screen.
 
 
 \subsection{Crossing time}
@@ -2694,7 +2710,7 @@ For \(\Delta m_{12}\), no statistically significant morphology trend is found in
 
 
 Group radii and \(t_\mathrm{cross}\) use projected proper separations from the Planck 2015 angular-diameter distance, correcting the luminosity-distance convention used for this diagnostic in \citet{Tricottet+25}; the values decrease by 3.3--9.6\% (median 7.2\%), without changing the reported correlations at quoted precision.
-The corrected secondary colour audit places the \CG{} satellite blue-fraction correlation at \(\rho_\mathrm{S}=0.365\) (Holm-corrected \(p=0.05003\)), just above the adjusted 5\% threshold; we therefore do not count this boundary result as detected. This reinforces, rather than changes, the exploratory interpretation of the colour diagnostics.
+The secondary colour audit places the \CG{} satellite blue-fraction correlation at \(\rho_\mathrm{S}=0.365\) (adjusted \(p=0.05003\)); this weak boundary result does not change the exploratory interpretation of the colour diagnostics.
 
 The crossing-time diagnostic mainly separates systems by dynamical scale rather than by luminosity alone. Shorter \(t_\mathrm{cross}\) systems have larger virial mass-to-light ratios and virial masses: the correlations with \(\log(\mathcal{M}_\mathrm{VT}/L_r)\) and \(\log(\mathcal{M}_\mathrm{VT})\) are \(\rho_\mathrm{S}=-0.39\) (\(p<10^{-4}\)) and \(\rho_\mathrm{S}=-0.33\) (\(p<10^{-4}\)), respectively, over 816 groups. By contrast, the relation with total group luminosity is formally detected but very weak (\(\rho_\mathrm{S}=0.08\)). We therefore read \(t_\mathrm{cross}\) as a dynamical compactness indicator tied primarily to virial mass and mass-to-light ratio, with little independent leverage from \(L_\mathrm{group}\).
 \FloatBarrier
@@ -2702,9 +2718,9 @@ The crossing-time diagnostic mainly separates systems by dynamical scale rather 
 
 The retained colour-analysis matches include 110 of 248 galaxies in CG$_4$, 931 of 2792 galaxies in Control$_{4B}$, 1153 of 2812 galaxies in Control$_{4C}$, 102 of 224 galaxies in RG$_4$. This stricter subset differs from the availability audit in Fig.~\ref{fig:data_availability}: the figure's colour row only requires the four derived SDSS colour columns to be present in the final catalogue, giving 217 of 248 \CG{} galaxies, whereas the colour analysis also requires successful matched-photometry retention and the covariates used below. The fractions retained in this stricter colour-analysis subset are 44.4\% in CG4, 33.3\% in Control4B, 41.0\% in Control4C, 45.5\% in RG4.
 
-The raw catalogue colour--mass fits indicate that \CG{} does not simply follow the same colour--mass relation as every comparison sample: common slopes are rejected in all four colours, with the significant directional slope differences concentrated in the bluer colours and dependent on the adopted comparison catalogue. In the satellite-only comparison, the fitted offsets and slopes likewise depend on the control definition. These tests motivate the robustness analysis rather than establishing a stand-alone compact-group colour effect.
+The raw catalogue colour--mass fits indicate that \CG{} does not simply follow the same colour--mass relation as every comparison sample: common slopes are rejected in all four colours, with the directional slope differences having small adjusted p-values mainly in the bluer colours and depending on the adopted comparison catalogue. In the satellite-only comparison, the fitted offsets and slopes likewise depend on the control definition. These tests motivate the robustness analysis rather than establishing a stand-alone compact-group colour effect.
 
-We therefore refit the satellite colours with cluster-robust standard errors, using catalogue-qualified group identifiers. In the pooled comparison adjusted only for stellar mass and redshift, none of the four \CG{} coefficients is significantly negative after Holm correction. Adding morphology and sSFR class does not reveal a significant negative coefficient. However, these adjusted coefficients are control-sample dependent, and they do not persist within the sSFR or morphology splits. The data therefore do not localize the colour effect to the star-forming spiral population expected for a simple interaction-triggered star-formation scenario.
+We refit satellite colours with cluster-robust standard errors. In the pooled mass- and redshift-adjusted comparison, the negative \CG{} coefficients are weak. Adding morphology and sSFR class does not reveal a clear negative coefficient. These coefficients remain control-sample dependent, with non-uniform split-sample behaviour, so they do not identify a global colour shift or a simple interaction-triggered star-formation population.
 
 Residual colour trends with projected BGG-centric distance are consistent with stronger processing near the group centre and a less processed outer population, but these trends use the same biased colour subset and are treated as exploratory. The group-level BGG--satellite colour concordance is similarly secondary: redder BGGs tend to have redder mean satellite populations in the combined group sample, but the \CG{} slope is not a robustly distinct population-level signature. Detailed colour--mass, satellite, and radial diagnostics are provided in the online supplement. Figure~\ref{fig:colour_robustness_coefficients} summarizes the model and control-sample dependence that motivates our interpretation: the present data do not establish a robust global blue or red offset for \CG{} satellites.
 
@@ -2720,88 +2736,41 @@ Residual colour trends with projected BGG-centric distance are consistent with s
 \section{Pooled models, matching details, and selection diagnostics}\label{app:pooled_models}
 \suppressfloats[t]
 
-
-
-
-\subsection{Group-level multiplicity sensitivity}
-
-The three per-control group-level satellite-composition matches are treated in the main text as distinct control-definition estimands, and their p-values are not adjusted across \CB{}, \CC{}, and \RG{}. Table~\ref{tab:group_match_holm_sensitivity} reports the Holm sensitivity requested by that alternative convention. The pooled group-level match is excluded because it is a secondary summary of overlapping control catalogues.
-
-\begin{table}
-\centering
-\caption{Holm sensitivity for the three per-control group-level satellite-composition matches. The adjusted values are computed from the full-precision bootstrap and paired sign-flip permutation p-values.}
-\label{tab:group_match_holm_sensitivity}
-\small
-\tabcolsep=3pt
-\begin{tabular}{lrrrr}
-\hline\hline
-Control & \(p_{\rm perm}\) & Holm \(p_{\rm perm}\) & \(p_{\rm boot}\) & Holm \(p_{\rm boot}\) \\
-\hline
-
-\CB{} & \(0.016\) & \(0.047\) & \(0.012\) & \(0.036\) \\
-
-\CC{} & \(0.080\) & \(0.080\) & \(0.082\) & \(0.082\) \\
-
-\RG{} & \(0.026\) & \(0.053\) & \(0.019\) & \(0.038\) \\
-
-\hline
-\end{tabular}
-\end{table}
-
-
 \subsection{Pooled adjusted models}\label{sec:adjusted_galaxy_properties}
-% MOVED: full pooled model family relocated here from old Sect. 5.2; the
+% MOVED: full pooled models relocated here from old Sect. 5.2; the
 % summary sentence and fig:specialness_logistic remain in the main text.
 
 
-As a compact summary across the heterogeneous control definitions we also fit binomial models to the pooled catalogue. Because the control samples overlap heavily (all \RG{} galaxies are also \CB{} members, and \CB{} and \CC{} share their cores), the pooled control side is first deduplicated by SDSS objid — one row per physical galaxy, unweighted, with every source label recorded — and standard errors are clustered by physical Lim group. The common adjustment set includes stellar mass, redshift, satellite/BGG rank, group luminosity and velocity dispersion (all complete under the Sect.~\ref{sec:stats} rule). This pooled family is read as a secondary summary; the per-control contrasts of Sect.~\ref{sec:primary_contrasts} are primary.
+As a compact summary across the heterogeneous control definitions we also fit binomial models to the pooled catalogue. Because the control samples overlap heavily, the pooled control side is first deduplicated by SDSS objid and standard errors are clustered by physical Lim group. The common adjustment set includes stellar mass, redshift, satellite/BGG rank, group luminosity, and velocity dispersion. This pooled result does not replace the physically interpretable per-control contrasts.
 
 
 
 
-For quenched status, the \CG{} odds ratio is \(1.35\), with 95\% confidence interval \([0.98, 1.86]\) and Holm-corrected \(p = 0.136\).
+For quenched status, the \CG{} odds ratio is \(1.35\), with 95\% confidence interval \([0.98, 1.86]\) and \(p = 0.068\).
 
 
 
 
-For quenched satellite status, the \CG{} odds ratio is \(1.53\), with 95\% confidence interval \([1.10, 2.11]\) and Holm-corrected \(p = 0.043\).
+For quenched satellite status, the \CG{} odds ratio is \(1.53\), with 95\% confidence interval \([1.10, 2.11]\) and \(p = 0.011\).
 
 
 
 
-For star-forming satellite status, the \CG{} odds ratio is \(0.66\), with 95\% confidence interval \([0.47, 0.91]\) and Holm-corrected \(p = 0.043\).
+For elliptical morphology, the \CG{} odds ratio is \(1.77\), with 95\% confidence interval \([1.32, 2.37]\) and \(p = 1.4\times 10^{-4}\).
 
 
 
 
-For elliptical morphology, the \CG{} odds ratio is \(1.77\), with 95\% confidence interval \([1.32, 2.37]\) and Holm-corrected \(p = 8.5\times 10^{-4}\).
+For elliptical satellite morphology, the \CG{} odds ratio is \(2.08\), with 95\% confidence interval \([1.51, 2.88]\) and \(p<10^{-4}\).
 
 
 
 
-For elliptical satellite morphology, the \CG{} odds ratio is \(2.08\), with 95\% confidence interval \([1.51, 2.88]\) and Holm-corrected \(p<10^{-4}\).
+For elliptical BGG morphology, the \CG{} odds ratio is \(0.78\), with 95\% confidence interval \([0.39, 1.53]\) and \(p = 0.464\).
 
 
 
-
-For elliptical BGG morphology, the \CG{} odds ratio is \(0.78\), with 95\% confidence interval \([0.39, 1.53]\) and Holm-corrected \(p = 0.464\).
-
-
-
-
-For spiral morphology, the \CG{} odds ratio is \(0.57\), with 95\% confidence interval \([0.42, 0.76]\) and Holm-corrected \(p = 8.5\times 10^{-4}\).
-
-
-
-
-For spiral satellite morphology, the \CG{} odds ratio is \(0.48\), with 95\% confidence interval \([0.35, 0.66]\) and Holm-corrected \(p<10^{-4}\).
-
-
-
-
-
-Compact-group membership therefore remains independently associated with morphology after the available adjustments: \CG{} galaxies have a higher probability of being elliptical and a lower probability of being spiral. The pooled secondary satellite quenched/star-forming coefficients are also significant within this model family, but the star-formation result is not robust across the primary per-control and matched analyses and is therefore not interpreted as a control-robust instantaneous star-formation difference.
-
+The pooled coefficients reinforce the satellite morphology shift. The quenched estimate is treated more cautiously because it changes across the separate controls and is not reproduced by the matched contrast.
 
 
 \subsection{Galaxy-level matching details}
@@ -2824,17 +2793,7 @@ The galaxy-level control pool of Sect.~\ref{sec:matched} is deduplicated by SDSS
 
 
 
-The 234 matched controls occupy 204 physical Lim groups: 176 contribute one matched galaxy, 26 contribute two, and 2 contribute three. Thus 58 controls (24.8\%) belong to repeated hosts, and 26 control hosts link more than one treated \CG{} group. We therefore resample the 33 connected components of the bipartite treated-group/control-host graph as a two-sided clustering sensitivity. It leaves the elliptical-fraction difference at \(0.139\) (95\% interval \([0.051, 0.244]\); Holm-corrected \(p = 0.018\)) and the quenched-fraction difference at \(0.031\) (\([-0.090, 0.120]\); Holm-corrected \(p = 1.000\)); the spiral and star-forming rows are their exact complements. For the matched size endpoints, the Simard half-light-radius difference remains null at \(-0.019\) dex (\([-0.064, 0.018]\); Holm-corrected \(p = 0.621\)), as does concentration (Holm-corrected \(p = 0.896\)); the Petrosian \(R_{50}\) sensitivity is \(-0.033\) dex (\([-0.067, -0.007]\); Holm-corrected \(p = 0.049\)), crossing the adjusted 5\% threshold for this proxy alone. The principal morphology and quenching inferences are unchanged, while the one-proxy Petrosian result warrants the same secondary-outcome caution as the original size analysis.
-
-
-For completeness, the complement outcomes of the matched family are as follows.
-
-
-The \CG{}--minus--control difference in star-forming fraction is \(-0.031\), with 95\% bootstrap interval \([-0.122, 0.056]\) and Holm-corrected \(p = 1.000\).
-
-
-
-The \CG{}--minus--control difference in spiral fraction is \(-0.139\), with 95\% bootstrap interval \([-0.240, -0.037]\) and Holm-corrected \(p = 0.036\).
+The 234 matched controls occupy 204 physical Lim groups, and 26 control hosts link more than one treated \CG{} group. We therefore resample the 33 connected components of the treated-group/control-host graph. The elliptical-fraction difference remains \(0.139\) (95\% interval \([0.051, 0.244]\); \(p = 0.004\)), and the quenched-fraction difference is \(0.031\) (\([-0.090, 0.120]\); \(p = 0.649\)). The analogous matched-size sensitivities are \(-0.019\) dex for Simard radius (\(p = 0.310\)), \(-0.033\) dex for Petrosian radius (\(p = 0.016\)), and \(-0.008\) for concentration (\(p = 0.896\)). The one-proxy Petrosian result warrants the same caution as the original size analysis.
 
 
 
@@ -2869,7 +2828,7 @@ The median nearest-neighbour angular separation is 100.9 arcsec in \CG{} and 255
 
 
 
-Under the availability definitions shown in Fig.~\ref{fig:data_availability}, no major availability difference meets both criteria of corrected significance and a difference exceeding 10 percentage points.
+Under the availability definitions shown in Fig.~\ref{fig:data_availability}, no major availability difference has both an adjusted p-value below 0.05 and a difference exceeding 10 percentage points.
 
 
 
@@ -2920,7 +2879,7 @@ The radial diagnostic is exploratory: mass- and redshift-adjusted satellite size
 
 
 
-Within morphology classes, the satellite-only fits give \(0.036\) dex for elliptical satellites (Holm-corrected \(p = 0.205\)) and \(-0.005\) dex for spiral satellites (Holm-corrected \(p = 0.831\)), and the \CG{}\(\times\)morphology interaction is \(0.032\) dex (\(p = 0.348\)). These strata are secondary diagnostics; they test whether any size offset is independent information beyond the morphology signal rather than a restatement of it.
+Within morphology classes, the satellite-only fits give \(0.036\) dex for elliptical satellites (\(p = 0.068\)) and \(-0.005\) dex for spiral satellites (\(p = 0.831\)), and the \CG{}\(\times\)morphology interaction is \(0.032\) dex (\(p = 0.348\)). These strata are secondary diagnostics of whether size carries information beyond the morphology shift.
 
 
 
@@ -2933,12 +2892,12 @@ Within morphology classes, the satellite-only fits give \(0.036\) dex for ellipt
 
 
 
-\begin{figure}
+\begin{figure*}
     \centering
-    \includegraphics[width=\columnwidth]{figures/size_re_n_plane.pdf}
+    \includegraphics[width=0.72\textwidth]{figures/size_re_n_plane.pdf}
     \caption{Half-light radius versus S\'ersic index for \CG{} and the pooled controls, shown for galaxies with both valid Simard size and stellar mass in the mass--size analysis. The pooled controls are shown as a grey logarithmic hexbin density, while \CG{} galaxies are overplotted as foreground points; lines show binned medians where bins are sufficiently populated. This is the plane used by the S-PLUS transition-galaxy studies.}
     \label{fig:size_re_n_plane}
-\end{figure}
+\end{figure*}
 
 
 

@@ -8,8 +8,8 @@ published sample definitions or primary inference families:
    systems whose quartet BGG is also the BGG of the Lim parent group?
 
 Outputs are written under ``output/referee/`` plus ``referee/values/T9.json``
-for manuscript rendering. The primary Holm families in ``output/results.json``
-are not modified.
+for manuscript rendering. The primary results in ``output/results.json`` are
+not modified.
 """
 
 from __future__ import annotations
@@ -54,7 +54,7 @@ VALUES = ROOT / "referee" / "values"
 
 SAMPLES = ["CG4", "Control4B", "Control4C", "RG4"]
 CONTROLS = ["Control4B", "Control4C", "RG4"]
-MORPHOLOGY_MODELS = ["elliptical_satellites", "spiral_satellites"]
+MORPHOLOGY_MODELS = ["elliptical_satellites"]
 
 # Same Planck15-like constants already used by src/sample_construction.py and
 # by the T8 values currently rendered in Sect. 2.1. Distances below are still
@@ -458,12 +458,10 @@ def host_bgg_sensitivity(
                 "primary_ci95_low": (primary_model.get("cg4_ci95") or [None, None])[0],
                 "primary_ci95_high": (primary_model.get("cg4_ci95") or [None, None])[1],
                 "primary_raw_p": primary_model.get("cg4_p"),
-                "primary_family_holm_p": primary_model.get("cg4_p_adj"),
                 "aligned_odds_ratio": aligned_model.get("cg4_odds_ratio"),
                 "aligned_ci95_low": (aligned_model.get("cg4_ci95") or [None, None])[0],
                 "aligned_ci95_high": (aligned_model.get("cg4_ci95") or [None, None])[1],
                 "aligned_raw_p": aligned_model.get("cg4_p"),
-                "sensitivity_family_holm_p": aligned_model.get("cg4_p_adj"),
                 "primary_beta": primary_model.get("cg4_coefficient"),
                 "aligned_beta": aligned_model.get("cg4_coefficient"),
             }
@@ -490,10 +488,9 @@ def host_bgg_sensitivity(
             "Labelled sensitivity only: CG4 is restricted to systems whose "
             "quartet BGG objid equals the Lim parent-group BGG objid. Control "
             "definitions, covariates, complete-case handling, physical-group "
-            "clustering, model specs, and per-control Holm families are unchanged."
+            "clustering, and model specifications are unchanged."
         ),
         "n_aligned_cg4_groups": int(len(aligned_groups)),
-        "holm_family": list(MODEL_SPECS.keys()),
         "reported_models": MORPHOLOGY_MODELS,
         "classification_rule": (
             "Stable requires same direction, overlapping 95% CIs, and less than "

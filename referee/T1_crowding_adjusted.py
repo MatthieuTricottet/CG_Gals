@@ -2,17 +2,15 @@
 
 Sect. 3.5's crowding test contrasts *raw* proportions, while the headline
 per-control result (Sect. 3.2) is *adjusted*; the referee asks for the
-robustness of the adjusted estimand on the adjusted estimand.
+robustness of the adjusted morphology and quenching results.
 
 This script reruns the full Sect. 3.2 per-control adjusted binomial
-families (all eight outcomes: elliptical/spiral/quenched x all-member,
-satellite-only, plus starforming_satellites and elliptical_bgg) on the
+models (elliptical and quenched, with the pre-specified rank subsets) on the
 sample that *excludes* every galaxy whose nearest projected same-group
 neighbour lies within 55 arcsec (the existing Sect. 3.5 crowding flag),
 separately vs Control4B, Control4C, and RG4. Covariates, clustering
-(physical Lim group), and the Holm-within-contrast correction are
-identical to the published families; the excluded-sample fits form a new
-labelled sensitivity family and are never folded into the published one.
+(physical Lim group), and the outcome definitions are identical to the
+published models. The excluded-sample fits remain a labelled sensitivity.
 
 Outputs
 -------
@@ -43,7 +41,7 @@ from primary_contrasts import run_primary_contrasts  # noqa: E402
 from specialness_models import LABELS, MODEL_SPECS  # noqa: E402
 
 OUT = ROOT / "referee"
-FIELDS = ["cg4_odds_ratio", "cg4_ci95", "cg4_p", "cg4_p_adj", "n", "n_clusters"]
+FIELDS = ["cg4_odds_ratio", "cg4_ci95", "cg4_p", "n", "n_clusters"]
 
 
 def main() -> None:
@@ -79,10 +77,9 @@ def main() -> None:
             }
             for sample, row in excluded_stats.iterrows()
         },
-        "family_note": (
-            "sensitivity family: 55-arcsec exclusion; Holm within each "
-            "contrast across the same eight outcomes as the published "
-            "Sect. 3.2 families, which stay frozen"
+        "sensitivity_note": (
+            "55-arcsec exclusion with the same outcomes, covariates, and "
+            "physical-group clustering as the published Sect. 3.2 models"
         ),
         "contrasts": {},
     }
@@ -128,7 +125,7 @@ def main() -> None:
                     return "skipped"
                 return (f"OR={m['cg4_odds_ratio']:.2f} "
                         f"[{m['cg4_ci95'][0]:.2f},{m['cg4_ci95'][1]:.2f}] "
-                        f"p={m['cg4_p']:.4f} pH={m['cg4_p_adj']:.4f} "
+                        f"p={m['cg4_p']:.4f} "
                         f"n={m['n']}")
 
             print(f"{model:24s} {fmt(f)}  ->  {fmt(e)}")

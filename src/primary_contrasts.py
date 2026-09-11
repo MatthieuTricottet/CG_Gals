@@ -9,11 +9,12 @@ never pooled here:
   groups (BGG + three closest projected companions)?
 * RG4       - compared with *true four-member ordinary groups*?
 
-Each contrast fits the same family of adjusted logistic models as the
+Each comparison fits the same set of adjusted logistic models as the
 pooled (secondary) analysis, on the CG4 + one-control subset, with
 cluster-robust standard errors by *physical* group (Lim group id for
-controls and for CG4s via their host Lim group). Holm correction is applied
-within each contrast across its outcome family.
+controls and for CG4s via their host Lim group). Elliptical/spiral and
+quenched/star-forming are represented once each because they are exact
+binary complements on their respective complete-case samples.
 """
 
 from __future__ import annotations
@@ -29,11 +30,11 @@ import numpy as np
 
 try:
     from extended_data import ensure_galaxy_frame
-    from extended_stats import fit_logistic_model, holm_correction, safe_json
+    from extended_stats import fit_logistic_model, safe_json
     from specialness_models import LABELS, MODEL_SPECS, _covariates
 except ModuleNotFoundError:  # pragma: no cover
     from .extended_data import ensure_galaxy_frame
-    from .extended_stats import fit_logistic_model, holm_correction, safe_json
+    from .extended_stats import fit_logistic_model, safe_json
     from .specialness_models import LABELS, MODEL_SPECS, _covariates
 
 CONTRAST_QUESTIONS = {
@@ -41,7 +42,7 @@ CONTRAST_QUESTIONS = {
     "Control4C": "BGG-centred projected cores of ordinary groups",
     "RG4": "true four-member ordinary groups",
 }
-PLOT_OUTCOMES = ["elliptical_all", "spiral_all", "quenched_all"]
+PLOT_OUTCOMES = ["elliptical_all", "quenched_all"]
 PLOT_COLOURS = {"Control4B": "#2864A6", "Control4C": "#25876E", "RG4": "#A74752"}
 
 
@@ -125,15 +126,6 @@ def run_primary_contrasts(data, output_dir: str | None = None, frame=None):
                 predictors,
                 continuous=[column for column in continuous if column in predictors],
             )
-        ok_names = [
-            name for name in MODEL_SPECS if contrast[name].get("status") == "ok"
-        ]
-        adjusted = holm_correction([contrast[name].get("cg4_p") for name in ok_names])
-        for name, p_adj in zip(ok_names, adjusted):
-            contrast[name]["cg4_p_adj"] = p_adj
-        contrast["significant_models"] = [
-            name for name in ok_names if contrast[name].get("cg4_p_adj", 1) < 0.05
-        ]
         results["contrasts"][control] = contrast
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)

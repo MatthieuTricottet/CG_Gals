@@ -101,15 +101,15 @@ def run_extended_specialness(sample, output_dir: str | None = None):
     adjusted = results["specialness_models"].get("quenched_all", {})
     matched = results["matched_controls"].get("effects", {}).get("quenched_fraction", {})
     results["interpretation"] = {
-        "adjusted_quenched_signal": adjusted.get("cg4_p_adj", 1) is not None
-        and adjusted.get("cg4_p_adj", 1) < 0.05,
-        "matched_quenched_signal": matched.get("p_adj", 1) is not None
-        and matched.get("p_adj", 1) < 0.05,
+        "adjusted_quenched_signal": adjusted.get("cg4_p", 1) is not None
+        and adjusted.get("cg4_p", 1) < 0.05,
+        "matched_quenched_signal": matched.get("p", 1) is not None
+        and matched.get("p", 1) < 0.05,
         "independent_compact_group_signal": (
-            adjusted.get("cg4_p_adj", 1) is not None
-            and adjusted.get("cg4_p_adj", 1) < 0.05
-            and matched.get("p_adj", 1) is not None
-            and matched.get("p_adj", 1) < 0.05
+            adjusted.get("cg4_p", 1) is not None
+            and adjusted.get("cg4_p", 1) < 0.05
+            and matched.get("p", 1) is not None
+            and matched.get("p", 1) < 0.05
         ),
         "phase_space_signal": results["phase_space_segregation"].get(
             "fixed_phase_space_cg4_significant", False

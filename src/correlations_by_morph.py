@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 
 
-from scipy.stats import fisher_exact, barnard_exact
+from scipy.stats import fisher_exact
 
 
 #* --------------------------------------------------------------------------------

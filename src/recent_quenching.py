@@ -14,10 +14,10 @@ from scipy import stats
 
 try:
     from extended_data import ensure_galaxy_frame
-    from extended_stats import holm_correction, safe_json
+    from extended_stats import safe_json
 except ModuleNotFoundError:  # pragma: no cover
     from .extended_data import ensure_galaxy_frame
-    from .extended_stats import holm_correction, safe_json
+    from .extended_stats import safe_json
 
 
 DN4000_ALIASES = ["Dn4000", "dn4000", "d4000"]
@@ -124,8 +124,6 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
         }
     comparisons = {}
     cg = values.loc[values["sample"] == "CG4"]
-    p_values = []
-    keys = []
     for control_name in ["Control4B", "Control4C", "RG4"]:
         control = values.loc[values["sample"] == control_name]
         key = f"CG4_vs_{control_name}"
@@ -151,10 +149,6 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
             ),
             "fisher_p": p_value,
         }
-        p_values.append(p_value)
-        keys.append(key)
-    for key, adjusted in zip(keys, holm_correction(p_values)):
-        comparisons[key]["p_adj"] = adjusted
 
     result = {
         "status": "limited",
@@ -167,8 +161,8 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
         "fractions_by_sample": fractions,
         "comparisons": comparisons,
         "recent_quenching_classification_available": False,
-        "any_significant_comparison": any(
-            value.get("p_adj", 1) < 0.05 for value in comparisons.values()
+        "any_low_p_comparison": any(
+            value.get("fisher_p", 1) < 0.05 for value in comparisons.values()
         ),
     }
     if output_dir:

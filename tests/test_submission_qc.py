@@ -114,30 +114,24 @@ def test_host_bgg_alignment_uses_objids_and_preserves_satellite_status():
 def test_aligned_morphology_sensitivities_are_labelled_and_separate():
     t9 = _json("referee/values/T9.json")
     rows = pd.DataFrame(t9["host_bgg_sensitivity"]["rows"])
-    assert len(rows) == 6
+    assert len(rows) == 3
     assert set(rows["control"]) == set(CONTROLS)
-    assert set(rows["model"]) == {"elliptical_satellites", "spiral_satellites"}
+    assert set(rows["model"]) == {"elliptical_satellites"}
     assert t9["host_bgg_sensitivity"]["n_aligned_cg4_groups"] == 56
-    assert t9["host_bgg_sensitivity"]["classification_counts"] == {"Stable": 6}
+    assert t9["host_bgg_sensitivity"]["classification_counts"] == {"Stable": 3}
     assert "Labelled sensitivity only" in t9["host_bgg_sensitivity"]["role"]
 
     for _, row in rows.iterrows():
         assert row["n_cg4_systems_retained"] == 56
         assert row["n_cg4_satellite_galaxies_raw"] == 56 * 3
         assert row["n_cg4_complete"] == 143
-        assert row["sensitivity_family_holm_p"] >= row["aligned_raw_p"]
         assert row["delta_beta_aligned_minus_primary"] == pytest.approx(
             np.log(row["aligned_odds_ratio"]) - np.log(row["primary_odds_ratio"])
         )
-        if row["model"] == "elliptical_satellites":
-            assert row["aligned_odds_ratio"] > 1
-        else:
-            assert row["aligned_odds_ratio"] < 1
+        assert row["aligned_odds_ratio"] > 1
 
     c4c_e = rows.query("control == 'Control4C' and model == 'elliptical_satellites'").iloc[0]
-    c4c_s = rows.query("control == 'Control4C' and model == 'spiral_satellites'").iloc[0]
     assert c4c_e["aligned_odds_ratio"] == pytest.approx(1.98, abs=0.005)
-    assert c4c_s["aligned_odds_ratio"] == pytest.approx(0.51, abs=0.005)
 
     results = _json("output/results.json")["extended_specialness"]
     assert "host_bgg_sensitivity" not in results

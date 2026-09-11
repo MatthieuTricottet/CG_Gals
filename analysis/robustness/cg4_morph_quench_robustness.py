@@ -36,7 +36,7 @@ if str(SRC_ROOT) not in sys.path:
 
 import config as co  # noqa: E402
 from extended_data import dedup_control_pool, ensure_galaxy_frame  # noqa: E402
-from extended_stats import fit_logistic_model, holm_correction  # noqa: E402
+from extended_stats import fit_logistic_model  # noqa: E402
 from primary_contrasts import run_primary_contrasts  # noqa: E402
 from size_data import (  # noqa: E402
     SDSS_ID_COLUMNS,
@@ -55,7 +55,7 @@ REQUESTED_CONTROLS = ["RG4", "Control4C"]
 MORPH_THRESHOLDS = [0.5, 0.8]
 CONCENTRATION_THRESHOLDS = [2.6, 2.5, 2.86]
 SERSIC_THRESHOLDS = [2.5, 2.0, 3.0]
-ROBUSTNESS_VERSION = "2026-07-17"
+ROBUSTNESS_VERSION = "2026-09-11"
 
 
 @dataclass
@@ -75,7 +75,6 @@ class ModelSpec:
     ci_low: float | None = None
     ci_high: float | None = None
     p: float | None = None
-    p_holm: float | None = None
     n: int | None = None
     n_cg4: int | None = None
     n_control: int | None = None
@@ -934,8 +933,8 @@ def run_fiducial_reproduction(sample: dict[str, pd.DataFrame]) -> pd.DataFrame:
                     if safe_float(refit.get("cg4_odds_ratio")) is not None and safe_float(saved.get("cg4_odds_ratio")) is not None
                     else np.nan
                 ),
-                "stored_p_holm": saved.get("cg4_p_adj"),
-                "refit_p_holm": refit.get("cg4_p_adj"),
+                "stored_p": saved.get("cg4_p"),
+                "refit_p": refit.get("cg4_p"),
                 "stored_n": saved.get("n"),
                 "refit_n": refit.get("n"),
                 "status": refit.get("status"),
@@ -943,13 +942,6 @@ def run_fiducial_reproduction(sample: dict[str, pd.DataFrame]) -> pd.DataFrame:
             }
         )
     return pd.DataFrame(rows)
-
-
-def apply_global_holm(specs: list[ModelSpec]) -> None:
-    ok = [spec for spec in specs if spec.status == "ok" and spec.p is not None]
-    adjusted = holm_correction([spec.p for spec in ok])
-    for spec, p_holm in zip(ok, adjusted):
-        spec.p_holm = p_holm
 
 
 def specs_to_frame(specs: list[ModelSpec]) -> pd.DataFrame:
@@ -1041,7 +1033,7 @@ def write_report(
 ) -> None:
     report = []
     report.append(f"# CG4 Morphology/Quenching Robustness Report\n")
-    report.append(f"Run date: 2026-07-17. Robustness runner version: `{ROBUSTNESS_VERSION}`.\n")
+    report.append(f"Run date: {ROBUSTNESS_VERSION}. Robustness runner version: `{ROBUSTNESS_VERSION}`.\n")
     report.append("## Methods Actually Used\n")
     report.append(
         "- Input catalogue: `data/processed_sample.pkl`, harmonized with `src.extended_data.ensure_galaxy_frame`.\n"
@@ -1050,7 +1042,7 @@ def write_report(
         "- Star-formation class: `sSFR_status`, with `Quenched` versus `Starforming`; `NosSFR` rows are excluded.\n"
         "- Structural columns: local caches `data/sdss_size_columns.csv` (`petroR50_r`, `petroR90_r`) and `data/simard2011_subset.csv` (`ng`). No external downloads were attempted.\n"
         "- Model adjustment: the existing helper selected `logMstar`, `z_numeric`, `is_satellite` for all-member fits, `log_group_luminosity`, and `velocity_dispersion` when complete enough. Satellite-only fits remove `is_satellite` after subsetting. Standard errors are clustered by `physical_group`.\n"
-        "- Holm correction: one global Holm correction was applied over all successful inferential estimates in this new robustness family.\n"
+        "- These are labelled robustness checks of the fitted direction, magnitude, and interval; they are not pooled into an additional multiple-testing family.\n"
     )
     if missing_raw_votes:
         report.append(
@@ -1062,7 +1054,7 @@ def write_report(
 
     task_a = estimates.loc[estimates["task"] == "A"].copy()
     report.append("\n## Task A - Debiased Morphology\n")
-    report.append(markdown_table(task_a, ["contrast", "scope", "proxy", "threshold", "estimate", "ci_low", "ci_high", "p", "p_holm", "n"], max_rows=24))
+    report.append(markdown_table(task_a, ["contrast", "scope", "proxy", "threshold", "estimate", "ci_low", "ci_high", "p", "n"], max_rows=24))
 
     rg_sat = task_a.loc[
         (task_a["contrast"] == "CG4_vs_RG4")
@@ -1074,51 +1066,51 @@ def write_report(
         row = rg_sat.iloc[0]
         report.append(
             f"\nAt the fiducial debiased threshold for satellites against RG4, OR = {fmt(row['estimate'])} "
-            f"(95% CI {fmt(row['ci_low'])}-{fmt(row['ci_high'])}; Holm p = {p_text(row['p_holm'])}).\n"
+            f"(95% CI {fmt(row['ci_low'])}-{fmt(row['ci_high'])}; p = {p_text(row['p'])}).\n"
         )
 
     task_b = estimates.loc[estimates["task"] == "B"].copy()
-    structural_signal = task_b.loc[
+    positive_structural_intervals = task_b.loc[
         (task_b["status"] == "ok")
-        & (task_b["p_holm"].notna())
-        & (task_b["p_holm"] < 0.05)
+        & (task_b["ci_low"].notna())
+        & (task_b["ci_low"] > np.where(task_b["effect_type"].eq("OR"), 1.0, 0.0))
         & (
             ((task_b["effect_type"] == "OR") & (task_b["estimate"] > 1))
             | ((task_b["effect_type"] == "beta") & (task_b["estimate"] > 0))
         )
     ]
     report.append("\n## Task B - Structural Morphology Proxies\n")
-    report.append(markdown_table(task_b, ["contrast", "scope", "proxy", "model_type", "threshold", "estimate", "ci_low", "ci_high", "p", "p_holm", "n"], max_rows=40))
-    if structural_signal.empty:
-        report.append("\nNo structural excess is significant after the global Holm correction at fixed mass and the fiducial covariates.\n")
+    report.append(markdown_table(task_b, ["contrast", "scope", "proxy", "model_type", "threshold", "estimate", "ci_low", "ci_high", "p", "n"], max_rows=40))
+    if positive_structural_intervals.empty:
+        report.append("\nNo positive structural-proxy fit has a 95% confidence interval excluding the null at fixed mass and the fiducial covariates.\n")
     else:
         report.append(
-            "\nAt least one structural proxy is positive and significant after Holm correction: "
-            + ", ".join(structural_signal["model_id"].astype(str).tolist())
-            + ".\n"
+            "\nPositive structural-proxy fits whose 95% confidence intervals exclude the null are: "
+            + ", ".join(positive_structural_intervals["model_id"].astype(str).tolist())
+            + ". These deliberately overlapping proxy definitions are robustness diagnostics, not separate discoveries.\n"
         )
 
     task_c = estimates.loc[estimates["task"] == "C"].copy()
     report.append("\n## Task C - 2x2 Morphology x Star-Formation Decomposition\n")
-    report.append(markdown_table(task_c, ["outcome", "estimate", "ci_low", "ci_high", "p", "p_holm", "n"]))
+    report.append(markdown_table(task_c, ["outcome", "estimate", "ci_low", "ci_high", "p", "n"]))
     report.append("\nObserved complete-case satellite fractions:\n")
     report.append(markdown_table(cell_fractions, ["sample", "cell", "n_cell", "n_complete", "fraction"]))
     if not task_c.empty and (task_c["status"] == "ok").any():
         strongest = task_c.loc[task_c["status"] == "ok"].sort_values("estimate", ascending=False).iloc[0]
         report.append(
             f"\nLargest adjusted RRR is `{strongest['outcome']}`: RRR = {fmt(strongest['estimate'])} "
-            f"(95% CI {fmt(strongest['ci_low'])}-{fmt(strongest['ci_high'])}; Holm p = {p_text(strongest['p_holm'])}). "
+            f"(95% CI {fmt(strongest['ci_low'])}-{fmt(strongest['ci_high'])}; p = {p_text(strongest['p'])}). "
             "Interpretation hooks: early_passive implies historical transform-and-quench; early_SF implies tidal heating without quenching; late_passive implies strangulation without structural transformation.\n"
         )
 
     report.append("\n## Task D - Quenching Null CI\n")
-    report.append(markdown_table(quenching, ["contrast", "scope", "estimate", "ci_low", "ci_high", "p", "p_holm", "n"]))
+    report.append(markdown_table(quenching, ["contrast", "scope", "estimate", "ci_low", "ci_high", "p", "n"]))
     pooled_sat = quenching.loc[(quenching["contrast"] == "CG4_vs_pooled_controls") & (quenching["scope"] == "satellites")]
     if not pooled_sat.empty:
         row = pooled_sat.iloc[0]
         report.append(
             f"\nPooled satellite quenching OR = {fmt(row['estimate'])} "
-            f"(95% CI {fmt(row['ci_low'])}-{fmt(row['ci_high'])}). This interval is compatible with no effect and with a modest excess.\n"
+            f"(95% CI {fmt(row['ci_low'])}-{fmt(row['ci_high'])}). This pooled estimate points to a modest excess, but the control-specific fits show that it is not stable across comparison samples.\n"
         )
 
     report.append("\n## Data Availability And Fibre-Collision Caveat\n")
@@ -1182,7 +1174,6 @@ def main(argv: list[str] | None = None) -> int:
     multinomial_specs, cell_fractions = fit_multinomial_cells(frame, exclusions)
     specs.extend(multinomial_specs)
     specs.extend(run_quenching_ci(frame, exclusions))
-    apply_global_holm(specs)
     estimates = specs_to_frame(specs)
 
     morphology = estimates.loc[estimates["task"] == "A"].copy()

@@ -13,11 +13,10 @@ quenched) with and without ``dist_host_kpc``, on the *identical*
 complete-case sample (the complete-case mask always includes the radius
 column, so dropping the term never changes the rows) and identical strata.
 It reports a 2x2 grid {with radius, without radius} x {clogit, FE-GLM}
-with OR, 95% CI, nominal p, and a Holm p computed under one consistent
-convention: within each estimator x specification, Holm across the two
-outcomes (the published family convention). The published Sect. 3.4
-numbers correspond to the with-radius cells and are cross-checked against
-output/results.json.
+with OR, 95% CI, and p. Morphology and quenching answer different physical
+questions and are not combined into a multiplicity family. The published
+Sect. 3.4 numbers correspond to the with-radius cells and are cross-checked
+against output/results.json.
 
 Outputs: referee/values/T2.json, referee/T2_within_host_table.csv,
 referee/T2_summary.md (hand-written).
@@ -35,7 +34,6 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from extended_stats import holm_correction  # noqa: E402
 from host_controlled import (  # noqa: E402
     _fit_conditional_logit,
     _fit_fe_glm,
@@ -63,8 +61,7 @@ def main() -> None:
     values = {
         "note": (
             "complete cases fixed on the full covariate set incl. "
-            "dist_host_kpc for both specifications; Holm across the two "
-            "outcomes within each estimator x specification"
+            "dist_host_kpc for both specifications"
         ),
         "grid": {},
     }
@@ -78,21 +75,14 @@ def main() -> None:
                             *FULL_COVARIATES]
                 )
                 fits[outcome] = fitter(complete, outcome, covariates)
-            holm = holm_correction(
-                [fits[o].get("is_CG_member_p") if fits[o].get("status") == "ok"
-                 else None for o in OUTCOMES]
-            )
-            for outcome, p_holm in zip(OUTCOMES, holm):
+            for outcome in OUTCOMES:
                 fit = fits[outcome]
-                if fit.get("status") == "ok":
-                    fit["is_CG_member_p_holm"] = p_holm
                 entry = {
                     "status": fit.get("status"),
                     "n": fit.get("n"),
                     "odds_ratio": fit.get("is_CG_member_odds_ratio"),
                     "ci95": fit.get("is_CG_member_ci95"),
                     "p": fit.get("is_CG_member_p"),
-                    "p_holm": fit.get("is_CG_member_p_holm"),
                 }
                 values["grid"].setdefault(outcome, {}).setdefault(
                     spec_name, {})[est_name] = entry

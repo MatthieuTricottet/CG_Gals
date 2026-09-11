@@ -13,31 +13,25 @@ import numpy as np
 
 try:
     from extended_data import dedup_control_pool, ensure_galaxy_frame
-    from extended_stats import fit_logistic_model, holm_correction, safe_json
+    from extended_stats import fit_logistic_model, safe_json
 except ModuleNotFoundError:  # pragma: no cover
     from .extended_data import dedup_control_pool, ensure_galaxy_frame
-    from .extended_stats import fit_logistic_model, holm_correction, safe_json
+    from .extended_stats import fit_logistic_model, safe_json
 
 
 MODEL_SPECS = {
     "quenched_all": ("quenched", None),
     "quenched_satellites": ("quenched", ("is_satellite", 1)),
-    "starforming_satellites": ("starforming", ("is_satellite", 1)),
     "elliptical_all": ("elliptical", None),
     "elliptical_satellites": ("elliptical", ("is_satellite", 1)),
     "elliptical_bgg": ("elliptical", ("is_bgg", 1)),
-    "spiral_all": ("spiral", None),
-    "spiral_satellites": ("spiral", ("is_satellite", 1)),
 }
 LABELS = {
     "quenched_all": "Quenched, all",
     "quenched_satellites": "Quenched, satellites",
-    "starforming_satellites": "Star-forming, satellites",
     "elliptical_all": "Elliptical, all",
     "elliptical_satellites": "Elliptical, satellites",
     "elliptical_bgg": "Elliptical, BGG",
-    "spiral_all": "Spiral, all",
-    "spiral_satellites": "Spiral, satellites",
 }
 
 
@@ -76,9 +70,7 @@ def _plot(results, path):
     odds = np.array([row[1]["cg4_odds_ratio"] for row in rows])
     low = np.array([row[1]["cg4_ci95"][0] for row in rows])
     high = np.array([row[1]["cg4_ci95"][1] for row in rows])
-    colours = [
-        "#A74752" if row[1].get("cg4_p_adj", 1) < 0.05 else "#555555" for row in rows
-    ]
+    colours = ["#2864A6" for _ in rows]
     for index, colour in enumerate(colours):
         ax.errorbar(
             odds[index],
@@ -101,7 +93,7 @@ def _plot(results, path):
 
 
 def fit_logistic_specialness_models(data, output_dir: str | None = None):
-    """Fit the pooled family of adjusted binary-outcome models (secondary).
+    """Fit pooled adjusted binary-outcome models (secondary).
 
     This pooled analysis is a *summary across heterogeneous control
     definitions* and is secondary to the per-control contrasts of
@@ -141,23 +133,6 @@ def fit_logistic_specialness_models(data, output_dir: str | None = None):
             continuous=[column for column in continuous if column in predictors],
         )
 
-    ok_names = [name for name in MODEL_SPECS if results[name].get("status") == "ok"]
-    adjusted = holm_correction([results[name].get("cg4_p") for name in ok_names])
-    for name, p_adj in zip(ok_names, adjusted):
-        result = results[name]
-        result["cg4_p_adj"] = p_adj
-        coefficient = result.get("cg4_coefficient")
-        if p_adj is None or p_adj >= 0.05:
-            result["interpretation_flag"] = "not_significant"
-        elif coefficient > 0:
-            result["interpretation_flag"] = "positive"
-        elif coefficient < 0:
-            result["interpretation_flag"] = "negative"
-        else:
-            result["interpretation_flag"] = "null"
-    results["significant_models"] = [
-        name for name in ok_names if results[name].get("cg4_p_adj", 1) < 0.05
-    ]
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
         results["figure"] = _plot(

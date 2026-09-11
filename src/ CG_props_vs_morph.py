@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 from astroquery.sdss import SDSS
 
-from scipy.stats import multivariate_normal, fisher_exact, barnard_exact
+from scipy.stats import multivariate_normal, fisher_exact
 import scipy.interpolate as interp
 
 import matplotlib.pyplot as plt
@@ -58,4 +58,3 @@ import generate_report as report
 import sSFR
 
 # endregion
-

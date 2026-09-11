@@ -200,11 +200,17 @@ def test_all_modules_execute_on_synthetic_data_and_create_figures(tmp_path):
         assert (Path(tmp_path) / filename).is_file()
 
 
-def test_matched_control_reports_conservative_complement_family():
+def test_matched_control_reports_complementarity_without_duplicate_outcomes():
     frame = synthetic_frame()
     result = run_matched_control_analysis(frame, n_boot=50)
 
-    assert "holm_correction_note" in result
+    assert "holm_correction_note" not in result
+    assert set(result["effects"]) == {
+        "quenched_fraction",
+        "elliptical_fraction",
+        "residual_sSFR_starforming",
+        "colour_residual_u_minus_r",
+    }
     assert (
         result["complementarity_audit"]["quenched_starforming"]["exact_complements"]
         is True

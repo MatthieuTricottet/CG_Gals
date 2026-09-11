@@ -11,12 +11,10 @@ def _minimal_results_context():
         "extended_specialness": {
             "specialness_models": {
                 "elliptical_all": {"status": "ok"},
-                "spiral_all": {"status": "ok"},
             },
             "matched_controls": {
                 "effects": {
                     "elliptical_fraction": {"status": "ok"},
-                    "spiral_fraction": {"status": "ok"},
                 }
             },
             "morphology_robustness": {

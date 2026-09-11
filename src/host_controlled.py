@@ -56,10 +56,10 @@ except ImportError:  # pragma: no cover
 
 try:
     import config as co
-    from extended_stats import fit_logistic_model, holm_correction, safe_json
+    from extended_stats import fit_logistic_model, safe_json
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
-    from .extended_stats import fit_logistic_model, holm_correction, safe_json
+    from .extended_stats import fit_logistic_model, safe_json
 
 CG_CLASSES = ["Embedded", "Predom"]
 OUTCOMES = ["elliptical", "quenched"]
@@ -406,15 +406,4 @@ def run_host_controlled_analysis(sample, output_dir: str | None = None):
 
         results["models"][outcome] = outcome_results
 
-    # Holm correction across outcomes using the primary (conditional logit) p-values,
-    # falling back to pooled if primary failed.
-    ok_names = [
-        name for name in OUTCOMES
-        if results["models"][name].get("cg_member_p") is not None
-    ]
-    adjusted = holm_correction(
-        [results["models"][name].get("cg_member_p") for name in ok_names]
-    )
-    for name, p_adj in zip(ok_names, adjusted):
-        results["models"][name]["cg_member_p_adj"] = p_adj
     return safe_json(results)

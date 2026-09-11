@@ -75,6 +75,5 @@ def test_host_controlled_runs_on_committed_data(monkeypatch):
     assert result["n_members"] > result["n_cg_members"]
     quenched = result["models"]["quenched"]
     if quenched.get("status") == "ok":
-        assert quenched.get("cg_member_p_adj") is None or (
-            quenched["cg_member_p_adj"] >= quenched["cg_member_p"]
-        )
+        assert quenched.get("cg_member_p") is not None
+        assert "cg_member_p_adj" not in quenched

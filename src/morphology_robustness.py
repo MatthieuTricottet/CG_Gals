@@ -27,7 +27,7 @@ except ModuleNotFoundError:  # pragma: no cover
 
 SAMPLES = ["CG4", "Control4B", "Control4C", "RG4"]
 CONTROL_SAMPLES = ["Control4B", "Control4C", "RG4"]
-MORPH_OUTCOMES = ["elliptical", "spiral"]
+MORPH_OUTCOMES = ["elliptical"]
 CROWDING_THRESHOLD_ARCSEC = 55.0
 
 
@@ -98,33 +98,33 @@ def _exact_test_rows(frame: pd.DataFrame) -> list[dict[str, object]]:
     for control in CONTROL_SAMPLES:
         ctrl = no_close.loc[no_close["sample"] == control]
         for outcome in MORPH_OUTCOMES:
-            cg_success = int(cg[outcome].eq(1).sum())
-            ctrl_success = int(ctrl[outcome].eq(1).sum())
+            cg_valid = cg.loc[cg[outcome].notna()]
+            ctrl_valid = ctrl.loc[ctrl[outcome].notna()]
+            cg_success = int(cg_valid[outcome].eq(1).sum())
+            ctrl_success = int(ctrl_valid[outcome].eq(1).sum())
             table = np.array(
                 [
-                    [cg_success, int(len(cg) - cg_success)],
-                    [ctrl_success, int(len(ctrl) - ctrl_success)],
+                    [cg_success, int(len(cg_valid) - cg_success)],
+                    [ctrl_success, int(len(ctrl_valid) - ctrl_success)],
                 ]
             )
             if table.min() < 0 or table.sum() == 0:
                 p_value = None
                 method = "skipped"
             else:
-                try:
-                    p_value = float(stats.barnard_exact(table, alternative="two-sided").pvalue)
-                    method = "Barnard exact"
-                except Exception:
-                    p_value = float(stats.fisher_exact(table, alternative="two-sided").pvalue)
-                    method = "Fisher exact"
+                p_value = float(
+                    stats.fisher_exact(table, alternative="two-sided").pvalue
+                )
+                method = "Fisher exact"
             rows.append(
                 {
                     "control": control,
                     "outcome": outcome,
                     "method": method,
-                    "cg4_n": int(len(cg)),
-                    "control_n": int(len(ctrl)),
-                    "cg4_fraction": float(cg_success / len(cg)) if len(cg) else None,
-                    "control_fraction": float(ctrl_success / len(ctrl)) if len(ctrl) else None,
+                    "cg4_n": int(len(cg_valid)),
+                    "control_n": int(len(ctrl_valid)),
+                    "cg4_fraction": float(cg_success / len(cg_valid)) if len(cg_valid) else None,
+                    "control_fraction": float(ctrl_success / len(ctrl_valid)) if len(ctrl_valid) else None,
                     "p_value": p_value,
                 }
             )
@@ -218,12 +218,8 @@ def _cg_class_split(frame: pd.DataFrame) -> dict[str, object]:
                 "class": str(class_name),
                 "n_groups": int(part["group_uid"].nunique()),
                 "n_galaxies": int(len(part)),
-                "elliptical_fraction": float(part["elliptical"].eq(1).mean()),
-                "spiral_fraction": float(part["spiral"].eq(1).mean()),
-                "quenched_fraction": float(part["quenched"].eq(1).mean()) if "quenched" in part else None,
-                "starforming_fraction": (
-                    float(part["starforming"].eq(1).mean()) if "starforming" in part else None
-                ),
+                "elliptical_fraction": float(part["elliptical"].mean()),
+                "quenched_fraction": float(part["quenched"].mean()) if "quenched" in part else None,
             }
         )
 
@@ -246,21 +242,26 @@ def _cg_class_split(frame: pd.DataFrame) -> dict[str, object]:
                 }
             )
             continue
-        for outcome in ["elliptical", "spiral", "quenched", "starforming"]:
+        for outcome in ["elliptical", "quenched"]:
             if outcome not in cg.columns:
                 continue
-            a_success = int(a[outcome].eq(1).sum())
-            b_success = int(b[outcome].eq(1).sum())
-            table = [[a_success, int(len(a) - a_success)], [b_success, int(len(b) - b_success)]]
+            a_valid = a.loc[a[outcome].notna()]
+            b_valid = b.loc[b[outcome].notna()]
+            a_success = int(a_valid[outcome].eq(1).sum())
+            b_success = int(b_valid[outcome].eq(1).sum())
+            table = [
+                [a_success, int(len(a_valid) - a_success)],
+                [b_success, int(len(b_valid) - b_success)],
+            ]
             comparisons.append(
                 {
                     "comparison": f"{label_a} vs {label_b}",
                     "outcome": outcome,
                     "status": "ok",
-                    "n_a": int(len(a)),
-                    "n_b": int(len(b)),
-                    "fraction_a": float(a_success / len(a)),
-                    "fraction_b": float(b_success / len(b)),
+                    "n_a": int(len(a_valid)),
+                    "n_b": int(len(b_valid)),
+                    "fraction_a": float(a_success / len(a_valid)),
+                    "fraction_b": float(b_success / len(b_valid)),
                     "fisher_p": float(stats.fisher_exact(table, alternative="two-sided").pvalue),
                 }
             )

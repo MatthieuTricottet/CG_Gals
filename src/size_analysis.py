@@ -1,17 +1,14 @@
 """Galaxy-size analysis at fixed stellar mass for compact groups.
 
-Primary estimand: the CG4 coefficient Delta (dex) in a cluster-robust linear
+Primary comparison: the CG4 coefficient Delta (dex) in a cluster-robust linear
 model of log10(size/kpc) at fixed stellar mass, redshift, rank, and available
 group-scale covariates, pooled over the three regular-group controls.
 Delta < 0 means CG4 galaxies are smaller at fixed mass.
 
-Pre-registered Holm families:
-  F1 (primary, Simard size): all galaxies, satellites only, BGGs only.
-  F2 (secondary): Petrosian all, Petrosian satellites, concentration
-     satellites.
-  F3 (matched outcomes): Simard Dlog size, Petrosian Dlog size,
-     Dconcentration.
-Everything else is descriptive/exploratory (raw p, BH inside figures).
+The all-galaxy, satellite, BGG, alternative-measure, and matched analyses
+answer distinct scientific or robustness questions. They are reported with
+effect sizes, confidence intervals, and unadjusted p-values rather than being
+combined into artificial multiple-testing families.
 """
 
 from __future__ import annotations
@@ -32,10 +29,8 @@ try:
     import config as co
     from extended_data import dedup_control_pool, ensure_galaxy_frame
     from extended_stats import (
-        benjamini_hochberg,
         empirical_p_two_sided,
         fit_ols_with_optional_cluster_se,
-        holm_correction,
         safe_float,
         safe_json,
         two_sample_summary,
@@ -48,10 +43,8 @@ except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from .extended_data import dedup_control_pool, ensure_galaxy_frame
     from .extended_stats import (
-        benjamini_hochberg,
         empirical_p_two_sided,
         fit_ols_with_optional_cluster_se,
-        holm_correction,
         safe_float,
         safe_json,
         two_sample_summary,
@@ -244,15 +237,6 @@ def fit_size_model(
     return result
 
 
-def _holm_annotate(results: dict[str, dict], names: list[str]) -> None:
-    """Attach Holm-corrected p-values across the given family in place."""
-
-    ok = [n for n in names if results.get(n, {}).get("status") == "ok"]
-    adjusted = holm_correction([results[n].get("p") for n in ok])
-    for name, p_holm in zip(ok, adjusted):
-        results[name]["p_holm"] = p_holm
-
-
 # ---------------------------------------------------------------------------
 # Block A: availability audit
 # ---------------------------------------------------------------------------
@@ -404,12 +388,12 @@ def _plot_mass_size(panels: dict, path: str) -> str | None:
 
 
 # ---------------------------------------------------------------------------
-# Block C: primary adjusted models (family F1)
+# Block C: primary adjusted models
 # ---------------------------------------------------------------------------
 
 
 def _adjusted(frame: pd.DataFrame, outcome: str = PRIMARY_OUTCOME, **kwargs) -> dict:
-    result = {"status": "ok", "family": "F1", "outcome": outcome}
+    result = {"status": "ok", "outcome": outcome}
     result["all"] = fit_size_model(frame, outcome, **kwargs)
     result["satellites"] = fit_size_model(
         frame.loc[frame["is_satellite"] == 1],
@@ -423,7 +407,6 @@ def _adjusted(frame: pd.DataFrame, outcome: str = PRIMARY_OUTCOME, **kwargs) -> 
         include_satellite_flag=False,
         **kwargs,
     )
-    _holm_annotate(result, ["all", "satellites", "bgg"])
     if all(result[name].get("status") != "ok" for name in ["all", "satellites", "bgg"]):
         result["status"] = "skipped"
         result["reason"] = "no_fittable_variant"
@@ -446,12 +429,9 @@ def _per_control(frame: pd.DataFrame, output_dir: str | None) -> dict:
             panel, PRIMARY_OUTCOME, include_group_covariates=False
         )
     ok = [k for k, v in comparisons.items() if v.get("status") == "ok"]
-    adjusted = benjamini_hochberg([comparisons[k].get("p") for k in ok])
-    for name, p_bh in zip(ok, adjusted):
-        comparisons[name]["p_bh"] = p_bh
     result = {
         "status": "ok" if ok else "skipped",
-        "note": "descriptive; mass+z adjusted; BH within this figure family",
+        "note": "descriptive mass- and redshift-adjusted comparisons",
         "comparisons": comparisons,
     }
     if output_dir and ok:
@@ -503,7 +483,7 @@ def _plot_forest(comparisons: dict, path: str) -> str | None:
 
 def _morphology_strata(frame: pd.DataFrame) -> dict:
     satellites = frame.loc[frame["is_satellite"] == 1]
-    result = {"status": "ok", "note": "secondary; Holm within this trio"}
+    result = {"status": "ok", "note": "secondary morphology-stratified diagnostics"}
     result["elliptical_satellites"] = fit_size_model(
         satellites.loc[satellites["elliptical"] == 1],
         PRIMARY_OUTCOME,
@@ -520,17 +500,11 @@ def _morphology_strata(frame: pd.DataFrame) -> dict:
         include_satellite_flag=False,
         interaction_with="elliptical",
     )
-    family = ["elliptical_satellites", "spiral_satellites", "interaction"]
-    # For the interaction model the family member is the interaction term.
-    interaction = result["interaction"]
-    if interaction.get("status") == "ok" and interaction.get("interaction_term"):
-        interaction["p"] = interaction["interaction_term"]["p"]
-    _holm_annotate(result, family)
     return result
 
 
 # ---------------------------------------------------------------------------
-# Block G: matched pairs (family F3)
+# Block G: matched pairs
 # ---------------------------------------------------------------------------
 
 
@@ -642,32 +616,12 @@ def _matched(frame: pd.DataFrame) -> dict:
                 "n_components": sensitivity_mean["n_blocks"],
             },
         }
-    _holm_annotate(effects, list(outcomes))
-    for name in outcomes:
-        if effects[name].get("status") == "ok":
-            effects[name]["p_adj"] = effects[name].get("p_holm")
-    sensitivity_names = [
-        name
-        for name in outcomes
-        if effects[name].get("status") == "ok"
-        and effects[name].get("two_sided_cluster_sensitivity", {}).get("p")
-        is not None
-    ]
-    sensitivity_adjusted = holm_correction(
-        [effects[name]["two_sided_cluster_sensitivity"]["p"] for name in sensitivity_names]
-    )
-    for name, adjusted in zip(sensitivity_names, sensitivity_adjusted):
-        effects[name]["two_sided_cluster_sensitivity"]["p_holm"] = adjusted
-
     return {
         "status": "ok",
-        "family": "F3",
         "note": (
             "Pairs recomputed with the paper's matching implementation and "
-            "seed on the objid-deduplicated control pool; the published "
-            "matched-control Holm family is untouched. Holm here spans the "
-            "three size outcomes; p is the two-sided add-one empirical "
-            "p-value of the group-blocked paired mean bootstrap."
+            "seed on the objid-deduplicated control pool; p is the two-sided "
+            "add-one empirical p-value of the group-blocked paired mean bootstrap."
         ),
         "matching_variables": variables,
         "propensity_caliper": safe_float(caliper),
@@ -723,7 +677,6 @@ def _crowding(frame: pd.DataFrame) -> dict:
 def _petrosian(frame: pd.DataFrame) -> dict:
     result = {
         "status": "ok",
-        "family": "F2",
         "note": "psfWidth_r enters as a standardized seeing covariate",
     }
     result["all"] = fit_size_model(
@@ -972,8 +925,8 @@ def _concentration(frame: pd.DataFrame) -> dict:
     result = {
         "status": "ok",
         "note": (
-            "C=R90/R50 in linear units; the satellites test belongs to "
-            "family F2, the all-galaxy fit is descriptive"
+            "C=R90/R50 in linear units; the all-galaxy and satellite fits "
+            "are secondary structural diagnostics"
         ),
         "outcome_units": "concentration ratio (not dex)",
     }
@@ -994,21 +947,6 @@ def _concentration(frame: pd.DataFrame) -> dict:
         result["status"] = "skipped"
         result["reason"] = "no_fittable_variant"
     return result
-
-
-def _apply_f2_holm(petrosian: dict, concentration: dict) -> list[str]:
-    """Holm across the pre-registered F2 family, writing p_holm in place."""
-
-    members = [
-        ("petrosian_all", petrosian.get("all", {})),
-        ("petrosian_satellites", petrosian.get("satellites", {})),
-        ("concentration_satellites", concentration.get("satellites", {})),
-    ]
-    ok = [(name, entry) for name, entry in members if entry.get("status") == "ok"]
-    adjusted = holm_correction([entry.get("p") for _, entry in ok])
-    for (name, entry), p_holm in zip(ok, adjusted):
-        entry["p_holm"] = p_holm
-    return [name for name, _ in members]
 
 
 # ---------------------------------------------------------------------------
@@ -1035,8 +973,8 @@ def _verdicts(results: dict) -> dict:
     )
     survives_matching = bool(
         matched_effect.get("status") == "ok"
-        and matched_effect.get("p_holm") is not None
-        and matched_effect.get("p_holm") < co.P_LIMIT
+        and matched_effect.get("p") is not None
+        and matched_effect.get("p") < co.P_LIMIT
         and _same_sign(matched_effect.get("mean_delta"), satellite_delta)
     )
 
@@ -1074,11 +1012,11 @@ def _verdicts(results: dict) -> dict:
 
     return {
         "primary_all_significant": bool(
-            all_fit.get("p_holm") is not None and all_fit.get("p_holm") < co.P_LIMIT
+            all_fit.get("p") is not None and all_fit.get("p") < co.P_LIMIT
         ),
         "primary_satellites_significant": bool(
-            satellite_fit.get("p_holm") is not None
-            and satellite_fit.get("p_holm") < co.P_LIMIT
+            satellite_fit.get("p") is not None
+            and satellite_fit.get("p") < co.P_LIMIT
         ),
         "direction": direction,
         "survives_matching": survives_matching,
@@ -1272,19 +1210,6 @@ def run_size_analysis(data, output_dir: str | None = None) -> dict[str, object]:
             "z_match_tolerance": float(Z_MATCH_TOLERANCE),
             "close_neighbour_arcsec": float(CROWDING_THRESHOLD_ARCSEC),
         },
-        "holm_families": {
-            "F1": ["adjusted.all", "adjusted.satellites", "adjusted.bgg"],
-            "F2": [
-                "petrosian.all",
-                "petrosian.satellites",
-                "concentration.satellites",
-            ],
-            "F3": [
-                "matched.delta_log_Rchl_r",
-                "matched.delta_log_petroR50",
-                "matched.delta_concentration",
-            ],
-        },
     }
 
     blocks = [
@@ -1341,9 +1266,6 @@ def run_size_analysis(data, output_dir: str | None = None) -> dict[str, object]:
                 "block_exception", error=f"{exc.__class__.__name__}: {exc}"
             )
 
-    results["holm_families"]["F2_members"] = _apply_f2_holm(
-        results.get("petrosian", {}), results.get("concentration", {})
-    )
     results["verdicts"] = _verdicts(results)
     if output_dir:
         try:

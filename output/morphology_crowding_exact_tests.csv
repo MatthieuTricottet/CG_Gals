@@ -1,7 +1,4 @@
 control,outcome,method,cg4_n,control_n,cg4_fraction,control_fraction,p_value
-Control4B,elliptical,Barnard exact,16,0,0.625,,1.0
-Control4B,spiral,Barnard exact,16,0,0.375,,1.0
-Control4C,elliptical,Barnard exact,16,0,0.625,,1.0
-Control4C,spiral,Barnard exact,16,0,0.375,,1.0
-RG4,elliptical,Barnard exact,16,61,0.625,0.29508196721311475,0.01488421293393403
-RG4,spiral,Barnard exact,16,61,0.375,0.7049180327868853,0.01488421293393403
+Control4B,elliptical,Fisher exact,16,0,0.625,,1.0
+Control4C,elliptical,Fisher exact,16,0,0.625,,1.0
+RG4,elliptical,Fisher exact,16,61,0.625,0.29508196721311475,0.020416523035950634
