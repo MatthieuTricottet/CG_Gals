@@ -95,6 +95,123 @@ def _physical_group(frame):
     return frame["group_uid"].astype(str)
 
 
+def matched_cluster_components(treated_groups, control_groups) -> np.ndarray:
+    """Return pair-level connected components for two-sided clustering.
+
+    Each matched pair is an edge in a bipartite graph whose nodes are the
+    treated CG4 group and the matched control's physical Lim group.  Resampling
+    connected components therefore keeps every dependence link on either side
+    of the match intact, including transitive links through repeated hosts.
+    """
+
+    treated = pd.Series(treated_groups).astype(str).to_numpy()
+    control = pd.Series(control_groups).astype(str).to_numpy()
+    if treated.size != control.size:
+        raise ValueError("treated_groups and control_groups must align")
+
+    parent = {}
+
+    def find(node):
+        parent.setdefault(node, node)
+        while parent[node] != node:
+            parent[node] = parent[parent[node]]
+            node = parent[node]
+        return node
+
+    def union(left, right):
+        left_root, right_root = find(left), find(right)
+        if left_root != right_root:
+            parent[right_root] = left_root
+
+    for treated_group, control_group in zip(treated, control):
+        union(("treated", treated_group), ("control", control_group))
+
+    roots = [find(("treated", treated_group)) for treated_group in treated]
+    root_index = pd.MultiIndex.from_tuples(roots, names=["node_type", "node_id"])
+    components, _ = pd.factorize(root_index, sort=True)
+    return components.astype(int)
+
+
+def _control_host_dependence_audit(treated, control, provenance, components):
+    """Summarize repeated matched controls from the same physical Lim host."""
+
+    treated_groups = _physical_group(treated).reset_index(drop=True)
+    control_groups = _physical_group(control).reset_index(drop=True)
+    host_counts = control_groups.value_counts()
+    repeated = control_groups.map(host_counts).gt(1)
+    links = pd.DataFrame(
+        {"treated_group": treated_groups, "control_group": control_groups}
+    )
+    treated_groups_per_host = links.groupby("control_group")[
+        "treated_group"
+    ].nunique()
+    component_counts = pd.Series(components).value_counts()
+
+    def by_category(values):
+        summary = {}
+        for label, indices in values.groupby(values, observed=True).groups.items():
+            index = list(indices)
+            sub_hosts = control_groups.iloc[index]
+            within_counts = sub_hosts.value_counts()
+            sub_repeated = repeated.iloc[index]
+            summary[str(label)] = {
+                "n_controls": int(len(index)),
+                "n_unique_lim_groups": int(sub_hosts.nunique()),
+                "n_controls_in_repeated_lim_groups": int(sub_repeated.sum()),
+                "fraction_controls_in_repeated_lim_groups": float(
+                    sub_repeated.mean()
+                ),
+                "max_matched_controls_per_lim_group_within_category": int(
+                    within_counts.max()
+                ),
+            }
+        return summary
+
+    kept_labels = control["sample"].astype(str).reset_index(drop=True)
+    provenance_labels = provenance["control_definitions"].astype(str)
+    return {
+        "n_matched_controls": int(len(control)),
+        "n_unique_control_objids": int(control["objid"].nunique())
+        if "objid" in control
+        else None,
+        "n_unique_physical_lim_groups": int(control_groups.nunique()),
+        "matched_control_multiplicity_per_lim_group": {
+            str(int(multiplicity)): int(n_hosts)
+            for multiplicity, n_hosts in host_counts.value_counts()
+            .sort_index()
+            .items()
+        },
+        "n_lim_groups_with_multiple_matched_controls": int((host_counts > 1).sum()),
+        "n_controls_from_repeated_lim_groups": int(repeated.sum()),
+        "fraction_controls_from_repeated_lim_groups": float(repeated.mean()),
+        "max_matched_controls_from_one_lim_group": int(host_counts.max()),
+        "treated_groups_per_control_lim_group": {
+            str(int(multiplicity)): int(n_hosts)
+            for multiplicity, n_hosts in treated_groups_per_host.value_counts()
+            .sort_index()
+            .items()
+        },
+        "n_control_lim_groups_linking_multiple_treated_groups": int(
+            (treated_groups_per_host > 1).sum()
+        ),
+        "max_treated_groups_linked_by_one_control_lim_group": int(
+            treated_groups_per_host.max()
+        ),
+        "by_kept_label": by_category(kept_labels),
+        "by_control_provenance": by_category(provenance_labels),
+        "connected_component_resampling": {
+            "n_components": int(component_counts.size),
+            "pair_count_per_component": {
+                str(int(pair_count)): int(n_components)
+                for pair_count, n_components in component_counts.value_counts()
+                .sort_index()
+                .items()
+            },
+            "max_pairs_in_component": int(component_counts.max()),
+        },
+    }
+
+
 def prepare_matched_frame(frame: pd.DataFrame) -> pd.DataFrame:
     """Deduplicate the control pool and enforce the hard constraints."""
 
@@ -756,22 +873,43 @@ def run_matched_control_analysis(
     }
 
     treated_blocks = _physical_group(prepared.loc[treated_indices]).to_numpy()
+    control_blocks = _physical_group(prepared.loc[control_indices]).to_numpy()
+    two_sided_blocks = matched_cluster_components(treated_blocks, control_blocks)
     effects = {}
+    two_sided_effects = {}
     for name, (column, statistic) in OUTCOMES.items():
         if column not in treated or column not in control:
             effects[name] = {"status": "skipped", "reason": "missing_outcome_column"}
+            two_sided_effects[name] = {
+                "status": "skipped",
+                "reason": "missing_outcome_column",
+            }
             continue
         tx, cx = treated[column], control[column]
         blocks = treated_blocks
+        sensitivity_blocks = two_sided_blocks
         if name == "residual_sSFR_starforming":
             mask = treated["starforming"].eq(1) & control["starforming"].eq(1)
             tx, cx = tx[mask], cx[mask]
             blocks = treated_blocks[mask.to_numpy()]
+            sensitivity_blocks = two_sided_blocks[mask.to_numpy()]
         effect = bootstrap_difference(
             tx, cx, statistic=statistic, paired=True, n_boot=n_boot, blocks=blocks
         )
+        sensitivity = bootstrap_difference(
+            tx,
+            cx,
+            statistic=statistic,
+            paired=True,
+            n_boot=n_boot,
+            blocks=sensitivity_blocks,
+        )
         if effect["estimate"] is None:
             effects[name] = {"status": "skipped", "reason": "no_complete_matched_pairs"}
+            two_sided_effects[name] = {
+                "status": "skipped",
+                "reason": "no_complete_matched_pairs",
+            }
         else:
             effects[name] = {
                 "status": "ok",
@@ -784,11 +922,32 @@ def run_matched_control_analysis(
                 "n_blocks": effect["n_blocks"],
                 "n_pairs": effect["n"],
             }
+            two_sided_effects[name] = {
+                "status": "ok",
+                "delta_cg4_minus_control": sensitivity["estimate"],
+                "ci95": sensitivity["ci95"],
+                "p": sensitivity["p"],
+                "p_floor": sensitivity["p_floor"],
+                "n_boot": sensitivity["n_boot"],
+                "resampling_unit": "bipartite_connected_component",
+                "n_components": sensitivity["n_blocks"],
+                "n_pairs": sensitivity["n"],
+            }
     ok_names = [name for name, value in effects.items() if value.get("status") == "ok"]
     for name, adjusted in zip(
         ok_names, holm_correction([effects[name]["p"] for name in ok_names])
     ):
         effects[name]["p_adj"] = adjusted
+    sensitivity_ok_names = [
+        name
+        for name, value in two_sided_effects.items()
+        if value.get("status") == "ok"
+    ]
+    for name, adjusted in zip(
+        sensitivity_ok_names,
+        holm_correction([two_sided_effects[name]["p"] for name in sensitivity_ok_names]),
+    ):
+        two_sided_effects[name]["p_adj"] = adjusted
 
     # Post-hoc decomposition of the all-pair matched elliptical-fraction
     # difference into its satellite component (audit question: is the
@@ -834,6 +993,9 @@ def run_matched_control_analysis(
             }
 
     provenance = _provenance_table(prepared, control_indices)
+    control_host_audit = _control_host_dependence_audit(
+        treated, control, provenance, two_sided_blocks
+    )
     group_level = group_level_matched_analysis(frame, n_boot=n_boot)
     per_control_group = per_control_group_level_matches(frame, n_boot=n_boot)
     group_level_holm_sensitivity = _group_level_holm_sensitivity(per_control_group)
@@ -897,6 +1059,18 @@ def run_matched_control_analysis(
             abs(value) for value in after.values() if value is not None
         ),
         "effects": effects,
+        "control_host_dependence_audit": control_host_audit,
+        "two_sided_cluster_sensitivity": {
+            "status": "ok",
+            "method": (
+                "Paired bootstrap resampling connected components of the "
+                "bipartite treated-CG4-group/control-Lim-host graph; this "
+                "preserves all clustering links on both sides of the match."
+            ),
+            "n_components": int(pd.Series(two_sided_blocks).nunique()),
+            "holm_correction_family": sensitivity_ok_names,
+            "effects": two_sided_effects,
+        },
         "satellite_decomposition": satellite_decomposition,
         "group_level": group_level,
         "group_level_per_control": per_control_group,

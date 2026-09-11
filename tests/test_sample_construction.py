@@ -6,6 +6,8 @@ import sys
 import numpy as np
 import pandas as pd
 import pytest
+from astropy import units as u
+from astropy.cosmology import Planck15
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
@@ -88,6 +90,25 @@ def test_group_builder_reproduces_committed_rg4_groups(pc_gals):
         a, b = committed[column], rebuilt[column]
         if a.dtype == object:
             assert (a.astype(str) == b.astype(str)).all(), column
+        elif column == "size_Group_Bary_kpc":
+            expected = (
+                committed["Radius_Bary_arcmin"]
+                * np.pi
+                / (180 * 60)
+                * Planck15.angular_diameter_distance(committed["z_group"])
+                .to_value(u.kpc)
+            )
+            np.testing.assert_allclose(expected, b, rtol=1e-9, err_msg=column)
+        elif column == "t_cr":
+            expected_size = (
+                committed["Radius_Bary_arcmin"]
+                * np.pi
+                / (180 * 60)
+                * Planck15.angular_diameter_distance(committed["z_group"])
+                .to_value(u.kpc)
+            )
+            expected = 0.887 * expected_size / committed["Vdisp"]
+            np.testing.assert_allclose(expected, b, rtol=1e-9, err_msg=column)
         elif column in ("lMass_200", "r_200_kpc"):
             # legacy solver tolerance: <= 3e-3 dex / 0.3 per cent
             np.testing.assert_allclose(a, b, rtol=3e-3, err_msg=column)

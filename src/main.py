@@ -120,6 +120,7 @@ def load_data():
         report.initialise_json(build=True)
         sample = load_data_build()
         sample = clean(sample)
+        sample = dl.correct_group_distance_scales(sample)
         if co.VERBOSE:
             print("Classifying morphologies")
         sample = morph.classify_all_samples(sample)
@@ -141,6 +142,9 @@ def load_data():
             print("Loading processed samples from disk")
         with open(co.DATA_PATH + co.PROCESS_SAMPLES, "rb") as file:
             sample = pkl.load(file)
+        sample = dl.correct_group_distance_scales(sample)
+        sample = morph.classify_all_samples(sample, record_build_counts=False)
+        sample = morph.add_morphology_fractions_to_groups(sample)
         if "SDSS_withAGN" in sample:
             dl.plot_bpt(sample["SDSS_withAGN"], name="BPT_diagram")
 

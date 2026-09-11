@@ -66,6 +66,7 @@ def initialise_json(build=False):
         append_json("sSFR_status", co.sSFR_status)
         append_json("NosSFR_LABEL", co.NosSFR_LABEL)
         append_json("Morphologies", co.Morphologies)
+        append_json("NoMorphology_LABEL", co.NoMorphology_LABEL)
         append_json("DOMINATIION_CRITERIA", co.DOMINATIION_CRITERIA)
 
 
@@ -195,6 +196,7 @@ def _validate_consistent_table_counts(ctx):
     samples = ["CG4", "Control4B", "Control4C", "RG4"]
     statuses = ["Quenched", "Starforming", "NosSFR"]
     morphs = ["Elliptical", "Spiral", "Uncertain"]
+    no_morph = ctx.get("NoMorphology_LABEL", "NoGZ")
     sample_totals = {}
     problems = []
     for sample in samples:
@@ -219,8 +221,13 @@ def _validate_consistent_table_counts(ctx):
         morph_counts = {
             morph: _get_path(ctx, f"{sample}_Gals_N_{morph}") for morph in morphs
         }
-        if sample in sample_totals and all(value is not None for value in morph_counts.values()):
-            morph_total = int(sum(morph_counts.values()))
+        no_morph_count = _get_path(ctx, f"{sample}_Gals_N_{no_morph}")
+        if (
+            sample in sample_totals
+            and all(value is not None for value in morph_counts.values())
+            and no_morph_count is not None
+        ):
+            morph_total = int(sum(morph_counts.values())) + int(no_morph_count)
             if morph_total != sample_totals[sample]:
                 problems.append(
                     f"{sample}: morphology total={morph_total}, "
@@ -287,6 +294,7 @@ def _build_render_context(build_data, results_data):
     ctx["samples"] = ["CG4", "Control4B", "Control4C", "RG4"]
     ctx["statuses"] = ["Quenched", "Starforming"]
     ctx["morphs"] = ["Elliptical", "Spiral", "Uncertain"]
+    ctx["NoMorphology_LABEL"] = getattr(co, "NoMorphology_LABEL", "NoGZ")
 
     ctx["quantities"] = ["sSFR", "M_r", "lgm"]
     ctx["qdefs"] = [

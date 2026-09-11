@@ -61,20 +61,26 @@ def classify(df: pd.DataFrame) -> pd.DataFrame:
     -------
     pandas.DataFrame
         The original DataFrame augmented with:
-        - 'morphology' : str  
+        - 'morphology' : str
             Assigned morphological class, one of:
-            'Elliptical', 'Spiral' or 'Uncertain'.
+            'Elliptical', 'Spiral', 'Uncertain', or the project missing-vote
+            label. ``Uncertain`` means finite Galaxy Zoo votes that do not
+            cross either threshold; missing vote fractions are not folded into
+            that class.
     """
-    conds = [
-        df['p_E'] > 0.5,
-        (df['p_S'] > 0.5)
-    ]
-    choices = ['Elliptical', 'Spiral']
+    p_e = pd.to_numeric(df.get('p_E', pd.Series(np.nan, index=df.index)), errors='coerce')
+    p_s = pd.to_numeric(df.get('p_S', pd.Series(np.nan, index=df.index)), errors='coerce')
+    finite_votes = p_e.notna() & p_s.notna()
 
-    df['morphology'] = np.select(conds, choices, default='Uncertain')
+    morphology = pd.Series(co.NoMorphology_LABEL, index=df.index, dtype=object)
+    morphology.loc[finite_votes] = co.Morphologies[-1]
+    morphology.loc[finite_votes & (p_e > 0.5)] = co.Morphologies[0]
+    morphology.loc[finite_votes & ~(p_e > 0.5) & (p_s > 0.5)] = co.Morphologies[1]
+
+    df['morphology'] = morphology
     return df
 
-def classify_all_samples(sample: dict) -> dict:
+def classify_all_samples(sample: dict, record_build_counts: bool = True) -> dict:
     """
     Apply morphological classification to all galaxy samples in the provided dictionary.
 
@@ -90,15 +96,26 @@ def classify_all_samples(sample: dict) -> dict:
         The input dictionary with each DataFrame augmented with a 'morphology' column.
     """
     for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]+["SDSS"]:
+        if cat not in sample:
+            continue
         df = sample[cat]
         if co.VERBOSE:
             print(f".  Sample: {cat}")
         df = classify(df)
-        for morph in ['Elliptical', 'Spiral', 'Uncertain']:
-            n_morph = len(df[df['morphology'] == morph])
-            report.append_json(f'{cat}_N_{morph}', n_morph, build=True)
-            if co.VERBOSE:
-                print(f"   {morph}: {n_morph} galaxies")
+        sample[cat] = df
+        if record_build_counts:
+            for morph in [*co.Morphologies, co.NoMorphology_LABEL]:
+                n_morph = int((df['morphology'] == morph).sum())
+                report.append_json(f'{cat}_N_{morph}', n_morph, build=True)
+                if co.VERBOSE:
+                    print(f"   {morph}: {n_morph} galaxies")
+            p_e = pd.to_numeric(df.get('p_E', pd.Series(np.nan, index=df.index)), errors='coerce')
+            p_s = pd.to_numeric(df.get('p_S', pd.Series(np.nan, index=df.index)), errors='coerce')
+            finite_votes = p_e.notna() & p_s.notna()
+            report.append_json(f'{cat}_N_GZFinite', int(finite_votes.sum()), build=True)
+            report.append_json(f'{cat}_N_GZMissing', int((~finite_votes).sum()), build=True)
+            report.append_json(f'{cat}_N_p_E_finite', int(p_e.notna().sum()), build=True)
+            report.append_json(f'{cat}_N_p_S_finite', int(p_s.notna().sum()), build=True)
 
 
     # ADD MORPHOLOGICAL FRACTIONS TO GROUPS
@@ -143,10 +160,10 @@ def add_morphology_fractions_to_groups(sample: dict) -> dict:
 
         for exclude_uncertain in [True, False]:
             for exclude_BGG in [True, False]:
-                loc_Gals = Gals.copy()
+                loc_Gals = Gals[Gals['morphology'].isin(co.Morphologies)].copy()
                 suffix = '_frac'
                 if exclude_uncertain:
-                    loc_Gals = Gals[Gals['morphology'] != co.Morphologies[-1]]
+                    loc_Gals = loc_Gals[loc_Gals['morphology'].isin(co.Morphologies[:2])]
                     suffix += '_NoU'
                 if exclude_BGG:
                     loc_Gals = loc_Gals[loc_Gals['rank_M'] != 1]
@@ -184,7 +201,7 @@ def stats(sample):
     for cat in [name+co.GASUFF for name in co.SAMPLE.keys()]+['SDSS']:
         df = sample[cat]
         n_total = len(df)
-        for morph in co.Morphologies:  
+        for morph in [*co.Morphologies, co.NoMorphology_LABEL]:
             n_morph = len(df[df['morphology'] == morph])
             report.append_json(f'{cat}_N_{morph}', n_morph)  
             frac_morph = n_morph / n_total
@@ -195,12 +212,14 @@ def stats(sample):
     for control_name in co.CONTROL.keys():  
         control_cat = control_name + co.GASUFF
         CG_cat = 'CG4' + co.GASUFF
+        CG_finite = sample[CG_cat][sample[CG_cat]['morphology'].isin(co.Morphologies)]
+        control_finite = sample[control_cat][sample[control_cat]['morphology'].isin(co.Morphologies)]
         for morph in ['Elliptical', 'Spiral']:
             # Create contingency table
-            n_CG_morph = len(sample[CG_cat][sample[CG_cat]['morphology'] == morph])
-            n_CG_non_morph = len(sample[CG_cat]) - n_CG_morph
-            n_control_morph = len(sample[control_cat][sample[control_cat]['morphology'] == morph])
-            n_control_non_morph = len(sample[control_cat]) - n_control_morph
+            n_CG_morph = len(CG_finite[CG_finite['morphology'] == morph])
+            n_CG_non_morph = len(CG_finite) - n_CG_morph
+            n_control_morph = len(control_finite[control_finite['morphology'] == morph])
+            n_control_non_morph = len(control_finite) - n_control_morph
             contingency_table = np.array([[n_CG_morph, n_CG_non_morph],
                                           [n_control_morph, n_control_non_morph]])
             # Perform Barnard's exact test
@@ -231,7 +250,7 @@ def morph_sSFR(sample):
     status = co.sSFR_status[-1] # 'Starforming'
 
     CG = sample['CG4_Gals']
-    CG = CG.loc[CG['morphology'] != co.Morphologies[2]]  # Remove 'Uncertain' morphologies
+    CG = CG.loc[CG['morphology'].isin(co.Morphologies[:2])]
     CG_m0_sSFR2 = len(CG[(CG['morphology'] == co.Morphologies[0]) & (CG['sSFR_status'] == status)])
     CG_m1_sSFR2 = len(CG[(CG['morphology'] == co.Morphologies[1]) & (CG['sSFR_status'] == status)])
     CG_NoU_sSFR = CG_m0_sSFR2 + CG_m1_sSFR2
@@ -244,7 +263,7 @@ def morph_sSFR(sample):
 
     report.append_json(f'Morph_sSFR_test', 'Barnard two-sided exact test')
     for name, control in Controls.items():
-        control = control.loc[control['morphology'] != co.Morphologies[2]]  # Remove 'Uncertain' morphologies
+        control = control.loc[control['morphology'].isin(co.Morphologies[:2])]
         
         Control_m0_sSFR2 = len(control[(control['morphology'] == co.Morphologies[0]) & (control['sSFR_status'] == status)])
         Control_m1_sSFR2 = len(control[(control['morphology'] == co.Morphologies[1]) & (control['sSFR_status'] == status)])
@@ -298,28 +317,35 @@ def BGGs_analysis(sample):
 
     CG4 = sample['CG4'+co.GASUFF]
     BGGs_CG4 = CG4[CG4['rank_M'] == 1]
-    total = len(BGGs_CG4)
+    BGGs_CG4_finite = BGGs_CG4[BGGs_CG4['morphology'].isin(co.Morphologies)]
+    total = len(BGGs_CG4_finite)
     if co.VERBOSE:
-        print(f"Sample: CG4 - Total BGGs: {total}")
+        print(f"Sample: CG4 - Total BGGs with finite GZ votes: {total}")
+    report.append_json(f'CG4_BGG_N_{co.NoMorphology_LABEL}', int((BGGs_CG4['morphology'] == co.NoMorphology_LABEL).sum()))
+    report.append_json('CG4_BGG_N_GZFinite', total)
     for morph in co.Morphologies:
-        n_BGGs = len(BGGs_CG4[BGGs_CG4['morphology'] == morph])
+        n_BGGs = len(BGGs_CG4_finite[BGGs_CG4_finite['morphology'] == morph])
         report.append_json(f'CG4_BGG_N_{morph}', n_BGGs)
-        report.append_json(f'CG4_BGG_fracpc_{morph}', f"{100*n_BGGs/total:.1f}")
+        report.append_json(f'CG4_BGG_fracpc_{morph}', f"{100*n_BGGs/total:.1f}" if total else "nan")
         if co.VERBOSE:
-            print(f".  {morph}: {n_BGGs} / {total} = {n_BGGs/total:.1f}")
+            frac = n_BGGs / total if total else np.nan
+            print(f".  {morph}: {n_BGGs} / {total} = {frac:.1f}")
     
 
     for cat in co.CONTROL.keys():
         name = cat+co.GASUFF
         df = sample[name]
         BGGs = df[df['rank_M'] == 1]
-        total = len(BGGs)
+        BGGs_finite = BGGs[BGGs['morphology'].isin(co.Morphologies)]
+        total = len(BGGs_finite)
         if co.VERBOSE:
-            print(f"Sample: {cat} - Total BGGs: {total}")
+            print(f"Sample: {cat} - Total BGGs with finite GZ votes: {total}")
+        report.append_json(f'{cat}_BGG_N_{co.NoMorphology_LABEL}', int((BGGs['morphology'] == co.NoMorphology_LABEL).sum()))
+        report.append_json(f'{cat}_BGG_N_GZFinite', total)
         for morph in co.Morphologies:
-            n_BGGs = len(BGGs[BGGs['morphology'] == morph])
+            n_BGGs = len(BGGs_finite[BGGs_finite['morphology'] == morph])
             report.append_json(f'{cat}_BGG_N_{morph}', n_BGGs)
-            report.append_json(f'{cat}_BGG_fracpc_{morph}', f"{100*n_BGGs/total:.1f}")
+            report.append_json(f'{cat}_BGG_fracpc_{morph}', f"{100*n_BGGs/total:.1f}" if total else "nan")
             if co.VERBOSE:
                 print(f"   {morph}: {n_BGGs} BGGs")
         

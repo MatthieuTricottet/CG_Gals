@@ -39,6 +39,7 @@ GROUP_KEYS = {label: key.replace("_Gals", "_Groups") for label, key in SAMPLE_KE
 SAMPLE_ORDER = list(SAMPLE_KEYS)
 CONTROL_SAMPLES = ["Control4B", "Control4C", "RG4"]
 COLOUR_COLUMNS = ["u_minus_r", "u_minus_g", "g_minus_r", "r_minus_i"]
+MORPHOLOGY_CLASSES = ["Elliptical", "Spiral", "Uncertain"]
 COLOUR_LABELS = {
     "u_minus_r": r"$(u-r)$",
     "u_minus_g": r"$(u-g)$",
@@ -299,27 +300,33 @@ def build_harmonized_colour_frame(
         merged["is_control"] = label in CONTROL_SAMPLES[:2]
         merged["is_RG4"] = label == "RG4"
         merged["is_satellite"] = (
-            _numeric(merged[rank_column]).gt(1) if rank_column in merged else pd.NA
+            _numeric(merged[rank_column]).gt(1) if rank_column in merged else np.nan
         )
         merged["is_BGG"] = (
-            _numeric(merged[rank_column]).eq(1) if rank_column in merged else pd.NA
+            _numeric(merged[rank_column]).eq(1) if rank_column in merged else np.nan
         )
         merged["logM"] = _numeric(merged["lgm"]) if "lgm" in merged else np.nan
         merged["z_harmonized"] = _numeric(merged["z"]) if "z" in merged else np.nan
         merged["sSFR_harmonized"] = _numeric(merged["sSFR"]) if "sSFR" in merged else np.nan
         # Only the measured classes; unmeasured (NosSFR) galaxies must not
         # form a regression category, so they become NA here.
-        merged["sSFR_class"] = (
-            merged["sSFR_status"].astype("string").where(
-                merged["sSFR_status"].isin(["Quenched", "Starforming"])
+        if "sSFR_status" in merged:
+            ssfr_status = merged["sSFR_status"].astype(object)
+            merged["sSFR_class"] = ssfr_status.where(
+                ssfr_status.isin(["Quenched", "Starforming"]),
+                np.nan,
             )
-            if "sSFR_status" in merged
-            else pd.NA
-        )
+        else:
+            merged["sSFR_class"] = np.nan
         merged["morphology_harmonized"] = (
-            merged["morphology"].astype("string") if "morphology" in merged else pd.NA
+            merged["morphology"].where(
+                merged["morphology"].isin(MORPHOLOGY_CLASSES),
+                np.nan,
+            )
+            if "morphology" in merged
+            else np.nan
         )
-        merged["group_id"] = merged["Group"] if "Group" in merged else pd.NA
+        merged["group_id"] = merged["Group"] if "Group" in merged else np.nan
         merged["cluster_id"] = label + "_" + merged["group_id"].astype("string")
         merged["has_colour"] = merged[COLOUR_COLUMNS].notna().all(axis=1)
         frames.append(merged)

@@ -49,6 +49,7 @@ DATA_RELEASE = 16
 sSFR_status = ['Quenched', 'Starforming']
 NosSFR_LABEL = 'NosSFR'
 Morphologies = ['Elliptical', 'Spiral', 'Uncertain']
+NoMorphology_LABEL = 'NoGZ'
 
 # Sanity range for measured log sSFR (yr^-1) and log stellar mass: values
 # outside are treated as unmeasured (legacy catalogues used -9999 sentinels).

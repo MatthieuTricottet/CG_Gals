@@ -399,7 +399,7 @@ def Group_agg(y, z_group_label=None, Id="Id", z='z', seed=1e12, circ=False, morp
         z_group = z_mean 
     
     arcmin_to_rad = np.pi/(180*60)
-    Dist_Group_Mpc = cosmo.luminosity_distance(z_group)
+    Dist_Group_Mpc = cosmo.angular_diameter_distance(z_group)
     size_Group_Bary_kpc =  (Radius_Bary_arcmin * arcmin_to_rad * Dist_Group_Mpc).to(u.kpc).value
     if circ:
         size_Group_Circ_kpc =  (Radius_Circ_arcmin * arcmin_to_rad * Dist_Group_Mpc).to(u.kpc).value

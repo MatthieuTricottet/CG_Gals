@@ -165,6 +165,7 @@ def display_label(value):
         "Star forming": "Star-forming",
         # Missing sSFR estimates are reported as counts, never as a class
         "NosSFR": "No sSFR",
+        "NoGZ": "No GZ",
         "Predom": "Predominant",
         "CG4_Gals": "CG4",
         "Control4B_Gals": "Control4B",
@@ -205,6 +206,7 @@ def morph_marker(morph):
         'Spiral': 'o',
         'Elliptical': 's',
         'Uncertain': 'x',
+        'NoGZ': '+',
         'Lenticular': '^',
         'Irregular': 'D',
     }
@@ -218,6 +220,7 @@ def morph_color(morph):
         'Spiral': 'blue',
         'Elliptical': 'red',
         'Uncertain': 'gray',
+        'NoGZ': 'lightgray',
         'Lenticular': 'green',
         'Irregular': 'purple',
     }

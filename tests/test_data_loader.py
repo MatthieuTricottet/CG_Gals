@@ -1,6 +1,9 @@
 import pickle
 
 import pandas as pd
+import pytest
+from astropy import units as u
+from astropy.cosmology import Planck15
 
 from src import data_loader as dl
 
@@ -26,3 +29,25 @@ def test_load_sdss_falls_back_to_cached_processed_sample(tmp_path, monkeypatch):
 
     pd.testing.assert_frame_equal(loaded_with_agn, sdss_with_agn)
     pd.testing.assert_frame_equal(loaded_sdss, sdss)
+
+
+def test_correct_group_distance_scales_uses_angular_diameter_distance():
+    groups = pd.DataFrame(
+        {
+            "Radius_Bary_arcmin": [2.0],
+            "z_group": [0.04],
+            "Vdisp": [200.0],
+            "size_Group_Bary_kpc": [999.0],
+            "t_cr": [999.0],
+        }
+    )
+    sample = {"CG4_Groups": groups}
+    corrected = dl.correct_group_distance_scales(sample)["CG4_Groups"]
+    expected_size = (
+        2.0
+        * 3.141592653589793
+        / (180 * 60)
+        * Planck15.angular_diameter_distance(0.04).to_value(u.kpc)
+    )
+    assert corrected.loc[0, "size_Group_Bary_kpc"] == pytest.approx(expected_size)
+    assert corrected.loc[0, "t_cr"] == pytest.approx(0.887 * expected_size / 200.0)

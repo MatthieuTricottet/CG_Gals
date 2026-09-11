@@ -19,6 +19,12 @@ Paper I's published statistics, which the present construction reproduces
 exactly (61 exclusions -> 704 groups; Table 2 medians; Table 3 T1/T2).
 See referee/T0_control4c_audit.md and referee/T0_paper1_table2_check.py.
 
+The per-galaxy ``dist2BGG`` field inherited from ``PC_Gals.csv`` stores the
+great-circle separation from the BGG as radians multiplied by 3600. Manuscript
+calculations that need physical projected distances divide this stored value by
+3600 before converting with the angular-diameter distance; the uniform factor
+leaves projected-separation rankings unaffected.
+
 Group-level quartet properties reproduce the committed ``Control4B_Groups``
 / ``RG4_Groups`` generation (originally ``common.py::Group_agg``) exactly;
 every formula below was validated against those files at machine precision
@@ -27,8 +33,7 @@ every formula below was validated against those files at machine precision
 * velocity dispersion: gapper (Wainer & Thissen 1976) on member redshifts,
   scaled by c/(1+z_group), z_group = plain mean member redshift;
 * size_Group_Bary_kpc: median pairwise separation (arcmin) converted with
-  the *luminosity* distance at z_group (Planck15-like cosmology, H0=67.8,
-  Om0=0.308);
+  the Planck15 angular-diameter distance at z_group (proper kpc);
 * M_virial = 3 pi sigma^2 R_h / G with R_h the harmonic mean pairwise
   *projected* separation (angular-diameter distance);
 * t_cr = 0.887 size_Group_Bary_kpc / Vdisp;
@@ -49,7 +54,7 @@ import os
 import numpy as np
 import pandas as pd
 from astropy import units as u
-from astropy.cosmology import FlatLambdaCDM
+from astropy.cosmology import FlatLambdaCDM, Planck15
 from scipy import optimize
 
 try:
@@ -190,13 +195,16 @@ def quartet_group_properties(members: pd.DataFrame,
     ) * 60
     offset_bary = offset_abs_arcmin / radius_bary_arcmin
 
-    dist_lum_kpc = COSMO.luminosity_distance(z_group).to(u.kpc).value
     arcmin_to_rad = np.pi / (180 * 60)
-    size_kpc = radius_bary_arcmin * arcmin_to_rad * dist_lum_kpc
+    size_kpc = (
+        radius_bary_arcmin
+        * arcmin_to_rad
+        * Planck15.angular_diameter_distance(z_group).to(u.kpc).value
+    )
 
     seps = _pairwise_separations_rad(x["RA"], x["Dec"])
     harmonic_rad = len(seps) / np.sum(1.0 / seps)
-    dist_ang_kpc = dist_lum_kpc / (1 + z_group) ** 2
+    dist_ang_kpc = COSMO.angular_diameter_distance(z_group).to(u.kpc).value
     m_virial = (VIRIAL_CONST * (vdisp * 1e3) ** 2
                 * (harmonic_rad * dist_ang_kpc * KPC_M) / G_SI / MSUN_KG)
     t_cr = T_CR_COEFF * size_kpc / vdisp

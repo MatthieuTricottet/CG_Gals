@@ -64,7 +64,9 @@ AVAILABILITY_NOTES = {
     "denominator": "Each fraction uses the final per-sample galaxy count as its denominator.",
     "morphology": (
         "The secure GZ class row counts galaxies classified as elliptical or "
-        "spiral; uncertain Galaxy Zoo morphologies remain in the morphology table."
+        "spiral; finite-vote uncertain Galaxy Zoo morphologies remain in the "
+        "morphology table, while rows without Galaxy Zoo vote fractions are "
+        "counted separately in the sample-size audit."
     ),
     "colours": (
         "The SDSS colour-columns row counts complete broad photometric columns in the "
@@ -98,6 +100,8 @@ MATCHING_AUDIT_COLUMNS = [
 ]
 
 SIZE_AVAILABILITY_FLAGS = {"simard_size", "petrosian_size"}
+FINITE_GZ_MORPHOLOGIES = {"Elliptical", "Spiral", "Uncertain"}
+MISSING_GZ_LABEL = "NoGZ"
 
 
 def _availability_mask(part, quantity, columns):
@@ -245,16 +249,23 @@ def _sample_size_audit(frame):
 
     for sample_name, part in frame.groupby("sample", observed=True):
         if "morphology" in part:
-            morphology_table = int(part["morphology"].notna().sum())
+            finite_gz = part["morphology"].isin(FINITE_GZ_MORPHOLOGIES)
+            missing_gz = part["morphology"].eq(MISSING_GZ_LABEL)
+            morphology_table = int(finite_gz.sum())
+            missing_morphology = int(missing_gz.sum())
         elif {"elliptical", "spiral"}.issubset(part.columns):
             morphology_table = int((part["elliptical"].notna() | part["spiral"].notna()).sum())
+            missing_morphology = 0
         else:
             morphology_table = 0
+            missing_morphology = 0
 
         row = {
             "total_galaxies": int(len(part)),
             "sSFR_table_N": int(part["quenched"].notna().sum()) if "quenched" in part else 0,
             "morphology_table_N": morphology_table,
+            "GZ_finite_N": morphology_table,
+            "missing_morphology_N": missing_morphology,
             "secure_morphology_N": (
                 int((part["elliptical"].notna() | part["spiral"].notna()).sum())
                 if {"elliptical", "spiral"}.issubset(part.columns)

@@ -416,8 +416,11 @@ def validate_ssfr_table_counts(sample):
             )
         if "morphology" in df:
             # The morphology table covers all ranked galaxies, i.e. the
-            # classified ones plus those without an sSFR measurement.
-            morph_total = int(df["morphology"].isin(co.Morphologies).sum())
+            # classified ones plus those without an sSFR measurement. Rows
+            # without Galaxy Zoo vote fractions are explicit missing-morphology
+            # rows and still belong to the table total.
+            valid_morphologies = [*co.Morphologies, getattr(co, "NoMorphology_LABEL", "NoGZ")]
+            morph_total = int(df["morphology"].isin(valid_morphologies).sum())
             expected = all_counts["Total"] + all_counts[co.NosSFR_LABEL]
             if morph_total != expected:
                 raise AssertionError(
@@ -1936,6 +1939,93 @@ def plot_main_sequence_residuals(
     return fig, ax
 
 
+def _grouped_finite_values(frame, value_col: str, group_col: str):
+    """Return finite values split by catalogue group."""
+
+    if group_col not in frame:
+        group_ids = pd.Series(np.arange(len(frame)), index=frame.index)
+    else:
+        group_ids = frame[group_col]
+    work = pd.DataFrame(
+        {
+            value_col: pd.to_numeric(frame[value_col], errors="coerce"),
+            group_col: group_ids,
+        }
+    ).replace([np.inf, -np.inf], np.nan)
+    work = work.dropna(subset=[value_col, group_col])
+    groups = [
+        part[value_col].to_numpy(dtype=float)
+        for _, part in work.groupby(group_col, observed=True)
+        if len(part)
+    ]
+    values = np.concatenate(groups) if groups else np.array([], dtype=float)
+    return groups, values
+
+
+def _group_blocked_bootstrap_median_difference(
+    frame_a,
+    frame_b,
+    *,
+    value_col: str = "MS_res",
+    group_col: str = "Group",
+    n_boot: int = 10000,
+    random_state: int = 20260612,
+):
+    """Bootstrap a median difference by resampling whole catalogue groups."""
+
+    groups_a, values_a = _grouped_finite_values(frame_a, value_col, group_col)
+    groups_b, values_b = _grouped_finite_values(frame_b, value_col, group_col)
+    if not groups_a or not groups_b:
+        return {
+            "status": "skipped",
+            "reason": "no_complete_cases",
+            "delta": None,
+            "CI_16": None,
+            "CI_84": None,
+            "CI_95_low": None,
+            "CI_95_high": None,
+            "p_value": None,
+            "n_galaxies_a": int(values_a.size),
+            "n_galaxies_b": int(values_b.size),
+            "n_groups_a": int(len(groups_a)),
+            "n_groups_b": int(len(groups_b)),
+        }
+
+    rng = np.random.default_rng(random_state)
+    boot = np.empty(n_boot, dtype=float)
+    for index in range(n_boot):
+        draw_a = rng.integers(0, len(groups_a), len(groups_a))
+        draw_b = rng.integers(0, len(groups_b), len(groups_b))
+        sampled_a = np.concatenate([groups_a[i] for i in draw_a])
+        sampled_b = np.concatenate([groups_b[i] for i in draw_b])
+        boot[index] = np.median(sampled_a) - np.median(sampled_b)
+
+    k_le = int(np.sum(boot <= 0))
+    k_ge = int(np.sum(boot >= 0))
+    p_value = min(
+        1.0,
+        2 * min((k_le + 1) / (n_boot + 1), (k_ge + 1) / (n_boot + 1)),
+    )
+    lo68, hi68 = np.quantile(boot, [0.16, 0.84])
+    lo95, hi95 = np.quantile(boot, [0.025, 0.975])
+    return {
+        "status": "ok",
+        "delta": float(np.median(values_a) - np.median(values_b)),
+        "CI_16": float(lo68),
+        "CI_84": float(hi68),
+        "CI_95_low": float(lo95),
+        "CI_95_high": float(hi95),
+        "p_value": float(p_value),
+        "n_boot": int(n_boot),
+        "p_floor": float(2 / (n_boot + 1)),
+        "n_galaxies_a": int(values_a.size),
+        "n_galaxies_b": int(values_b.size),
+        "n_groups_a": int(len(groups_a)),
+        "n_groups_b": int(len(groups_b)),
+        "resampling_unit": "catalogue_group",
+    }
+
+
 def compare_main_sequence_residuals_bootstrap(sample):
     """ 
     Compare main sequence residuals between CG4 and other samples using bootstrap.
@@ -1957,8 +2047,6 @@ def compare_main_sequence_residuals_bootstrap(sample):
     """
 
     cg4_key = "CG4" + co.GASUFF
-    cg4 = sample[cg4_key]["MS_res"].to_numpy()
-    cg4 = cg4[np.isfinite(cg4)]
 
     results = {}
 
@@ -1968,23 +2056,27 @@ def compare_main_sequence_residuals_bootstrap(sample):
         if key == cg4_key:
             continue
 
-        other = df["MS_res"].to_numpy()
-        other = other[np.isfinite(other)]
-
-        delta, lo, hi, p, lo95, hi95 = su.bootstrap_median_difference(
-            cg4, other, random_state=20260612, return_ci95=True
+        res = _group_blocked_bootstrap_median_difference(
+            sample[cg4_key], df, random_state=20260612
         )
 
         results[key] = {
-            "Δmedian": delta,
-            "CI_16": lo,
-            "CI_84": hi,
-            "CI_95_low": lo95,
-            "CI_95_high": hi95,
+            "Δmedian": res["delta"],
+            "CI_16": res["CI_16"],
+            "CI_84": res["CI_84"],
+            "CI_95_low": res["CI_95_low"],
+            "CI_95_high": res["CI_95_high"],
             "interval_16_84_level": 0.68,
             "delta_sign_convention": "median(CG4) - median(control)",
-            "p_value_method": "two-sided bootstrap sign probability for the median difference",
-            "p_value": p,
+            "p_value_method": "two-sided group-blocked bootstrap sign probability for the median difference",
+            "p_value": res["p_value"],
+            "n_boot": res.get("n_boot"),
+            "p_floor": res.get("p_floor"),
+            "resampling_unit": res.get("resampling_unit"),
+            "n_CG4_galaxies": res.get("n_galaxies_a"),
+            "n_control_galaxies": res.get("n_galaxies_b"),
+            "n_CG4_groups": res.get("n_groups_a"),
+            "n_control_groups": res.get("n_groups_b"),
         }
 
     return results

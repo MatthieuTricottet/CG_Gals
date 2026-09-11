@@ -14,7 +14,7 @@ import pandas as pd
 from scipy import stats
 
 try:
-    from extended_data import ensure_galaxy_frame
+    from extended_data import dedup_control_pool, ensure_galaxy_frame
     from extended_stats import (
         fit_logistic_model,
         holm_correction,
@@ -23,7 +23,7 @@ try:
         two_sample_summary,
     )
 except ModuleNotFoundError:  # pragma: no cover
-    from .extended_data import ensure_galaxy_frame
+    from .extended_data import dedup_control_pool, ensure_galaxy_frame
     from .extended_stats import (
         fit_logistic_model,
         holm_correction,
@@ -31,6 +31,10 @@ except ModuleNotFoundError:  # pragma: no cover
         safe_json,
         two_sample_summary,
     )
+
+
+CONTROL_LABEL_PRIORITY = {"RG4": 0, "Control4B": 1, "Control4C": 2}
+GAP_COLUMNS = ["Delta_m12", "Delta_m14"]
 
 
 def _group_summary(frame):
@@ -48,6 +52,7 @@ def _group_summary(frame):
         rows.append(
             {
                 "group_uid": group_uid,
+                "physical_group": first.get("physical_group", group_uid),
                 "sample": first["sample"],
                 "is_CG4": first["is_CG4"],
                 "Delta_m12": magnitude_gap(magnitudes),
@@ -74,6 +79,96 @@ def _group_summary(frame):
             }
         )
     return pd.DataFrame(rows)
+
+
+def _control_duplication_audit(groups):
+    controls = groups.loc[groups["is_CG4"] == 0].copy()
+    if controls.empty or "physical_group" not in controls:
+        return {"status": "skipped", "reason": "missing_physical_group"}
+    multiplicity = controls.groupby("physical_group", observed=True).size()
+    labelsets = controls.groupby("physical_group", observed=True)["sample"].agg(
+        lambda values: "+".join(sorted(set(values)))
+    )
+    rows_by_sample = controls["sample"].value_counts().sort_index().to_dict()
+    return {
+        "status": "ok",
+        "n_control_rows": int(len(controls)),
+        "n_unique_physical_groups": int(multiplicity.size),
+        "multiplicity_distribution": {
+            str(int(key)): int(value)
+            for key, value in multiplicity.value_counts().sort_index().items()
+        },
+        "n_physical_groups_in_multiple_control_labels": int((multiplicity > 1).sum()),
+        "labelset_distribution": {
+            str(key): int(value)
+            for key, value in labelsets.value_counts().sort_index().items()
+        },
+        "rows_by_sample": {str(key): int(value) for key, value in rows_by_sample.items()},
+        "n_rg4_physical_groups_also_control4b": int(
+            labelsets.str.contains("RG4", regex=False).fillna(False)
+            .loc[labelsets.str.contains("Control4B", regex=False).fillna(False)]
+            .sum()
+        ),
+    }
+
+
+def _deduplicate_control_groups(groups):
+    """Keep one control-group row per physical group for pooled sensitivity."""
+
+    cg4 = groups.loc[groups["is_CG4"] == 1]
+    controls = groups.loc[groups["is_CG4"] == 0].copy()
+    if controls.empty or "physical_group" not in controls:
+        return groups.copy()
+    controls["_priority"] = controls["sample"].map(CONTROL_LABEL_PRIORITY).fillna(99)
+    controls = (
+        controls.sort_values(["physical_group", "_priority", "group_uid"])
+        .drop_duplicates("physical_group", keep="first")
+        .drop(columns="_priority")
+    )
+    return pd.concat([cg4, controls], ignore_index=True, sort=False)
+
+
+def _holm_adjust_comparisons(comparisons):
+    valid = [
+        (gap, value)
+        for gap, value in comparisons.items()
+        if value.get("status") == "ok"
+    ]
+    adjusted = holm_correction([value["mannwhitney_p"] for _, value in valid])
+    for (gap, value), p_adj in zip(valid, adjusted):
+        comparisons[gap]["p_adj"] = p_adj
+    return [gap for gap, _ in valid]
+
+
+def _pooled_comparisons(groups):
+    comparisons = {}
+    for gap in GAP_COLUMNS:
+        comparisons[gap] = two_sample_summary(
+            groups.loc[groups["is_CG4"] == 1, gap],
+            groups.loc[groups["is_CG4"] == 0, gap],
+        )
+    valid = _holm_adjust_comparisons(comparisons)
+    return comparisons, valid
+
+
+def _per_control_comparisons(groups):
+    comparisons = {}
+    p_values = []
+    refs = []
+    cg4 = groups.loc[groups["is_CG4"] == 1]
+    for control in ["Control4B", "Control4C", "RG4"]:
+        comparisons[control] = {}
+        controls = groups.loc[groups["sample"] == control]
+        for gap in GAP_COLUMNS:
+            summary = two_sample_summary(cg4[gap], controls[gap])
+            summary["control"] = control
+            comparisons[control][gap] = summary
+            if summary.get("status") == "ok":
+                p_values.append(summary["mannwhitney_p"])
+                refs.append((control, gap))
+    for (control, gap), adjusted in zip(refs, holm_correction(p_values)):
+        comparisons[control][gap]["p_holm"] = adjusted
+    return comparisons
 
 
 def _plot(groups, path):
@@ -137,17 +232,11 @@ def run_fossilness_analysis(data, output_dir: str | None = None):
             "missing_columns": ["M_r", "group_uid"],
         }
     groups = _group_summary(frame)
-    comparisons = {}
-    for gap in ["Delta_m12", "Delta_m14"]:
-        comparisons[gap] = two_sample_summary(
-            groups.loc[groups["is_CG4"] == 1, gap],
-            groups.loc[groups["is_CG4"] == 0, gap],
-        )
-    valid = [gap for gap, value in comparisons.items() if value.get("status") == "ok"]
-    for gap, adjusted in zip(
-        valid, holm_correction([comparisons[gap]["mannwhitney_p"] for gap in valid])
-    ):
-        comparisons[gap]["p_adj"] = adjusted
+    duplication_audit = _control_duplication_audit(groups)
+    groups_dedup = _deduplicate_control_groups(groups)
+    comparisons, valid = _pooled_comparisons(groups_dedup)
+    label_pooled_comparisons, _ = _pooled_comparisons(groups)
+    per_control_comparisons = _per_control_comparisons(groups)
 
     correlations = {}
     correlation_p = []
@@ -161,7 +250,7 @@ def run_fossilness_analysis(data, output_dir: str | None = None):
         "group_luminosity",
         "virial_mass_to_light",
     ]
-    for gap in ["Delta_m12", "Delta_m14"]:
+    for gap in GAP_COLUMNS:
         for outcome in outcomes:
             clean = groups[[gap, outcome]].replace([np.inf, -np.inf], np.nan).dropna()
             key = f"{gap}_vs_{outcome}"
@@ -184,7 +273,7 @@ def run_fossilness_analysis(data, output_dir: str | None = None):
         correlations[key]["p_adj"] = adjusted
 
     gap_map = groups.set_index("group_uid")["Delta_m12"]
-    model_frame = frame.copy()
+    model_frame = dedup_control_pool(frame.copy())
     model_frame["Delta_m12"] = model_frame["group_uid"].map(gap_map)
     predictors = ["is_CG4", "Delta_m12", "logMstar", "is_satellite"]
     models = {
@@ -196,24 +285,43 @@ def run_fossilness_analysis(data, output_dir: str | None = None):
         )
         for outcome in ["quenched", "elliptical"]
     }
+    any_per_control_significant = any(
+        item.get("p_holm", 1) < 0.05
+        for control in per_control_comparisons.values()
+        for item in control.values()
+    )
+    robust_per_control_significant = any(
+        all(
+            per_control_comparisons[control][gap].get("p_holm", 1) < 0.05
+            for control in ["Control4B", "Control4C", "RG4"]
+        )
+        for gap in GAP_COLUMNS
+    )
     result = {
         "status": "ok",
         "n_groups": int(len(groups)),
+        "n_groups_deduplicated_pooled": int(len(groups_dedup)),
         "gap_definition": "M_r,2 - M_r,1 and M_r,4 - M_r,1 after sorting brightest first",
+        "control_duplication_audit": duplication_audit,
+        "control_selection_rule": "deduplicated pooled sensitivity keeps one control row per physical group with priority RG4 > Control4B > Control4C",
         "sample_comparisons": comparisons,
+        "per_control_comparisons": per_control_comparisons,
+        "label_pooled_comparisons": label_pooled_comparisons,
+        "label_pooled_warning": "Label-pooled control rows duplicate most physical Lim groups across Control4B, Control4C, and RG4; retained only for audit traceability.",
         "correlations": correlations,
         "models_with_gap": models,
-        "magnitude_gap_significant": any(
-            comparisons[gap].get("p_adj", 1) < 0.05 for gap in valid
-        ),
+        "magnitude_gap_any_per_control_significant": any_per_control_significant,
+        "magnitude_gap_control_robust": robust_per_control_significant,
+        "magnitude_gap_significant": robust_per_control_significant,
+        "multiple_testing": "Holm correction across the six per-control Mann-Whitney p-values (3 controls x 2 gaps); deduplicated pooled sensitivity is labelled separately.",
     }
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
         result["figure"] = _plot(
-            groups, os.path.join(output_dir, "fig_magnitude_gap_comparison.pdf")
+            groups_dedup, os.path.join(output_dir, "fig_magnitude_gap_comparison.pdf")
         )
         result["quenched_fraction_figure"] = _plot_fraction(
-            groups,
+            groups_dedup,
             os.path.join(output_dir, "fig_magnitude_gap_vs_quenched_fraction.pdf"),
         )
     return safe_json(result)

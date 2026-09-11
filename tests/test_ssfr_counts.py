@@ -51,6 +51,7 @@ def test_validate_ssfr_table_counts_rejects_missing_morphology_class(monkeypatch
         "SAMPLE",
         {"CG4": "CG4", "Control4B": "Control4B", "Control4C": "Control4C", "RG4": "RG4"},
     )
+    monkeypatch.setattr(sSFR.co, "NoMorphology_LABEL", "NoGZ", raising=False)
 
     with pytest.raises(AssertionError, match="morphology total"):
         sSFR.validate_ssfr_table_counts(sample)
@@ -66,6 +67,28 @@ def test_validate_ssfr_table_counts_accepts_consistent_sample(monkeypatch):
         "SAMPLE",
         {"CG4": "CG4", "Control4B": "Control4B", "Control4C": "Control4C", "RG4": "RG4"},
     )
+    monkeypatch.setattr(sSFR.co, "NoMorphology_LABEL", "NoGZ", raising=False)
     audit = sSFR.validate_ssfr_table_counts(sample)
+    assert audit["CG4"]["all"]["Total"] == 2
+    assert audit["CG4"]["all"]["NosSFR"] == 1
+
+
+def test_validate_ssfr_table_counts_accepts_explicit_missing_morphology(monkeypatch):
+    sample = {
+        name + "_Gals": _galaxies(
+            ["Quenched", "NosSFR", "Starforming"],
+            ["Elliptical", "NoGZ", "Spiral"],
+        )
+        for name in ["CG4", "Control4B", "Control4C", "RG4"]
+    }
+    monkeypatch.setattr(
+        sSFR.co,
+        "SAMPLE",
+        {"CG4": "CG4", "Control4B": "Control4B", "Control4C": "Control4C", "RG4": "RG4"},
+    )
+    monkeypatch.setattr(sSFR.co, "NoMorphology_LABEL", "NoGZ", raising=False)
+
+    audit = sSFR.validate_ssfr_table_counts(sample)
+
     assert audit["CG4"]["all"]["Total"] == 2
     assert audit["CG4"]["all"]["NosSFR"] == 1

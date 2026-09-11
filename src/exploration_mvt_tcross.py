@@ -10,8 +10,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from astropy import units as u
+from astropy.cosmology import Planck15
 from matplotlib.ticker import FuncFormatter
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+from scipy.stats import kendalltau
+from scipy.stats import pearsonr
 from scipy.stats import ranksums
 from scipy.stats import spearmanr
 
@@ -284,6 +288,7 @@ def compute_global_tcross_correlations(group_frame: pd.DataFrame) -> list[dict[s
         if len(clean) < 3:
             continue
         rho, p_value = spearmanr(clean["lg_t_cr"], clean[y_key])
+        pearson_r, pearson_p = pearsonr(clean["lg_t_cr"], clean[y_key])
         rows.append(
             {
                 "x_key": "lg_t_cr",
@@ -294,10 +299,123 @@ def compute_global_tcross_correlations(group_frame: pd.DataFrame) -> list[dict[s
                 "rho_fmt": f"{rho:.2f}",
                 "p_value": float(p_value),
                 "p_value_fmt": gu.tex_form(p_value),
+                "pearson_r": float(pearson_r),
+                "pearson_p_value": float(pearson_p),
             }
         )
 
     return rows
+
+
+def distance_scale_correction_audit(
+    sample: dict[str, pd.DataFrame],
+) -> dict[str, object]:
+    """Verify the proper-distance correction and its inferential impact."""
+
+    all_scales = []
+    correlation_frames = []
+    arcmin_to_rad = np.pi / (180.0 * 60.0)
+    for cat in ["CG4", "Control4B", "Control4C", "RG4"]:
+        key = cat + co.GRSUFF
+        groups = sample.get(key)
+        required = {
+            "z_group",
+            "Radius_Bary_arcmin",
+            "size_Group_Bary_kpc",
+            "t_cr",
+            "M_virial",
+            "Lum_group",
+            "M_virial_over_L",
+        }
+        if groups is None or not required.issubset(groups.columns):
+            continue
+        part = groups[list(required)].copy()
+        for column in required:
+            part[column] = pd.to_numeric(part[column], errors="coerce")
+        expected_size = (
+            part["Radius_Bary_arcmin"].to_numpy(dtype=float)
+            * arcmin_to_rad
+            * Planck15.angular_diameter_distance(
+                part["z_group"].to_numpy(dtype=float)
+            ).to_value(u.kpc)
+        )
+        relative_error = np.abs(
+            part["size_Group_Bary_kpc"].to_numpy(dtype=float) / expected_size - 1
+        )
+        all_scales.append(
+            pd.DataFrame(
+                {
+                    "legacy_factor": (1 + part["z_group"]) ** 2,
+                    "relative_error": relative_error,
+                }
+            )
+        )
+        if cat != "Control4C":
+            part["sample"] = cat
+            part["lg_t_cr_corrected"] = np.log10(part["t_cr"])
+            part["lg_t_cr_legacy"] = np.log10(
+                part["t_cr"] * (1 + part["z_group"]) ** 2
+            )
+            part["lg_M_virial_over_L"] = np.log10(part["M_virial_over_L"])
+            part["lg_M_virial"] = np.log10(part["M_virial"])
+            part["lg_Lum_group"] = np.log10(part["Lum_group"])
+            correlation_frames.append(part)
+
+    if not all_scales or not correlation_frames:
+        return {"status": "skipped", "reason": "missing_group_scale_columns"}
+
+    scales = pd.concat(all_scales, ignore_index=True).replace(
+        [np.inf, -np.inf], np.nan
+    ).dropna()
+    frame = pd.concat(correlation_frames, ignore_index=True).replace(
+        [np.inf, -np.inf], np.nan
+    )
+    rank_clean = frame[["lg_t_cr_corrected", "lg_t_cr_legacy"]].dropna()
+    rank_spearman = spearmanr(
+        rank_clean["lg_t_cr_corrected"], rank_clean["lg_t_cr_legacy"]
+    )
+    rank_kendall = kendalltau(
+        rank_clean["lg_t_cr_corrected"], rank_clean["lg_t_cr_legacy"]
+    )
+
+    correlations = {}
+    for y_key in ["lg_M_virial_over_L", "lg_M_virial", "lg_Lum_group"]:
+        correlations[y_key] = {}
+        for convention, x_key in [
+            ("corrected", "lg_t_cr_corrected"),
+            ("legacy", "lg_t_cr_legacy"),
+        ]:
+            clean = frame[[x_key, y_key]].dropna()
+            rho, p_s = spearmanr(clean[x_key], clean[y_key])
+            r_p, p_p = pearsonr(clean[x_key], clean[y_key])
+            correlations[y_key][convention] = {
+                "n_groups": int(len(clean)),
+                "spearman_rho": float(rho),
+                "spearman_p": float(p_s),
+                "pearson_r": float(r_p),
+                "pearson_p": float(p_p),
+            }
+
+    legacy_pct = 100 * (scales["legacy_factor"] - 1)
+    return {
+        "status": "ok",
+        "distance_convention": "Planck15 angular-diameter distance; proper kpc",
+        "n_groups_all_samples": int(len(scales)),
+        "legacy_overestimate_percent": {
+            "min": float(legacy_pct.min()),
+            "median": float(legacy_pct.median()),
+            "max": float(legacy_pct.max()),
+        },
+        "max_relative_error_against_recomputed_proper_size": float(
+            scales["relative_error"].max()
+        ),
+        "crossing_time_rank_comparison": {
+            "n_groups": int(len(rank_clean)),
+            "spearman_rho": float(rank_spearman.statistic),
+            "kendall_tau": float(rank_kendall.statistic),
+        },
+        "correlations": correlations,
+    }
 
 
 def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[str, object]:
@@ -312,6 +430,7 @@ def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[
     add_group_ssfr_excess_summary(sample)
     group_frame = build_group_property_frame(sample)
     tcross_correlations = compute_global_tcross_correlations(group_frame)
+    distance_scale_audit = distance_scale_correction_audit(sample)
 
     figures = {
         "tcr_vs_mvirial_over_l": plot_group_relation(
@@ -391,6 +510,7 @@ def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[
     ]
 
     report.append_json("Tcross_global_correlations", tcross_correlations)
+    report.append_json("Tcross_distance_scale_audit", distance_scale_audit)
     report.append_json("Main_sequence_offset_by_sample", sample_summary)
     report.append_json("Main_sequence_offset_by_sample_significant", significant_sample_summary)
     report.append_json("Main_sequence_offset_by_cg_class", class_summary)
@@ -399,6 +519,7 @@ def run(sample: dict[str, pd.DataFrame], output_dir: str | None = None) -> dict[
     return {
         "figures": figures,
         "tcross_correlations": tcross_correlations,
+        "distance_scale_audit": distance_scale_audit,
         "main_sequence_offset_by_sample": by_sample,
         "main_sequence_offset_by_sample_summary": sample_summary,
         "main_sequence_offset_by_cg_class": by_class,

@@ -53,17 +53,18 @@ from tidal_indices import _angular_matrix, _derive  # noqa: E402
 SEED = 42
 SAMPLES = ["CG4", "Control4B", "Control4C", "RG4"]
 MORPHS = ["Elliptical", "Spiral", "Uncertain"]
+NO_MORPH = getattr(co, "NoMorphology_LABEL", "NoGZ")
 LGM_TIDAL_WINDOW = (6.0, 13.0)  # paper convention: outside -> zero mass
 JSON_PATH = os.path.join(co.OUTPUT_PATH, "paper_additions.json")
 MACROS_PATH = os.path.join(co.REPORT_PATH, "additions_macros.tex")
 
 PUBLISHED_COUNTS = {
-    "CG4": dict(groups=62, gals=248, E=124, Sp=86, U=38, Q=146, SF=84, N=18),
-    "Control4B": dict(groups=698, gals=2792, E=1106, Sp=1266, U=420,
+    "CG4": dict(groups=62, gals=248, E=124, Sp=86, U=7, NoGZ=31, Q=146, SF=84, N=18),
+    "Control4B": dict(groups=698, gals=2792, E=1106, Sp=1266, U=116, NoGZ=304,
                       Q=1593, SF=1019, N=180),
-    "Control4C": dict(groups=703, gals=2812, E=1118, Sp=1229, U=465,
+    "Control4C": dict(groups=703, gals=2812, E=1118, Sp=1229, U=144, NoGZ=321,
                       Q=1560, SF=1061, N=191),
-    "RG4": dict(groups=56, gals=224, E=60, Sp=129, U=35, Q=101, SF=118, N=5),
+    "RG4": dict(groups=56, gals=224, E=60, Sp=129, U=15, NoGZ=20, Q=101, SF=118, N=5),
 }
 
 REGRESSION_CHECKS: list[dict] = []
@@ -102,6 +103,7 @@ def canonical_gate(sample: dict) -> dict:
             E=int((g["morphology"] == "Elliptical").sum()),
             Sp=int((g["morphology"] == "Spiral").sum()),
             U=int((g["morphology"] == "Uncertain").sum()),
+            NoGZ=int((g["morphology"] == NO_MORPH).sum()),
             Q=int((g["sSFR_status"] == "Quenched").sum()),
             SF=int((g["sSFR_status"] == "Starforming").sum()),
             N=int((g["sSFR_status"] == "NosSFR").sum()),
@@ -435,9 +437,9 @@ def host_inclusive_block(sample: dict, work: pd.DataFrame) -> dict:
 
     Membership and positions come from the Lim catalogue (``SDSS(L)
     galaxy.dat``); stellar masses of the additional members come from the
-    SDSS selection (``output/SDSS_processed.csv``); members absent from that
-    selection contribute zero mass, so the host-inclusive T_i is a lower
-    bound. Separations use the same convention as the quartet T_i (haversine
+    SDSS non-AGN reference (``output/SDSS_processed.csv``); members absent
+    from that reference contribute zero mass, so the host-inclusive T_i is a
+    lower bound. Separations use the same convention as the quartet T_i (haversine
     x angular-diameter distance at the *quartet's* median redshift).
     """
 

@@ -145,6 +145,9 @@ def test_holm_family_sizes_match_preregistration():
         effect = result["matched"]["effects"][outcome]
         assert effect["status"] == "ok"
         assert effect["p_holm"] is not None
+        sensitivity = effect["two_sided_cluster_sensitivity"]
+        assert sensitivity["p_holm"] is not None
+        assert sensitivity["n_components"] > 0
 
 
 def test_two_runs_produce_byte_identical_json():

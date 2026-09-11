@@ -158,9 +158,9 @@ def test_kitagawa_isolated_and_leave_one_outputs():
     )
     assert quench["chi2_homogeneity_PQE"]["p"] == pytest.approx(0.3927829543)
     expected_cond = {
-        "Control4B": (-0.0339856315, -0.0857162206, 0.0192449829),
-        "Control4C": (-0.0160176243, -0.0683262411, 0.0385176513),
-        "RG4": (0.0351211038, -0.0468715131, 0.1210957659),
+        "Control4B": (-0.0167079492, -0.0732416620, 0.0379244012),
+        "Control4C": (0.0020159043, -0.0541470105, 0.0576353816),
+        "RG4": (0.0496868466, -0.0350646365, 0.1364416519),
     }
     for control, (cond, lo, hi) in expected_cond.items():
         item = quench["kitagawa"][control]

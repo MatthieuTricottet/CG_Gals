@@ -4,7 +4,7 @@ The three control samples answer different questions and are therefore
 never pooled here:
 
 * Control4B - is the CG4 population special compared with the *luminous
-  population of richer ordinary groups* (four brightest members)?
+  population of eligible ordinary groups* (four brightest eligible members)?
 * Control4C - compared with *BGG-centred projected cores* of ordinary
   groups (BGG + three closest projected companions)?
 * RG4       - compared with *true four-member ordinary groups*?
@@ -37,7 +37,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from .specialness_models import LABELS, MODEL_SPECS, _covariates
 
 CONTRAST_QUESTIONS = {
-    "Control4B": "luminous population of richer ordinary groups",
+    "Control4B": "luminous population of eligible ordinary groups",
     "Control4C": "BGG-centred projected cores of ordinary groups",
     "RG4": "true four-member ordinary groups",
 }
@@ -69,6 +69,7 @@ def _plot(results, path):
         )
     ax.axvline(1, color="0.45", linestyle=":", linewidth=1)
     ax.set_xscale("log")
+    ax.set_xticks([0.25, 0.5, 1, 2, 4], labels=["0.25", "0.5", "1", "2", "4"])
     ax.set_yticks(
         y,
         [

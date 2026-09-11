@@ -80,6 +80,8 @@ def test_matched_controls_return_dict_unchanged_by_refactor():
         "max_abs_smd_before",
         "max_abs_smd_after",
         "effects",
+        "control_host_dependence_audit",
+        "two_sided_cluster_sensitivity",
         "satellite_decomposition",
         "holm_correction_family",
         "holm_correction_note",

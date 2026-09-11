@@ -90,6 +90,7 @@ def _plot(results, path):
         )
     ax.axvline(1, color="0.45", linestyle=":", linewidth=1)
     ax.set_xscale("log")
+    ax.set_xticks([0.5, 1, 2, 3], labels=["0.5", "1", "2", "3"])
     ax.set_yticks(y, [row[0] for row in rows])
     ax.set_xlabel("CG4 odds ratio (95% confidence interval)")
     ax.invert_yaxis()

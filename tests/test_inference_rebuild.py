@@ -15,7 +15,10 @@ from src.extended_stats import (
     empirical_p_two_sided,
     holm_correction,
 )
-from src.matched_controls import run_matched_control_analysis
+from src.matched_controls import (
+    matched_cluster_components,
+    run_matched_control_analysis,
+)
 from src.primary_contrasts import run_primary_contrasts
 from tests.test_matched_pairs_stability import add_matched_outcome_columns
 from tests.test_size_models import synthetic_size_frame
@@ -54,6 +57,14 @@ def test_holm_adjusted_never_below_raw():
     raw = [0.001, 0.02, 0.04, 0.2, 0.6]
     adjusted = holm_correction(raw)
     assert all(a >= r for a, r in zip(adjusted, raw))
+
+
+def test_matched_cluster_components_connect_both_sides():
+    components = matched_cluster_components(
+        ["CG:1", "CG:2", "CG:3"], ["Lim:10", "Lim:10", "Lim:11"]
+    )
+    assert components[0] == components[1]
+    assert components[0] != components[2]
 
 
 def _frame_with_control_duplicates():
@@ -98,6 +109,15 @@ def test_matching_hard_constraints_and_provenance():
     assert result["n_control_unique"] == result["n_control_matched"]
     assert "matched_control_counts_by_provenance" in result
     assert result["n_matched_controls_physically_RG4"] >= 0
+    audit = result["control_host_dependence_audit"]
+    assert audit["n_matched_controls"] == result["n_control_matched"]
+    assert sum(
+        int(multiplicity) * n_hosts
+        for multiplicity, n_hosts in audit[
+            "matched_control_multiplicity_per_lim_group"
+        ].items()
+    ) == result["n_control_matched"]
+    assert result["two_sided_cluster_sensitivity"]["status"] == "ok"
     for effect in result["effects"].values():
         if effect.get("status") == "ok":
             assert effect["p"] is None or effect["p"] >= effect["p_floor"]

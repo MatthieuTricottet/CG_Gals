@@ -40,7 +40,7 @@ try:
         safe_json,
         two_sample_summary,
     )
-    from matched_controls import matched_pairs
+    from matched_controls import matched_cluster_components, matched_pairs
     from morphology_robustness import CROWDING_THRESHOLD_ARCSEC, _nearest_angular
     from size_data import Z_MATCH_TOLERANCE, attach_size_columns
     from tidal_indices import _derive as _derive_tidal_indices
@@ -56,7 +56,7 @@ except ModuleNotFoundError:  # pragma: no cover
         safe_json,
         two_sample_summary,
     )
-    from .matched_controls import matched_pairs
+    from .matched_controls import matched_cluster_components, matched_pairs
     from .morphology_robustness import CROWDING_THRESHOLD_ARCSEC, _nearest_angular
     from .size_data import Z_MATCH_TOLERANCE, attach_size_columns
     from .tidal_indices import _derive as _derive_tidal_indices
@@ -559,6 +559,10 @@ def _paired_bootstrap(differences: np.ndarray, statistic, blocks=None) -> dict:
         "p": empirical_p_two_sided(boot),
         "n_boot": int(N_BOOT),
         "p_floor": float(2 / (N_BOOT + 1)),
+        "resampling_unit": "block" if blocks is not None else "pair",
+        "n_blocks": int(len(pd.unique(np.asarray(blocks))))
+        if blocks is not None
+        else int(n),
     }
 
 
@@ -584,8 +588,11 @@ def _matched(frame: pd.DataFrame) -> dict:
     )
     if "physical_group" in treated:
         treated_blocks = treated["physical_group"].astype(str).to_numpy()
+        control_blocks = control["physical_group"].astype(str).to_numpy()
     else:
         treated_blocks = treated["group_uid"].astype(str).to_numpy()
+        control_blocks = control["group_uid"].astype(str).to_numpy()
+    two_sided_blocks = matched_cluster_components(treated_blocks, control_blocks)
 
     outcomes = {
         "delta_log_Rchl_r": (PRIMARY_OUTCOME, True),
@@ -607,8 +614,15 @@ def _matched(frame: pd.DataFrame) -> dict:
             )
             continue
         pair_blocks = treated_blocks[mask.to_numpy()]
+        component_blocks = two_sided_blocks[mask.to_numpy()]
         mean_boot = _paired_bootstrap(differences, np.mean, blocks=pair_blocks)
         median_boot = _paired_bootstrap(differences, np.median, blocks=pair_blocks)
+        sensitivity_mean = _paired_bootstrap(
+            differences, np.mean, blocks=component_blocks
+        )
+        sensitivity_median = _paired_bootstrap(
+            differences, np.median, blocks=component_blocks
+        )
         effects[name] = {
             "status": "ok",
             "n_pairs": int(len(pairs)),
@@ -618,11 +632,32 @@ def _matched(frame: pd.DataFrame) -> dict:
             "median_delta": median_boot["estimate"],
             "median_ci95": median_boot["ci95"],
             "p": mean_boot["p"],
+            "two_sided_cluster_sensitivity": {
+                "method": "bipartite_connected_component_bootstrap",
+                "mean_delta": sensitivity_mean["estimate"],
+                "mean_ci95": sensitivity_mean["ci95"],
+                "median_delta": sensitivity_median["estimate"],
+                "median_ci95": sensitivity_median["ci95"],
+                "p": sensitivity_mean["p"],
+                "n_components": sensitivity_mean["n_blocks"],
+            },
         }
     _holm_annotate(effects, list(outcomes))
     for name in outcomes:
         if effects[name].get("status") == "ok":
             effects[name]["p_adj"] = effects[name].get("p_holm")
+    sensitivity_names = [
+        name
+        for name in outcomes
+        if effects[name].get("status") == "ok"
+        and effects[name].get("two_sided_cluster_sensitivity", {}).get("p")
+        is not None
+    ]
+    sensitivity_adjusted = holm_correction(
+        [effects[name]["two_sided_cluster_sensitivity"]["p"] for name in sensitivity_names]
+    )
+    for name, adjusted in zip(sensitivity_names, sensitivity_adjusted):
+        effects[name]["two_sided_cluster_sensitivity"]["p_holm"] = adjusted
 
     return {
         "status": "ok",
@@ -638,6 +673,7 @@ def _matched(frame: pd.DataFrame) -> dict:
         "propensity_caliper": safe_float(caliper),
         "deterministic": bool(deterministic),
         "n_pairs": int(len(pairs)),
+        "n_two_sided_cluster_components": int(pd.Series(two_sided_blocks).nunique()),
         "expected_n_pairs_from_matched_controls": expected,
         "pair_count_consistent": pair_count_consistent,
         "effects": effects,

@@ -16,6 +16,8 @@ import matplotlib.lines as mlines  # for legend proxies
 import matplotlib.ticker as ticker
 
 import seaborn as sns
+from astropy import units as u
+from astropy.cosmology import Planck15
 
 import time as time
 import re as re
@@ -78,6 +80,43 @@ control_list_name = {samp : sample_list_name[samp] for samp in control_list}
 Gals_list = ["{}{}".format(i,gal_suff) for i in sample_list]
 Groups_list = ["{}{}".format(i,group_suff) for i in sample_list]
 # endregion
+
+
+def correct_group_distance_scales(sample):
+    """Recompute group radii and crossing times as projected proper lengths.
+
+    The inherited group tables converted the angular median pairwise
+    separation with luminosity distance.  The current paper consistently
+    uses the Planck15 angular-diameter distance for projected quantities, so
+    overwrite the two affected derived columns whenever their angular inputs
+    are available.  The angular radius, velocity dispersion, virial mass, and
+    dimensionless barycentric offset are unchanged.
+    """
+
+    arcmin_to_rad = np.pi / (180.0 * 60.0)
+    for key in Groups_list:
+        groups = sample.get(key)
+        if groups is None:
+            continue
+        required = {"Radius_Bary_arcmin", "z_group", "Vdisp"}
+        if not required.issubset(groups.columns):
+            continue
+        groups = groups.copy()
+        theta = (
+            pd.to_numeric(groups["Radius_Bary_arcmin"], errors="coerce")
+            * arcmin_to_rad
+        )
+        redshift = pd.to_numeric(groups["z_group"], errors="coerce")
+        velocity_dispersion = pd.to_numeric(groups["Vdisp"], errors="coerce")
+        distance_kpc = Planck15.angular_diameter_distance(
+            redshift.to_numpy(dtype=float)
+        ).to_value(u.kpc)
+        groups["size_Group_Bary_kpc"] = theta.to_numpy(dtype=float) * distance_kpc
+        groups["t_cr"] = (
+            0.887 * groups["size_Group_Bary_kpc"] / velocity_dispersion
+        )
+        sample[key] = groups
+    return sample
 
 
 def load_previous_samples():
