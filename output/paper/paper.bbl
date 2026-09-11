@@ -1,4 +1,4 @@
-\begin{thebibliography}{54}
+\begin{thebibliography}{55}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Ahumada} {et~al.}(2020){Ahumada}, {Allende Prieto}, {Almeida},
@@ -52,6 +52,11 @@
   {Zandivarez}, \& {Taverna}}]{DiazGimenez+18}
 {D{\'\i}az-Gim{\'e}nez}, E., {Zandivarez}, A., \& {Taverna}, A. 2018, \aap,
   618, A157
+
+\bibitem[{Dom{\'i}nguez~S{\'a}nchez {et~al.}(2018)Dom{\'i}nguez~S{\'a}nchez,
+  Huertas-Company, Bernardi, Tuccillo, \& Fischer}]{DominguezSanchez2018}
+Dom{\'i}nguez~S{\'a}nchez, H., Huertas-Company, M., Bernardi, M., Tuccillo, D.,
+  \& Fischer, J.~L. 2018, MNRAS, 476, 3661
 
 \bibitem[{{Dressler}(1980)}]{Dressler80}
 {Dressler}, A. 1980, \apj, 236, 351
