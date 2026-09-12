@@ -1,0 +1,889 @@
+{
+  "status": "ok",
+  "scope": "DR7-era DS18-matched subset; diagnostic validation only",
+  "source_notebook": "notebooks/audit_gz1_vs_ds18.ipynb",
+  "inputs": {
+    "processed_sample": "data/processed_sample.pkl",
+    "photoobjdr7_bridge": "${CG_GALS_DS18_CACHE:-~/.cache/cg_gals_audit}/photoobjdr7_map.csv",
+    "ds18_catalogue": "${CG_GALS_DS18_CACHE:-~/.cache/cg_gals_audit}/ds18/catalog.dat.gz"
+  },
+  "composition": {
+    "unique_sample": 3857,
+    "matched_unique": 2436,
+    "matched_fraction": 0.631578947368421,
+    "matching_by_environment": {
+      "CG4": {
+        "n_total": 248,
+        "n_matched": 173,
+        "fraction_matched": 0.6975806451612904
+      },
+      "deduplicated_controls": {
+        "n_total": 3609,
+        "n_matched": 2263,
+        "fraction_matched": 0.6270435023552231
+      }
+    },
+    "matched_gz1_e": {
+      "pooled": {
+        "n": 942,
+        "fraction_early": 0.921443736730361,
+        "fraction_s0_like": 0.5424628450106157,
+        "fraction_strong_s0_like": 0.28662420382165604
+      },
+      "CG4": {
+        "n": 86,
+        "fraction_early": 0.9069767441860465,
+        "fraction_s0_like": 0.5465116279069767,
+        "fraction_strong_s0_like": 0.2441860465116279
+      },
+      "deduplicated_controls": {
+        "n": 856,
+        "fraction_early": 0.9228971962616822,
+        "fraction_s0_like": 0.5420560747663551,
+        "fraction_strong_s0_like": 0.2908878504672897
+      }
+    },
+    "high_confidence_s0": {
+      "definition": "TType <= 0 and P_S0 >= 0.8",
+      "n": 429,
+      "fraction_to_E": 0.6293706293706294,
+      "fraction_to_S": 0.24475524475524477,
+      "environment_mapping": {
+        "CG4": {
+          "n": 37,
+          "fraction_to_E": 0.5675675675675675
+        },
+        "deduplicated_controls": {
+          "n": 392,
+          "fraction_to_E": 0.6352040816326531
+        },
+        "fisher_E_vs_not_E_p": 0.4769980949435707
+      }
+    }
+  },
+  "early_type_robustness": {
+    "outcome": "DS18 TType <= 0",
+    "design": "separate CG4-versus-control contrasts",
+    "covariates": [
+      "logMstar",
+      "z_numeric",
+      "is_satellite",
+      "log_group_luminosity",
+      "velocity_dispersion"
+    ],
+    "continuous_standardized": [
+      "logMstar",
+      "z_numeric",
+      "log_group_luminosity",
+      "velocity_dispersion"
+    ],
+    "cluster_unit": "physical_group",
+    "contrasts": {
+      "Control4B": {
+        "n": 1822,
+        "n_CG4": 173,
+        "n_control": 1649,
+        "n_physical_groups": 687,
+        "n_early_CG4": 99,
+        "n_early_control": 749,
+        "model": {
+          "status": "ok",
+          "n": 1822,
+          "formula": "ds18_early ~ is_CG4 + logMstar + z_numeric + is_satellite + log_group_luminosity + velocity_dispersion",
+          "predictors_used": [
+            "is_CG4",
+            "logMstar",
+            "z_numeric",
+            "is_satellite",
+            "log_group_luminosity",
+            "velocity_dispersion"
+          ],
+          "standardized_predictors": [
+            "logMstar",
+            "z_numeric",
+            "log_group_luminosity",
+            "velocity_dispersion"
+          ],
+          "covariance": "cluster",
+          "n_clusters": 687,
+          "aic": 2326.241898251182,
+          "bic": 2364.7957287959216,
+          "terms": {
+            "const": {
+              "coefficient": -0.37487920168646116,
+              "standard_error": 0.19843012958022965,
+              "odds_ratio": 0.6873723071915079,
+              "ci95": [
+                0.4658949455007086,
+                1.0141356828544046
+              ],
+              "p": 0.0588616591213287
+            },
+            "is_CG4": {
+              "coefficient": 0.746847248210484,
+              "standard_error": 0.17770809589413525,
+              "odds_ratio": 2.1103361512983554,
+              "ci95": [
+                1.4896568337276215,
+                2.9896272555153227
+              ],
+              "p": 2.6379310919116848e-05
+            },
+            "logMstar": {
+              "coefficient": 0.8160092457263272,
+              "standard_error": 0.08465880346688849,
+              "odds_ratio": 2.261456886701328,
+              "ci95": [
+                1.9156960706505586,
+                2.669623500700774
+              ],
+              "p": 5.482529183821803e-22
+            },
+            "z_numeric": {
+              "coefficient": -0.07771011928385112,
+              "standard_error": 0.05478181936582939,
+              "odds_ratio": 0.9252325947604375,
+              "ci95": [
+                0.8310373724711606,
+                1.030104520885238
+              ],
+              "p": 0.1560336097928544
+            },
+            "is_satellite": {
+              "coefficient": 0.15149846335571715,
+              "standard_error": 0.21001191851479506,
+              "odds_ratio": 1.1635765138051042,
+              "ci95": [
+                0.7709611211167103,
+                1.7561330479515593
+              ],
+              "p": 0.47067555625935065
+            },
+            "log_group_luminosity": {
+              "coefficient": -0.13173785678997493,
+              "standard_error": 0.06829000743821813,
+              "odds_ratio": 0.8765707520341971,
+              "ci95": [
+                0.7667581767537147,
+                1.0021103218943603
+              ],
+              "p": 0.05371916977799779
+            },
+            "velocity_dispersion": {
+              "coefficient": 0.012322166946199564,
+              "standard_error": 0.05552411019670333,
+              "odds_ratio": 1.012398397632627,
+              "ci95": [
+                0.9080070924773272,
+                1.1287913101347318
+              ],
+              "p": 0.8243725659332768
+            }
+          },
+          "cg4_coefficient": 0.746847248210484,
+          "cg4_standard_error": 0.17770809589413525,
+          "cg4_odds_ratio": 2.1103361512983554,
+          "cg4_ci95": [
+            1.4896568337276215,
+            2.9896272555153227
+          ],
+          "cg4_p": 2.6379310919116848e-05
+        },
+        "without_sigma_v": {
+          "status": "ok",
+          "n": 1822,
+          "formula": "ds18_early ~ is_CG4 + logMstar + z_numeric + is_satellite + log_group_luminosity",
+          "predictors_used": [
+            "is_CG4",
+            "logMstar",
+            "z_numeric",
+            "is_satellite",
+            "log_group_luminosity"
+          ],
+          "standardized_predictors": [
+            "logMstar",
+            "z_numeric",
+            "log_group_luminosity"
+          ],
+          "covariance": "cluster",
+          "n_clusters": 687,
+          "aic": 2324.298489933418,
+          "bic": 2357.3446304003373,
+          "terms": {
+            "const": {
+              "coefficient": -0.3772684588704688,
+              "standard_error": 0.19832046336416537,
+              "odds_ratio": 0.6857319583564163,
+              "ci95": [
+                0.46488304346484977,
+                1.0114981075812894
+              ],
+              "p": 0.05712967843287704
+            },
+            "is_CG4": {
+              "coefficient": 0.7514161292964938,
+              "standard_error": 0.17699345836189437,
+              "odds_ratio": 2.120000086098656,
+              "ci95": [
+                1.4985760023009775,
+                2.9991140643900707
+              ],
+              "p": 2.1815926855453736e-05
+            },
+            "logMstar": {
+              "coefficient": 0.8165952830305089,
+              "standard_error": 0.08463520262851788,
+              "odds_ratio": 2.2627825732116666,
+              "ci95": [
+                1.9169077369927996,
+                2.671064900422823
+              ],
+              "p": 4.992291223108758e-22
+            },
+            "z_numeric": {
+              "coefficient": -0.07827659002436652,
+              "standard_error": 0.05483467052957988,
+              "odds_ratio": 0.9247086259878352,
+              "ci95": [
+                0.8304807164808876,
+                1.029627811949308
+              ],
+              "p": 0.15343531122636855
+            },
+            "is_satellite": {
+              "coefficient": 0.15365949791918668,
+              "standard_error": 0.2098121363501736,
+              "odds_ratio": 1.1660937618190161,
+              "ci95": [
+                0.7729315906319664,
+                1.759243221306871
+              ],
+              "p": 0.4639445571039086
+            },
+            "log_group_luminosity": {
+              "coefficient": -0.12842370256885993,
+              "standard_error": 0.0665824071191668,
+              "odds_ratio": 0.8794806619738674,
+              "ci95": [
+                0.7718825926933685,
+                1.0020775725580597
+              ],
+              "p": 0.053756524546882664
+            }
+          },
+          "cg4_coefficient": 0.7514161292964938,
+          "cg4_standard_error": 0.17699345836189437,
+          "cg4_odds_ratio": 2.120000086098656,
+          "cg4_ci95": [
+            1.4985760023009775,
+            2.9991140643900707
+          ],
+          "cg4_p": 2.1815926855453736e-05
+        },
+        "support": {
+          "logMstar": {
+            "CG4_range": [
+              9.123651,
+              11.17926
+            ],
+            "control_range": [
+              7.770007,
+              11.58129
+            ],
+            "overlap_range": [
+              9.123651,
+              11.17926
+            ],
+            "CG4_fraction_within_control_range": 1.0,
+            "control_fraction_within_CG4_range": 0.9745300181928441
+          },
+          "z_numeric": {
+            "CG4_range": [
+              0.019768186,
+              0.046428481
+            ],
+            "control_range": [
+              0.016196958,
+              0.048040464
+            ],
+            "overlap_range": [
+              0.019768186,
+              0.046428481
+            ],
+            "CG4_fraction_within_control_range": 1.0,
+            "control_fraction_within_CG4_range": 0.9945421467556095
+          },
+          "log_group_luminosity": {
+            "CG4_range": [
+              10.792090718618416,
+              11.435171765857067
+            ],
+            "control_range": [
+              10.71163103590858,
+              11.576844792774025
+            ],
+            "overlap_range": [
+              10.792090718618416,
+              11.435171765857067
+            ],
+            "CG4_fraction_within_control_range": 1.0,
+            "control_fraction_within_CG4_range": 0.9624014554275319
+          },
+          "velocity_dispersion": {
+            "CG4_range": [
+              32.42121263589201,
+              419.9583578978288
+            ],
+            "control_range": [
+              13.703637323704228,
+              712.5703011207556
+            ],
+            "overlap_range": [
+              32.42121263589201,
+              419.9583578978288
+            ],
+            "CG4_fraction_within_control_range": 1.0,
+            "control_fraction_within_CG4_range": 0.9678593086719224
+          }
+        }
+      },
+      "Control4C": {
+        "n": 1913,
+        "n_CG4": 173,
+        "n_control": 1740,
+        "n_physical_groups": 698,
+        "n_early_CG4": 99,
+        "n_early_control": 823,
+        "model": {
+          "status": "ok",
+          "n": 1913,
+          "formula": "ds18_early ~ is_CG4 + logMstar + z_numeric + is_satellite + log_group_luminosity + velocity_dispersion",
+          "predictors_used": [
+            "is_CG4",
+            "logMstar",
+            "z_numeric",
+            "is_satellite",
+            "log_group_luminosity",
+            "velocity_dispersion"
+          ],
+          "standardized_predictors": [
+            "logMstar",
+            "z_numeric",
+            "log_group_luminosity",
+            "velocity_dispersion"
+          ],
+          "covariance": "cluster",
+          "n_clusters": 698,
+          "aic": 2460.169674669097,
+          "bic": 2499.0646704551787,
+          "terms": {
+            "const": {
+              "coefficient": -0.37722069973631545,
+              "standard_error": 0.19908409113848718,
+              "odds_ratio": 0.6857647091030761,
+              "ci95": [
+                0.4642099511059662,
+                1.0130615147969466
+              ],
+              "p": 0.05812145703787654
+            },
+            "is_CG4": {
+              "coefficient": 0.39855572416161184,
+              "standard_error": 0.16701481380465716,
+              "odds_ratio": 1.4896716464495239,
+              "ci95": [
+                1.0738096054132054,
+                2.06658759900151
+              ],
+              "p": 0.017016568846564994
+            },
+            "logMstar": {
+              "coefficient": 0.7126319694701535,
+              "standard_error": 0.0707425637804064,
+              "odds_ratio": 2.0393517127233665,
+              "ci95": [
+                1.7753171664456107,
+                2.3426548713627526
+              ],
+              "p": 7.228617062226162e-24
+            },
+            "z_numeric": {
+              "coefficient": -0.0037545623516926363,
+              "standard_error": 0.054607274169600796,
+              "odds_ratio": 0.9962524772046268,
+              "ci95": [
+                0.8951331032783892,
+                1.1087948760930575
+              ],
+              "p": 0.9451840664266773
+            },
+            "is_satellite": {
+              "coefficient": 0.28670563595073073,
+              "standard_error": 0.21496125660612658,
+              "odds_ratio": 1.3320320534105967,
+              "ci95": [
+                0.874056128559582,
+                2.0299719129448346
+              ],
+              "p": 0.182284185821181
+            },
+            "log_group_luminosity": {
+              "coefficient": -0.07165770858517398,
+              "standard_error": 0.062421998474476166,
+              "odds_ratio": 0.9308494630663802,
+              "ci95": [
+                0.8236557813439982,
+                1.0519937363604617
+              ],
+              "p": 0.25098672239464304
+            },
+            "velocity_dispersion": {
+              "coefficient": 0.2042151641204272,
+              "standard_error": 0.05672474002513925,
+              "odds_ratio": 1.2265620372079202,
+              "ci95": [
+                1.0975020311139245,
+                1.3707987670808015
+              ],
+              "p": 0.0003180856011255754
+            }
+          },
+          "cg4_coefficient": 0.39855572416161184,
+          "cg4_standard_error": 0.16701481380465716,
+          "cg4_odds_ratio": 1.4896716464495239,
+          "cg4_ci95": [
+            1.0738096054132054,
+            2.06658759900151
+          ],
+          "cg4_p": 0.017016568846564994
+        },
+        "without_sigma_v": {
+          "status": "ok",
+          "n": 1913,
+          "formula": "ds18_early ~ is_CG4 + logMstar + z_numeric + is_satellite + log_group_luminosity",
+          "predictors_used": [
+            "is_CG4",
+            "logMstar",
+            "z_numeric",
+            "is_satellite",
+            "log_group_luminosity"
+          ],
+          "standardized_predictors": [
+            "logMstar",
+            "z_numeric",
+            "log_group_luminosity"
+          ],
+          "covariance": "cluster",
+          "n_clusters": 698,
+          "aic": 2473.0474879325266,
+          "bic": 2506.386055749168,
+          "terms": {
+            "const": {
+              "coefficient": -0.3988554025450641,
+              "standard_error": 0.19914779294500745,
+              "odds_ratio": 0.6710877319161644,
+              "ci95": [
+                0.4542180525344583,
+                0.9915034010987844
+              ],
+              "p": 0.04519757214418941
+            },
+            "is_CG4": {
+              "coefficient": 0.39706516500173417,
+              "standard_error": 0.1660388179945778,
+              "odds_ratio": 1.487452856761148,
+              "ci95": [
+                1.0742632327185602,
+                2.059565973870153
+              ],
+              "p": 0.01678427327731392
+            },
+            "logMstar": {
+              "coefficient": 0.7084109948900673,
+              "standard_error": 0.06981925115581501,
+              "odds_ratio": 2.0307618026337706,
+              "ci95": [
+                1.771041474465685,
+                2.32856969105173
+              ],
+              "p": 3.43966963388754e-24
+            },
+            "z_numeric": {
+              "coefficient": -0.016074595917204712,
+              "standard_error": 0.0541965480486623,
+              "odds_ratio": 0.9840539109132446,
+              "ci95": [
+                0.884884741384825,
+                1.0943369845751738
+              ],
+              "p": 0.7667733230199003
+            },
+            "is_satellite": {
+              "coefficient": 0.31046450227973793,
+              "standard_error": 0.21492974111116292,
+              "odds_ratio": 1.3640585753166365,
+              "ci95": [
+                0.8951266614881455,
+                2.0786508512678163
+              ],
+              "p": 0.14860035292704485
+            },
+            "log_group_luminosity": {
+              "coefficient": 0.00027595570950088993,
+              "standard_error": 0.05953206817887026,
+              "odds_ratio": 1.0002759937887804,
+              "ci95": [
+                0.8901148729573494,
+                1.124070717328722
+              ],
+              "p": 0.9963014889569919
+            }
+          },
+          "cg4_coefficient": 0.39706516500173417,
+          "cg4_standard_error": 0.1660388179945778,
+          "cg4_odds_ratio": 1.487452856761148,
+          "cg4_ci95": [
+            1.0742632327185602,
+            2.059565973870153
+          ],
+          "cg4_p": 0.01678427327731392
+        },
+        "support": {
+          "logMstar": {
+            "CG4_range": [
+              9.123651,
+              11.17926
+            ],
+            "control_range": [
+              7.770007,
+              11.58129
+            ],
+            "overlap_range": [
+              9.123651,
+              11.17926
+            ],
+            "CG4_fraction_within_control_range": 1.0,
+            "control_fraction_within_CG4_range": 0.978735632183908
+          },
+          "z_numeric": {
+            "CG4_range": [
+              0.019768186,
+              0.046428481
+            ],
+            "control_range": [
+              0.016196958,
+              0.046631916
+            ],
+            "overlap_range": [
+              0.019768186,
+              0.046428481
+            ],
+            "CG4_fraction_within_control_range": 1.0,
+            "control_fraction_within_CG4_range": 0.9913793103448276
+          },
+          "log_group_luminosity": {
+            "CG4_range": [
+              10.792090718618416,
+              11.435171765857067
+            ],
+            "control_range": [
+              10.710002652645098,
+              11.423766477158306
+            ],
+            "overlap_range": [
+              10.792090718618416,
+              11.423766477158306
+            ],
+            "CG4_fraction_within_control_range": 0.9884393063583815,
+            "control_fraction_within_CG4_range": 0.9448275862068966
+          },
+          "velocity_dispersion": {
+            "CG4_range": [
+              32.42121263589201,
+              419.9583578978288
+            ],
+            "control_range": [
+              13.703637323704228,
+              1127.684641971124
+            ],
+            "overlap_range": [
+              32.42121263589201,
+              419.9583578978288
+            ],
+            "CG4_fraction_within_control_range": 1.0,
+            "control_fraction_within_CG4_range": 0.9477011494252874
+          }
+        }
+      },
+      "RG4": {
+        "n": 324,
+        "n_CG4": 173,
+        "n_control": 151,
+        "n_physical_groups": 107,
+        "n_early_CG4": 99,
+        "n_early_control": 52,
+        "model": {
+          "status": "ok",
+          "n": 324,
+          "formula": "ds18_early ~ is_CG4 + logMstar + z_numeric + is_satellite + log_group_luminosity + velocity_dispersion",
+          "predictors_used": [
+            "is_CG4",
+            "logMstar",
+            "z_numeric",
+            "is_satellite",
+            "log_group_luminosity",
+            "velocity_dispersion"
+          ],
+          "standardized_predictors": [
+            "logMstar",
+            "z_numeric",
+            "log_group_luminosity",
+            "velocity_dispersion"
+          ],
+          "covariance": "cluster",
+          "n_clusters": 107,
+          "aic": 405.07289141521056,
+          "bic": 431.5380960257569,
+          "terms": {
+            "const": {
+              "coefficient": -1.2838560622277644,
+              "standard_error": 0.5462334168809025,
+              "odds_ratio": 0.27696723576493804,
+              "ci95": [
+                0.09494534331587028,
+                0.8079474675452399
+              ],
+              "p": 0.018754257112084536
+            },
+            "is_CG4": {
+              "coefficient": 0.7963135817702264,
+              "standard_error": 0.26830409765088986,
+              "odds_ratio": 2.2173517574712505,
+              "ci95": [
+                1.3105504154966914,
+                3.7515907501333787
+              ],
+              "p": 0.0029979151140480356
+            },
+            "logMstar": {
+              "coefficient": 0.8991819310224293,
+              "standard_error": 0.21687705386855308,
+              "odds_ratio": 2.457591808958712,
+              "ci95": [
+                1.6065848524189694,
+                3.7593765996032746
+              ],
+              "p": 3.3826801270370114e-05
+            },
+            "z_numeric": {
+              "coefficient": -0.11197614465599848,
+              "standard_error": 0.12743597875137255,
+              "odds_ratio": 0.8940655854880647,
+              "ci95": [
+                0.6964591949451634,
+                1.147738843791206
+              ],
+              "p": 0.37957183148352747
+            },
+            "is_satellite": {
+              "coefficient": 0.7922587150268948,
+              "standard_error": 0.5612515353208049,
+              "odds_ratio": 2.2083788957451866,
+              "ci95": [
+                0.7350813684888459,
+                6.634554426537246
+              ],
+              "p": 0.15806984701987414
+            },
+            "log_group_luminosity": {
+              "coefficient": 0.08131475570457752,
+              "standard_error": 0.14818897161129993,
+              "odds_ratio": 1.0847122622129066,
+              "ci95": [
+                0.8112895245794877,
+                1.450284585401129
+              ],
+              "p": 0.5831952880218485
+            },
+            "velocity_dispersion": {
+              "coefficient": 0.003792246235103571,
+              "standard_error": 0.12726216356962783,
+              "odds_ratio": 1.0037994458989465,
+              "ci95": [
+                0.7822061056460544,
+                1.2881685789895558
+              ],
+              "p": 0.9762276005612294
+            }
+          },
+          "cg4_coefficient": 0.7963135817702264,
+          "cg4_standard_error": 0.26830409765088986,
+          "cg4_odds_ratio": 2.2173517574712505,
+          "cg4_ci95": [
+            1.3105504154966914,
+            3.7515907501333787
+          ],
+          "cg4_p": 0.0029979151140480356
+        },
+        "without_sigma_v": {
+          "status": "ok",
+          "n": 324,
+          "formula": "ds18_early ~ is_CG4 + logMstar + z_numeric + is_satellite + log_group_luminosity",
+          "predictors_used": [
+            "is_CG4",
+            "logMstar",
+            "z_numeric",
+            "is_satellite",
+            "log_group_luminosity"
+          ],
+          "standardized_predictors": [
+            "logMstar",
+            "z_numeric",
+            "log_group_luminosity"
+          ],
+          "covariance": "cluster",
+          "n_clusters": 107,
+          "aic": 403.07372534897377,
+          "bic": 425.7581864437277,
+          "terms": {
+            "const": {
+              "coefficient": -1.2861964199212506,
+              "standard_error": 0.531023609050067,
+              "odds_ratio": 0.2763197912852258,
+              "ci95": [
+                0.09758967612166651,
+                0.7823842653265983
+              ],
+              "p": 0.015430772750760716
+            },
+            "is_CG4": {
+              "coefficient": 0.7986388472835262,
+              "standard_error": 0.25049044549023175,
+              "odds_ratio": 2.2225136881476257,
+              "ci95": [
+                1.3602746061485076,
+                3.631301409051141
+              ],
+              "p": 0.0014311165719162234
+            },
+            "logMstar": {
+              "coefficient": 0.8995158453803584,
+              "standard_error": 0.21561061882562985,
+              "odds_ratio": 2.4584125711741702,
+              "ci95": [
+                1.6111155025346073,
+                3.751309177150303
+              ],
+              "p": 3.0200930209565973e-05
+            },
+            "z_numeric": {
+              "coefficient": -0.11188946393991431,
+              "standard_error": 0.12731854520894745,
+              "odds_ratio": 0.8941430870921399,
+              "ci95": [
+                0.6966799003782971,
+                1.147574172529648
+              ],
+              "p": 0.37950152100229595
+            },
+            "is_satellite": {
+              "coefficient": 0.7935294796196415,
+              "standard_error": 0.5548815066877056,
+              "odds_ratio": 2.2111870093010197,
+              "ci95": [
+                0.7452628610753235,
+                6.560568418835274
+              ],
+              "p": 0.15269171447959617
+            },
+            "log_group_luminosity": {
+              "coefficient": 0.08192605229447038,
+              "standard_error": 0.14947449872253712,
+              "odds_ratio": 1.0853755458306642,
+              "ci95": [
+                0.8097428249356805,
+                1.4548323729583974
+              ],
+              "p": 0.5836274686658776
+            }
+          },
+          "cg4_coefficient": 0.7986388472835262,
+          "cg4_standard_error": 0.25049044549023175,
+          "cg4_odds_ratio": 2.2225136881476257,
+          "cg4_ci95": [
+            1.3602746061485076,
+            3.631301409051141
+          ],
+          "cg4_p": 0.0014311165719162234
+        },
+        "support": {
+          "logMstar": {
+            "CG4_range": [
+              9.123651,
+              11.17926
+            ],
+            "control_range": [
+              8.895717,
+              11.22813
+            ],
+            "overlap_range": [
+              9.123651,
+              11.17926
+            ],
+            "CG4_fraction_within_control_range": 1.0,
+            "control_fraction_within_CG4_range": 0.9801324503311258
+          },
+          "z_numeric": {
+            "CG4_range": [
+              0.019768186,
+              0.046428481
+            ],
+            "control_range": [
+              0.024788749,
+              0.046036735
+            ],
+            "overlap_range": [
+              0.024788749,
+              0.046036735
+            ],
+            "CG4_fraction_within_control_range": 0.9710982658959537,
+            "control_fraction_within_CG4_range": 1.0
+          },
+          "log_group_luminosity": {
+            "CG4_range": [
+              10.792090718618416,
+              11.435171765857067
+            ],
+            "control_range": [
+              10.735058774847595,
+              11.135876271302886
+            ],
+            "overlap_range": [
+              10.792090718618416,
+              11.135876271302886
+            ],
+            "CG4_fraction_within_control_range": 0.8323699421965318,
+            "control_fraction_within_CG4_range": 0.9006622516556292
+          },
+          "velocity_dispersion": {
+            "CG4_range": [
+              32.42121263589201,
+              419.9583578978288
+            ],
+            "control_range": [
+              13.703637323704228,
+              514.9271205533958
+            ],
+            "overlap_range": [
+              32.42121263589201,
+              419.9583578978288
+            ],
+            "CG4_fraction_within_control_range": 1.0,
+            "control_fraction_within_CG4_range": 0.9536423841059603
+          }
+        }
+      }
+    },
+    "same_direction": true
+  }
+}

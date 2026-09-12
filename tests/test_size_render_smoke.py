@@ -78,7 +78,7 @@ def test_template_renders_with_ok_size_stub():
     rendered = render_with_size_block(json.loads(json.dumps(SIZE_STUB_OK)))
     assert r"\subsection{Galaxy sizes}" in rendered
     assert r"\subsection{Galaxy sizes at fixed stellar mass}" in rendered
-    assert "but there were no such occurrence." in rendered
+    assert "but there were no such occurrences." in rendered
     assert "blended detections and dropped (0 rows)" not in rendered
     assert "<<" not in rendered
 
@@ -89,8 +89,8 @@ def test_template_reports_nonzero_blended_detection_count():
 
     rendered = render_with_size_block(size_block)
 
-    assert "blended detections and dropped (2 rows)." in rendered
-    assert "but there were no such occurrence" not in rendered
+    assert "as blended detections (2 rows)." in rendered
+    assert "but there were no such occurrences" not in rendered
 
 
 def test_template_renders_with_skipped_size_block():
