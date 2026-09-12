@@ -1,0 +1,226 @@
+tablename,name,unit,ucd,description
+galSpecIndx,best_model_z,,,"Metallicity of best fitting (min chisq) model Z = 0.004 / 0.017 / 0.050 (0.2 1.0, 2.5 x solar)"
+galSpecIndx,bh_cai,mag,,Restframe index measurement
+galSpecIndx,bh_cai_err,mag,,Error on index measurement
+galSpecIndx,bh_cai_model,mag,,Index of best fit model spectrum
+galSpecIndx,bh_cai_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,bh_cai_sub_err,mag,,Error in the above index measurement
+galSpecIndx,bh_cnb,mag,,Restframe index measurement
+galSpecIndx,bh_cnb_err,mag,,Error on index measurement
+galSpecIndx,bh_cnb_model,mag,,Index of best fit model spectrum
+galSpecIndx,bh_cnb_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,bh_cnb_sub_err,mag,,Error in the above index measurement
+galSpecIndx,bh_fc,mag,,Restframe index measurement
+galSpecIndx,bh_fc_err,mag,,Error on index measurement
+galSpecIndx,bh_fc_model,mag,,Index of best fit model spectrum
+galSpecIndx,bh_fc_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,bh_fc_sub_err,mag,,Error in the above index measurement
+galSpecIndx,bh_g,mag,,Restframe index measurement
+galSpecIndx,bh_g_err,mag,,Error on index measurement
+galSpecIndx,bh_g_model,mag,,Index of best fit model spectrum
+galSpecIndx,bh_g_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,bh_g_sub_err,mag,,Error in the above index measurement
+galSpecIndx,bh_hb,mag,,Restframe index measurement
+galSpecIndx,bh_hb_err,mag,,Error on index measurement
+galSpecIndx,bh_hb_model,mag,,Index of best fit model spectrum
+galSpecIndx,bh_hb_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,bh_hb_sub_err,mag,,Error in the above index measurement
+galSpecIndx,bh_hk,mag,,Restframe index measurement
+galSpecIndx,bh_hk_err,mag,,Error on index measurement
+galSpecIndx,bh_hk_model,mag,,Index of best fit model spectrum
+galSpecIndx,bh_hk_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,bh_hk_sub_err,mag,,Error in the above index measurement
+galSpecIndx,bh_mgg,mag,,Restframe index measurement
+galSpecIndx,bh_mgg_err,mag,,Error on index measurement
+galSpecIndx,bh_mgg_model,mag,,Index of best fit model spectrum
+galSpecIndx,bh_mgg_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,bh_mgg_sub_err,mag,,Error in the above index measurement
+galSpecIndx,bh_mh,mag,,Restframe index measurement
+galSpecIndx,bh_mh_err,mag,,Error on index measurement
+galSpecIndx,bh_mh_model,mag,,Index of best fit model spectrum
+galSpecIndx,bh_mh_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,bh_mh_sub_err,mag,,Error in the above index measurement
+galSpecIndx,bh_nad,mag,,Restframe index measurement
+galSpecIndx,bh_nad_err,mag,,Error on index measurement
+galSpecIndx,bh_nad_model,mag,,Index of best fit model spectrum
+galSpecIndx,bh_nad_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,bh_nad_sub_err,mag,,Error in the above index measurement
+galSpecIndx,d4000,,,"4000AA break, Bruzual (1983) definition"
+galSpecIndx,d4000_blue,,,The flux in the blue window of the Bruzual (1983) definition of D4000
+galSpecIndx,d4000_err,,,"Uncertainty estimate for 4000AA break, Bruzual (1983) definition"
+galSpecIndx,d4000_model,,,"4000AA break, Bruzual (1983) definition measured off best-fit CB08 model"
+galSpecIndx,d4000_n,,,"4000AA break, Balogh et al (1999) definition"
+galSpecIndx,d4000_n_blue,,,The flux in the blue window of the Balogh et al (1999) definition of D4000
+galSpecIndx,d4000_n_err,,,"Uncertainty estimate for 4000AA break, Balogh et al (1999) definition"
+galSpecIndx,d4000_n_model,,,"4000AA break, Balogh et al (1999) definition measured off best-fit CB08 model"
+galSpecIndx,d4000_n_red,,,The flux in the red window of the Balogh et al (1999) definition of D4000
+galSpecIndx,d4000_n_sub,,,"4000AA break, Balogh et al (1999) definition after correction for emission lines"
+galSpecIndx,d4000_n_sub_blue,,,The flux in the blue window of the Balogh et al (1999)q definition of D4000 after subtraction of emission lines
+galSpecIndx,d4000_n_sub_err,,,"Uncertainty estimate for 4000AA break, Balogh et al (1999) definition after correction for emission lines"
+galSpecIndx,d4000_n_sub_red,,,The flux in the red window of the Balogh et al (1999) definition of D4000 after subtraction of emission lines
+galSpecIndx,d4000_red,,,The flux in the red window of the Bruzual (1983) definition of D4000
+galSpecIndx,d4000_sub,,,"4000AA break, Bruzual (1983) definition after correction for emission lines"
+galSpecIndx,d4000_sub_blue,,,The flux in the blue window of the Bruzual (1983) definition of D4000 after subtraction of emission lines
+galSpecIndx,d4000_sub_err,,,"Uncertainty estimate for 4000AA break, Bruzual (1983) definition after correction for emission lines"
+galSpecIndx,d4000_sub_red,,,The flux in the red window of the Bruzual (1983) definition of D4000 after subtraction of emission lines
+galSpecIndx,dtt_caii8498,A,,Restframe index measurement
+galSpecIndx,dtt_caii8498_err,A,,Error on index measurement
+galSpecIndx,dtt_caii8498_model,A,,Index of best fit model spectrum
+galSpecIndx,dtt_caii8498_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,dtt_caii8498_sub_err,A,,Error in the above index measurement
+galSpecIndx,dtt_caii8542,A,,Restframe index measurement
+galSpecIndx,dtt_caii8542_err,A,,Error on index measurement
+galSpecIndx,dtt_caii8542_model,A,,Index of best fit model spectrum
+galSpecIndx,dtt_caii8542_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,dtt_caii8542_sub_err,A,,Error in the above index measurement
+galSpecIndx,dtt_caii8662,A,,Restframe index measurement
+galSpecIndx,dtt_caii8662_err,A,,Error on index measurement
+galSpecIndx,dtt_caii8662_model,A,,Index of best fit model spectrum
+galSpecIndx,dtt_caii8662_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,dtt_caii8662_sub_err,A,,Error in the above index measurement
+galSpecIndx,dtt_mgi8807,A,,Restframe index measurement
+galSpecIndx,dtt_mgi8807_err,A,,Error on index measurement
+galSpecIndx,dtt_mgi8807_model,A,,Index of best fit model spectrum
+galSpecIndx,dtt_mgi8807_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,dtt_mgi8807_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_c4668,A,,Restframe index measurement
+galSpecIndx,lick_c4668_err,A,,Error on index measurement
+galSpecIndx,lick_c4668_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_c4668_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_c4668_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_ca4227,A,,Restframe index measurement
+galSpecIndx,lick_ca4227_err,A,,Error on index measurement
+galSpecIndx,lick_ca4227_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_ca4227_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_ca4227_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_ca4455,A,,Restframe index measurement
+galSpecIndx,lick_ca4455_err,A,,Error on index measurement
+galSpecIndx,lick_ca4455_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_ca4455_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_ca4455_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_cn1,mag,,Restframe index measurement
+galSpecIndx,lick_cn1_err,mag,,Error on index measurement
+galSpecIndx,lick_cn1_model,mag,,Index of best fit model spectrum
+galSpecIndx,lick_cn1_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_cn1_sub_err,mag,,Error in the above index measurement
+galSpecIndx,lick_cn2,mag,,Restframe index measurement
+galSpecIndx,lick_cn2_err,mag,,Error on index measurement
+galSpecIndx,lick_cn2_model,mag,,Index of best fit model spectrum
+galSpecIndx,lick_cn2_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_cn2_sub_err,mag,,Error in the above index measurement
+galSpecIndx,lick_fe4383,A,,Restframe index measurement
+galSpecIndx,lick_fe4383_err,A,,Error on index measurement
+galSpecIndx,lick_fe4383_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_fe4383_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_fe4383_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_fe4531,A,,Restframe index measurement
+galSpecIndx,lick_fe4531_err,A,,Error on index measurement
+galSpecIndx,lick_fe4531_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_fe4531_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_fe4531_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_fe5015,A,,Restframe index measurement
+galSpecIndx,lick_fe5015_err,A,,Error on index measurement
+galSpecIndx,lick_fe5015_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_fe5015_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_fe5015_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_fe5270,A,,Restframe index measurement
+galSpecIndx,lick_fe5270_err,A,,Error on index measurement
+galSpecIndx,lick_fe5270_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_fe5270_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_fe5270_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_fe5335,A,,Restframe index measurement
+galSpecIndx,lick_fe5335_err,A,,Error on index measurement
+galSpecIndx,lick_fe5335_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_fe5335_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_fe5335_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_fe5406,A,,Restframe index measurement
+galSpecIndx,lick_fe5406_err,A,,Error on index measurement
+galSpecIndx,lick_fe5406_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_fe5406_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_fe5406_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_fe5709,A,,Restframe index measurement
+galSpecIndx,lick_fe5709_err,A,,Error on index measurement
+galSpecIndx,lick_fe5709_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_fe5709_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_fe5709_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_fe5782,A,,Restframe index measurement
+galSpecIndx,lick_fe5782_err,A,,Error on index measurement
+galSpecIndx,lick_fe5782_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_fe5782_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_fe5782_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_g4300,A,,Restframe index measurement
+galSpecIndx,lick_g4300_err,A,,Error on index measurement
+galSpecIndx,lick_g4300_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_g4300_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_g4300_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_hb,A,,Restframe index measurement
+galSpecIndx,lick_hb_err,A,,Error on index measurement
+galSpecIndx,lick_hb_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_hb_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_hb_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_hd_a,A,,Restframe index measurement
+galSpecIndx,lick_hd_a_err,A,,Error on index measurement
+galSpecIndx,lick_hd_a_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_hd_a_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_hd_a_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_hd_f,A,,Restframe index measurement
+galSpecIndx,lick_hd_f_err,A,,Error on index measurement
+galSpecIndx,lick_hd_f_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_hd_f_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_hd_f_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_hg_a,A,,Restframe index measurement
+galSpecIndx,lick_hg_a_err,A,,Error on index measurement
+galSpecIndx,lick_hg_a_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_hg_a_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_hg_a_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_hg_f,A,,Restframe index measurement
+galSpecIndx,lick_hg_f_err,A,,Error on index measurement
+galSpecIndx,lick_hg_f_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_hg_f_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_hg_f_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_mg1,mag,,Restframe index measurement
+galSpecIndx,lick_mg1_err,mag,,Error on index measurement
+galSpecIndx,lick_mg1_model,mag,,Index of best fit model spectrum
+galSpecIndx,lick_mg1_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_mg1_sub_err,mag,,Error in the above index measurement
+galSpecIndx,lick_mg2,mag,,Restframe index measurement
+galSpecIndx,lick_mg2_err,mag,,Error on index measurement
+galSpecIndx,lick_mg2_model,mag,,Index of best fit model spectrum
+galSpecIndx,lick_mg2_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_mg2_sub_err,mag,,Error in the above index measurement
+galSpecIndx,lick_mgb,A,,Restframe index measurement
+galSpecIndx,lick_mgb_err,A,,Error on index measurement
+galSpecIndx,lick_mgb_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_mgb_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_mgb_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_nad,A,,Restframe index measurement
+galSpecIndx,lick_nad_err,A,,Error on index measurement
+galSpecIndx,lick_nad_model,A,,Index of best fit model spectrum
+galSpecIndx,lick_nad_sub,A,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_nad_sub_err,A,,Error in the above index measurement
+galSpecIndx,lick_tio1,mag,,Restframe index measurement
+galSpecIndx,lick_tio1_err,mag,,Error on index measurement
+galSpecIndx,lick_tio1_model,mag,,Index of best fit model spectrum
+galSpecIndx,lick_tio1_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_tio1_sub_err,mag,,Error in the above index measurement
+galSpecIndx,lick_tio2,mag,,Restframe index measurement
+galSpecIndx,lick_tio2_err,mag,,Error on index measurement
+galSpecIndx,lick_tio2_model,mag,,Index of best fit model spectrum
+galSpecIndx,lick_tio2_sub,mag,,Restframe index measurement on the data after subtracting all 3-sigma emission lines
+galSpecIndx,lick_tio2_sub_err,mag,,Error in the above index measurement
+galSpecIndx,model_chisq,,,Reduced chi-squared of best fit model (best of 4 Z's)
+galSpecIndx,model_chisq_040,,,The chi^2 of the best fit Z=0.004 CB08 model
+galSpecIndx,model_chisq_080,,,The chi^2 of the best fit Z=0.008 CB08 model
+galSpecIndx,model_chisq_170,,,The chi^2 of the best fit Z=0.017 CB08 model
+galSpecIndx,model_chisq_400,,,The chi^2 of the best fit Z=0.04 CB08 model
+galSpecIndx,model_coef,,,Coeficients of best fit model (best of 4 Z's)
+galSpecIndx,model_coef_040,,,The scaling coefficients of the best fit Z=0.004 CB08 model
+galSpecIndx,model_coef_080,,,The scaling coefficients of the best fit Z=0.008 CB08 model
+galSpecIndx,model_coef_170,,,The scaling coefficients of the best fit Z=0.017 CB08 model
+galSpecIndx,model_coef_400,,,The scaling coefficients of the best fit Z=0.04 CB08 model
+galSpecIndx,specObjID,,ID_CATALOG,Unique ID
+galSpecIndx,tauv_cont,,,V-band optical depth (TauV = A_V / 1.086) affecting the stars from best fit model (best of 4 Z's)
+galSpecIndx,tauv_model_040,,,Dust attenuation of the best fit Z=0.004 CB08 model
+galSpecIndx,tauv_model_080,,,Dust attenuation of the best fit Z=0.008 CB08 model
+galSpecIndx,tauv_model_170,,,Dust attenuation of the best fit Z=0.017 CB08 model
+galSpecIndx,tauv_model_400,,,Dust attenuation of the best fit Z=0.04 CB08 model

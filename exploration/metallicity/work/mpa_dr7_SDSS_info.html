@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+	<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>SDSS Data Products: "gal_info"</title>
+		<link href="../Styles/default.css" rel="stylesheet" type="text/css" media="all">
+	</head>
+
+	<body>
+		<h1>SDSS Data Products: &quot;gal_info:&quot;</h1>
+		<p class="abstract">This FITS binary structure contains SDSS targeting info from the plugmap and redshift and velocity dispersion info from David Schlegel's &quot;<a href="http://spectro.princeton.edu/#dm_spzbest">spZbest</a>&quot; files.</p>
+		<br>
+		<table style="text-align: left; width: 98%;" border="2" cellspacing="2" cellpadding="2">
+			<tbody>
+				<tr>
+					<td style="vertical-align: top;">
+						<h3>Tag Name</h3>
+					</td>
+					<td style="vertical-align: top;">
+						<h3>Data Type / Units<br>
+						</h3>
+					</td>
+					<td style="vertical-align: top;">
+						<h3>Description<br>
+							<br>
+						</h3>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">plateid<br>
+					</td>
+					<td style="vertical-align: top;">int[1]<br>
+					</td>
+					<td style="vertical-align: top;">Plate number<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">mjd<br>
+					</td>
+					<td style="vertical-align: top;">long[1]<br>
+					</td>
+					<td style="vertical-align: top;">Modified Julian Date of plate observation<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">fiberid<br>
+					</td>
+					<td style="vertical-align: top;">int[1]<br>
+					</td>
+					<td style="vertical-align: top;">Fiber number&nbsp; (1 - 640)<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">photoid<br>
+					</td>
+					<td style="vertical-align: top;">int[5]<br>
+					</td>
+					<td style="vertical-align: top;">Run, re-run, camcol, field of photo target observation<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">ra<br>
+					</td>
+					<td style="vertical-align: top;">float[1]&nbsp; degrees<br>
+					</td>
+					<td style="vertical-align: top;">Right Ascention of drilled fiber position<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">dec<br>
+					</td>
+					<td style="vertical-align: top;">float[1]&nbsp; degrees<br>
+					</td>
+					<td style="vertical-align: top;">Declination of drilled fiber position<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">plug_mag<br>
+					</td>
+					<td style="vertical-align: top;">float[5]&nbsp; lupitudes<br>
+					</td>
+					<td style="vertical-align: top;"><span style="font-style: italic;">ugriz</span> fiber mag of photo target observation<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">primtarget<br>
+					</td>
+					<td style="vertical-align: top;">int[1]<br>
+					</td>
+					<td style="vertical-align: top;"><a href="http://spectro.princeton.edu/#targetflags">Primary Target Flag</a> (MAIN galaxy = 64)<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">sectarget<br>
+					</td>
+					<td style="vertical-align: top;">int[1]<br>
+					</td>
+					<td style="vertical-align: top;"><a href="http://spectro.princeton.edu/#targetflags">Secondary Target Flag</a> (QA = 8)<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">targettype<br>
+					</td>
+					<td style="vertical-align: top;">string[1]<br>
+					</td>
+					<td style="vertical-align: top;">Text version of primary target (GALAXY/QA/QSO/ROSAT_D)<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">spectrotype<br>
+					</td>
+					<td style="vertical-align: top;">string[1]<br>
+					</td>
+					<td style="vertical-align: top;">Schlegel classification of spectrum ... code is only run where this is set to &quot;GALAXY&quot;<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">subclass<br>
+					</td>
+					<td style="vertical-align: top;">string[1]<br>
+					</td>
+					<td style="vertical-align: top;">Schlegel subclass from PCA analysis -- not alwasy correct!! AGN/BROADLINE/STARBURST/STARFORMING<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">z<br>
+					</td>
+					<td style="vertical-align: top;">float[1]<br>
+					</td>
+					<td style="vertical-align: top;">Redshift from Schlegel<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">z_err<br>
+					</td>
+					<td style="vertical-align: top;">float[1]<br>
+					</td>
+					<td style="vertical-align: top;">Redshift error<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">z_warning<br>
+					</td>
+					<td style="vertical-align: top;">int[1]<br>
+					</td>
+					<td style="vertical-align: top;">Bad redshift if this is non-zero -- see <a href="http://spectro.princeton.edu/#dm_spzbest">Schlegel data model</a><br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">v_disp</td>
+					<td style="vertical-align: top;">float[1]&nbsp; km/s<br>
+					</td>
+					<td style="vertical-align: top;">Velocity dispersion from Schlegel<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">v_disp_err<br>
+					</td>
+					<td style="vertical-align: top;">float[1]&nbsp; km/s<br>
+					</td>
+					<td style="vertical-align: top;">Velocity dispersion error&nbsp; (negative for invalid fit)<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">sn_median<br>
+					</td>
+					<td style="vertical-align: top;">float[1]<br>
+					</td>
+					<td style="vertical-align: top;">Median S/N per pixel of the whole spectrum<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">e_bv_sfd<br>
+					</td>
+					<td style="vertical-align: top;">float[1]<br>
+					</td>
+					<td style="vertical-align: top;">E(B-V) of foreground reddening from SFD maps<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">ztweak<br>
+					</td>
+					<td style="vertical-align: top;">float[1]<br>
+					</td>
+					<td style="vertical-align: top;">Updated redshift from best fit template -- currently not implemented!<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">ztewak_err<br>
+					</td>
+					<td style="vertical-align: top;">float[1]<br>
+					</td>
+					<td style="vertical-align: top;">Error on updated redshift<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">spectro_mag<br>
+					</td>
+					<td style="vertical-align: top;">float[3]<br>
+						AB mag<br>
+					</td>
+					<td style="vertical-align: top;">Synthesized <span style="font-style: italic;">gri</span> magnitudes of the spectrum after&nbsp; foreground dereddening<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">kcor_mag<br>
+					</td>
+					<td style="vertical-align: top;">float[3]<br>
+						AB mag<br>
+					</td>
+					<td style="vertical-align: top;">Synthesized <span style="font-style: italic;">gri</span> magnitudes of the spectrum after foreground dereddening and de-redshifting<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">kcor_model_mag<br>
+					</td>
+					<td style="vertical-align: top;">float[5]<br>
+						AB mag<br>
+					</td>
+					<td style="vertical-align: top;">Synthesized <span style="font-style: italic;">ugriz</span> magnitudes of the best fitting Bruzual-Charlot model&nbsp; in the galaxy restframe<br>
+					</td>
+				</tr>
+				<tr>
+					<td style="vertical-align: top;">release<br>
+					</td>
+					<td style="vertical-align: top;">string[1]<br>
+					</td>
+					<td style="vertical-align: top;">Data Release (dr1/dr2/dr3/dr4)<br>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<br>
+	</body>
+
+</html>

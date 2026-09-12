@@ -1,0 +1,21 @@
+tablename,name,unit,ucd,description
+galSpecInfo,dec,degrees,,Declination of drilled fiber position
+galSpecInfo,e_bv_sfd,,,E(B-V) of foreground reddening from SFD maps
+galSpecInfo,fiberid,,,Fiber number (1 - 640)
+galSpecInfo,mjd,,,Modified Julian Date of plate observation
+galSpecInfo,plateid,,,Plate number
+galSpecInfo,primtarget,,,Primary Target Flag (MAIN galaxy = 64)
+galSpecInfo,ra,degrees,,Right Ascention of drilled fiber position
+galSpecInfo,release,,,Data Release (dr1/dr2/dr3/dr4)
+galSpecInfo,reliable,,,"has ""reliable"" line measurements and physical parameters"
+galSpecInfo,sectarget,,,Secondary Target Flag (QA = 8)
+galSpecInfo,sn_median,,,Median S/N per pixel of the whole spectrum
+galSpecInfo,specObjID,,ID_CATALOG,Unique ID
+galSpecInfo,spectrotype,,,"Schlegel classification of spectrum ... code is only run where this is set to ""GALAXY"""
+galSpecInfo,subclass,,,Schlegel subclass from PCA analysis -- not alwasy correct!! AGN/BROADLINE/STARBURST/STARFORMING
+galSpecInfo,targettype,,,Text version of primary target (GALAXY/QA/QSO/ROSAT_D)
+galSpecInfo,v_disp,km/s,,Velocity dispersion from Schlegel
+galSpecInfo,v_disp_err,km/s,,Velocity dispersion error (negative for invalid fit)
+galSpecInfo,z,,,Redshift from Schlegel
+galSpecInfo,z_err,,,Redshift error
+galSpecInfo,z_warning,,,Bad redshift if this is non-zero -- see Schlegel data model

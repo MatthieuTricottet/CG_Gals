@@ -1,0 +1,539 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1"
+ http-equiv="content-type">
+  <title>SDSS Data Products: "gal_indx"</title>
+		<link href="../Styles/default.css" rel="stylesheet" type="text/css" media="all">
+	</head>
+<body>
+<h1>SDSS Data Products: "gal_indx"</h1>
+<p class="abstract"> This binary structure contains measurements of stellar absorption
+line
+indices (Lick indices) and the coeficients of the Bruzual &amp; Charlot
+models
+used in the continuum fit. It also contains a measurement of the
+reddening
+in the continuum.
+</p>
+<table style="text-align: left; width: 95%;" border="1" cellspacing="2"
+ cellpadding="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">
+      <h3>Tag Name</h3>
+      </td>
+      <td style="vertical-align: top;">
+      <h3>Data Type / Units</h3>
+      </td>
+      <td style="vertical-align: top;">
+      <h3>Description</h3>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">plateid <br>
+      </td>
+      <td style="vertical-align: top;">int[1]<br>
+      </td>
+      <td style="vertical-align: top;">Plate id<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">fiberid<br>
+      </td>
+      <td style="vertical-align: top;">int[1] <br>
+      </td>
+      <td style="vertical-align: top;">Fiber number (1-640)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#Index_Name">(index_name)</a><br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+mag or A<br>
+      </td>
+      <td style="vertical-align: top;">Restframe index measurement<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#Index_Name">(index_name)</a>_err<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">Error on index measurement<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#Index_Name">(index_name)</a>_model<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">Index of best fit model spectrum<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#Index_Name">(index_name)</a>_sub<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">Restframe index measurement on
+the data after subtracting all 3-sigma emission lines<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><a href="#Index_Name">(index_name)</a>_sub_err<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">Error in the above index
+measurement<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">tauv_model_004<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">V-band optical depth affecting
+the stars<br>
+for BC03 models with Z=0.004&nbsp; (1/5 x Solar)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">model_coef_004<br>
+      </td>
+      <td style="vertical-align: top;">float[10]<br>
+      </td>
+      <td style="vertical-align: top;">Coeficient of each (normalized)
+instantaneous burst BC03 model with Z=0.004&nbsp; (1/5 x Solar)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">model_chisq_004<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">Reduced chi-squared of fit with
+Z=0.004 BC03 models<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">tauv_model_020<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">V-band optical depth affecting
+the stars<br>
+for BC03 models with Z=0.020 (Solar)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">model_coef_020</td>
+      <td style="vertical-align: top;">float[10]<br>
+      </td>
+      <td style="vertical-align: top;">Coeficient of each (normalized)
+instantaneous burst BC03 model with Z=0.020 (Solar)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">model_chisq_020<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">Reduced chi-squared of fit with
+Z=0.020 BC03 models</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">tauv_model_050<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">V-band optical depth affecting
+the stars<br>
+for BC03 models with Z=0.050 (2.5 x Solar)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">model_coef_050<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">Coeficient of each (normalized)
+instantaneous burst BC03 model with Z=0.050 (2.5 x Solar)</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">model_chisq_050<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">Reduced chi-squared of fit with
+Z=0.050 BC03 models<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">best_model_z<br>
+      </td>
+      <td style="vertical-align: top;">float[1]<br>
+      </td>
+      <td style="vertical-align: top;">Metallicity of best fitting (min
+chisq) model<br>
+Z = 0.004 / 0.020 / 0.050&nbsp; (0.2 1.0, 2.5 x solar)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">tauv_cont<br>
+      </td>
+      <td style="vertical-align: top;">float[1] <br>
+      </td>
+      <td style="vertical-align: top;">V-band optical depth (TauV = A_V
+/ 1.086) affecting the stars from best fit model (best of 3 Z's)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">model_coef<br>
+      </td>
+      <td style="vertical-align: top;">float[10]<br>
+      </td>
+      <td style="vertical-align: top;">Coeficients of best fit model
+(best of 3 Z's)<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">model_chisq<br>
+      </td>
+      <td style="vertical-align: top;">float[1] <br>
+      </td>
+      <td style="vertical-align: top;">Reduced chi-squared of best fit
+model (best of 3 Z's)<br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
+<table style="text-align: left; width: 98%;" border="1" cellspacing="2"
+ cellpadding="2">
+  <tbody>
+    <tr>
+      <td><a name="Index_Name"></a> Index Name </td>
+      <td> Index bandpass </td>
+      <td> Blue continuum bandpass </td>
+      <td> Red continuum bandpass </td>
+      <td> Units </td>
+    </tr>
+    <tr>
+      <td> Lick_CN1 </td>
+      <td> 4142.125 - 4177.125 </td>
+      <td> 4080.125 - 4117.625 </td>
+      <td> 4244.125 - 4284.125 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> Lick_CN2 </td>
+      <td> 4142.125 - 4177.125 </td>
+      <td> 4083.875 - 4096.375 </td>
+      <td> 4244.125 - 4284.125 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> Lick_Ca4227 </td>
+      <td> 4222.250 - 4234.750 </td>
+      <td> 4211.000 - 4219.750 </td>
+      <td> 4241.000 - 4251.000 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_G4300 </td>
+      <td> 4281.375 - 4316.375 </td>
+      <td> 4266.375 - 4282.625 </td>
+      <td> 4318.875 - 4335.125 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Fe4383 </td>
+      <td> 4369.125 - 4420.375 </td>
+      <td> 4359.125 - 4370.375 </td>
+      <td> 4442.875 - 4455.375 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Ca4455 </td>
+      <td> 4452.125 - 4474.625</td>
+      <td> 4445.875 - 4454.625 </td>
+      <td> 4477.125 - 4492.125 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Fe4531 </td>
+      <td> 4514.250 - 4559.250 </td>
+      <td> 4504.250 - 4514.250 </td>
+      <td> 4560.500 - 4579.250 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_C4668 </td>
+      <td> 4634.000 - 4720.250 </td>
+      <td> 4611.500 - 4630.250 </td>
+      <td> 4742.750 - 4756.500 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Hb </td>
+      <td> 4847.875 - 4876.625 </td>
+      <td> 4827.875 - 4847.875 </td>
+      <td> 4876.625 - 4891.625 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Fe5015 </td>
+      <td> 4977.750 - 5054.000 </td>
+      <td> 4946.500 - 4977.750 </td>
+      <td> 5054.000 - 5065.250 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Mg1 </td>
+      <td> 5069.125 - 5134.125 </td>
+      <td> 4895.125 - 4957.625 </td>
+      <td> 5301.125 - 5366.125 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> Lick_Mg2 </td>
+      <td> 5154.125 - 5196.625 </td>
+      <td> 4895.125 - 4957.625 </td>
+      <td> 5301.125 - 5366.125 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> Lick_Mgb </td>
+      <td> 5160.125 - 5192.625 </td>
+      <td> 5142.625 - 5161.375 </td>
+      <td> 5191.375 - 5206.375 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Fe5270 </td>
+      <td> 5245.650 - 5285.650 </td>
+      <td> 5233.150 - 5248.150 </td>
+      <td> 5285.650 - 5318.150 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Fe5335 </td>
+      <td> 5312.125 - 5352.125 </td>
+      <td> 5304.625 - 5315.875 </td>
+      <td> 5353.375 - 5363.375 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Fe5406 </td>
+      <td> 5387.500 - 5415.000 </td>
+      <td> 5376.250 - 5387.500 </td>
+      <td> 5415.000 - 5425.000 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Fe5709 </td>
+      <td> 5696.625 - 5720.375 </td>
+      <td> 5672.875 - 5696.625 </td>
+      <td> 5722.875 - 5736.625 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Fe5782 </td>
+      <td> 5776.625 - 5796.625 </td>
+      <td> 5765.375 - 5775.375 </td>
+      <td> 5797.875 - 5811.625 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_NaD </td>
+      <td> 5876.875 - 5909.375 </td>
+      <td> 5860.625 - 5875.625 </td>
+      <td> 5922.125 - 5948.125 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_TiO1 </td>
+      <td> 5936.625 - 5994.125 </td>
+      <td> 5816.625 - 5849.125 </td>
+      <td> 6038.625 - 6103.625 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> Lick_TiO2 </td>
+      <td> 6189.625 - 6272.125 </td>
+      <td> 6066.625 - 6141.625 </td>
+      <td> 6372.625 - 6415.125 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> Lick_Hd_A </td>
+      <td> 4083.500 - 4122.250 </td>
+      <td> 4041.600 - 4079.750 </td>
+      <td> 4128.500 - 4161.000 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Hg_A </td>
+      <td> 4319.750 - 4363.500 </td>
+      <td> 4283.500 - 4319.750 </td>
+      <td> 4367.250 - 4419.750 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Hd_F </td>
+      <td> 4091.000 - 4112.250 </td>
+      <td> 4057.250 - 4088.500 </td>
+      <td> 4114.750 - 4137.250 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> Lick_Hg_F </td>
+      <td> 4331.250 - 4352.250 </td>
+      <td> 4283.500 - 4319.750 </td>
+      <td> 4354.750 - 4384.750 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> DTT_CaII8498 </td>
+      <td> 8483.000 - 8513.000 </td>
+      <td> 8447.500 - 8462.500 </td>
+      <td> 8842.500 - 8857.500 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> DTT_CaII8542 </td>
+      <td> 8527.000 - 8557.000 </td>
+      <td> 8447.500 - 8462.500 </td>
+      <td> 8842.500 - 8857.500 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> DTT_CaII8662 </td>
+      <td> 8647.000 - 8677.000 </td>
+      <td> 8447.500 - 8462.500 </td>
+      <td> 8842.500 - 8857.500 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> DTT_MgI8807 </td>
+      <td> 8799.500 - 8814.500 </td>
+      <td> 8775.000 - 8787.000 </td>
+      <td> 8845.000 - 8855.000 </td>
+      <td> A </td>
+    </tr>
+    <tr>
+      <td> BH_CNB </td>
+      <td> 3810.000 - 3910.000 </td>
+      <td> 3785.000 - 3810.000 </td>
+      <td> 3910.000 - 3925.000 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+    </tr>
+    <tr>
+      <td> BH_HK </td>
+      <td> 3925.000 - 3995.000 </td>
+      <td> 3910.000 - 3925.000 </td>
+      <td> 3995.000 - 4010.000 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> BH_CaI </td>
+      <td> 4215.000 - 4245.000 </td>
+      <td> 4200.000 - 4215.000 </td>
+      <td> 4245.000 - 4260.000 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> BH_G </td>
+      <td> 4285.000 - 4315.000 </td>
+      <td> 4275.000 - 4285.000 </td>
+      <td> 4315.000 - 4325.000 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> BH_Hb </td>
+      <td> 4830.000 - 4890.000 </td>
+      <td> 4800.000 - 4830.000 </td>
+      <td> 4890.000 - 4920.000 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> BH_MgG </td>
+      <td> 5150.000 - 5195.000 </td>
+      <td> 5125.000 - 5150.000 </td>
+      <td> 5195.000 - 5220.000 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> BH_MH </td>
+      <td> 4940.000 - 5350.000 </td>
+      <td> 4740.000 - 4940.000 </td>
+      <td> 5350.000 - 5550.000 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> BH_FC </td>
+      <td> 5250.000 - 5280.000 </td>
+      <td> 5225.000 - 5250.000 </td>
+      <td> 5280.000 - 5305.000 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td> BH_NaD </td>
+      <td> 5865.000 - 5920.000 </td>
+      <td> 5835.000 - 5865.000 </td>
+      <td> 5920.000 - 5950.000 </td>
+      <td> mag </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">D4000<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;">3750.000 - 3950.000<br>
+      </td>
+      <td style="vertical-align: top;">4050.000 - 4250.000<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">D4000_n<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;">3850.000 - 3950.000<br>
+      </td>
+      <td style="vertical-align: top;">4000.000 - 4100.000<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">Balmer_Break<br>
+      </td>
+      <td style="vertical-align: top;">Not correctly implemented<br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+      <td style="vertical-align: top;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Lick indices from Worthey et al., 1994, ApJS, 94, 687 and Worthey and
+Ottaviani, 1997, ApJS, 111, 377 <br>
+BH indices from Brodie and Hanes (see Huchra et al. 1996, ApJS, 102, 29)<br>
+DTT indices from Diaz, Terlevich, &amp; Terlevich, 1989, MNRAS, 239, 325<br>
+D4000 is from Bruzual, 1983, ApJ, 273, 105<br>
+D4000_n is from Balogh et al. 1999, ApJ, 527, 54<br>
+<br>
+</body>
+</html>

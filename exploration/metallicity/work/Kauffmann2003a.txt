@@ -1,0 +1,1111 @@
+arXiv:astro-ph/0204055v2  31 Oct 2002
+Stellar Masses and Star Formation Histories for 10 5
+Galaxies from the Sloan Digital Sky Survey
+Guinevere Kauﬀmann 1, Timothy M. Heckman 2, Simon D.M. White 1 ,
+St´ ephane Charlot1, 3, Christy Tremonti 2, Jarle Brinchmann 1,
+Gustavo Bruzual 4, Eric W. Peng 2, Mark Seibert 2,
+Mariangela Bernardi 5, Michael Blanton 6, Jon Brinkmann 7, Francisco
+Castander8, Istvan Cs´ abai9, 2, Masataka Fukugita 10, Zeljko Ivezic 11, Jeﬀrey A.
+Munn 12, Robert C. Nichol 13, Nikhil Padmanabhan 14, Aniruddha R. Thakar 2,
+David H. Weinberg 15, Donald York 5
+1Max-Planck Institut f¨ ur Astrophysik, D-85748 Garching, G ermany
+2Department of Physics and Astronomy, Johns Hopkins Univers ity, Baltimore, MD 21218
+3 Institut d’Astrophysique du CNRS, 98 bis Boulevard Arago, F -75014 Paris, France
+4 (AE) Centro de Investigaciones de Astronomia, Merida, Vene zuela
+5 Department of Astronomy, University of Chicago, 5640 South Ellis Ave, Chicago, IL 60637
+6 Department of Physics, New York University, 4 Washington Pl ace, New York, NY 10003
+7 Apache Point Observatory, P.O. Box 59, Sunspot, NM 88349
+8 Department of Physics, Yale University, P.O. Box 208121, Ne w Haven, CT 06520
+9 Department of Physics, Eotvos Lorand University, Pf. 32, H- 1518 Budapest, Hungary
+10 Institute for Cosmic Ray Research, University of Tokyo, Chi ba 277-8582, Japan
+11 Princeton University Observatory, Peyton Hall, Princeton NJ 08544-1001
+12 US Naval Observatory, Flagstaﬀ Station, P.O. Box 1149, Flag staﬀ, AZ 86002
+13 Department of Physics, Carnegie Mellon University, 5000 Fo rbes Ave, Pittsburgh, PA 15232
+14 Department of Physics, Princeton University , Princeton NJ 08544
+15 Department of Astronomy, Ohio State University, 140 West 18 th Avenue, Columbus, OH 43210
+Abstract
+We develop a new method to constrain the star formation histo ries, dust at-
+tenuation and stellar masses of galaxies. It is based on two s tellar absorption line
+indices, the 4000 ˚
+A break strength and the Balmer absorption line index H δ A.
+Together, these indices allow us to constrain the mean stell ar ages of galaxies and
+the fractional stellar mass formed in bursts over the past fe w Gyr. A compari-
+son with broad band photometry then yields estimates of dust attenuation and of
+stellar mass. We generate a large library of Monte Carlo real izations of diﬀerent
+star formation histories, including starbursts of varying strength and a range of
+metallicities. We use this library to generate median likel ihood estimates of burst
+mass fractions, dust attenuation strengths, stellar masse s and stellar mass-to-light
+ratios for a sample of 122,808 galaxies drawn from the Sloan D igital Sky Survey.
+The typical 95% conﬁdence range in our estimated stellar mas ses is ± 40 %. We
+study how the stellar mass-to-light ratios of galaxies vary as a function of absolute
+magnitude, concentration index and photometric pass-band and how dust atten-
+uation varies as a function of absolute magnitude and 4000 ˚
+A break strength.
+We also calculate how the total stellar mass of the present Un iverse is distributed
+over galaxies as a function of their mass, size, concentrati on, colour, burst mass
+fraction and surface mass density. We ﬁnd that most of the ste llar mass in the
+local Universe resides in galaxies that have, to within a fac tor of about 2, stellar
+masses ∼ 5× 1010M⊙, half-light radii ∼ 3 kpc, and half-light surface mass densities
+∼ 109M⊙kpc−2. The distribution of D n(4000) is strongly bimodal, showing a clear
+division between galaxies dominated by old stellar populat ions and galaxies with
+more recent star formation.
+Keywords: galaxies:formation,evolution; galaxies: stel lar content
+1
+1 Introduction
+The masses of galaxies are traditionally estimated by dynam ical methods from the kinematics
+of their stars and gas. Ever since extended HI rotation curve s were ﬁrst measured for spirals,
+it has been clear that the implied masses include not only the observed material, but also
+substantial amounts of dark matter. Indeed, it is now believ ed that most galaxies are sur-
+rounded by dark halos which extend to many times their optica l radii and contain an order
+of magnitude more mass than the visible components. The prop erties of these halos can be
+inferred directly from tracers at large radii such as X-ray e mitting atmospheres, systems of
+satellite galaxies, or weak gravitational distortion of ba ckground galaxy images. In practice,
+gaseous atmospheres are visible only around some bright ell iptical galaxies, while the other
+two techniques are too noisy to apply to individual galaxies ; they are used to obtain average
+halo properties for stacked samples of similar galaxies (Za ritsky et al 1993 ; McKay et al
+2002).
+In order to understand how galaxies formed, we would like to m ap the relationship between
+the properties of the observed baryonic components of galax ies and those of their dark halos.
+This mapping should yield information about how the baryons cooled, condensed and turned
+into stars as the halo-galaxy systems were assembled, and sh ould clarify the complex physical
+processes that regulated the eﬃciency and timing of galaxy f ormation.
+Most studies of the halo-galaxy relation have used luminosi ty as a surrogate for total
+baryon content, and a kinematic measure – peak rotation velo city, stellar velocity dispersion,
+X-ray atmosphere temperature – as a surrogate for halo mass. Both surrogates are far from
+ideal. Kinematic measures are strongly aﬀected by the visib le components of the galaxy and
+so have an uncertain relation to halo mass; only satellite an d weak lensing studies can reliably
+estimate total halo masses, albeit as an average over all gal axies in a chosen class. Galaxy
+luminosity may not correlate well with stellar mass (the dom inant baryonic component in all
+but a subset of the smallest systems). There are strong depen dences on the fraction of young
+stars in the galaxy and on its dust content. Thus a technique t o correct for attenuation by
+dust and to estimate the mass-to-light ratio of the underlyi ng stellar population is needed to
+estimate the stellar mass of a galaxy.
+It is well-known that luminosities are less aﬀected by stell ar population variations in the
+near-infrared than in the optical, and that extinction corr ections are also smaller at longer
+wavelengths. Recently Verheijen (2001) studied the B, R, I a nd K’-band Tully-Fisher relations
+of a volume-limited sample of 49 spiral galaxies in the Ursa M ajor Cluster. He showed that
+the K’-band relation exhibited the tightest correlation wi th rotation velocity, suggesting that
+the stellar masses of galaxies are linked closely with the ma sses of the dark matter halos in
+which they formed. The larger scatter in the shorter wavelen gth passbands was attributed
+to variations in star formation history and dust extinction between diﬀerent galaxies in the
+sample.
+Although near-infrared luminosities are less dependent on star formation history than
+optical luminosities, they nevertheless exhibit some sens itivity to stellar age. Bell & de Jong
+2
+(2001) estimate that the near-infrared mass-to-light rati os of local spirals can vary by as
+much as a factor of two and propose a correction based on the op tical colours of the galaxies.
+Brinchmann & Ellis (2000) also used colour-based methods to transform the near-infrared
+magnitudes of a sample of intermediate redshift galaxies in to stellar masses. In both analyses,
+it was assumed that the star formation histories of galaxies could be described by simple
+exponential laws. If galaxies formed a major ( > 10%) fraction of their stars in recent bursts,
+it was shown that this would introduce substantial errors in to the estimated mass-to-light
+ratios.
+In this paper, we make use of spectral indicators as diagnost ics of the past star formation
+histories of galaxies. In particular, two spectral feature s, the 4000 ˚
+A break and the H δ
+absorption line, provide important information about the a ges of the stellar populations in
+galaxies and are able to distinguish recent star formation h istories dominated by bursts from
+those that are more continuous. We develop a method based on t hese two indicators and
+on broad-band photometry that allows us to derive maximum li kelihood estimates of the
+stellar mass of a galaxy, the attenuation of its starlight by dust, and the fraction of its stars
+formed in recent bursts. We apply our method to a sample of ∼ 120, 000 galaxies drawn
+from the Sloan Digital Sky Survey and show how the derived ste llar mass-to-light ratios of
+galaxies in four Sloan bandpasses ( g, r, i and z; Fukugita et al 1996) depend both on galaxy
+luminosity and on structural parameters such as concentrat ion index. We also compute the
+fraction of the total stellar mass in the Universe in galaxie s of diﬀerent masses, sizes, colours
+and concentrations. The dependence of galaxy properties on stellar mass is addressed in a
+separate paper (Kauﬀmann et al 2002; Paper II)
+2 Description of the Observational Sample and Spectral
+Reductions
+The sample of galaxies analyzed in this paper is drawn from th e Sloan Digital Sky Survey.
+This survey will obtain u, g, r, i and z photometry of almost a quarter of the sky and spectra
+of at least 700,000 objects. The survey goals and procedures are outlined in York et al. (2000)
+and a description of the data products and pipelines is given in Stoughton et al.(2002).
+Our sample of galaxies is drawn from all available spectrosc opic observations in the SDSS
+Data Release One (DR1). We have included all objects spectro scopically classiﬁed as galaxies
+with Petrosian r band magnitudes in the range 14 . 5 < r < 17. 77 after correction for foreground
+galactic extinction using the reddening maps of Schlegel, F inkbeiner & Davis (1998). This is
+equivalent to the ‘main’ galaxy sample designed for large-s cale structure studies. Our sample
+contains a total of 122,808 galaxies. More details about the SDSS photometric system may
+be found in Fukugita et al (1996) and Smith et al (2002). Infor mation relating to the SDSS
+camera and photometric monitoring system can be found in Gun n et al (1998) and Hogg et
+al (2001). Details of the spectroscopic target selection of galaxies are given in Strauss et al
+(2002).
+3
+The spectra were reduced using version v4.9.5 of the Spectro 2d pipeline. The processed
+spectra are wavelength and ﬂux-calibrated. The spectral in dicators (primarily the 4000 ˚
+A
+break and the H δ A index) and the emission lines (the equivalent widths and ﬂux es of H α and
+Hβ ) that are discussed in this paper are calculated using a spec ial-purpose code described in
+detail in Tremonti et al (2002, in preparation). Here we prov ide a brief summary of the main
+features of the code.
+Galaxies display a very rich stellar absorption line spectr um, which encodes much informa-
+tion about their stellar populations, but complicates meas urements of nebular emission lines.
+In most early-type galaxies, the [OII], [OIII], and H α emission lines are similar in strength
+to ﬂuctuations produced by the many superposed stellar abso rption features. Although late-
+type galaxies tend to have stronger emission lines and spect ra dominated by hotter, more
+featureless stars, stellar Balmer absorption can still be s ubstantial (2 - 4 ˚
+A at H β ).
+We therefore perform a careful subtraction of the stellar ab sorption line spectrum before
+measuring the nebular emission lines. This is accomplished by ﬁtting the emission line free
+regions of the spectrum with a model spectrum. The models are based on the new popu-
+lation synthesis code of Bruzual & Charlot (2002, in prepara tion, hereafter BC2002) which
+incorporates high resolution (3 ˚
+A FWHM) stellar libraries. (Salient details of the librarie s
+are discussed further in Section 3). We have generated a set o f 39 template spectra spanning
+a wide range in age and metallicity. The template spectra are convolved with a Gaussian
+to match the stellar velocity dispersion of each galaxy and r ebinned to the SDSS dispersion
+(∆log λ = 10 4). The best ﬁtting model spectrum is constructed from a non-n egative linear
+combination of the template spectra, with dust attenuation modeled as a λ −0. 7 power law of
+adjustable amplitude (Charlot & Fall 2000).
+In Fig. 1, we plot two representative SDSS galaxy spectra ove r the wavelength interval
+3700-4400 ˚
+A (restframe), which includes both the 4000 ˚
+A break and the H δ absorption features
+that are used extensively in this paper. The upper panel in Fi g. 1 shows the spectrum of a
+star-forming galaxy with strong Balmer emission lines, whi le the lower panel shows a typical
+early-type galaxy with strong stellar absorption features . The red lines in Fig.1 show the best
+ﬁt model to the stellar absorption spectrum over the wavelen gth interval from 3600 to 6800
+˚
+A. We ﬁnd that in general, the BC2002 models reproduce the mai n stellar absorption features
+of galaxies in the SDSS survey extremely well.
+A more detailed analysis of the spectral ﬁts will be presente d in Tremonti et al (2002). We
+note that the top panel of Fig. 1 demonstrates that in star for ming galaxies, high resolution
+models are required in order to separate the Balmer emission lines from the under lying stellar
+absorption features in a reliable way. Without these models , the accuracy of the emission
+line measurements is compromised by an unknown correction f or stellar absorption. Likewise,
+stellar continuum indices such as H δ A will be contaminated by emission-lines unless these can
+be removed.
+All magnitudes quoted in this paper are Petrosian magnitude s. For the SDSS, the Petrosian
+radius is deﬁned as the largest radius at which the local r-band surface brightness is at least
+one ﬁfth the mean surface brightness interior to that radius . The Petrosian ﬂux is then
+4
+the total ﬂux within a circular aperture two times the Petros ian radius. Details about the
+Petrosian ﬂux measurements are given in Lupton et al (2002) a nd Strauss et al (2002). The
+SDSS Petrosian magnitude detects essentially all the light from galaxies with exponential
+proﬁles and more than 80% of the light from galaxies with de Va ucouleurs proﬁles.
+Conversions from apparent magnitude to absolute magnitude depend on cosmology through
+the distance modulus DM(z) and on galaxy type through the K-c orrection K(z):
+M = m − DM (z) − K(z). (1)
+We assume a Friedman-Robertson-Walker cosmology with Ω = 0 . 3, Λ = 0 . 7 and H 0= 70
+km s −1 Mpc−1. We calculate the K-corrections K(z) for each galaxy using the routines in
+kcorrect v1 11 (Blanton et al. 2002). In order to minimize the errors in this procedure,
+we K-correct the magnitudes of all galaxies in our sample to z = 0 . 1, which is close to the
+median redshift of the galaxies in our sample. Blanton et al. have studied the errors in the
+K-corrections by comparing the magnitudes produced by the kcorrect routine with broad-
+band magnitudes synthesized from the galaxy spectra themse lves. The conclusion is that r, i
+and z band magnitudes can be reconstructed to the level of the phot ometry ( ∼ 1 %). The g
+and u-band magnitudes have considerably larger errors (5% and 20 %, respectively). We will
+not consider u-band magnitudes in this paper.
+3 Spectral Diagnostics of Bursts
+The break occurring at 4000 ˚
+A is the strongest discontinuity in the optical spectrum of a
+galaxy and arises because of the accumulation of a large numb er of spectral lines in a narrow
+wavelength region. The main contribution to the opacity com es from ionized metals. In hot
+stars, the elements are multiply ionized and the opacity dec reases, so the 4000 ˚
+A break will
+be small for young stellar populations and large for old, met al-rich galaxies. A break index
+D(4000) was deﬁned by Bruzual (1983) as the ratio of the avera ge ﬂux density F ν in the bands
+4050-4250 ˚
+A and 3750-3950 ˚
+A. A deﬁnition using narrower continuum bands (3850-3950 ˚
+A
+and 4000-4100 ˚
+A) was recently introduced by Balogh et al (1999). The princi pal advantage
+of the narrow deﬁnition is that the index is considerably les s sensitive to reddening eﬀects.
+We will adopt the narrow deﬁnition as our standard in this pap er and we denote this index
+as D n(4000).
+Strong H δ absorption lines arise in galaxies that experienced a burst of star formation
+that ended ∼ 0. 1 − 1 Gyr ago. The peak occurs once hot O and B stars, which have wea k
+intrinsic absorption, have terminated their evolution. Th e optical light from the galaxies is
+then dominated by late-B to early-F stars. Worthey & Ottavia ni (1997) deﬁned an H δ A index
+using a central bandpass bracketed by two pseudo-continuum bandpasses. They parametrized
+the strength of this feature as a function of stellar eﬀectiv e temperature, gravity and metallicity
+using the Lick/IDS spectral library (Gorgas et al. 1993). A s imilar calibration of the 4000
+˚
+A break strength has been carried out by Gorgas et al (1999). M ost currently available
+5
+Figure 1: SDSS spectra of a late-type galaxy (top) and an early-type ga laxy (bottom) are plotted
+over the interval 3700-4400 ˚
+A in the restframe. The red line shows our best ﬁt BC2002 model
+spectrum. The light grey shaded regions indicate the bandpa sses over which the D n(4000) index is
+measured. The dark grey regions show the pseudocontinua for the H δ A index, while the hatched
+region shows the H δ A bandpass.
+6
+stellar population synthesis models have very low spectral resolution. The resolution of the
+Lick/IDS spectral library is 9 ˚
+A a factor of 4 lower than that of the SDSS spectra. The
+Bruzual & Charlot (1993) models have a 20 ˚
+A spectral resolution, far too low to measure the
+Hδ absorption feature and D n(4000) index reliably.
+High resolution stellar spectral libraries spanning a wide range in metallicity, spectral type
+and luminosity class have only recently become available. T he STELIB library (Le Borgne
+et al 2002) consists of over 250 stars spanning a range of meta llicities from 0.05 to 2.5 times
+solar, a range of spectral types from O5 to M9 and luminosity c lasses from I to V. The
+coverage in spectral type is not uniform at all metallicitie s: hot ( Tef f > 20000 K) stars of
+sub-solar metallicity are under-represented, and the libr ary lacks very cool ( Tef f < 3500 K)
+stars of all metallicities. The spectra cover the wavelengt h range from 3500 to 9500 ˚
+A with a
+resolution of 3 ˚
+A FWHM and a signal-to-noise ratio of ∼ 50. Most of the stars in the library
+were selected from the catalogue of Cayrel de Strobel et al. ( 1992), which contains Fe/H
+determinations obtained from high resolution spectroscop ic observations. The selection of
+stars was optimized to provide good coverage of the HR diagra m. This stellar library has now
+been incorporated in the latest version of the Bruzual & Char lot (1993) population synthesis
+code. A full description of the code and of the new stellar lib rary will be presented elsewhere
+(Bruzual & Charlot 2002). A description of the underlying st ellar evolution prescriptions used
+in these models (stellar evolutionary tracks and their semi -empirical extensions) can be found
+in Liu, Charlot & Graham (2000).
+The evolution of the D n(4000) and H δ A indices following an instantaneous burst of star
+formation is illustrated in Fig. 2. The left panels show the e volution of the two indices for a
+solar metallicity single-age stellar population (SSP). In order to assess how much systematic
+uncertainty there is in the calibration of these two indices, we have compared model predictions
+using 3 diﬀerent empirical stellar libraries: 1) the STELIB library with 3 ˚
+A resolution (Le
+Borgne et al 2002), 2) the Pickles (1998) library with 5 ˚
+A resolution, and 3) the Jacoby,
+Hunter & Christensen (1984) library with 4.5 ˚
+A resolution. Our results show that at ﬁxed
+metallicity and age, the variations in the behaviour of the i ndices due to diﬀerences in the
+input stellar libraries are ∼ 0. 05 for the D n(4000) index and ∼ 1 ˚
+A for H δ A. For very old
+stellar populations, the systematic diﬀerences are somewh at larger. In the right panels, we
+compare the evolution of the two indices for SSPs of diﬀering metallicity. Results are shown
+only for the STELIB library. There are no other high-resolut ion libraries of stars of non-solar
+metallicity that span a wide range in wavelength, spectral t ype and luminosity class, so we are
+unable to to carry out an analysis of systematic eﬀects for no n-solar models. As can be seen,
+the evolution of D n(4000) does not depend strongly on metallicity until ages of more than 10 9
+years after the burst. The strongest dependence of the H δ A index on metallicity also occurs
+at old ages. The calibration in Fig.2 does not take into accou nt the eﬀects of the velocity
+dispersion of the stars in galaxies. We tested whether this w ould make any diﬀerence to our
+index calibrations and we ﬁnd that the eﬀects on H δ A and D n(4000) are negligible (We note
+that this is not true for all the Lick indices).
+Although the time evolution of the D n(4000) and H δ A indices does depend on metallicity,
+7
+the locus of galaxies in the D n(4000)/Hδ A plane is not as sensitive to metallicity and is a
+powerful diagnostic of whether galaxies have been forming s tars continuously or in bursts
+over the past 1-2 Gyr. In addition, these two stellar indices are largely insensitive to the dust
+attenuation eﬀects that complicate the interpretation of b roadband colours. In Fig. 3 we plot
+Hδ A as a function of D n(4000) for “pure burst” star formation histories and for con tinuous
+star formation histories spanning a large range of formatio n times tf orm and exponential star
+formation timescales. Results are shown for three diﬀerent metallicities. As can be seen, the
+continuous models occupy a narrow band in the D n(4000)/Hδ A plane. Galaxies with stronger
+Hδ A absorption strength at a given value of D n(4000) must have formed some fraction of their
+stars in a recent burst.
+In Fig 3. we also show the region of the D n(4000)/Hδ A plane populated by SDSS galaxies.
+We show the subset of galaxies for which the error in the measu red value of H δ A is less than
+0.8 ˚
+A and the error in the D n(4000) index is less than ∼ 0. 03. This cut includes ∼ 25,000
+galaxies or 20% of the total sample. The mean errors on the D n(4000) and H δ A indices for the
+full sample are 0.048 and 1.4 ˚
+A respectively. We have corrected the H δ A measurements for
+contamination due to nebular emission. Because the H δ emission is so much weaker than that
+at Hα or Hβ , even in the dust-free case, the most robust way to correct fo r it is to scale directly
+from the measured H α ﬂux. We use the diﬀerence between the observed H α /Hβ emission line
+ﬂuxes and the dust-free case-B recombination value (2.86) t o calculate the attenuation of
+the emission lines. We assume an attenuation law of the form τ λ ∝ λ −0. 7 (Charlot & Fall
+2000). It is then straightforward to calculate the emission correction to the Hδ A index. We
+apply this correction to all galaxies where the H α and Hβ emission lines are measured with
+S/N> 3. The typical emission correction to H δ A for late-type galaxies with D n(4000)< 1. 4
+is around 1 ˚
+A. For early-type galaxies, it is smaller. We have also corre cted the D n(4000)
+index for contamination by the [NeIII] emission line at 3869 ˚
+A. This only aﬀects a very small
+fraction of galaxies – mainly Seyfert IIs. Fig. 3 shows that t here is good agreement between
+the area of the D n(4000)/Hδ A plane populated by real galaxies and the values predicted by
+the population synthesis models. We now investigate the eﬀe ct of diﬀerent star formation
+histories on the estimated stellar mass-to-light ratios of our galaxies.
+4 A Library of Star Formation Histories
+We use a Bayesian technique to derive estimates of the stella r mass-to-light ratios, dust at-
+tenuation corrections and burst mass fractions for each gal axy in our sample. We also derive
+associated conﬁdence intervals for each of these parameter s. A generalized description of the
+mathematical basis of our technique is given in Appendix A.
+In Bayesian statistics, an initial assumption is made that t he data are randomly drawn
+from a distribution, which is a family of models characteriz ed by a parameter vector P. One
+has to specify a prior distribution on the space of all possib le P. This is a probability density
+distribution that encodes knowledge about the relative lik elihood of various P values in the
+8
+Figure 2: Left: The evolution of D n(4000) and H δ A following an instantaneous, solar-metallicity
+burst of star formation. Solid lines show results from BC200 2+STELIB, the dotted line shows results
+if the Pickles (1998) library is used, and the dashed line is f or the Jacoby, Hunter & Christensen
+(1984) library. Right: The evolution of D n(4000) and H δ A for bursts of diﬀerent metallicity. The
+solid line is a solar metallicity model, the dotted line is a 2 0 percent solar model and the dashed line
+as a 2.5 solar model.
+9
+Figure 3: Hδ A is plotted as a function of D n(4000) for 20% solar, solar and 2.5 times solar metallicity
+bursts (blue, red and magenta lines), and for 20% solar, sola r and 2.5 solar continuous star formation
+histories (blue, red and magenta symbols). A subset of the SD SS data points with small errors are
+plotted as black dots. The typical error bar on the observed i ndices is shown in the top right-hand
+corner of the plot.
+10
+absence of any data. Typically one takes a uniform prior in pa rameters with a small dynamic
+range and a uniform prior in the logarithm of parameters with a large dynamic range.
+We set up our prior distribution by generating a library of Mo nte Carlo realizations of
+diﬀerent star formation histories. It is important that our library of models span the full
+range of physically plausible star formation histories, an d that it be uniform in the sense that
+all histories are reasonably represented and no a priori imp lausible corner of parameter space
+accounts for a large fraction of the models.
+In our library, each star formation history consists of two p arts:
+1. An underlying continuous model parametrized by a formati on time tf orm and and a star
+formation time scale parameter γ . Galaxies form stars according to the law SFR(t) ∝
+exp[− γt (Gyr)] from time tf orm to the present. We take tf orm to be distributed uniformly
+over the interval from the Big Bang to 1.5 Gyr before the prese nt day and γ over the
+interval 0 to 1. We do not allow star formation rates that incr ease with time ( γ < 0)
+because these are very similar to bursts.
+2. We superimpose random bursts on these continuous models. The amplitude of a burst
+is parametrized as A = Mburst/M cont, where Mburst is the mass of stars formed in the
+burst and Mcont is the total mass of stars formed by the continuous model from time
+tf orm to the present. A is distributed logarithmically from 0.03 to 4.0. During the
+burst, stars form at a constant rate for a time tburst distributed uniformly in the range
+3 × 107 – 3 × 108 years. Bursts occur with equal probability at all times afte r tf orm and
+we have set the probability so that 50% the galaxies in the lib rary have experienced a
+burst in the past 2 Gyr. Bursting and continuous models are th us equally represented
+(recall that our stellar indicators H δ A and Dn(4000) are only sensitive to bursts occurring
+during the past 1-2 Gyr). In section 6.2, we explore to what ex tent altering the mix
+of continuous and bursty star formation histories changes e stimated parameters such as
+the mass-to-light ratios and burst mass fractions.
+We adopt the universal initial mass function (IMF) as parame trized by Kroupa (2001). It
+is very similar in form to the IMF proposed by Kennicutt (1983 ). Our models are distributed
+uniformly in metallicity from 0.25 to 2 times solar. Our ﬁnal library consists of 32,000 diﬀerent
+star formation histories. For each history, we store a varie ty of diﬀerent parameters, including
+the predicted values of D n(4000), Hδ A, the value of the stellar mass-to-light ratio in the z-band,
+the g − r and r − i colours of the stellar populations of the model galaxies, an d the fraction
+of the total stellar mass of the galaxy formed in bursts in the past 2 Gyr (we will denote this
+parameter as Fburst). Fig. 4 illustrates how our model galaxies populate the D n(4000)/Hδ A
+plane. Even though 50% of galaxies have had a starburst of var ying amplitude in the past 2
+Gyr, most of the models lie close to the locus of continuous st ar formation histories. The fact
+that our models are distributed inhomogeneously in the D n(4000)/Hδ A plane has a signiﬁcant
+impact on the conﬁdence intervals we derive for our paramete rs. For example, a galaxy will
+have a relatively high probability of being scattered from t he continuous to the bursting region
+11
+Figure 4: The distribution of galaxies in our model library in the D n(4000)/Hδ A plane.
+of the plane by observational errors. It will have a much smal ler probability of being scattered
+the other way around. We will illustrate this in more detail i n the next section.
+In the left-hand panel of Fig. 5, we divide the D n(4000)/Hδ A plane into bins and we
+have colour-coded each bin to reﬂect the average z-band mass-to-light ratio of the simulated
+galaxies that fall into it. As can be seen, the mass-to-light ratio is is primarily a sequence in
+Dn(4000), but at ﬁxed D n(4000), galaxies with strong H δ absorption have a higher fraction
+of young stars and hence have smaller mass-to-light ratios. As well as average values, one
+can also compute the 1 σ dispersion in these parameters as a function of position in t he plane.
+This is shown in the right hand panel of Fig. 5 and gives an indi cation of the accuracy with
+which mass-to-light ratios could be derived from the models if there were no observational
+errors and in the absence of dust. As can be seen, the logarith m of the z-band mass-to-light
+12
+ratio can be determined to better than 0.1 dex for galaxies wi th D n(4000)> 1.6. For galaxies
+with D n(4000)< 1.6, log ( M/L )z is still determined to better than 0.15 dex for all but the
+very youngest systems.
+In Fig. 6, the bins are colour-coded according to the fraction of model SFHs with Fburst
+in a given range. The blue/cyan areas of the diagram indicate regions where more than 95%
+of the models in the grid have Fburst > 0. 05. If a galaxy has measured indices that lie in
+this region and the errors are small, then one can say with hig h conﬁdence that the galaxy
+has experienced a burst in the past 2 Gyr. In the region that is colour-coded a darker shade
+of blue, 95% of galaxies are currently experiencing or have e xperienced a burst that began
+no more than 0.1 Gyr ago. Galaxies in this region may be better termed “starburst” rather
+than “post-starburst” systems. The green areas of the diagr am indicate regions where more
+than 95% of the models have Fburst = 0. If a galaxy lies in this region, one can say with high
+conﬁdence that a galaxy did not form a signiﬁcant fraction of its stellar population in a bur st
+in the past 2 Gyr. A signiﬁcant fraction of the diagram is colo ur-coded grey. These regions
+contains a mix of bursty and continuous models. The values of Fburst derived for galaxies in
+this region will depend strongly on how one chooses the mix of star formation histories in the
+library. This is discussed in more detail in section 6.2.
+For illustrative purposes, we superpose the same subset of S DSS galaxies plotted in Fig.3
+on our colour-coded grid. Once again we see that there is an ex cellent match between the area
+of the diagram occupied by the models and the data. There are a lso a signiﬁcant number of
+galaxies that lie within the blue bursty region of the plot. A careful analysis of the observa-
+tional errors is required before one can assess what fractio n of the objects are “true” bursty
+systems. This is discussed in more detail in Paper II (Kauﬀma nn et al. 2002).
+5 Parameter Estimation from the Data
+In this section, we apply our method to our sample of SDSS gala xies to estimate parameters
+such as burst mass fractions, stellar masses and dust attenu ations. For each galaxy in the
+sample, we have a measurement of D n(4000) and H δ A as well as an estimate of the error
+in these measurements. The likelihood that a galaxy has a giv en value of a parameter is
+evaluated by weighting each model in the library by the proba bility function exp( − χ 2/ 2) and
+then binning the probabilities as a function of the paramete r value (see Appendix A). The
+most likely value of the parameter can be taken as the peak of t his distribution; the most
+typical value is its median. We deﬁne the 95% conﬁdence inter val by excluding the 2.5% tails
+at each end of the distribution.
+5.1 Estimated versus observed values
+When the observational uncertainty in a spectroscopic inde x is large, the best estimate of its
+true value, taking into account the a priori physical constraints in the population synthesis
+13
+Figure 5: Left: The D n(4000)/Hδ A plane has been binned and colour-coded to reﬂect the average
+z-band mass-to-light ratios of the simulated stellar popula tions that fall into that bin. Magenta
+indicates regions with log( M/L )z > 0. 2, red is for 0 . 05 < log(M/L )z < 0. 2, green is for − 0. 1 <
+log(M/L )z < 0. 05, blue is for − 0. 4 < log(M/L )z < − 0. 1 and cyan is for log( M/L )z < − 0. 4. Right:
+The plane has been binned and colour-coded to reﬂect the 1 σ dispersion in the z-band mass-to-light
+ratios. Black indicates regions with σ log(M/L )z < 0. 1, green is for 0 . 1 < σ log(M/L )z < 0. 15 and red is
+for σ log(M/L )z > 0. 15.
+14
+Figure 6: The D n(4000)/Hδ A plane has been binned and colour-coded to reﬂect the fractio n of
+simulated galaxies with Fburst in a given range. Blue indicates regions where 95% of the mode l
+galaxies have Fburst > 0. 05 and the onset of the burst occurred more than 0.1 Gyr ago. Cy an
+indicates regions where 95% of the model galaxies have Fburst > 0. 05 and the onset of the burst
+occurred less than 0.1 Gyr ago. Green indicates regions wher e 95% of the model galaxies have
+Fburst = 0. Grey indicates all other regions covered by the model gal axies.
+15
+models, may be signiﬁcantly diﬀerent from the observed valu e. From now on, we will use the
+median value of the derived probability distributions as ou r ”best” estimate of these param-
+eters (in practice, the peak and the median usually give simi lar answers). It is informative
+to compare the estimated values of D n(4000) and H δ A with the observed values of the same
+parameters. The results of this comparison are shown in Fig. 7. For D n(4000), the estimated
+and observed values are usually equal to well within the 1 σ observational uncertainty. How-
+ever, the diﬀerences between estimated and observed values of H δ A are often considerably
+larger. The reason is that the models are homogeneously dist ributed in D n(4000), but het-
+erogeneously distributed in H δ A (see Fig. 4). As a result, models with H δ A far away from
+the observed value often contribute signiﬁcantly to the pro bability distribution. This is why
+the distribution of diﬀerences between H δ A(estimated) and H δ A(observed) shown in Fig. 7 is
+broad compared to the same distribution derived for the D n(4000) index.
+Fig. 8 compares the 2.5 and 97.5 percentile ranges of the esti mated values of D n(4000) and
+Hδ A with the observational errorbars. We note that the observat ional errors on the D n(4000)
+index are very small – typically around 0.02 or a few percent o f the total range of values
+spanned by the models. On the other hand, the H δ A index has a typical error of 1-2 ˚
+A, which
+is more than 10% of the range spanned by the models. As can be se en from Fig. 8, the 2.5
+and 97.5 percentile ranges of the probability distribution of D n(4000) correspond extremely
+well to the 2 σ observational errors. However, the same is not true for H δ A. Because the error
+bars on this index are large, the range of acceptable H δ A values is strongly constrained by the
+region of parameter space occupied by the models. As a result , 2.5 and 97.5 percentile values
+are typically less than 2 σ away from the best estimate. We stress that these eﬀects are d ue
+to genuine physical constraints, caused by the fact that H δ A can only extend over a limited
+range of values for all possible star formation histories.
+5.2 Estimating Burst Mass Fractions
+Fig. 9 shows the probability distributions of the parameter Fburst that we derive for three
+galaxies drawn from our observational sample.
+The top galaxy lies in the region of D n(4000)/Hδ A parameter space occupied by galaxies
+that have formed stars continuously over the past few Gyr. Th is is reﬂected in the derived
+probability distribution, which is sharply peaked at a valu e of Fburst = 0. There is a small tail
+towards non-zero values of Fburst, reﬂecting the fact that the galaxy could have had a small
+burst of star formation in the past that would not be detectab le at the present day.
+The middle galaxy lies well away from the locus of continuous star formation models.
+Dn(4000) and H δ A are both measured with high accuracy. As a result, our derive d probability
+distribution indicates that this galaxy must have formed more than about 25% of its stars in
+a recent burst. The value of Fburst is not very well constrained. This reﬂects the so-called
+age/mass degeneracy: a large burst that occurred long ago is indistinguishable from a smaller
+burst that occurred more recently.
+The bottom galaxy lies away from the locus of continuous mode ls, but the error on its
+16
+Figure 7: Left: The distribution of the observed value of D n(4000) minus the estimated one, divided
+by the 1 σ measurement error for all galaxies in the SDSS sample. Right: The same thing except for
+the H δ A index.
+Hδ A index is much larger than that of the middle galaxy. The media n value of the probability
+distribution indicates that a typical galaxy with the same H δ A and D n(4000) index measure-
+ments will have experienced a burst during the past 2 Gyr. How ever, one cannot say with
+any degree of conﬁdence that this particular galaxy must hav e undergone such a burst.
+Our method thus provides us with an objective way of deﬁning a sample of “post-starburst”
+galaxies from the data. We study the properties of such a samp le in detail in Paper II.
+5.3 Estimating the Attenuation of Starlight by Dust
+So far, we have only calculated mass-to-light ratios and col ours of the stellar populations
+of galaxies. We have not taken into account the attenuation o f the starlight by dust in the
+interstellar medium. In the z-band, dust attentuation is not expected to be large, but it m ay
+nevertheless have substantial impact on our analysis of mas s-to-light ratios, particularly if
+certain kinds of galaxies are much more dusty than others.
+We can use our models to estimate the degree of dust attenuati on by comparing our best
+estimate of the colours of the galaxies from our model librar y, to the observed colour of the
+galaxy. Ideally we should use photometry that is matched to t he ﬁbre aperture to estimate
+the dust attenuation. We have chosen to convolve the spectra in our sample with the SDSS g,
+r and i-band ﬁlter functions in order to generate a set of synthetic “spectral magnitudes” that
+can be compared with the models. We have tested the accuracy o f our spectro-photometry
+by comparing the spectral magnitudes of stars drawn from the SDSS to the PSF magnitudes
+output by the photometric pipeline PHOTO (see Tremonti et al 2002 for more details). We
+17
+Figure 8: Left: The 2.5 percentile values of the probability distributions of H δ A and D n(4000)
+minus the best estimates, divided by the 1 σ measurement error. Right: The same except for the
+97.5 percentile value. These histograms contain the data fo r our full SDSS sample.
+18
+Figure 9: The left-hand panels show the location of three example gala xies in the D n(4000)/Hδ A
+plane. Error bars indicate the measurement errors of the D n(4000) and H δ A indices. The right-hand
+panels show the probability distributions of the parameter Fburst for each galaxy.
+19
+have also subtracted oﬀ the main emission lines, including H α , [NII] and [SII], to generate a
+set of true “stellar magnitudes” for our galaxies.
+In Fig.10 we compare the g − r versus r − i colours generated from the spectra (black
+points) with the colours of the galaxies in our library (blue points). Results are shown for
+a random subset of our sample of 120,000 galaxies. We plot obs erver-frame colours at two
+diﬀerent redshifts: z = 0 . 03 and z = 0 . 11. In the left panels, we show colours without any
+correction for emission lines. The right panels show what ha ppens when emission lines are
+removed from the spectra. Over certain redshift ranges, the eﬀect of emission lines on the
+colours can be large. The r − i colour is strongly aﬀected by emission at z ∼ 0. 1, because
+a set of three strong lines (H α , [NII] and [SII]) are positioned near the edges of the r and i
+passbands.
+The right-hand panels of Fig.10 show that the data is still oﬀ set from the models, even
+after we have corrected for emission lines. This oﬀset is cau sed by dust reddening. The red
+arrow on the plot indicates the direction of the reddening ve ctor assuming an attenuation law
+of the form τ λ ∝ λ −0. 7. The length of the arrow is appropriate for a galaxy with τ V = 0 . 5,
+which is typical for spiral galaxies. We see that reddening w ill move galaxies systematically
+to the right of the locus occupied by our models.
+We have used the diﬀerence between model colours and the meas ured colours to calculate
+the reddening for each galaxy in our sample. By extrapolatin g to the z-band using a stan-
+dard attenuation curve of the form τ λ ∝ λ −0. 7, we obtain an estimate of Az, the attenuation
+in the z-band expressed in magnitudes. We note that the shape of the a ttenuation curve
+determined from direct observations resembles a power law w ith slope ∼ − 0. 7 over a wave-
+length range from 1250-8000 ˚
+A (Calzetti, Kinney & Storchi-Bergmann 1994). Models based
+on a 2-component ISM suggest that the extinction curve may be slightly steeper than this at
+longer wavelengths (Charlot & Fall 2000), but we will use a si ngle power-law for simplicity. In
+practice, we ﬁnd that comparing g − r or r − i colours yields very similar attenuation values
+for most galaxies if the colours are corrected for nebular em ission.
+The distribution of Az for our full sample of SDSS galaxies is shown in Fig. 11. The er rors
+in our synthesized magnitudes are extremely small and the fo rmal 1 σ error on our estimate
+of Az is typically around ± 0.12 mag. This does not take into account systematic errors t hat
+may arise as a result of calibration problems. Fig. 11 shows t hat the typical attenuation at
+z-band is quite small. The median value of Az is 0.3 mag. Nevertheless there is a long tail
+to high values of Az. More than 5% of galaxies in the sample are attenuated by more than
+a magnitude in the z-band. The dependences of Az on absolute magnitude and on D n(4000)
+are shown in Fig. 12. At luminosities below L∗, the median attenuation increases for more
+luminous galaxies. At luminosities above L∗, the median attenuation drops sharply. This
+can be explained by the fact that the most luminous galaxies a re predominantly early-type
+systems that contain little dust. This is shown more clearly in the right hand panel of Fig.
+12, where we see that galaxies with D n(4000)> 1.8 have Az = 0 on average. Fig. 12 also
+shows that the galaxies with the youngest stellar populatio ns (small values of D n(4000)) are
+the most attenuated by dust. This is expected, because galax ies with young stars contain
+20
+more gas and hence more dust than galaxies with old stellar po pulations.
+5.4 Estimating Stellar Masses and Mass-to-Light Ratios
+In this section, we present estimates of the stellar masses a nd mass-to-light ratios of the
+galaxies in our sample. To estimate the stellar mass, we ﬁrst need to estimate the dust-
+correction to the observed z-band magnitude of the galaxy. When estimating stellar mass es
+and mass-to-light ratios, we exclude models with r − i colours redder than the observed colour,
+because this would give negative attenuation corrections, which are unphysical. For each
+acceptable model, the stellar mass is computed by multiplyi ng the dust-corrected luminosity
+of the galaxy by the stellar mass-to-light ratio predicted b y the model. The best estimate of
+the mass is then obtained by weighting each model by the proba bility function in the usual
+way. Note that in the calculation of our stellar masses, we ar e extrapolating the mass-to-light
+ratios and Az values estimated within the ﬁbre to the galaxy as a whole.
+In the top panel of Fig. 13, we plot the z-band stellar mass-to-light ratios estimated
+from the model as a function of z-band absolute magnitude (corrected to z = 0 . 1) for all
+the galaxies in our sample. The mass-to-light ratios are plo tted in solar units, where we
+have adopted Mz⊙(z = 0 . 1) = 4 . 51 (Blanton et al. 2002). As can be seen, the distribution
+of ( M/L )z(model) is strongly dependent on galaxy luminosity. Almost all very luminous
+galaxies have high mass-to-light ratios. Faint galaxies sp an a wider range in ( M/L )z(model).
+For guidance, we have marked the value of ( M/L )z(model) for a galaxy that has formed stars
+at a constant rate over a Hubble time as a line on the plot. Gala xies with mass-to-light ratios
+lower than this value have had star formation histories that are more weighted towards the
+present than continuous star formation lasting 10-12 Gyr. O nly a few of the most luminous
+galaxies fall into this category, but at faint magnitudes ma ny galaxies have formed a large
+fraction of their stars at late times.
+The bottom panel of Fig. 13 shows ( M/L )z(model) as a function of the standard con-
+centration parameter C, deﬁned as the ratio R90/R 50, where R90 and R50 are the radii
+enclosing 90% and 50% of the Petrosian r-band luminosity of the galaxy. It has been shown
+by Shimasaku et al (2001) and Strateva et al (2001) that for br ight galaxies, there is a good
+correspondence between concentration parameter and ‘by-e ye’ classiﬁcation into Hubble type,
+but there is some disgreement about the value of C that marks the boundary between early
+and late type galaxies. Strateva et al (2001) claim that gala xies with C > 2. 6 are mostly
+early-type systems, whereas spirals and irregulars have 2 < C < 2. 6. Not surprisingly, our
+stellar mass-to-light ratios are also correlated with conc entration parameter, with concentrated
+(early-type) galaxies exhibiting higher and more uniform v alues of ( M/L )z(model) than less
+concentrated (late-type) galaxies.
+In Fig. 14, we plot mass-to-light ratios deﬁned in a diﬀerent way:
+M
+L (galaxy) = Total Mass in Stars
+K − corrected luminosity . (2)
+21
+Figure 10: The observed g − r versus r − i spectral colours of a representative subset of SDSS
+galaxies (black points) are compared with our Bruzual-Char lot model grid (blue points) at z = 0. 03
+and z = 0 . 11. The colours have been computed by convolving the spectra with the SDSS ﬁlter
+functions. In the right panels, the colours are computed aft er emission lines have been removed from
+the spectra. The predicted reddening vector assuming an att enuation law of the form τ λ ∝ λ −0. 7 is
+shown as a red arrow.
+22
+Figure 11: The distribution of the estimated values of the dust attenua tion in the z-band for all
+the galaxies in the sample. The median value is shown as a vert ical line.
+Figure 12: Left: Az is plotted as a function of z-band absolute magnitude for a random subsample
+of galaxies . The solid line shows the running median of the di stribution for the full sample. Right:
+Az is plotted as a function of D n(4000).
+23
+The total mass in stars is computed by multiplying the dust-c orrected and K-corrected z-
+band luminosity of the galaxy by our estimate of the z-band mass-to-light ratio of its stellar
+population. M/L (galaxy) thus tells us how a given observed luminosity translates into stellar
+mass. In Fig. 14, we show results in four of the ﬁve SDSS bands ( g, r, i and z). We do not
+show results for the u-band because of diﬃculties with the K-corrections. The med ian value
+of the mass-to-light ratio in each absolute magnitude bin is shown as a solid symbol. Solid
+errorbars mark the 25th to 75th percentile ranges of the dist ributions. Dotted errorbars mark
+the 5th to 95th percentile ranges. As can be seen, the median m ass-to-light ratio ﬁrst increases
+with luminosity and then appears to ﬂatten. The scatter in M/L (galaxy) at ﬁxed luminosity
+decreases at longer wavelengths: it is more than a factor of t wo larger in the g-band than in
+the z-band.
+In order to make some comparison to related work, we have plot ted as a thick solid line
+the mean relation between ( M/L )r(dynamical) and r-band magnitude derived by Bernardi
+et al (2002) for a sample of early-type galaxies drawn from th e SDSS. In this analysis
+M/L ∝ R0σ 2/L , where R0 is the eﬀective radius of the galaxy and σ is the line-of-sight
+velocity dispersion of the stars measured in a 3 arcsecond ap erture. It is interesting that
+the relation derived by Bernardi et al agrees well with our M/L (galaxy) estimates for less
+luminous galaxies, but lies above our estimates for brighte r galaxies. This may be an indica-
+tion that more luminous galaxies contain more dark matter th an less luminous galaxies. We
+caution, however, that a more careful analysis is required b ecause the Bernardi et al sample
+is carefully selected to contain only galaxies with pure ear ly-type spectra, whereas our sample
+includes all galaxies. Note that if we had assumed a Salpeter rather than a Kroupa (2001)
+IMF, our stellar mass estimates would have been around a fact or of two larger. For lower
+mass ellipticals, they would then be clear contradiction wi th the dynamically-derived mass
+estimates.
+The distribution of formal errors on our stellar mass estima tes is shown in Fig.14. We
+plot the distribution of the 95% conﬁdence range in log M∗, i.e. the range of values of log M∗
+obtained when the 2.5% tails at each end of the probability di stribution of log M∗ are excluded.
+For a Gaussian distribution of errors, this corresponds to f our times the standard error in the
+mass estimate. As can be seen, the 95% conﬁdence interval is t ypically around a factor of ∼ 2
+in mass. The errors are smaller for older galaxies with large r 4000 ˚
+A breaks than for younger
+galaxies with smaller break strengths.
+6 Sources of Systematic Error
+Fig. 14 indicates that the formal errors on our stellar mass e stimates are small. There are,
+however, quite a few sources of possible systematic error. I n this section, we explore some of
+these in more detail.
+24
+Figure 13: T op: Our estimate of z-band mass-to-light ratios of the stellar populations of th e
+galaxies in our sample is is plotted as a function of K-correc ted z-band absolute magnitude for
+all galaxies in the sample. Bottom: The mass-to-light ratio is plotted as a function of r-band
+concentration parameter for all galaxies in the sample. The line indicates the value of ( M/L )z(stars)
+for an unextincted galaxy that has been forming stars at a con stant rate for a Hubble time.
+25
+Figure 14: The total stellar mass of a galaxy divided by its observed lum inosity (K-corrected
+to z=0.1) is plotted as a function of absolute magnitude in 4 S DSS bands. The solid symbols
+indicate the median mass-to-light ratio at a given magnitud e, the solid errorbars indicate the 25th to
+75th percentile ranges of the distribution and the dotted er rorbars indicate the 5th-95th percentile
+ranges. Mass-to-light ratios are plotted in solar units whe re M⊙g = 5 . 45, M⊙r = 4 . 76, M⊙i = 4 . 58
+and M⊙z = 4. 51 at z = 0. 1. (Blanton et al 2002). The thick solid line is the mean relat ion between
+dynamical M/L (estimated from the stellar velocity dispersion) and r-band magnitude for a sample
+of early type galaxies from Bernardi et al (2002).
+26
+Figure 15: The distribution of errors in our stellar mass estimates. Th e quantity plotted is the full
+length of the 95% conﬁdence interval in log M ∗. The solid histogram shows the distributions for all
+galaxies in the sample. The dotted histogram is for the subse t of galaxies with D n(4000)> 1.8 and
+the dashed histogram is for galaxies with D n(4000)< 1.4.
+27
+6.1 Aperture eﬀects
+The D n(4000) and Hδ A indices measured from the SDSS spectra reﬂect the propertie s of the
+starlight that found its way down a 3 arcsecond diameter ﬁbre that has been positioned as close
+as possible to the centre of the galaxy. One may thus wonder to what extent our estimates
+of ( M/L )z may be biased because the index measurements are not accurat ely reﬂecting the
+stellar content of the whole galaxy. In particular, apertur e bias could well be a serious problem
+for spiral galaxies, where the index measurements may be app ropriate for the central bulge
+component, but not for the outer disk where most of the star fo rmation is taking place.
+It is possible to address the eﬀect of aperture bias in a stati stical way by comparing the
+observed stellar indices and the derived M/L values for similar galaxies viewed at diﬀerent
+distances from us. If aperture bias is important, one should see a trend in these quantities
+with distance.
+This is illustrated in Figs. 16 and 17. We plot the index D n(4000) and the z-band mass-
+to-light ratio ( M/L )z as a function of ‘normalized’ distance z/z max, where zmax is the redshift
+at which the galaxy drops out of the survey. Normalizing by zmax takes care of any selection
+eﬀects that arise when one divides up the sample in diﬀerent w ays. Note that as expected,
+galaxies in the survey are distributed uniformly in the quan tity V /V max, so there are many
+more objects in the bins with z/z max values close to 1.
+Fig. 16 shows the variation in the 4000 ˚
+A break as a function of normalized distance. We
+see that both the size and the sense of the eﬀect depend strong ly on the absolute magnitude
+of the galaxy. Galaxies with luminosities ∼ L∗ (M∗(z) = − 22. 3) exhibit the strongest trend
+with z/z max. More distant galaxies have younger stellar populations th an nearby objects, as
+expected if the spectra are preferentially sampling the bul ges of nearby galaxies.
+Fig. 17 shows how the dust attenuation in the z-band varies as a function of distance.
+Our results indicate that Az increases towards the centres of low luminosity galaxies, b ut in
+galaxies with luminosities ∼ L∗, the attenuation increases towards the outer regions. In th e
+most luminous galaxies in our sample, the attenuation does n ot appear to vary strongly as
+a function of radius. The simplest interpretation of these t rends is that our low-luminosity
+sample is dominated by disk galaxies, which are known to have have signiﬁcant metallicity
+gradients (e.g. Zaritsky, Kennicutt & Huchra 1994). If dust content correlates with metallicity,
+one might expect the light from stars in the inner parts of the se galaxies to be more attenuated.
+Galaxies with luminosities ∼ L∗ are composite systems consisting of both a bulge and a disk;
+starlight from the bulge is expected to be less attenuated th an that from the disk. The
+highest luminosity galaxies are primarily ellipticals, wh ich contain very little dust and have
+no appreciable gradients in Az.
+Finally, Fig. 18 shows the trend in our estimates of ( M/L )z with distance. As can be
+seen, the eﬀect of aperture on the mass-to-light ratio is rel atively small. For L∗ galaxies, our
+estimate of the the median ( M/L )z decreases by 0.12 dex from one edge of the survey to the
+other. For brighter and fainter galaxies, the eﬀect is even s maller. Unfortunately it is not
+possible use the relations shown in Figs. 16, 17 and 18 to esti mate the true global mass-to-
+28
+Figure 16: The D n(4000) index is plotted as a function of z/z max for galaxies in diﬀerent ranges
+of z-band absolute magnitude. The solid line indicates the medi an of the distribution as a function
+of z/z max. The dashed lines indicate the 25th and 75th percentiles. Th e dotted lines indicate the
+5th and 95th percentiles.
+light ratio of a given type of galaxy. Even at the outer limit o f the survey, the median fraction
+of the total galaxy light that enters the ﬁber is around 50%. A sample of galaxies with large
+aperture spectra is required for this purpose. Nevertheles s, our plots make it clear that the
+variations in M/L as a function of luminosity and concentration are substanti ally larger than
+any biases induced by aperture eﬀects.
+6.2 The choice of prior
+It is important to understand how our choice of priors may bia s our estimates of parameters
+such as mass-to-light ratios or burst mass fractions. The as sumed prior will have little inﬂuence
+if error bars are small and the problem is well constrained. B ecause the errors on the H δ A
+index are of the same order as the total spread of values in the model grid, parameters such
+as Fburst, which depend strongly on the value of the H δ A index, will be inﬂuenced by the mix
+of star formation histories contained in our model library.
+This is illustrated in Fig. 19 where we compare, for two diﬀer ent choices of prior, our
+best estimates of mass-to-light ratio ( M/L )z, attenuation Az and burst mass fraction Fburst.
+P1 is our “standard” prior, described in detail in section 4. P2 is a modiﬁed prior where we
+have reduced by a factor of 10 the probability of all models wi th bursts in the last 2 Gyr.
+In the ﬁrst three panels, we plot the median of the likelihood distribution obtained using P2
+versus the median obtained using P1. In the Fburst panel, we only plot those galaxies that
+29
+Figure 17: The dust attenuation in the z-band Az is plotted as a function of z/z max for galaxies
+in diﬀerent ranges of z-band absolute magnitude.
+Figure 18: The stellar mass-to-light ratio in the z-band is plotted as a function of z/z max for
+galaxies in diﬀerent ranges of z-band absolute magnitude.
+30
+have Fburst(50%) > 0 for either P1 or P2. As can be seen, our estimates of ( M/L )z and Az
+are insensitive to the choice of prior. On the other hand, Fburst(median) does depend strongly
+on the fraction of galaxies in the model grid that have experi enced recent starbursts.
+In the fourth panel, we compare the median of the likelihood d istributions of Fburst for
+the subset of galaxies with Fburst(2. 5%) > 0 for either prior, i.e. we restrict the sample to
+galaxies that are very strongly constrained to have experie nced a recent starburst. The lower
+right panel of Fig. 19 demonstrates that for these galaxies, Fburst(50%) is insensitive to to the
+choice of prior.
+This demonstrates that it is valid to use the criterion Fburst(2. 5%) > 0 to select subsamples
+of starburst and post-starburst galaxies from our full data set. Fburst(50%) then provides the
+best estimate of the fraction of the total mass in stars forme d in the burst mode over the past
+2 Gyr.
+6.3 Other sources of systematic error
+1. Stellar population models Fig. 2 indicates that the diﬀerences in the predicted values
+of D n(4000) and H δ A at given stellar age for three diﬀerent input stellar librar ies are
+comparable to the measurement errors for those indices. Unf ortunately, we are only able
+to carry out this test at solar metallicity, so we are unable t o carry out a fully rigorous
+analysis of the systematic uncertainty arising from our cal ibration of these indices.
+2. IMF. All our derived parameters are tied to a speciﬁc choice of IMF . Changing the IMF
+would scale the stellar mass estimates by a ﬁxed factor. For e xample, changing from a
+Kroupa (2001) to a Salpeter IMF with a cutoﬀ at 0.1 M⊙ would result in a factor of 2
+increase in the stellar mass.
+3. Calibration errors Our dust corrections rely on accurately calibrated spectra l magni-
+tudes. Any systematic oﬀsets in the spectrophotometric cal ibrations will result in sys-
+tematic errors in these corrections. A full assessment of th e accuracy of the wavelength
+and ﬂux calibration of SDSS spectra will be given in Tremonti et al (2002).
+7 Comparison with Colour-Based Methods
+Most previous attempts to convert from absolute magnitude t o stellar mass have used colours
+to constrain the star formation histories of galaxies (e.g. Brinchmann & Ellis 2000; Cole et
+al 2001; Bell & de Jong (2001)). Bell & de Jong (2001) argue tha t there should be a tight
+relation between the optical colours of spiral galaxies and their stellar mass-to-light ratios.
+This relation ought to be insensitive to the eﬀects of dust-r eddening. Although dust causes
+colours to become redder, it also makes the galaxy fainter an d for a standard dust attenuation
+curve, the two eﬀects compensate. Bell & de Jong (2001) show t hat recent bursts of star
+31
+Figure 19: The derived values of the mass-to-light ratio ( M/L )z, the attenuation Az, the median
+of the likelihood distribution of Fburst, and the lower 2.5 percentile value of this distribution are
+compared for two diﬀerent choices of prior.
+32
+formation introduce scatter into this relation, but claim t hat this should not be important for
+most spirals in Tully-Fisher samples.
+It is interesting to see whether the stellar masses derived u sing our method correlate with
+the observed optical colours of galaxies. In Fig. 20 we plot t he stellar mass-to-light ratio in
+the g-band as a function of the Petrosian g − r colours (K-corrected to z = 0. 1) for galaxies in
+4 diﬀerent absolute magnitude ranges. We ﬁnd that there is a t ight relation between colour
+and stellar mass-to-light ratio. The scatter in log ( M/L )g at given g − r colour is roughly
+constant at all magnitudes and has an r.m.s. value of ∼ 0. 3 dex. However, the zero-point of
+the relation shifts systematically by about 0.2 dex from the faintest to the brightest galaxies
+in our sample. At least part of this eﬀect may be due to the fact that brighter galaxies
+have stronger colour gradients (Fig. 16) and our mass-to-li ght will consequently be biased to
+higher values than those measured from integrated colours. Overall, the agreement is very
+encouraging, as it suggests that SDSS colours may be used to d erive a reasonably accurate
+estimate of the stellar masses of nearby galaxies when spect roscopic information is missing.
+Note that the r − i colour would not work well because of its sensitivity to emission lines at
+redshifts z ∼ 0. 1.
+8 An Inventory of the Stellar Mass in the Universe
+In this section, we compute how galaxies of diﬀerent types co ntribute to the total stellar
+mass budget of the local Universe. Galaxies of diﬀerent lumi nosities can be seen to diﬀerent
+distances before dropping out due to the selection limits of the survey. The volume Vmax
+within which a galaxy can be seen and will be included in the sa mple goes as the distance
+limit cubed, which results in galaxy samples being dominate d by intrinsically bright galaxies.
+In this paper we use the simplest available method for correc ting for selection eﬀects, the
+Vmax correction method (Schmidt 1968). Each galaxy is given a wei ght equal to the inverse of
+its maximum visibility volume determined from the apparent magnitude limit of the survey.
+In order to obtain an estimate of the true number density of ga laxies in the Universe, it
+is necessary to account for galaxies that are missed due to ﬁb re collisions or spectroscopic
+failures. This aﬀects around 10-15% of the galaxies brighte r than the spectroscopic limit of
+the survey (Blanton et al 2001). Here, we focus on the relative contribution of diﬀerent kinds
+of galaxies to the total stellar mass, so weighting by 1 /V max ought to be suﬃcient. As a check,
+we have computed the z-band luminosity function for the galaxies in our sample and ﬁnd that
+the Schechter function ﬁt given in Blanton et al (2001) provi des an excellent match to the
+shape of the function we derive.
+A compendium of results is presented in Fig. 21. We plot the fr action of the total stellar
+mass contained in galaxies as a function of their stellar mas s, D n(4000), g − r colour, Fburst,
+size, concentration index and surface mass density. Note th at we have adopted a cosmology
+with Ω = 0 . 3, Λ = 0 . 7 and H 0= 70 km s −1 Mpc−1 in our calculations. From these plots
+it is possible to read oﬀ the characteristic properties of th e galaxies that contain the bulk
+33
+Figure 20: The g-band mass -to-light ratio is plotted as a function of the g − r colour (K-corrected
+to z=0.1) for galaxies in 4 diﬀerent bins of z-band absolute magnitude. The dashed red line shows
+the mean relation evaluated for galaxies with − 21 < M (z) < − 20.
+34
+of the stellar mass in the Universe at the present day. Note th at because we have 122,808
+galaxies in the total sample, we are able to derive extremely accurate functional forms for
+these distributions. The bins around the peaks of the distri butions shown in Fig. 21 each
+contain 5000 or more galaxies. Even in the wings, most bins ar e still sampled by a few hundred
+objects. In Table 1, we list the median, 1%, 5%, 25%, 75%, 95% a nd 99% percentile values
+for each of the distributions shown in Fig. 21 (with the excep tion of Fburst).
+Our main conclusions are the following:
+• The characteristic mass Mchar of galaxies at the present day, deﬁned as the peak of the
+distribution function shown in the top left panel of Fig. 21, is 6 × 1010M⊙. This agrees
+reasonably well with the results of Cole et al. (2001). These authors transform the near-
+infrared luminosity function derived from 2dF/2MASS data t o a stellar mass function
+using a colour-based technique. Their Schechter-function parametrization yields Mchar =
+5. 6 × 1010M⊙ for H 0= 70 km s −1 Mpc−1 and a Kennicutt (1983) IMF, which is fairly
+close to the Kroupa (2001) IMF that we have assumed.
+We ﬁnd that only 20% of the total stellar mass is contained in g alaxies less massive
+than 10 10M⊙. An even smaller fraction ( ∼ 1%) of the total mass is contained in galaxies
+less massive than 10 9M⊙. The total stellar mass budget of the Universe is thus heavil y
+weighted towards galaxies that are within a factor of 10 in ma ss of the Milky Way.
+• The D n(4000) distribution of the stellar mass is strongly bimodal . The ﬁrst peak is
+centred at D n(4000)∼ 1. 3. Galaxies with break strengths of this value have r-band
+weighted mean stellar ages of ∼ 1 − 3 Gyr and mass-weighted mean ages a factor of ∼ 2
+larger. Almost all these galaxies also have emission lines a nd are thus forming stars at
+the present day. The second peak is centred at D n(4000)∼ 1. 85, a value typical of old
+elliptical galaxies with mean stellar ages ∼ 10 Gyr.
+• The g − r colour distribution exhibits a strong red peak, but the blue peak is much less
+pronounced. This is probably because colours depend both on stellar age and on dust
+attenuation, whereas D n(4000) is not aﬀected by dust. Note that Strateva et al (2001)
+have also discussed the bimodality in the colour distributi ons of SDSS galaxies.
+• The vast majority ( > 90%) of the stellar mass is in galaxies that have not formed mo re
+than 5% of the stars in a burst in the past 2 Gyr.
+• The distribution of stellar mass as a function of galaxy half -light radius in the r-band
+(R50) is peaked at ∼ 3 kpc. For the radius containing 90% of the light ( R90) it is peaked
+at ∼ 8 kpc. More than 90% of the total stellar mass in the Universe r esides in galaxies
+with R50 and R90 that are within a factor of three of these values.
+• The distribution of stellar mass as a function of concentrat ion index is broad, with no
+pronounced peak at any particular value. If we adopt C = 2 . 6 as the demarcation
+between early and late-type galaxies, then 50% of the total s tellar mass is contained in
+35
+the early-types. If we adopt C = 3, then only 10% of the mass is contained in such
+systems.
+• We deﬁne the surface mass density µ ∗ as 0 . 5M∗/ (πz 2
+50), where z50 is the Petrosian half-
+light radius in the z-band. Most of the stellar mass in the Universe resides in gal axies
+with µ ∗ within a factor of 2 of 10 9M⊙ kpc−2.
+Table 1: Percentiles of the distribution of the fraction of the total stellar mass contained
+in galaxies of diﬀerent types shown in Fig. 21
+Parameter Median 1% 5% 25% 75% 95% 99%
+log M∗ (M⊙) 10.493 9.249 9.542 10.108 10.799 11.139 11.342
+Dn(4000) 1.609 1.105 1.120 1.350 1.838 2.012 2.119
+g − r (z=0.1) 0.816 0.238 0.380 0.634 0.906 1.095 1.411
+R50 (kpc) 3.225 0.249 0.740 2.042 4.636 7.190 9.652
+R90 (kpc) 8.748 0.784 2.075 5.417 12.177 19.386 27.014
+C = R90/R 50 2.493 1.767 1.896 2.201 2.787 3.106 3.284
+log µ ∗ (M⊙ kpc−2) 8.745 7.327 7.810 8.453 8.958 9.242 9.484
+9 Summary and Discussion
+We have developed a new method to constrain the past star form ation histories of galaxies. It
+is based on two stellar absorption line indices, the 4000 ˚
+A break strength D n(4000) and the
+Balmer absorption line index H δ A. Together these two indices allow us to place constraints on
+the mean age of the stellar population of a galaxy and the frac tion of its stellar mass formed
+in recent bursts.
+We have generated a library of Monte Carlo realizations of diﬀerent star formation histories,
+which includes bursting as well as continuous models and a wi de range of metallicities. We
+use the library to generate estimates and conﬁdence interva ls for a variety of parameters for
+a sample of 122,808 galaxies drawn from the Sloan Digital Sky Survey, These include:
+1. Fburst the fraction of the stellar mass of the galaxy formed in burst s in the past two Gyr.
+2. Az the attenuation of the rest-frame z-band light due to dust.
+36
+8 9 10 11 12
+0
+0.05
+0.1
+0.15
+1 1.5 2 2.5
+0
+0.05
+0.1
+0 0.5 1
+0
+0.05
+0.1
+0.15
+g-r                        
+0 0.2 0.4 0.6 0.8 1
+-4
+-2
+0
+0 5 10 15
+0
+0.05
+0.1
+0 10 20 30
+0
+0.05
+0.1
+1.5 2 2.5 3 3.5
+0
+0.05
+0.1
+0.15
+7 8 9 10
+0
+0.05
+0.1
+0.15
+Figure 21: The fraction of the total stellar mass in the Universe contai ned in galaxies as a function
+of 1) log stellar mass, 2) D n(4000), 3) g − r colour K-corrected to z=0.1, 4) Fburst (median) solid
+and Fburst(2.5%) dotted , 5) Petrosian half-light radius in the r-band, 6) Petrosian 90% radius on
+the r-band, 7) concentration index ( R90/R 50), 8) log surface mass density. The fraction is shown
+linearly in all plots except that for Fburst where the logarithm is given.
+37
+3. Stellar mass-to-light ratios in the g, r, i and z bands.
+4. Stellar masses.
+Note that the analysis can be extended to include other param eters describing the star
+formation history of a galaxy, but not all parameters are equ ally well-constrained. For exam-
+ple, the luminosity-weighted or mass-weighted mean stella r ages have large errors, because of
+the rather strong dependence of the 4000 ˚
+A break on metallicity at ages of more than 1-2
+Gyr (see Fig. 2).
+In the ﬁrst part of the paper, we have illustrated in detail ho w our methods can be applied
+to galaxies in the SDSS and we have estimated the conﬁdence wi th which we can constrain
+basic parameters such as stellar mass. In the second part of t he paper, we have presented a
+number of astrophysically interesting applications of our methods.
+We have shown that the attenuation of the z-band light due to dust depends strongly on
+both the absolute magnitude and the mean stellar age of a gala xy. We have also studied the
+distribution of stellar mass-to-light ratios of galaxies a s a function of absolute magnitude in
+the four SDSS pass bands. We have shown that the distribution of M/L is strongly dependent
+on galaxy luminosity in all photometric bands. Almost all ve ry luminous galaxies have high
+mass-to-light ratios. Faint galaxies have lower mass-to-l ight ratios, but also span a wider
+range in M/L . We have also shown that the scatter in M/L at a given luminosity is a factor
+of ∼ 2 smaller in the z-band than it is in the g-band. Finally, we have computed how galaxies
+of diﬀerent types contribute to the total stellar mass budge t of the Universe.
+In the standard paradigm for structure formation in the Univ erse, galaxy formation occurs
+hierarchically through the merging of small protogalactic condensations to form more and more
+massive systems. In this picture, the contribution of diﬀer ent kinds of galaxies to the stellar
+mass budget is expected to evolve strongly with redshift. Th e rate and form of this evolution
+depend not only on the values of cosmological parameters suc h as Ω and Λ, but also on the
+physical processes that control the rate at which stars form in galaxies. For example, if star
+formation rates are enhanced during galaxy-galaxy mergers , the fraction of stars formed in
+recent bursts should rise strongly with redshift, simply be cause merging rates and gas fractions
+were higher in the past (see for example Kauﬀmann & Haehnelt 2 000).
+Although it is now clear that the integrated star formation r ate density increases strongly
+to higher redshifts (Madau et al 1996), it is still not unders tood which galaxies undergo the
+strongest evolution or which physical processes cause gala xies to form stars more rapidly in
+the past. In the next few years, there will be a number of new la rge redshift surveys of the
+faint galaxy population. These surveys will contain enough galaxies to carry out an inventory
+of the stellar mass at z ∼ 1. When these results are compared with the distributions de rived
+from the SDSS, it will be possible to draw quantitative concl usions about how galaxies have
+evolved over the past two thirds of a Hubble time and to begin d isentangling the eﬀects of
+the diﬀerent processes that may have inﬂuenced this evoluti on.
+38
+We thank the anonymous referee for detailed comments that he lped improve our method-
+ology.
+S.C. thanks the Alexander von Humboldt Foundation, the Fede ral Ministry of Educa-
+tion and Research, and the Programme for Investment in the Fu ture (ZIP) of the German
+Government for their support.
+The Sloan Digital Sky Survey (SDSS) is a joint project of The U niversity of Chicago,
+Fermilab, the Institute for Advanced Study, the Japan Parti cipation Group, The Johns Hop-
+kins University, Los Alamos National Laboratory, the Max-P lanck-Institute for Astronomy
+(MPIA), the Max-Planck-Institute for Astrophysics (MPA), New Mexico State University,
+Princeton University, the United States Naval Observatory , and the University of Washing-
+ton. Apache Point Observatory, site of the SDSS telescopes, is operated by the Astrophysical
+Research Consortium (ARC).
+Funding for the project has been provided by the Alfred P. Slo an Foundation, the SDSS
+member institutions, the National Aeronautics and Space Ad ministration, the National Sci-
+ence Foundation, the U.S. Department of Energy, the Japanes e Monbukagakusho, and the
+Max Planck Society. The SDSS Web site is http://www.sdss.or g/.
+39
+Appendix A
+Here we describe the mathematical underpinning of the Bayes ian likelihood estimates for
+parameters such as Fburst, Az and M/L that we derive in this paper.
+Let us recall the basis of Bayesian statistics for this kind o f problem. An initial assumption
+is made that the data are randomly drawn from a distribution w hich is a member of a model
+family characterised by a parameter vector P. The dimension of P can, in principle, be
+arbitrarily large. In particular, it can be much larger than the number of points N in the
+dataset to be ﬁtted. The goal is then to use the data to deﬁne a l ikelihood function on the
+space of all possible P. This function can be used to obtain a best estimate and conﬁd ence
+interval for any model property Y( P).
+In Bayesian statistics one has to specify a prior distributi on on the space of all possible P.
+This is a probability density distribution fp(P) which encodes knowledge about the relative
+likelihood of various P values in the absence of any data. For example, the physicall y accessible
+range for each element of P may be limited. Typically one takes a uniform prior in parame ters
+with a small dynamic range and a uniform prior in the log of par ameters with a large dynamic
+range.
+The likelihood of a particular value of P given a speciﬁc dataset d is then written as a
+posterior probability density function (using Bayes’ theo rem) as
+f (P |d)dP = Afp(P)P r{d |P}dP (3)
+where A is a constant which is adjusted so that f (P |d) normalises correctly to unity and
+P r{d |P} is the probability of the observed dataset on the hypothesis that the underlying
+distribution is described by the particular parameter set P.
+The likelihood of the derived parameter Y( P) given the data is then
+f (Y |d)dY =
+∫
+Y
+f (P |d)dP (4)
+where the integral extends over all P for which Y lies in a speciﬁed bin ± dY/2. Note that
+there is no regularity requirement on the function Y( P) other than piecewise continuity so
+it makes sense to deﬁne a probability density. The most likel y value of Y can then be taken
+as the peak of this distribution; the most typical value as it s median; the 95% (symmetric)
+conﬁdence interval for scalar Y can be deﬁned by excluding th e 2.5% tails at each end of the
+distribution.
+When applied to the kinds of problems presented in this paper , the prior is taken to be
+the distribution of possible star formation histories in th e comparison library, which can be
+viewed as a Monte Carlo sampling of fp(P). The integral in the above expression for the
+likelihood of Y is then trivially evaluated through binning the integrand as a function of Y.
+The expression for P r{d |P} is also straightforward for our case, since we have a measure of
+each element of d and we can assume the errors are normal with known correlatio n matrix C.
+In this situation
+40
+P r{d |P} ∝ exp[− (d − dp(P)). C−1. (d − dp(P))/ 2] (5)
+where dp(P) is the data vector predicted by the model with parameters P. The argument of
+the exponential is then just minus one half of χ 2.
+It is worth noting that this procedure makes no assumptions a bout the shapes of the
+distributions fp(P), f (P |d) or f (Y |d). The ﬁrst can be assumed at will, and for small
+error bars and a well constrained problem should have little eﬀect on the answer. The other
+two are then derived consistently. The important assumptio ns are that the model makes a well
+deﬁned and speciﬁc prediction for the value of the observabl e in the absence of observational
+errors (in practice there will be some degree of theoretical uncertainty and this could be
+included in C if it can be modelled as Gaussian) and that the ob served data d have a known
+observational error which can be assumed Gaussian with cova riance matrix C.
+41
+References
+Balogh, M.L., Morris, S.L., Yee, H.K.C., Carlberg, R.G., El lingson, E., 1999, ApJ, 527, 54
+Bell, E.F., De Jong, R., 2001, ApJ, 550, 212
+Bernardi, M., Sheth, R.K., Annis, J., Burles, S., Eisenstei n, D.J., Finkbeiner, D.P., Hogg, D.W.,
+Lupton, R.H., Schlegel, D.J., SubbaRao, M. et al., 2002, AJ, submitted (astro-ph/0110344)
+Blanton, M.R., Dalcanton, J., Eisenstein, D., Loveday, J., Strauss, M.A., SubbaRao, M., Wein-
+berg, D.H., Andersen, J.E. et al., 2001, AJ, 121, 2358
+Blanton, M.R., Brinkmann, J., Csabai, I., Doi, M., Eisenste in, D., Fukugita, M., Gunn, J.E.,
+Hogg, D.W., Schlegel, D.J., 2002, AJ, submitted
+Blanton, M.R. et al., 2002, SDSS preprint
+Brinchmann, J., Ellis, R.S., 2001, ApJ, 536, L77
+Bruzual, A.G., 1983, ApJ, 273, 105
+Bruzual, A.G., Charlot, S., 1993, ApJ, 405, 538
+Calzetti, D., Kinney, A., Storchi-Bergmann, T., 1994, ApJ, 429, 582
+Cayrel de Strobel, G, Hauck, B., Francois, P., Thevenin, F., Friel, E., Mermilliod, M., Borde, S.,
+1992, A&AS, 95, 273
+Charlot, S., Fall, S.M., 2000, ApJ, 539, 718
+Cole, S., Norberg, P., Baugh, C.M., Frenk, C.S., Bland-Hawt horn, J., Bridges, T., Cannon, R.,
+Colless, M. et al, 2001, MNRAS, 326, 255
+Fukugita, M., Ichikawa, T., Gunn, J.E., Doi, M., Shimasaku, K., Schneider, D.P., 1996, AJ, 111,
+1748
+Gorgas, J., Faber, S.M., Burstein, D., Gonzalez, J.J., Cour teau, S., Proseer, C., 1993, ApJS, 86,
+153
+Gorgas, J., Cardiel, N., Pedraz, S., Gonzalez, J.J., 1999, A &AS, 139, 29
+Gunn, J.E., Carr, M., Rockosi, C., Sekiguchi, M., Berry, K., Elms, B., de Haas, E., Ivezic, Z. et
+al, 1998, AJ, 116, 3040
+Hogg, D.W., Finkbeiner, D.P., Schlegel, D.J., Gunn, J.E., 2 001, AJ, 122, 2129
+Jacoby, G.H., Hunter, D.A., Christian, C.A., 1984, ApJS, 56 , 257
+Kauﬀmann G., Haehnelt M., 2000, MNRAS, 311, 576
+42
+Kauﬀmann, G., Heckman, T.M., White, S.D.M., Charlot, S., Tr emonti,C., Peng, E.W., Seibert,
+M., Brinkmann, J. et al, 2002, MNRAS, submitted (astro-ph/0 2005070)
+Kennicutt, R.C., 1983, ApJ, 272, 54
+Kroupa, P., 2001, MNRAS, 322, 231
+Le Borgne, J.-F., Bruzual, A.G., Pello, R., Lancon, A., Rocc a-Volmerange, B., Sanahuja, B.,
+Schaerer, D., Soubiran, C., Vilchez-Gomez, R., 2002, in pre paration (http://webast.ast.obs-
+mip.fr/stelib)
+Liu, M.C., Charlot, S., Graham, J.R., 2000, ApJ, 543, 644
+Lupton, R.H. et al, 2002, in preparation
+Madau, P., Ferguson, H.C., Dickinson, M.E., Giavalisco, M. , Steidel, C.C., Fruchter, A., 1996,
+MNRAS, 283, 1388
+McKay, T.A., Sheldon, E.S., Racusin, J., Fischer, P., Selja k, U., Stebbins, A., Johnston, D.,
+Frieman, J.A. et al., 2002, ApJ, submitted (astro-ph/01080 13)
+Pickles, A.J., 1998, PASP, 110, 863
+Schlegel, D.J., Finkbeiner, D.P., Davis., M., 1998, ApJ, 50 0, 525
+Shimasaku, K., Fukugita, M., Doi, M., Hamabe, M., Ichikawa, T., Okamura, S., Sekiguchi, M.,
+Yasuda, N. et al, 2001, AJ, 122, 1238
+Schmidt, M., 1968, ApJ, 151, 393
+Smith, J.A., Tucker, D.L., Kent, S., Richmond, M.W., Fukugi ta, M., Ichikawa, T., Ichikawa,
+S.I.,Jorgensen, A.M. et al. 2002, AJ, in press
+Stoughton, C., Lupton, R.H., Bernardi, M., Blanton, M.R., B urles, S., Castander, F.J., Connolly,
+A.J., Eisenstein, D.J. et al., 2002, AJ, 123, 485
+Strateva, I., Ivezic, Z., Knapp, G.R., Narayanan, V.K., Str auss, M.A., Gunn, J.E., Lupton, R.H.,
+Schlegel, D. et al, 2001, AJ, 122, 1861
+Strauss, M.A., Weinberg, D.H., Lupton, R.L., Narayanan, V. K., Annis, J., Bernardi, M., Blanton,
+M., Berles, M. et al., 2002, AJ, accepted (astro-ph/0206225 )
+Tremonti, C.A. et al., 2002, in preparation
+Verheijen, M.A.W., 2001, ApJ, 563, 694
+Wang, B., Heckman, T.M., 1996, ApJ, 457, 645
+Worthey, G., Ottaviani, D.L, 1997, ApJS, 111, 377
+43
+York D.G., Adelman J., Anderson J.E., Anderson S.F., Annis J ., Bahcall N.A., Bakken J.A.,
+Barkhouser R. et al., 2000, AJ, 120, 1579
+Zaritsky, D., Smith, R., Frenk, C.S., White, S.D.M., 1993, A pJ, 405, 464
+Zaritsky, D., Kennicutt, R.C.. Huchra, J.P., 1994, ApJ, 420 , 47
+44

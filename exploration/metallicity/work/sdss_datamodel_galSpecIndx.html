@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Data model: galSpecIndx</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/datamodel/datamodel.css" type="text/css" />
+<link rel="icon" href="/datamodel/sdss.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/datamodel/sdss.ico" type="image/x-icon" />
+</head>
+<body>
+<h1>Data model: galSpecIndx</h1>
+
+<p> <b> General description: </b> Index measurements for fibers for
+which the MPA-JHU spectroscopic parameters pipeline has been run.
+This file is built out of a similar one in the galspec SVN product. It
+is designed to be line-by-line matched with
+the <a href="specObj.html"> specObj</a> list of all spectra. Any
+spectra in specObj that do not have a measurement from the MPA-JHU
+pipeline have all values zeroed out in this file.  There is further
+information about the MPA-JHU results in the parallel
+files <a href="galSpecInfo.html">
+galSpecInfo</a>, <a href="galSpecLine.html"> galSpecLine</a>,
+and <a href="galSpecExtra.html"> galSpecExtra</a>. ID values
+in <a href="galSpecInfo.html"> galSpecInfo</a> are set to -1 for cases
+where there were no results from the MPA-JHU pipeline. In some cases,
+the pipeline was run but we don't believe the results are reliable, in
+which case the column "RELIABLE"
+in <a href="galSpecInfo.html">galSpecInfo</a> is set to zero. </p>
+
+<p>
+<b>
+Naming convention:
+</b>
+galSpecIndx-[DRNAME].fits
+</p>
+
+<p>
+<b>
+Approximate size:
+</b>
+2 Gbytes.
+</p>
+
+<p>
+<b>
+File type:
+</b>
+FITS
+</p>
+
+<p>
+<b>
+Read by products:
+</b>
+sas
+</p>
+
+<p>
+<b>
+Written by products:
+</b>
+sas
+</p>
+
+<p>
+<b>
+Required column names:
+</b> 
+</p>
+<ul>
+<li> <b>specObjID</b> (int64):  Unique ID  </li>
+<li> <b>MJD</b> (int32):  MJD of observation </li>
+<li> <b>PLATEID</b> (int32):  Plate number for observation </li>
+<li> <b>FIBERID</b> (int32):  Fiber number for observation </li>
+<li> <b>LICK_CN1</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>LICK_CN1_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>LICK_CN1_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>LICK_CN1_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>LICK_CN1_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>LICK_CN2</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>LICK_CN2_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>LICK_CN2_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>LICK_CN2_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>LICK_CN2_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>LICK_CA4227</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_CA4227_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_CA4227_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_CA4227_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_CA4227_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_G4300</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_G4300_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_G4300_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_G4300_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_G4300_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_FE4383</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_FE4383_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_FE4383_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_FE4383_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_FE4383_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_CA4455</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_CA4455_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_CA4455_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_CA4455_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_CA4455_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_FE4531</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_FE4531_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_FE4531_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_FE4531_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_FE4531_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_C4668</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_C4668_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_C4668_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_C4668_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_C4668_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_HB</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_HB_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_HB_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_HB_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_HB_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_FE5015</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_FE5015_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_FE5015_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_FE5015_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_FE5015_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_MG1</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>LICK_MG1_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>LICK_MG1_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>LICK_MG1_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>LICK_MG1_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>LICK_MG2</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>LICK_MG2_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>LICK_MG2_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>LICK_MG2_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>LICK_MG2_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>LICK_MGB</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_MGB_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_MGB_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_MGB_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_MGB_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_FE5270</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_FE5270_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_FE5270_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_FE5270_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_FE5270_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_FE5335</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_FE5335_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_FE5335_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_FE5335_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_FE5335_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_FE5406</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_FE5406_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_FE5406_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_FE5406_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_FE5406_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_FE5709</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_FE5709_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_FE5709_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_FE5709_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_FE5709_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_FE5782</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_FE5782_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_FE5782_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_FE5782_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_FE5782_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_NAD</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_NAD_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_NAD_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_NAD_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_NAD_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_TIO1</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>LICK_TIO1_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>LICK_TIO1_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>LICK_TIO1_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>LICK_TIO1_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>LICK_TIO2</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>LICK_TIO2_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>LICK_TIO2_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>LICK_TIO2_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>LICK_TIO2_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>LICK_HD_A</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_HD_A_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_HD_A_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_HD_A_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_HD_A_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_HG_A</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_HG_A_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_HG_A_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_HG_A_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_HG_A_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_HD_F</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_HD_F_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_HD_F_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_HD_F_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_HD_F_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>LICK_HG_F</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>LICK_HG_F_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>LICK_HG_F_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>LICK_HG_F_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>LICK_HG_F_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>DTT_CAII8498</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>DTT_CAII8498_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>DTT_CAII8498_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>DTT_CAII8498_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>DTT_CAII8498_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>DTT_CAII8542</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>DTT_CAII8542_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>DTT_CAII8542_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>DTT_CAII8542_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>DTT_CAII8542_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>DTT_CAII8662</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>DTT_CAII8662_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>DTT_CAII8662_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>DTT_CAII8662_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>DTT_CAII8662_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>DTT_MGI8807</b> (float32):  Restframe index measurement  (A)</li>
+<li> <b>DTT_MGI8807_ERR</b> (float32):  Error on index measurement  (A)</li>
+<li> <b>DTT_MGI8807_MODEL</b> (float32):  Index of best fit model spectrum  (A)</li>
+<li> <b>DTT_MGI8807_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (A)</li>
+<li> <b>DTT_MGI8807_SUB_ERR</b> (float32):  Error in the above index measurement  (A)</li>
+<li> <b>BH_CNB</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>BH_CNB_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>BH_CNB_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>BH_CNB_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>BH_CNB_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>BH_HK</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>BH_HK_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>BH_HK_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>BH_HK_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>BH_HK_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>BH_CAI</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>BH_CAI_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>BH_CAI_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>BH_CAI_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>BH_CAI_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>BH_G_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>BH_G_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>BH_G_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>BH_G_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>BH_HB</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>BH_HB_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>BH_HB_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>BH_HB_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>BH_HB_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>BH_MGG</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>BH_MGG_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>BH_MGG_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>BH_MGG_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>BH_MGG_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>BH_MH</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>BH_MH_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>BH_MH_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>BH_MH_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>BH_MH_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>BH_FC</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>BH_FC_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>BH_FC_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>BH_FC_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>BH_FC_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>BH_NAD</b> (float32):  Restframe index measurement  (mag)</li>
+<li> <b>BH_NAD_ERR</b> (float32):  Error on index measurement  (mag)</li>
+<li> <b>BH_NAD_MODEL</b> (float32):  Index of best fit model spectrum  (mag)</li>
+<li> <b>BH_NAD_SUB</b> (float32):  Restframe index measurement on the data after subtracting all 3-sigma emission lines  (mag)</li>
+<li> <b>BH_NAD_SUB_ERR</b> (float32):  Error in the above index measurement  (mag)</li>
+<li> <b>D4000</b> (float32):  4000AA break, Bruzual (1983) definition  </li>
+<li> <b>D4000_ERR</b> (float32):  Uncertainty estimate for 4000AA break, Bruzual (1983) definition   </li>
+<li> <b>D4000_MODEL</b> (float32):  4000AA break, Bruzual (1983) definition measured off best-fit CB08 model  </li>
+<li> <b>D4000_SUB</b> (float32):  4000AA break, Bruzual (1983) definition after correction for emission lines  </li>
+<li> <b>D4000_SUB_ERR</b> (float32):  Uncertainty estimate for 4000AA break, Bruzual (1983) definition after correction for emission lines  </li>
+<li> <b>D4000_N</b> (float32):  4000AA break, Balogh et al (1999) definition  </li>
+<li> <b>D4000_N_ERR</b> (float32):  Uncertainty estimate for 4000AA break, Balogh et al (1999) definition   </li>
+<li> <b>D4000_N_MODEL</b> (float32):  4000AA break, Balogh et al (1999) definition measured off best-fit CB08 model  </li>
+<li> <b>D4000_N_SUB</b> (float32):  4000AA break, Balogh et al (1999) definition after correction for emission lines  </li>
+<li> <b>D4000_N_SUB_ERR</b> (float32):  Uncertainty estimate for 4000AA break, Balogh et al (1999) definition after correction for emission lines  </li>
+<li> <b>D4000_RED</b> (float32):  The flux in the red window of the Bruzual (1983) definition of D4000  </li>
+<li> <b>D4000_BLUE</b> (float32):  The flux in the blue window of the Bruzual (1983) definition of D4000  </li>
+<li> <b>D4000_N_RED</b> (float32):  The flux in the red window of the Balogh et al (1999) definition of D4000   </li>
+<li> <b>D4000_N_BLUE</b> (float32):  The flux in the blue window of the Balogh et al (1999) definition of D4000    </li>
+<li> <b>D4000_SUB_RED</b> (float32):  The flux in the red window of the Bruzual (1983) definition of D4000 after subtraction of emission lines   </li>
+<li> <b>D4000_SUB_BLUE</b> (float32):  The flux in the blue window of the Bruzual (1983) definition of D4000 after subtraction of emission lines  </li>
+<li> <b>D4000_N_SUB_RED</b> (float32):  The flux in the red window of the Balogh et al (1999) definition of D4000 after subtraction of emission lines   </li>
+<li> <b>D4000_N_SUB_BLUE</b> (float32):  The flux in the blue window of the Balogh et al (1999)q definition of D4000 after subtraction of emission lines  </li>
+<li> <b>TAUV_MODEL_040</b> (float32):  Dust attenuation of the best fit Z=0.004 CB08 model          </li>
+<li> <b>MODEL_COEF_040</b> (float32):  The scaling coefficients of the best fit Z=0.004 CB08 model  </li>
+<li> <b>MODEL_CHISQ_040</b> (float32):  The chi^2 of the best fit Z=0.004 CB08 model                 </li>
+<li> <b>TAUV_MODEL_080</b> (float32):  Dust attenuation of the best fit Z=0.008 CB08 model          </li>
+<li> <b>MODEL_COEF_080</b> (float32):  The scaling coefficients of the best fit Z=0.008 CB08 model  </li>
+<li> <b>MODEL_CHISQ_080</b> (float32):  The chi^2 of the best fit Z=0.008 CB08 model                 </li>
+<li> <b>TAUV_MODEL_170</b> (float32):  Dust attenuation of the best fit Z=0.017 CB08 model          </li>
+<li> <b>MODEL_COEF_170</b> (float32):  The scaling coefficients of the best fit Z=0.017 CB08 model  </li>
+<li> <b>MODEL_CHISQ_170</b> (float32):  The chi^2 of the best fit Z=0.017 CB08 model                 </li>
+<li> <b>TAUV_MODEL_400</b> (float32):  Dust attenuation of the best fit Z=0.04 CB08 model          </li>
+<li> <b>MODEL_COEF_400</b> (float32):  The scaling coefficients of the best fit Z=0.04 CB08 model  </li>
+<li> <b>MODEL_CHISQ_400</b> (float32):  The chi^2 of the best fit Z=0.04 CB08 model                 </li>
+<li> <b>TAUV_CONT</b> (float32):  V-band optical depth (TauV = A_V / 1.086) affecting the stars from best fit model (best of 4 Z's)  </li>
+<li> <b>MODEL_COEF</b> (float32):  Coeficients of best fit model (best of 4 Z's)  </li>
+<li> <b>MODEL_CHISQ</b> (float32):  Reduced chi-squared of best fit model (best of 4 Z's)  </li>
+</ul>
+
+</body>
+</html>

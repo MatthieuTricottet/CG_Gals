@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Data model: galSpecInfo</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="/datamodel/datamodel.css" type="text/css" />
+<link rel="icon" href="/datamodel/sdss.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="/datamodel/sdss.ico" type="image/x-icon" />
+</head>
+<body>
+<h1>Data model: galSpecInfo</h1>
+
+<p> <b> General description: </b> Information about fibers for which
+the MPA-JHU spectroscopic parameters pipeline has been run.  This file
+is built out of a similar one in the galspec SVN product. It is
+designed to be line-by-line matched with the <a href="specObj.html">
+specObj</a> list of all spectra. ny spectra in specObj that do not
+have a measurement from the MPA-JHU pipeline have all values zeroed
+out in this file.  There is further information about the MPA-JHU
+results in the parallel files <a href="galSpecIndx.html">
+galSpecIndx</a>, <a href="galSpecLine.html"> galSpecLine</a>,
+and <a href="galSpecExtra.html"> galSpecExtra</a>. ID values are set
+to -1 for cases where there were no results from the MPA-JHU
+pipeline. In some cases, the pipeline was run but we don't believe the
+results are reliable, in which case the column "RELIABLE" is set to
+zero. </p>
+
+<p>
+<b>
+Naming convention:
+</b>
+galSpecInfo-[DRNAME].fits
+</p>
+
+<p>
+<b>
+Approximate size:
+</b>
+500 Mbytes.
+</p>
+
+<p>
+<b>
+File type:
+</b>
+FITS
+</p>
+
+<p>
+<b>
+Read by products:
+</b>
+sas
+</p>
+
+<p>
+<b>
+Written by products:
+</b>
+sas
+</p>
+
+<p>
+<b>
+Required column names:
+</b> 
+</p>
+<ul>
+<li> <b>specObjID</b> (int64):  Unique ID  </li>
+<li> <b>plateid</b> (int16):  Plate number  </li>
+<li> <b>mjd</b> (int32):  Modified Julian Date of plate observation  </li>
+<li> <b>fiberid</b> (int16):  Fiber number (1 - 640)  </li>
+<li> <b>ra</b> (float32):  Right Ascention of drilled fiber position  (degrees)</li>
+<li> <b>dec</b> (float32):  Declination of drilled fiber position  (degrees)</li>
+<li> <b>primtarget</b> (int16):  Primary Target Flag (MAIN galaxy = 64)  </li>
+<li> <b>sectarget</b> (int16):  Secondary Target Flag (QA = 8)  </li>
+<li> <b>targettype</b> (string):  Text version of primary target (GALAXY/QA/QSO/ROSAT_D)  </li>
+<li> <b>spectrotype</b> (string):  Schlegel classification of spectrum ... code is only run where this is set to "GALAXY"  </li>
+<li> <b>subclass</b> (string):  Schlegel subclass from PCA analysis  </li>
+<li> <b>z</b> (float32):  Redshift from Schlegel  </li>
+<li> <b>z_err</b> (float32):  Redshift error  </li>
+<li> <b>z_warning</b> (int16):  Bad redshift if this is non-zero  </li>
+<li> <b>v_disp</b> (float32):  Velocity dispersion from Schlegel  (km)</li>
+<li> <b>v_disp_err</b> (float32):  Velocity dispersion error (negative for invalid fit)  (km)</li>
+<li> <b>sn_median</b> (float32):  Median S/N per pixel of the whole spectrum  </li>
+<li> <b>e_bv_sfd</b> (float32):  E(B-V) of foreground reddening from SFD maps  </li>
+<li> <b>release</b> (string):  Data Release (dr1/dr2/dr3/dr4)  </li>
+<li> <b>reliable</b> (int16):  has "reliable" line measurements and physical parameters </li>
+</ul>
+
+</body>
+</html>

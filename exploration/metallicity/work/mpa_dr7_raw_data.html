@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  
+  <head>
+    <meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+    <meta name="generator" content="Adobe GoLive">
+    <title>Raw data</title>
+    <link href="../Styles/default.css" rel="stylesheet" type="text/css" media="all">
+  </head>
+  
+  <body bgcolor="#ffffff">
+    <h1>The raw data</h1>
+    <h2> Origin of data</h2>
+    <p>We have used the redshifts from spZbest files and the spectra
+      were downloaded from the SDSS DAS as spPlate files. 
+      The photometric data provided for reference below has been taken
+      from the FNAL tsObj files provided per plate in
+      <tt>spectro/2d_26</tt>. 
+    </p>
+    <h2> Spectrum normalisation </h2>
+    <p>
+      The <a href="http://www.sdss.org/dr7">SDSS DR7</a> includes a
+      different spectrophotometric calibration, and as a result the
+      overall normalisation of the spectra matches the PSF
+      magnitudes (see <a
+	href="http://www.sdss.org/dr7/algorithms/spectrophotometry.html">
+	this page</a> for more details). This is correct for point
+      sources but is not easily interpreted for extended sources. As a
+      consequence we have renormalised our flux outputs to match the
+      <b>photometric fiber</b> magnitude in the r-band. This is done
+      by calculating synthetic r-band magnitudes from the spectra and
+      matching these to the outputs of photo. The scale applied is
+      kept as the key <tt>SPECTOFIBER</tt> in the <tt>gal_line</tt>
+      file below.
+    </p>
+    <p><b>General notice:</b> Please note that our line fluxes where
+      given, are all corrected for foreground (galactic) reddening
+      using the O'Donnell, J.E., 1994, ApJ, 422, 158. If you have any
+      questions about this please feel free to contact us. 
+    </p>  
+    <h2>About error estimates<a name="errors"></a></h2>
+    <p>
+      <b> Note:</b> This section has not yet been updated to reflect
+      DR7 spectra but we espect small changes.
+    </p>
+    <p> 
+      The quoted uncertainties (e.g. <tt>*_FLUX_ERR</tt> are formal
+      uncertainties). These are, however, underestimates of the true
+      uncertainties and this should be taken into account in most
+      work. To estimate the true uncertainties we have used the 
+      duplicate observations of galaxies, to
+      compare the empirical spread in value determinations with the
+      random errors. These uncertainties will include both errors in
+      the spectrophotometry etc which are not included in the
+      <tt>spectro2d</tt> pipeline, but more importantly they also
+      include continuum subtraction uncertainties which are otherwise
+      very hard to quantify (note in particular the substantial
+      adjustment of the Ha flux errors below).
+    </p>
+    <p>Since this procedure cannot be carried out on a
+      galaxy-by-galaxy basis, there is a certain amount of residual
+      uncertainty here, but the following table of conversions seems
+      to give very good fits to our emission line models and we have
+      adopted these - in particular all the derived data have been
+      calculated with the emission line flux errors adjusted according
+      to the following table:</p> 
+    <table width="80%">
+      <thead>
+	<tr>
+	  <!-- one of (TD TH) -->
+	  <th> Emission line </th> 
+	  <th> Scale uncertainty by </th>
+	</tr>
+      </thead>
+	<tr>
+	  <td align="center"> [O II]3727   </td> <td align="center"> 2.199 </td>
+	</tr>
+	<tr>
+	  <td align="center"> [Ne III]3869 </td> <td align="center"> 1.731 </td>
+	</tr>
+	<tr>
+	  <td align="center"> Hbeta        </td> <td align="center"> 1.882 </td>
+	</tr>
+	<tr>
+	  <td align="center"> [O III]4363  </td> <td align="center"> 1.306 </td>
+	</tr>
+	<tr>
+	  <td align="center"> [O III]4959  </td> <td align="center"> 1.573 </td>
+	</tr>
+	<tr>
+	  <td align="center"> [O III]5007  </td> <td align="center"> 1.566 </td>
+	</tr>
+	<tr>
+	  <td align="center"> [O I]6300    </td> <td align="center"> 1.378 </td>
+	</tr>
+	<tr>
+	  <td align="center"> HeI 5876     </td> <td align="center"> 1.501 </td>
+	</tr>
+	<tr>
+	  <td align="center"> Halpha       </td> <td align="center"> 2.473 </td>
+	</tr>
+	<tr>
+	  <td align="center"> [N II]6584   </td> <td align="center"> 2.039 </td>
+	</tr>
+	<tr>
+	  <td align="center"> [S II]6716   </td> <td align="center"> 1.621 </td>
+	</tr>
+	<tr>
+	  <td align="center"> [S II]6731   </td> <td align="center"> 1.621 </td>
+	</tr>
+    </TABLE>
+    <p>That said, it is of course entirely up to the individual whether to adopt these scalings or not, but we would in general recommend it. The quantities in the following files are the quantities given by our pipeline so have not been scaled in any way.    </p>
+
+    <h2> The FITS tables with data </h2>
+    <p>
+      The files below are substantial so you might prefer direct
+      access to the datafiles through <a href="Data/">this link</a>.
+    </p>
+    <p>
+    <ul>
+      <li> <a href="Data/gal_info_dr7_v5_2.fit.gz">gal_info</a> contains
+	information about the galaxies as  
+	<a href="SDSS_info.html">described here.</a> This includes
+	redshifts, velocity dispersions, RA &amp; Dec etc. 
+	<span class="size">[69Mb]</span>
+      <li> The spectroscopic data is in <a
+	  href="Data/gal_line_dr7_v5_2.fit.gz">gal_line</a> and the content
+	is described <a href="SDSS_line.html">here.</a> This file
+	contain line fluxes (in units of 1e-17 erg/s/cm^2), 
+	equivalent widths and continuum fluxes.
+	<span class="size">[678Mb]</span>
+      <li> The continuum indices are all collated in the <a
+	  href="Data/gal_indx_dr7_v5_2.fit.gz">gal_indx</a> file which is
+	<a href="SDSS_indx.html">described in this file.</a> Note that
+	this file contains values measured off the unmodified
+	spectrum. 	<span class="size">[504Mb]</span> 
+      <li>We have also measured continuum indices from spectra which
+	have been corrected for contamination by sky emission lines
+	using the best-fit model spectrum. This is <a
+	  href="SDSS_fixedidx.html">described here.</a> and the data
+	are kept in the <a
+	  href="Data/gal_idxfix_dr7_v5_2.fit.gz">gal_idxfix</a> file.
+	<span class="size">[650Mb]</span>
+      <li> For each spectrum we have also measured observed-frame
+	magnitudes using <tt>filter_thru</tt> from <tt>idlutils</tt>
+	with the June 2001 filter curves. These are available from the
+	<a href="Data/gal_specmag_dr7_v5_2.fit.gz">gal_specmag</a> file,
+	and the individual columns are described <a
+	  href="SDSS_specmag.html">in this file</a>. Note that these are
+         <b>dust-corrected</b> magnitudes!
+	<span class="size">[21Mb]</span>
+      <li>
+	We have concatenated spObj plates which contain the 
+	<a href="http://www.sdss.org/dr7/dm/flatFiles/tsObj.html">tsObj
+	  information</a> for each plate from the SDSS DAS. In
+	addition we have included the <a
+	  href="http://www.sdss.org/dr7/algorithms/photometry.html#cmodel">CModel</a> 
+	magnitudes as the <tt>CMODEL</tt> column. This is kept in the
+	huge <a href="Data/gal_fnal_dr7_v5_2.fit.gz">gal_fnal</a>
+	file. <span class="size">[1.8Gb]</span>
+
+    </ul>
+  </p>
+
+
+  </body>
+
+ </html>
