@@ -195,7 +195,7 @@ The regular-group comparison samples are built from Lim--Tempel groups satisfyin
 We use SDSS DR<<DATA_RELEASE>> \citep{Ahumada+20} to retrieve stellar masses, star formation rates \citep[SFRs;][]{Brinchmann+04,Kauffmann+03b}, and Galaxy Zoo morphologies \citep{Lintott+08,GalaxyZoo1}; Appendix~\ref{app:sdss_query} summarises the principal quantities and table joins, and the full SQL query is provided in \texttt{src/data\_loader.py}. Throughout, `SDSS non-AGN reference' denotes the AGN-filtered, post-processed reference sample used for calibration and orientation: spectroscopic galaxies with \(<<Z_MIN>> \le z \le <<Z_MAX>>\), extinction-corrected Petrosian \(r \le <<R_MAX>>\), a valid MPA-JHU stellar mass, and finite Galaxy Zoo vote fractions after the pipeline AGN filter. It serves as a field-dominated reference population, not as a control sample. All projected distances and derived quantities adopt the Planck 2015 cosmology \citep{Planck15}, consistently with our previous paper.
 
 \subsection{Star-formation and morphology classes}\label{sec:ssfr_classification}
-We classify galaxies from SDSS total sSFRs. In the MPA-JHU catalogue, values of \(-9999\) in the sSFR fields are sentinel values indicating that no valid sSFR estimate is available, rather than physical measurements; the same missing-value convention is used for MPA-JHU DR8 target quantities by \citet{Zeraatgari+24}. We therefore treat \texttt{specsfr\_tot\_p50} \(= -9999\) as \emph{missing data}: such galaxies are excluded from the star-formation classification and from every sSFR-based figure and fraction, and are reported as counts only (Table~\ref{tab:sSFR_status}). All quenched and star-forming fractions quoted in this paper are computed among classified galaxies only. The missing-sSFR incidence is markedly higher in \CG{} (<< CG4_Gals_NNosSFR_pc|fmt(0) >>\% of members, and << CG4_BGG_NNosSFR_pc|fmt(0) >>\% of BGGs) than in the field selection (<< SDSS_NNosSFR_pc|fmt(0) >>\%), plausibly reflecting crowded-field spectroscopy and deblending (Sect.~\ref{sec:decoupling}) rather than a physical population. Galaxies with a measured sSFR are split into quenched and star-forming classes with a two-component Gaussian mixture model (GMM) in the \(\log M_\star\)--\(\log\mathrm{sSFR}\) plane; BPT/AGN handling and the exact GMM boundary definition are given in Appendix~\ref{app:ssfr_method} (Fig.~\ref{fig:sSFR_classification}).
+We classify galaxies from SDSS total sSFRs. The inherited DR12 group catalogues store \(\log\mathrm{sSFR}=\texttt{sfr\_tot\_p50}-\texttt{lgm\_tot\_p50}\); they do not obtain this final quantity from \texttt{specsfr\_tot\_p50}. MPA-JHU values of \(-9999\) are missing-value sentinels rather than physical measurements, and the same convention is used for MPA-JHU DR8 target quantities by \citet{Zeraatgari+24}. We therefore treat rows with unavailable components, including \texttt{sfr\_tot\_p50} \(= -9999\), as \emph{missing data}: such galaxies are excluded from the star-formation classification and from every sSFR-based figure and fraction, and are reported as counts only (Table~\ref{tab:sSFR_status}). All quenched and star-forming fractions quoted in this paper are computed among classified galaxies only. The missing-sSFR incidence is markedly higher in \CG{} (<< CG4_Gals_NNosSFR_pc|fmt(0) >>\% of members, and << CG4_BGG_NNosSFR_pc|fmt(0) >>\% of BGGs) than in the field selection (<< SDSS_NNosSFR_pc|fmt(0) >>\%). An exact-spectrum provenance audit shows that the missing-sSFR rows mix \texttt{galSpecExtra} sentinel values with spectra absent from the MPA-JHU \texttt{galSpecExtra}/\texttt{galSpecInfo} tables; the available cross-match is therefore insufficient to establish the origin of the missing sSFR estimates. Galaxies with a measured sSFR are split into quenched and star-forming classes with a two-component Gaussian mixture model (GMM) in the \(\log M_\star\)--\(\log\mathrm{sSFR}\) plane; BPT/AGN handling and the exact GMM boundary definition are given in Appendix~\ref{app:ssfr_method} (Fig.~\ref{fig:sSFR_classification}).
 
 Morphologies are drawn from Galaxy Zoo 1 \citep{Lintott+08,GalaxyZoo1}, a single-question classification in which volunteers assigned each galaxy image to one of several morphological categories. The resulting vote fractions, debiased for the redshift-dependent classification bias following \citet{Bamford+09}, are provided in the \texttt{zooSpec} table through the columns \texttt{p\_el\_debiased} (fraction voting ``elliptical'') and \texttt{p\_cs\_debiased} (fraction voting combined-spiral; Lintott et al.\ 2011). We classify a galaxy as elliptical if \texttt{p\_el\_debiased} exceeds 0.5, as spiral if \texttt{p\_cs\_debiased} exceeds 0.5, and as ``uncertain'' only when both vote fractions are finite but neither threshold is exceeded. If either vote fraction is missing after merging Galaxy Zoo onto the compact-group and control catalogues, the row is treated as missing Galaxy Zoo data rather than uncertain. These are vote-fraction classes, not a full structural decomposition. In particular, the catalogue does not provide a clean E/S0 separation, so references below to elliptical or early-type galaxies should be read as Galaxy Zoo 1 elliptical-vote proxies for early-type morphology rather than as a bulge-disc structural classification.
 
@@ -311,6 +311,18 @@ The gradation across the contrasts is itself informative, but it is not by itsel
     \caption{Adjusted \CG{} odds ratios from the three separate per-control contrasts (colour-coded by control sample) for the all-member elliptical and quenched outcomes. Bars show 95\% confidence intervals; the vertical line marks equal odds.}
     \label{fig:primary_contrasts}
 \end{figure}
+<% endif %>
+
+<% set mass_trends = r.get('descriptive_mass_trends', {}) %>
+<% if mass_trends.get('status') == 'ok' %>
+The direct mass-binned view in Fig.~\ref{fig:mass_trends} shows the same physical distinction without another model: through the well-populated intermediate-mass bins, \CG{} has higher median elliptical-vote and lower spiral-vote fractions, while \CC{} is generally the closest comparison. The satellite quenched-fraction curves cross, and the BGG curves are similar. Thus the visual trends support the morphology result but do not reveal an additional \CG{}-specific quenching pattern.
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{<< SUBFIGURES_PATH >><< mass_trends.get('figure') >>}
+    \caption{Galaxy Zoo vote fractions and quenched fractions versus stellar mass. Top: median debiased elliptical and spiral vote fractions for all galaxies. Bottom: quenched fractions among valid-sSFR satellites and BGGs. All samples use the same bins within each row: edges \(7.0, 9.5, 10.0, 10.5, 11.0, 12.5\) for morphology and \(7.0, 10.0, 10.5, 11.0, 12.5\) for quenching. Each estimate is plotted at the median stellar mass of the galaxies contributing to it, rather than at the geometric bin centre; points are not connected because the displayed bins have unequal widths. Bars are 16th--84th percentile physical-group-blocked bootstrap intervals; bins with fewer than five galaxies or three groups are omitted.}
+    \label{fig:mass_trends}
+\end{figure*}
 <% endif %>
 <% endif %>
 
@@ -683,6 +695,7 @@ The pairwise tidal-index experiment strengthens this interpretation while also n
 This proxy uses projected separations, so it may be inflated by line-of-sight alignments and is entangled with compact-group selection itself. We therefore read the tidal-index result as a local projected-density or immediate-neighbour proxy, not as a time-dependent tidal-field measurement. The \CC{} comparison is stringent because \CC{} is also selected as a projected compact core around a BGG. The persistence of a \CG{}--\CC{} morphology contrast after closest-neighbour exclusion, together with attenuation in the tidal-index model, is consistent with \CG{} selecting a more extreme part of the local-density distribution rather than establishing a separate causal channel.
 
 This reading is consistent with compact groups tracing the high-density, high-interaction tail of group environments -- some genuinely compact, others dense cores or substructures inside larger haloes -- and with stronger structural signatures reported for non-isolated compact groups in recent S-PLUS work. The \nGrIso{} isolated \CG{}s are compatible with loose \RG{} groups in satellite early-type fraction (group-level permutation \(p = \pIsoRG\)) and have a lower satellite early-type fraction than the rest of \CG{} (\(p = \pIsoRest\)); this pattern is consistent with a larger-scale host contribution, but the very small isolated sample prevents a firm separation of explanations (Appendix~\ref{app:env_diagnostics}). The available \(M_{200c}\) is a host-halo abundance-matching mass rather than a harmonised quartet property; adding it to the adjusted models mildly attenuates the elliptical odds ratios and changes no conclusion.
+Stellar-population diagnostics may provide additional constraints on the origin of these morphological differences. In particular, stellar metallicity, age, and abundance ratios such as \([\alpha/\mathrm{Fe}]\) could help distinguish differences in integrated enrichment history from differences in star-formation timescale; we defer such an analysis to future work.
 
 \subsection{Elliptical-vote morphologies, S0 degeneracy, and transition galaxies}
 
@@ -765,7 +778,9 @@ This publication uses Galaxy Zoo classifications; we thank the volunteers who ma
 \section{SDSS data query}\label{app:sdss_query}
 
 % MOVED: column/join description relocated here from Sect. 2.1.
-We specifically extract the columns \texttt{sfr\_tot\_p50}, \texttt{specsfr\_tot\_p50}, and \texttt{lgm\_tot\_p50} from the \texttt{galSpecExtra} table, \texttt{h\_alpha\_eqw} from \texttt{galSpecLine}, and \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} from the \texttt{zooSpec} table. In the query, \texttt{galSpecExtra}, \texttt{galSpecLine}, and \texttt{zooSpec} are joined to \texttt{SpecObj} by \texttt{specObjID}, while the photometric object is linked through \texttt{SpecObj.bestObjID}=\texttt{PhotoObj.objID}; the queried quantities are then merged onto the \CG{} and control catalogue rows by their stored \texttt{objid}. The full query result is subsequently split by the pipeline into the AGN-inclusive table and the non-AGN SDSS reference sample used for the GMM calibration.
+For the SDSS calibration sample, we extract \texttt{sfr\_tot\_p50}, \texttt{specsfr\_tot\_p50}, and \texttt{lgm\_tot\_p50} from \texttt{galSpecExtra}, \texttt{h\_alpha\_eqw} from \texttt{galSpecLine}, and \texttt{p\_el\_debiased} and \texttt{p\_cs\_debiased} from \texttt{zooSpec}. In that query, these spectroscopic tables are joined to \texttt{SpecObj} by \texttt{specObjID}, while the photometric object is linked through \texttt{SpecObj.bestObjID}=\texttt{PhotoObj.objID}. The full result is split into the AGN-inclusive table and the non-AGN reference used for GMM calibration. The group samples instead inherit their DR12 \texttt{sfr\_tot\_p50}, \texttt{lgm\_tot\_p50}, and stored \texttt{specObjID} from the parent catalogues; only the Galaxy Zoo vote fractions are added to those rows by photometric \texttt{objid}. Their final \(\log\mathrm{sSFR}\) is the stored difference \texttt{sfr\_tot\_p50}\(-\)\texttt{lgm\_tot\_p50}.
+
+We re-audited all 6076 final sample rows against \texttt{SpecObjAll} in DR12, retaining the stored \texttt{specObjID} even when the same photometric \texttt{objid} has multiple spectra. All 3855 unique non-zero identifiers resolve to the same photometric object; two \CB{} rows have no stored spectrum identifier. The earlier low recovery resulted from looking up these DR12 identifiers in DR16: \texttt{specObjID} encodes the reduction version, so reprocessed BOSS observations can retain the same plate--MJD--fibre while acquiring a different identifier. On the exact DR12 observations, the missing rows comprise 4 \texttt{sfr\_tot\_p50} sentinels and 14 spectra without \texttt{galSpecExtra} coverage in \CG{}, 29 and 149 (plus the two rows without a spectrum identifier) in \CB{}, 27 and 164 in \CC{}, and 0 and 5 in \RG{}, respectively. \texttt{galSpecInfo} is complete for the sentinel subsets but absent for the much larger no-\texttt{galSpecExtra} subsets. The available cross-match is therefore insufficient to establish the origin of the missing sSFR estimates.
 
 The full query is provided in \texttt{src/data\_loader.py} in the code repository (see Data availability).
 
@@ -789,19 +804,18 @@ or if they lie above the empirical demarcation of \citet{Kauffmann+03a}:
 > \frac{0.61}{\log_{10}([\mathrm{N\,II}]/\mathrm{H}\alpha)-0.05} \;+\; 1.3,
 \]
 in which case they are excluded from the GMM calibration sample. This calibration flag is deliberately more inclusive than the three-class BPT scheme of Sect.~\ref{sec:agn_env}, in which composite galaxies lie between the \citet{Kauffmann+03a} and \citet{Kewley+01} demarcations and only galaxies above the \citet{Kewley+01} line are labelled AGN-like, because its sole purpose is to keep possible AGN contamination out of the sSFR calibration. Galaxies with missing diagnostic line ratios are BPT-unclassified, not proven non-AGN. They are retained for the broad sSFR status assignment when valid SDSS stellar mass and sSFR estimates are available, while the emission-line/AGN-like analysis treats BPT-unclassified objects separately.
-Galaxies with \texttt{specsfr\_tot\_p50} equal to \(-9999\) in the SDSS carry the MPA-JHU missing-value sentinel and have no valid sSFR estimate;
-they are treated as missing data throughout: excluded from the GMM calibration, never assigned an sSFR class,
+Reference-sample rows with unavailable \texttt{specsfr\_tot\_p50}, and group-sample rows with unavailable \texttt{sfr\_tot\_p50} or \texttt{lgm\_tot\_p50}, including the \(-9999\) sentinel, have no valid sSFR estimate;
+they are treated as missing data throughout: excluded from the GMM calibration where applicable, never assigned an sSFR class,
 omitted from every sSFR figure, and reported as counts only (Sect.~\ref{sec:ssfr_classification}).
 Galaxies with a measured sSFR are divided into quenched and star-forming classes with a two-component Gaussian Mixture Model (GMM) in the \(\log M_\star\)-\(\log\mathrm{sSFR}\) plane \citep{McLachlanPeel2000}. The calibration excludes galaxies flagged as AGN-like where the required BPT line ratios are available, while BPT-unclassified galaxies with valid SDSS stellar mass and sSFR estimates can still receive a broad sSFR class. The quenched/star-forming boundary is the locus where the two component posterior probabilities are equal; the resulting classification for the SDSS non-AGN reference is shown in Fig.~\ref{fig:sSFR_classification}. A fixed-threshold robustness check confirms that the qualitative hierarchy is not tied to the exact GMM split (Sect.~\ref{sec:secondary}).
 
 % MOVED: fig:sSFR_classification relocated here from Sect. 2.
-\begin{figure}
+\begin{figure*}
     \centering
-     \includegraphics[width=\columnwidth]{sSFR_classification.pdf}
-     \caption{sSFR versus stellar mass, the star-forming/quenched limit, and Galaxy Zoo morphologies for the SDSS non-AGN reference,
-     excluding galaxies without sSFR estimates.}
+     \includegraphics[width=\textwidth]{sSFR_classification.pdf}
+     \caption{Galaxy Zoo morphology in sSFR--stellar-mass space for the SDSS non-AGN reference, excluding galaxies without sSFR estimates. Panels show early-type, late-type, and uncertain morphologies; no unavailable morphologies occur in this reference sample ($N=0$). Solid class-specific contours enclose 20, 40, 60, 80, and 95\% of the density, grey dotted contours show the full reference distribution at the same enclosed-probability levels, and the dashed curve is the unchanged adopted star-forming--quenched GMM boundary.}
      \label{fig:sSFR_classification}
-\end{figure}
+\end{figure*}
 
 <% set t5 = referee.get('T5', {}) %>
 <% if t5.get('comparisons') %>
@@ -907,6 +921,15 @@ with << pval_text(p) >>.
 \end{itemize}
 
 Because the raw residual comparison and the matched comparison condition on different covariate structures, and because the apparent offset changes in strength after matching, we treat SFMS residuals as a secondary diagnostic rather than as evidence for a robust compact-group star-formation offset (Sect.~\ref{sec:raw}).
+
+The full residual distributions overlap closely (Fig.~\ref{fig:sfms_residual_distributions}). In particular, the \CG{} distribution shows neither a pronounced negative-residual tail of anaemic star formers nor a distinct enhanced tail. This visual diagnostic leaves the median-offset interpretation unchanged.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{main_sequence_residuals.pdf}
+    \caption{Cumulative distributions of the existing order-2 SFMS residuals for star-forming galaxies. Zero marks the adopted SFMS; symbols mark sample medians. The normalisation gives each sample equal visual weight.}
+    \label{fig:sfms_residual_distributions}
+\end{figure}
 
 <% if r.get('Main_sequence_offset_by_cg_class_significant', []) %>
 Within \CG, the class-split comparison of star-forming main-sequence offsets highlights

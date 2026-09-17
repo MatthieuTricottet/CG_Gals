@@ -10,6 +10,7 @@ from dataclasses import dataclass
 
 from scipy.stats import multivariate_normal, fisher_exact, linregress
 import scipy.interpolate as interp
+from scipy.ndimage import gaussian_filter
 
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
@@ -435,7 +436,7 @@ def validate_ssfr_table_counts(sample):
     return audit
     
 
-def plot_classification(non_quenched, sdss_df, fit_results, f_interp, 
+def _plot_classification_scatter_legacy(non_quenched, sdss_df, fit_results, f_interp,
                                fig_size=(12,8), label_fontsize=18, tick_labelsize=16, 
                                legendmarkerscale=5, name=None, quenched_value_set=-15):
     """
@@ -553,7 +554,175 @@ def plot_classification(non_quenched, sdss_df, fit_results, f_interp,
     if co.SHOW:
         plt.show()
 
- 
+
+def _enclosed_density_levels(density, enclosed=(0.95, 0.80, 0.60, 0.40, 0.20)):
+    """Return contour thresholds enclosing fixed fractions of total density."""
+
+    values = np.asarray(density, dtype=float)
+    positive = values[np.isfinite(values) & (values > 0)]
+    if positive.size == 0:
+        raise ValueError("Cannot draw contours from an empty density grid.")
+    ranked = np.sort(positive)[::-1]
+    cumulative = np.cumsum(ranked) / ranked.sum()
+    thresholds = []
+    for fraction in enclosed:
+        index = min(np.searchsorted(cumulative, fraction), len(ranked) - 1)
+        thresholds.append(ranked[index])
+    return np.unique(np.sort(thresholds))
+
+
+def plot_classification(
+    non_quenched,
+    sdss_df,
+    fit_results,
+    f_interp,
+    fig_size=(7.05, 2.65),
+    label_fontsize=9,
+    tick_labelsize=7.5,
+    legendmarkerscale=1,
+    name=None,
+    quenched_value_set=-15,
+):
+    """Plot SDSS sSFR density by Galaxy Zoo morphology and the GMM boundary.
+
+    The GMM is not fitted here. ``f_interp`` is the boundary adopted during
+    sample construction; the other legacy arguments remain in the signature
+    so cached and rebuild workflows call the same plotting function.
+    """
+
+    del sdss_df, fit_results, legendmarkerscale, quenched_value_set
+    required = {"lgm", "sSFR", "morphology"}
+    missing = required.difference(non_quenched.columns)
+    if missing:
+        raise KeyError(f"Missing classification-plot columns: {sorted(missing)}")
+
+    frame = non_quenched[["lgm", "sSFR", "morphology"]].copy()
+    frame[["lgm", "sSFR"]] = frame[["lgm", "sSFR"]].apply(
+        pd.to_numeric, errors="coerce"
+    )
+    frame = frame.replace([np.inf, -np.inf], np.nan).dropna(subset=["lgm", "sSFR"])
+    if frame.empty:
+        raise ValueError("No measured stellar masses and sSFR values to plot.")
+
+    x = frame["lgm"].to_numpy(dtype=float)
+    y = frame["sSFR"].to_numpy(dtype=float)
+    x_range = (float(x.min() - 0.05), float(x.max() + 0.05))
+    y_range = (float(y.min() - 0.05), float(y.max() + 0.05))
+    full_counts, x_edges, y_edges = np.histogram2d(
+        x, y, bins=(150, 150), range=(x_range, y_range)
+    )
+    full_density = gaussian_filter(full_counts.T, sigma=1.25)
+    full_levels = _enclosed_density_levels(full_density)
+    x_centres = 0.5 * (x_edges[:-1] + x_edges[1:])
+    y_centres = 0.5 * (y_edges[:-1] + y_edges[1:])
+
+    panels = [
+        (co.Morphologies[0], "Early-type"),
+        (co.Morphologies[1], "Late-type"),
+        (co.Morphologies[2], "Uncertain"),
+    ]
+    fig, axes = plt.subplots(1, 3, figsize=fig_size, sharex=True, sharey=True)
+    x_vals = np.linspace(x_range[0], x_range[1], 500)
+    y_vals = f_interp(x_vals)
+    for ax, (morphology, title) in zip(axes.flat, panels):
+        ax.contour(
+            x_centres,
+            y_centres,
+            full_density,
+            levels=full_levels,
+            colors="0.45",
+            linestyles=":",
+            linewidths=0.8,
+            zorder=1,
+        )
+
+        morph_frame = frame.loc[frame["morphology"].eq(morphology)]
+        n_morph = int(len(morph_frame))
+        if n_morph:
+            morph_counts, _, _ = np.histogram2d(
+                morph_frame["lgm"].to_numpy(dtype=float),
+                morph_frame["sSFR"].to_numpy(dtype=float),
+                bins=(150, 150),
+                range=(x_range, y_range),
+            )
+            morph_density = gaussian_filter(morph_counts.T, sigma=1.25)
+            morph_levels = _enclosed_density_levels(morph_density)
+            filled_levels = np.r_[
+                morph_levels, morph_density.max() * (1 + 1e-6)
+            ]
+            ax.contourf(
+                x_centres,
+                y_centres,
+                morph_density,
+                levels=filled_levels,
+                colors=("0.94", "0.88", "0.81", "0.73", "0.64"),
+                antialiased=True,
+                zorder=2,
+            )
+            ax.contour(
+                x_centres,
+                y_centres,
+                morph_density,
+                levels=morph_levels,
+                colors="0.18",
+                linestyles="-",
+                linewidths=0.65,
+                zorder=3,
+            )
+        # White underlay keeps the identical stored boundary visible through
+        # every class-specific density field without changing its location.
+        ax.plot(x_vals, y_vals, color="white", linewidth=2.0, zorder=5)
+        ax.plot(
+            x_vals,
+            y_vals,
+            color="black",
+            linestyle="--",
+            linewidth=0.9,
+            zorder=6,
+        )
+        ax.set_title(
+            f"{title} (N={n_morph:,})",
+            fontsize=8.5,
+            pad=2.0,
+        )
+        ax.set_xlim(x_range)
+        ax.set_ylim(y_range)
+        ax.tick_params(axis="both", labelsize=tick_labelsize, length=2.2, pad=1.5)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+
+    axes[0].set_ylabel(lu.formatted_label("sSFR"), fontsize=label_fontsize, labelpad=3)
+    axes[1].set_xlabel(lu.formatted_label("lgm"), fontsize=label_fontsize, labelpad=3)
+
+    legend_handles = [
+        mlines.Line2D([], [], color="0.18", linewidth=0.8, label="Morphology density"),
+        mlines.Line2D(
+            [], [], color="0.45", linestyle=":", linewidth=0.9, label="All morphologies"
+        ),
+        mlines.Line2D(
+            [], [], color="black", linestyle="--", linewidth=0.9, label="GMM boundary"
+        ),
+    ]
+    fig.legend(
+        handles=legend_handles,
+        frameon=False,
+        fontsize=7.2,
+        loc="upper center",
+        ncol=3,
+        handlelength=2.4,
+        bbox_to_anchor=(0.5, 1.0),
+    )
+    fig.subplots_adjust(left=0.075, right=0.995, bottom=0.17, top=0.76, wspace=0.07)
+
+    if name:
+        fig.savefig(co.FIGURES_PATH + name + ".pdf", format="pdf", bbox_inches="tight")
+    if co.SHOW:
+        plt.show()
+    else:
+        plt.close(fig)
+    return fig, axes
+
+
 def plot_galaxies(SDSS, CG, markerscale=8, triangle_factor=0.7, name=None, figsize=(10, 8),
                    fontsize_labels=16, fontsize_legend=14, 
                    xmin = 7.5, xmax = 11.8, ymin = -14.2, ymax = -8):
@@ -1842,7 +2011,7 @@ def add_MS_residuals(
             df.loc[is_sf, y_col].to_numpy(dtype=float) - y_hat
         )
 
-def plot_main_sequence_residuals(
+def _plot_main_sequence_residuals_hist_legacy(
     sample: dict,
     figname: str | None = None,
     suffix: str | None = None,
@@ -1936,6 +2105,96 @@ def plot_main_sequence_residuals(
     else:
         plt.close(fig)
 
+    return fig, ax
+
+
+def plot_main_sequence_residuals(
+    sample: dict,
+    figname: str | None = None,
+    suffix: str | None = None,
+    res_col: str = "MS_res",
+    figsize: tuple[float, float] = (6.2, 4.2),
+    xlabel: str = r"$\Delta \log_{10}(\mathrm{sSFR}/\mathrm{yr}^{-1})$",
+    ylabel: str = "Cumulative fraction",
+    labelsize: int = 12,
+    ticksize: int = 10,
+    legendsize: int = 9,
+    title: str | None = None,
+    show: bool | None = None,
+    **_legacy_options,
+):
+    """Plot ECDFs of the existing order-2 main-sequence residuals.
+
+    This routine only visualises ``MS_res``. It does not fit or alter the
+    adopted main-sequence relation.
+    """
+
+    if suffix is None:
+        suffix = co.GASUFF
+    if show is None:
+        show = co.SHOW
+
+    styles = {
+        "CG4_Gals": ("#000000", "-", "o"),
+        "Control4B_Gals": ("#0072B2", "--", "s"),
+        "Control4C_Gals": ("#D55E00", "-.", "^"),
+        "RG4_Gals": ("#009E73", ":", "D"),
+    }
+    fig, ax = plt.subplots(figsize=figsize)
+    for index, (key, df) in enumerate(sample.items()):
+        if not str(key).endswith(suffix) or res_col not in df.columns:
+            continue
+        residuals = pd.to_numeric(df[res_col], errors="coerce").to_numpy()
+        residuals = np.sort(residuals[np.isfinite(residuals)])
+        if residuals.size == 0:
+            continue
+        ecdf = np.arange(1, residuals.size + 1, dtype=float) / residuals.size
+        colour, linestyle, marker = styles.get(
+            str(key), (f"C{index}", "-", "o")
+        )
+        ax.step(
+            residuals,
+            ecdf,
+            where="post",
+            color=colour,
+            linestyle=linestyle,
+            linewidth=1.6,
+            label=lu.display_label(str(key)),
+        )
+        ax.plot(
+            float(np.median(residuals)),
+            0.5,
+            marker=marker,
+            markersize=5.0,
+            markerfacecolor="white",
+            markeredgecolor=colour,
+            markeredgewidth=1.1,
+            linestyle="none",
+            zorder=4,
+        )
+
+    ax.axvline(0, color="0.45", linewidth=1.0, zorder=0)
+    ax.set_xlabel(xlabel, fontsize=labelsize)
+    ax.set_ylabel(ylabel, fontsize=labelsize)
+    ax.set_ylim(0, 1)
+    ax.tick_params(axis="both", which="major", labelsize=ticksize)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    if title is not None:
+        ax.set_title(title, fontsize=labelsize)
+    ax.legend(fontsize=legendsize, frameon=False, loc="best")
+    fig.tight_layout()
+
+    if figname is not None:
+        fig.savefig(
+            co.FIGURES_PATH + figname + ".pdf",
+            format="pdf",
+            bbox_inches="tight",
+        )
+    if show:
+        plt.show()
+    else:
+        plt.close(fig)
     return fig, ax
 
 

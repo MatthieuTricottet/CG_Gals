@@ -68,7 +68,10 @@ def check_vocabulary(tex: str) -> None:
         r"|in the sSFR fields are sentinel values indicating that no valid"
         r"|as \\emph\{missing data\})"
         r"|values of \\\(-9999\\\) in the sSFR fields are sentinel values"
+        r"|values of \\\(-9999\\\) are missing-value sentinels"
         r"|treat \\texttt\{specsfr\\_tot\\_p50\} \\\(= -9999\\\) as"
+        r"|\\texttt\{sfr\\_tot\\_p50\} \\\(= -9999\\\), as \\emph"
+        r"|including the \\\(-9999\\\) sentinel"
     )
     for match in re.finditer(r"-9999", tex):
         window = tex[match.start() - 60 : match.end() + 80]

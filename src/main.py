@@ -63,6 +63,8 @@ import exploration_mvt_tcross
 import extended_specialness
 import luminosity_function
 import ssfr_robustness
+import descriptive_trends
+import ssfr_quality_audit
 
 
 
@@ -328,6 +330,9 @@ def main():
 
     ssfr_report_properties(sample)
     morph_properties(sample)
+
+    report.append_json("descriptive_mass_trends", descriptive_trends.run(sample))
+    report.append_json("ssfr_quality_audit", ssfr_quality_audit.run(sample))
 
     sSFR.split_by_fertility(sample)
     sSFR.split_by_BGG_fertility(sample)
