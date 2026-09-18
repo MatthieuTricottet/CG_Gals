@@ -1,0 +1,13 @@
+sample,missing_type,N,n_boss,n_sdss,n_run2d_26,n_zwarning_nonzero,n_class_galaxy,n_sciprimary,median_snMedian_r
+CG4,no-galSpecExtra,14,14,0,0,0,14,14,47.51466
+CG4,sentinel,4,0,4,4,0,4,4,40.88747
+CG4,valid,230,0,230,230,1,230,230,37.241915
+Control4B,no-galSpecExtra,149,149,0,0,0,149,149,45.98648
+Control4B,no-specObjID,2,0,0,0,0,0,0,
+Control4B,sentinel,29,0,29,29,0,29,29,43.59825
+Control4B,valid,2612,0,2612,2612,0,2612,2612,42.33771
+Control4C,no-galSpecExtra,164,164,0,0,0,164,164,45.3059
+Control4C,sentinel,27,0,27,27,0,27,27,37.47755
+Control4C,valid,2621,0,2621,2621,0,2621,2621,38.04109
+RG4,no-galSpecExtra,5,5,0,0,0,5,5,67.71172
+RG4,valid,219,0,219,219,0,219,219,29.698

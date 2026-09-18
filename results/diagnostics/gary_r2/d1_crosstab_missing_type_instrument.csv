@@ -1,0 +1,13 @@
+sample,missing_type,instrument,N
+CG4,no-galSpecExtra,BOSS,14
+CG4,sentinel,SDSS,4
+CG4,valid,SDSS,230
+Control4B,no-galSpecExtra,BOSS,149
+Control4B,no-specObjID,none,2
+Control4B,sentinel,SDSS,29
+Control4B,valid,SDSS,2612
+Control4C,no-galSpecExtra,BOSS,164
+Control4C,sentinel,SDSS,27
+Control4C,valid,SDSS,2621
+RG4,no-galSpecExtra,BOSS,5
+RG4,valid,SDSS,219

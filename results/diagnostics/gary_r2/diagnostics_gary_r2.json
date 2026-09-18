@@ -1,0 +1,2468 @@
+{
+ "d1_missing_ssfr": {
+  "n_rows": 6076,
+  "n_missing": 394,
+  "by_type": {
+   "no-galSpecExtra": 332,
+   "sentinel": 60,
+   "no-specObjID": 2
+  },
+  "by_type_and_instrument": {
+   "no-galSpecExtra|BOSS": 332,
+   "no-specObjID|none": 2,
+   "sentinel|SDSS": 60
+  },
+  "n_boss_among_missing": 332,
+  "n_boss_among_valid": 0,
+  "n_sentinel_sdss_instrument": 60,
+  "per_sample": {
+   "CG4": {
+    "valid": 230,
+    "no-galSpecExtra": 14,
+    "sentinel": 4
+   },
+   "Control4B": {
+    "valid": 2612,
+    "no-galSpecExtra": 149,
+    "sentinel": 29,
+    "no-specObjID": 2
+   },
+   "Control4C": {
+    "valid": 2621,
+    "no-galSpecExtra": 164,
+    "sentinel": 27
+   },
+   "RG4": {
+    "valid": 219,
+    "no-galSpecExtra": 5
+   }
+  },
+  "snr_column": "SpecObjAll.snMedian_r (DR12)",
+  "snr_summary_file": "d1_snr_by_missing_status.csv",
+  "crosstab_file": "d1_crosstab_missing_type_instrument.csv",
+  "rank_sum_tests": {
+   "CG4": {
+    "n_missing": 18,
+    "n_valid": 230,
+    "median_missing": 46.582415,
+    "median_valid": 37.241915,
+    "mannwhitney_U": 3058.0,
+    "p": 0.0007538439070777237
+   },
+   "Control4B": {
+    "n_missing": 178,
+    "n_valid": 2612,
+    "median_missing": 45.675470000000004,
+    "median_valid": 42.33771,
+    "mannwhitney_U": 278408.0,
+    "p": 9.973722097431812e-06
+   },
+   "Control4C": {
+    "n_missing": 191,
+    "n_valid": 2621,
+    "median_missing": 44.63502,
+    "median_valid": 38.04109,
+    "mannwhitney_U": 318068.0,
+    "p": 3.96985611490737e-10
+   },
+   "RG4": {
+    "n_missing": 5,
+    "n_valid": 219,
+    "median_missing": 67.71172,
+    "median_valid": 29.698,
+    "mannwhitney_U": 955.0,
+    "p": 0.002190335792947241
+   },
+   "pooled_unique_spectra": {
+    "n_missing": 247,
+    "n_valid": 3608,
+    "median_missing": 45.22525,
+    "median_valid": 39.029435,
+    "mannwhitney_U": 565012.0,
+    "p": 1.6993592992377932e-12
+   },
+   "no_galSpecExtra_vs_valid_unique": {
+    "n_missing": 208,
+    "median_missing": 45.861315,
+    "median_valid": 39.029435,
+    "p": 8.825350801126361e-14
+   },
+   "sentinel_vs_valid_unique": {
+    "n_missing": 39,
+    "median_missing": 39.64936,
+    "median_valid": 39.029435,
+    "p": 0.5203191795288669
+   }
+  },
+  "verdict": "Of the 394 missing-sSFR rows, 332 (84%) have no galSpecExtra row and all 332 of these are BOSS-instrument spectra (survey='boss', run2d v5_7_0), which the MPA-JHU tables (legacy run2d=26 only) never covered, while every valid row is an SDSS-legacy spectrum (0 valid BOSS rows); the 60 sfr_tot_p50 = -9999 sentinel rows are all SDSS-legacy spectra with galSpecInfo reliable=1, zWarning=0 and a stellar mass, and 2 rows have no specObjID. Neither class is low-S/N: median snMedian_r is 40.1 (sentinel) and 45.9 (BOSS) against 39.0 for valid rows, and the missing rows have significantly HIGHER S/N than the valid rows in every sample (rank-sum). Verdict: BOSS-instrument coverage gap (84%) plus MPA-JHU fit failures at normal S/N (15%); not low-S/N spectra."
+ },
+ "d2_sfms_sign": {
+  "fit": {
+   "fitted_on": "SDSS non-AGN reference sample (sample['SDSS']), GMM class 'Starforming'",
+   "n_fit": 44192,
+   "order": 2,
+   "coeffs_highest_first": [
+    0.031056463434844497,
+    -1.0179649483132265,
+    -3.0768973808299034
+   ],
+   "stored_MS_res_max_abs_deviation_from_refit": 0.0,
+   "cv_rms_selected": 0.3052308675021252,
+   "residual_defined_for": "GMM star-forming galaxies only (NaN otherwise)"
+  },
+  "raw_published": {
+   "Control4B": {
+    "\u0394median": 0.05604083902372636,
+    "CI_16": 0.02687905015693204,
+    "CI_84": 0.09769841052338979,
+    "p_value": 0.06359364063593641,
+    "n_CG4_galaxies": 84,
+    "n_control_galaxies": 1019
+   },
+   "Control4C": {
+    "\u0394median": 0.05826032926890612,
+    "CI_16": 0.03871732643539322,
+    "CI_84": 0.10302761827391908,
+    "p_value": 0.0301969803019698,
+    "n_CG4_galaxies": 84,
+    "n_control_galaxies": 1061
+   },
+   "RG4": {
+    "\u0394median": 0.04550768280284778,
+    "CI_16": -0.04321377083789553,
+    "CI_84": 0.09829158986568991,
+    "p_value": 0.5891410858914109,
+    "n_CG4_galaxies": 84,
+    "n_control_galaxies": 118
+   }
+  },
+  "matched_definition": {
+   "pool": "objid-deduplicated pooled controls (RG4 > Control4B > Control4C priority), one global match, not per control",
+   "matching_variables": [
+    "logMstar",
+    "z_numeric",
+    "rank",
+    "log_group_luminosity",
+    "velocity_dispersion"
+   ],
+   "propensity_caliper_logit": 0.10375223214719648,
+   "n_pairs_total": 234,
+   "sf_restriction": "BOTH members of a pair must be GMM star-forming (starforming==1)",
+   "n_pairs_both_sf": 39,
+   "n_pairs_cg4_sf_only": 84,
+   "n_pairs_control_sf_only": 90,
+   "n_pairs_cg4_sf_control_not_sf": 45,
+   "statistic": "MEAN of paired differences of MS_res (np.mean), bootstrap blocked by treated CG group",
+   "published_delta": -0.14748506724220858,
+   "published_ci95": [
+    -0.3109662648088736,
+    0.008402292009362081
+   ],
+   "published_p": 0.0638,
+   "matched_control_composition_both_sf": {
+    "Control4B": 23,
+    "Control4C": 13,
+    "RG4": 3
+   },
+   "matched_control_composition_both_sf_physical_labels": {
+    "Control4B+Control4C": 19,
+    "Control4C": 13,
+    "Control4B": 4,
+    "Control4B+Control4C+RG4": 3
+   },
+   "rank_composition_both_sf": {
+    "1": 5,
+    "2": 7,
+    "3": 12,
+    "4": 15
+   }
+  },
+  "recomputed": {
+   "matched_both_sf": {
+    "cg4": {
+     "n": 39,
+     "median": 0.014568463135221421,
+     "mean": -0.06087499769127797,
+     "q16": -0.4165662723625032,
+     "q84": 0.21154842176982241,
+     "sd": 0.3400395079622294
+    },
+    "control": {
+     "n": 39,
+     "median": 0.05997119373996007,
+     "mean": 0.0866100695509306,
+     "q16": -0.2005031771911083,
+     "q84": 0.3866300687759973,
+     "sd": 0.3887519031311465
+    },
+    "delta_median": -0.04540273060473865,
+    "delta_mean": -0.14748506724220858,
+    "paired_median_of_differences": -0.0781682261044665,
+    "paired_mean_of_differences": -0.14748506724220858,
+    "wilcoxon_p": 0.2585682743010693,
+    "mannwhitney_p": 0.19734725645688045,
+    "n_pairs_with_cg4_above_control": 15
+   },
+   "matched_cg4_sf_all_treated": {
+    "n": 84,
+    "median": 0.01531909519263941,
+    "mean": -0.03103011439217873,
+    "q16": -0.4135765596872257,
+    "q84": 0.2826883306355494,
+    "sd": 0.3456219297797756
+   },
+   "matched_control_sf_all_controls": {
+    "n": 90,
+    "median": -0.07132978345507368,
+    "mean": -0.07192492336141067,
+    "q16": -0.4487792906278332,
+    "q84": 0.2913124554311488,
+    "sd": 0.40567691319896343
+   },
+   "full_sample_sf": {
+    "CG4": {
+     "n": 84,
+     "median": 0.01531909519263941,
+     "mean": -0.03103011439217873,
+     "q16": -0.4135765596872257,
+     "q84": 0.2826883306355494,
+     "sd": 0.3456219297797756
+    },
+    "Control4B": {
+     "n": 1019,
+     "median": -0.040721743831086954,
+     "mean": -0.07070014811582594,
+     "q16": -0.5199397801817088,
+     "q84": 0.31308470411459494,
+     "sd": 0.3877679791606637
+    },
+    "Control4C": {
+     "n": 1061,
+     "median": -0.04294123407626671,
+     "mean": -0.07717326082795481,
+     "q16": -0.4955462049251036,
+     "q84": 0.28961440159748547,
+     "sd": 0.3769096215959432
+    },
+    "RG4": {
+     "n": 118,
+     "median": -0.030188587610208373,
+     "mean": -0.03236447597047841,
+     "q16": -0.43827341354231997,
+     "q84": 0.31516846226415995,
+     "sd": 0.3536442585712589
+    }
+   },
+   "cg4_sf_matched_vs_unmatched": {
+    "matched": {
+     "n": 84,
+     "median": 0.01531909519263941,
+     "mean": -0.03103011439217873,
+     "q16": -0.4135765596872257,
+     "q84": 0.2826883306355494,
+     "sd": 0.3456219297797756
+    },
+    "unmatched": {
+     "n": 0
+    },
+    "in_both_sf_pairs": {
+     "n": 39,
+     "median": 0.014568463135221421,
+     "mean": -0.06087499769127797,
+     "q16": -0.4165662723625032,
+     "q84": 0.21154842176982241,
+     "sd": 0.3400395079622294
+    },
+    "matched_but_control_not_sf": {
+     "n": 45,
+     "median": 0.031474448394327226,
+     "mean": -0.005164548866292722,
+     "q16": -0.3970618720131382,
+     "q84": 0.3229693256459775,
+     "sd": 0.3521382694484707
+    }
+   },
+   "per_control_full_sf_mean_vs_median": {
+    "Control4B": {
+     "delta_median": 0.05604083902372636,
+     "delta_mean": 0.039670033723647205,
+     "mannwhitney_p": 0.34472644602955627
+    },
+    "Control4C": {
+     "delta_median": 0.05826032926890612,
+     "delta_mean": 0.04614314643577608,
+     "mannwhitney_p": 0.20958611995260656
+    },
+    "RG4": {
+     "delta_median": 0.04550768280284778,
+     "delta_mean": 0.0013343615782996782,
+     "mannwhitney_p": 0.9853870128941767
+    }
+   }
+  },
+  "sf_mass_distributions": [
+   {
+    "sample": "CG4",
+    "scope": "all_SF",
+    "n": 84,
+    "q16": 9.55793004,
+    "median": 9.9859115,
+    "mean": 10.053806261904763,
+    "q84": 10.5719592,
+    "frac_sat": 0.8690476190476191
+   },
+   {
+    "sample": "CG4",
+    "scope": "SF_satellites",
+    "n": 73,
+    "q16": 9.53947048,
+    "median": 9.939357,
+    "mean": 9.912283232876712,
+    "q84": 10.3195852,
+    "frac_sat": 1.0
+   },
+   {
+    "sample": "Control4B",
+    "scope": "all_SF",
+    "n": 1019,
+    "q16": 9.70545812,
+    "median": 10.27381,
+    "mean": 10.241102278704613,
+    "q84": 10.7742024,
+    "frac_sat": 0.8949950932286556
+   },
+   {
+    "sample": "Control4B",
+    "scope": "SF_satellites",
+    "n": 912,
+    "q16": 9.6747204,
+    "median": 10.201315000000001,
+    "mean": 10.160713021929823,
+    "q84": 10.651038400000001,
+    "frac_sat": 1.0
+   },
+   {
+    "sample": "Control4C",
+    "scope": "all_SF",
+    "n": 1061,
+    "q16": 9.531514,
+    "median": 10.04861,
+    "mean": 10.07390747313855,
+    "q84": 10.655144,
+    "frac_sat": 0.8991517436380773
+   },
+   {
+    "sample": "Control4C",
+    "scope": "SF_satellites",
+    "n": 954,
+    "q16": 9.504262559999999,
+    "median": 9.9603975,
+    "mean": 9.978304908805033,
+    "q84": 10.4525148,
+    "frac_sat": 1.0
+   },
+   {
+    "sample": "RG4",
+    "scope": "all_SF",
+    "n": 118,
+    "q16": 9.42217164,
+    "median": 9.9392365,
+    "mean": 9.974043737288135,
+    "q84": 10.6077432,
+    "frac_sat": 0.8728813559322034
+   },
+   {
+    "sample": "RG4",
+    "scope": "SF_satellites",
+    "n": 103,
+    "q16": 9.417416880000001,
+    "median": 9.82069,
+    "mean": 9.862576009708738,
+    "q84": 10.2962936,
+    "frac_sat": 1.0
+   },
+   {
+    "sample": "CG4",
+    "scope": "matched_both_SF",
+    "n": 39,
+    "q16": 9.64132528,
+    "median": 9.950853,
+    "mean": 10.048130717948718,
+    "q84": 10.6029048,
+    "frac_sat": 0.8717948717948718
+   },
+   {
+    "sample": "matched controls",
+    "scope": "matched_both_SF",
+    "n": 39,
+    "q16": 9.285542,
+    "median": 9.849862,
+    "mean": 9.90091264102564,
+    "q84": 10.6489212,
+    "frac_sat": 0.8717948717948718
+   }
+  ],
+  "ms_res_by_mass_split_10p3": {
+   "CG4": {
+    "n_lo": 61,
+    "median_lo": 0.031474448394327226,
+    "n_hi": 23,
+    "median_hi": 0.004573181273174853
+   },
+   "Control4B": {
+    "n_lo": 533,
+    "median_lo": 0.0713700408274498,
+    "n_hi": 486,
+    "median_hi": -0.19425655491663907
+   },
+   "Control4C": {
+    "n_lo": 720,
+    "median_lo": 0.01328853083511472,
+    "n_hi": 341,
+    "median_hi": -0.21060729739551043
+   },
+   "RG4": {
+    "n_lo": 88,
+    "median_lo": 0.06826492318645272,
+    "n_hi": 30,
+    "median_hi": -0.19417904174362466
+   }
+  },
+  "mass_split_logMstar": 10.3,
+  "explanation": "The two numbers are different estimands on different samples. (1) The raw offsets are MEDIAN differences between all 84 star-forming CG4 galaxies and all star-forming galaxies of each control (1019, 1061, 118), unmatched in mass/rank. (2) The matched value is the MEAN paired difference over only 39 pairs in which BOTH members are star-forming, from the pooled deduplicated galaxy-level match. On those same 39 pairs the median difference is -0.045 and the median of paired differences -0.078 (mean -0.147; Wilcoxon p = 0.26; 15/39 pairs have CG4 above its control). The star-forming CG4 galaxies that enter both-SF pairs have a median residual of +0.015 against +0.015 for all star-forming CG4 galaxies, and the matched star-forming controls sit at +0.060 against -0.041/-0.043/-0.030 for the full control SF populations. Both signs are therefore correct for what they measure; the conflict comes from (i) the small both-SF pair subset, (ii) mean versus median, and (iii) the matched controls being a different (mass/rank-matched, pooled) population than the full control SF samples. Only the raw Control4C offset reaches p < 0.05 (group-bootstrap p = 0.030; Control4B 0.064, RG4 0.59) and the matched contrast does not (p = 0.064); this is not a bug. A fourth ingredient is the mass dependence of the residuals about the FIELD-fitted main sequence: in every control the star-forming galaxies with log M* >= 10.3 sit well below the field relation (median -0.19, -0.21, -0.19) while those below 10.3 sit slightly above it (+0.07, +0.01, +0.07); the 23 massive star-forming CG4 galaxies do not show this depression (+0.00), which drives the positive raw medians, whereas the matched controls of the both-SF pairs are lower-mass than their CG4 partners (16th percentiles 9.29 vs 9.64) and therefore inherit positive residuals."
+ },
+ "d3_zheng_shen_class": {
+  "definition_source": "Zheng & Shen (2021, ApJ 911, 105, Sect. 2.3): CGs whose members coincide with a Yang et al. (2007) group are 'isolated'; CGs that are subsets of a richer group are 'embedded systems' and, among them, 'embedded CGs' are the subgroups that do NOT dominate the luminosity of their parent group, sum_i^{Npar} L_i >= 2 sum_j^{Nemb} L_j (Eq. 1), while the remainder, which contribute more than half of the parent luminosity, are 'predominant'; members matched to different groups are 'split'. Paper I (Tricottet+25, Sect. 3.3) states the same: Predominant = 'accounting for half or more of their host group total r-band luminosity' (19 groups), Embedded = 'less than half' (37 groups).",
+  "implemented": "inherited 'Class' column of data/CG4_Groups.csv (Paper I export); used verbatim by paper_additions.zheng_shen_block, morphology_dominance, host_controlled, identity",
+  "class_crosstab_stored_vs_rederived": {
+   "Embedded": {
+    "Embedded": 0,
+    "Isolated": 0,
+    "Predominant": 37,
+    "Split": 0
+   },
+   "Isolated": {
+    "Embedded": 0,
+    "Isolated": 6,
+    "Predominant": 0,
+    "Split": 0
+   },
+   "Predominant": {
+    "Embedded": 19,
+    "Isolated": 0,
+    "Predominant": 0,
+    "Split": 0
+   },
+   "Split": {
+    "Embedded": 0,
+    "Isolated": 0,
+    "Predominant": 0,
+    "Split": 16
+   }
+  },
+  "per_class_stored_labels": [
+   {
+    "class_stored": "Embedded",
+    "n_groups": 37,
+    "median_host_logM200c": 13.134806937099691,
+    "q16_host_logM200c": 12.870097190697242,
+    "q84_host_logM200c": 13.427489379671101,
+    "median_host_richness": 8.0,
+    "min_host_richness": 5.0,
+    "max_host_richness": 24.0,
+    "median_fL_cg_over_host": 0.8315278556235871,
+    "min_fL": 0.5149770839880735,
+    "max_fL": 0.9816392799469428
+   },
+   {
+    "class_stored": "Isolated",
+    "n_groups": 6,
+    "median_host_logM200c": 12.863515744439251,
+    "q16_host_logM200c": 12.808894825424945,
+    "q84_host_logM200c": 12.962733123448324,
+    "median_host_richness": 4.0,
+    "min_host_richness": 4.0,
+    "max_host_richness": 4.0,
+    "median_fL_cg_over_host": 1.0,
+    "min_fL": 0.9999999999999998,
+    "max_fL": 1.0
+   },
+   {
+    "class_stored": "Predominant",
+    "n_groups": 19,
+    "median_host_logM200c": 13.825752463831812,
+    "q16_host_logM200c": 13.543484880731999,
+    "q84_host_logM200c": 14.069929612479168,
+    "median_host_richness": 26.0,
+    "min_host_richness": 13.0,
+    "max_host_richness": 93.0,
+    "median_fL_cg_over_host": 0.30844076625421263,
+    "min_fL": 0.0638612190860448,
+    "max_fL": 0.4780105787862962
+   }
+  ],
+  "predominant_hosts_more_massive_than_embedded_with_stored_labels": true,
+  "n_nonsplit_groups_with_swapped_label": 56,
+  "verdict": "CONFIRMED numerically for the stored labels: median host log M200c is 13.83 for the 19 groups labelled 'Predom' and 13.13 for the 37 labelled 'Embedded' (Table E.2), BUT this CONTRADICTS the definitions: every group labelled 'Embedded' contributes >= 0.51 (median 0.83) of its host r-band luminosity (host richness 5--24), i.e. it DOMINATES the host and is 'Predominant' under Zheng & Shen (2021) Eq. 1 and under Paper I Sect. 3.3, whereas every group labelled 'Predom' contributes <= 0.48 (median 0.31; host richness 13--93) and is 'Embedded'. The two labels are swapped in data/CG4_Groups.csv for all 56/56 non-isolated non-split groups (the 0.5 luminosity-fraction boundary is reproduced exactly: no group is ambiguous). With the correct labels, Embedded hosts (rich groups/clusters) are the massive ones, as the definitions imply. Paper I's Sect. 4.3 prose already carried the inconsistency ('Embedded CG4s ... contributing over half the luminosity of the host').",
+  "n_isolated_groups": 6,
+  "satellite_logistic_models": {
+   "class_stored": {
+    "class_plus_logMstar": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar",
+     "predictors_used": [
+      "is_Embedded",
+      "is_Predominant",
+      "logMstar"
+     ],
+     "standardized_predictors": [
+      "logMstar"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 195.63964795344293,
+     "bic": 207.86463117483618,
+     "terms": {
+      "const": {
+       "coefficient": -1.1013732729745498,
+       "standard_error": 0.30533911145668136,
+       "odds_ratio": 0.3324142745684346,
+       "ci95": [
+        0.1827151430039603,
+        0.6047624084144113
+       ],
+       "p": 0.00030969866019625245
+      },
+      "is_Embedded": {
+       "coefficient": 1.4916180840961801,
+       "standard_error": 0.39775243782907244,
+       "odds_ratio": 4.44428092442358,
+       "ci95": [
+        2.038140008047016,
+        9.691008889090845
+       ],
+       "p": 0.0001767522491072057
+      },
+      "is_Predominant": {
+       "coefficient": 1.5441081571817012,
+       "standard_error": 0.43995607499287903,
+       "odds_ratio": 4.683792557007852,
+       "ci95": [
+        1.97745387486869,
+        11.094019939422815
+       ],
+       "p": 0.0004486343129006147
+      },
+      "logMstar": {
+       "coefficient": 0.8540811924365836,
+       "standard_error": 0.1969198410177389,
+       "odds_ratio": 2.3492149122294506,
+       "ci95": [
+        1.5969976475689687,
+        3.455741285682068
+       ],
+       "p": 1.4430777678225598e-05
+      }
+     }
+    },
+    "class_plus_logMstar_plus_logM200c": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_M200c",
+     "predictors_used": [
+      "is_Embedded",
+      "is_Predominant",
+      "logMstar",
+      "log_M200c"
+     ],
+     "standardized_predictors": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 197.16240998577268,
+     "bic": 212.4436390125142,
+     "terms": {
+      "const": {
+       "coefficient": -1.2723243499482537,
+       "standard_error": 0.3873073251472699,
+       "odds_ratio": 0.28017962883625,
+       "ci95": [
+        0.1311474838436883,
+        0.5985675219540006
+       ],
+       "p": 0.0010196388154068141
+      },
+      "is_Embedded": {
+       "coefficient": 1.6074352507659924,
+       "standard_error": 0.4858221515811474,
+       "odds_ratio": 4.989996711603883,
+       "ci95": [
+        1.925607169577605,
+        12.931021225517958
+       ],
+       "p": 0.0009373331474168577
+      },
+      "is_Predominant": {
+       "coefficient": 1.871307577009512,
+       "standard_error": 0.6238629977031973,
+       "odds_ratio": 6.496785895614846,
+       "ci95": [
+        1.9127817004486685,
+        22.066410904892862
+       ],
+       "p": 0.002703797062605487
+      },
+      "logMstar": {
+       "coefficient": 0.9014668007561966,
+       "standard_error": 0.22545880204182914,
+       "odds_ratio": 2.463213506078023,
+       "ci95": [
+        1.5834019555025343,
+        3.831889151987015
+       ],
+       "p": 6.37812822861291e-05
+      },
+      "log_M200c": {
+       "coefficient": -0.1726794415937586,
+       "standard_error": 0.20440614584148473,
+       "odds_ratio": 0.8414072917991656,
+       "ci95": [
+        0.5636577005430171,
+        1.2560215712670386
+       ],
+       "p": 0.39823035645647165
+      }
+     }
+    },
+    "logMstar_plus_logM200c_no_class": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ logMstar + log_M200c",
+     "predictors_used": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "standardized_predictors": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 199.36912153712046,
+     "bic": 208.5378589531654,
+     "terms": {
+      "const": {
+       "coefficient": 0.2739409601541521,
+       "standard_error": 0.1712497626653379,
+       "odds_ratio": 1.3151371544517227,
+       "ci95": [
+        0.940162630952819,
+        1.8396665407414725
+       ],
+       "p": 0.1096745941513046
+      },
+      "logMstar": {
+       "coefficient": 0.8033727710121368,
+       "standard_error": 0.20773757360754863,
+       "odds_ratio": 2.2330598410799527,
+       "ci95": [
+        1.4861882319647994,
+        3.3552656026966377
+       ],
+       "p": 0.00011007035674480844
+      },
+      "log_M200c": {
+       "coefficient": 0.059974337918960716,
+       "standard_error": 0.17815405370255893,
+       "odds_ratio": 1.0618092979594809,
+       "ci95": [
+        0.7488615260178667,
+        1.505537333755756
+       ],
+       "p": 0.7363859404086716
+      }
+     }
+    },
+    "class_plus_logMstar_plus_logNhost": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_N_host",
+     "predictors_used": [
+      "is_Embedded",
+      "is_Predominant",
+      "logMstar",
+      "log_N_host"
+     ],
+     "standardized_predictors": [
+      "logMstar",
+      "log_N_host"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 197.29136024678309,
+     "bic": 212.5725892735246,
+     "terms": {
+      "const": {
+       "coefficient": -1.3757117022173158,
+       "standard_error": 0.5402371138314764,
+       "odds_ratio": 0.2526597133227605,
+       "ci95": [
+        0.08763656245993168,
+        0.7284280549630915
+       ],
+       "p": 0.010881042809772
+      },
+      "is_Embedded": {
+       "coefficient": 1.692068907168141,
+       "standard_error": 0.5512562484251183,
+       "odds_ratio": 5.430704714322608,
+       "ci95": [
+        1.8434273220169832,
+        15.99876129746008
+       ],
+       "p": 0.002144332239711655
+      },
+      "is_Predominant": {
+       "coefficient": 2.047206563300292,
+       "standard_error": 0.9420289876795545,
+       "odds_ratio": 7.746232245662688,
+       "ci95": [
+        1.2224581089297466,
+        49.084801814826676
+       ],
+       "p": 0.029766132912986853
+      },
+      "logMstar": {
+       "coefficient": 0.8778771267469562,
+       "standard_error": 0.2135311769335723,
+       "odds_ratio": 2.4057871005418536,
+       "ci95": [
+        1.5830663757612768,
+        3.6560763728875822
+       ],
+       "p": 3.935461656132474e-05
+      },
+      "log_N_host": {
+       "coefficient": -0.19634912570533397,
+       "standard_error": 0.2998717134049699,
+       "odds_ratio": 0.8217252991681571,
+       "ci95": [
+        0.4565363822107027,
+        1.479033202180502
+       ],
+       "p": 0.5126112877418914
+      }
+     }
+    },
+    "predominant_vs_embedded_only_plus_logMstar": {
+     "status": "ok",
+     "n": 143,
+     "formula": "elliptical ~ is_Predominant + logMstar",
+     "predictors_used": [
+      "is_Predominant",
+      "logMstar"
+     ],
+     "standardized_predictors": [
+      "logMstar"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 54,
+     "aic": 175.38483314663554,
+     "bic": 184.27336703741526,
+     "terms": {
+      "const": {
+       "coefficient": 0.40001922223607805,
+       "standard_error": 0.2373810257380806,
+       "odds_ratio": 1.4918533741234077,
+       "ci95": [
+        0.9368434946428748,
+        2.3756652019362168
+       ],
+       "p": 0.09196240849069452
+      },
+      "is_Predominant": {
+       "coefficient": 0.030434684562529846,
+       "standard_error": 0.38427808946368824,
+       "odds_ratio": 1.0309025539984595,
+       "ci95": [
+        0.48542206428830886,
+        2.1893526356258435
+       ],
+       "p": 0.9368738346232215
+      },
+      "logMstar": {
+       "coefficient": 0.9365905453246701,
+       "standard_error": 0.22213558133996097,
+       "odds_ratio": 2.5512681399182364,
+       "ci95": [
+        1.6507220631430344,
+        3.9431042130548293
+       ],
+       "p": 2.4834188135059895e-05
+      }
+     }
+    },
+    "predominant_vs_embedded_only_plus_logMstar_logM200c": {
+     "status": "ok",
+     "n": 143,
+     "formula": "elliptical ~ is_Predominant + logMstar + log_M200c",
+     "predictors_used": [
+      "is_Predominant",
+      "logMstar",
+      "log_M200c"
+     ],
+     "standardized_predictors": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 54,
+     "aic": 176.64891066224772,
+     "bic": 188.50028918328735,
+     "terms": {
+      "const": {
+       "coefficient": 0.31179411401482016,
+       "standard_error": 0.1989100011953803,
+       "odds_ratio": 1.3658734498776026,
+       "ci95": [
+        0.9249067804010653,
+        2.017079256648506
+       ],
+       "p": 0.11699471102270356
+      },
+      "is_Predominant": {
+       "coefficient": 0.29638841093801244,
+       "standard_error": 0.38674376669427696,
+       "odds_ratio": 1.344992465175368,
+       "ci95": [
+        0.6302646660162741,
+        2.8702302840689518
+       ],
+       "p": 0.4434568079011699
+      },
+      "logMstar": {
+       "coefficient": 1.0028889956272875,
+       "standard_error": 0.25880133214571066,
+       "odds_ratio": 2.726146287499163,
+       "ci95": [
+        1.6415611429283323,
+        4.527320601405057
+       ],
+       "p": 0.00010656747134715708
+      },
+      "log_M200c": {
+       "coefficient": -0.2192863023420808,
+       "standard_error": 0.2176254894563249,
+       "odds_ratio": 0.8030917581848844,
+       "ci95": [
+        0.5242301760737725,
+        1.230292343899194
+       ],
+       "p": 0.3136313921373821
+      }
+     }
+    }
+   },
+   "class_rederived_ZS21": {
+    "class_plus_logMstar": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar",
+     "predictors_used": [
+      "is_Embedded",
+      "is_Predominant",
+      "logMstar"
+     ],
+     "standardized_predictors": [
+      "logMstar"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 195.63964795344293,
+     "bic": 207.86463117483618,
+     "terms": {
+      "const": {
+       "coefficient": -1.1013732729745498,
+       "standard_error": 0.305339111456681,
+       "odds_ratio": 0.3324142745684346,
+       "ci95": [
+        0.18271514300396038,
+        0.6047624084144109
+       ],
+       "p": 0.00030969866019624724
+      },
+      "is_Embedded": {
+       "coefficient": 1.5441081571817017,
+       "standard_error": 0.43995607499287953,
+       "odds_ratio": 4.683792557007854,
+       "ci95": [
+        1.977453874868689,
+        11.094019939422829
+       ],
+       "p": 0.0004486343129006199
+      },
+      "is_Predominant": {
+       "coefficient": 1.4916180840961801,
+       "standard_error": 0.3977524378290735,
+       "odds_ratio": 4.44428092442358,
+       "ci95": [
+        2.0381400080470113,
+        9.691008889090863
+       ],
+       "p": 0.00017675224910721277
+      },
+      "logMstar": {
+       "coefficient": 0.8540811924365843,
+       "standard_error": 0.196919841017739,
+       "odds_ratio": 2.3492149122294523,
+       "ci95": [
+        1.5969976475689693,
+        3.455741285682071
+       ],
+       "p": 1.443077767822549e-05
+      }
+     }
+    },
+    "class_plus_logMstar_plus_logM200c": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_M200c",
+     "predictors_used": [
+      "is_Embedded",
+      "is_Predominant",
+      "logMstar",
+      "log_M200c"
+     ],
+     "standardized_predictors": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 197.16240998577268,
+     "bic": 212.4436390125142,
+     "terms": {
+      "const": {
+       "coefficient": -1.2723243499482555,
+       "standard_error": 0.3873073251472705,
+       "odds_ratio": 0.28017962883624953,
+       "ci95": [
+        0.13114748384368788,
+        0.5985675219540003
+       ],
+       "p": 0.0010196388154068141
+      },
+      "is_Embedded": {
+       "coefficient": 1.8713075770095158,
+       "standard_error": 0.6238629977031998,
+       "odds_ratio": 6.496785895614871,
+       "ci95": [
+        1.9127817004486665,
+        22.06641090489305
+       ],
+       "p": 0.0027037970626055453
+      },
+      "is_Predominant": {
+       "coefficient": 1.607435250765992,
+       "standard_error": 0.4858221515811486,
+       "odds_ratio": 4.989996711603881,
+       "ci95": [
+        1.9256071695775994,
+        12.931021225517986
+       ],
+       "p": 0.0009373331474168863
+      },
+      "logMstar": {
+       "coefficient": 0.9014668007561965,
+       "standard_error": 0.22545880204182914,
+       "odds_ratio": 2.463213506078023,
+       "ci95": [
+        1.5834019555025343,
+        3.831889151987015
+       ],
+       "p": 6.378128228612928e-05
+      },
+      "log_M200c": {
+       "coefficient": -0.17267944159375967,
+       "standard_error": 0.204406145841485,
+       "odds_ratio": 0.8414072917991646,
+       "ci95": [
+        0.5636577005430162,
+        1.2560215712670377
+       ],
+       "p": 0.3982303564564694
+      }
+     }
+    },
+    "logMstar_plus_logM200c_no_class": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ logMstar + log_M200c",
+     "predictors_used": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "standardized_predictors": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 199.36912153712046,
+     "bic": 208.5378589531654,
+     "terms": {
+      "const": {
+       "coefficient": 0.2739409601541521,
+       "standard_error": 0.1712497626653379,
+       "odds_ratio": 1.3151371544517227,
+       "ci95": [
+        0.940162630952819,
+        1.8396665407414725
+       ],
+       "p": 0.1096745941513046
+      },
+      "logMstar": {
+       "coefficient": 0.8033727710121368,
+       "standard_error": 0.20773757360754863,
+       "odds_ratio": 2.2330598410799527,
+       "ci95": [
+        1.4861882319647994,
+        3.3552656026966377
+       ],
+       "p": 0.00011007035674480844
+      },
+      "log_M200c": {
+       "coefficient": 0.059974337918960716,
+       "standard_error": 0.17815405370255893,
+       "odds_ratio": 1.0618092979594809,
+       "ci95": [
+        0.7488615260178667,
+        1.505537333755756
+       ],
+       "p": 0.7363859404086716
+      }
+     }
+    },
+    "class_plus_logMstar_plus_logNhost": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_N_host",
+     "predictors_used": [
+      "is_Embedded",
+      "is_Predominant",
+      "logMstar",
+      "log_N_host"
+     ],
+     "standardized_predictors": [
+      "logMstar",
+      "log_N_host"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 197.29136024678309,
+     "bic": 212.5725892735246,
+     "terms": {
+      "const": {
+       "coefficient": -1.3757117022173162,
+       "standard_error": 0.5402371138314718,
+       "odds_ratio": 0.2526597133227604,
+       "ci95": [
+        0.08763656245993245,
+        0.7284280549630844
+       ],
+       "p": 0.010881042809771292
+      },
+      "is_Embedded": {
+       "coefficient": 2.0472065633002914,
+       "standard_error": 0.9420289876795499,
+       "odds_ratio": 7.746232245662685,
+       "ci95": [
+        1.2224581089297568,
+        49.084801814826235
+       ],
+       "p": 0.029766132912986097
+      },
+      "is_Predominant": {
+       "coefficient": 1.6920689071681418,
+       "standard_error": 0.5512562484251134,
+       "odds_ratio": 5.430704714322612,
+       "ci95": [
+        1.8434273220170025,
+        15.998761297459945
+       ],
+       "p": 0.002144332239711448
+      },
+      "logMstar": {
+       "coefficient": 0.8778771267469554,
+       "standard_error": 0.21353117693357218,
+       "odds_ratio": 2.405787100541852,
+       "ci95": [
+        1.5830663757612762,
+        3.6560763728875783
+       ],
+       "p": 3.9354616561325036e-05
+      },
+      "log_N_host": {
+       "coefficient": -0.1963491257053343,
+       "standard_error": 0.29987171340496926,
+       "odds_ratio": 0.8217252991681568,
+       "ci95": [
+        0.4565363822107031,
+        1.4790332021804997
+       ],
+       "p": 0.5126112877418898
+      }
+     }
+    },
+    "predominant_vs_embedded_only_plus_logMstar": {
+     "status": "ok",
+     "n": 143,
+     "formula": "elliptical ~ is_Predominant + logMstar",
+     "predictors_used": [
+      "is_Predominant",
+      "logMstar"
+     ],
+     "standardized_predictors": [
+      "logMstar"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 54,
+     "aic": 175.38483314663554,
+     "bic": 184.27336703741526,
+     "terms": {
+      "const": {
+       "coefficient": 0.4304539067986074,
+       "standard_error": 0.30987908332533287,
+       "odds_ratio": 1.5379554535750395,
+       "ci95": [
+        0.8378652959745263,
+        2.82301580999378
+       ],
+       "p": 0.16480148805662254
+      },
+      "is_Predominant": {
+       "coefficient": -0.030434684562528846,
+       "standard_error": 0.3842780894636887,
+       "odds_ratio": 0.9700237875261829,
+       "ci95": [
+        0.4567560217242675,
+        2.060062929908492
+       ],
+       "p": 0.9368738346232236
+      },
+      "logMstar": {
+       "coefficient": 0.9365905453246697,
+       "standard_error": 0.22213558133996092,
+       "odds_ratio": 2.5512681399182355,
+       "ci95": [
+        1.650722063143034,
+        3.9431042130548266
+       ],
+       "p": 2.483418813506003e-05
+      }
+     }
+    },
+    "predominant_vs_embedded_only_plus_logMstar_logM200c": {
+     "status": "ok",
+     "n": 143,
+     "formula": "elliptical ~ is_Predominant + logMstar + log_M200c",
+     "predictors_used": [
+      "is_Predominant",
+      "logMstar",
+      "log_M200c"
+     ],
+     "standardized_predictors": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 54,
+     "aic": 176.64891066224774,
+     "bic": 188.50028918328738,
+     "terms": {
+      "const": {
+       "coefficient": 0.6081825249528316,
+       "standard_error": 0.3655405038480211,
+       "odds_ratio": 1.8370894984684594,
+       "ci95": [
+        0.8973909255014894,
+        3.760788893087034
+       ],
+       "p": 0.0961544632050659
+      },
+      "is_Predominant": {
+       "coefficient": -0.29638841093801166,
+       "standard_error": 0.386743766694278,
+       "odds_ratio": 0.7434985889453403,
+       "ci95": [
+        0.3484041003784404,
+        1.5866350343272804
+       ],
+       "p": 0.44345680790117237
+      },
+      "logMstar": {
+       "coefficient": 1.0028889956272877,
+       "standard_error": 0.25880133214571094,
+       "odds_ratio": 2.7261462874991635,
+       "ci95": [
+        1.6415611429283319,
+        4.5273206014050595
+       ],
+       "p": 0.0001065674713471585
+      },
+      "log_M200c": {
+       "coefficient": -0.21928630234208085,
+       "standard_error": 0.21762548945632534,
+       "odds_ratio": 0.8030917581848843,
+       "ci95": [
+        0.5242301760737721,
+        1.230292343899195
+       ],
+       "p": 0.3136313921373829
+      }
+     }
+    }
+   }
+  },
+  "satellite_counts_by_stored_class": [
+   {
+    "class_stored": "Embedded",
+    "n_sat": 96,
+    "n_E": 54.0,
+    "n_groups": 36,
+    "fE": 0.5625
+   },
+   {
+    "class_stored": "Isolated",
+    "n_sat": 14,
+    "n_E": 4.0,
+    "n_groups": 5,
+    "fE": 0.2857142857142857
+   },
+   {
+    "class_stored": "Predominant",
+    "n_sat": 47,
+    "n_E": 30.0,
+    "n_groups": 18,
+    "fE": 0.6382978723404256
+   }
+  ],
+  "satellite_fE_by_class_file": "d3_satellite_fE_by_class.csv",
+  "note_small_N": "6 Isolated groups (14 classified satellites); class coefficients are exploratory"
+ },
+ "d4_ds18_gz1_mapping": {
+  "n_unique_galaxies": 3857,
+  "n_matched_ds18": 2436,
+  "thresholds": {
+   "P_S0>0.5": {
+    "n": 730,
+    "fractions": {
+     "E": {
+      "n": 511,
+      "fraction": 0.7,
+      "wilson_lo": 0.6657809503979888,
+      "wilson_hi": 0.7321251592803237
+     },
+     "S": {
+      "n": 137,
+      "fraction": 0.18767123287671234,
+      "wilson_lo": 0.1610093526742428,
+      "wilson_hi": 0.217603023992502
+     },
+     "U": {
+      "n": 45,
+      "fraction": 0.06164383561643835,
+      "wilson_lo": 0.04638680502049609,
+      "wilson_hi": 0.08149021486265448
+     },
+     "X": {
+      "n": 37,
+      "fraction": 0.050684931506849315,
+      "wilson_lo": 0.0369930952465274,
+      "wilson_hi": 0.06908085013370194
+     }
+    },
+    "inclination": {
+     "0-0.1": {
+      "n": 410,
+      "E": {
+       "n": 315,
+       "fraction": 0.7682926829268293,
+       "wilson_lo": 0.7250757044612951,
+       "wilson_hi": 0.8065288395274207
+      },
+      "S": {
+       "n": 55,
+       "fraction": 0.13414634146341464,
+       "wilson_lo": 0.10453177282870385,
+       "wilson_hi": 0.17055293991395648
+      },
+      "U": {
+       "n": 20,
+       "fraction": 0.04878048780487805,
+       "wilson_lo": 0.03179682706662636,
+       "wilson_hi": 0.07414098531598802
+      },
+      "X": {
+       "n": 20,
+       "fraction": 0.04878048780487805,
+       "wilson_lo": 0.03179682706662636,
+       "wilson_hi": 0.07414098531598802
+      }
+     },
+     "0.1-0.3": {
+      "n": 70,
+      "E": {
+       "n": 60,
+       "fraction": 0.8571428571428571,
+       "wilson_lo": 0.7566158011633325,
+       "wilson_hi": 0.920510582829334
+      },
+      "S": {
+       "n": 6,
+       "fraction": 0.08571428571428572,
+       "wilson_lo": 0.039876669645112064,
+       "wilson_hi": 0.1746567249233948
+      },
+      "U": {
+       "n": 1,
+       "fraction": 0.014285714285714285,
+       "wilson_lo": 0.002526246457890312,
+       "wilson_hi": 0.07658187131208327
+      },
+      "X": {
+       "n": 3,
+       "fraction": 0.04285714285714286,
+       "wilson_lo": 0.014681541004111405,
+       "wilson_hi": 0.11859668748527552
+      }
+     },
+     "0.3-0.5": {
+      "n": 54,
+      "E": {
+       "n": 43,
+       "fraction": 0.7962962962962963,
+       "wilson_lo": 0.6709769331166456,
+       "wilson_hi": 0.8822594591257861
+      },
+      "S": {
+       "n": 5,
+       "fraction": 0.09259259259259259,
+       "wilson_lo": 0.04020113475702944,
+       "wilson_hi": 0.19909882590962688
+      },
+      "U": {
+       "n": 4,
+       "fraction": 0.07407407407407407,
+       "wilson_lo": 0.02918152776550481,
+       "wilson_hi": 0.1755411583859995
+      },
+      "X": {
+       "n": 2,
+       "fraction": 0.037037037037037035,
+       "wilson_lo": 0.01021636794844559,
+       "wilson_hi": 0.12535176917275476
+      }
+     },
+     "0.5-0.7": {
+      "n": 52,
+      "E": {
+       "n": 34,
+       "fraction": 0.6538461538461539,
+       "wilson_lo": 0.5180355424727014,
+       "wilson_hi": 0.7684899233353408
+      },
+      "S": {
+       "n": 12,
+       "fraction": 0.23076923076923078,
+       "wilson_lo": 0.13724260925492748,
+       "wilson_hi": 0.3613378255809984
+      },
+      "U": {
+       "n": 5,
+       "fraction": 0.09615384615384616,
+       "wilson_lo": 0.04177435105257249,
+       "wilson_hi": 0.20609630120131633
+      },
+      "X": {
+       "n": 1,
+       "fraction": 0.019230769230769232,
+       "wilson_lo": 0.0034028080709451597,
+       "wilson_hi": 0.10120511127892247
+      }
+     },
+     "0.7-1": {
+      "n": 144,
+      "E": {
+       "n": 59,
+       "fraction": 0.4097222222222222,
+       "wilson_lo": 0.3327606967189344,
+       "wilson_hi": 0.49137523776522496
+      },
+      "S": {
+       "n": 59,
+       "fraction": 0.4097222222222222,
+       "wilson_lo": 0.3327606967189344,
+       "wilson_hi": 0.49137523776522496
+      },
+      "U": {
+       "n": 15,
+       "fraction": 0.10416666666666667,
+       "wilson_lo": 0.06414804449479507,
+       "wilson_hi": 0.16475566824344234
+      },
+      "X": {
+       "n": 11,
+       "fraction": 0.0763888888888889,
+       "wilson_lo": 0.04318732966175298,
+       "wilson_hi": 0.13160436291776428
+      }
+     }
+    },
+    "P_edge_on_median_by_class": {
+     "E": 0.0305904,
+     "S": 0.529894,
+     "U": 0.404584,
+     "X": 0.0604656
+    },
+    "P_edge_on_E_vs_S_mannwhitney_p": 1.1352376115884796e-05,
+    "fE_face_on_lt0p1": {
+     "n": 410,
+     "fE": 0.7682926829268293
+    },
+    "fE_inclined_ge0p5": {
+     "n": 196,
+     "fE": 0.4744897959183674
+    }
+   },
+   "P_S0>=0.8": {
+    "n": 429,
+    "fractions": {
+     "E": {
+      "n": 270,
+      "fraction": 0.6293706293706294,
+      "wilson_lo": 0.5827084631700251,
+      "wilson_hi": 0.673736472355391
+     },
+     "S": {
+      "n": 105,
+      "fraction": 0.24475524475524477,
+      "wilson_lo": 0.20645364836141133,
+      "wilson_hi": 0.2875874247911459
+     },
+     "U": {
+      "n": 33,
+      "fraction": 0.07692307692307693,
+      "wilson_lo": 0.05529531216264534,
+      "wilson_hi": 0.10606043922720977
+     },
+     "X": {
+      "n": 21,
+      "fraction": 0.04895104895104895,
+      "wilson_lo": 0.03223701256359725,
+      "wilson_hi": 0.07367118519914084
+     }
+    },
+    "inclination": {
+     "0-0.1": {
+      "n": 230,
+      "E": {
+       "n": 172,
+       "fraction": 0.7478260869565218,
+       "wilson_lo": 0.6879469017707861,
+       "wilson_hi": 0.7995628861638392
+      },
+      "S": {
+       "n": 36,
+       "fraction": 0.1565217391304348,
+       "wilson_lo": 0.11525311169700259,
+       "wilson_hi": 0.20907542783220107
+      },
+      "U": {
+       "n": 13,
+       "fraction": 0.05652173913043478,
+       "wilson_lo": 0.03332569732836319,
+       "wilson_hi": 0.09428836636757057
+      },
+      "X": {
+       "n": 9,
+       "fraction": 0.0391304347826087,
+       "wilson_lo": 0.020720932217296636,
+       "wilson_hi": 0.07268191829024236
+      }
+     },
+     "0.1-0.3": {
+      "n": 30,
+      "E": {
+       "n": 23,
+       "fraction": 0.7666666666666667,
+       "wilson_lo": 0.5907167384187784,
+       "wilson_hi": 0.8820761185551049
+      },
+      "S": {
+       "n": 5,
+       "fraction": 0.16666666666666666,
+       "wilson_lo": 0.0733654237184855,
+       "wilson_hi": 0.3356435050641603
+      },
+      "U": {
+       "n": 0,
+       "fraction": 0.0,
+       "wilson_lo": 0.0,
+       "wilson_hi": 0.11351339317396876
+      },
+      "X": {
+       "n": 2,
+       "fraction": 0.06666666666666667,
+       "wilson_lo": 0.018477023791270378,
+       "wilson_hi": 0.2132345836261692
+      }
+     },
+     "0.3-0.5": {
+      "n": 28,
+      "E": {
+       "n": 21,
+       "fraction": 0.75,
+       "wilson_lo": 0.5664432968100104,
+       "wilson_hi": 0.8732350508070668
+      },
+      "S": {
+       "n": 2,
+       "fraction": 0.07142857142857142,
+       "wilson_lo": 0.019812064115305755,
+       "wilson_hi": 0.22645362568399052
+      },
+      "U": {
+       "n": 3,
+       "fraction": 0.10714285714285714,
+       "wilson_lo": 0.03711836682929999,
+       "wilson_hi": 0.27195851548672156
+      },
+      "X": {
+       "n": 2,
+       "fraction": 0.07142857142857142,
+       "wilson_lo": 0.019812064115305755,
+       "wilson_hi": 0.22645362568399052
+      }
+     },
+     "0.5-0.7": {
+      "n": 31,
+      "E": {
+       "n": 18,
+       "fraction": 0.5806451612903226,
+       "wilson_lo": 0.4076626249536972,
+       "wilson_hi": 0.7358445693268778
+      },
+      "S": {
+       "n": 9,
+       "fraction": 0.2903225806451613,
+       "wilson_lo": 0.1609580015630062,
+       "wilson_hi": 0.46592329330749926
+      },
+      "U": {
+       "n": 3,
+       "fraction": 0.0967741935483871,
+       "wilson_lo": 0.03346464416319736,
+       "wilson_hi": 0.24899938443392836
+      },
+      "X": {
+       "n": 1,
+       "fraction": 0.03225806451612903,
+       "wilson_lo": 0.005717221525416816,
+       "wilson_hi": 0.16194105164724906
+      }
+     },
+     "0.7-1": {
+      "n": 110,
+      "E": {
+       "n": 36,
+       "fraction": 0.32727272727272727,
+       "wilson_lo": 0.24671132610522006,
+       "wilson_hi": 0.4194911242705093
+      },
+      "S": {
+       "n": 53,
+       "fraction": 0.4818181818181818,
+       "wilson_lo": 0.39064279126942547,
+       "wilson_hi": 0.5742206245595985
+      },
+      "U": {
+       "n": 14,
+       "fraction": 0.12727272727272726,
+       "wilson_lo": 0.07734981388846994,
+       "wilson_hi": 0.20235021060652508
+      },
+      "X": {
+       "n": 7,
+       "fraction": 0.06363636363636363,
+       "wilson_lo": 0.031164518014477616,
+       "wilson_hi": 0.125557461882102
+      }
+     }
+    },
+    "P_edge_on_median_by_class": {
+     "E": 0.0195753,
+     "S": 0.719496,
+     "U": 0.546769,
+     "X": 0.287513
+    },
+    "P_edge_on_E_vs_S_mannwhitney_p": 3.5968612178556686e-07,
+    "fE_face_on_lt0p1": {
+     "n": 230,
+     "fE": 0.7478260869565218
+    },
+    "fE_inclined_ge0p5": {
+     "n": 141,
+     "fE": 0.3829787234042553
+    }
+   }
+  },
+  "reference": {
+   "early_P_S0<0.2": {
+    "n": 174,
+    "E": 0.896551724137931,
+    "S": 0.005747126436781609,
+    "U": 0.028735632183908046,
+    "X": 0.06896551724137931
+   },
+   "late_TType>0": {
+    "n": 1290,
+    "E": 0.05736434108527132,
+    "S": 0.8542635658914729,
+    "U": 0.04108527131782946,
+    "X": 0.047286821705426356
+   }
+  },
+  "gz1_E_content_pooled": {
+   "n_E_matched": 942,
+   "fraction_TType_le0": 0.921443736730361,
+   "fraction_TType_gt0": 0.07855626326963906,
+   "fraction_early_and_P_S0_gt0.5": 0.5424628450106157,
+   "fraction_early_and_P_S0_ge0.8": 0.28662420382165604,
+   "fraction_early_and_P_S0_lt0.2": 0.16560509554140126,
+   "median_TType": -2.167195
+  },
+  "environment_split": "NOT computed (reserved for blind Paper III analysis)"
+ },
+ "d5_sigma_v_group_match": {
+  "Control4B": {
+   "with_sigma_v": {
+    "variables": [
+     "z_group",
+     "logMstar_bgg",
+     "log_group_luminosity",
+     "velocity_dispersion"
+    ],
+    "n_pairs": 54,
+    "delta": 0.16049382716049382,
+    "caliper_logit": 0.1440184394852452,
+    "mean_fraction_cg4": 0.5462962962962963,
+    "mean_fraction_control": 0.38580246913580246,
+    "smd": {
+     "z_group": {
+      "before": 0.1422816662621913,
+      "after": -0.08359104780734963,
+      "median_cg4": 0.036163902625,
+      "median_control": 0.03823649775
+     },
+     "logMstar_bgg": {
+      "before": 0.11484770056933048,
+      "after": 0.13334270760147698,
+      "median_cg4": 11.11993,
+      "median_control": 11.077639999999999
+     },
+     "log_group_luminosity": {
+      "before": -0.41223393053972807,
+      "after": 0.134928336737118,
+      "median_cg4": 10.983360939761315,
+      "median_control": 10.986726380927646
+     },
+     "velocity_dispersion": {
+      "before": 0.19617051277993816,
+      "after": 0.17146781551430662,
+      "median_cg4": 160.40352377067745,
+      "median_control": 146.20698168202875
+     },
+     "mean_sat_logMstar": {
+      "before": -0.6181699676547215,
+      "after": 0.005460219242747405,
+      "median_cg4": 10.208630666666666,
+      "median_control": 10.251899333333334
+     }
+    }
+   },
+   "without_sigma_v": {
+    "variables": [
+     "z_group",
+     "logMstar_bgg",
+     "log_group_luminosity"
+    ],
+    "n_pairs": 54,
+    "delta": 0.2839506172839506,
+    "caliper_logit": 0.1345485391543384,
+    "mean_fraction_cg4": 0.5462962962962964,
+    "mean_fraction_control": 0.2623456790123456,
+    "smd": {
+     "z_group": {
+      "before": 0.1422816662621913,
+      "after": 0.24595730883919262,
+      "median_cg4": 0.036163902625,
+      "median_control": 0.0340888835
+     },
+     "logMstar_bgg": {
+      "before": 0.11484770056933048,
+      "after": 0.033023212989211966,
+      "median_cg4": 11.11993,
+      "median_control": 11.11108
+     },
+     "log_group_luminosity": {
+      "before": -0.41223393053972807,
+      "after": 0.06429084904551237,
+      "median_cg4": 10.983360939761315,
+      "median_control": 10.961569443362327
+     },
+     "velocity_dispersion": {
+      "before": 0.19617051277993816,
+      "after": 0.268895401595065,
+      "median_cg4": 160.40352377067745,
+      "median_control": 128.66849108966503
+     },
+     "mean_sat_logMstar": {
+      "before": -0.6181699676547215,
+      "after": 0.015517878880153638,
+      "median_cg4": 10.208630666666666,
+      "median_control": 10.248653166666667
+     }
+    }
+   },
+   "n_shared_control_groups": 7,
+   "fraction_shared_control_groups_of_with": 0.12962962962962962,
+   "fraction_shared_control_groups_of_without": 0.12962962962962962,
+   "n_shared_cg4_groups": 54,
+   "n_identical_pairs": 0,
+   "sigma_v_imbalance_without": {
+    "smd_after": 0.268895401595065,
+    "direction": "CG4 have HIGHER sigma_v than controls",
+    "median_cg4_kms": 160.40352377067745,
+    "median_control_kms": 128.66849108966503
+   },
+   "delta_change": 0.12345679012345678,
+   "mean_fraction_control_change": -0.12345679012345684,
+   "mean_fraction_cg4_change": 1.1102230246251565e-16
+  },
+  "Control4C": {
+   "with_sigma_v": {
+    "variables": [
+     "z_group",
+     "logMstar_bgg",
+     "log_group_luminosity",
+     "velocity_dispersion"
+    ],
+    "n_pairs": 54,
+    "delta": 0.11419753086419754,
+    "caliper_logit": 0.038981056285715514,
+    "mean_fraction_cg4": 0.5462962962962963,
+    "mean_fraction_control": 0.43209876543209874,
+    "smd": {
+     "z_group": {
+      "before": 0.15144413497186435,
+      "after": -0.07654862956096087,
+      "median_cg4": 0.036163902625,
+      "median_control": 0.03656611037499995
+     },
+     "logMstar_bgg": {
+      "before": 0.11695569128951569,
+      "after": 0.060981282116882765,
+      "median_cg4": 11.11993,
+      "median_control": 11.110365
+     },
+     "log_group_luminosity": {
+      "before": 0.02298126066488966,
+      "after": -0.06674792349755237,
+      "median_cg4": 10.983360939761315,
+      "median_control": 11.030400965361618
+     },
+     "velocity_dispersion": {
+      "before": 0.02861499468979612,
+      "after": -0.010408740322963458,
+      "median_cg4": 160.40352377067745,
+      "median_control": 151.2200943523215
+     },
+     "mean_sat_logMstar": {
+      "before": 0.055107707379132606,
+      "after": 0.0865597253055219,
+      "median_cg4": 10.208630666666666,
+      "median_control": 10.203117666666667
+     }
+    }
+   },
+   "without_sigma_v": {
+    "variables": [
+     "z_group",
+     "logMstar_bgg",
+     "log_group_luminosity"
+    ],
+    "n_pairs": 54,
+    "delta": 0.10185185185185185,
+    "caliper_logit": 0.038976422251197566,
+    "mean_fraction_cg4": 0.5462962962962963,
+    "mean_fraction_control": 0.4444444444444444,
+    "smd": {
+     "z_group": {
+      "before": 0.15144413497186435,
+      "after": 0.05827915589431408,
+      "median_cg4": 0.036163902625,
+      "median_control": 0.0356919675
+     },
+     "logMstar_bgg": {
+      "before": 0.11695569128951569,
+      "after": -0.10526159408309337,
+      "median_cg4": 11.11993,
+      "median_control": 11.121
+     },
+     "log_group_luminosity": {
+      "before": 0.02298126066488966,
+      "after": -0.053408488041622106,
+      "median_cg4": 10.983360939761315,
+      "median_control": 11.027548180754955
+     },
+     "velocity_dispersion": {
+      "before": 0.02861499468979612,
+      "after": -0.10904249307427216,
+      "median_cg4": 160.40352377067745,
+      "median_control": 143.04038805903036
+     },
+     "mean_sat_logMstar": {
+      "before": 0.055107707379132606,
+      "after": -0.05072495470672657,
+      "median_cg4": 10.208630666666666,
+      "median_control": 10.26141
+     }
+    }
+   },
+   "n_shared_control_groups": 10,
+   "fraction_shared_control_groups_of_with": 0.18518518518518517,
+   "fraction_shared_control_groups_of_without": 0.18518518518518517,
+   "n_shared_cg4_groups": 54,
+   "n_identical_pairs": 5,
+   "sigma_v_imbalance_without": {
+    "smd_after": -0.10904249307427216,
+    "direction": "controls have HIGHER sigma_v than CG4",
+    "median_cg4_kms": 160.40352377067745,
+    "median_control_kms": 143.04038805903036
+   },
+   "delta_change": -0.012345679012345692,
+   "mean_fraction_control_change": 0.012345679012345678,
+   "mean_fraction_cg4_change": 0.0
+  },
+  "RG4": {
+   "with_sigma_v": {
+    "variables": [
+     "z_group",
+     "logMstar_bgg",
+     "log_group_luminosity",
+     "velocity_dispersion"
+    ],
+    "n_pairs": 28,
+    "delta": 0.19642857142857137,
+    "caliper_logit": 0.27967516528853303,
+    "mean_fraction_cg4": 0.47619047619047616,
+    "mean_fraction_control": 0.27976190476190477,
+    "smd": {
+     "z_group": {
+      "before": -0.5002199761697065,
+      "after": 0.0696569110544369,
+      "median_cg4": 0.03734792599999995,
+      "median_control": 0.037927597874999996
+     },
+     "logMstar_bgg": {
+      "before": 0.7256554032095724,
+      "after": 0.009376801276291407,
+      "median_cg4": 11.064015,
+      "median_control": 11.042295
+     },
+     "log_group_luminosity": {
+      "before": 0.6713058745090491,
+      "after": -0.24698597889552448,
+      "median_cg4": 10.944248150260385,
+      "median_control": 10.988717094492198
+     },
+     "velocity_dispersion": {
+      "before": 0.7147166807070063,
+      "after": 0.19896867503284102,
+      "median_cg4": 129.85948401605955,
+      "median_control": 106.82123704847253
+     },
+     "mean_sat_logMstar": {
+      "before": 0.5373374609984787,
+      "after": -0.060132587158384855,
+      "median_cg4": 10.120871000000001,
+      "median_control": 10.192689166666666
+     }
+    }
+   },
+   "without_sigma_v": {
+    "variables": [
+     "z_group",
+     "logMstar_bgg",
+     "log_group_luminosity"
+    ],
+    "n_pairs": 31,
+    "delta": 0.25268817204301075,
+    "caliper_logit": 0.2567907109275059,
+    "mean_fraction_cg4": 0.49462365591397855,
+    "mean_fraction_control": 0.24193548387096772,
+    "smd": {
+     "z_group": {
+      "before": -0.5002199761697065,
+      "after": -0.020456295877994735,
+      "median_cg4": 0.037650195,
+      "median_control": 0.03928745525
+     },
+     "logMstar_bgg": {
+      "before": 0.7256554032095724,
+      "after": 0.07738719142083413,
+      "median_cg4": 11.07583,
+      "median_control": 11.02857
+     },
+     "log_group_luminosity": {
+      "before": 0.6713058745090491,
+      "after": -0.07617177050263384,
+      "median_cg4": 10.944278126219213,
+      "median_control": 10.970609357080415
+     },
+     "velocity_dispersion": {
+      "before": 0.7147166807070063,
+      "after": 0.5209872537930811,
+      "median_cg4": 163.05321918207693,
+      "median_control": 98.46851953911724
+     },
+     "mean_sat_logMstar": {
+      "before": 0.5373374609984787,
+      "after": 0.17758654592591214,
+      "median_cg4": 10.163223333333333,
+      "median_control": 10.108587333333334
+     }
+    }
+   },
+   "n_shared_control_groups": 21,
+   "fraction_shared_control_groups_of_with": 0.75,
+   "fraction_shared_control_groups_of_without": 0.6774193548387096,
+   "n_shared_cg4_groups": 22,
+   "n_identical_pairs": 0,
+   "sigma_v_imbalance_without": {
+    "smd_after": 0.5209872537930811,
+    "direction": "CG4 have HIGHER sigma_v than controls",
+    "median_cg4_kms": 163.05321918207693,
+    "median_control_kms": 98.46851953911724
+   },
+   "delta_change": 0.05625960061443938,
+   "mean_fraction_control_change": -0.037826420890937046,
+   "mean_fraction_cg4_change": 0.01843317972350239
+  },
+  "interpretation": "For Control4B the two matched control sets share only 7/54 control groups (13%) and 0 identical pairs; dropping sigma_v changes the matched-control mean elliptical-satellite fraction by -0.123 and the CG4 side by +0.000, so the shift of Delta from 0.160 to 0.284 comes from which control quartets are selected, not from the CG4 side. In the no-sigma_v set the residual sigma_v SMD is +0.27 (CG4 have HIGHER sigma_v than controls; medians 160 vs 129 km/s). Because Control4B quartets embedded in rich hosts carry high gapper sigma_v, matching ON sigma_v pulls in controls from dynamically hotter (richer, more early-type-rich) hosts, which raises the control elliptical fraction and lowers Delta; matching WITHOUT it selects controls from cooler hosts. With four tracers sigma_v is a noisy covariate (Sect. 2.4), so neither Delta is 'the' answer: the pair of values brackets the Control4B contrast, and the ordering Control4C < Control4B, RG4 holds in both. Note that the no-sigma_v Control4B set is NOT better balanced overall: its redshift SMD grows to +0.25 (from -0.08), so the published with-sigma_v match remains the primary one and the no-sigma_v value a labelled sensitivity.",
+  "smd_file": "d5_group_match_smd_with_vs_without_sigma_v.csv"
+ },
+ "d6_holm_per_control": {
+  "table3_group_permutation": {
+   "raw": {
+    "Control4B": 0.0158,
+    "Control4C": 0.0801,
+    "RG4": 0.0263
+   },
+   "holm": {
+    "Control4B": 0.047400000000000005,
+    "Control4C": 0.0801,
+    "RG4": 0.0526
+   },
+   "family_size": 3
+  },
+  "galaxy_adjusted_elliptical_or": {
+   "raw": {
+    "Control4B": 9.553097242993727e-07,
+    "Control4C": 0.0005864042942453806,
+    "RG4": 5.986749710263143e-06
+   },
+   "holm": {
+    "Control4B": 2.865929172898118e-06,
+    "Control4C": 0.0005864042942453806,
+    "RG4": 1.1973499420526287e-05
+   },
+   "family_size": 3
+  },
+  "galaxy_adjusted_quenched_or": {
+   "raw": {
+    "Control4B": 0.0012665657286651743,
+    "Control4C": 0.17305463316051417,
+    "RG4": 0.23809575079256584
+   },
+   "holm": {
+    "Control4B": 0.003799697185995523,
+    "Control4C": 0.34610926632102834,
+    "RG4": 0.34610926632102834
+   },
+   "family_size": 3
+  },
+  "note": "Holm within each family of three per-control tests; values stored only, not adopted in the manuscript pending Gate A"
+ },
+ "d7_fig2_statistic_audit": {
+  "bins": [
+   7.0,
+   9.5,
+   10.0,
+   10.5,
+   11.0,
+   12.5
+  ],
+  "table_file": "d7_fig2_morphology_bins_audit.csv",
+  "rows": [
+   {
+    "sample": "CG4",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "n_galaxies_votes": 10,
+    "n_groups_votes": 8,
+    "n_usable_ES": 9,
+    "n_groups_usable": 7,
+    "median_p_el": 0.1464999988675115,
+    "median_p_cs": 0.7435000240802765,
+    "mean_p_el": 0.1303000011481344,
+    "mean_p_cs": 0.75450000166893,
+    "frac_E": 0.0,
+    "frac_S": 1.0,
+    "frac_uncertain_of_votes": 0.1,
+    "displayed": true
+   },
+   {
+    "sample": "CG4",
+    "bin_left": 9.5,
+    "bin_right": 10.0,
+    "n_galaxies_votes": 38,
+    "n_groups_votes": 30,
+    "n_usable_ES": 36,
+    "n_groups_usable": 29,
+    "median_p_el": 0.273999996483326,
+    "median_p_cs": 0.615000009536743,
+    "mean_p_el": 0.350473685410658,
+    "mean_p_cs": 0.5924210534676124,
+    "frac_E": 0.3888888888888889,
+    "frac_S": 0.6111111111111112,
+    "frac_uncertain_of_votes": 0.05263157894736842,
+    "displayed": true
+   },
+   {
+    "sample": "CG4",
+    "bin_left": 10.0,
+    "bin_right": 10.5,
+    "n_galaxies_votes": 72,
+    "n_groups_votes": 49,
+    "n_usable_ES": 71,
+    "n_groups_usable": 48,
+    "median_p_el": 0.64750000834465,
+    "median_p_cs": 0.22749999910593,
+    "mean_p_el": 0.558041665961759,
+    "mean_p_cs": 0.37865277677257025,
+    "frac_E": 0.6197183098591549,
+    "frac_S": 0.38028169014084506,
+    "frac_uncertain_of_votes": 0.013888888888888888,
+    "displayed": true
+   },
+   {
+    "sample": "CG4",
+    "bin_left": 10.5,
+    "bin_right": 11.0,
+    "n_galaxies_votes": 54,
+    "n_groups_votes": 40,
+    "n_usable_ES": 52,
+    "n_groups_usable": 39,
+    "median_p_el": 0.7129999995231625,
+    "median_p_cs": 0.1349999979138375,
+    "mean_p_el": 0.6160000021121016,
+    "mean_p_cs": 0.3131111088312335,
+    "frac_E": 0.6923076923076923,
+    "frac_S": 0.3076923076923077,
+    "frac_uncertain_of_votes": 0.037037037037037035,
+    "displayed": true
+   },
+   {
+    "sample": "CG4",
+    "bin_left": 11.0,
+    "bin_right": 12.5,
+    "n_galaxies_votes": 43,
+    "n_groups_votes": 42,
+    "n_usable_ES": 42,
+    "n_groups_usable": 41,
+    "median_p_el": 0.880999982357025,
+    "median_p_cs": 0.0450000017881393,
+    "mean_p_el": 0.6454186030598574,
+    "mean_p_cs": 0.2885581404403892,
+    "frac_E": 0.7142857142857143,
+    "frac_S": 0.2857142857142857,
+    "frac_uncertain_of_votes": 0.023255813953488372,
+    "displayed": true
+   },
+   {
+    "sample": "Control4B",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "n_galaxies_votes": 80,
+    "n_groups_votes": 70,
+    "n_usable_ES": 67,
+    "n_groups_usable": 61,
+    "median_p_el": 0.129499994218349,
+    "median_p_cs": 0.764499992132187,
+    "mean_p_el": 0.17142500099726019,
+    "mean_p_cs": 0.6815374999307096,
+    "frac_E": 0.05970149253731343,
+    "frac_S": 0.9402985074626866,
+    "frac_uncertain_of_votes": 0.1625,
+    "displayed": true
+   },
+   {
+    "sample": "Control4B",
+    "bin_left": 9.5,
+    "bin_right": 10.0,
+    "n_galaxies_votes": 291,
+    "n_groups_votes": 234,
+    "n_usable_ES": 270,
+    "n_groups_usable": 220,
+    "median_p_el": 0.172999992966652,
+    "median_p_cs": 0.737999975681305,
+    "mean_p_el": 0.2666701027592228,
+    "mean_p_cs": 0.6526323021981622,
+    "frac_E": 0.2222222222222222,
+    "frac_S": 0.7777777777777778,
+    "frac_uncertain_of_votes": 0.07216494845360824,
+    "displayed": true
+   },
+   {
+    "sample": "Control4B",
+    "bin_left": 10.0,
+    "bin_right": 10.5,
+    "n_galaxies_votes": 607,
+    "n_groups_votes": 413,
+    "n_usable_ES": 583,
+    "n_groups_usable": 402,
+    "median_p_el": 0.25900000333786,
+    "median_p_cs": 0.690999984741211,
+    "mean_p_el": 0.35853541948214246,
+    "mean_p_cs": 0.6001383863033534,
+    "frac_E": 0.3584905660377358,
+    "frac_S": 0.6415094339622641,
+    "frac_uncertain_of_votes": 0.039538714991762765,
+    "displayed": true
+   },
+   {
+    "sample": "Control4B",
+    "bin_left": 10.5,
+    "bin_right": 11.0,
+    "n_galaxies_votes": 894,
+    "n_groups_votes": 512,
+    "n_usable_ES": 853,
+    "n_groups_usable": 497,
+    "median_p_el": 0.4155000001192095,
+    "median_p_cs": 0.5,
+    "mean_p_el": 0.45456040271930814,
+    "mean_p_cs": 0.4937382547332753,
+    "frac_E": 0.4783118405627198,
+    "frac_S": 0.5216881594372802,
+    "frac_uncertain_of_votes": 0.04586129753914989,
+    "displayed": true
+   },
+   {
+    "sample": "Control4B",
+    "bin_left": 11.0,
+    "bin_right": 12.5,
+    "n_galaxies_votes": 616,
+    "n_groups_votes": 471,
+    "n_usable_ES": 599,
+    "n_groups_usable": 459,
+    "median_p_el": 0.870000004768372,
+    "median_p_cs": 0.0549999997019768,
+    "mean_p_el": 0.6461185062872609,
+    "mean_p_cs": 0.29283766213852863,
+    "frac_E": 0.7095158597662772,
+    "frac_S": 0.2904841402337229,
+    "frac_uncertain_of_votes": 0.027597402597402596,
+    "displayed": true
+   },
+   {
+    "sample": "Control4C",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "n_galaxies_votes": 138,
+    "n_groups_votes": 120,
+    "n_usable_ES": 120,
+    "n_groups_usable": 110,
+    "median_p_el": 0.107500001788139,
+    "median_p_cs": 0.761000007390976,
+    "mean_p_el": 0.1577536234146227,
+    "mean_p_cs": 0.7032971021489821,
+    "frac_E": 0.058333333333333334,
+    "frac_S": 0.9416666666666667,
+    "frac_uncertain_of_votes": 0.13043478260869565,
+    "displayed": true
+   },
+   {
+    "sample": "Control4C",
+    "bin_left": 9.5,
+    "bin_right": 10.0,
+    "n_galaxies_votes": 503,
+    "n_groups_votes": 379,
+    "n_usable_ES": 460,
+    "n_groups_usable": 355,
+    "median_p_el": 0.231000006198883,
+    "median_p_cs": 0.669000029563904,
+    "mean_p_el": 0.31619681897119545,
+    "mean_p_cs": 0.6024353865896969,
+    "frac_E": 0.30217391304347824,
+    "frac_S": 0.6978260869565217,
+    "frac_uncertain_of_votes": 0.08548707753479125,
+    "displayed": true
+   },
+   {
+    "sample": "Control4C",
+    "bin_left": 10.0,
+    "bin_right": 10.5,
+    "n_galaxies_votes": 725,
+    "n_groups_votes": 499,
+    "n_usable_ES": 692,
+    "n_groups_usable": 483,
+    "median_p_el": 0.398999989032745,
+    "median_p_cs": 0.541999995708466,
+    "mean_p_el": 0.4258799993824856,
+    "mean_p_cs": 0.524513103674198,
+    "frac_E": 0.4552023121387283,
+    "frac_S": 0.5447976878612717,
+    "frac_uncertain_of_votes": 0.04551724137931035,
+    "displayed": true
+   },
+   {
+    "sample": "Control4C",
+    "bin_left": 10.5,
+    "bin_right": 11.0,
+    "n_galaxies_votes": 609,
+    "n_groups_votes": 435,
+    "n_usable_ES": 573,
+    "n_groups_usable": 413,
+    "median_p_el": 0.448000013828278,
+    "median_p_cs": 0.42399999499321,
+    "mean_p_el": 0.4679556654289071,
+    "mean_p_cs": 0.47211822634945166,
+    "frac_E": 0.5008726003490401,
+    "frac_S": 0.49912739965095987,
+    "frac_uncertain_of_votes": 0.059113300492610835,
+    "displayed": true
+   },
+   {
+    "sample": "Control4C",
+    "bin_left": 11.0,
+    "bin_right": 12.5,
+    "n_galaxies_votes": 516,
+    "n_groups_votes": 466,
+    "n_usable_ES": 502,
+    "n_groups_usable": 454,
+    "median_p_el": 0.877499997615814,
+    "median_p_cs": 0.0509999990463257,
+    "mean_p_el": 0.6661821705065378,
+    "mean_p_cs": 0.2712306201624027,
+    "frac_E": 0.7370517928286853,
+    "frac_S": 0.26294820717131473,
+    "frac_uncertain_of_votes": 0.027131782945736434,
+    "displayed": true
+   },
+   {
+    "sample": "RG4",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "n_galaxies_votes": 25,
+    "n_groups_votes": 21,
+    "n_usable_ES": 19,
+    "n_groups_usable": 17,
+    "median_p_el": 0.164000004529953,
+    "median_p_cs": 0.689000010490417,
+    "mean_p_el": 0.1854400010406971,
+    "mean_p_cs": 0.6583199983835221,
+    "frac_E": 0.05263157894736842,
+    "frac_S": 0.9473684210526315,
+    "frac_uncertain_of_votes": 0.24,
+    "displayed": true
+   },
+   {
+    "sample": "RG4",
+    "bin_left": 9.5,
+    "bin_right": 10.0,
+    "n_galaxies_votes": 48,
+    "n_groups_votes": 38,
+    "n_usable_ES": 45,
+    "n_groups_usable": 36,
+    "median_p_el": 0.1730000004172325,
+    "median_p_cs": 0.737500011920929,
+    "mean_p_el": 0.2577708327056219,
+    "mean_p_cs": 0.6721666684995095,
+    "frac_E": 0.2,
+    "frac_S": 0.8,
+    "frac_uncertain_of_votes": 0.0625,
+    "displayed": true
+   },
+   {
+    "sample": "RG4",
+    "bin_left": 10.0,
+    "bin_right": 10.5,
+    "n_galaxies_votes": 54,
+    "n_groups_votes": 37,
+    "n_usable_ES": 51,
+    "n_groups_usable": 36,
+    "median_p_el": 0.2464999929070475,
+    "median_p_cs": 0.710500001907349,
+    "mean_p_el": 0.32572222011232815,
+    "mean_p_cs": 0.6248888913542032,
+    "frac_E": 0.29411764705882354,
+    "frac_S": 0.7058823529411765,
+    "frac_uncertain_of_votes": 0.05555555555555555,
+    "displayed": true
+   },
+   {
+    "sample": "RG4",
+    "bin_left": 10.5,
+    "bin_right": 11.0,
+    "n_galaxies_votes": 55,
+    "n_groups_votes": 38,
+    "n_usable_ES": 54,
+    "n_groups_usable": 38,
+    "median_p_el": 0.48199999332428,
+    "median_p_cs": 0.51800000667572,
+    "mean_p_el": 0.4505454567345706,
+    "mean_p_cs": 0.5166545475071127,
+    "frac_E": 0.46296296296296297,
+    "frac_S": 0.5370370370370371,
+    "frac_uncertain_of_votes": 0.01818181818181818,
+    "displayed": true
+   },
+   {
+    "sample": "RG4",
+    "bin_left": 11.0,
+    "bin_right": 12.5,
+    "n_galaxies_votes": 22,
+    "n_groups_votes": 21,
+    "n_usable_ES": 20,
+    "n_groups_usable": 19,
+    "median_p_el": 0.446499988436699,
+    "median_p_cs": 0.4294999986886975,
+    "mean_p_el": 0.49709090725942084,
+    "mean_p_cs": 0.4344545469026673,
+    "frac_E": 0.5,
+    "frac_S": 0.5,
+    "frac_uncertain_of_votes": 0.09090909090909091,
+    "displayed": true
+   }
+  ],
+  "sign_disagreements": [
+   {
+    "control": "Control4B",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "median_stat": "median_p_el",
+    "alt_stat": "frac_E",
+    "delta_median": 0.017000004649162487,
+    "delta_alt": -0.05970149253731343
+   },
+   {
+    "control": "Control4B",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "median_stat": "median_p_el",
+    "alt_stat": "mean_p_el",
+    "delta_median": 0.017000004649162487,
+    "delta_alt": -0.04112499984912579
+   },
+   {
+    "control": "Control4B",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "median_stat": "median_p_cs",
+    "alt_stat": "frac_S",
+    "delta_median": -0.02099996805191051,
+    "delta_alt": 0.05970149253731338
+   },
+   {
+    "control": "Control4B",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "median_stat": "median_p_cs",
+    "alt_stat": "mean_p_cs",
+    "delta_median": -0.02099996805191051,
+    "delta_alt": 0.0729625017382205
+   },
+   {
+    "control": "Control4C",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "median_stat": "median_p_el",
+    "alt_stat": "frac_E",
+    "delta_median": 0.0389999970793725,
+    "delta_alt": -0.058333333333333334
+   },
+   {
+    "control": "Control4C",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "median_stat": "median_p_el",
+    "alt_stat": "mean_p_el",
+    "delta_median": 0.0389999970793725,
+    "delta_alt": -0.027453622266488314
+   },
+   {
+    "control": "Control4C",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "median_stat": "median_p_cs",
+    "alt_stat": "frac_S",
+    "delta_median": -0.017499983310699463,
+    "delta_alt": 0.05833333333333335
+   },
+   {
+    "control": "Control4C",
+    "bin_left": 7.0,
+    "bin_right": 9.5,
+    "median_stat": "median_p_cs",
+    "alt_stat": "mean_p_cs",
+    "delta_median": -0.017499983310699463,
+    "delta_alt": 0.05120289951994794
+   },
+   {
+    "control": "Control4C",
+    "bin_left": 11.0,
+    "bin_right": 12.5,
+    "median_stat": "median_p_el",
+    "alt_stat": "frac_E",
+    "delta_median": 0.0034999847412110485,
+    "delta_alt": -0.02276607854297097
+   },
+   {
+    "control": "Control4C",
+    "bin_left": 11.0,
+    "bin_right": 12.5,
+    "median_stat": "median_p_el",
+    "alt_stat": "mean_p_el",
+    "delta_median": 0.0034999847412110485,
+    "delta_alt": -0.020763567446680398
+   },
+   {
+    "control": "Control4C",
+    "bin_left": 11.0,
+    "bin_right": 12.5,
+    "median_stat": "median_p_cs",
+    "alt_stat": "frac_S",
+    "delta_median": -0.005999997258186396,
+    "delta_alt": 0.02276607854297097
+   }
+  ],
+  "n_sign_disagreements": 11,
+  "n_displayed_bins_with_median_vote_near_0_or_1": 1,
+  "note": "Medians of bimodal vote fractions collapse toward 0/1 and hide the class mix; fractions classified E/S among usable E/S rows and mean debiased votes track the class mix directly. Flags list bins where the CG4-minus-control sign differs between the median and the fraction/mean statistic (|Delta| > 0.02)."
+ }
+}

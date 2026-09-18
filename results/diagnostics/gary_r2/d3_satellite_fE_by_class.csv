@@ -1,0 +1,7 @@
+labelling,cls,n_groups,n_sat_classified,n_E,fE,median_host_logM200c
+class_stored,Embedded,36,96,54,0.5625,13.134806937099691
+class_stored,Isolated,5,14,4,0.2857142857142857,12.863515744439251
+class_stored,Predominant,18,47,30,0.6382978723404256,13.825752463831812
+class_rederived_ZS21,Embedded,18,47,30,0.6382978723404256,13.825752463831812
+class_rederived_ZS21,Isolated,5,14,4,0.2857142857142857,12.863515744439251
+class_rederived_ZS21,Predominant,36,96,54,0.5625,13.134806937099691

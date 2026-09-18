@@ -1,0 +1,10 @@
+family,control,p_raw,p_holm
+table3_group_permutation,Control4B,0.0158,0.047400000000000005
+table3_group_permutation,Control4C,0.0801,0.0801
+table3_group_permutation,RG4,0.0263,0.0526
+galaxy_adjusted_elliptical_or,Control4B,9.553097242993727e-07,2.865929172898118e-06
+galaxy_adjusted_elliptical_or,Control4C,0.0005864042942453806,0.0005864042942453806
+galaxy_adjusted_elliptical_or,RG4,5.986749710263143e-06,1.1973499420526287e-05
+galaxy_adjusted_quenched_or,Control4B,0.0012665657286651743,0.003799697185995523
+galaxy_adjusted_quenched_or,Control4C,0.17305463316051417,0.34610926632102834
+galaxy_adjusted_quenched_or,RG4,0.23809575079256584,0.34610926632102834
