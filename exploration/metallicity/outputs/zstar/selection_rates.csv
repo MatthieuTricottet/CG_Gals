@@ -1,0 +1,75 @@
+catalogue,variable,level,n,usable_n,retained_fraction
+Gallazzi DR4,morphology4,Elliptical,1532,602,0.39295039164490864
+Gallazzi DR4,morphology4,NoGZ,422,105,0.24881516587677724
+Gallazzi DR4,morphology4,Spiral,1728,435,0.2517361111111111
+Gallazzi DR4,morphology4,Uncertain,175,40,0.22857142857142856
+Gallazzi DR4,sf_state,NosSFR,249,9,0.03614457831325301
+Gallazzi DR4,sf_state,Quenched,2152,848,0.3940520446096654
+Gallazzi DR4,sf_state,Starforming,1456,325,0.22321428571428573
+Gallazzi DR4,lgm_quintile,"(7.391, 9.955]",730,93,0.1273972602739726
+Gallazzi DR4,lgm_quintile,"(9.955, 10.314]",729,195,0.2674897119341564
+Gallazzi DR4,lgm_quintile,"(10.314, 10.657]",729,293,0.401920438957476
+Gallazzi DR4,lgm_quintile,"(10.657, 10.985]",729,291,0.3991769547325103
+Gallazzi DR4,lgm_quintile,"(10.985, 12.453]",730,309,0.4232876712328767
+Gallazzi DR4,z_quintile,"(0.0148, 0.0289]",772,266,0.344559585492228
+Gallazzi DR4,z_quintile,"(0.0289, 0.0332]",771,283,0.3670557717250324
+Gallazzi DR4,z_quintile,"(0.0332, 0.0373]",771,204,0.26459143968871596
+Gallazzi DR4,z_quintile,"(0.0373, 0.0416]",771,198,0.25680933852140075
+Gallazzi DR4,z_quintile,"(0.0416, 0.0486]",772,231,0.29922279792746115
+Gallazzi DR4,r_petro_dered_quintile,"(11.585, 13.985]",772,301,0.3898963730569948
+Gallazzi DR4,r_petro_dered_quintile,"(13.985, 14.688]",771,306,0.3968871595330739
+Gallazzi DR4,r_petro_dered_quintile,"(14.688, 15.332]",771,256,0.3320363164721141
+Gallazzi DR4,r_petro_dered_quintile,"(15.332, 16.049]",771,210,0.2723735408560311
+Gallazzi DR4,r_petro_dered_quintile,"(16.049, 17.691]",772,109,0.1411917098445596
+Gallazzi DR4,SN_quintile,"(3.87, 18.25]",730,0,0.0
+Gallazzi DR4,SN_quintile,"(18.25, 27.276]",730,268,0.36712328767123287
+Gallazzi DR4,SN_quintile,"(27.276, 35.138]",730,324,0.4438356164383562
+Gallazzi DR4,SN_quintile,"(35.138, 41.485]",730,315,0.4315068493150685
+Gallazzi DR4,SN_quintile,"(41.485, 76.885]",730,275,0.3767123287671233
+Gallazzi DR4,fibre_light_fraction_quintile,"(0.013999999999999999, 0.0882]",772,192,0.24870466321243523
+Gallazzi DR4,fibre_light_fraction_quintile,"(0.0882, 0.123]",771,228,0.29571984435797666
+Gallazzi DR4,fibre_light_fraction_quintile,"(0.123, 0.172]",771,237,0.30739299610894943
+Gallazzi DR4,fibre_light_fraction_quintile,"(0.172, 0.239]",771,258,0.3346303501945525
+Gallazzi DR4,fibre_light_fraction_quintile,"(0.239, 0.828]",772,267,0.34585492227979275
+Gallazzi DR4,R50_kpc_quintile,"(0.569, 2.263]",772,254,0.3290155440414508
+Gallazzi DR4,R50_kpc_quintile,"(2.263, 3.19]",771,214,0.2775616083009079
+Gallazzi DR4,R50_kpc_quintile,"(3.19, 4.093]",771,207,0.26848249027237353
+Gallazzi DR4,R50_kpc_quintile,"(4.093, 5.414]",771,255,0.33073929961089493
+Gallazzi DR4,R50_kpc_quintile,"(5.414, 19.419]",772,252,0.32642487046632124
+FIREFLY DR16 MILES light-weighted,morphology4,Elliptical,1532,1519,0.991514360313316
+FIREFLY DR16 MILES light-weighted,morphology4,NoGZ,422,319,0.7559241706161137
+FIREFLY DR16 MILES light-weighted,morphology4,Spiral,1728,1716,0.9930555555555556
+FIREFLY DR16 MILES light-weighted,morphology4,Uncertain,175,174,0.9942857142857143
+FIREFLY DR16 MILES light-weighted,sf_state,NosSFR,249,153,0.6144578313253012
+FIREFLY DR16 MILES light-weighted,sf_state,Quenched,2152,2132,0.9907063197026023
+FIREFLY DR16 MILES light-weighted,sf_state,Starforming,1456,1443,0.9910714285714286
+FIREFLY DR16 MILES light-weighted,lgm_quintile,"(7.391, 9.955]",730,723,0.9904109589041096
+FIREFLY DR16 MILES light-weighted,lgm_quintile,"(9.955, 10.314]",729,724,0.9931412894375857
+FIREFLY DR16 MILES light-weighted,lgm_quintile,"(10.314, 10.657]",729,720,0.9876543209876543
+FIREFLY DR16 MILES light-weighted,lgm_quintile,"(10.657, 10.985]",729,724,0.9931412894375857
+FIREFLY DR16 MILES light-weighted,lgm_quintile,"(10.985, 12.453]",730,723,0.9904109589041096
+FIREFLY DR16 MILES light-weighted,z_quintile,"(0.0148, 0.0289]",772,747,0.9676165803108808
+FIREFLY DR16 MILES light-weighted,z_quintile,"(0.0289, 0.0332]",771,745,0.9662775616083009
+FIREFLY DR16 MILES light-weighted,z_quintile,"(0.0332, 0.0373]",771,747,0.9688715953307393
+FIREFLY DR16 MILES light-weighted,z_quintile,"(0.0373, 0.0416]",771,740,0.959792477302205
+FIREFLY DR16 MILES light-weighted,z_quintile,"(0.0416, 0.0486]",772,749,0.9702072538860104
+FIREFLY DR16 MILES light-weighted,r_petro_dered_quintile,"(11.585, 13.985]",772,743,0.9624352331606217
+FIREFLY DR16 MILES light-weighted,r_petro_dered_quintile,"(13.985, 14.688]",771,736,0.9546044098573282
+FIREFLY DR16 MILES light-weighted,r_petro_dered_quintile,"(14.688, 15.332]",771,740,0.959792477302205
+FIREFLY DR16 MILES light-weighted,r_petro_dered_quintile,"(15.332, 16.049]",771,747,0.9688715953307393
+FIREFLY DR16 MILES light-weighted,r_petro_dered_quintile,"(16.049, 17.691]",772,762,0.9870466321243523
+FIREFLY DR16 MILES light-weighted,SN_quintile,"(3.87, 18.25]",730,728,0.9972602739726028
+FIREFLY DR16 MILES light-weighted,SN_quintile,"(18.25, 27.276]",730,719,0.9849315068493151
+FIREFLY DR16 MILES light-weighted,SN_quintile,"(27.276, 35.138]",730,722,0.989041095890411
+FIREFLY DR16 MILES light-weighted,SN_quintile,"(35.138, 41.485]",730,722,0.989041095890411
+FIREFLY DR16 MILES light-weighted,SN_quintile,"(41.485, 76.885]",730,724,0.9917808219178083
+FIREFLY DR16 MILES light-weighted,fibre_light_fraction_quintile,"(0.013999999999999999, 0.0882]",772,747,0.9676165803108808
+FIREFLY DR16 MILES light-weighted,fibre_light_fraction_quintile,"(0.0882, 0.123]",771,732,0.9494163424124513
+FIREFLY DR16 MILES light-weighted,fibre_light_fraction_quintile,"(0.123, 0.172]",771,749,0.9714656290531777
+FIREFLY DR16 MILES light-weighted,fibre_light_fraction_quintile,"(0.172, 0.239]",771,753,0.9766536964980544
+FIREFLY DR16 MILES light-weighted,fibre_light_fraction_quintile,"(0.239, 0.828]",772,747,0.9676165803108808
+FIREFLY DR16 MILES light-weighted,R50_kpc_quintile,"(0.569, 2.263]",772,745,0.9650259067357513
+FIREFLY DR16 MILES light-weighted,R50_kpc_quintile,"(2.263, 3.19]",771,747,0.9688715953307393
+FIREFLY DR16 MILES light-weighted,R50_kpc_quintile,"(3.19, 4.093]",771,753,0.9766536964980544
+FIREFLY DR16 MILES light-weighted,R50_kpc_quintile,"(4.093, 5.414]",771,743,0.9636835278858625
+FIREFLY DR16 MILES light-weighted,R50_kpc_quintile,"(5.414, 19.419]",772,740,0.9585492227979274

@@ -1,0 +1,140 @@
+\documentclass{aa}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[varg]{txfonts}
+\usepackage[breaklinks=true]{hyperref}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage{url}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=cyan,
+  pdftitle={Are galaxies in compact groups special? Online supplementary material}
+}
+
+\newcommand{\CB}{Control\textsubscript{4B}}
+\newcommand{\CC}{Control\textsubscript{4C}}
+\newcommand{\CG}{CG\textsubscript{4}}
+\newcommand{\RG}{RG\textsubscript{4}}
+\graphicspath{{<< SUBFIGURES_PATH >>}}
+
+\renewcommand{\thefigure}{S.\arabic{figure}}
+
+\begin{document}
+<% set es = extended_specialness if extended_specialness else {} %>
+<% set matched = es.get('matched_controls', {}) %>
+<% set sz = es.get('size_analysis', {}) %>
+<% set diag = diag if diag else {} %>
+<% set d2 = diag.get('d2_sfms_sign', {}) %>
+<% set mass_trends = r.get('descriptive_mass_trends', {}) %>
+<% set qseq = mass_trends.get('quenched_sequence', {}) %>
+<% set ms4b = r.get('pval_MSresiduals_Control4B_Gals', {}) %>
+<% set ms4c = r.get('pval_MSresiduals_Control4C_Gals', {}) %>
+<% set msrg = r.get('pval_MSresiduals_RG4_Gals', {}) %>
+<% set m_resid = matched.get('effects', {}).get('residual_sSFR_starforming', {}) %>
+<% set d2m = d2.get('recomputed', {}).get('matched_both_sf', {}) %>
+<% set d2dep = d2.get('ms_res_by_mass_split_10p3', {}) %>
+<% macro p_from_fmt(fmt, label='p') -%><% set text = (fmt|string)|replace('$', '')|trim -%>\(<< label >><% if text.startswith('<') %><< text >><% else %> = << text >><% endif %>\)<%- endmacro %>
+<% macro pval_text(x, nd=3) -%><% if x is none -%>\(p\) unavailable<% elif x < 0.0001 -%>\(p<10^{-4}\)<% elif x < 0.001 -%>\(p = << gu.latex_number(x, precision=2, math_mode=False) >>\)<% elif x < 0.01 -%>\(p = << x|fmt(3) >>\)<% else -%>\(p = << x|fmt(nd) >>\)<% endif -%><% endmacro %>
+
+\title{Are galaxies in compact groups special?\\Online supplementary material}
+\author{Matthieu Tricottet \and Gary A. Mamon \and Eugenia D\'iaz-Gim\'enez}
+\date{}
+\maketitle
+
+This supplement contains the distributional and pooled-model diagnostics moved out of the article for editorial economy. It uses the same samples, definitions, and fitted quantities as the article; no additional scientific claims are introduced here.
+
+\section{Star-forming and quenched sequence residuals}
+
+Star-forming \CG{} galaxies do not sit off the star-forming main sequence (SFMS). Relative to an order-<< r.get('Main_Sequence_polyfit_selected_order', 2) >> polynomial SFMS fitted to the star-forming galaxies of the SDSS reference sample, the median residual of \CG{} star-forming galaxies exceeds that of the controls by \(<< "%.3f"|format(ms4b['Δmedian']) >>\), \(<< "%.3f"|format(ms4c['Δmedian']) >>\), and \(<< "%.3f"|format(msrg['Δmedian']) >>\) dex for \CB{}, \CC{}, and \RG{} (68\% group-bootstrap intervals \([<< "%.2f"|format(ms4b['CI_16']) >>, << "%.2f"|format(ms4b['CI_84']) >>]\), \([<< "%.2f"|format(ms4c['CI_16']) >>, << "%.2f"|format(ms4c['CI_84']) >>]\), and \([<< "%.2f"|format(msrg['CI_16']) >>, << "%.2f"|format(msrg['CI_84']) >>]\); sign-crossing << pval_text(ms4b['p_value'], 2) >>, << pval_text(ms4c['p_value'], 2) >>, and << pval_text(msrg['p_value'], 2) >>; Fig.~\ref{fig:supp_sfms_residuals}a)<% if m_resid.get('status') == 'ok' %>. The mean paired difference over the << m_resid.get('n_pairs') >> individually matched pairs in which both members are star-forming is instead \(<< m_resid.get('delta_cg4_minus_control')|fmt(2) >>\) dex (\([<< m_resid.get('ci95')[0]|fmt(2) >>, << m_resid.get('ci95')[1]|fmt(2) >>]\); << pval_text(m_resid.get('p'), 2) >>)<% endif %>.
+
+The two signs are not in conflict: they are different statistics of different subsets<% if d2m.get('cg4') %>. On the same << d2m['cg4']['n'] >> pairs, the median paired difference is \(<< d2m.get('paired_median_of_differences')|fmt(2) >>\) dex (Wilcoxon \(p = << d2m.get('wilcoxon_p')|fmt(2) >>\))<% endif %><% if d2dep.get('Control4B') %>. Both reflect the mass dependence of the residuals about the field-fitted relation: control star-forming galaxies above \(\log(M_\star/M_\odot) = << d2.get('mass_split_logMstar')|fmt(1) >>\) lie \(\simeq << (0 - d2dep['Control4B']['median_hi'])|fmt(1) >>\) dex below it while the << d2dep['CG4']['n_hi'] >> massive star-forming \CG{} galaxies do not, which raises the raw medians, whereas the matched star-forming controls are less massive than their \CG{} partners<% endif %>. We therefore treat SFMS residuals as a secondary diagnostic.
+
+<% if qseq.get('offsets') %><% set qo = qseq['offsets'] %>
+Quenched \CG{} galaxies lie slightly below the quenched sequence of the reference sample (Fig.~\ref{fig:supp_sfms_residuals}b; order-<< qseq.get('selected_order') >> fit, median offsets \(<< qo['Control4B']['delta_median']|fmt(2) >>\), \(<< qo['Control4C']['delta_median']|fmt(2) >>\), and \(<< qo['RG4']['delta_median']|fmt(2) >>\) dex against \CB{}, \CC{}, and \RG{}; << pval_text(qo['Control4B']['p_value'], 3) >>, << pval_text(qo['Control4C']['p_value'], 3) >>, and << pval_text(qo['RG4']['p_value'], 3) >>). MPA--JHU sSFRs of quenched galaxies are largely \(D_n4000\)-calibrated, so these residuals are weakly informative.
+<% endif %>
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=0.9\textwidth]{main_sequence_residuals.pdf}
+  \caption{Cumulative distributions of the sSFR residuals of (a) star-forming galaxies about the order-<< r.get('Main_Sequence_polyfit_selected_order', 2) >> star-forming main sequence and (b) quenched galaxies about the order-<< qseq.get('selected_order', 4) >> quenched sequence, both fitted to the SDSS non-AGN reference sample. Zero marks the fitted relation; filled symbols mark the sample medians. MPA--JHU sSFRs of quenched galaxies are largely \(D_n4000\)-calibrated, so panel (b) is weakly informative.}
+  \label{fig:supp_sfms_residuals}
+\end{figure*}
+
+\section{Optical-colour diagnostics}
+
+The retained colour-analysis matches include <% for item in r.Colour_matching_summary -%><< item.n_matched >> of << item.n_total >> galaxies in << item.sample_label >><% if not loop.last %>, <% else %>.<% endif %><% endfor %> The colour analysis requires successful matched-photometry retention and the covariates used below; the fractions retained are <% for item in r.Colour_robustness_audit -%><< (100 * item.n_all_four_colours / item.n_galaxies)|round(1) >>\% in << item.sample >><% if not loop.last %>, <% else %>.<% endif %><% endfor %> The subset is <% if r.Colour_robustness_matching_biased -%>not representative of the full catalogues: matched galaxies are systematically less massive, more actively star-forming, and more frequently satellites than unmatched galaxies<% else -%>broadly representative of the full catalogues in the audited quantities<% endif %> (Fig.~\ref{fig:supp_colour_selection}).
+
+The raw colour--mass fits do not show a single common relation for every sample: <% set n_colour_slope_tests = r.Colour_mass_significant_global_tests|length %><% if n_colour_slope_tests == 4 -%>common slopes are rejected in all four colours<% elif n_colour_slope_tests > 0 -%>common slopes are rejected in << n_colour_slope_tests >> of the four colours<% else -%>common slopes are not rejected in the four colours<% endif %><% if r.Colour_mass_significant_pairwise_tests|length > 0 -%>, with the directional slope differences having small adjusted p-values mainly in the bluer colours and depending on the comparison catalogue<% endif %>. In the satellite-only comparison, the fitted offsets and slopes likewise depend on the control definition. In cluster-robust satellite fits, <% if r.Colour_robustness_significant_baseline_blue|length == 0 -%>the negative \CG{} coefficients in the pooled mass- and redshift-adjusted comparison are weak<% else -%>the bluer coefficients occur in <% for item in r.Colour_robustness_significant_baseline_blue -%><< item.colour_label >><% if not loop.last %>, <% endif %><% endfor %><% endif %>, and <% if r.Colour_robustness_significant_full_blue|length > 0 -%>after adding morphology and sSFR class, negative coefficients appear in <% for item in r.Colour_robustness_significant_full_blue -%><< item.colour_label >> (\(\Delta=<< item.is_CG4_coefficient_fmt >>\) mag, adjusted << p_from_fmt(item.p_holm_fmt) >>)<% if not loop.last %> and <% else %>.<% endif %><% endfor %><% else -%>adding morphology and sSFR class does not reveal a clear negative coefficient.<% endif %> These coefficients remain <% if r.Colour_robustness_summary.control_dependent -%>control-sample dependent<% else -%>consistent across the control catalogues<% endif %>, with non-uniform split-sample behaviour (Fig.~\ref{fig:supp_colour_coefficients}). They therefore do not identify a global colour shift or a simple interaction-triggered star-forming population.
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=0.9\textwidth]{fig_colour_matched_selection_bias.pdf}
+  \caption{Selection diagnostics for the matched-photometry colour subset. The plotted comparisons show how galaxies retained for the colour analysis differ from those not retained in the audited quantities.}
+  \label{fig:supp_colour_selection}
+\end{figure*}
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{<< r.Colour_figures.robustness_coefficients >>}
+  \caption{Robustness of the satellite colour coefficients. Left: pooled ordinary-group comparison before and after controlling for GZ1 E/S morphology and sSFR class. Right: mass- and redshift-adjusted comparisons against each control catalogue separately. Points show the \CG{} minus ordinary-group coefficient and bars show 95\% confidence intervals; negative values indicate bluer \CG{} satellites.}
+  \label{fig:supp_colour_coefficients}
+\end{figure*}
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{colour_mass_relations.pdf}
+  \caption{Colour--stellar-mass relations in the four catalogues. These raw relations motivate the control-specific adjusted comparisons rather than a single pooled interpretation.}
+  \label{fig:supp_colour_mass}
+\end{figure*}
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{satellite_colour_mass_environment.pdf}
+  \caption{Satellite colour--mass relations split by environment. The offsets and slopes depend on the comparison catalogue.}
+  \label{fig:supp_satellite_colour}
+\end{figure*}
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{colour_residual_distance.pdf}
+  \caption{Colour residuals versus projected BGG-centric distance. These trends are exploratory and inherit the matched-photometry selection described above.}
+  \label{fig:supp_colour_radius}
+\end{figure*}
+
+\clearpage
+\section{Pooled adjusted models}
+
+For a compact summary across the heterogeneous control definitions, the article also fits binomial models to a pooled catalogue. Because the control catalogues overlap heavily, the control side is first deduplicated by SDSS object identifier and standard errors are clustered by physical Lim group. The common adjustment set contains stellar mass, redshift, satellite/BGG rank, group luminosity, and velocity dispersion. The figure below visualises the coefficients tabulated in Appendix H of the article. The pooled model is a summary, not a replacement for the separate-control contrasts: it reinforces the satellite E-class morphology shift, whereas the quenched estimate changes across controls and is not reproduced by the matched comparison.
+
+\begin{center}
+  \includegraphics[width=\columnwidth]{fig_specialness_logistic_coefficients.pdf}
+  \par\smallskip
+  \begin{minipage}{\columnwidth}\small
+  \textbf{Fig. S.7.} Adjusted \CG{} odds ratios from the pooled models. The GZ1 E-class outcomes refer to the smooth early-type-like GZ1 class, not to a physically pure sample of classical ellipticals. Points are odds ratios and bars are 95\% confidence intervals; the vertical line marks no difference.
+  \end{minipage}
+\end{center}
+
+\clearpage
+\section{Additional environmental diagnostics}
+
+The distance-to-BGG, magnitude-gap, and luminosity-dominance screens are retained here because they are useful provenance checks but do not add a control-independent signal to the article. Satellite sSFR shows no consistent monotonic dependence on projected BGG distance across the four samples. Binary dominance splits and further subdivision by BGG morphology produce small, heterogeneous subsets; their occasional low p-values do not survive as a coherent compact-group effect. Likewise, magnitude-gap differences are sensitive to the control definition. These diagnostics support the article's choice to retain the continuous group-scale screen and projected phase-space result as the more interpretable summaries.
+
+The optical-colour panels above give the corresponding full distributional diagnostics: matched-photometry retention is selective, and fitted offsets depend on the control definition and split sample.
+
+<% if sz.get('per_control', {}).get('figure') %>
+\section{Size-model comparison by control}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\columnwidth]{<< sz.get('per_control', {}).get('figure') >>}
+  \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control catalogue separately. Every model uses the article's main adjustment set: stellar mass, redshift, rank, group luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii at fixed covariates.}
+  \label{fig:supp_size_per_control}
+\end{figure}
+<% endif %>
+
+\end{document}

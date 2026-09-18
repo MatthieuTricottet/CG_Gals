@@ -1,0 +1,345 @@
+[
+  {
+    "start": 0,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00000_00079.csv",
+    "query_sha256": "4b6762e59d63b17cfd95217ecea40bee6ff80523a883715c49abeb8932a2c38d"
+  },
+  {
+    "start": 80,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00080_00159.csv",
+    "query_sha256": "a6ed1ef4285cb929133e38aecfcea47794ab204843f674865e3e1393030981ad"
+  },
+  {
+    "start": 160,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00160_00239.csv",
+    "query_sha256": "c2fdc861e4b88c30d78a260b40236d0b757ee03834b991abe18ad3380e99bf81"
+  },
+  {
+    "start": 240,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00240_00319.csv",
+    "query_sha256": "30e3fd95b0381e70d2941cce4c4857752ce592b8c0ab36bb88d663300b4989a0"
+  },
+  {
+    "start": 320,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00320_00399.csv",
+    "query_sha256": "470c6b32dd49bb5b0d24bdc082cdfc5dc18955e3a3093d3eeb1228f3149f6a3d"
+  },
+  {
+    "start": 400,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00400_00479.csv",
+    "query_sha256": "7eee22a0ddef052972f660cb1a49ce85c69131d64574fef8b79e668b77ae81e2"
+  },
+  {
+    "start": 480,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00480_00559.csv",
+    "query_sha256": "9e746382c3323848bc9390528fa4d4f4415403ecbcea00186fa4be34f91c9bef"
+  },
+  {
+    "start": 560,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00560_00639.csv",
+    "query_sha256": "bbc5427be22de7029b30b36f440b5e2345973cbd0eeea1289b86f601aa4e1f91"
+  },
+  {
+    "start": 640,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00640_00719.csv",
+    "query_sha256": "b6dc225983f475ea6d50abeb57a38bf0da5e5544a07c4c937311a3922a59e3fa"
+  },
+  {
+    "start": 720,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00720_00799.csv",
+    "query_sha256": "c7855bdac502a841deae43155aa93eadf7b5ebdb3474e92bd91ab1aaa4812be5"
+  },
+  {
+    "start": 800,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00800_00879.csv",
+    "query_sha256": "c14532fe9950392cdaea7368557d120a2e90fd2b99e8d8ccd07789f5dbaf1965"
+  },
+  {
+    "start": 880,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00880_00959.csv",
+    "query_sha256": "75843279998db2b3ea1baa8d8d9530e744f5b8a7c72caf805dd942bba5cc6292"
+  },
+  {
+    "start": 960,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_00960_01039.csv",
+    "query_sha256": "ffc01845899b45f72e585c1126e40aed038d5c51062ed4b67abc224135c3ac3c"
+  },
+  {
+    "start": 1040,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_01040_01119.csv",
+    "query_sha256": "d549dcb9e4251a9c4d9b209d8789e9866d938e9c10afad224c42d24d5a4aaf85"
+  },
+  {
+    "start": 1120,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_01120_01199.csv",
+    "query_sha256": "8e9829aef978a7d4955eb818a2cdf5248524a9933f5ccc1172989e946afc5847"
+  },
+  {
+    "start": 1200,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_01200_01279.csv",
+    "query_sha256": "10adbe25431f6e1ea263cff9b2708bbed7670e1e72640a463b87a10ff6a67f11"
+  },
+  {
+    "start": 1280,
+    "n_target": 80,
+    "n_returned": 73,
+    "cache": "work/catalogues/firefly/queries/firefly_01280_01359.csv",
+    "query_sha256": "b76caf29a0842cf4bc4830c9dd2f0bd9c1ac405b2eeed26a9e9d6b743fd1d127"
+  },
+  {
+    "start": 1360,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_01360_01439.csv",
+    "query_sha256": "b5adf06a72af7368cce75f48f9f217a36c4b355fba7a02b8f8f2c7899d2fa4af"
+  },
+  {
+    "start": 1440,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_01440_01519.csv",
+    "query_sha256": "59477e5850b23ec3a5376a830219d07979597bde7416f79a3741d3d35267e822"
+  },
+  {
+    "start": 1520,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_01520_01599.csv",
+    "query_sha256": "0230bf19d632eabfcb4dae818880bff8cd3ba95ebb4b773b1d6ed783e6990f22"
+  },
+  {
+    "start": 1600,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_01600_01679.csv",
+    "query_sha256": "a23e705f5b7c04ac99eaa8f900976ec6d56d41584cf8d12ea47046b644a82fc5"
+  },
+  {
+    "start": 1680,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_01680_01759.csv",
+    "query_sha256": "3965bcf736702a93c4ba8cf1f9655976b4607ac9921b5e03a8f38aea769f9a49"
+  },
+  {
+    "start": 1760,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_01760_01839.csv",
+    "query_sha256": "660a453b91ae50f7e2f14a2bfb760fca352da656974b499a71ba281378888333"
+  },
+  {
+    "start": 1840,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_01840_01919.csv",
+    "query_sha256": "2514124e73690296a923419ee21eefd7754b597a65bf5c5f71c3fcea28335616"
+  },
+  {
+    "start": 1920,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_01920_01999.csv",
+    "query_sha256": "115ef7e19cf4d6632a9c915ba961b2a778bdec8c08c07fe41918028e13dda3b5"
+  },
+  {
+    "start": 2000,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02000_02079.csv",
+    "query_sha256": "768ce65b7d564b3ac7c9bce8daff852dfdd7e1fef4d5b11430835c9937d86644"
+  },
+  {
+    "start": 2080,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02080_02159.csv",
+    "query_sha256": "40e67e919212cba8fecde6983c1ddf7f92f85290ad8f1c5412d14cc7870b0393"
+  },
+  {
+    "start": 2160,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02160_02239.csv",
+    "query_sha256": "de98eb831b0d63b3a6ff9c1d4668c24d1094805356afafae3db403a2812630bb"
+  },
+  {
+    "start": 2240,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02240_02319.csv",
+    "query_sha256": "62f418c3527d0630f4fc6e3ec42bf62fee909a24cd2cc9be65f657f4199d65af"
+  },
+  {
+    "start": 2320,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02320_02399.csv",
+    "query_sha256": "7cc9d02518860548cb2b5d6adb63af817eae4483b9eac5e0bb82d683fe0fa99e"
+  },
+  {
+    "start": 2400,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02400_02479.csv",
+    "query_sha256": "5993ae840f38e4a371f9e3e1c8441c57aca9f9a81a0d777644423b04d9b8dff4"
+  },
+  {
+    "start": 2480,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02480_02559.csv",
+    "query_sha256": "bebb394a65713a9c5916b9a27511bd2e966f446a8e2f55e90eaf640b24e524ad"
+  },
+  {
+    "start": 2560,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02560_02639.csv",
+    "query_sha256": "ecd36c6f977e3630254d20ad6d323a4f2d62531ad3b256d9cdb647770ac75aaa"
+  },
+  {
+    "start": 2640,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02640_02719.csv",
+    "query_sha256": "b7127e9c9fcc9780db5a8d1c95d6fb6613defeead7ec7bdf9ae153b5f00ce8a1"
+  },
+  {
+    "start": 2720,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02720_02799.csv",
+    "query_sha256": "fe8021d3e42f697c5ffb75b1cde808714ba129d54326b439ae0be51850c33a04"
+  },
+  {
+    "start": 2800,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02800_02879.csv",
+    "query_sha256": "dc6bdd2c3ef594b45cb8a410b909fc7158a87e5dccf2381ef65f953b0f6a0816"
+  },
+  {
+    "start": 2880,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02880_02959.csv",
+    "query_sha256": "44bf8203124c4bf50753d1f65a52852a484208ea550c87eee9a08e6fc0339f08"
+  },
+  {
+    "start": 2960,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_02960_03039.csv",
+    "query_sha256": "4374017fcc0788bab8d085718ac0ac51886203281fb972b6325e7bdb9245d4a2"
+  },
+  {
+    "start": 3040,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_03040_03119.csv",
+    "query_sha256": "ea3eaacc58f70d3ac1aef2fc5a093c83678706bc48b9722ad1cf6ff4219127a6"
+  },
+  {
+    "start": 3120,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_03120_03199.csv",
+    "query_sha256": "f4e2febbda1cb0ee101ea16bbda63799f69cbc88ea837d4c9ead5fb99fc2bff3"
+  },
+  {
+    "start": 3200,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_03200_03279.csv",
+    "query_sha256": "1666b2639104e79133ec6f2ab09ea6d8e985c73e29c81890ce190f14972cbed9"
+  },
+  {
+    "start": 3280,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_03280_03359.csv",
+    "query_sha256": "695cabc6466a6fba3cf584dc56cc33017130ec1634e6bf1f0530116f22cf5cce"
+  },
+  {
+    "start": 3360,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_03360_03439.csv",
+    "query_sha256": "a7623ea74894ac594afd88421f6ed37b1447fede471e81ea3b5eb38e35da7bc1"
+  },
+  {
+    "start": 3440,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_03440_03519.csv",
+    "query_sha256": "ff40cde7d92c32795af5e25299b3a4e525122155ea28924e50ff67e18118b6b7"
+  },
+  {
+    "start": 3520,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_03520_03599.csv",
+    "query_sha256": "5d2886ac44d370f3bd53fb19fa7fe95394109121f5b1428aa74a151c6784d626"
+  },
+  {
+    "start": 3600,
+    "n_target": 80,
+    "n_returned": 65,
+    "cache": "work/catalogues/firefly/queries/firefly_03600_03679.csv",
+    "query_sha256": "930ba95ced7856fb745d2ab4bb96fd8ff0fd4db1f4c240882ef0e0939f767509"
+  },
+  {
+    "start": 3680,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_03680_03759.csv",
+    "query_sha256": "895489dfe205d12ead0953d397a93b280f34e98f31341c702619b052a2464999"
+  },
+  {
+    "start": 3760,
+    "n_target": 80,
+    "n_returned": 80,
+    "cache": "work/catalogues/firefly/queries/firefly_03760_03839.csv",
+    "query_sha256": "aadc7bb288a4ac217ac55f692de35596ccf51941b0b117aed20742e15dc45b23"
+  },
+  {
+    "start": 3840,
+    "n_target": 17,
+    "n_returned": 17,
+    "cache": "work/catalogues/firefly/queries/firefly_03840_03856.csv",
+    "query_sha256": "548fe2677da7febce48b66e0b46966c5242720b1018605cc48915622da4b35f8"
+  }
+]

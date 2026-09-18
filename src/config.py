@@ -21,11 +21,13 @@ SIMARD_SUBSET_FILE = DATA_PATH + "simard2011_subset.csv"
 SIMARD_FTP_URL = "https://cdsarc.cds.unistra.fr/ftp/J/ApJS/196/11/"
 
 REPORT_FILE = "paper.tex"
+SUPPLEMENT_FILE = "online_supplement.tex"
 REPORT_PATH = OUTPUT_PATH + "paper/"
 SUBFIGURES_PATH = "figures/"
 FIGURES_PATH = REPORT_PATH + SUBFIGURES_PATH
 TEMPLATE_PATH = BASE_PATH + "src/paper_template/"
 TEMPLATE_FILE = "paper_template.tex" 
+SUPPLEMENT_TEMPLATE_FILE = "online_supplement_template.tex"
 BIB_FILE = "paper"
 
 

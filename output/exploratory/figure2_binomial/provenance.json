@@ -1,0 +1,19 @@
+{
+  "purpose": "Exploratory second version of Figure 2; not used by the paper build",
+  "input_sample": "/Users/matt/Astrophysics/CG_Gals/data/processed_sample.pkl",
+  "upstream_repository": "https://gitlab.com/gmamon/python-codes",
+  "upstream_branch": "gary",
+  "upstream_commit": "88fea77dbd6430a67c262ffa9ac5ab369ab351f3",
+  "graphutils_url": "https://gitlab.com/gmamon/python-codes/-/blob/88fea77dbd6430a67c262ffa9ac5ab369ab351f3/graphutils.py",
+  "mathutils_url": "https://gitlab.com/gmamon/python-codes/-/blob/88fea77dbd6430a67c262ffa9ac5ab369ab351f3/mathutils.py",
+  "graphutils_sha256": "3a0fe3fd15a7884840ea1eaae03ccdf1cd4542c4bdc7539b7ee6cdd57f285ffc",
+  "mathutils_sha256": "6df40cf7a873c6c077480a3f4ac3edd0c3a745c2eb1c2617551f608178f65b42",
+  "binomial_method": "Unmodified upstream binomialerrorplot calling upstream BinomialError: Wald 1-sigma errors for 0<n<N; z=1.65 Wilson-centred one-sided limits for n=0 or n=N",
+  "minimum_galaxies_displayed": 5,
+  "minimum_groups_displayed": 3,
+  "outputs": {
+    "pdf": "/Users/matt/Astrophysics/CG_Gals/output/exploratory/figure2_binomial/fig2_binomial_satellite_bgg.pdf",
+    "png": "/Users/matt/Astrophysics/CG_Gals/output/exploratory/figure2_binomial/fig2_binomial_satellite_bgg.png",
+    "counts": "/Users/matt/Astrophysics/CG_Gals/output/exploratory/figure2_binomial/fig2_binomial_satellite_bgg_counts.csv"
+  }
+}

@@ -380,7 +380,7 @@ def _plot_mass_size(panels: dict, path: str) -> str | None:
     for ax in axes[-1]:
         ax.set_xlabel(r"$\log(M_\star/M_\odot)$")
     for ax in axes[:, 0]:
-        ax.set_ylabel(r"$\log_{10}(R_{\rm chl,r}/{\rm kpc})$")
+        ax.set_ylabel(r"$\log_{10}(R_{e,r}/{\rm kpc})$")
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
@@ -421,17 +421,18 @@ def _adjusted(frame: pd.DataFrame, outcome: str = PRIMARY_OUTCOME, **kwargs) -> 
 def _per_control(frame: pd.DataFrame, output_dir: str | None) -> dict:
     comparisons = {}
     comparisons["pooled"] = fit_size_model(
-        frame, PRIMARY_OUTCOME, include_group_covariates=False
+        frame, PRIMARY_OUTCOME, include_group_covariates=True
     )
     for control in CONTROL_SAMPLES:
         panel = frame.loc[frame["sample"].isin(["CG4", control])]
         comparisons[control] = fit_size_model(
-            panel, PRIMARY_OUTCOME, include_group_covariates=False
+            panel, PRIMARY_OUTCOME, include_group_covariates=True
         )
     ok = [k for k, v in comparisons.items() if v.get("status") == "ok"]
     result = {
         "status": "ok" if ok else "skipped",
-        "note": "descriptive mass- and redshift-adjusted comparisons",
+        "note": ("group-adjusted comparisons matching the main model: stellar mass, "
+                 "redshift, rank, group luminosity, and velocity dispersion"),
         "comparisons": comparisons,
     }
     if output_dir and ok:
@@ -470,6 +471,9 @@ def _plot_forest(comparisons: dict, path: str) -> str | None:
     ax.set_yticks(y, [row[0] for row in rows])
     ax.invert_yaxis()
     ax.set_xlabel(r"CG$_4$ size offset $\Delta$ (dex, 95% CI)")
+    ax.tick_params(direction="in", top=True, right=True, labelsize=10)
+    for spine in ax.spines.values():
+        spine.set_visible(True)
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
@@ -765,7 +769,7 @@ def _plot_measure_delta(work: pd.DataFrame, path: str) -> str | None:
     ax.axvline(CROWDING_THRESHOLD_ARCSEC, color="0.45", linestyle="--", linewidth=0.9)
     ax.set_xscale("log")
     ax.set_xlabel("Nearest projected neighbour separation (arcsec)")
-    ax.set_ylabel(r"$\log R_{\rm chl,r} - \log R_{50,r}$ (dex)")
+    ax.set_ylabel(r"$\log R_{e,r} - \log R_{50,r}$ (dex)")
     ax.legend(frameon=False)
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
@@ -908,7 +912,7 @@ def _plot_radial(satellites: pd.DataFrame, path: str) -> str | None:
             ax.plot(centers, medians, color=colour, linewidth=1.6)
     ax.axhline(0, color="0.45", linestyle=":", linewidth=1)
     ax.set_xlabel("Projected distance to the BGG (kpc)")
-    ax.set_ylabel(r"$\Delta\log R_{\rm chl,r}$ at fixed mass and $z$ (dex)")
+    ax.set_ylabel(r"$\Delta\log R_{e,r}$ at fixed mass and $z$ (dex)")
     ax.legend(frameon=False)
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
@@ -1101,7 +1105,7 @@ def _plot_re_n_plane(frame: pd.DataFrame, path: str) -> str | None:
         )
 
     ax.set_xlabel("Sersic index $n_g$")
-    ax.set_ylabel(r"$\log_{10}(R_{\rm chl,r}/{\rm kpc})$")
+    ax.set_ylabel(r"$\log_{10}(R_{e,r}/{\rm kpc})$")
     ax.set_xlim(0.45, 8.05)
     y_min = float(panel[PRIMARY_OUTCOME].min())
     y_max = float(panel[PRIMARY_OUTCOME].max())

@@ -82,7 +82,7 @@ def _plot(fractions, path):
         [0 if value is None else value for value in values],
         color=["#2864A6", "#777777", "#777777", "#777777"],
     )
-    ax.set_ylabel("AGN-like fraction")
+    ax.set_ylabel("AGN fraction")
     ax.set_ylim(0, max(0.05, max(value or 0 for value in values) * 1.25))
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")

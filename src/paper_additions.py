@@ -139,7 +139,7 @@ def wilson(k: int, n: int, z: float = 1.959963984540054) -> tuple[float, float]:
 # --------------------------------------------------------------------------
 
 def group_median_separations(gals: pd.DataFrame) -> pd.Series:
-    """Median of the 6 pairwise projected separations (proper kpc) per quartet.
+    """Median of the 6 pairwise projected physical separations (kpc) per quartet.
 
     Convention as in the paper: haversine angle x angular-diameter distance
     at the quartet's median redshift (Planck 2015).
@@ -343,7 +343,7 @@ def zheng_shen_block(sample: dict) -> dict:
     gals, groups = sample["CG4_Gals"], sample["CG4_Groups"]
     cls = groups.set_index("Group")["Class"]
     lm200 = groups.set_index("Group")["lMass_200"]
-    block = {"per_class": {}, "permutations": {}}
+    block = {"per_class": {}, "permutations": {}, "mass_binned_satellites": {}}
     display = {"Isolated": "Isolated", "Embedded": "Embedded",
                "Predom": "Predominant"}
     for cname in ["Isolated", "Embedded", "Predom"]:
@@ -360,6 +360,24 @@ def zheng_shen_block(sample: dict) -> dict:
                                         p=k / n if n else np.nan,
                                         wilson_lo=lo, wilson_hi=hi)
         block["per_class"][display[cname]] = entry
+        sat_classified = sat.loc[sat["morphology"].isin(["Elliptical", "Spiral"])].copy()
+        sat_classified["mass_bin"] = pd.cut(
+            pd.to_numeric(sat_classified["lgm"], errors="coerce"),
+            bins=[7.0, 10.5, 12.5], right=False, include_lowest=True,
+        )
+        mass_rows = []
+        for interval in sat_classified["mass_bin"].cat.categories:
+            current = sat_classified.loc[sat_classified["mass_bin"] == interval]
+            k = int((current["morphology"] == "Elliptical").sum())
+            n = int(len(current))
+            lo, hi = wilson(k, n)
+            mass_rows.append({
+                "bin_left": float(interval.left), "bin_right": float(interval.right),
+                "n_E": k, "n_classified": n,
+                "n_groups": int(current["Group"].nunique()),
+                "p": k / n if n else np.nan, "wilson_lo": lo, "wilson_hi": hi,
+            })
+        block["mass_binned_satellites"][display[cname]] = mass_rows
 
     iso = block["per_class"]["Isolated"]
     check("fE_isolated_all", iso["fE_all"]["p"], 7 / 18, 1e-9)
@@ -403,6 +421,11 @@ def zheng_shen_block(sample: dict) -> dict:
     block["statistic"] = ("difference of the means over groups of the per-group "
                           "satellite elliptical fraction E/(E+Sp); two-sided, "
                           "add-one convention p=(k+1)/(B+1)")
+    block["mass_bin_edges"] = [7.0, 10.5, 12.5]
+    block["mass_binning_note"] = (
+        "Two bins adopted because a three-bin alternative leaves only 4, 5, and "
+        "5 classified isolated satellites; the two-bin counts are 9 and 5."
+    )
 
     check("perm_iso_vs_rest_p",
           block["permutations"]["isolated_vs_rest_of_CG4"]["p"], 0.022, 0.01)
@@ -428,37 +451,35 @@ def control_satellite_fe(sample: dict) -> dict:
 
 
 def plot_cg4_classes(zheng: dict, controls: dict, path: str) -> str:
-    """Fig.: satellite f_E by Zheng--Shen class with control bands (gary-r2 A5)."""
+    """Satellite E-class fractions by Zheng--Shen class in two mass bins."""
 
     import matplotlib.pyplot as plt
     from utils import labels_utils as lu
 
     order = ["Isolated", "Embedded", "Predominant"]
-    colours = {"Control4B": "#0072B2", "Control4C": "#D55E00", "RG4": "#009E73"}
-    fig, ax = plt.subplots(figsize=(4.4, 3.4))
-    for name, entry in controls.items():
-        ax.axhspan(entry["wilson_lo"], entry["wilson_hi"], color=colours[name], alpha=0.16, lw=0)
-        ax.axhline(entry["p"], color=colours[name], lw=1.0, ls="--",
-                   label=f"{lu.sample_tex_label(name)} satellites")
+    del controls, lu
+    fig, axes = plt.subplots(1, 2, figsize=(7.1, 3.4), sharey=True)
     x = np.arange(len(order))
-    for i, cname in enumerate(order):
-        e = zheng["per_class"][cname]["fE_sat"]
-        ax.errorbar(i, e["p"], yerr=[[e["p"] - e["wilson_lo"]], [e["wilson_hi"] - e["p"]]],
-                    fmt="o", color="black", ms=6, capsize=3, lw=1.2,
-                    label=r"CG$_4$ satellites" if i == 0 else None)
-        ax.annotate(f"$N_{{\\rm gr}}={zheng['per_class'][cname]['n_groups']}$\n"
-                    f"$\\log M_{{200c}}={zheng['per_class'][cname]['median_host_lM200']:.2f}$",
-                    (i, e["wilson_hi"]), textcoords="offset points", xytext=(0, 6),
-                    ha="center", va="bottom", fontsize=7.5)
-    ax.set_xticks(x, order)
-    ax.set_xlim(-0.6, len(order) - 0.4)
-    ax.set_ylim(0, 1.0)
-    ax.set_ylabel(r"satellite $f_{\rm E} = N_{\rm E}/(N_{\rm E}+N_{\rm S})$", fontsize=9)
-    ax.set_xlabel("Zheng--Shen class", fontsize=9)
-    ax.tick_params(labelsize=8)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.legend(fontsize=7, frameon=False, loc="lower right")
+    bin_titles = (r"(a) $7.0\leq\log M_\star<10.5$",
+                  r"(b) $10.5\leq\log M_\star<12.5$")
+    for bin_index, (ax, title) in enumerate(zip(axes, bin_titles)):
+        for i, cname in enumerate(order):
+            e = zheng["mass_binned_satellites"][cname][bin_index]
+            ax.errorbar(i, e["p"],
+                        yerr=[[e["p"] - e["wilson_lo"]], [e["wilson_hi"] - e["p"]]],
+                        fmt="o", color="black", ms=6, capsize=3, lw=1.2)
+            ax.annotate(f"$N={e['n_classified']}$\n$N_{{\\rm gr}}={e['n_groups']}$",
+                        (i, e["wilson_hi"]), textcoords="offset points", xytext=(0, 5),
+                        ha="center", va="bottom", fontsize=8)
+        ax.set_xticks(x, order)
+        ax.set_xlim(-0.55, len(order) - 0.45)
+        ax.set_ylim(0, 1.08)
+        ax.set_title(title, fontsize=10)
+        ax.set_xlabel("Zheng--Shen class", fontsize=10)
+        ax.tick_params(labelsize=9, direction="in", top=True, right=True)
+        for spine in ax.spines.values():
+            spine.set_visible(True)
+    axes[0].set_ylabel(r"satellite $f_{\rm E}=N_{\rm E}/(N_{\rm E}+N_{\rm S})$", fontsize=10)
     fig.tight_layout()
     fig.savefig(path, format="pdf", bbox_inches="tight")
     plt.close(fig)

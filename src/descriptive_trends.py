@@ -1,8 +1,7 @@
 """Descriptive stellar-mass trends requested for the revised manuscript.
 
-This module does not fit inferential models.  It bins the existing catalogue
-measurements, uses physical-group resampling for descriptive intervals, and
-redraws two figures from already adopted classifications and residuals.
+This module does not fit inferential models. It bins the existing catalogue
+classifications and redraws two figures from already adopted quantities.
 """
 
 from __future__ import annotations
@@ -20,11 +19,13 @@ try:
     import generate_report as report
     import sSFR
     from utils import labels_utils as lu
+    from utils.gmamon_binomial import binomialerrorplot
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from . import generate_report as report
     from . import sSFR
     from .utils import labels_utils as lu
+    from .utils.gmamon_binomial import binomialerrorplot
 
 
 SAMPLES = ("CG4", "Control4B", "Control4C", "RG4")
@@ -32,8 +33,9 @@ SAMPLES = ("CG4", "Control4B", "Control4C", "RG4")
 # Fixed before examining any between-sample differences.  The 0.5-dex
 # interior bins are retained, while the sparsely populated mass tails are
 # merged so that the CG4 medians remain interpretable.
-MORPHOLOGY_MASS_BINS = np.array([7.0, 9.5, 10.0, 10.5, 11.0, 12.5])
-QUENCHED_MASS_BINS = np.array([7.0, 10.0, 10.5, 11.0, 12.5])
+MASS_BINS = np.array([7.0, 10.0, 10.5, 11.0, 12.5])
+MORPHOLOGY_MASS_BINS = MASS_BINS
+QUENCHED_MASS_BINS = MASS_BINS
 MIN_GALAXIES_TO_PLOT = 5
 MIN_GROUPS_TO_PLOT = 3
 N_BOOT = 2000
@@ -167,32 +169,16 @@ def _mass_bin_rows(
 
 
 def compute_mass_trends(sample: dict[str, pd.DataFrame]) -> pd.DataFrame:
-    """Compute all four descriptive mass-trend panels."""
+    """Compute the six requested binomial mass-trend panels."""
 
     rows: list[dict] = []
-    # Top row (gary-r2 A1): the fraction classified elliptical (spiral) among
-    # usable E/S classifications replaces the median debiased vote, whose
-    # bimodality made the medians collapse toward 0/1; the mean debiased
-    # votes over all galaxies with finite votes are kept as open markers.
     specifications = (
-        ("elliptical_fraction", "is_elliptical", "fraction", MORPHOLOGY_MASS_BINS, "all"),
-        ("spiral_fraction", "is_spiral", "fraction", MORPHOLOGY_MASS_BINS, "all"),
-        ("elliptical_vote_mean", "p_E", "mean", MORPHOLOGY_MASS_BINS, "all"),
-        ("spiral_vote_mean", "p_S", "mean", MORPHOLOGY_MASS_BINS, "all"),
-        (
-            "quenched_satellites",
-            "is_quenched",
-            "fraction",
-            QUENCHED_MASS_BINS,
-            "satellites",
-        ),
-        (
-            "quenched_bggs",
-            "is_quenched",
-            "fraction",
-            QUENCHED_MASS_BINS,
-            "bggs",
-        ),
+        ("elliptical_bggs", "is_elliptical", "fraction", MASS_BINS, "bggs"),
+        ("spiral_bggs", "is_spiral", "fraction", MASS_BINS, "bggs"),
+        ("elliptical_satellites", "is_elliptical", "fraction", MASS_BINS, "satellites"),
+        ("spiral_satellites", "is_spiral", "fraction", MASS_BINS, "satellites"),
+        ("quenched_bggs", "is_quenched", "fraction", MASS_BINS, "bggs"),
+        ("quenched_satellites", "is_quenched", "fraction", MASS_BINS, "satellites"),
     )
     for sample_name in SAMPLES:
         frame = sample[sample_name + co.GASUFF].copy()
@@ -270,14 +256,14 @@ def finish_binned_figure(fig, axes, filename: str, ylabel: str = "Fraction") -> 
     """Common axis cosmetics, legend, and save for the binned figures."""
 
     for ax in axes.flat:
-        ax.tick_params(labelsize=8)
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
+        ax.tick_params(labelsize=9, direction="in", top=True, right=True)
+        for spine in ax.spines.values():
+            spine.set_visible(True)
     for ax in axes[-1, :]:
-        ax.set_xlabel(r"$\log_{10}(M_\star/M_\odot)$", fontsize=9)
+        ax.set_xlabel(r"$\log_{10}(M_\star/M_\odot)$", fontsize=10)
     if ylabel:
         for ax in axes[:, 0]:
-            ax.set_ylabel(ylabel, fontsize=9)
+            ax.set_ylabel(ylabel, fontsize=10)
     handles, labels = axes.flat[0].get_legend_handles_labels()
     fig.legend(
         handles,
@@ -285,7 +271,7 @@ def finish_binned_figure(fig, axes, filename: str, ylabel: str = "Fraction") -> 
         loc="upper center",
         ncol=4,
         frameon=False,
-        fontsize=8.5,
+        fontsize=9,
         bbox_to_anchor=(0.5, 1.01),
     )
     fig.tight_layout(rect=(0, 0, 1, 0.955), h_pad=1.0, w_pad=1.0)
@@ -294,41 +280,38 @@ def finish_binned_figure(fig, axes, filename: str, ylabel: str = "Fraction") -> 
 
 
 def plot_mass_trends(trends: pd.DataFrame, filename: str) -> None:
-    """Plot morphology and quenched fractions as one compact four-panel figure.
-
-    Top row: fraction classified elliptical / spiral among usable E/S
-    classifications (filled markers, group-blocked 16--84% intervals) with
-    the mean debiased vote fraction over all galaxies with finite votes as
-    open markers.  Bottom row: quenched fractions among valid-sSFR
-    satellites and BGGs.
-    """
+    """Plot the six binomial fractions with Gary Mamon's plotting routine."""
 
     panel_order = (
-        ("elliptical_fraction", "elliptical_vote_mean"),
-        ("spiral_fraction", "spiral_vote_mean"),
-        ("quenched_satellites", None),
-        ("quenched_bggs", None),
+        "elliptical_bggs", "spiral_bggs",
+        "elliptical_satellites", "spiral_satellites",
+        "quenched_bggs", "quenched_satellites",
     )
     titles = (
-        r"(a) Fraction classified elliptical",
-        r"(b) Fraction classified spiral",
-        "(c) Quenched fraction: satellites",
-        "(d) Quenched fraction: BGGs",
+        r"(a) BGGs: E class", r"(b) BGGs: S class",
+        r"(c) Satellites: E class", r"(d) Satellites: S class",
+        r"(e) BGGs: quenched", r"(f) Satellites: quenched",
     )
-    fig, axes = plt.subplots(2, 2, figsize=(7.1, 5.3), sharey=True)
+    fig, axes = plt.subplots(3, 2, figsize=(7.1, 7.2), sharex=True, sharey=True)
     displayed = trends.loc[trends["displayed"]]
-    for ax, (panel, overlay), title in zip(axes.flat, panel_order, titles):
-        draw_binned_series(ax, displayed.loc[displayed["panel"] == panel])
-        if overlay is not None:
-            draw_binned_series(
-                ax,
-                displayed.loc[displayed["panel"] == overlay],
-                filled=False,
-                with_errors=False,
-                label=False,
-                x_offset=0.03,
+    offsets = dict(zip(SAMPLES, (-0.045, -0.015, 0.015, 0.045)))
+    for ax, panel, title in zip(axes.flat, panel_order, titles):
+        for sample_name in SAMPLES:
+            current = displayed.loc[
+                (displayed["panel"] == panel) & (displayed["sample"] == sample_name)
+            ].sort_values("mass_location")
+            if current.empty:
+                continue
+            style = SAMPLE_STYLES[sample_name]
+            N = current["n_galaxies"].to_numpy(dtype=int)
+            n = np.rint(current["estimate"].to_numpy(dtype=float) * N).astype(int)
+            binomialerrorplot(
+                current["mass_location"].to_numpy(dtype=float) + offsets[sample_name],
+                N, n, color=style["colour"], marker=style["marker"],
+                markersize=4.7, mec=style["colour"], ecolor=style["colour"],
+                capsize=2, ax=ax, label=SAMPLE_LABELS[sample_name], zorder=3,
             )
-        ax.set_title(title, fontsize=9)
+        ax.set_title(title, fontsize=10)
         ax.set_ylim(-0.03, 1.03)
     finish_binned_figure(fig, axes, filename)
 
@@ -483,12 +466,12 @@ def run(sample: dict[str, pd.DataFrame]) -> dict:
     return {
         "status": "ok",
         "figure": "fig_mass_trends.pdf",
-        "morphology_mass_bins": MORPHOLOGY_MASS_BINS.tolist(),
-        "quenched_mass_bins": QUENCHED_MASS_BINS.tolist(),
+        "mass_bins": MASS_BINS.tolist(),
+        "morphology_mass_bins": MASS_BINS.tolist(),
+        "quenched_mass_bins": MASS_BINS.tolist(),
         "minimum_galaxies_displayed": MIN_GALAXIES_TO_PLOT,
         "minimum_groups_displayed": MIN_GROUPS_TO_PLOT,
-        "bootstrap_draws": N_BOOT,
-        "interval_quantiles": list(CI_QUANTILES),
+        "plot_uncertainties": "Gary Mamon binomialerrorplot (upstream commit 88fea77)",
         "x_coordinate": "median stellar mass of contributing galaxies",
         "connecting_lines": False,
         "counts_file": os.path.basename(trends_path),
@@ -496,7 +479,7 @@ def run(sample: dict[str, pd.DataFrame]) -> dict:
         "sfms_residual_summary": residuals.to_dict(orient="records"),
         "quenched_sequence": quenched_sequence,
         "morphology_statistic": (
-            "fraction classified elliptical/spiral among usable E/S classifications; "
-            "mean debiased vote fractions over galaxies with finite votes as open markers"
+            "binomial E- and S-class fractions among usable E/S classifications, "
+            "shown separately for BGGs and satellites"
         ),
     }

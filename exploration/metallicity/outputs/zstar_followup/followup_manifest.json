@@ -1,0 +1,186 @@
+{
+  "created_utc": "2026-09-17T12:56:49+00:00",
+  "seed": 20260917,
+  "n_boot": 2000,
+  "scope": "writes only below exploration/metallicity/{outputs/zstar_followup,figures/zstar_followup}",
+  "inputs": [
+    "outputs/zstar/zstar_contrasts.csv",
+    "work/metallicity_worktable.csv",
+    "work/catalogues/firefly/firefly_sample_matches.csv",
+    "work/catalogues/gallazzi/gallazzi_sample_matches.csv",
+    "../../data/processed_sample.pkl (read-only)",
+    "../../data/PC_Groups.csv (read-only)"
+  ],
+  "files": [
+    {
+      "path": "outputs/zstar_followup/audit_reproduction.csv",
+      "bytes": 2931,
+      "sha256": "216d3311528120cd88c86c8b47a92fd4433b32737ee8b4518570dae2aca6351c"
+    },
+    {
+      "path": "outputs/zstar_followup/audit_censoring.csv",
+      "bytes": 3928,
+      "sha256": "03c06eff09e07aad9cdfd85a93807c247664333f88dde33be2761834d68ddd3f"
+    },
+    {
+      "path": "outputs/zstar_followup/same_objects.csv",
+      "bytes": 3094,
+      "sha256": "abc28ff8d9c57306fb84d5b6b030f344d8640e2f5c0b4398766ad01353414a67"
+    },
+    {
+      "path": "outputs/zstar_followup/mass_interaction.csv",
+      "bytes": 3555,
+      "sha256": "8306ad6cc965969d1d73f3d94ba4da66a1fca12d63f32eb1e35c6563a73ce5a6"
+    },
+    {
+      "path": "outputs/zstar_followup/control_only_residuals.csv",
+      "bytes": 5658,
+      "sha256": "7763e60712c4a00b81ebc75b3d7de010eda4ea94a13610738f8cab6827771ee9"
+    },
+    {
+      "path": "outputs/zstar_followup/control_only_residuals_objects.csv",
+      "bytes": 478119,
+      "sha256": "039811cdc2066859ea0ec0ba39e415850d938ce18addf37c12ac037688972851"
+    },
+    {
+      "path": "outputs/zstar_followup/rg4_subsets.csv",
+      "bytes": 50948,
+      "sha256": "1f7430e223c5d23ff3c5988e7350d49797d6805d0c5aa2eda0aca0cb2505db0c"
+    },
+    {
+      "path": "outputs/zstar_followup/rg4_joint_models.csv",
+      "bytes": 16074,
+      "sha256": "2d0228583edc54441d851e3de4924d8c6687a05f1a5d20f20b9c2b3132fe0051"
+    },
+    {
+      "path": "outputs/zstar_followup/rg4_composition_split.csv",
+      "bytes": 1894,
+      "sha256": "d33a43e736febb4107137f1aab7224ecddbf6f1a8f0ea8990988695e8194cdb7"
+    },
+    {
+      "path": "outputs/zstar_followup/composition_balance.csv",
+      "bytes": 18754,
+      "sha256": "b8e05ca2bb1b23831a2ed97a643ba0dc77f1081d312b4e5d25d2a9ff7fd9ac31"
+    },
+    {
+      "path": "outputs/zstar_followup/adjusted_contrasts.csv",
+      "bytes": 5764,
+      "sha256": "789664c8953e793847097be027ea74357a5152c0770dff528c01f4f28f4bcdd7"
+    },
+    {
+      "path": "outputs/zstar_followup/environment_sequence.csv",
+      "bytes": 8221,
+      "sha256": "1acdb1046b6eacb479ed1d31a82f933c54ed7924d3d31cda0772eb43a4060c61"
+    },
+    {
+      "path": "outputs/zstar_followup/within_control_environment_slopes.csv",
+      "bytes": 8609,
+      "sha256": "766788014d5428f95d4ca2bfe9fc6aaa8514ffa3c9bb9a2c4aa0dcbdc988b1f9"
+    },
+    {
+      "path": "outputs/zstar_followup/environment_model_residuals.csv",
+      "bytes": 571,
+      "sha256": "98a3c0b5b006cb6c2ada0fd08c2d21d671883cab2195588f8e071ddd46a74a89"
+    },
+    {
+      "path": "outputs/zstar_followup/mass_bins.csv",
+      "bytes": 3757,
+      "sha256": "2e3cb9434422748c2211854128d21cb6729d518176ec81e5213ee7da8673edf4"
+    },
+    {
+      "path": "outputs/zstar_followup/bgg_sf_objects.csv",
+      "bytes": 5067,
+      "sha256": "55223be45aaaee82a7a7b32f468e52317c0faedac795eb207cd2834a41802c7d"
+    },
+    {
+      "path": "outputs/zstar_followup/bgg_sf_leave_one_out.csv",
+      "bytes": 1413,
+      "sha256": "e17d76e8e59f602e30798de9bed6f2af5b8829a25c7fcf440a2963f5da181708"
+    },
+    {
+      "path": "outputs/zstar_followup/bgg_sf_products.csv",
+      "bytes": 7761,
+      "sha256": "b2556ee05bb97f3c68b92fc9f638a14e62d63748f5e6b4349db67604de6f9d57"
+    },
+    {
+      "path": "outputs/zstar_followup/age_contrasts.csv",
+      "bytes": 54412,
+      "sha256": "40659ac771f074e964cc9905eaa5f37bf1f1ca4a9f3ecec19400620444b3b322"
+    },
+    {
+      "path": "outputs/zstar_followup/age_grid_diagnostics.csv",
+      "bytes": 5087,
+      "sha256": "9bbb50481cebb164f89802594dccba3dea3528b95161607b147321d42ed3461b"
+    },
+    {
+      "path": "outputs/zstar_followup/age_same_objects.csv",
+      "bytes": 1848,
+      "sha256": "b92b35cdf9ac136af158322d945bca05f302281cabfb68d8b937aacb91bd7ebd"
+    },
+    {
+      "path": "outputs/zstar_followup/gas_phase_contrasts.csv",
+      "bytes": 9363,
+      "sha256": "f366fdc7f81270887f8594a37bef74007a6ca71f4f0aa48913fcd0542edd0047"
+    },
+    {
+      "path": "outputs/zstar_followup/gas_phase_census.csv",
+      "bytes": 490,
+      "sha256": "7314db92890d01d418e13f7d72ffe8752ed6e205be5db60b503ba3e5af7897b6"
+    },
+    {
+      "path": "outputs/zstar_followup/robustness.csv",
+      "bytes": 2701,
+      "sha256": "324555e0ce08dedc2b29176fb0235ff79b513d276790335bd0bfe2bb203ec22a"
+    },
+    {
+      "path": "outputs/zstar_followup/followup_worktable.csv",
+      "bytes": 2419307,
+      "sha256": "1e939c1a2959c19c0a505999f81cb426312dc2aa948b068cb8227d799b8c1f01"
+    },
+    {
+      "path": "outputs/zstar_followup/key_numbers.json",
+      "bytes": 998,
+      "sha256": "6e731e4b2cef0b202c336872780edd3fd4988cfe64d3a9a12cfe7e1a7f7bc0ff"
+    },
+    {
+      "path": "figures/zstar_followup/age_effects.png",
+      "bytes": 154142,
+      "sha256": "64c02e581756eeec9fe87548da5c06033d1754be40c403fcf3468ed2d1fcbb47"
+    },
+    {
+      "path": "figures/zstar_followup/control_only_residuals.png",
+      "bytes": 189914,
+      "sha256": "8f053d303580f965bbc560e43ecc23cf1ad11233dace3328a9d7ee212df7ce91"
+    },
+    {
+      "path": "figures/zstar_followup/delta_z_vs_mass.png",
+      "bytes": 132389,
+      "sha256": "80b5e2664e28dbb5720fa0ce3735751cffb3cddd009058c03bc6df0b6a5bea9c"
+    },
+    {
+      "path": "figures/zstar_followup/environment_sequence.png",
+      "bytes": 195921,
+      "sha256": "1e84a5271c067b6650bf7b4392e2e996e7fcd86c0f5f67b41616c2fbcf2787df"
+    },
+    {
+      "path": "figures/zstar_followup/gas_phase_effects.png",
+      "bytes": 152509,
+      "sha256": "52d329e8a52d17b6cece62ed4530a8c73f6ed44aa6c5370f12fc7dda54854a5f"
+    },
+    {
+      "path": "figures/zstar_followup/rg4_decomposition.png",
+      "bytes": 112384,
+      "sha256": "dff86e678e6160e37d4089a9b6780e6b41ded39296f24c42c306c468da055b1b"
+    },
+    {
+      "path": "figures/zstar_followup/rg4_interactions_by_product.png",
+      "bytes": 105720,
+      "sha256": "975247902dc0e082b7ec909a9cb93d66fb2fe90a2b094cde925c8f8071ca049d"
+    },
+    {
+      "path": "figures/zstar_followup/same_objects.png",
+      "bytes": 79117,
+      "sha256": "c74095d040621ebd69ff4b0c771270ede02c8bebc3c55b5940393ef957b3dd1e"
+    }
+  ]
+}

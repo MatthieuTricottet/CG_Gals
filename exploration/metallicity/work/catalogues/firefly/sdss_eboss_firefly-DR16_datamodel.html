@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>Datamodel: sdss_eboss_firefly</title>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<link href="/datamodel/datamodel.css" rel="stylesheet" type="text/css" />
+<link href="/datamodel/sdss.ico" rel="icon" type="image/x-icon" />
+<link href="/datamodel/sdss.ico" rel="shortcut icon" type="image/x-icon" />
+</head>
+<body>
+<div id="intro">
+<h1>Datamodel: sdss_eboss_firefly</h1>
+<dl>
+<dt>General Description</dt>
+<dd>
+This page documents the outputs of firefly run on the DR16 SDSS (RUN2D=26) and eBOSS (RUN2D=v5_13_0) spectra.
+For DR16, the version of firefly used is FIREFLY_VER=v1_1_0 for SDSS and FIREFLY_VER=v1_1_1 for eBOSS. 
+</dd>
+
+<dt>Naming Convention</dt>
+<dd id="filename"><code>eboss_sdss_firefly-RELEASE.fits, where RELEASE=DR16 for the latest release</code>, </dd>
+
+<dt>Approximate Size</dt>
+<dd id="filesize">2.3 GB</dd>
+
+<dt>File Type</dt>
+<dd id="filetype">FITS</dd>
+
+<dt>Read by Products</dt>
+<dd>firefly</dd>
+
+<dt>Written by Products</dt>
+<dd>firefly</dd>
+
+<dt>Sections</dt>
+<dd><p>This should contain internal links to parts of the file (if any).</p>
+    <ul>
+        <li><a href="#hdu0">HDU0</a>: The Primary Header</li>
+        <li><a href="#hdu1">HDU1</a>: A Data Table</li>
+        <li><a href="#references">References</a></li>
+    </ul>
+</dd>
+</dl>
+</div>
+
+<div id="hdu0">
+<h2>HDU0: The Primary Header</h2>
+
+<table class="header">
+<caption>Required Header Keywords</caption>
+<tr><th>KEY</th><th>Value</th><th>Type</th><th>Comment</th></tr>
+<tr><td>VOTMETA</td><td>True</td><td>int</td><td>Table metadata in VOTable format</td></tr>
+<tr><td>NTABLE</td><td>1</td><td>int</td><td>Number of following BINTABLE HDUs</td></tr>
+</table>
+
+</div>
+
+<div id="hdu1">
+<h2>HDU1: [What's in this HDU?]</h2>
+<p>[This HDU contains the results of the firefly fits using the templates from the MILES library combined with the models from Maraston et al. 2011.]</p>
+<table class="header">
+<caption>Required Header Keywords</caption>
+<tr><th>KEY</th><th>Value</th><th>Type</th><th>Comment</th></tr>
+<tr><td>EXTNAME</td><td>Joined  </td><td>str</td><td>table name</td></tr>
+<tr><td>DATE-HDU</td><td>2017-03-27T14:50:32</td><td>str</td><td>Date of HDU creation (UTC)</td></tr>
+<tr><td>STILVERS</td><td>3.1</td><td>float</td><td>Version of STIL software</td></tr>
+<tr><td>STILCLAS</td><td>uk.ac.starlink.votable.FitsPlusTableWriter</td><td>str</td><td>Author class in STIL so</td></tr>
+</table>
+
+<table class="columns">
+<caption>Required Data Table Columns</caption>
+
+<tr><td>SpecObjAll keywords</td><td>Most important columns from SpecObjAll are reproduced                     </td><td></td><td>many </td></tr>
+<tr><th>Name</th><th>Type</th><th>Units</th><th>Description</th></tr>
+
+<tr><td>SPECOBJID </td><td> int </td><td> </td><td>Spectroscopic unique identifier</td></tr> 
+<tr><td>RUN2D </td><td> str </td><td> </td><td>version of the 2d reduction pipeline</td></tr>
+<tr><td>RUN1D </td><td> str </td><td> </td><td>version of the 1d reduction pipeline</td></tr>
+<tr><td>MJD</td><td>int32</td><td> </td><td>MJD of observation</td></tr>
+<tr><td>PLATE</td><td>int32</td><td> </td><td>Plate number</td></tr>
+<tr><td>FIBERID</td><td>int32</td><td> </td><td>Fiber identification number</td></tr>
+<tr><td>RA</td><td>float64</td><td> </td><td>Right ascension of fiber, J2000</td></tr>
+<tr><td>DEC</td><td>float64</td><td> </td><td>Declination of fiber, J2000</td></tr>
+<tr><td>Z_NOQSO</td><td>float32</td><td> </td><td>Best redshift (z for SDSS or z_noqso for eBOSS)</td></tr>
+<tr><td>Z_ERR_NOQSO</td><td>float32</td><td> </td><td>Error in redshift (zerr for SDSS or zerr_noqso for eBOSS)</td></tr>
+<tr><td>ZWARNING_NOQSO</td><td>int32</td><td> </td><td>Warnings in "z" redshift</td></tr>
+<tr><td>CLASS_NOQSO</td><td>char[6]</td><td> </td><td>Classification in redshift</td></tr>
+
+<tr><th>Firefly keywords  </th><th> Firefly parameters for the Chabrier $IMF and $LIBRARY (MILES ELODIE)    </td><td>many </td></tr>
+<tr><th>KEY</th><th>Value</th><th>Type</th><th>Comment</th></tr>
+
+<tr><td>$IMF_$LIBRARY_age_lightW                        </td><td>light weighted age                                                     </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_age_lightW_up_1sig          </td><td>light weighted age upper value 1 sigma   </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_age_lightW_low_1sig         </td><td>light weighted age lower value 1 sigma    </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_age_lightW_up_2sig          </td><td>light weighted age upper value 2 sigma    </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_age_lightW_low_2sig         </td><td>light weighted age lower value 2 sigma   </td><td>float64 </td></tr>
+
+<tr><td>$IMF_$LIBRARY_metallicity_lightW                  </td><td>light weighted metallicity                      </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_metallicity_lightW_up_1sig          </td><td>light weighted metallicity upper value 1 sigma   </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_metallicity_lightW_low_1sig         </td><td>light weighted metallicity lower value 1 sigma    </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_metallicity_lightW_up_2sig          </td><td>light weighted metallicity upper value 2 sigma    </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_metallicity_lightW_low_2sig         </td><td>light weighted metallicity lower value 2 sigma   </td><td>float64 </td></tr>
+
+<tr><td>$IMF_$LIBRARY_age_massW                        </td><td>light weighted age                                                     </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_age_massW_up_1sig          </td><td>mass weighted age upper value 1 sigma   </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_age_massW_low_1sig         </td><td>mass weighted age lower value 1 sigma    </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_age_massW_up_2sig          </td><td>mass weighted age upper value 2 sigma    </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_age_massW_low_2sig         </td><td>mass weighted age lower value 2 sigma   </td><td>float64 </td></tr>
+
+<tr><td>$IMF_$LIBRARY_metallicity_massW                  </td><td>mass weighted metallicity                      </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_metallicity_massW_up_1sig          </td><td>mass weighted metallicity upper value 1 sigma   </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_metallicity_massW_low_1sig         </td><td>mass weighted metallicity lower value 1 sigma    </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_metallicity_massW_up_2sig          </td><td>mass weighted metallicity upper value 2 sigma    </td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_metallicity_massW_low_2sig         </td><td>mass weighted metallicity lower value 2 sigma   </td><td>float64 </td></tr>
+
+<tr><td>$IMF_$LIBRARY_total_mass            </td><td>stellar mass                          </td><td>float64</td></tr>
+<tr><td>$IMF_$LIBRARY_total_mass_up_1sig    </td><td>stellar mass upper value 1 sigma      </td><td>float64</td></tr>
+<tr><td>$IMF_$LIBRARY_total_mass_low_1sig   </td><td>stellar mass lower value 1 sigma        </td><td>float64</td></tr>
+<tr><td>$IMF_$LIBRARY_total_mass_up_2sig    </td><td>stellar mass upper value 2 sigma      </td><td>float64</td></tr>
+<tr><td>$IMF_$LIBRARY_total_mass_low_2sig   </td><td>stellar mass lower value 2 sigma        </td><td>float64</td></tr>
+
+<tr><td>$IMF_$LIBRARY_spm_EBV </td><td>reddenning fitted, E(B-V)</td><td>float64 </td></tr>
+<tr><td>$IMF_$LIBRARY_nComponentsSSP            </td><td>number of single stellar population components fitted </td><td>float64 </td></tr>
+    
+    
+</table>
+
+</div>
+
+<div id="references">
+<h2>References</h2>
+<p>
+
+Additional catalogs containing more columns as well as model spectra are available <a href="http://www.mpe.mpg.de/~comparat/firefly_catalogs/">here</a>.
+
+<ul>
+  <li><a href="http://www.icg.port.ac.uk/firefly/">firefly's website</a></li>
+  <li>Stellar population properties for 1.6 million galaxies from SDSS DR14 and DEEP2 DR4 from full spectral fitting <a href="http://arxiv.org/abs/1711.06575">Comparat et al. 2017</a> </li>
+  <li>firefly (Fitting IteRativEly For Likelihood analYsis): a full spectral fitting code <a href="http://adsabs.harvard.edu/abs/2017MNRAS.472.4297W"> Wilkinson et al. 2017</a></li>
+  <li>SDSS-IV MaNGA: Spatially resolved star formation histories in galaxies as a function of galaxy mass and type <a href="http://adsabs.harvard.edu/abs/2017MNRAS.466.4731G">Goddard et al. 2017</a></li>
+  <li>SDSS-IV MaNGA: stellar population gradients as a function of galaxy environment <a href="http://adsabs.harvard.edu/abs/2017MNRAS.465..688G"> Goddard et al. 2017</a></li>
+  <li>P-MaNGA: full spectral fitting and stellar population maps from prototype observations <a href="http://adsabs.harvard.edu/abs/2015MNRAS.449..328W"> Wilkinsin et al. 2015</a></li>
+</ul>
+
+</p>
+</div>
+
+
+</body>
+</html>
+

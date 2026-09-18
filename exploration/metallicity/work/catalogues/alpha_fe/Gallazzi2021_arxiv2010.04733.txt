@@ -1,0 +1,1973 @@
+MNRAS000, 1–22 () Preprint 29 January 2021 Compiled using MNRAS L ATEX style ﬁle v3.0
+Galaxy evolution across environments as probed by the ages, stellar
+metallicities and»𝛼Fe¼ of central and satellite galaxies
+Anna R. Gallazzi1★, A. Pasquali2, S. Zibetti1, F. La Barbera3
+1INAF-Osservatorio Astroﬁsico di Arcetri, Largo Enrico Fermi 5, 50125 Firenze, Italy
+2Astronomisches Rechen-Institut, Zentrum für Astronomie der Universität Heidelberg, Mönchhofstr. 12-14, D-69120 Heidelberg, Germany
+3INAF-Osservatorio Astronomico di Capodimonte, sal. Moiariello 16, 80131 Napoli, Italy
+Accepted 2021 January 22. Received 2020 December 23; in original form 2020 October 09
+ABSTRACT
+Weexplorehowthestarformationandmetalenrichmenthistoriesofpresent-daygalaxieshave
+been aﬀected by environment combining stellar population parameter estimates and group
+environment characterization for SDSS DR7. We compare stellar ages, stellar metallicities
+and,crucially,elementabundanceratios »𝛼Fe¼ ofsatelliteandcentralgalaxies,asafunction
+oftheirstellarandhostgrouphalomass,controllingforthecurrentstarformationrateandfor
+theinfallepoch.Weconﬁrmthatbelow 𝑀 10105𝑀 satellitesareolderandslightlymetal-
+richer than equally-massive central galaxies. On the contrary, we do not detect any diﬀerence
+intheir»𝛼Fe¼:»𝛼Fe¼ dependsprimarilyonstellarmassandnotongrouphierarchynorhost
+halo mass. We also ﬁnd that the diﬀerences in the median age and metallicity of satellites and
+centralsatstellarmassbelow 10105Marelargelyduetothehigherfractionofpassivegalaxies
+amongsatellitesandasafunctionofhalomass.Wearguethattheobservedtrendsatlowmasses
+reveal the action of satellite-speciﬁc environmental eﬀects in a ‘delayed-then-rapid’ fashion.
+When accounting for the varying quiescent fraction, small residual excess in age, metallicity
+and»𝛼Fe¼ emerge for satellites dominated by old stellar populations and residing in halos
+moremassivethan 1014𝑀,comparedtoequally-massivecentralgalaxies.Thisexcessinage,
+metallicity and»𝛼Fe¼ pertain to ancient infallers, i.e. satellites that have accreted onto the
+current halo more than 5 Gyr ago. This result points to the action of environment in the early
+phases of star formation in galaxies located close to cosmic density peaks.
+Key words:galaxies: formation, galaxies: evolution, galaxies: abundances, galaxies: groups:
+general
+1 INTRODUCTION
+In the local Universe several galaxy properties, including mor-
+phology (Dressler 1980; Poggianti et al. 2008), star formation rate
+(Gavazzi et al. 2002; Gómez et al. 2003; Balogh et al. 2004; Pog-
+gianti et al. 2008), atomic gas content (Giovanelli & Haynes 1983;
+Chung et al. 2009; Catinella et al. 2013), colors (Weinmann et al.
+2006a; Baldry et al. 2006) correlate with environmental density.
+These same properties are also known to correlate with galaxy
+mass (Kauﬀmann et al. 2003; Brinchmann et al. 2004; Tremonti
+et al. 2004; Gallazzi et al. 2005; McDermid et al. 2015; Catinella
+et al. 2018). In summary, quiescent galaxies with low gas content
+and elliptical-like morphologies dominate in terms of number den-
+sityandmassdensitythehigh-massendofthegalaxymassfunction
+(Baldry et al. 2004, 2012; Moﬀett et al. 2016) and in high-density
+environments (Baldry et al. 2006). This result and some of the
+aforementioned correlations with environmental density and with
+mass have been observed out to𝑧 1 (Cooper et al. 2010b; Peng
+★ E-mail: anna.gallazzi@inaf.it
+et al. 2010; Cucciati et al. 2017). It is only thanks to spectroscopic
+surveys with large statistics that it is possible to disentangle trends
+with environment and trends with galaxy mass (e.g. Baldry et al.
+2006; Cooper et al. 2008; Pasquali et al. 2010; Peng et al. 2010;
+Woo et al. 2013).
+Several processes can aﬀect the amount of gas in galaxies and
+its ability to form stars eventually leading to suppression of star
+formationactivityandgalaxyquenching.Thesecanbebroadlydis-
+tinguished into secular/internal processes (‘mass quenching’, pres-
+ence of bulge stabilizing disk, stellar feedback, AGN feedback;
+Kormendy 2013; Dekel & Birnboim 2006) and environmental pro-
+cesses acting on galaxies that become satellites of groups or clus-
+ters(ram-pressurestripping,strangulation,galaxyharassment,tidal
+interactions, mergers; see for a review Boselli & Gavazzi 2006).
+Distinguishing the action of environment-speciﬁc processes from
+that of internal processes is complicated by the fact that the en-
+vironment in which galaxies reside evolves with redshift and so
+also the environment-speciﬁc processes that a galaxy experience
+vary in time and in eﬃciency. Moreover, environment can inﬂu-
+ence the growth history of galaxies both through satellite’s speciﬁc
+© The Authors
+arXiv:2010.04733v2  [astro-ph.GA]  28 Jan 2021
+
+2 A. R. Gallazzi et al.
+processes that act on galaxies as they enter a halo (‘nurture’) and
+through setting diﬀerent initial conditions on the eﬃciency of star
+formation, feedback processes and mergers depending on the lo-
+cation of galaxies in the cosmic density ﬁeld (‘nature’) (De Lucia
+2007).
+While it is not straightforward to deﬁne which ‘environment’
+is most relevant in galaxy evolution (Muldrew et al. 2012; Wilman
+et al. 2010), a convenient way to try and isolate the eﬀects of
+mechanisms acting speciﬁcally on galaxies falling into groups or
+clusters is by distinguishing galaxies into ‘centrals’ and ‘satellites’.
+This is a natural scheme in the framework of hierarchical structure
+growthofhydrodynamicalsimulationsandofsemi-analyticmodels.
+Thoughnotfreefromuncertaintiesandpotentialmisclassiﬁcations
+especiallyintheregimeofsmallgroups(e.g.DeLuciaetal.2014),
+it has proven to be a powerful framework to be applied to large
+spectroscopic surveys (e.g. van den Bosch et al. 2008) allowing a
+more direct comparison with hierarchical models and simulations
+of galaxy formation, and allowing to control for both the stellar
+mass of galaxies and the halo mass of the host environment.
+Itisnowestablishedthatthefractionofquiescentgalaxiesisa
+functionnotonlyofmass,butalsoofgalaxyhierarchyandhosthalo
+mass(Baldryetal.2006;Pengetal.2010;Wetzeletal.2012).This
+result has provided an important observational testbed for galaxy
+and structure formation models and their adopted schemes for the
+eﬃciency and timescales of quenching mechanisms, both internal
+and external (e.g. Weinmann et al. 2006b; Hirschmann et al. 2014;
+Bahé et al. 2017b). While the abundance of quiescent galaxies
+increases with both stellar mass and halo mass, the distribution in
+galaxycolorsandstarformationrateisbimodalinallenvironments
+withlittle variationof thelocationof thepeaks (Baldryetal. 2006;
+McGeeetal.2011;Wetzeletal.2012).Combiningthesetworesults
+and infall histories from N-body simulations, Wetzel et al. (2013)
+put forward the so-called ‘delayed-then-rapid’ quenching, whereby
+ittakesaconsiderabletime(fewGyr)whenagalaxyﬁrstbecomea
+satellite before rapid quenching occurs.
+Moredetailedcharacterizationofgalaxyphysicalpropertiesas
+a function of both mass and environment is needed to gain further
+insightintowhenandwheregalaxiesquenchundertheactionofen-
+vironment. In particular, the stellar population properties are fossil
+recordsofthepaststarformationandmetalenrichmenthistory.The
+luminosity-weightedmeanageofthestellarpopulationsreﬂectsthe
+mainepochofmassbuild-up,modulatedbytheoccurrenceofrecent
+(or ongoing) star formation even if at low levels. In Pasquali et al.
+(2010) the diﬀerences in light-weighted age between centrals and
+satellites, and as a function of stellar mass and halo mass, provided
+evidenceforanearlierepochofquenchingofsatellitesinmoremas-
+sive halos with respect to equally-massive centrals. The observed
+trendswereunderstoodinthecontextofthesemi-analyticmodelof
+Wang et al. (2008) by removal of the hot halo gas in satellites upon
+infallandbytheearlierinfallepochsofsatellitesintoday’smassive
+halos.
+Thestellarmetallicity,integratedoverthewholestarformation
+history, reﬂects the eﬃciency of star formation, metal production
+and metal recycling. Mechanisms that alter the gas content and the
+chemicalpropertiesoftheinterstellarmedium(ISM)willalsoaﬀect
+thestellarmetallicity.Hencediﬀerencesinstellarmetallicitycanbe
+informativenotonlyofanyvariationintheeﬃciencyofstarforma-
+tion but also of modiﬁcations of the ISM chemical properties. For
+the general galaxy population, the diﬀerent stellar metallicity-mass
+relations for star-forming and passive galaxies have been shown to
+provide important constraints on the main quenching mechanism
+(Peng et al. 2015; Trussler et al. 2020b) and on inﬂow/outﬂow eﬃ-
+ciency(Spitonietal.2017).InPasqualietal.(2010)weshowedthat
+satellites are metal-richer than equally-massive centrals at masses
+below 10105𝑀 withthediﬀerencebeinglargerinhigher-massha-
+los.Whenrestrictingthesampletostar-forminggalaxiesinPasquali
+et al. (2012), the diﬀerence in stellar metallicity between centrals
+and satellites at ﬁxed mass vanishes, but it emerges an excess in
+the gas-phase metallicity of satellites compared to centrals. The
+observed trends in stellar and gas-phase metallicities favor mecha-
+nisms that deprive galaxies of their gas content (strangulation and
+then ram-pressure stripping) inhibiting gas inﬂows leading to en-
+hanced metal enrichment (Pasquali et al. 2012; Bahé et al. 2017a;
+Maier et al. 2019a; Trussler et al. 2020b).
+The element abundance ratio»𝛼Fe¼ in stars also represents
+a mass-weighted property integrated over the whole SFH. The
+»𝛼Fe¼ arises from the relative eﬀective yields of SNII and SNIa
+products (Greggio & Renzini 1983). Several factors can aﬀect this
+ratio, including variations in IMF, delay-time-distribution of SNIa,
+diﬀerential loss of metals, star-formation timescales (Tinsley 1979;
+Matteucci 1994; Trager et al. 2000). However it has become gener-
+allyaccepted,intheassumptionofauniversalIMF,tointerpretthe
+»𝛼Fe¼  𝑀 relation of early-type galaxies as indicative of shorter
+formation timescales in more massive galaxies as a consequence
+of star formation being interrupted before the Fe-peak elements of
+SNIa have time to be recycled in stars (e.g. Thomas et al. 2005).
+The high level of𝛼-enhancement of massive early-type/quiescent
+galaxies and its relation with stellar mass (e.g. Trager et al. 2000;
+Kuntschner2001;Gravesetal.2009a;McDermidetal.2015)area
+strongtestbedforcosmologicalsimulationsofgalaxyformationand
+semi-analytic models. The observed»𝛼Fe¼ of quiescent galaxies
+canbereproducedbyrequiringatop-heavyIMFduringintensestar
+formation events (Nagashima et al. 2005; Fontanot et al. 2017) or
+veryshorttimescalesachievedthroughtheactionofAGNfeedback
+(Pipino et al. 2009; Segers et al. 2016), possibly in addition to star-
+burststriggeredbyﬂy-byencounters(Calura&Menci2011).Segers
+etal.(2016)haveshownthatEAGLEcosmologicalhydrodynamical
+simulations that reproduce the main scaling relations observed for
+local early-type galaxies (including the mass-metallicity relation -
+Schayeetal.2015)canalsoreproducethetrendbetween »𝛼Fe¼and
+stellarmassformassesabove 10105M asaresultofAGNfeedback
+quenching star formation in massive galaxies. However, De Lucia
+et al. (2017) discuss, in the framework of the semi-analytic GAEA
+model, that quenching induced by AGN feedback is not enough
+to reach the observed levels of»𝛼Fe¼. Imposing a truncation of
+star-formation in galaxies more massive than10105M appears
+necessary to reproduce the»𝛼Fe¼-M relation, but would violate
+the stellar mass-metallicity relation. This result led Fontanot et al.
+(2017) to propose an alternative interpretation, by which»𝛼Fe¼ is
+not trivially related to star formation timescale, but rather to the
+SFR at the peak of the galaxy star formation history, in the context
+of a SFR-dependent IMF (IGIMF - Weidner & Kroupa 2005).
+Diﬀerences in»𝛼Fe¼ as a function of environment can thus
+be informative of either a shorter formation timescale or diﬀerent
+starformationconditionsatthepeakofactivityingalaxiesindense
+environments.Previousworksonearly-typegalaxiesfoundthatthe
+main environmental eﬀect was an increased scatter toward slightly
+younger ages, lower metallicities and lower»𝛼Fe¼ in less dense
+environments, but that the scaling relations for the bulk of the pop-
+ulation were not dependent on the environmental density (Gallazzi
+et al. 2006; Thomas et al. 2010; La Barbera et al. 2014). Other
+element abundance ratios, such as [CN/Fe] in addition to [Mg/Fe],
+have been used as ‘chemical clocks’ to detect small diﬀerences in
+MNRAS000, 1–22 ()
+
+Ages, metallicities and»𝛼Fe¼ of centrals and satellites 3
+star formation timescales in massive cluster ellipticals (Carretero
+et al. 2007).
+In this paper, we aim at inferring how the past star forma-
+tion and metal enrichment history of galaxies, as summarized by
+their present-day stellar population properties, are aﬀected by en-
+vironment. We make use of our own stellar population catalog of
+light-weighted ages and stellar metallicities for SDSS DR7 derived
+from a Bayesian analysis of key absorption features as in Gallazzi
+et al. (2005). By combining the stellar population catalog with the
+SDSS DR7 group catalog of Wang et al. (2014), we characterize
+galaxy‘environment’ﬁrstofallbydistinguishinggalaxiesinterms
+of group hierarchy, speciﬁcally central galaxies and satellite galax-
+ies. We then control for both stellar mass and host halo mass, by
+looking at trends for centrals and satellites at ﬁxed stellar mass and
+at ﬁxed halo mass. We build upon our previous work in Pasquali
+etal.(2010),butwemakethreeimportantadditionstoouranalysis:
+i) With respect to our previous work, we critically add infor-
+mationonthe »𝛼Fe¼,derivedfortheﬁrsttimeforgalaxieswithany
+star formation activity, with the aim of constraining any diﬀerence
+in star formation timescale induced by environment.
+ii) In addition to looking at stellar population trends for the
+population as a whole, we also control for the eﬀect of the varying
+fraction of quiescent galaxies, by looking at detailed diﬀerences as
+a function of environment for galaxies with similar current speciﬁc
+star formation rate.
+iii) Since several works have recently indicated overall long
+timescaleforenvironmentalprocessestobeeﬀective(e.g.DeLucia
+et al. 2012; Oman & Hudson 2016; Hirschmann et al. 2014) and
+because the environment in which galaxies live changes with time,
+we also wish to control for the epoch of infall, i.e. when a galaxy
+becamesatelliteofitscurrentenvironment.Thelocationofgalaxies
+inadiagramcombiningcluster-centricvelocitywithcluster-centric
+distance(thephase-spacediagram)hasbeenshowntobeapromis-
+ing tool to infer mean infall times of satellites, even with observed
+projected quantities (e.g. Oman & Hudson 2016; Pasquali et al.
+2019, and references therein). We thus further characterize the his-
+tory of satellite galaxies by controlling for their infall epoch using
+thephase-spaceparametrizationofPasqualietal.(2019)andSmith
+et al. (2019).
+Combining all these ingredients allows us to put constraints
+on the most likely mechanisms and timescale for environmental
+quenching and to detect the action of environment in the early
+phases of galaxy formation. Trussler et al. (2020a) have recently
+presented a similar analysis on the diﬀerences in age and stellar
+metallicity between centrals and satellites distinguished into star-
+forming,greenvalleyandpassive.Withrespecttotheiranalysiswe
+take the further step, as discussed above, to add information about
+»𝛼Fe¼ and the epoch of infall.
+We describe our sample, the group catalog and the stellar
+populationparameterestimates,includingthederivationofthenew
+»𝛼Fe¼ estimates, in Sec. 2. We explore the scaling relations for
+the general populations of centrals and satellites in Sec. 3, and how
+they depend on host halo mass in Sec. 4. In Sec. 5 we quantify
+and discuss the residual diﬀerences between centrals and satellites
+after removing the dependence of the quiescent fraction on stellar
+and halo mass. We then discuss our results in light of the infall
+epoch, distinguishing ‘ancient’ and ‘recent’ infaller satellites based
+ontheirphase-spacelocation,inSec.6.Finally,wesummarizeand
+discussourﬁndingsinSec.7.Throughoutthework,weassumeaﬂat
+ΛCDM cosmology withΩ𝑚 = 0275 andΩΛ = 0725 (Komatsu
+et al. 2011), a Chabrier (2003) IMF, and𝑍 = 002 for solar
+metallicity.
+2 DATA
+2.1 The group catalog
+WeusethegroupcatalogforSDSSDR7constructedbyWangetal.
+(2014) following Yang et al. (2007) by applying the halo-based
+groupﬁnderalgorithmofYangetal.(2005)totheNewYorkUniver-
+sity Value-Added Galaxy Catalog for SDSS DR7 (Abazajian et al.
+2009). The catalog includes galaxies with an apparent magnitude
+(corrected for Galactic extinction) brighter than𝑟 = 18 mag, with
+redshift 001 𝑧 02 and with redshift completeness𝐶𝑧 ¡ 07.
+In this paper we use the version of the group catalog that includes
+galaxies with SDSS photometry but redshift from other spectro-
+scopic surveys in addition to galaxies with SDSS spectroscopic
+redshift,foratotalnumberof596851galaxies.Galaxymagnitudes
+and colors are based on Petrosian magnitudes, corrected for Galac-
+ticextinctionandK+e–correctedto 𝑧= 01followingBlantonetal.
+(2003). Note that for galaxies with𝑟-band concentration parameter
+𝐶 ¡ 26 Petrosian magnitudes have been corrected by 01 mag.
+Galaxystellarmassesarecomputedusingthecolor-M/Lrelationof
+Bell et al. (2003).
+Foreachgroupthecatalogprovidesestimatesofthedarkmatter
+halo mass. As in our previous works we use the halo masses based
+on the ranking of the total stellar mass, which has been shown by
+Moreetal.(2011)tobeabetterpredictorofhalomassthanthetotal
+luminosity.Thisestimateisavailableforgroupsmoremassivethan
+𝑀ℎ 1012ℎ 1𝑀 and with one or more members brighter than
+𝑀01𝑟   5 logℎ = 195 mag. For smaller groups down to𝑀ℎ
+1011ℎ 1𝑀, the halo mass provided in the catalog is estimated
+fromtherelationshipofYangetal.(2008)betweenthestellarmass
+ofcentralgalaxiesandthehalomass.Uncertaintiesonhalomasses
+range from 035 dex around 𝑀ℎ  10135  1014ℎ 1𝑀 to
+ 02 dex at lower and higher masses, according to tests on mock
+catalogs in Yang et al. (2007).
+Galaxies are classiﬁed as central galaxies if they are the most
+massive galaxy in a group or as satellite galaxies otherwise. The
+catalog comprises 468822 central galaxies and 128029 satellite
+galaxies. In Fig.1 the dotted histograms show the distribution in
+stellar mass M (left) and group halo mass Mℎ (right) for the two
+subsamplesinthewholegroupcatalog.Weproberoughlythreeor-
+ders of magnitude in stellar mass, fromlog¹𝑀ℎ 2𝑀º 9 to
+ 12. As expected, the distribution in stellar mass for central
+galaxies is shifted to higher stellar masses with respect to satel-
+lites. We probe roughly four orders of magnitude in group halo
+mass, from log¹𝑀ℎℎ 1𝑀º 11 to 15. The distribution for
+central galaxies, which reﬂects the abundance of groups, peaks at
+ 10125ℎ 1𝑀. The halo mass distribution for satellite galaxies
+peaks around 1014ℎ 1𝑀, a higher value than for central galax-
+ies, as a consequence of the fact that higher-mass groups host a
+larger number of satellites.
+2.2 Stellar masses
+GalaxystellarmassesintheYangetal.(2007)catalogarecomputed
+using the color-M/L relation of Bell et al. (2003), speciﬁcally the
+onebasedonthe 𝑔 𝑟 colorand 𝑟-bandmagnitudeK+e-correctedto
+𝑧 = 0. In this work we continue to use these stellar mass estimates
+for consistency with our previous works and with the halo mass
+estimates in the Yang et al. (2007) catalog (see Sec. 2.1). We have
+comparedthesestellarmasseswiththoseobtainedfrommoreup-to-
+datecolor-M/Lrelationsthattakeinbetteraccountdustattenuation
+andcomplexstarformationhistoriesofyounggalaxies,inparticular
+MNRAS000, 1–22 ()
+
+4 A. R. Gallazzi et al.
+Figure1. Distributioningalaxystellarmass( left)andhostgrouphalomass
+(right) for the galaxy sample used in this work. Galaxies are separated into
+satellites (red histograms) and centrals (black histograms). The solid his-
+tograms show the ﬁnal subsamples, whose number of galaxies is written in
+theleftpanel,whilethedottedhistogramsshowthecorrespondingdistribu-
+tionsfortheoriginalsamplebeforethecutat 𝑆𝑁 ¡20.Allhistogramsare
+normalised to unity.
+theupdatedversionoftheZibettietal.(2009) ¹𝑔 𝑖º 𝑀𝐿𝑖 relation
+as used in Fontanot et al. (2017). The two mass estimates compare
+generally well with an rms of007 dex, but with an average oﬀset
+of 015 dex, and ranging from 0.1 dex atlog𝑀 = 115 to 0.3 dex
+at log𝑀 = 95, in the sense that the masses in the catalog are
+larger. We have checked that we obtain quantitatively consistent
+results on the scaling relations presented in this work if we use
+stellar masses computed with the updated version of the Zibetti
+et al. (2009) calibration.
+Wehavealsocomparedwiththestellarmassesestimatedfrom
+absorptionindicesincombinationwith 𝑟 𝑖colorasinGallazzietal.
+(2005). In this case there is a smaller systematic oﬀset (006 dex in
+the sense of larger spectroscopic stellar masses) but a larger scatter
+of 013dexinparticularatintermediatemasses.Thismayberelated
+to a combination of the diﬀerent treatment of dust attenuation and
+of aperture eﬀects on the spectroscopic M/L in disk galaxies with
+prominent bulges. Also in this case we have checked that we ﬁnd
+consistent scaling relations for the population as a whole and split
+according to galaxy hierarchy and group halo mass, presented in
+Sec. 3 and 4.
+2.3 Ages and stellar metallicities
+We combine the SDSS group catalog with stellar populations pa-
+rametersestimatedforSDSSDR7galaxiesfollowingGallazzietal.
+(2005) (hereafter G05). Speciﬁcally, probability distribution func-
+tions (PDF) of r-band luminosity-weighted mean age and stellar
+metallicitiesarederivedcomparingthestrengthofthe D4000n,H𝛽,
+H𝛿𝐴+H𝛾𝐴,»MgFe¼0 and»Mg2Fe¼ absorption features to model
+spectraobtainedconvolvingBruzual&Charlot(2003)(BC03)SSP
+models with a large Monte Carlo library of star-formation histories
+andmetallicities 1.Thesefeatureshavebeenchosenfortheirdiﬀer-
+1 We make use of the catalogs of spectro-photometric data and ab-
+sorption index measurements, corrected for contamination by sky emis-
+sion, kindly made publicly available by Jarle Brinchmann at the link
+http://wwwmpa.mpa-garching.mpg.de/SDSS/DR7/raw_data.html. The ab-
+ent sensitivityto ageand metallicity andtheir minimal dependence
+on element abundance ratios. Notice that BC03 models follow the
+Galactic abundance pattern, i.e. they are "base" models, approxi-
+mately scaled-solar at solar metallicity (see Sec. 2.4). We note that
+a few works (Vazdekis et al. 2015; Korn et al. 2005; Thomas et al.
+2004) have shown that 4000Å-break and the high-order Balmer
+lines (and possibly H𝛽 - Cervantes & Vazdekis 2009) depend on
+»𝛼Fe¼,especiallyat D4000n>1.6.Theseworksagreeonthenegli-
+giblevariationofcompositeMg-Feindiceswith »𝛼Fe¼.InG05we
+checked that the derived ages and metallicities were not systemati-
+cally diﬀerent if we excluded the high-order Balmer lines from the
+ﬁt. We estimated a possible systematic uncertainty of 0.05 dex in
+our age and metallicity estimates (with opposite sign) derived with
+scaled-solarmodelsforan »𝛼Fe¼ increaseof0.3dex(seeSec.2.4.2
+of G05).
+We followed the same methodology as outlined in G05 for
+SDSS DR2 and for the SDSS DR4 parameters used in Pasquali
+et al. (2010). However, SDSS DR7 stellar metallicities are on aver-
+agehigherby 003  01dexformassesbelow  1010𝑀 andlower
+by 003 dex at larger masses with respect to the previous releases,
+forthegalaxiesincommon,becauseofdiﬀerencesin D4000n mea-
+surements and associated uncertainties due to modiﬁcations in the
+spectro-photometric calibration. We note that these diﬀerences re-
+sult in slightly shallower mass-metallicity relation and a slightly
+smaller oﬀset in stellar metallicity between satellites and central
+galaxieswithrespecttowhatobservedinPasqualietal.(2010),but
+do not aﬀect our main conclusions.
+Inordertoobtainanestimateofageandmetallicitywerequire
+thatalltheﬁveabsorptionindicesaremeasuredfromtheemission-
+line cleaned spectra. For a reliable estimate of these parameters,
+we further restrict the analysis to those galaxies with a spectral
+S/N of at least 20. The ﬁnal sample of galaxies with a measure of
+the stellar population parameters and with𝑆𝑁 ¡ 20 comprises
+113307 galaxies, of which 87284 are centrals and 26023 are satel-
+lites. The distributions in stellar mass and halo mass for the ﬁnal
+galaxy samples are shown in Fig. 1 (solid histograms) compared to
+the distributions for the original sample (dotted histograms). The
+cut in S/N aﬀects central and satellite galaxies in a similar way,
+leaving 23% and 25% galaxies respectively of the corresponding
+originalsamples;italsopreferentiallyexcludesgalaxieswithlower
+stellarmassand,asaconsequence,thatresideingroupswithlower
+halo mass.
+Figure 2 shows the distribution in the median-likelihood esti-
+mates of stellar metallicity and r-band light-weighted average age
+andtheirassociateduncertainties,asgivenbyhalfofthe 84𝑡ℎ 16𝑡ℎ
+interpercentilerangeoftheirPDF,forthehigh-S/Nsamplesofcen-
+trals(black)andsatellites(red).Thedistributionsinstellarmetallic-
+ity and mean age for the two populations are very similar, although
+we notice that satellite galaxies are slightly more abundant at old
+agesthancentralgalaxies.Themedianuncertaintyonstellarmetal-
+licity is 0.12 dex, while that on light-weighted age is 0.11 dex for
+sorption indices are measured from pure stellar continuum galaxy spec-
+tra. The removal of emission line contamination is achieved ﬁtting ﬁrst the
+emission-line-freeregionsofeachspectrumwithanon-negativeleast-square
+ﬁt of SSP models and then the residuals are ﬁtted with gaussian-broadened
+emission line templates (see G05 and Tremonti et al. 2004, for a more de-
+tailed description). With respect to the values provided in the catalog, we
+increase the error on absorption indices by a factor that accounts for dif-
+ferences between duplicate observations. The error onD4000n is further
+increased by a 7% added in quadrature to account for spectro-photometric
+calibration uncertainties.
+MNRAS000, 1–22 ()
+
+Ages, metallicities and»𝛼Fe¼ of centrals and satellites 5
+Figure2. Distributioninderivedstellarmetallicity( upperleftpanel )andits
+uncertaintyasgivenbyhalfofthe 84𝑡ℎ  16𝑡ℎ interpercentilerange( upper
+right panel) for our high-S/N sample of ‘central’ (black) and ‘satellite’
+(red)galaxies.Thedistributionsinderivedr-bandlight-weightedageandits
+associateduncertaintyareshowninthelowerpanelsforcentralandsatellite
+galaxies.Eachhistogramisnormalisedtounity.Thedottedhistogramsshow
+the distributions obtained weighing galaxies by1𝑉𝑚𝑎𝑥𝑤𝑆𝑁 .
+bothsamples.Thedottedhistogramsshowthedistributionobtained
+by weighing galaxies in order to correct for Malmquist bias and
+for incompleteness due to the S/N cut (see Sec. 3). This shows that
+galaxies with younger and/or metal-poorer populations are more
+aﬀected by the cut in S/N.
+2.4 »𝛼Fe¼ abundance ratios
+We adopt a semi-empirical estimate of»𝛼Fe¼ building on the ap-
+proach of Gallazzi et al. (2006) (hereafter G06). For each galaxy
+we measure the index ratioMgbhFei on the observed spectrum2
+and the diﬀerenceΔ¹MgbhFeiº between this value and the in-
+dex ratio measured on all the models in the library. We then build
+the PDF ofΔ¹MgbhFeiº ﬁtting the»𝛼Fe¼-independent features
+D4000n, H𝛽, H𝛿𝐴+H𝛾𝐴,»MgFe¼0,»Mg2Fe¼, as we do for age
+and metallicity. The excess Δ¹MgbhFeiº in the data with re-
+spect to the BC03 base models can be interpreted as an excess
+of»𝛼Fe¼ with respect to solar. 3 We note that these measures
+are fully consistent withΔ¹MgbhFeiº measured on the bestﬁt
+model only, as done in G06, with a rms scatter of 0.05 compa-
+rable to the average16𝑡ℎ  84𝑡ℎ interpercentile half-range of the
+2 hFei is the average of the Fe5270 and Fe5335 index strengths.
+3 We note that the BC03 SSP models follow the abundance pattern of the
+MilkyWay,hencetheyaretruly »𝛼Fe¼= 0onlyfor[Z/H] & 0.Thederived
+abundance ratios should then be regarded as relative to the MW abundance
+pattern.Wefoundthatthezero-pointofour »𝛼Fe¼ estimatesmaybebiased
+low forlog¹𝑍𝑍º  04, but this does not aﬀect our main results (see
+Appendix A).
+Δ¹MgbhFeiº PDFs (0.025). The average uncertainty on the ob-
+served index ratioMgbhFei is 0.14. We combine in quadrature
+the two contributions (width of PDF and observational error) to
+estimate the uncertainty on eachΔ¹MgbhFeiº measurement (see
+Appendix A).
+Considering the excess Δ¹MgbhFeiº, rather than the ob-
+served index ratio, signiﬁcantly removes the dependence on age
+and metallicity. Indeed, we have checked that the relation between
+Δ¹MgbhFeiº and»𝛼Fe¼ is largely independent of age and metal-
+licity for a wide range in these parameters (see also Sec. 2 of G06)
+using the SSP models of Thomas et al. (2003) and Thomas et al.
+(2004),hereafterTMK04 4 (seeAppendixA).Speciﬁcally,wecon-
+sider ﬁve metallicities ([Z/H]= 135 033 00 035 067) and
+seventeen age values between 0.6 and 15 Gyr. For each age and
+metallicity we compute the diﬀerence between theMgbhFei in-
+dex of models with»𝛼Fe¼= 03 03 05 with respect to the in-
+dex strength of the solar-scaled model (»𝛼Fe¼=0) with the same
+age and metallicity. The rms scatter in»𝛼Fe¼ for a given value of
+Δ¹MgbhFeiº atﬁxedmetallicityandforagevaryingbetween1and
+15Gyrisbelow3%formetallicitieslargerthan »𝑍𝐻¼= 033and
+8% for»𝑍𝐻¼ = 135. Similarly, the rms scatter at ﬁxed age for
+metallicity varying between -1.35 and 0.67 is below 10% for ages
+younger than 4 Gyr and around 13% for older ages.
+ContrarytoG06whereonlyearly-typegalaxieswereanalysed,
+the sample used in this study includes both star-forming and qui-
+escent galaxies and covers larger age and metallicity ranges, where
+the relation betweenΔ¹MgbhFeiº and»𝛼Fe¼ mildly changes.
+Therefore,weexplicitlytranslatetheempirical Δ¹MgbhFeiº diag-
+nostic into an estimate of»𝛼Fe¼. In order to do so, we calibrate
+the relation betweenΔ¹MgbhFeiº and»𝛼Fe¼ as a function of
+age and metallicity adopting as default the TMK04 models. For
+each age and metallicity, we ﬁt a third order polynomial over the
+Δ¹MgbhFeiº and»𝛼Fe¼ range of the models. For each galaxy
+in the sample we apply the ﬁtted function corresponding to the
+age and metallicity closest to the estimated ones (see Sec.2.3). For
+those galaxies whoseΔ¹MgbhFeiº value lies outside the model
+range we adopt the linearly extrapolated function. This happens for
+only 6% of the sample and correspond to»𝛼Fe¼& 05 and we
+note that the results of this work are not inﬂuenced by these galax-
+ies. We notice that the ﬁttedΔ¹MgbhFeiº-»𝛼Fe¼ relations have a
+very small dependence on age and metallicity in particular for ages
+¡ 1Gyrormetallicities & 05𝑍.5 Wehavecheckedwithothersets
+ofmodels(Thomasetal.2011;Walcheretal.2009;Vazdekisetal.
+2015)thatweﬁndverysimilarrelationsbetween Δ¹MgbhFeiº and
+»𝛼Fe¼ and thatΔ¹MgbhFeiº has a negligible dependence on age
+andmetallicity(seeAppendixA).Theconclusionspresentedinthe
+following are not aﬀected by the chosen calibration: we ﬁnd con-
+sistent scaling relations between»𝛼Fe¼ and stellar mass and halo
+mass and, in particular, a consistent comparison between centrals
+and satellites split into halo or stellar mass bins.
+Figure 3 shows the distributions in the empirical estimator
+of element abundance ratioΔ¹MgbhFeiº(upper panel) and in the
+derived»𝛼Fe¼ estimates (lower panel) for central galaxies (black)
+and satellites (red). The distributions for the two galaxy samples
+are remarkably similar, despite the small oﬀsets observed in the
+4 These models have been made available by Daniel Thomas at
+www.dsg.port.ac.uk/˜thomasd/tmb
+5 Systematicuncertaintiesonage/metallicityof  005dexwouldtranslate
+into»𝛼Fe¼ diﬀerences of 001 dex. This would be the case even for
+variations in age of a few Gyr.
+MNRAS000, 1–22 ()
+
+6 A. R. Gallazzi et al.
+Figure3. Distributionintheempiricalestimator Δ¹MgbhFeiº (upperleft
+panel) and in the inferred»𝛼Fe¼ (lower left panel) for satellites (red his-
+tograms) and for central galaxies (black histograms). The right-hand panels
+show the distributions in the associated uncertainties combining the ob-
+servational error onMgbh Fei index and the84𝑡ℎ  16𝑡ℎ interpercentile
+half-range of the PDF ofΔ¹MgbhFeiº or»𝛼Fe¼. Each histogram is nor-
+malised to unity. The dotted histograms in the bottom-left panel show the
+distributions obtained weighing galaxies by1𝑉𝑚𝑎𝑥𝑤𝑆𝑁 .
+massdistributions.Theright-handpanelsshowtheuncertaintieson
+Δ¹MgbhFeiº and»𝛼Fe¼,combiningtheobservationaluncertainty
+onthe MgbhFei indexstrengthandthe 84𝑡ℎ  16𝑡ℎ interpercentile
+half-range of the PDF.
+2.5 Statistical corrections
+The original galaxy sample is not volume limited and therefore
+suﬀers from Malmquist bias. In order to correct for this bias, we
+weigheachgalaxybytheinverseofthemaximumvisibilityvolume
+(V𝑚𝑎𝑥), i.e. the comoving volume out to a comoving distance at
+which the galaxy would pass the magnitude limit of the survey. In
+addition to this, the cut in S/N that we apply for reliable estimates
+of stellar population parameters introduces a further bias toward
+brighter galaxies at ﬁxed mass. We wish to correct for incomplete-
+ness as a function of stellar population properties at ﬁxed stellar
+mass, so as to properly weight galaxies in the scaling relations. In
+order to do so we estimate the S/N selection bias as a function of
+both stellar mass and absolute𝑔 𝑟 color, taken as proxy of galaxy
+physical parameters. Speciﬁcally, wecompute the number ratio be-
+tween the original sample and the ﬁnal high-S/N sample in bins of
+stellarmassandabsolute 𝑔 𝑟 Petrosiancolorofwidth0.1dexand
+0.2 mag respectively, for satellites and central galaxies separately.
+Wethusweighteachsatelliteandcentralgalaxyforthisratio, 𝑤𝑆𝑁 ,
+to correct for the galaxies missed due to the S/N cut. We do not
+consider bins in which high-S/N galaxies are fewer than 10 and are
+lessthan10%ofthenumberofgalaxiesbeforetheS/Ncut,andwe
+put the weight to zero for galaxies falling in those bins. They are in
+any case a negligible fraction of both the initial and ﬁnal sample.
+Unless otherwise stated, in all the relations shown in this work the
+galaxiesareweightedby 1𝑉𝑚𝑎𝑥𝑤𝑆𝑁 .Wehavecheckedthatour
+results do not critically depend on these weights, in particular the
+diﬀerences between central and satellite galaxies are qualitatively
+the same if no weight is applied.
+Another limitation of the spectroscopic data is that they are
+taken through ﬁxed-aperture ﬁbers and hence sample diﬀerent spa-
+tial extent of the galaxies. Quantifying this eﬀect on a galaxy-by-
+galaxy basis is uncertain and depends on several factors, and we
+do not attempt to correct for it. However, we have checked that the
+trends discussed in the next sections (in particular Sec. 5) are not
+driven by aperture bias due to galaxies with higher mass and in
+higher mass halos extending to higher redshift (Appendix B).
+3 TRENDS WITH STELLAR MASS
+It is known that both the mean stellar age and the stellar metallicity
+ingalaxiesincreaseonaveragewithgalaxymass(e.g.Gallazzietal.
+2005; Thomas et al. 2005; Mateus et al. 2006; González Delgado
+et al. 2015). The element abundance ratio»𝛼Fe¼ is also known to
+correlate with galaxy mass for early-type/quiescent galaxies (e.g.
+Jørgensen 1999; Trager et al. 2000; Thomas et al. 2005; Gallazzi
+et al. 2006; Graves et al. 2009b; Conroy et al. 2014; Walcher et al.
+2015).Inthissectionweanalysethescalingrelationsbetweenlight-
+weighted age, stellar metallicity and, for the ﬁrst time,»𝛼Fe¼ for
+all galaxy types versus galaxy stellar mass. We explore whether
+these scaling relations depend on galaxy hierarchy. In Fig.4 we
+plot the median trends (solid line with error bars) of age, stellar
+metallicity and»𝛼Fe¼ as a function of stellar mass for satellites
+(red) and central galaxies (black). The error bars indicate the error
+on the median6, while the shaded regions indicate the16𝑡ℎ  84𝑡ℎ
+interpercentile range of the distributions.
+From the upper panel of Fig.4 it is immediately clear that at
+masseslowerthan 10108M satellitegalaxiesareolderthanequally
+massive central galaxies. The diﬀerence in age between satellites
+and central galaxies increases with decreasing stellar mass at least
+down to 1094M reaching 035  04 dex. A similar but weaker
+trend is observed for stellar metallicity (middle panel), such that
+satellites are metal-richer than centrals by 015 dex in the mass
+range 1096  10106M. Over this mass range, these diﬀerences
+in metallicity are signiﬁcant between 5 and 13𝜎 level compared
+with the error on the median, but the signiﬁcance drops at masses
+lower than 1095M. At masses above10105M we ﬁnd a tiny
+diﬀerence in the median age and the median stellar metallicity of
+satellite and central galaxies, but still statistically signiﬁcant up
+to masses of 101112𝑀, above which centrals and satellites are
+indistinguishable as already shown in Pasquali et al. (2010). Not
+only the median trends are diﬀerent for satellites and for centrals,
+but also the lower and upper percentiles. In particular we notice a
+lowerfractionofyoungormetal-poorgalaxiesamongsatellites,and
+a larger spread in age toward old ages for low-mass satellites with
+respect to centrals. These results reproduce those already shown
+in Pasquali et al. (2010) but here updated with the SDSS DR7
+measurements.
+In addition to age and metallicity, in this work we explore the
+dependence of»𝛼Fe¼ on stellar mass and galaxy hierarchy for all
+6 Because of the non-gaussianity of the distributions and the weights ap-
+plied, instead of using the standard deﬁnition of the error on the median,
+we compute this as125¹ 𝑃84 𝑃16º2
+p
+𝑁, where N is the number of
+galaxies in each stellar mass bin.
+MNRAS000, 1–22 ()
+
+Ages, metallicities and»𝛼Fe¼ of centrals and satellites 7
+galaxytypes.ThebottompanelofFig.4showsthat »𝛼Fe¼increases
+with stellar mass also when the whole galaxy population is consid-
+ered and not only for early-type galaxies. Speciﬁcally we ﬁnd that
+»𝛼Fe¼ increases from 005 dex at 1091M to 035 dex at
+10115M. Contrary to age and metallicity, both the median trend
+andthe16-84percentilerangeof »𝛼Fe¼ arevirtuallyindistinguish-
+ableforsatellitesandcentralgalaxies.Wenotice,though,thatinthe
+mass range10106  10114M the tiny excess in»𝛼Fe¼ of satel-
+lites is statistically signiﬁcant at the4  7𝜎 level (compared with
+the error on the median). This will be better explored in Sec. 5.
+The diﬀerences in light-weighted mean age suggest at face
+value that satellite-speciﬁc processes have inﬂuenced and sup-
+pressed the more recent star formation history of relatively low-
+mass satellites to a larger extent than what has occurred for their
+central counterparts. These mechanisms have also led, on average,
+to a higher degree of metal enrichment of satellites’ stellar popula-
+tions. However, the element abundance ratio»𝛼Fe¼ is not aﬀected
+suggesting that quenching happens (or terminates) late enough for
+Fe-peakelementstobeincorporatedintostars.Tofurtherelucidate
+the possible origin of these diﬀerence, we investigate in the next
+sections how they depend on halo mass and on galaxy type.
+4 TRENDS WITH HALO MASS
+InFig.5weexploreanyfurtherdependenceofstellarpopulationpa-
+rametersonthegrouphalomass.Theleft-hand(right-hand)panels
+show the relations with stellar mass (halo mass) for galaxies resid-
+inginhalosofdiﬀerentmass(inbinsof 𝑀).Themediantrendsas
+afunctionofstellarmass(halomass)ofsatellitegalaxiesinbinsof
+halomass(stellarmass)areshownbythesolidcolouredlines,with
+error bars indicating the error on the median. The median trends
+as a function of stellar mass (halo mass) of central galaxies in bins
+of halo mass (stellar mass) are shown by the dot-dashed coloured
+lines. The grey region and the white solid line in each panel show
+the median and percentiles of the overall distribution for centrals.
+4.1 Central galaxies
+Forcentralgalaxies,bothageandstellarmetallicitydependstrongly
+on stellar mass: both parameters increase with stellar mass over
+roughly two orders of magnitude, with a ﬂattening only at masses
+& 1011𝑀 (left-hand panels). Centrals’ age and metallicity are
+insteadindependentofhalomassexceptforhaloslessmassivethan
+1012𝑀 (right-hand panels). We note though that, according to
+the relation between host halo mass and central stellar mass (Yang
+et al. 2008), the halo mass range over which the relations are ﬂat
+(Mh ¡ 10125M) roughly corresponds to the range over which
+alsotherelationswithstellarmassareﬂat( M ¡ 1011M).Onthe
+contrary, we do not detect any signiﬁcant ﬂattening in the scaling
+relationsof»𝛼Fe¼ ofcentralgalaxies:their »𝛼Fe¼ showsasimilar
+monotonic increase with both stellar mass and halo mass (bottom
+panels). We note that the slope of the relations with stellar mass
+(halomass)forcentralgalaxiesisindependentofhalomass(stellar
+mass): centrals in diﬀerent halos (dot-dashed colored lines) follow
+the same trends with stellar mass as the global central galaxies
+populations. We only note a milder increase of age and metallicity
+withhalomassatﬁxedstellarmassfor Mh  10125Mwithrespect
+totheglobaltrends,buttherangeinhalomassprobed,atﬁxedM ,
+is narrow.
+Trussler et al. (2020a) discuss a feature of central galaxies at
+ﬁxed stellar mass being slightly more metal-poor in higher mass
+Figure 4.Distribution in r-band light-weighted age (upper panel), stellar
+metallicity (middle panel) and»𝛼Fe¼ (bottom panel) as a function of
+stellar mass for central (black curve and grey region) and satellite galaxies
+(red curve and hatched region). The solid lines represent the median trend,
+witherrorbarsindicatingtheerroronthemedianineachbinofstellarmass .
+The hatched regions represent the16𝑡ℎ  84𝑡ℎ interpercentile range of the
+distributions. Only galaxies with spectral𝑆𝑁  20 are included. Each
+galaxyisweightedtocorrectforMalmquistbiasandforincompletenessdue
+to the S/N cut.
+halos. We do not ﬁnd such a feature. Instead, over the small mass
+range of overlap, we see that at ﬁxed stellar mass centrals in more
+massive halos tend to be either equal or slightly more metal-rich,
+older and more𝛼-enhanced than those in lower-mass halos: note
+thepositiveslopewithM ℎ ofthedot-dashedlinesintherightpanel
+of Fig. 5 and the systematic vertical oﬀsets of the lines at ﬁxed
+halo mass in the left panels (these trends are more clearly visible
+in Fig.C1 zooming onto the high-mass regime of centrals). It is
+a subtle eﬀect and the diﬀerence could come from the diﬀerent
+physicalparameterestimatesusedand/orfromthediﬀerentbinning
+in halo mass.
+The slight increase of metallicity with Mℎ for central galaxies
+isconsistentwiththatfound,atﬁxedvelocitydispersion(ratherthan
+M), by La Barbera et al. (2014) for the population of early-type
+galaxiesonly.Noticethat,instead,thetrendsofageand »𝛼Fe¼with
+Mℎ seemtodiﬀerwithrespecttothoseofLaBarberaetal.(2014),
+who found that, at ﬁxed velocity dispersion, early-type centrals in
+MNRAS000, 1–22 ()
+
+8 A. R. Gallazzi et al.
+massive groups are younger and less𝛼-enhanced than early-type
+centrals in low-mass halos. These diﬀerences may be due to the
+fact that our trends include the contribution of both early- and late-
+type galaxies, the latter dominating the low-mass range, while La
+Barbera et al. (2014) considered only (morphological and color-
+selected) early-type galaxies. Moreover, La Barbera et al. (2014)
+compared galaxy properties as a function of velocity dispersion
+rather than stellar mass as in the present work.
+4.2 Satellite galaxies
+Concerning satellite galaxies, all the stellar population parameters
+studied here increase with galaxy stellar mass even at ﬁxed halo
+mass, suggesting that stellar mass is the primary driver of stel-
+lar population age and chemical abundances (left-hand panels of
+Fig. 5). This is not new and evidences of this statement have been
+reported by several works (e.g. G06, Pasquali et al. 2010; Peng
+et al. 2010; Thomas et al. 2010; Trussler et al. 2020a). However,
+in addition to stellar mass dependence, it is evident that the light-
+weighted mean age also strongly depends on halo mass at ﬁxed
+stellar mass: for satellites less massive than 1011𝑀 their mean
+stellarageincreasesonaveragewithincreasinghalomassandthere-
+lation becomes steeper for lower stellar masses (upper-right panel).
+Low-mass satellites residing in more and more massive halos de-
+viate to older and older ages with respect to equally-massive cen-
+tral galaxies, such that below1010𝑀 satellites inMh ¡ 1014M
+are 06 dex older than satellites inMh  10125M and than
+equally-massive centrals (upper-left panel). The stellar metallicity
+of satellite galaxies depends primarily on galaxy stellar mass, but a
+mild dependence on halo mass at ﬁxed stellar mass is detected for
+satellites less massive than 10105𝑀: the stellar metallicity of
+satellites increases by about 0.2 dex over a range in halo mass from
+ 1012 to 10145𝑀 and with respect to equally-massive central
+galaxies (middle-right panel). No signiﬁcant dependence on halo
+mass is observed for the»𝛼Fe¼ of satellite galaxies (bottom pan-
+els): the»𝛼Fe¼ 𝑀 relation is the same for satellites in diﬀerent
+environments,exceptforasmall »𝛼Fe¼excessforsatellitesresiding
+in the most massive halos (Mh ¡ 1014M).
+These trends in stellar age suggest that for low-mass galaxies
+the mass of the halo onto which they accrete inﬂuences the process
+ofstarformationquenching,beingitfacilitatedoroccurringearlier
+in more massive halos. The excess in stellar metallicity of satellite
+galaxies can be explained in a scenario in which the quenching is
+associated with the suppression of metal-poor gas inﬂows in high
+densityenvironments,asaresultofprocessesthatremovethegasin
+thegalaxyhaloand/orinthegalaxydisc,asdiscussedinBahéetal.
+(2017a)andTrussleretal.(2020b).Ifweinterpret »𝛼Fe¼asaproxy
+for the timescale of chemical enrichment, its lack of environmental
+dependencemayindicatethatanyenvironmentalquenchingshould
+take long enough or occur after long enough time to allow the
+reprocessingofFe-peakelements.Thisinterpretationisinlinewith
+the long timescale of SF suppression inferred in Pasquali et al.
+(2019)fromthegradientsinspeciﬁcSFRversusphase-spacezone.
+Overall, the observed global trends in age, the small stellar
+metallicity excess for low-mass satellites in massive halos and the
+lackofsigniﬁcant»𝛼Fe¼ diﬀerencesasafunctionofgrouphierar-
+chy and halo mass, manifest the action of environment on the more
+recent star formation and not the bulk star formation in the past.
+4.3 Comparing centrals and satellites at ﬁxed stellar and halo
+mass
+By ﬁxing both the stellar mass and the halo mass, there are no sig-
+niﬁcant systematic diﬀerences between centrals and satellites. The
+similarity of centrals and satellites at ﬁxed stellar and halo mass
+has already been discussed in Wang et al. (2018) who interpret it
+as due to a similarity in the quenching process aﬀecting centrals
+and satellites in their host halo. However, because of the relation
+between group halo mass and𝑀 for centrals (Yang et al. 2008),
+centralgalaxiesspananarrowrangeinstellarmassatﬁxed Mh and
+there is little overlap with satellites (except for𝑀ℎ . 10125𝑀).
+Conversely, except forlog𝑀𝑀 = 105  115, at ﬁxed stellar
+mass there is a limited range of overlap inMh between centrals
+and satellites. Controlling for both stellar and halo mass, satellites
+and centrals appear to follow similar scaling relations, but cover-
+ing diﬀerent mass ranges (comparing solid and dot-dashed colored
+lines). This has been interpreted by Wang et al. (2018) as an in-
+dication that satellite-speciﬁc environmental eﬀects (’nurture’) are
+not important. However this does not fully explain the diﬀerent
+distributions of centrals and satellites that we observe. Moreover,
+for log𝑀ℎ𝑀  125 (the only environment where satellites and
+centrals span a similar stellar mass range) satellites are 005 dex
+older than centrals at ﬁxed stellar mass (black solid versus dot-
+dashed curves in the left-hand panels). Forlog𝑀𝑀 = 10  11,
+instead, centrals are . 005 dex older and more metal-enhanced
+than satellites at ﬁxed halo mass (green and blue dot-dashed versus
+solid curves in the right-hand panels). However this could be due
+to the larger averageM of centrals in eachMh bin and the rela-
+tionbetweenstellarpopulationparametersandstellarmass.Indeed,
+we checked that for each stellar mass bin and as a function ofMh
+centrals are on average02 dex more massive than satellites.
+We should keep in mind that when ﬁxing both Mℎ and M
+we are considering satellites that have a similar M to their own
+central as well. In this regime misclassiﬁcations of centrals due
+to stellar mass errors and to the more physical fact that the most
+massive galaxy is not always the one sitting at the bottom of the
+potential well (Skibba et al. 2011) can be important and wash out
+truediﬀerencesbetweencentralsandsatellites. Whatemergesfrom
+Fig. 5 is that galaxies in the local Universe in order to be old and
+chemicallyevolvedneedtobeeitherverymassiveorbesatellitesin
+massive haloes.
+5 DEPENDENCE ON SPECIFIC SFR
+Sofarwehavecomparedsatellitesandcentralgalaxiesirrespective
+oftheircurrentstarformationactivity.Theolderaveragestellarage
+of satellites with respect to equally-massive central galaxies can be
+toﬁrstordertheresultofahigherfractionofpassivegalaxiesamong
+the satellite population. Indeed the frequency of passive galaxies is
+a strong function not only of galaxy mass but also of environment
+(e.g.Pengetal.2012).Toquantifythiseﬀectinourdataweclassify
+the galaxies in our sample on the basis of their speciﬁc SFR.
+Figure 6 shows the distribution in speciﬁc SFR versus stellar
+massforthewholesample(upperpanel),andforsatellitesandcen-
+tral galaxies separately (middle and lower panels). The SFR values
+used here are those estimated for SDSS DR7 as in Brinchmann
+et al. (2004) and aperture corrected to total values7. The dashed
+line in Fig. 6 shows the linear relation ﬁt between speciﬁc SFR and
+7 We downloaded the catalogs from http://wwwmpa.mpa-
+MNRAS000, 1–22 ()
+
+Ages, metallicities and»𝛼Fe¼ of centrals and satellites 9
+Figure5. Left:Distributioninlight-weightedage,stellarmetallicityand »𝛼Fe¼ asafunctionofstellarmassforcentralgalaxies(greyshadedregionenclosing
+the 16-84 interpercentile range) and for satellite galaxies in diﬀerent bins of log halo mass (colored lines). Centrals are also divided in the same halo mass
+bins and the corresponding trends are indicated by the dot-dashed linesRight:Distribution in light-weighted age, stellar metallicity and»𝛼Fe¼ as a function
+of halo mass for central galaxies (grey shaded region enclosing the 16-84 interpercentile range) and for satellite galaxies in diﬀerent bins of log stellar mass
+(colored lines). The dot-dashed lines show the trends for centrals in the same stellar mass bins. Only bins with at least 20 galaxies are shown. The error bars
+associated with the trends of satellite galaxies are theerror on the median.
+stellar mass for galaxies in the whole sample which are classiﬁed
+as star-forming based on the Baldwin et al. (1981) (BPT) diagram
+(cyan contours). We deﬁne as quiescent those galaxies whose spe-
+ciﬁc SFR is below this relation by more than4𝜎 (i.e. below the
+red line), star-forming those whose speciﬁc SFR extends from less
+garching.mpg.de/SDSS/DR7/sfrs.html where also a description of the
+method can be found.
+than 2𝜎 below the relation upward (i.e. above the blue line), and
+green-valley those with a speciﬁc SFR in between these values.
+InFig.7weshowhowthefractionofquiescentgalaxiesvaries
+asafunctionofstellarmassforcentralgalaxies(grayregion)andfor
+centralsandsatellitesdividedintobinsofhalomass(dot-dashedand
+solidcoloredlines,respectively).Thefractionofquiescentgalaxies
+increasesto ¡ 90%atstellarmassesabove 10115𝑀.Furthermore,
+atanygivenstellarmassdownto 1095𝑀 thequiescentfractionis
+higheramongsatellitegalaxiesanditincreaseswithhosthalomass,
+such that in halos more massive than1014𝑀 more than 50% of
+MNRAS000, 1–22 ()
+
+10 A. R. Gallazzi et al.
+Figure 6.Distribution in speciﬁc SFR as a function of stellar mass for the
+wholesample(upperpanel),forsatellites(middlepanel)andcentralgalaxies
+(lowerpanel).Ineachpanelthedashedlineshowsthelinearrelationﬁtforall
+galaxies (independent of hierarchy) classiﬁed as star-forming based on the
+BPTdiagram(cyancontours),theredandbluelinesshowthesamerelation
+oﬀsetby2and4 𝜎respectively.Wedeﬁneasquiescentthosegalaxiesbelow
+the red line, as star-forming those above the blue line and as green-valley
+those in between.
+satellitesarequiescentatanyﬁxedstellarmass.Thisisinagreement
+with what shown by many other works, irrespective of the exact
+deﬁnition of ‘quiescence’ and of ‘environment’ (e.g. Baldry et al.
+2006;Pengetal.2012;Wetzeletal.2013;Trussleretal.2020a;De
+Lucia et al. 2019). In analogy with these results, considering early-
+type galaxies only, Thomas et al. (2010) found that the fraction of
+rejuvenated galaxies instead decreases with increasing mass and
+with increasing environmental density. For central galaxies there is
+no clear dependence on halo mass, but this can only be probed for
+a narrow range in halo mass at ﬁxed stellar mass. At high stellar
+masses (¡ 1011M) the fraction of quiescent galaxies is the same
+for centrals and for satellites, but at lower stellar masses satellite
+galaxieshaveahigherpassivefractionthanequally-massivecentrals
+inequally-massivehalos:thisisinparticularevidentforcentralsand
+satellites in halos less massive than10125M.
+Theincreaseinquiescentfractionwithhalomassatﬁxedstel-
+lar mass qualitatively resembles the increase in average stellar age
+of satellite galaxies. The question arises whether the observed dif-
+ferences in age and metallicity between satellites in diﬀerent halos
+and central galaxies are entirely due to the varying quiescent frac-
+tionorwhetherquiescentandstar-formingsatellitesseparatelyhave
+Figure7. Fractionofquiescentgalaxiesasafunctionofstellarmass.Galax-
+iesareweightedby 1Vmax wSN.Thegreyshadedregionreferstocentral
+galaxies, while colored solid (dot-dashed) lines refer to satellite (central)
+galaxies binned according to their host halo mass. Error bars indicate the
+Poissonian uncertainty.
+diﬀerentstellarpopulationpropertiesthantheircentralcounterparts
+owingtodiﬀerentstarformationhistories.Weaddressthisquestion
+in Fig. 8, in which we show the relation between stellar age, stel-
+lar metallicity,»𝛼Fe¼ and stellar mass for centrals (white line and
+grey region) and for satellites in diﬀerent halo mass bins (colored
+lines)splitintostar-forming(leftpanels),green-valley(middlepan-
+els)andquiescent(rightpanels).Thedot-dashedgreylinesenclose
+the 84𝑡ℎ  16𝑡ℎ percentile range of all satellites. All the three stel-
+lar population parameters show a diﬀerent dependence on stellar
+massaccordingtothegalaxystarformationactivity.Ageandstellar
+metallicityincreasesteeplywithstellarmassforstar-forminggalax-
+ies,whiletheirscalingrelationsbecomeﬂatterforgreen-valleyand
+quiescent galaxies. On the contrary, the»𝛼Fe¼ 𝑀 relation is rel-
+atively ﬂat for star-forming galaxies while it is signiﬁcantly steeper
+for green-valley and quiescent galaxies.
+In terms of environment, the ﬁrst notable result from Fig. 8 is
+that when comparing galaxies with similar current star formation
+activity the distributions in stellar population properties at ﬁxed
+stellar mass are very similar and in most cases virtually the same
+for satellite and central galaxies.The diﬀerences observed in the
+scaling relations of satellites and centrals originate to a large ex-
+tent from the dependence of quiescent fraction on stellar and halo
+mass.Recently,Trussleretal.(2020a)obtainedthesameresultson
+the similarity in the age and stellar metallicity scaling relations of
+centralsandsatelliteswhenaccountingfortheirquiescentfractions,
+usingindependentestimatesof(mass-weighted)ageandmetallicity.
+We further take a closer inspection to the diﬀerences (or lack
+thereof) between satellites and central galaxies with similar star
+formation activity by exploring any dependence on halo mass. We
+dividesatellitegalaxiesintobinsofhalomass:themedianrelations
+withstellarmassareshownbythecoloredlinesinFig.8,whileFig.9
+shows the diﬀerence in age, metallicity and»𝛼Fe¼ of satellites
+MNRAS000, 1–22 ()
+
+Ages, metallicities and»𝛼Fe¼ of centrals and satellites 11
+in each halo mass bin with respect to equally-massive centrals,
+splitintostar-forming,green-valleyandquiescent.Wediscusseach
+stellar population parameter in the next subsections.
+5.1 Stellar age
+The relation between light-weighted age and stellar mass (upper
+panels of Fig. 8) shows a clear dependence on speciﬁc SFR: not
+only the mean age at ﬁxed stellar mass shifts to older ages going
+from star-forming to quiescent galaxies, as expected, but also the
+relation is signiﬁcantly steeper for star-forming galaxies, while it
+becomes progressively ﬂatter for green-valley and for quiescent
+galaxies. Although the relations for satellites and central galaxies
+are very similar, for a given star formation activity, we do note that
+satellitegalaxieshaveanarrowerrangeinstellarageatﬁxedmass
+with respect to central galaxies, showing a reduced tail toward
+younger ages. We also note the tendency of the median age of
+satellite galaxies to be slightly older than that of central galaxies,
+in particular for star-forming and green-valley galaxies in the most
+massivehalosatmoderatestellarmasses:althoughthesediﬀerences
+areverysmall,theyareformallysigniﬁcantatalevelbetween3and
+5𝜎 for SF in the mass range10103  10108𝑀 and at3  7𝜎 for
+GVinthemassrange 10106  10102𝑀.Thesearealsosupported
+by a >99% KS probability of rejecting the null hypothesis.
+The upper panels of Fig. 9 show more clearly the diﬀerences
+in age between satellites in diﬀerent halo mass ranges and cen-
+trals. We see a small residual diﬀerence in light-weighted age of
+. 05  1 Gyr for star-forming and green-valley satellites residing
+today in the most massive halos (𝑀ℎ ¡ 1014𝑀) with respect to
+equally-massive centrals. This excess in light-weighted age could
+indicate a reduction in the level of recent star formation activity
+in these galaxies compared to equally-massive central galaxies and
+satellitesinlower-masshalos.Thisqualitativelyreﬂectstheresultof
+Pasqualietal.(2012)whereweshowedthat,amongSDSSgalaxies
+withameasureofgas-phasemetallicity(thatis,emissionlinegalax-
+ies), satellites have a global speciﬁc SFR lower by 0.03 dex than
+centrals at any given stellar mass. This ﬁnding is also qualitatively
+in agreement with the detected reduction in the average speciﬁc
+SFR at ﬁxed mass for star-forming satellite galaxies compared to
+their ﬁeld counterparts found by Woo et al. (2017) (they report a
+largerreductionof0.1dexthanPasqualietal.2012).Similarly,Ro-
+dríguezDelPinoetal.(2017)ﬁnda60%suppressioninthespeciﬁc
+SFRofH 𝛼-detectedgalaxiesintheA901/2clustercomparedtothe
+ﬁeld. However, we note that, contrary to what observed in Fig. 5
+and Fig. 7 for the population as a whole and to the studies men-
+tioned above, once we look at galaxies with similar speciﬁc SFR
+the residual eﬀect of environment on the mean light-weighted age
+is detected preferentially in star-forming and green-valley galaxies
+more massive than1010𝑀, which on average contain older stellar
+populations (upper left and middle panels of Fig. 9). Therefore the
+small excess in light-weighted age of (massive) star-forming satel-
+lites may have a diﬀerent origin: it may point to a star formation
+history more peaked at earlier times in galaxies that reside today in
+massive halos.
+A very small ( 02  05 Gyr) but systematic excess in light-
+weighted age is detected also for quiescent satellites in the most
+massivehaloscomparedtoequally-massivequiescentcentralgalax-
+ies(at 2 5𝜎signiﬁcanceoverthemassrange 1098 10113𝑀).A
+similarresidualdependenceofageonenvironmentwasobservedby
+Cooper et al. (2010a) for early-type galaxies and it was interpreted
+as evidence for assembly bias such that galaxies in higher-density
+regions formed earlier than equally-massive galaxies in less dense
+environments.Clemensetal.(2006)alsofoundadiﬀerenceofonly
+0.03-0.04 dex between early-type galaxies in low-density environ-
+ments and those in high-density environments.
+Theenvironmentinwhichthesemassive,passivegalaxieswere
+located at the time of their quenching was likely diﬀerent from the
+cluster-sized halos in which they are located today. Given the old
+ages of these quiescent galaxies ( 8 Gyr) they likely had their
+star formation quenched before becoming satellites of the current
+halo. These diﬀerences, although small (few hundred Myr), may
+reﬂecteitheranearlierassemblyepochforgalaxiestodayinmassive
+halos with respect to galaxies that reside today in lower-mass halos
+(assemblybias)possiblyassociatedtoadiﬀerentlocationwithinthe
+cosmicweb,ortheeﬀectofenvironmentally-inducedstarformation
+quenching at early times in a smaller halo (pre-processing).
+5.2 Stellar metallicity
+The relation between stellar metallicity and stellar mass (middle
+panelsofFig.8)alsodependsonthecurrentstarformationactivity,
+although less so than for light-weighted age. Star-forming galaxies
+displayasteeperrelationbetweenstellarmetallicityandstellarmass
+and they have a larger dispersion in stellar metallicity at ﬁxed mass
+than galaxies with low or absent current star formation activity.
+The diﬀerence in stellar metallicity between quiescent and star-
+forminggalaxiesvariesfrom0.3dexat 𝑀= 1095𝑀 to0.1dexat
+𝑀 = 10105𝑀. The diﬀerent slopes of the mass-metallicity rela-
+tionforstar-formingandquiescentgalaxies,andtheexcessmetallic-
+ity of quiescent galaxies at low masses with respect to SF galaxies,
+havealreadybeenshownbyPengetal.(2015)usingourstellarpop-
+ulation catalog but a diﬀerent classiﬁcation into star-forming and
+quiescent.ThisresulthasbeenrecentlyconﬁrmedbyTrussleretal.
+(2020b) using a diﬀerent set of stellar population parameters and
+in particular mass-weighted stellar metallicities. They interpreted
+the excess stellar metallicity of quiescent galaxies with respect to
+star-forminggalaxiesasanindicationthat‘starvation’(i.e.suppres-
+sion of gas inﬂows) is the dominant quenching mechanism at all
+masses, with eﬃcient outﬂows being needed in addition at masses
+below 10102M. An alternative explanation has been proposed by
+Spitoni et al. (2017): within their framework of analytical models
+of chemical evolution, the diﬀerent slopes of the mass-metallicity
+relationsforstar-formingandquiescentgalaxiesrequireshortergas
+infall timescales in quiescent galaxies leading to rapid star forma-
+tion and metal enrichment at early epochs combined with stronger
+outﬂows in low-mass star-forming galaxies. Diﬀerences between
+centrals and satellites and as a function of halo mass could be ex-
+pectedifenvironmentalprocessesmodulatethegasinfallrate(such
+asstrangulationandram-pressurestrippingthatsuppressinﬂowsby
+removing the gas from the halo and from the outer disk) and/or the
+gas escape through outﬂows (e.g. galactic wind conﬁnement).
+Figure8showsthatthedependenceofthemass-metallicityre-
+lationoncurrentstarformationrateissimilarforsatellitesandcen-
+trals: satellites have comparable stellar metallicity as central galax-
+ies with similar speciﬁc SFR. Nevertheless, we detect a slightly
+higher stellar metallicity in low-mass quiescent satellites and in
+intermediate-mass star-forming satellites with respect to their cen-
+tral counterparts. This is quantiﬁed in the middle panels of Fig. 9,
+wherewedetect(with 3  5𝜎signiﬁcance)anexcessof 01dexin
+intermediate-mass star-forming and green-valley satellites residing
+in ¡ 1014𝑀 groups. For quiescent satellites, a similar excess in
+stellarmetallicityisdetectedatallstellarmassesbelow  10113𝑀
+and for halos more massive than10135𝑀 (with 3  8𝜎 signiﬁ-
+MNRAS000, 1–22 ()
+
+12 A. R. Gallazzi et al.
+Figure 8.Relations between light-weighted age (upper panels), stellar metallicity (middle panels),»𝛼Fe¼ (lower panels) and stellar mass for central galaxies
+(white line for the median and grey shaded region for the84th  16th percentile range) and for satellite galaxies split into bins of halo mass (colored lines with
+errorbarsgivingthe erroronthemedian ).Greydot-dashedlinesenclosethe 84th  16th percentilerangeofsatellitegalaxieswithoutdistinctiononhalomass.
+Galaxies are divided into star-forming (left column), green-valley (central column) and quiescent (right column) according to their speciﬁc SFR. Only bins
+with at least 20 galaxies are shown.
+cance8) and it appears to increase with decreasing stellar mass.
+Thesediﬀerencesinstellarmetallicitybetweensatellitesinthemost
+massive halos and central galaxies - for either star-forming, green-
+valleyandquiescentgalaxies-displayaverysimilartrendasstellar
+agewithgalaxymassandhalomass,pointingtoacommonoriginof
+the age and metallicity excess. Interestingly, the metallicity excess
+is detected only in galaxies dominated by old stellar populations,
+i.e. quiescent galaxies and high-mass star-forming galaxies. This
+suggeststhattheactionofenvironmentonthesegalaxypopulations
+needs to be pushed back at early times.
+If interpreted in terms of assembly bias, this would mean that
+8 The signiﬁcance is given comparing the diﬀerence with the quadrature
+sum of the errors on the median. Over the quoted mass ranges a KS test
+rejects the null hypothesis at >98% probability.
+galaxies residing today in more massive halos had a more eﬃcient
+metalenrichmentthangalaxiesinlower-masshalos.However,these
+diﬀerences could also be related to the amount of metals available
+in the star forming ISM modulated by the quenching process, i.e.
+a mechanism that allows star formation to continue in a metal-
+enriched ISM such as the suppression of inﬂows of metal-poor gas
+(asdiscussede.g.in Pasqualietal.2012;Pengetal.2015;Bahéetal.
+2017a;Maieretal.2019a).Suchmechanismwouldbeenhancedor
+more eﬀective in massive halos where satellites have, on average,
+an older infall time (the time when a galaxy becomes a satellite)
+and hence have been exposed to environmental eﬀects for a longer
+time (Pasquali et al. 2010, 2019).
+MNRAS000, 1–22 ()
+
+Ages, metallicities and»𝛼Fe¼ of centrals and satellites 13
+Figure 9.Diﬀerence in light-weighted age (upper panels), stellar metallicity (middle panels),»𝛼Fe¼ (lower panels) between satellites in each halo mass bin
+(color coding as in Fig.8) and central galaxies at ﬁxed stellar mass. The errorbars show the quadrature sum of the errors on the median trends for satellites
+and centrals. Galaxies are divided into star-forming (left column), green-valley (central column) and quiescent (right column) according to their speciﬁc SFR.
+Only bins with at least 20 galaxies are shown. The y-axis label in the bottom right-hand plot indicates the half-mass time diﬀerence corresponding to a given
+»𝛼Fe¼ diﬀerence according to the relation of de la Rosa et al (2011).
+5.3 Element abundance ratio»𝛼Fe¼
+Theelementabundanceratio »𝛼Fe¼ showsastrongdependenceon
+stellar mass for quiescent and green-valley galaxies (bottom panels
+of Fig. 8). Their»𝛼Fe¼ increases by about 0.3 dex over two orders
+of magnitude in stellar mass. This is in agreement with the relation
+with stellar mass and/or velocity dispersion found by other works
+on early-type galaxies (e.g. Jørgensen 1999; Trager et al. 2000;
+Kuntschner 2001; Thomas et al. 2005; Gallazzi et al. 2006; Graves
+et al. 2009a; Conroy et al. 2014; La Barbera et al. 2014; Walcher
+et al. 2015).
+Hereweshowfortheﬁrsttimetherelationbetween »𝛼Fe¼and
+stellar mass for star-forming galaxies. This relation is much shal-
+lowerthantheoneforquiescentgalaxies,andthestellarpopulations
+ofstar-forminggalaxieshavemedian »𝛼Fe¼valueslowerthanthose
+of equally-massive quiescent galaxies. If»𝛼Fe¼ traces star forma-
+tiontimescales,low »𝛼Fe¼ values(closetosolar)andaﬂatrelation
+with mass are expected in galaxies in the local Universe with on-
+going star formation (hence with long star formation timescales).
+Howevertherelationisnotcompletelyﬂatand »𝛼Fe¼isabovesolar
+for the majority of galaxies. This could be explained if the current
+(SFH-integrated)»𝛼Fe¼ is set to ﬁrst order by the eﬃciency of
+star formation in the early epoch of galaxy formation (the peak star
+formationrate),whenenrichmentof 𝛼elementsoccurs,andthisef-
+ﬁciencyisafunctionofgalaxyﬁnalmass(seeFontanotetal.2017).
+Inthiscase,subsequentstarformationactstodilutetheearly-epoch
+»𝛼Fe¼ because of SN Ia products being reincorporated in stars.
+It must be noted that Mg and Fe lines andMgbhFei are promi-
+nent for populations older than a few hundred Myr (e.g. Vazdekis
+et al. 2015), and therefore one may expect that our measure of
+»𝛼Fe¼ mostly reﬂects the properties of the bulk of the (old) stellar
+populations.Ingalaxiescomposedbyabulgeandadiskwethusex-
+MNRAS000, 1–22 ()
+
+14 A. R. Gallazzi et al.
+pect that the inferred»𝛼Fe¼ is mostly representative of the bulge,
+whose properties possibly depend on total stellar mass in a mild
+way, similarly to quiescent galaxies.9
+As observed for the galaxy population as a whole in Fig. 4,
+star-forming satellites and central galaxies have the same»𝛼Fe¼,
+indicatingthatanyenvironmentally-inducedsmalldiﬀerenceinthe
+recent star formation history of galaxies has not aﬀected their stel-
+larabundancepattern.Contrarytoageandmetallicity,thisremains
+true even when splitting satellites according to their host halo mass
+(bottom-left panel of Fig.8 and 9). Instead, for the most massive
+halos( Mh ¡ 1014M -magentalineinthemiddleandrightbottom
+panels of Fig. 9), we detect a small»𝛼Fe¼ excess in green-valley
+satellitesatmasses 10108  10113𝑀 (4𝜎signiﬁcance)andinqui-
+escentsatellitesatmasses 1010  10108𝑀 (2  5𝜎signiﬁcance10).
+If interpreted in terms of star formation timescale, this points to a
+starformationtimescaleshorterinthisclassofgalaxieswithrespect
+toequally-massivegalaxiesinlowerdensityenvironments,butbya
+verysmallamount.ByusingtheempiricalcalibrationofdeLaRosa
+etal.(2011)between »𝛼Fe¼ andthetimetoformhalfofthepresent
+stellarmassweﬁndthatanexcessof 002 005dexin»𝛼Fe¼would
+translate into a diﬀerence in half-mass time of only <500 Myr. Al-
+ternatively,thissmallexcesswouldindicatediﬀerencesintheearly
+phases of star formation for satellites in the most massive halos,
+in particular larger star formation rates at early times if a SFR-
+dependent integrated galaxy-wide IMF is assumed (Fontanot et al.
+2017). Interestingly, this small excess in»𝛼Fe¼ is accompanied
+by a diﬀerence in light-weighted mean age of 200  300 Myr.
+We have checked that we ﬁnd quantitatively a similar diﬀerence in
+mass-weighted mean age11, possibly suggesting that they are asso-
+ciated to a diﬀerence in the epoch when the bulk of stars formed
+rather than in the lower-redshift tail of the star formation history.
+6 DEPENDENCE ON INFALL TIME
+Theextenttowhichenvironmentcanshapeagalaxystarformation
+history may well depend on the time the galaxy span in that partic-
+ular environment, or in other words on the infall time onto a given
+hostenvironment.Withthisideainmind,Pasqualietal.(2019)have
+explored the dependence of SFR and stellar population properties
+of satellites on the infall time onto their present-day host halo. The
+infall time is traced by the location ("zones") in the phase-space
+diagram of cluster-centric velocity and cluster-centric distance. In
+particularPasqualietal.(2019)usehydrodynamicalzoom-insimu-
+lations of galaxy clusters to calibrate the dependence on infall time
+anddeﬁnezonesinphase-spacewithdiﬀerentmeaninfalltimethat
+minimize the scatter in infall time within each zone. The time of
+infall is here deﬁned as the time a satellite ﬁrst crosses the virial
+radius of the main progenitor of its present-day host halo.
+9 Wealsocautionagainstover-interpretingthelow-massendoftherelation
+for star-forming galaxies at this stage: because BC03 models follow the
+abundance pattern of the Milky Way, our»𝛼Fe¼ could be underestimated
+at metallicities log¹𝑍𝑍º  05, a regime relevant for low-mass star-
+forming galaxies (see Appendix A). However, this bias may be not very
+important on average given the young ages of these galaxies.
+10 Thesigniﬁcanceisestimated comparingthediﬀerencewiththeerroron
+themedian.OverthesemassrangesaKStestrejectsthenullhypothesisthat
+the distributions are equal at >99% conﬁdence.
+11 Mass-weightedagesareestimatedinthesamewayaslight-weightedage,
+except for the diﬀerent weighing along the SFH (see Gallazzi et al. 2008).
+Weexplorewhetherthediﬀerencesbetweencentralsandsatel-
+litespresentedintheprevioussectionsdependontheinfalltime.We
+restrict the analysis to the satellites used in Pasquali et al. (2019),
+i.e. those residing in groups with at least four members. Follow-
+ing Smith et al. (2019), we distinguish between ‘ancient infallers’
+(withanaverageinfalltimeolderthan5Gyr,correspondingtozone
+number smaller than 2; see their Fig. 4) and ‘recent infallers’ (with
+an average infall time younger than 2.5 Gyr, corresponding to zone
+number larger than 5). Fig. 10 shows the global stellar population
+scaling relations as in Fig. 4 but only for these subsets of ancient
+andrecentinfallersatellites.Wenotethatthemeanrelationsforthis
+subsample of satellites are shifted to older stellar ages and higher
+metallicities than the whole satellite sample shown in Fig. 4: this is
+aconsequenceofthecutinnumberofgroupmembers( ¡ 4),which
+leads to excluding the least massive halos, and of the dependence
+of stellar population properties on host halo mass.
+The important result of Fig. 10 is that ancient infallers follow
+diﬀerent relations than recent infallers. In particular they are sig-
+niﬁcantly older and slightly metal-richer12 than recent infallers of
+similarstellarmass.Itisworthnotingthatancientinfallershaveon
+average light-weighted mean ages of 8-9 Gyr, hence older than the
+mean epoch at which they became satellites on their current halo.
+Theextenttowhichtheagesandmetallicitiesofancientandrecent
+infallers diﬀer is similar to that by which the ages and metallicities
+of satellites residing in diﬀerent halo masses diﬀer (see Fig. 5). In-
+terestingly, we also see that over the mass range1099  10106𝑀
+ancient infallers have004  007 dex larger»𝛼Fe¼ at ﬁxed mass
+withrespecttorecentinfallersat 2 3𝜎signiﬁcance.Thisisadiﬀer-
+ent representation of the results presented in Pasquali et al. (2019)
+on the trends of sSFR, age, metallicity and»𝛼Fe¼ with infall time
+for satellites in diﬀerent bins of stellar and halo mass, which are
+stronger for satellites with mass lower than10105𝑀 and in halos
+more massive than10135𝑀. This indicates that time of infall is
+an important factor in shaping satellites’ star formation history and
+it is suggestive of a signature of an early (even prior to infall onto
+the current halo) and more prolonged exposure to environmental
+processes by ancient infallers.
+We explore in more detail any signature of a prolonged
+exposure to environmental eﬀects on the stellar populations in
+Figg. 11 and 12 separately for ancient and recent infallers, re-
+spectively. Similar to Fig. 9, we remove the main eﬀect due to
+thevaryingfractionofquiescentgalaxiesbydividingsatellitesinto
+star-forming, green-valley and quiescent. For each subsample we
+plot the diﬀerence in age (upper panels), stellar metallicity (mid-
+dle panels) and»𝛼Fe¼ (lower panels) between satellites residing
+in halos of diﬀerent mass and equally-massive central galaxies.
+Comparing Fig. 11 (ancient infallers) and Fig. 12 (recent infall-
+ers) with Fig. 9 it is clear thatthe excess in age, metallicity and
+»𝛼Fe¼ detected for satellites in massive halos with respect to cen-
+trals is largely driven by the ancient infallers satellite population.
+For recent infallers (Fig. 12) we do not detect any signiﬁcant and
+systematicdiﬀerenceintheirstellarpopulationswithrespecttocen-
+trals, regardless of their current star formation activity and of the
+massoftheircurrenthalo.Onthecontrary,ancientinfallers(Fig.11)
+withlowstarformationactivity(quiescentandgreen-valley)display
+an excess in mean stellar age, stellar metallicity and»𝛼Fe¼ with
+12 Thediﬀerenceinmedianmetallicityissigniﬁcant,comparedtotheerror
+on the median, only for few mass bins. However the distributions in metal-
+licity for ancient and recent infallers are diﬀerent with a KS probability of
+¡ 98% at masses 10106𝑀.
+MNRAS000, 1–22 ()
+
+Ages, metallicities and»𝛼Fe¼ of centrals and satellites 15
+respect to their central counterparts. For passive galaxies this is ev-
+ident already for halo masses larger than10135M. In particular,
+we ﬁnd: i) an excess in light-weighted age of 1 Gyr for massive
+(10106  10111𝑀) green-valley ancient infallers in halos larger
+than 1014M,andof 03  1Gyrforpassiveancientinfallersinthe
+mass range 10103  10111𝑀 for halo masses¡ 10135M and
+at all stellar masses for halos larger than1014M , ii) an excess
+in stellar metallicity of 01 dex for green-valley and quiescent
+ancient infallers in halos more massive than1014𝑀 at masses
+10101  10111𝑀 , iii) an excess in»𝛼Fe¼ of 0.1 dex for green-
+valley (at masses¡ 10108𝑀) and quiescent ancient infallers (at
+virtuallyallmassesforhalosmoremassivethan 1014𝑀).13 These
+results are consistent with Pasquali et al. (2019) and with Smith
+et al. (2019) who ﬁnd that ancient infallers reached 90% of their
+stellar mass 2 Gyr earlier than recent infallers. We also conﬁrm
+thepowerofdistinguishinggalaxiesaccordingtotheirphase-space
+location(orinfalltime)andaccordingtotheircurrentstarformation
+activity to detect signature of environmental eﬀects in halos with
+masses down to10135𝑀.
+Galaxiesthatonlyrecently(  15Gyragoonaverage)fellonto
+(themainprogenitorof)theirpresent-dayhalodonotappeartohave
+(yet) their stellar populations altered by their current environment
+(Fig. 12). The fact that they have similar stellar populations as
+equally-massive central galaxies also suggests that they were not
+aﬀected by the environment prior to becoming satellites of their
+current halo: this means that if they were already satellites in a
+smaller halo this didn’t aﬀect their star formation history, i.e. that
+pre-processing has not been important, or that they were located
+in a low-density environment similar to the ﬁeld. In Pasquali et al.
+(2019)satelliteslocatedathighzonenumbers(recentinfallepochs)
+are found to be slightly older and metal-richer than the average
+ﬁeldgalaxy,atﬁxedstellarandhalomass.Thisresultwasobtained
+without distinguishing star-forming and passive galaxies, and was
+interpreted as a possible sign of pre-processing. In light of our
+analysis, it can be justiﬁed as due to a higher fraction of quiescent
+galaxies among recent infallers with respect to ﬁeld galaxies. It is
+thentheserecentlyaccretedquiescentsatellitestohaveexperienced
+pre-processing. We checked that the fraction of quiescent galaxies
+among recent infallers varies from 27% for halos less massive than
+10125𝑀 to 70% for halos more massive than1014𝑀, compared
+to 40% for centrals in halos less massive than10125𝑀 (possibly
+isolated galaxies).
+7 SUMMARY AND DISCUSSION
+Wehaveinvestigatedtheimprintofenvironmentaleﬀectsongalaxy
+evolution left on the present-day stellar populations in galaxies ac-
+cording to their present-day environment. Speciﬁcally, we have
+compared the properties (light-weighted age, stellar metallicity,
+»𝛼Fe¼) of the stellar populations in a sample of 26023 satellite
+galaxiestothoseinasampleof87284centralgalaxies,makinguse
+of the SDSS-DR7 Wang et al. (2014) group catalog. In addition to
+stellar metallicity and age derived as in Gallazzi et al. (2005), in
+this work we also derive estimates of»𝛼Fe¼ for galaxies with any
+star formation activity.
+13 Thesearethemassrangesoverwhichancientinfallersdiﬀerfromcentrals
+at more than3𝜎 signiﬁcance and with a KS probability >99%.
+Figure 10. Relations between r-band mean stellar age (top panel), stel-
+lar metallicity (middle panel),»𝛼Fe¼ (bottom panel) and stellar mass for
+satellite galaxies in groups with at least four members (i.e. the sample used
+in Pasquali et al. 2019). The solid red line with error bars traces the median
+trend,whilethehatchedregionenclosesthe84th-16thinterpercentilerange.
+Theblackandbluelineswitherrorbarstracethemediantrendforsatellites
+classiﬁed as ancient infallers and as recent infallers, respectively, on the
+basis of their location in phase space (see Smith et al. 2019). The error bars
+indicate the error on the median.
+7.1 ‘Nurture’ and delayed-then-rapid quenching
+We contrast the properties of satellite galaxies to those of equally-
+massive central galaxies, controlling also for host halo mass. We
+ﬁnd that:
+ For high mass galaxies (𝑀 & 10108𝑀) satellites and cen-
+tralshaveonaveragethesamelight-weightedageandstellarmetal-
+licity. These properties increase only mildly with stellar mass and
+have a negligible dependence on halo mass for satellite galaxies
+(Figg. 4 and 5).
+ At lower stellar masses satellite galaxies have median light-
+weighted ages older by 03  04 dex and median stellar metal-
+licities higher by 01 dex than equally-massive central galaxies.
+Wealsonotethatnotonlythemedianageandmetallicitydiﬀerbut
+also the overall distributions at ﬁxed mass, indicating a dearth of
+young,metal-poorgalaxiesandanexcessofold,metal-richgalaxies
+among the satellites population (Fig. 4). The diﬀerences in median
+MNRAS000, 1–22 ()
+
+16 A. R. Gallazzi et al.
+Figure 11.Diﬀerence in light-weighted age (upper panels), stellar metallicity (middle panels),»𝛼Fe¼ (bottom panels) between satellites classiﬁed as ancient
+infallers, divided into bins of halo mass as in Fig.9 (colored lines), and central galaxies at ﬁxed stellar mass. The error bars indicate the quadrature sum of
+the errors on the median for satellites and centrals. Galaxies are divided into star forming (left column), green-valley (central column) and quiescent (right
+column). Only bins with at least 10 galaxies are shown.
+light-weightedageand,toalesserdegree,inmedianstellarmetallic-
+ity between satellites and equally-massive central galaxies increase
+with increasing host halo mass (Fig. 5). These results are in agree-
+ment with what found in Pasquali et al. (2010) for SDSS DR2.
+ The»𝛼Fe¼abundanceratioincreasesmonotonicallybyalmost
+0.4 dex over three orders of magnitude in stellar mass. Both the
+median trend and the16th  84th percentile range are remarkably
+similarforsatelliteandcentralgalaxies,indicatingthatthe »𝛼Fe¼is
+primarily set by the galaxy stellar mass (Fig. 4).
+ The comparison of centrals and satellites by controlling for
+both stellar mass and halo mass is hampered by the small overlap
+range in masses. In a given bin of halo mass, satellites and cen-
+trals appear to follow similar scaling relations with stellar mass but
+covering diﬀerent mass ranges. This could argue against satellite-
+speciﬁcprocessesshapingsatellites’stellarpopulations(Wangetal.
+2018). However, we notice two results which we think are evi-
+denceofenvironmentactingspeciﬁcallyonsatellitegalaxies:i)for
+log𝑀ℎ𝑀  125satellitesareonaverageslightlyolderandmore
+metalenhancedthancentralsatﬁxed 𝑀,asaresultoftheirslightly
+higherfractionofquiescentgalaxies;ii)oldandmetal-richgalaxies
+are only found either at high stellar masses or among the satellite
+population in massive halos at intermediate to low stellar masses.
+ We have shown that the diﬀerent scaling relations between
+centrals and satellites are to ﬁrst order the result of the diﬀerent
+mass-dependent fraction of quiescent galaxies among centrals and
+satellites (Fig.7, see also Wetzel et al 2013). We explore the age,
+metallicity and, for the ﬁrst time,»𝛼Fe¼ scaling relations with
+stellar mass for satellites and centrals with similar speciﬁc SFR,
+ﬁnding them to be very similar (Fig.8). This suggests at face value
+similarpaststarformationandmetalenrichmenthistoriesforsatel-
+lites and central galaxies at ﬁxed mass and current SF activity. The
+same result has been recently found with the independent analysis
+of Trussler et al. (2020a).
+MNRAS000, 1–22 ()
+
+Ages, metallicities and»𝛼Fe¼ of centrals and satellites 17
+Figure 12.Diﬀerence in light-weighted age (upper panels), stellar metallicity (middle panels),»𝛼Fe¼ (bottom panels) between satellites classiﬁed as recent
+infallers, divided into bins of halo mass as in Fig.9 (colored lines), and central galaxies at ﬁxed stellar mass. The error bars indicate the quadrature sum of
+the errors on the median for satellites and centrals. Galaxies are divided into star forming (left column), green-valley (central column) and quiescent (right
+column). Only bins with at least 10 galaxies are shown.
+The results above indicate that the stellar populations in
+present-day galaxies retain signiﬁcant information about the
+environment-driven quenching of star formation for galaxies less
+massive than 3 1010𝑀. The diﬀerences in age and their in-
+crease with host halo mass reveals that halos of present-day high
+mass have facilitated the process of quenching, especially in low-
+mass galaxies. When and how fast does environment aﬀect the star
+formationhistoryofgalaxiesaswitnessedbytheirpresent-daystel-
+lar populations? The main signature of environmental eﬀects is the
+higher fraction of quiescent galaxies among satellites and with in-
+creasing halo mass, but typically star-forming galaxies in clusters
+are found to have similar levels of star formation to those in the
+ﬁeld (e.g. Balogh et al. 2004; Poggianti et al. 2008). This, together
+with the fact that we ﬁnd the stellar population scaling relations of
+centrals and satellites to be virtually identical when controlling for
+thevaryingquiescentfraction(seealsoTrussleretal.2020a),would
+argueforquenchinghappeningonarathershorttimescale:galaxies
+are either ‘on’ or ‘oﬀ’ and there is not a gradual transition in the
+stellar population properties. If this were the case, we might expect
+toseeasignatureoffastenvironmentalquenchinginthe »𝛼Fe¼ be-
+inghigherforsatellitegalaxies,ifweassumethat »𝛼Fe¼ isatracer
+of star formation timescale and if quenching happens early on as
+soon as a galaxy becomes a satellite. On the contrary, we ﬁnd that
+to ﬁrst order»𝛼Fe¼ scales with stellar mass in the same way for
+central and satellite galaxies. This would suggest that the timescale
+of star formation is set to ﬁrst order by the galaxy mass (internal
+processes) and that it is not aﬀected by environment. Or, in other
+words, it indicates that any environmentally driven star formation
+quenchinghappenssigniﬁcantlyafterthebulkofstarformationand
+metal enrichment occurs, on an overall timescale of few or several
+Gyr to allow SNIa products to be incorporated in stars.
+These two apparently contradicting results can be reconciled
+in a two-phase quenching scenario, also referred to as ‘delayed-
+then-rapidquenching’:starformationwouldcontinueforafewGyr
+MNRAS000, 1–22 ()
+
+18 A. R. Gallazzi et al.
+whenagalaxyisaccretedontoahalobeforebeingrapidlyquenched
+becauseoftheaccumulatedeﬀectofenvironmentalprocessesalter-
+ingthegascontentanddistributionwithinthegalaxy.Thisscenario
+wasﬁrstproposedbyWetzeletal.(2013)whoconstrainedthedelay
+timetovarybetween5and2Gyrdecreasingwithincreasingstellar
+mass and the time of actual quenching to be 0.2-0.8 Gyr. Similarly
+long overall timescales (not necessarily in two phases), between 3
+and 6 Gyr, for galaxies to quench after becoming satellites have
+beenalsodeterminedbasedoncomparisonoftheobservedpassive
+fractions with predictions from SAM (e.g. De Lucia et al. 2012;
+Hirschmann et al. 2014) and from N-body cosmological simula-
+tions (e.g Oman & Hudson 2016). Finally, in Pasquali et al. (2019)
+we determine that it takes between 4 and 6 Gyr before the speciﬁc
+SFR oflog𝑀  105satellites decreases below10 11𝑀𝑦𝑟 and
+ 2 3Gyrforhighermasssatellites.Thismightexplainthesimilar
+»𝛼Fe¼ of satellites and centrals that we ﬁnd in this work.
+Inthecontextofdelayed-then-rapidquenching,thehigherstel-
+lar metallicities of satellite galaxies can be understood if star for-
+mationcontinuesinamoremetal-richISMwithrespecttocentrals.
+SeveralmechanismsactingonsatellitescancausetheISMtoreach
+higher metallicities. Removal of gas from the halo (‘strangulation’,
+acting on a few Gyr timescale) and then from the outer disk (ram-
+pressurestripping,actingon1-2Gyrtimescale)(Boselli&Gavazzi
+2006)wouldinhibitinﬂowsofmetal-poorgastowardthecentralre-
+gionsof galaxies,thusallowingthe subsequentgenerationsof stars
+to reach higher metallicities. The combined action of strangulation
+and ram-pressure stripping could produce the two-phase quench-
+ing: on long timescales when only the hot gas reservoir is removed
+and thenon rapid timescales whenthe cold gas isstripped via ram-
+pressure. It has been suggested already by previous works in order
+toexplainthediﬀerencesobservedingas-phasemetallicitybetween
+satellites and centrals (Pasquali et al. 2012; Bahé et al. 2017a) as
+well as the enhanced gas-phase metallicities of galaxies located in
+the central regions of both low and intermediate redshift clusters
+(Maier et al. 2019a,b). Alternatively, higher gas-phase metallicities
+(and,subsequently,higherstellarmetallicities)couldresultfromthe
+conﬁnement of galactic winds under the pressure of the hot ICM
+(Mulchaey & Jeltema 2010), preventing outﬂows to remove metals
+from the ISM (Pasquali et al. 2012). However, based on cosmo-
+logical hydrodynamic simulations and analytic models (Bahé et al.
+2012), this process is expected to be sub-dominant with respect to
+strippingofthehotgasortooperateonlywhengalaxieshavealready
+losttheirhotgas.Gradualstrippingofthehotgasreservoirappears
+as a key ingredient to be treated in semi-analytic models of galaxy
+formation in order to reproduce the observed quenched fraction in
+central and satellite galaxies and the long timescales of satellite
+quenching inferred from observations (Xie et al. 2020; Cora et al.
+2018). However discrepancies between both semi-analytic models
+andhydro-dynamicalsimulationsandobservationsremainforlow-
+massgalaxiesinmassivehalosandhigh-massgalaxiesinlow-mass
+halos which are not trivial to approach (see discussion in Xie et al.
+2020).
+7.2 ‘Nature’ and early environmental eﬀects
+We have explored in detail diﬀerences in the present-day stellar
+populations of satellites and centrals, accounting for the varying
+quiescentfractioninthetwosamples.Controllingforhalomassand
+forinfalltime,basedonthephase-spacelocationofgalaxies,small
+but interesting diﬀerences emerge for relatively massive galaxies.
+ Weﬁndasmallexcessinlight-weightedageandstellarmetal-
+licity for intermediate-mass star-forming satellites residing in the
+mostmassivehalos( & 1014𝑀;upperandmiddlepanelsofFig.9).
+Atfacevalue,thismaysuggestareductioninthestarformationrate
+ofsatellitesincluster-sizedhalos,possiblyduetothesuppressionof
+metal-poorgassupplythatwouldacttoincreasetheobservedstellar
+metallicity along with aging of the stellar populations. If this were
+thecasethesmallenvironmental-inducedSFRreductionshouldnot
+aﬀect the»𝛼Fe¼ of star-forming satellites with respect to centrals
+(lower panel of Fig. 9): the continued star formation activity, and
+the consequent recycling of Type Ia SN products, would decrease
+»𝛼Fe¼ in a similar way as for equally-massive centrals. Few stud-
+ies have identiﬁed small levels of reduction in SFR in low-mass
+( 1010𝑀) cluster galaxies (e.g. Woo et al. 2017; Pasquali et al.
+2012). However, the diﬀerences in age and metallicity that we ob-
+serveforstar-forminggalaxiesarenotdetectedatasigniﬁcantlevel
+in low-mass galaxies, but manifest mainly at intermediate masses
+(between 1010 and 1011𝑀), i.e. in galaxies with light-weighted
+ages between 3 and 5 Gyr. Interestingly, these intermediate-mass
+star-forming galaxies may resemble the population of dusty star-
+forming galaxies with reduced SFR and with preferentially inter-
+mediate mass values found in low-redshift clusters (e.g Wolf et al.
+2009; Gallazzi et al. 2009; Rodríguez Del Pino et al. 2017). Alter-
+natively, what we are witnessing here is not a reduction in SFR but
+rather earlier formation epochs (associated to the earlier collapse
+of more massive halos) and higher metal enrichment eﬃciencies
+but similar formation timescales (if»𝛼Fe¼ traces SF timescale) in
+star-forming satellites of massive halos.
+ For passive galaxies we ﬁnd that satellites in halos more mas-
+sive than1014𝑀 show very small but systematic excess in light-
+weightedage(fewhundredMyr),stellarmetallicity(  01dex)and
+»𝛼Fe¼ (. 005 dex) over almost the whole mass range probed by
+oursample( 1098 10113𝑀)comparedtosatellitesinlower-mass
+halosandcentralgalaxies.Rejuvenationoflow-mass(  10108𝑀)
+quiescentsatelliteswithyoungeragesandlower »𝛼Fe¼ (buthigher
+stellar metallicity) in low-density environment, as observed by
+Thomasetal.(2010),doesnotprovideanexplanationforthediﬀer-
+ences we observe. Instead, our results are in line with the relation
+foundbyCooperetal.(2010a)betweenlight-weightedageandenvi-
+ronmental density, whereby galaxies with older stellar populations
+prefer higher-density regions with respect to galaxies with similar
+color and luminosity. This holds also after removing galaxies with
+residual recent SF, i.e. the eﬀect is not driven by a larger spread
+towardyoungeragesinlower-densityenvironmentasinsteadfound
+byotherworks(Gallazzietal.2006;Thomasetal.2010),butashift
+in the old population. This was interpreted in Cooper et al. (2010a)
+asevidenceofassemblybiaswithgalaxieslocatedinhigherdensity
+regions forming earlier. Similarly, a diﬀerence in age of 005dex
+per decade in local density was inferred by a Fundamental Plane
+analysisofearly-typegalaxiesinLaBarberaetal.(2010),inagree-
+mentwithwhatweobserveinFig.9(seealsoBernardietal.2006).
+In line with our results, McDermid et al. (2015) found that, among
+ATLAS3D galaxies,Virgoearly-typegalaxiesare2.5Gyrolderand
+more𝛼-enhanced than ﬁeld early-type galaxies: based on the fact
+thatsuchtrendsareobservednotonlyonlight-weightedbutalsoon
+mass-weightedpropertiesandontheoldagesofthesegalaxies,they
+argue that these trends cannot be reproduced by only suppressing
+the recent star formation, but they are a manifestation of a higher
+eﬃciency of early star formation in today’s cluster galaxies.
+ The stellar populations of satellite galaxies not only depend
+on the group halo mass but also on the infall time. We distinguish
+‘ancient infaller’ and ‘recent infaller’ satellites according to their
+location in the phase-space diagram, calibrated onto infall time
+MNRAS000, 1–22 ()
+
+Ages, metallicities and»𝛼Fe¼ of centrals and satellites 19
+(Pasquali et al. 2019).We ﬁnd marked diﬀerences in the scaling
+relations of ancient and recent infallers, the ﬁrst being older, more
+metal-rich and more𝛼-enhanced than the latter. By separating
+recent and ancient infallers and confronting satellites and centrals
+with similar current star formation activity, we do not detect any
+signiﬁcantsystematicdiﬀerenceforrecentinfallers,suggestingthat
+their stellar populations have not been aﬀected yet by their current
+environment(Fig.12).Insteadweseethat thediﬀerencesdiscussed
+forthegeneralsatellitepopulationspertainonlytoancientinfallers
+in high-mass halos ( 1014𝑀), i.e. satellites that accreted more
+than 5 Gyr ago onto their current halo (Fig. 11). We also note
+that galaxies that reside today in massive halos (more massive than
+ 10135𝑀) are expected to have, on average, high redshift of
+infall (𝑧 & 2, see Pasquali et al. 2010) onto halos less massive than
+the present-day halo.
+Given the old ages and the old infall times of the satellites
+aﬀected by the observed excess in age, metallicity and»𝛼Fe¼, it is
+likely that quenching occurred& 8 Gyr ago (𝑧 & 1) in a smaller-
+mass halo than the current one. It is thus not directly associated
+to cluster-speciﬁc mechanisms acting on galaxies falling into large
+halos. We argue instead that the slightly older ages, higher stellar
+metallicitiesand»𝛼Fe¼ observedat 𝑧 0forancientinfallersatel-
+litesinmassivehalosreﬂectdiﬀerencesintheirearlystarformation
+history, with more eﬃcient star formation and metal enrichment in
+theprogenitorsofpresent-daygalaxiesthatwerelocatedclosetothe
+cosmic density peaks, possibly aided by pre-processing in group-
+sizedhalos.If »𝛼Fe¼tracesSFtimescales,theobserveddiﬀerences
+pointtotimescalesshorterbyafewhundredMyrinquiescentsatel-
+lites compared to centrals. On the other hand the»𝛼Fe¼ excess
+may be a consequence of the higher star-formation activity for the
+progenitorsofsatellitegalaxiesifaSFR-dependentIMFisallowed.
+7.3 Concluding remarks
+We have highlighted the importance of controlling for galaxy star-
+formation activity, halo mass and infall time to disentangle the
+subtleeﬀectsof‘environment’onthepaststarformationandmetal
+enrichment histories of galaxies, as witnessed by their present-day
+stellar populations.Environment manifests both through ‘nurture’
+eﬀects in relatively low-mass galaxies, altering the star formation
+history on globally long timescales, and ‘nature’ eﬀects acting on
+theearlyphasesoftheformationofgalaxieslocatedclosetodensity
+peaks.Itispossibletoobservesucheﬀectsonlythankstohigh-S/N
+continuum spectroscopy and the large statistic of surveys such as
+SDSS.
+One should keep in mind that scaling relations are not evolu-
+tionarysequencesofindividualgalaxiesandthatcomparingcentrals
+andsatellitesatﬁxedﬁnalmassdoesnotmeancomparingsatellites
+with their likely progenitors. The stellar mass of a galaxy is in-
+trinsically connected with the star formation and assembly history
+and hence evolves with time. What we can do observationally is
+comparing the end-point of the evolution of centrals and satellites:
+a satellite galaxy and a central galaxy that reached today the same
+stellar mass have done so following a diﬀerent evolutionary track
+that put them on average onto diﬀerent stellar population scaling
+relations.Ideallyonewouldliketocomparegalaxieswiththesame
+mass at redshift of infall and track their diﬀerential evolution. In
+fact, part of the diﬀerences between centrals and satellites at ﬁxed
+present-day stellar mass may be due to satellites having stopped
+theirgrowthbecauseofenvironmentaleﬀects.Inotherwords,fora
+given progenitor mass, a central would end up with a larger stellar
+mass than a satellite. If this is the case, satellites would be better
+compared to centrals of larger present-day stellar mass, but this
+connection is hard to establish from the data alone.
+It is paramount to push such studies at higher redshift, where
+the younger Universe age allows for a ﬁner resolution in the early
+starformationhistoriesofgalaxies,followinggalaxypopulationsin
+their changing environment, and tracing the evolution with redshift
+ofstellarpopulationscalingrelationstoapproachtheanalysisfrom
+the‘startingpoint’andbetterconnectprogenitorsanddescendants.
+ACKNOWLEDGEMENTS
+We thank the referee for the constructive report. We are grateful to
+Gabriella De Lucia and Fabio Fontanot for a careful reading of the
+manuscript and for insightful comments. AG and SZ acknowledge
+support by the Istituto Nazionale di Astroﬁsica (PRIN-SKA 2017
+program 1.05.01.88.04). S.Z. has been supported by the EU Marie
+CurieCareerIntegrationGrant"SteMaGE"Nr.PCIG12-GA-2012-
+326466 (Call Identiﬁer: FP7-PEOPLE-2012 CIG).
+DATA AVAILABILITY
+The SDSS DR7 group catalog is available at
+http://gax.shao.ac.cn/data/Group.html. The SFR and emission line
+properties of SDSS DR7 main galaxy sample used in this work are
+available at https://wwwmpa.mpa-garching.mpg.de/SDSS/DR7.
+The stellar population catalog for SDSS DR7 main galaxy sample
+is available upon reasonable request to the corresponding author
+(ages and stellar metallicities of previous releases are available at
+https://wwwmpa.mpa-garching.mpg.de/SDSS/).
+REFERENCES
+Abazajian K. N., et al., 2009, ApJS, 182, 543
+Bahé Y. M., McCarthy I. G., Crain R. A., Theuns T., 2012, MNRAS, 424,
+1179
+Bahé Y. M., Schaye J., Crain R. A., McCarthy I. G., Bower R. G., Theuns
+T., McGee S. L., Trayford J. W., 2017a, MNRAS, 464, 508
+Bahé Y. M., et al., 2017b, MNRAS, 470, 4186
+Baldry I. K., Glazebrook K., Brinkmann J., Ivezić Ž., Lupton R. H., Nichol
+R. C., Szalay A. S., 2004, ApJ, 600, 681
+Baldry I. K., Balogh M. L., Bower R. G., Glazebrook K., Nichol R. C.,
+Bamford S. P., Budavari T., 2006, MNRAS, 373, 469
+Baldry I. K., et al., 2012, MNRAS, 421, 621
+Baldwin J. A., Phillips M. M., Terlevich R., 1981, PASP, 93, 5
+Balogh M., et al., 2004, MNRAS, 348, 1355
+BellE.F.,McIntoshD.H.,KatzN.,WeinbergM.D.,2003,ApJS,149,289
+Bernardi M., Nichol R. C., Sheth R. K., Miller C. J., Brinkmann J., 2006,
+AJ, 131, 1288
+Blanton M. R., et al., 2003, AJ, 125, 2348
+Boselli A., Gavazzi G., 2006, Publications of the Astronomical Society of
+the Paciﬁc, 118, 517
+Brinchmann J., Charlot S., White S. D. M., Tremonti C., Kauﬀmann G.,
+Heckman T., Brinkmann J., 2004, MNRAS, 351, 1151
+Bruzual G., Charlot S., 2003, MNRAS, 344, 1000
+Calura F., Menci N., 2011, MNRAS, 413, L1
+Carretero C., Vazdekis A., Beckman J. E., 2007, MNRAS, 375, 1025
+Catinella B., et al., 2013, MNRAS, 436, 34
+Catinella B., et al., 2018, MNRAS, 476, 875
+Cervantes J. L., Vazdekis A., 2009, MNRAS, 392, 691
+Chabrier G., 2003, PASP, 115, 763
+MNRAS000, 1–22 ()
+
+20 A. R. Gallazzi et al.
+Chung A., van Gorkom J. H., Kenney J. D. P., Crowl H., Vollmer B., 2009,
+AJ, 138, 1741
+ClemensM.S.,BressanA.,NikolicB.,AlexanderP.,AnnibaliF.,Rampazzo
+R., 2006, MNRAS, 370, 702
+Coelho P., Bruzual G., Charlot S., Weiss A., Barbuy B., Ferguson J. W.,
+2007, MNRAS, 382, 498
+Conroy C., Graves G. J., van Dokkum P. G., 2014, ApJ, 780, 33
+Cooper M. C., Tremonti C. A., Newman J. A., Zabludoﬀ A. I., 2008, MN-
+RAS, 390, 245
+Cooper M. C., Gallazzi A., Newman J. A., Yan R., 2010a, MNRAS, 402,
+1942
+Cooper M. C., et al., 2010b, MNRAS, 409, 337
+Cora S. A., et al., 2018, MNRAS, 479, 2
+Cucciati O., et al., 2017, A&A, 602, A15
+De Lucia G., 2007, in Metcalfe N., Shanks T., eds, Astronomical Society
+of the Paciﬁc Conference Series Vol. 379, Cosmic Frontiers. p. 257
+(arXiv:astro-ph/0611350)
+DeLuciaG.,WeinmannS.,PoggiantiB.M.,Aragón-SalamancaA.,Zaritsky
+D., 2012, MNRAS, 423, 1277
+De Lucia G., Muzzin A., Weinmann S., 2014, New Astron. Rev., 62, 1
+De Lucia G., Fontanot F., Hirschmann M., 2017, MNRAS, 466, L88
+De Lucia G., Hirschmann M., Fontanot F., 2019, MNRAS, 482, 5041
+Dekel A., Birnboim Y., 2006, MNRAS, 368, 2
+Dressler A., 1980, ApJ, 236, 351
+Falcón-Barroso J., Sánchez-Blázquez P., Vazdekis A., Ricciardelli E.,
+Cardiel N., Cenarro A. J., Gorgas J., Peletier R. F., 2011, A&A, 532,
+A95
+Fontanot F., De Lucia G., Hirschmann M., Bruzual G., Charlot S., Zibetti
+S., 2017, MNRAS, 464, 3812
+Gallazzi A., Charlot S., Brinchmann J., White S. D. M., Tremonti C. A.,
+2005, MNRAS, 362, 41
+Gallazzi A., Charlot S., Brinchmann J., White S. D. M., 2006, MNRAS,
+370, 1106
+Gallazzi A., Brinchmann J., Charlot S., White S. D. M., 2008, MNRAS,
+383, 1439
+Gallazzi A., et al., 2009, ApJ, 690, 1883
+Gavazzi G., Boselli A., Pedotti P., Gallazzi A., Carrasco L., 2002, A&A,
+396, 449
+Giovanelli R., Haynes M. P., 1983, AJ, 88, 881
+Gómez P. L., et al., 2003, ApJ, 584, 210
+González Delgado R. M., et al., 2015, A&A, 581, A103
+Graves G. J., Faber S. M., Schiavon R. P., 2009a, ApJ, 693, 486
+Graves G. J., Faber S. M., Schiavon R. P., 2009b, ApJ, 698, 1590
+Greggio L., Renzini A., 1983, A&A, 118, 217
+HirschmannM.,DeLuciaG.,WilmanD.,WeinmannS.,IovinoA.,Cucciati
+O., Zibetti S., Villalobos Á., 2014, MNRAS, 444, 2938
+Jørgensen I., 1999, MNRAS, 306, 607
+Kauﬀmann G., et al. 2003, MNRAS, 341, 33
+Komatsu E., et al., 2011, ApJS, 192, 18
+Kormendy J., 2013, Secular Evolution in Disk Galaxies. p. 1
+Korn A. J., Maraston C., Thomas D., 2005, A&A, 438, 685
+Kuntschner H., 2001, Ap&SS, 276, 885
+La Barbera F., Lopes P. A. A., de Carvalho R. R., de La Rosa I. G., Berlind
+A. A., 2010, MNRAS, 408, 1361
+LaBarberaF.,PasqualiA.,FerrerasI.,GallazziA.,deCarvalhoR.R.,dela
+Rosa I. G., 2014, MNRAS, 445, 1977
+Maier C., Ziegler B. L., Haines C. P., Smith G. P., 2019a, A&A, 621, A131
+Maier C., Hayashi M., Ziegler B. L., Kodama T., 2019b, A&A, 626, A14
+MateusA.,SodréL.,CidFernandesR.,StasińskaG.,SchoenellW.,Gomes
+J. M., 2006, MNRAS, 370, 721
+Matteucci F., 1994, A&A, 288, 57
+McDermid R. M., et al., 2015, MNRAS, 448, 3484
+McGee S. L., Balogh M. L., Wilman D. J., Bower R. G., Mulchaey J. S.,
+Parker L. C., Oemler A., 2011, MNRAS, 413, 996
+Moﬀett A. J., et al., 2016, MNRAS, 457, 1308
+More S., van den Bosch F. C., Cacciato M., Skibba R., Mo H. J., Yang X.,
+2011, MNRAS, 410, 210
+Mulchaey J. S., Jeltema T. E., 2010, ApJ, 715, L1
+Muldrew S. I., et al., 2012, MNRAS, 419, 2670
+Nagashima M., Lacey C. G., Okamoto T., Baugh C. M., Frenk C. S., Cole
+S., 2005, MNRAS, 363, L31
+Oman K. A., Hudson M. J., 2016, MNRAS, 463, 3083
+PasqualiA.,GallazziA.,FontanotF.,vandenBoschF.C.,DeLuciaG.,Mo
+H. J., Yang X., 2010, MNRAS, 407, 937
+Pasquali A., Gallazzi A., van den Bosch F. C., 2012, MNRAS, 425, 273
+PasqualiA.,SmithR.,GallazziA.,DeLuciaG.,ZibettiS.,HirschmannM.,
+Yi S. K., 2019, MNRAS, 484, 1702
+Peng Y.-j., et al., 2010, ApJ, 721, 193
+Peng Y.-j., Lilly S. J., Renzini A., Carollo M., 2012, ApJ, 757, 4
+Peng Y., Maiolino R., Cochrane R., 2015, Nature, 521, 192
+Pipino A., Devriendt J. E. G., Thomas D., Silk J., Kaviraj S., 2009, A&A,
+505, 1075
+Poggianti B. M., et al., 2008, ApJ, 684, 888
+RodríguezDelPinoB.,Aragón-SalamancaA.,Chies-SantosA.L.,Weinzirl
+T., Bamford S. P., Gray M. E., Böhm A., Wolf C., 2017, preprint,
+(arXiv:1701.06483)
+Schawinski K., Thomas D., Sarzi M., Maraston C., Kaviraj S., Joo S.-J., Yi
+S. K., Silk J., 2007, MNRAS, 382, 1415
+Schaye J., et al., 2015, MNRAS, 446, 521
+Segers M. C., Schaye J., Bower R. G., Crain R. A., Schaller M., Theuns T.,
+2016, MNRAS, 461, L102
+Skibba R. A., van den Bosch F. C., Yang X., More S., Mo H., Fontanot F.,
+2011, MNRAS, 410, 417
+SmithR.,PaciﬁciC.,PasqualiA.,Calderón-CastilloP.,2019,ApJ,876,145
+Spitoni E., Vincenzo F., Matteucci F., 2017, A&A, 599, A6
+Thomas D., Maraston C., Bender R., 2003, MNRAS, 339, 897
+Thomas D., Maraston C., Korn A., 2004, MNRAS, 351, L19
+Thomas D., Maraston C., Bender R., Mendes de Oliveira C., 2005, ApJ,
+621, 673
+Thomas D., Maraston C., Schawinski K., Sarzi M., Silk J., 2010, MNRAS,
+404, 1775
+Thomas D., Maraston C., Johansson J., 2011, MNRAS, 412, 2183
+Tinsley B. M., 1979, ApJ, 229, 1046
+Trager S. C., Faber S. M., Worthey G., González J. J., 2000, AJ, 120, 165
+Tremonti C. A., et al., 2004, ApJ, 613, 898
+Trussler J., Maiolino R., Maraston C., Peng Y., Thomas D., Goddard D.,
+Lian J., 2020a, arXiv e-prints, p. arXiv:2006.01154
+Trussler J., Maiolino R., Maraston C., Peng Y., Thomas D., Goddard D.,
+Lian J., 2020b, MNRAS, 491, 5406
+Vazdekis A., et al., 2015, MNRAS, 449, 1177
+Walcher C. J., Coelho P., Gallazzi A., Charlot S., 2009, MNRAS, 398, L44
+WalcherC.J.,CoelhoP.R.T.,GallazziA.,BruzualG.,CharlotS.,Chiappini
+C., 2015, A&A, 582, A46
+Wang J., De Lucia G., Kitzbichler M. G., White S. D. M., 2008, MNRAS,
+384, 1301
+Wang L., et al., 2014, MNRAS, 439, 611
+Wang E., et al., 2018, ApJ, 860, 102
+Weidner C., Kroupa P., 2005, ApJ, 625, 754
+WeinmannS.M.,vandenBoschF.C.,YangX.,MoH.J.,2006a,MNRAS,
+366, 2
+Weinmann S. M., van den Bosch F. C., Yang X., Mo H. J., Croton D. J.,
+Moore B., 2006b, MNRAS, 372, 1161
+Wetzel A. R., Tinker J. L., Conroy C., 2012, MNRAS, 424, 232
+WetzelA.R.,TinkerJ.L.,ConroyC.,vandenBoschF.C.,2013,MNRAS,
+432, 336
+Wilman D. J., Zibetti S., Budavári T., 2010, MNRAS, 406, 1701
+Wolf C., et al., 2009, MNRAS, 393, 1302
+Woo J., et al., 2013, MNRAS, 428, 3306
+WooJ.,CarolloC.M.,FaberS.M.,DekelA.,TacchellaS.,2017,MNRAS,
+464, 1077
+Xie L., De Lucia G., Hirschmann M., Fontanot F., 2020, MNRAS,
+Yang X., Mo H. J., van den Bosch F. C., Jing Y. P., 2005, MNRAS, 356,
+1293
+Yang X., Mo H. J., van den Bosch F. C., Pasquali A., Li C., Barden M.,
+2007, ApJ, 671, 153
+Yang X., Mo H. J., van den Bosch F. C., 2008, ApJ, 676, 248
+MNRAS000, 1–22 ()
+
+Ages, metallicities and»𝛼Fe¼ of centrals and satellites 21
+FigureA1. The»𝛼Fe¼-sensitiveabsorptionindex Mgbh Fei asafunction
+of the age- and metallicity-sensitve indicesD4000n, H𝛿𝐴+H𝛾𝐴,»Mg2Fe¼.
+Thedistributionofthegalaxiesinoursample(blackcontours)isoverplotted
+ontopofthedistributionofthemodelsinourlibrary,color-codedaccording
+to the mean light-weighted age (upper panels) and the mean metallicity
+(lower panels) in each index-index bin.
+Zibetti S., Charlot S., Rix H.-W., 2009, MNRAS, 400, 1181
+de La Rosa I. G., La Barbera F., Ferreras I., de Carvalho R. R., 2011,
+MNRAS, 418, L74
+van den Bosch F. C., Aquino D., Yang X., Mo H. J., Pasquali A., McIntosh
+D. H., Weinmann S. M., Kang X., 2008, MNRAS, 387, 79
+APPENDIX A:»𝛼Fe¼ ABUNDANCE RATIO:
+OBSERVATIONAL DIAGNOSTIC AND CALIBRATION
+The distribution in the»𝛼Fe¼-sensitive indexMgbhFei is shown
+inFig.A1asafunctionoftheage-andmetallicity-sensitivefeatures
+D4000n, H𝛿𝐴+H𝛾𝐴,»Mg2Fe¼ used to estimate light-weighted age
+and metallicity. The contours for the full sample of 113307 high-
+S/N SDSS DR7 galaxies are overlaid on top of the distribution
+of the models in our library (Sec. 2.3), which is color-coded ac-
+cording to the average light-weighted age (upper panels) or the
+averagestellarmetallicity(lowerpanels)inindex-indexbins.While
+at low D4000n and high H𝛿𝐴+H𝛾𝐴 the models cover the index
+range of the data, at highD4000n values a signiﬁcant fraction of
+the observed galaxies haveMgbhFei higher than our solar-scaled
+models, indicative of non-solar»𝛼Fe¼ abundance ratio. The error
+on Δ¹MgbhFeiº include the contribution from the observational
+uncertainty onMgbhFei and from the range of allowed models as
+expressed by the16𝑡ℎ  84𝑡ℎ interpercentile half-range of the PDF
+ofΔ¹MgbhFeiº.ThetwocomponentsarecomparedinFig.A2.For
+galaxieswithhigh D4000n valuesthePDFof Δ¹MgbhFeiº (upper
+panels) is very narrow, while for younger galaxies (lowerD4000n)
+the models have a larger range ofMgbhFei resulting in larger
+PDF ofΔ¹MgbhFeiº. The narrow PDFs ofΔ¹MgbhFeiº are also
+the result of the negligible dependence ofΔ¹MgbhFeiº on age
+and metallicity, which motivates the choice ofΔ¹MgbhFeiº as
+»𝛼Fe¼ indicator. The observational uncertainty onMgbhFei is
+much larger and dominates the error budget onΔ¹MgbhFeiº.
+We calibrate the relation between Δ¹MgbhFeiº and
+Figure A2. Observational error on the index ratioMgbh Fei as a func-
+tion of D4000n (lower left panel) and of the»𝛼Fe¼ empirical estimator
+Δ¹Mgbh Feiº (lower right panel). This can be compared with the uncer-
+taintyduetomodeldegeneraciesestimatedashalfofthe 84th 16thpercentile
+range of the PDF ofΔ¹Mgbh Feiº(upper panels).
+»𝛼Fe¼ using population synthesis models of SSPs with variable
+»𝛼Fe¼. We adopt as default the TMK04 models (see Sec. 2.4). In
+Fig.A3weshowtherelationsbetween »𝛼Fe¼andΔ¹MgbhFeiº for
+TMK04 models of diﬀerent ages (colored lines) and of diﬀerent
+metallicity (indicated in each panel). We ﬁt a third order poly-
+nomial and extrapolate the relation in the range not covered by
+the models (dashed lines). Remarkably, these relations are virtu-
+ally indistinguishable for ages older than 1 Gyr and metallicities of
+[Z/H]= 033ormore.Forthehighestmetallicitythevariationwith
+age are even smaller.
+In order to check the sensitivity of the»𝛼Fe¼ estimates on
+the models used to calibrate theΔ¹MgbhFeiº-»𝛼Fe¼ relation we
+have repeated the procedure described in Sec. 2.4 with other four
+sets of models: i) the Thomas et al. (2011) models spanning the
+same age, metallicity and»𝛼Fe¼ range as our default choice; ii)
+thediﬀerentialmodelsbasedontheCoelhoetal.(2007)theoretical
+modelscalibratedeitherontheBruzual&Charlot(2003)modelsor
+the MILES v9.1 models (Falcón-Barroso et al. 2011) (see Walcher
+etal.2009,2015),spanningtheagerangebetween3and12Gyrand
+between 2 and 13 Gyr respectively,»FeH¼ = 05 025 0 02
+and»𝛼Fe¼= 0 02 04;iii)the 𝛼-MILESmodelsofVazdekisetal.
+(2015), with age varying between 0.5 and 14 Gyr, metallicity be-
+tween [Z/H]=-1.26 and 0.26 and»𝛼Fe¼ = 0 04. We ﬁnd very
+similar relations betweenΔ¹MgbhFeiº and»𝛼Fe¼ and a negli-
+gible dependence on age and metallicity or Fe abundance for all
+these models for ages older than 1 Gyr and metallicities [Z/H]¡ 1
+(»𝛼Fe¼ can vary by at most005  01 dex for younger ages and
+lower metallicities). We prefer to use the calibration based on the
+TMK04modelsinsteadofthediﬀerentialmodelsbecausethelatter
+are computed at ﬁxed [Fe/H] rather than [Z/H] which is the param-
+eter that we estimate from the galaxy spectra in our sample (see
+Sec. 2.3).
+Our method relies on the assumption that the BC03 models
+have a solar abundance ratio»𝛼Fe¼ = 0. However this is strictly
+MNRAS000, 1–22 ()
+
+22 A. R. Gallazzi et al.
+true only for metallicities close to solar. The BC03 models follow
+theabundancepatternoftheMilkyWayandthuscorrespondtosig-
+niﬁcantly super-solar»𝛼Fe¼ for metallicitieslog¹𝑍𝑍º . 05.
+To gain insight into the potential bias, we compare the trend of
+the index ratioMgbhFei with metallicity for BC03 SSP models
+with that for TMK04 models at»𝛼Fe¼=0 and for𝛼-MILES mod-
+els at»𝛼Fe¼=0, after having normalized all models at the same
+MgbhFei for solar metallicity. The oﬀset inMgbhFei between
+BC03 models and truly solar-scaled models should be proportional
+to the diﬀerence in»𝛼Fe¼. Taking TMK04 as reference we would
+estimate BC03 SSP to have»𝛼Fe¼ increasing from 0.1 to 0.2 dex
+for metallicities between [Z/H]= 04 and 07 and for ages older
+than3Gyr.Taking 𝛼-MILESasreferencewewouldestimateBC03
+SSPs to have»𝛼Fe¼ increasing from 0.2 and 0.5 for the same
+age and metallicity ranges. The estimated»𝛼Fe¼ would reduce to
+01  015foryoungerages.Intheseageandmetallicityregimesour
+»𝛼Fe¼couldbeunderestimatedbythisamount.Themajorityofour
+sample galaxies have stellar metallicitieslog¹𝑍𝑍º ¡ 04 and
+thescalingrelationsarenotaﬀectedbythisbias.Onlythelow-mass
+end of the»𝛼Fe¼ 𝑀 relation for star-forming galaxies may be
+biased low: we estimate that their average»𝛼Fe¼ could be under-
+estimated by 0.1 dex at massesM 1095M. In any case, this
+is not a concern for the diﬀerential comparison between centrals
+and satellites, given the negligible diﬀerences in metallicity found
+in this regime.
+We note that the relations between»𝛼Fe¼ and stellar mass
+(halo mass), both globally and split into halo mass bins (stel-
+lar mass bins), obtained adopting diﬀerent calibrations between
+Δ¹MgbhFeiº and»𝛼Fe¼ are consistent with each other. We cau-
+tion though that the overall»𝛼Fe¼ range and the slope of the
+»𝛼Fe¼ 𝑀 relationaresensitivetotheadoptedcalibration:inpar-
+ticular we obtain»𝛼Fe¼ extending to higher values and a steeper
+slope with stellar mass adopting the TMK04, Thomas et al. (2011)
+or 𝛼-MILES models rather than the diﬀerential models (the me-
+dian»𝛼Fe¼ of 10115𝑀 galaxiesvariesbetween0.3and0.45dex
+among the various calibrations; see also Walcher et al 2015). How-
+ever, the comparison between central galaxies and satellites split
+into halo or stellar mass bins is remarkably consistent. The con-
+clusions presented in this paper are thus not aﬀected by the chosen
+calibration.
+Asafurthercheck,forthe12896galaxiesincommon,wehave
+compared our estimates of»𝛼Fe¼ with those obtained by Thomas
+et al. (2010) for the MOSES sample of morphologically-selected
+early-type galaxies (Schawinski et al. 2007). The comparison is
+shown in Fig. A4. There is a good correlation between the two
+estimateswithascatterof0.08(lessthan10%ofthe »𝛼Fe¼ range),
+but with a slope of 0.38 in the sense that our estimates are higher.
+APPENDIX B: APERTURE EFFECTS
+Thegalaxiesinoursamplespanarangeinredshiftandgalaxieswith
+higherstellarmassand/orinmoremassivehalostendtobeobserved
+outtohigherredshiftthanlowermassgalaxiesorgalaxiesinsmaller
+halos.Thereforetheﬁxed-apertureSDSSspectrasampleadiﬀerent
+fraction of the galaxy light as a function of the galaxy mass and
+redshift. While the overall trends of galaxy population properties
+with mass are not strongly aﬀected by this aperture bias (see also
+Gallazzi et al. 2005, 2008, for a discussion on aperture eﬀects), we
+want to check whether the (small) diﬀerences between satellites in
+massive halos (Fig.9) and centrals are aﬀected by aperture bias.
+We notice that the distribution in redshift is a function of halo
+massforsatellitesand,evenmorestrongly,forcentrals(seeFig.B1):
+galaxies in lower mass halos are detected out to𝑧 01, while for
+highermasshalosthereisanincreasingfractionofgalaxiesdetected
+out to higher𝑧. The redshift distributions for satellites and for cen-
+trals in the same halo mass bin deviate more and more going from
+low- to high-mass halos. However, the distribution in redshift for
+satellitesinhalosmoremassivethan log Mh 135issimilartothat
+ofthegeneralcentralgalaxiespopulation.WerepeatFig.9innarrow
+redshiftranges( 002  005; 005  007; 007  009; 009  012;¡
+012). We ﬁnd that the trends observed for quiescent galaxies in
+each redshift bin, in particular the slight excess for satellites in
+massive halos with respect to centrals, are consistent with the ones
+observed for the sample in the full redshift range. For star-forming
+andgreen-valleygalaxiestheexcessformassivesatellitesinmassive
+halos observed marginalizing over redshift disappears at𝑧 005.
+These results indicate that aperture bias is not driving the excess in
+age, metallicity and»𝛼Fe¼ observed for satellites in massive ha-
+los. However some aperture eﬀect might be present in low-redshift
+star-forming galaxies, possibly indicating that the outer parts, sam-
+pled only at high redshift, quench earlier than the central parts, as
+expected under the action of ram-pressure stripping.
+APPENDIX C: TRENDS OF CENTRALS WITH STELLAR
+AND HALO MASS
+In Fig.C1 we zoom onto the relations between age, stellar metallic-
+ity,»𝛼Fe¼ and stellar mass for only central galaxies divided into
+bins of halo mass, as in Fig.5. This plot shows more clearly the
+trends discussed in Sec.4.1.
+This paper has been typeset from a TEX/LATEX ﬁle prepared by the author.
+MNRAS000, 1–22 ()
+
+Ages, metallicities and»𝛼Fe¼ of centrals and satellites 23
+Figure A3.Calibration betweenΔ¹MgbhFeiº and»𝛼Fe¼ based on the TMK04 SSP models for a range of ages (colored lines; values reported are SSP ages
+in Gyr) and metallicities (indicated in each panel). Dashed lines indicate the range where the relations have been linearly extrapolated.
+Figure A4. Comparison between the»𝛼Fe¼ obtained by Thomas et al
+(2010) (»𝛼Fe¼𝑀𝑂𝑆𝐸𝑆 ) and those estimated in this work based on the
+Thomas et al (2003) and Thomas et al (2004) models (»𝛼Fe¼𝑇𝑀𝐾 04)
+for the 12896 galaxies in common with the MOSES sample (Schawinski
+et al 2007) of early-type galaxies (black dots; blue dots are galaxies for
+which no extrapolation of the relationΔ¹Mgbh Feiº »𝛼Fe¼ of the mod-
+els was needed). Red circles indicate the median»𝛼Fe¼𝑀𝑂𝑆𝐸𝑆 in bins
+of»𝛼Fe¼𝑇𝑀𝐾 04 witherrorbarsreﬂectingthemedianuncertaintyonboth
+parameters.The relation is ﬂatter than the 1:1 relation (solid line), as indi-
+cated by the linear ﬁt to»𝛼Fe¼𝑀𝑂𝑆𝐸𝑆 versus»𝛼Fe¼𝑇𝑀𝐾 04 (dashed
+line).
+Figure B1. Distribution in redshift for satellites (black solid lines) and
+centrals (blue solid lines) in diﬀerent halo mass bins. The distribution for
+central galaxies as a whole is reported in each panel with a dashed line.
+MNRAS000, 1–22 ()
+
+24 A. R. Gallazzi et al.
+Figure C1.Light-weighted age (upper panel), stellar metallicity (middle
+panel), »𝛼Fe¼ (bottom panel) as a function of stellar mass for central
+galaxies only. The white line and grey region in each panel indicate the
+median and 16  84 interpercentile range of the whole central population,
+while the colored dot-dashed lines show the median trends for centrals in
+diﬀerent bins of halo mass. The errorbars indicate the error on the median.
+WithrespecttoFig.5wefocusonthehighmassrangetohighlightthesmall
+trends of centrals with halo mass at ﬁxed stellar mass.
+MNRAS000, 1–22 ()

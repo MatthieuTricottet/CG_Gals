@@ -374,6 +374,8 @@ def generate_report():
     try:
         template = env.get_template(co.TEMPLATE_FILE)
         rendered_tex = template.render(ctx)
+        supplement_template = env.get_template(co.SUPPLEMENT_TEMPLATE_FILE)
+        rendered_supplement_tex = supplement_template.render(ctx)
     except (TemplateNotFound, TemplateSyntaxError) as e:
         print(f"[Error] template problem: {e}")
         return
@@ -385,11 +387,16 @@ def generate_report():
     report_dir = co.REPORT_PATH
     tex_file = co.REPORT_FILE
     tex_path = os.path.join(report_dir, tex_file)
+    supplement_file = co.SUPPLEMENT_FILE
+    supplement_path = os.path.join(report_dir, supplement_file)
     os.makedirs(report_dir, exist_ok=True)
     try:
         with open(tex_path, "w") as f:
             f.write(rendered_tex)
         print(f"[Info] LaTeX source written to: {tex_path}")
+        with open(supplement_path, "w") as f:
+            f.write(rendered_supplement_tex)
+        print(f"[Info] supplement source written to: {supplement_path}")
     except Exception as e:
         print(f"[Error] writing {tex_file}: {e}")
         return
@@ -510,6 +517,30 @@ def generate_report():
                 return
 
         print(f"[Success] PDF generated at {os.path.join(report_dir, basename)}.pdf")
+
+        supplement_basename, _ = os.path.splitext(supplement_file)
+        for i in (1, 2):
+            proc = run_proc(
+                [
+                    "pdflatex",
+                    "-interaction=nonstopmode",
+                    "-halt-on-error",
+                    "-file-line-error",
+                    "-synctex=0",
+                    "-output-directory",
+                    report_dir,
+                    supplement_file,
+                ],
+                cwd=report_dir,
+                description=f"supplement pdflatex pass #{i}",
+            )
+            if proc.returncode != 0:
+                print(proc.stderr)
+                return
+        print(
+            "[Success] supplement PDF generated at "
+            f"{os.path.join(report_dir, supplement_basename)}.pdf"
+        )
 
     except Exception as e:
         print(f"[Error] build pipeline aborted: {e}")

@@ -1,0 +1,153 @@
+panel,title,sample,population,outcome,success_class,bin_left,bin_right,mass_location,n_success,n_total,n_groups,raw_fraction,plot_estimate,plot_error,limit_type,displayed
+morph_e_all,(a) GZ1 E class: all galaxies,CG4,all,morphology,Elliptical,7.0,9.5,9.313793,0,9,7,0.0,0.11612284069097888,0.11612284069097888,upper,True
+morph_e_all,(a) GZ1 E class: all galaxies,CG4,all,morphology,Elliptical,9.5,10.0,9.83043,14,36,29,0.3888888888888889,0.3888888888888889,0.08124967025363077,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,CG4,all,morphology,Elliptical,10.0,10.5,10.18556,44,71,48,0.6197183098591549,0.6197183098591549,0.05761302746414258,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,CG4,all,morphology,Elliptical,10.5,11.0,10.734925,36,52,39,0.6923076923076923,0.6923076923076923,0.06400386879521874,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,CG4,all,morphology,Elliptical,11.0,12.5,11.146560000000001,30,42,41,0.7142857142857143,0.7142857142857143,0.06970714806775237,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,Control4B,all,morphology,Elliptical,7.0,9.5,9.391256,4,67,61,0.05970149253731343,0.05970149253731343,0.028945967245766605,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,Control4B,all,morphology,Elliptical,9.5,10.0,9.8158105,60,270,220,0.2222222222222222,0.2222222222222222,0.02530111300236938,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,Control4B,all,morphology,Elliptical,10.0,10.5,10.29137,209,583,402,0.3584905660377358,0.3584905660377358,0.01986122868741311,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,Control4B,all,morphology,Elliptical,10.5,11.0,10.75521,408,853,497,0.4783118405627198,0.4783118405627198,0.017103560975837425,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,Control4B,all,morphology,Elliptical,11.0,12.5,11.14429,425,599,459,0.7095158597662772,0.7095158597662772,0.018549356823754144,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,Control4C,all,morphology,Elliptical,7.0,9.5,9.380083500000001,7,120,110,0.058333333333333334,0.058333333333333334,0.021395201088786935,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,Control4C,all,morphology,Elliptical,9.5,10.0,9.8158105,139,460,355,0.30217391304347824,0.30217391304347824,0.0214103205162264,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,Control4C,all,morphology,Elliptical,10.0,10.5,10.249055,315,692,483,0.4552023121387283,0.4552023121387283,0.018930705978574366,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,Control4C,all,morphology,Elliptical,10.5,11.0,10.75337,287,573,413,0.5008726003490401,0.5008726003490401,0.02088776784794184,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,Control4C,all,morphology,Elliptical,11.0,12.5,11.152895000000001,370,502,454,0.7370517928286853,0.7370517928286853,0.01964862897382938,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,RG4,all,morphology,Elliptical,7.0,9.5,9.400273,1,19,17,0.05263157894736842,0.05263157894736842,0.05122781719918817,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,RG4,all,morphology,Elliptical,9.5,10.0,9.752666,9,45,36,0.2,0.2,0.0596284793999944,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,RG4,all,morphology,Elliptical,10.0,10.5,10.28066,15,51,36,0.29411764705882354,0.29411764705882354,0.06380307582901652,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,RG4,all,morphology,Elliptical,10.5,11.0,10.84905,25,54,38,0.46296296296296297,0.46296296296296297,0.0678544545178648,two_sided,True
+morph_e_all,(a) GZ1 E class: all galaxies,RG4,all,morphology,Elliptical,11.0,12.5,11.08952,10,20,19,0.5,0.5,0.11180339887498948,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,CG4,all,morphology,Spiral,7.0,9.5,9.313793,9,9,7,1.0,0.8838771593090211,0.11612284069097888,lower,True
+morph_s_all,(b) GZ1 S class: all galaxies,CG4,all,morphology,Spiral,9.5,10.0,9.83043,22,36,29,0.6111111111111112,0.6111111111111112,0.08124967025363077,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,CG4,all,morphology,Spiral,10.0,10.5,10.18556,27,71,48,0.38028169014084506,0.38028169014084506,0.05761302746414258,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,CG4,all,morphology,Spiral,10.5,11.0,10.734925,16,52,39,0.3076923076923077,0.3076923076923077,0.06400386879521874,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,CG4,all,morphology,Spiral,11.0,12.5,11.146560000000001,12,42,41,0.2857142857142857,0.2857142857142857,0.06970714806775237,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,Control4B,all,morphology,Spiral,7.0,9.5,9.391256,63,67,61,0.9402985074626866,0.9402985074626866,0.028945967245766594,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,Control4B,all,morphology,Spiral,9.5,10.0,9.8158105,210,270,220,0.7777777777777778,0.7777777777777778,0.02530111300236938,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,Control4B,all,morphology,Spiral,10.0,10.5,10.29137,374,583,402,0.6415094339622641,0.6415094339622641,0.019861228687413107,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,Control4B,all,morphology,Spiral,10.5,11.0,10.75521,445,853,497,0.5216881594372802,0.5216881594372802,0.017103560975837425,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,Control4B,all,morphology,Spiral,11.0,12.5,11.14429,174,599,459,0.2904841402337229,0.2904841402337229,0.018549356823754144,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,Control4C,all,morphology,Spiral,7.0,9.5,9.380083500000001,113,120,110,0.9416666666666667,0.9416666666666667,0.021395201088786935,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,Control4C,all,morphology,Spiral,9.5,10.0,9.8158105,321,460,355,0.6978260869565217,0.6978260869565217,0.0214103205162264,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,Control4C,all,morphology,Spiral,10.0,10.5,10.249055,377,692,483,0.5447976878612717,0.5447976878612717,0.018930705978574366,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,Control4C,all,morphology,Spiral,10.5,11.0,10.75337,286,573,413,0.49912739965095987,0.49912739965095987,0.02088776784794184,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,Control4C,all,morphology,Spiral,11.0,12.5,11.152895000000001,132,502,454,0.26294820717131473,0.26294820717131473,0.01964862897382938,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,RG4,all,morphology,Spiral,7.0,9.5,9.400273,18,19,17,0.9473684210526315,0.9473684210526315,0.05122781719918819,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,RG4,all,morphology,Spiral,9.5,10.0,9.752666,36,45,36,0.8,0.8,0.05962847939999438,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,RG4,all,morphology,Spiral,10.0,10.5,10.28066,36,51,36,0.7058823529411765,0.7058823529411765,0.06380307582901652,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,RG4,all,morphology,Spiral,10.5,11.0,10.84905,29,54,38,0.5370370370370371,0.5370370370370371,0.0678544545178648,two_sided,True
+morph_s_all,(b) GZ1 S class: all galaxies,RG4,all,morphology,Spiral,11.0,12.5,11.08952,10,20,19,0.5,0.5,0.11180339887498948,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,CG4,satellites,morphology,Elliptical,7.0,9.5,9.313793,0,9,7,0.0,0.11612284069097888,0.11612284069097888,upper,True
+morph_e_sat,(c) GZ1 E class: satellites,CG4,satellites,morphology,Elliptical,9.5,10.0,9.83043,14,36,29,0.3888888888888889,0.3888888888888889,0.08124967025363077,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,CG4,satellites,morphology,Elliptical,10.0,10.5,10.18556,44,71,48,0.6197183098591549,0.6197183098591549,0.05761302746414258,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,CG4,satellites,morphology,Elliptical,10.5,11.0,10.69086,28,39,31,0.717948717948718,0.717948717948718,0.07205737677223015,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,CG4,satellites,morphology,Elliptical,11.0,12.5,11.012789999999999,2,2,2,1.0,0.7117522498676548,0.2882477501323451,lower,False
+morph_e_sat,(c) GZ1 E class: satellites,Control4B,satellites,morphology,Elliptical,7.0,9.5,9.391256,4,67,61,0.05970149253731343,0.05970149253731343,0.028945967245766605,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,Control4B,satellites,morphology,Elliptical,9.5,10.0,9.8158105,60,270,220,0.2222222222222222,0.2222222222222222,0.02530111300236938,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,Control4B,satellites,morphology,Elliptical,10.0,10.5,10.28802,209,580,400,0.3603448275862069,0.3603448275862069,0.01993508572316112,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,Control4B,satellites,morphology,Elliptical,10.5,11.0,10.72089,334,696,432,0.47988505747126436,0.47988505747126436,0.01893710814195945,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,Control4B,satellites,morphology,Elliptical,11.0,12.5,11.10441,94,159,121,0.5911949685534591,0.5911949685534591,0.03898745788575209,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,Control4C,satellites,morphology,Elliptical,7.0,9.5,9.380083500000001,7,120,110,0.058333333333333334,0.058333333333333334,0.021395201088786935,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,Control4C,satellites,morphology,Elliptical,9.5,10.0,9.8158105,139,460,355,0.30217391304347824,0.30217391304347824,0.0214103205162264,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,Control4C,satellites,morphology,Elliptical,10.0,10.5,10.24852,315,689,481,0.45718432510885343,0.45718432510885343,0.018978515772687023,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,Control4C,satellites,morphology,Elliptical,10.5,11.0,10.70229,213,416,326,0.5120192307692307,0.5120192307692307,0.024507433040996618,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,Control4C,satellites,morphology,Elliptical,11.0,12.5,11.08117,36,59,56,0.6101694915254238,0.6101694915254238,0.06349465253568698,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,RG4,satellites,morphology,Elliptical,7.0,9.5,9.400273,1,19,17,0.05263157894736842,0.05263157894736842,0.05122781719918817,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,RG4,satellites,morphology,Elliptical,9.5,10.0,9.752666,9,45,36,0.2,0.2,0.0596284793999944,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,RG4,satellites,morphology,Elliptical,10.0,10.5,10.28066,15,51,36,0.29411764705882354,0.29411764705882354,0.06380307582901652,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,RG4,satellites,morphology,Elliptical,10.5,11.0,10.732535,14,26,23,0.5384615384615384,0.5384615384615384,0.09776752450803732,two_sided,True
+morph_e_sat,(c) GZ1 E class: satellites,RG4,satellites,morphology,Elliptical,11.0,12.5,11.13752,0,1,1,0.0,0.3656816655473472,0.3656816655473472,upper,False
+morph_s_sat,(d) GZ1 S class: satellites,CG4,satellites,morphology,Spiral,7.0,9.5,9.313793,9,9,7,1.0,0.8838771593090211,0.11612284069097888,lower,True
+morph_s_sat,(d) GZ1 S class: satellites,CG4,satellites,morphology,Spiral,9.5,10.0,9.83043,22,36,29,0.6111111111111112,0.6111111111111112,0.08124967025363077,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,CG4,satellites,morphology,Spiral,10.0,10.5,10.18556,27,71,48,0.38028169014084506,0.38028169014084506,0.05761302746414258,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,CG4,satellites,morphology,Spiral,10.5,11.0,10.69086,11,39,31,0.28205128205128205,0.28205128205128205,0.07205737677223015,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,CG4,satellites,morphology,Spiral,11.0,12.5,11.012789999999999,0,2,2,0.0,0.2882477501323451,0.2882477501323451,upper,False
+morph_s_sat,(d) GZ1 S class: satellites,Control4B,satellites,morphology,Spiral,7.0,9.5,9.391256,63,67,61,0.9402985074626866,0.9402985074626866,0.028945967245766594,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,Control4B,satellites,morphology,Spiral,9.5,10.0,9.8158105,210,270,220,0.7777777777777778,0.7777777777777778,0.02530111300236938,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,Control4B,satellites,morphology,Spiral,10.0,10.5,10.28802,371,580,400,0.6396551724137931,0.6396551724137931,0.01993508572316112,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,Control4B,satellites,morphology,Spiral,10.5,11.0,10.72089,362,696,432,0.5201149425287356,0.5201149425287356,0.018937108141959445,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,Control4B,satellites,morphology,Spiral,11.0,12.5,11.10441,65,159,121,0.4088050314465409,0.4088050314465409,0.03898745788575209,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,Control4C,satellites,morphology,Spiral,7.0,9.5,9.380083500000001,113,120,110,0.9416666666666667,0.9416666666666667,0.021395201088786935,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,Control4C,satellites,morphology,Spiral,9.5,10.0,9.8158105,321,460,355,0.6978260869565217,0.6978260869565217,0.0214103205162264,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,Control4C,satellites,morphology,Spiral,10.0,10.5,10.24852,374,689,481,0.5428156748911466,0.5428156748911466,0.018978515772687023,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,Control4C,satellites,morphology,Spiral,10.5,11.0,10.70229,203,416,326,0.4879807692307692,0.4879807692307692,0.024507433040996618,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,Control4C,satellites,morphology,Spiral,11.0,12.5,11.08117,23,59,56,0.3898305084745763,0.3898305084745763,0.06349465253568698,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,RG4,satellites,morphology,Spiral,7.0,9.5,9.400273,18,19,17,0.9473684210526315,0.9473684210526315,0.05122781719918819,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,RG4,satellites,morphology,Spiral,9.5,10.0,9.752666,36,45,36,0.8,0.8,0.05962847939999438,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,RG4,satellites,morphology,Spiral,10.0,10.5,10.28066,36,51,36,0.7058823529411765,0.7058823529411765,0.06380307582901652,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,RG4,satellites,morphology,Spiral,10.5,11.0,10.732535,12,26,23,0.46153846153846156,0.46153846153846156,0.09776752450803732,two_sided,True
+morph_s_sat,(d) GZ1 S class: satellites,RG4,satellites,morphology,Spiral,11.0,12.5,11.13752,1,1,1,1.0,0.6343183344526528,0.3656816655473472,lower,False
+morph_e_bgg,(e) GZ1 E class: BGGs,CG4,bggs,morphology,Elliptical,7.0,9.5,,0,0,0,,,,empty,False
+morph_e_bgg,(e) GZ1 E class: BGGs,CG4,bggs,morphology,Elliptical,9.5,10.0,,0,0,0,,,,empty,False
+morph_e_bgg,(e) GZ1 E class: BGGs,CG4,bggs,morphology,Elliptical,10.0,10.5,,0,0,0,,,,empty,False
+morph_e_bgg,(e) GZ1 E class: BGGs,CG4,bggs,morphology,Elliptical,10.5,11.0,10.9049,8,13,13,0.6153846153846154,0.6153846153846154,0.1349320029703122,two_sided,True
+morph_e_bgg,(e) GZ1 E class: BGGs,CG4,bggs,morphology,Elliptical,11.0,12.5,11.152429999999999,28,40,40,0.7,0.7,0.07245688373094719,two_sided,True
+morph_e_bgg,(e) GZ1 E class: BGGs,Control4B,bggs,morphology,Elliptical,7.0,9.5,,0,0,0,,,,empty,False
+morph_e_bgg,(e) GZ1 E class: BGGs,Control4B,bggs,morphology,Elliptical,9.5,10.0,,0,0,0,,,,empty,False
+morph_e_bgg,(e) GZ1 E class: BGGs,Control4B,bggs,morphology,Elliptical,10.0,10.5,10.37702,0,3,3,0.0,0.23787680209698556,0.23787680209698556,upper,False
+morph_e_bgg,(e) GZ1 E class: BGGs,Control4B,bggs,morphology,Elliptical,10.5,11.0,10.92664,74,157,157,0.4713375796178344,0.4713375796178344,0.03983872469195968,two_sided,True
+morph_e_bgg,(e) GZ1 E class: BGGs,Control4B,bggs,morphology,Elliptical,11.0,12.5,11.164069999999999,331,440,440,0.7522727272727273,0.7522727272727273,0.02058013556113031,two_sided,True
+morph_e_bgg,(e) GZ1 E class: BGGs,Control4C,bggs,morphology,Elliptical,7.0,9.5,,0,0,0,,,,empty,False
+morph_e_bgg,(e) GZ1 E class: BGGs,Control4C,bggs,morphology,Elliptical,9.5,10.0,,0,0,0,,,,empty,False
+morph_e_bgg,(e) GZ1 E class: BGGs,Control4C,bggs,morphology,Elliptical,10.0,10.5,10.37702,0,3,3,0.0,0.23787680209698556,0.23787680209698556,upper,False
+morph_e_bgg,(e) GZ1 E class: BGGs,Control4C,bggs,morphology,Elliptical,10.5,11.0,10.92664,74,157,157,0.4713375796178344,0.4713375796178344,0.03983872469195968,two_sided,True
+morph_e_bgg,(e) GZ1 E class: BGGs,Control4C,bggs,morphology,Elliptical,11.0,12.5,11.16521,334,443,443,0.7539503386004515,0.7539503386004515,0.020463546045592425,two_sided,True
+morph_e_bgg,(e) GZ1 E class: BGGs,RG4,bggs,morphology,Elliptical,7.0,9.5,,0,0,0,,,,empty,False
+morph_e_bgg,(e) GZ1 E class: BGGs,RG4,bggs,morphology,Elliptical,9.5,10.0,,0,0,0,,,,empty,False
+morph_e_bgg,(e) GZ1 E class: BGGs,RG4,bggs,morphology,Elliptical,10.0,10.5,,0,0,0,,,,empty,False
+morph_e_bgg,(e) GZ1 E class: BGGs,RG4,bggs,morphology,Elliptical,10.5,11.0,10.901489999999999,11,28,28,0.39285714285714285,0.39285714285714285,0.09229618630166095,two_sided,True
+morph_e_bgg,(e) GZ1 E class: BGGs,RG4,bggs,morphology,Elliptical,11.0,12.5,11.08024,10,19,19,0.5263157894736842,0.5263157894736842,0.11454888159631764,two_sided,True
+morph_s_bgg,(f) GZ1 S class: BGGs,CG4,bggs,morphology,Spiral,7.0,9.5,,0,0,0,,,,empty,False
+morph_s_bgg,(f) GZ1 S class: BGGs,CG4,bggs,morphology,Spiral,9.5,10.0,,0,0,0,,,,empty,False
+morph_s_bgg,(f) GZ1 S class: BGGs,CG4,bggs,morphology,Spiral,10.0,10.5,,0,0,0,,,,empty,False
+morph_s_bgg,(f) GZ1 S class: BGGs,CG4,bggs,morphology,Spiral,10.5,11.0,10.9049,5,13,13,0.38461538461538464,0.38461538461538464,0.1349320029703122,two_sided,True
+morph_s_bgg,(f) GZ1 S class: BGGs,CG4,bggs,morphology,Spiral,11.0,12.5,11.152429999999999,12,40,40,0.3,0.3,0.07245688373094719,two_sided,True
+morph_s_bgg,(f) GZ1 S class: BGGs,Control4B,bggs,morphology,Spiral,7.0,9.5,,0,0,0,,,,empty,False
+morph_s_bgg,(f) GZ1 S class: BGGs,Control4B,bggs,morphology,Spiral,9.5,10.0,,0,0,0,,,,empty,False
+morph_s_bgg,(f) GZ1 S class: BGGs,Control4B,bggs,morphology,Spiral,10.0,10.5,10.37702,3,3,3,1.0,0.7621231979030144,0.23787680209698556,lower,False
+morph_s_bgg,(f) GZ1 S class: BGGs,Control4B,bggs,morphology,Spiral,10.5,11.0,10.92664,83,157,157,0.5286624203821656,0.5286624203821656,0.03983872469195968,two_sided,True
+morph_s_bgg,(f) GZ1 S class: BGGs,Control4B,bggs,morphology,Spiral,11.0,12.5,11.164069999999999,109,440,440,0.24772727272727274,0.24772727272727274,0.02058013556113031,two_sided,True
+morph_s_bgg,(f) GZ1 S class: BGGs,Control4C,bggs,morphology,Spiral,7.0,9.5,,0,0,0,,,,empty,False
+morph_s_bgg,(f) GZ1 S class: BGGs,Control4C,bggs,morphology,Spiral,9.5,10.0,,0,0,0,,,,empty,False
+morph_s_bgg,(f) GZ1 S class: BGGs,Control4C,bggs,morphology,Spiral,10.0,10.5,10.37702,3,3,3,1.0,0.7621231979030144,0.23787680209698556,lower,False
+morph_s_bgg,(f) GZ1 S class: BGGs,Control4C,bggs,morphology,Spiral,10.5,11.0,10.92664,83,157,157,0.5286624203821656,0.5286624203821656,0.03983872469195968,two_sided,True
+morph_s_bgg,(f) GZ1 S class: BGGs,Control4C,bggs,morphology,Spiral,11.0,12.5,11.16521,109,443,443,0.24604966139954854,0.24604966139954854,0.020463546045592425,two_sided,True
+morph_s_bgg,(f) GZ1 S class: BGGs,RG4,bggs,morphology,Spiral,7.0,9.5,,0,0,0,,,,empty,False
+morph_s_bgg,(f) GZ1 S class: BGGs,RG4,bggs,morphology,Spiral,9.5,10.0,,0,0,0,,,,empty,False
+morph_s_bgg,(f) GZ1 S class: BGGs,RG4,bggs,morphology,Spiral,10.0,10.5,,0,0,0,,,,empty,False
+morph_s_bgg,(f) GZ1 S class: BGGs,RG4,bggs,morphology,Spiral,10.5,11.0,10.901489999999999,17,28,28,0.6071428571428571,0.6071428571428571,0.09229618630166093,two_sided,True
+morph_s_bgg,(f) GZ1 S class: BGGs,RG4,bggs,morphology,Spiral,11.0,12.5,11.08024,9,19,19,0.47368421052631576,0.47368421052631576,0.11454888159631764,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,CG4,satellites,ssfr,Quenched,7.0,10.0,9.720794,9,53,38,0.16981132075471697,0.16981132075471697,0.05157435301238719,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,CG4,satellites,ssfr,Quenched,10.0,10.5,10.19986,52,75,51,0.6933333333333334,0.6933333333333334,0.05324437024665578,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,CG4,satellites,ssfr,Quenched,10.5,11.0,10.698695,38,44,35,0.8636363636363636,0.8636363636363636,0.05173547117995419,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,CG4,satellites,ssfr,Quenched,11.0,12.5,11.012789999999999,2,2,2,1.0,0.7117522498676548,0.2882477501323451,lower,False
+quenched_sat,(g) Quenched fraction: satellites,Control4B,satellites,ssfr,Quenched,7.0,10.0,9.738376500000001,70,394,279,0.17766497461928935,0.17766497461928935,0.019256492834267207,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,Control4B,satellites,ssfr,Quenched,10.0,10.5,10.28438,271,629,429,0.43084260731319557,0.43084260731319557,0.019744684138465304,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,Control4B,satellites,ssfr,Quenched,10.5,11.0,10.720525,571,780,469,0.732051282051282,0.732051282051282,0.01585803211909348,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,Control4B,satellites,ssfr,Quenched,11.0,12.5,11.10478,148,169,125,0.8757396449704142,0.8757396449704142,0.02537525692265153,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,Control4C,satellites,ssfr,Quenched,7.0,10.0,9.7337945,178,676,458,0.26331360946745563,0.26331360946745563,0.01693965763508517,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,Control4C,satellites,ssfr,Quenched,10.0,10.5,10.2423,432,759,518,0.5691699604743083,0.5691699604743083,0.017974345521534665,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,Control4C,satellites,ssfr,Quenched,10.5,11.0,10.695910000000001,359,480,371,0.7479166666666667,0.7479166666666667,0.019818831868793844,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,Control4C,satellites,ssfr,Quenched,11.0,12.5,11.08281,54,62,58,0.8709677419354839,0.8709677419354839,0.04257496887716709,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,RG4,satellites,ssfr,Quenched,7.0,10.0,9.630564,13,77,48,0.16883116883116883,0.16883116883116883,0.042689943044847696,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,RG4,satellites,ssfr,Quenched,10.0,10.5,10.24989,26,57,40,0.45614035087719296,0.45614035087719296,0.06597132965516611,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,RG4,satellites,ssfr,Quenched,10.5,11.0,10.70973,23,31,25,0.7419354838709677,0.7419354838709677,0.07858983387512676,two_sided,True
+quenched_sat,(g) Quenched fraction: satellites,RG4,satellites,ssfr,Quenched,11.0,12.5,11.13752,1,1,1,1.0,0.6343183344526528,0.3656816655473472,lower,False
+quenched_bgg,(h) Quenched fraction: BGGs,CG4,bggs,ssfr,Quenched,7.0,10.0,,0,0,0,,,,empty,False
+quenched_bgg,(h) Quenched fraction: BGGs,CG4,bggs,ssfr,Quenched,10.0,10.5,,0,0,0,,,,empty,False
+quenched_bgg,(h) Quenched fraction: BGGs,CG4,bggs,ssfr,Quenched,10.5,11.0,10.90878,8,12,12,0.6666666666666666,0.6666666666666666,0.13608276348795434,two_sided,True
+quenched_bgg,(h) Quenched fraction: BGGs,CG4,bggs,ssfr,Quenched,11.0,12.5,11.146560000000001,37,44,44,0.8409090909090909,0.8409090909090909,0.05514052126067156,two_sided,True
+quenched_bgg,(h) Quenched fraction: BGGs,Control4B,bggs,ssfr,Quenched,7.0,10.0,8.512213,0,2,2,0.0,0.2882477501323451,0.2882477501323451,upper,False
+quenched_bgg,(h) Quenched fraction: BGGs,Control4B,bggs,ssfr,Quenched,10.0,10.5,10.37702,1,3,3,0.3333333333333333,0.3333333333333333,0.2721655269759087,two_sided,False
+quenched_bgg,(h) Quenched fraction: BGGs,Control4B,bggs,ssfr,Quenched,10.5,11.0,10.92664,109,167,167,0.6526946107784432,0.6526946107784432,0.03684279240680132,two_sided,True
+quenched_bgg,(h) Quenched fraction: BGGs,Control4B,bggs,ssfr,Quenched,11.0,12.5,11.15809,423,468,468,0.9038461538461539,0.9038461538461539,0.013627232352500473,two_sided,True
+quenched_bgg,(h) Quenched fraction: BGGs,Control4C,bggs,ssfr,Quenched,7.0,10.0,8.512213,0,2,2,0.0,0.2882477501323451,0.2882477501323451,upper,False
+quenched_bgg,(h) Quenched fraction: BGGs,Control4C,bggs,ssfr,Quenched,10.0,10.5,10.37702,1,3,3,0.3333333333333333,0.3333333333333333,0.2721655269759087,two_sided,False
+quenched_bgg,(h) Quenched fraction: BGGs,Control4C,bggs,ssfr,Quenched,10.5,11.0,10.92664,109,167,167,0.6526946107784432,0.6526946107784432,0.03684279240680132,two_sided,True
+quenched_bgg,(h) Quenched fraction: BGGs,Control4C,bggs,ssfr,Quenched,11.0,12.5,11.160715,427,472,472,0.9046610169491526,0.9046610169491526,0.013517836722810766,two_sided,True
+quenched_bgg,(h) Quenched fraction: BGGs,RG4,bggs,ssfr,Quenched,7.0,10.0,9.250072,0,1,1,0.0,0.3656816655473472,0.3656816655473472,upper,False
+quenched_bgg,(h) Quenched fraction: BGGs,RG4,bggs,ssfr,Quenched,10.0,10.5,,0,0,0,,,,empty,False
+quenched_bgg,(h) Quenched fraction: BGGs,RG4,bggs,ssfr,Quenched,10.5,11.0,10.901489999999999,18,30,30,0.6,0.6,0.08944271909999159,two_sided,True
+quenched_bgg,(h) Quenched fraction: BGGs,RG4,bggs,ssfr,Quenched,11.0,12.5,11.08952,20,22,22,0.9090909090909091,0.9090909090909091,0.06129089658756747,two_sided,True

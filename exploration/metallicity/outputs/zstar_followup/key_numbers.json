@@ -1,0 +1,31 @@
+{
+  "created_utc": "2026-09-17T12:56:49+00:00",
+  "seed": 20260917,
+  "n_boot": 2000,
+  "audit_notes": {
+    "RG4_objids_in_Control4C": 224,
+    "RG4_objids_in_Control4B": 224,
+    "RG4_n_objids": 224,
+    "Control4B_Control4C_shared_objids": 1995,
+    "duplicate_objid_within_sample": 0,
+    "CG4_objids_in_any_control": 0,
+    "Control4C_groups_with_parent_N4": 56,
+    "Control4C_groups_total": 703,
+    "firefly_metallicity_is_linear_ZZsun": true,
+    "firefly_metallicity_grid_max_linear": 1.996677,
+    "gallazzi_logz_solar_max": 0.39447000433601875,
+    "gallazzi_zsun": 0.02
+  },
+  "max_abs_beta_reproduction_diff": 9.71445146547012e-17,
+  "CG4_group_medians": {
+    "core_size_kpc": 153.21128550634523,
+    "group_Vdisp": 160.40352377067745,
+    "core_size_p90": 217.89128556445942
+  },
+  "env_model_coefficients": {
+    "const": 0.004072374215940576,
+    "lgm-10.2": 0.22447496830888808,
+    "log_core_size-2.2": -0.04999429153616117,
+    "log_group_Vdisp-2.2": 0.013380136770093119
+  }
+}

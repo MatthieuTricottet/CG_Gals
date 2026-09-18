@@ -12,6 +12,8 @@ from scipy.stats import multivariate_normal, fisher_exact, linregress
 import scipy.interpolate as interp
 from scipy.ndimage import gaussian_filter
 
+CONTOUR_GAUSSIAN_SIGMA_BINS = 1.25
+
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import matplotlib.lines as mlines  # for legend proxies
@@ -611,14 +613,18 @@ def plot_classification(
     full_counts, x_edges, y_edges = np.histogram2d(
         x, y, bins=(150, 150), range=(x_range, y_range)
     )
-    full_density = gaussian_filter(full_counts.T, sigma=1.25)
+    # Display-only smoothing in histogram-bin units; the adopted GMM
+    # boundary and all classifications remain untouched.
+    full_density = gaussian_filter(
+        full_counts.T, sigma=CONTOUR_GAUSSIAN_SIGMA_BINS
+    )
     full_levels = _enclosed_density_levels(full_density)
     x_centres = 0.5 * (x_edges[:-1] + x_edges[1:])
     y_centres = 0.5 * (y_edges[:-1] + y_edges[1:])
 
     panels = [
-        (co.Morphologies[0], "Elliptical"),
-        (co.Morphologies[1], "Spiral"),
+        (co.Morphologies[0], "E class"),
+        (co.Morphologies[1], "S class"),
         (co.Morphologies[2], "Uncertain"),
     ]
     fig, axes = plt.subplots(1, 3, figsize=fig_size, sharex=True, sharey=True)
@@ -645,7 +651,9 @@ def plot_classification(
                 bins=(150, 150),
                 range=(x_range, y_range),
             )
-            morph_density = gaussian_filter(morph_counts.T, sigma=1.25)
+            morph_density = gaussian_filter(
+                morph_counts.T, sigma=CONTOUR_GAUSSIAN_SIGMA_BINS
+            )
             morph_levels = _enclosed_density_levels(morph_density)
             filled_levels = np.r_[
                 morph_levels, morph_density.max() * (1 + 1e-6)
@@ -687,9 +695,10 @@ def plot_classification(
         )
         ax.set_xlim(x_range)
         ax.set_ylim(y_range)
-        ax.tick_params(axis="both", labelsize=tick_labelsize, length=2.2, pad=1.5)
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
+        ax.tick_params(axis="both", labelsize=tick_labelsize, length=2.2,
+                       pad=1.5, direction="in", top=True, right=True)
+        for spine in ax.spines.values():
+            spine.set_visible(True)
 
     axes[0].set_ylabel(lu.formatted_label("sSFR"), fontsize=label_fontsize, labelpad=3)
     axes[1].set_xlabel(lu.formatted_label("lgm"), fontsize=label_fontsize, labelpad=3)
@@ -2078,11 +2087,8 @@ def _plot_main_sequence_residuals_hist_legacy(
         ylabel = "Probability density" if density else "Number"
     ax.set_ylabel(ylabel, fontsize=labelsize)
 
-    ax.tick_params(axis="both", which="major", labelsize=ticksize)
-
-    # Clean look
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
+    ax.tick_params(axis="both", which="major", labelsize=ticksize,
+                   direction="in", top=True, right=True)
 
     if title is not None:
         ax.set_title(title, fontsize=labelsize)
@@ -2177,9 +2183,8 @@ def plot_main_sequence_residuals(
     ax.set_xlabel(xlabel, fontsize=labelsize)
     ax.set_ylabel(ylabel, fontsize=labelsize)
     ax.set_ylim(0, 1)
-    ax.tick_params(axis="both", which="major", labelsize=ticksize)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
+    ax.tick_params(axis="both", which="major", labelsize=ticksize,
+                   direction="in", top=True, right=True)
     if title is not None:
         ax.set_title(title, fontsize=labelsize)
     ax.legend(fontsize=legendsize, frameon=False, loc="best")
@@ -2246,9 +2251,8 @@ def plot_residual_ecdf_panels(
         ax.set_xlabel(xlabel, fontsize=labelsize)
         ax.set_title(title, fontsize=labelsize - 1)
         ax.set_ylim(0, 1)
-        ax.tick_params(axis="both", which="major", labelsize=ticksize)
-        ax.spines["top"].set_visible(False)
-        ax.spines["right"].set_visible(False)
+        ax.tick_params(axis="both", which="major", labelsize=ticksize,
+                       direction="in", top=True, right=True)
     axes[0].set_ylabel(ylabel, fontsize=labelsize)
     axes[0].legend(fontsize=legendsize, frameon=False, loc="upper left")
     fig.tight_layout()

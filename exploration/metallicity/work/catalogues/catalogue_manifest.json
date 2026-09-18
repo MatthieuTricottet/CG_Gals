@@ -1,0 +1,164 @@
+{
+  "created_utc": "2026-09-15T16:51:41+00:00",
+  "target_spectrum_definition": "Claude work/metallicity_worktable.csv chosen plate-MJD-fibre; parent rows unchanged",
+  "matching_key": [
+    "plate",
+    "mjd",
+    "fiberid"
+  ],
+  "downloads": [
+    {
+      "path": "work/catalogues/gallazzi/stellarmet.html",
+      "url": "https://wwwmpa.mpa-garching.mpg.de/SDSS/DR4/Data/stellarmet.html",
+      "bytes": 5279,
+      "sha256": "d02cd321e265386f062e4b41f309f8ea33c052619632143fa037fd57dd889c59"
+    },
+    {
+      "path": "work/catalogues/gallazzi/all_stat_z_log.dat.gz",
+      "url": "https://wwwmpa.mpa-garching.mpg.de/SDSS/DR4/Data/Gallazzi/all_stat_z_log.dat.gz",
+      "bytes": 10357084,
+      "sha256": "c90bd533b507bc0eb46fce2e4f7167dba2cd6207e66b68f2e2dc11c7564e56ee"
+    },
+    {
+      "path": "work/catalogues/gallazzi/all_stat_age.dat.gz",
+      "url": "https://wwwmpa.mpa-garching.mpg.de/SDSS/DR4/Data/Gallazzi/all_stat_age.dat.gz",
+      "bytes": 10274429,
+      "sha256": "315700b5f4538b54fc4c30aa118691eb9ebe28637181419135ecc34d327a7269"
+    },
+    {
+      "path": "work/catalogues/gallazzi/Gallazzi2005_arxiv.pdf",
+      "url": "https://arxiv.org/pdf/astro-ph/0506539",
+      "bytes": 867001,
+      "sha256": "b8b99c8423ddc7570e5680103dc35e3eed576aab7f4506c509243815b2c74bea"
+    },
+    {
+      "path": "work/catalogues/firefly/sdss_dr16_firefly.html",
+      "url": "https://www.sdss4.org/dr16/spectro/eboss-firefly-value-added-catalog/",
+      "bytes": 44390,
+      "sha256": "d5afbcd84f094dda00c0a4689eb588fa9b64ae90f5fbd5ff56ae152d2bb46efd"
+    },
+    {
+      "path": "work/catalogues/firefly/sdss_eboss_firefly-DR16_datamodel.html",
+      "url": "https://data.sdss.org/datamodel/files/EBOSS_FIREFLY/FIREFLY_VER/sdss_eboss_firefly-DR16.html",
+      "bytes": 9108,
+      "sha256": "e5d95e13f93d22db327ba2d71b69a3d2307bb8f9701fc709dd5821100e21a835"
+    },
+    {
+      "path": "work/catalogues/firefly/Comparat2019_arxiv.pdf",
+      "url": "https://arxiv.org/pdf/1711.06575",
+      "bytes": 3592779,
+      "sha256": "01bfe7b3046937818c96493768e1b831d1a9a800e5eee13e683851f74201e49d"
+    }
+  ],
+  "gallazzi": {
+    "catalogue_rows": 567486,
+    "unique_pmf": 567486,
+    "target_unique_pmf": 3857,
+    "matched_unique_pmf": 1665,
+    "output": "work/catalogues/gallazzi/gallazzi_sample_matches.csv",
+    "metallicity_raw_quantiles": {
+      "0": -99.0,
+      "0.01": -99.0,
+      "0.5": -1.8498,
+      "0.99": -1.3644,
+      "1": -1.3039
+    }
+  },
+  "firefly": {
+    "cas_data_release_endpoint": 18,
+    "vac": "SDSS DR16 SDSS/eBOSS FIREFLY",
+    "combined_dr16_vac_directory_version": "v1_1_1",
+    "legacy_sdss_firefly_version": "v1_1_0",
+    "eboss_firefly_version": "v1_1_1",
+    "target_unique_pmf": 3857,
+    "matched_unique_pmf": 3835,
+    "returned_run2d": {
+      "26": 3645,
+      "v5_13_0": 190
+    },
+    "columns": [
+      "plate",
+      "mjd",
+      "fiberid",
+      "SPECOBJID",
+      "RUN2D",
+      "RUN1D",
+      "PLATE",
+      "MJD",
+      "FIBERID",
+      "RA",
+      "DEC",
+      "Z_NOQSO",
+      "Z_ERR_NOQSO",
+      "CLASS_NOQSO",
+      "Chabrier_MILES_age_lightW",
+      "Chabrier_MILES_age_lightW_up_1sig",
+      "Chabrier_MILES_age_lightW_low_1sig",
+      "Chabrier_MILES_age_lightW_up_2sig",
+      "Chabrier_MILES_age_lightW_low_2sig",
+      "Chabrier_MILES_metallicity_lightW",
+      "Chabrier_MILES_metallicity_lightW_up_1sig",
+      "Chabrier_MILES_metallicity_lightW_low_1sig",
+      "Chabrier_MILES_metallicity_lightW_up_2sig",
+      "Chabrier_MILES_metallicity_lightW_low_2sig",
+      "Chabrier_MILES_age_massW",
+      "Chabrier_MILES_age_massW_up_1sig",
+      "Chabrier_MILES_age_massW_low_1sig",
+      "Chabrier_MILES_age_massW_up_2sig",
+      "Chabrier_MILES_age_massW_low_2sig",
+      "Chabrier_MILES_metallicity_massW",
+      "Chabrier_MILES_metallicity_massW_up_1sig",
+      "Chabrier_MILES_metallicity_massW_low_1sig",
+      "Chabrier_MILES_metallicity_massW_up_2sig",
+      "Chabrier_MILES_metallicity_massW_low_2sig",
+      "Chabrier_MILES_total_mass",
+      "Chabrier_MILES_total_mass_up_1sig",
+      "Chabrier_MILES_total_mass_low_1sig",
+      "Chabrier_MILES_total_mass_up_2sig",
+      "Chabrier_MILES_total_mass_low_2sig",
+      "Chabrier_MILES_spm_EBV",
+      "Chabrier_MILES_nComponentsSSP",
+      "Chabrier_ELODIE_age_lightW",
+      "Chabrier_ELODIE_age_lightW_up_1sig",
+      "Chabrier_ELODIE_age_lightW_low_1sig",
+      "Chabrier_ELODIE_age_lightW_up_2sig",
+      "Chabrier_ELODIE_age_lightW_low_2sig",
+      "Chabrier_ELODIE_metallicity_lightW",
+      "Chabrier_ELODIE_metallicity_lightW_up_1sig",
+      "Chabrier_ELODIE_metallicity_lightW_low_1sig",
+      "Chabrier_ELODIE_metallicity_lightW_up_2sig",
+      "Chabrier_ELODIE_metallicity_lightW_low_2sig",
+      "Chabrier_ELODIE_age_massW",
+      "Chabrier_ELODIE_age_massW_up_1sig",
+      "Chabrier_ELODIE_age_massW_low_1sig",
+      "Chabrier_ELODIE_age_massW_up_2sig",
+      "Chabrier_ELODIE_age_massW_low_2sig",
+      "Chabrier_ELODIE_metallicity_massW",
+      "Chabrier_ELODIE_metallicity_massW_up_1sig",
+      "Chabrier_ELODIE_metallicity_massW_low_1sig",
+      "Chabrier_ELODIE_metallicity_massW_up_2sig",
+      "Chabrier_ELODIE_metallicity_massW_low_2sig",
+      "Chabrier_ELODIE_total_mass",
+      "Chabrier_ELODIE_total_mass_up_1sig",
+      "Chabrier_ELODIE_total_mass_low_1sig",
+      "Chabrier_ELODIE_total_mass_up_2sig",
+      "Chabrier_ELODIE_total_mass_low_2sig",
+      "Chabrier_ELODIE_spm_EBV",
+      "Chabrier_ELODIE_nComponentsSSP"
+    ],
+    "output": "work/catalogues/firefly/firefly_sample_matches.csv"
+  },
+  "sdss_aux": {
+    "target_unique_objid": 3857,
+    "matched_unique_objid": 3857,
+    "columns": [
+      "petroMag_r",
+      "fiberMag_r",
+      "modelMag_r",
+      "cModelMag_r",
+      "extinction_r",
+      "objid"
+    ],
+    "output": "work/catalogues/sdss_aux/sdss_photometry.csv"
+  }
+}

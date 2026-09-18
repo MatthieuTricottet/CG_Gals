@@ -57,8 +57,10 @@ pytest                                 # invariants and render smoke tests
 
 `python -m src.main` honours the flags in `src/config.py`
 (`RENDER_PAPER_ONLY = True` renders the paper from the existing JSON without
-re-running analyses). The paper is compiled to `output/paper/paper.pdf`
-(pdflatex + bibtex required). Every stochastic step uses a fixed, documented
+re-running analyses). The paper and its online diagnostic supplement are
+compiled to `output/paper/paper.pdf` and
+`output/paper/online_supplement.pdf` (pdflatex + bibtex required). Every
+stochastic step uses a fixed, documented
 seed; `output/results.json` and `output/results_build.json` are regenerated
 by the pipeline and feed the Jinja2 template — never edit
 `output/paper/paper.tex` by hand.

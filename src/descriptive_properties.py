@@ -4,9 +4,9 @@ Four panels in the style and binning of the morphology row of Fig. 2, for
 all galaxies of the four samples:
 
   (a) strong H-alpha emission fraction (EW <= -3 A, SDSS sign convention);
-  (b) AGN-like fraction among BPT-classified galaxies (Sect. 3.7 scheme);
+  (b) AGN fraction among BPT-classified galaxies (Sect. 3.7 scheme);
   (c) median D_n4000 (MPA-JHU galSpecIndx, Appendix A provenance);
-  (d) median log R_chl,r (seeing-corrected Simard half-light radius, kpc).
+  (d) median log R_e,r (seeing-corrected Simard half-light radius, kpc).
 
 Purely descriptive: no model is fitted.  Intervals are group-blocked
 bootstrap 16--84% percentiles exactly as in Fig. 2.
@@ -50,10 +50,10 @@ PANELS = (
     ("strong_halpha", "strong_halpha", "fraction",
      "(a) Strong H$\\alpha$ emission fraction (EW $\\leq -3$ \u00c5)", (-0.03, 1.03)),
     ("agn_like", "agn_like", "fraction",
-     "(b) AGN-like fraction (BPT-classified)", (-0.03, 1.03)),
+     "(b) AGN fraction (BPT-classified)", (-0.03, 1.03)),
     ("dn4000", "Dn4000", "median", r"(c) Median $D_n4000$", None),
     ("log_rchl", "log_Rchl_r_kpc", "median",
-     r"(d) Median $\log_{10}(R_{\rm chl,r}/{\rm kpc})$", None),
+     r"(d) Median $\log_{10}(R_{e,r}/{\rm kpc})$", None),
 )
 
 

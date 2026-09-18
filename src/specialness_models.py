@@ -30,9 +30,9 @@ MODEL_SPECS = {
 LABELS = {
     "quenched_all": "Quenched, all",
     "quenched_satellites": "Quenched, satellites",
-    "elliptical_all": "Elliptical, all",
-    "elliptical_satellites": "Elliptical, satellites",
-    "elliptical_bgg": "Elliptical, BGG",
+    "elliptical_all": "GZ1 E class, all",
+    "elliptical_satellites": "GZ1 E class, satellites",
+    "elliptical_bgg": "GZ1 E class, BGG",
 }
 
 

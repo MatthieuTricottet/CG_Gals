@@ -2,9 +2,9 @@
  "meta": {
   "script": "src/paper_additions.py",
   "seed": 42,
-  "generated_utc": "2026-09-17T19:51:24.334422+00:00",
-  "git_head": "71011cd",
-  "runtime_s": 11.3
+  "generated_utc": "2026-09-18T16:53:55.580144+00:00",
+  "git_head": "f3bbb4c",
+  "runtime_s": 12.3
  },
  "canonical_gate": {
   "CG4": {
@@ -319,6 +319,74 @@
     "n_b": 679
    }
   },
+  "mass_binned_satellites": {
+   "Isolated": [
+    {
+     "bin_left": 7.0,
+     "bin_right": 10.5,
+     "n_E": 3,
+     "n_classified": 9,
+     "n_groups": 5,
+     "p": 0.3333333333333333,
+     "wilson_lo": 0.1205838183869109,
+     "wilson_hi": 0.6457978644196036
+    },
+    {
+     "bin_left": 10.5,
+     "bin_right": 12.5,
+     "n_E": 1,
+     "n_classified": 5,
+     "n_groups": 4,
+     "p": 0.2,
+     "wilson_lo": 0.03622410863243014,
+     "wilson_hi": 0.6244653702374747
+    }
+   ],
+   "Embedded": [
+    {
+     "bin_left": 7.0,
+     "bin_right": 10.5,
+     "n_E": 20,
+     "n_classified": 33,
+     "n_groups": 15,
+     "p": 0.6060606060606061,
+     "wilson_lo": 0.43683440819940234,
+     "wilson_hi": 0.7531689256552291
+    },
+    {
+     "bin_left": 10.5,
+     "bin_right": 12.5,
+     "n_E": 10,
+     "n_classified": 14,
+     "n_groups": 9,
+     "p": 0.7142857142857143,
+     "wilson_lo": 0.4535091567010681,
+     "wilson_hi": 0.8827862135542308
+    }
+   ],
+   "Predominant": [
+    {
+     "bin_left": 7.0,
+     "bin_right": 10.5,
+     "n_E": 35,
+     "n_classified": 74,
+     "n_groups": 34,
+     "p": 0.47297297297297297,
+     "wilson_lo": 0.36338706920848024,
+     "wilson_hi": 0.5852264323805136
+    },
+    {
+     "bin_left": 10.5,
+     "bin_right": 12.5,
+     "n_E": 19,
+     "n_classified": 22,
+     "n_groups": 18,
+     "p": 0.8636363636363636,
+     "wilson_lo": 0.6666501283342828,
+     "wilson_hi": 0.9525099628594474
+    }
+   ]
+  },
   "isolated_satellite_classification_support": {
    "n_isolated_groups_total": 6,
    "n_isolated_groups_with_classified_satellites": 5,
@@ -447,6 +515,12 @@
    }
   },
   "statistic": "difference of the means over groups of the per-group satellite elliptical fraction E/(E+Sp); two-sided, add-one convention p=(k+1)/(B+1)",
+  "mass_bin_edges": [
+   7.0,
+   10.5,
+   12.5
+  ],
+  "mass_binning_note": "Two bins adopted because a three-bin alternative leaves only 4, 5, and 5 classified isolated satellites; the two-bin counts are 9 and 5.",
   "control_satellite_fE": {
    "Control4B": {
     "n_E": 701,

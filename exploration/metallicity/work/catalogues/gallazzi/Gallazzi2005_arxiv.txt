@@ -1,0 +1,1818 @@
+arXiv:astro-ph/0506539v1  22 Jun 2005
+Mon. Not. R. Astron. Soc. 000, 1–22 (2004) Printed 26 November 2024 (MN L ATEX style ﬁle v2.2)
+The Ages and Metallicities of Galaxies in the Local
+Universe
+Anna Gallazzi 1⋆, St´ ephane Charlot1,2, Jarle Brinchmann 3, Simon D.M. White 1,
+Christy A. Tremonti 4
+1Max-Planck-Institut f¨ ur Astrophysik, Karl-Schwarzschild-Str. 1, D-85748 Garching bei M¨ unchen, Germany
+2Institut d’Astrophysique de Paris, UMR 7095, 98 bis Bouleva rd Arago, F-75014 Paris, France
+3Centro de Astrof ´ ısica da Universidade do Porto, Rua das Est relas - 4150-762 Porto, Portugal
+4Steward Observatory, University of Arizona, 933 North Cher ry Avenue, Tucson, AZ 85721
+Accepted . Received ; in original form...
+ABSTRACT
+We derive stellar metallicities, light-weighted ages and s tellar masses for a magnitude-
+limited sample of 175,128 galaxies drawn from the Sloan Digi tal Sky Survey Data
+Release Two (SDSS DR2). We compute median-likelihood estim ates of these param-
+eters using a large library of model spectra at medium-high r esolution, covering a
+comprehensive range of star formation histories. The const raints we derive are set by
+the simultaneous ﬁt of ﬁve spectral absorption features, wh ich are well reproduced by
+our population synthesis models. By design, these constrai nts depend only weakly on
+the α/Fe element abundance ratio. Our sample includes galaxies o f all types spanning
+the full range in star formation activity, from dormant earl y-type to actively star-
+forming galaxies. By analysing a subsample of 44,254 high-q uality spectra, we show
+that, in the mean, galaxies follow a sequence of increasing s tellar metallicity, age and
+stellar mass at increasing 4000 ˚
+A-break strength. For galaxies of intermediate mass,
+stronger Balmer absorption at ﬁxed 4000 ˚
+A-break strength is associated with higher
+metallicity and younger age. We investigate how stellar met allicity and age depend on
+total galaxy stellar mass. Low-mass galaxies are typically young and metal-poor, mas-
+sive galaxies old and metal-rich, with a rapid transition be tween these regimes over
+the stellar mass range 3 × 109 ≲ M∗ ≲ 3 × 1010M⊙. Both high- and low-concentration
+galaxies follow these relations, but there is a large disper sion in stellar metallicity
+at ﬁxed stellar mass, especially for low-concentration gal axies of intermediate mass.
+Despite the large scatter, the relation between stellar met allicity and stellar mass
+is similar to the correlation between gas-phase oxygen abun dance and stellar mass
+for star-forming galaxies. This is conﬁrmed by the good corr elation between stellar
+metallicity and gas-phase oxygen abundance for galaxies wi th both measures. The
+substantial range in stellar metallicity at ﬁxed gas-phase oxygen abundance suggests
+that gas ejection and/or accretion are important factors in galactic chemical evolution.
+Key words: galaxies: formation, galaxies: evolution, galaxies: stel lar content
+1 INTRODUCTION
+The ages and metallicities of stellar populations in nearby
+galaxies are direct tracers of the star formation and chemic al
+enrichment histories of the Universe. Clues to the ages and
+metallicities of the stars may be inferred from the integrat ed
+spectra of galaxies, using ‘stellar population synthesis m od-
+els’ (Tinsley 1978; Bruzual A. 1983; Bruzual A. & Charlot
+1993; Bressan et al. 1994; Fioc & Rocca-Volmerange 1997;
+⋆ E-mail: gallazzi@MPA-Garching.MPG.DE
+Maraston 1998; Vazdekis 1999). Analyses based on these
+models have been traditionally limited by the diﬃculty of
+deriving independent constraints on the age, star formatio n
+history, metallicity and dust content of a galaxy. For exam-
+ple, changes in age, metallicity and attenuation by dust all
+have similar eﬀects on the colours and low-resolution spect ra
+of galaxies. This gives rise to well-known ‘near-degenerac ies’
+in the constraints derived on these diﬀerent parameters.
+The expectation is that these degeneracies may be bro-
+ken, at least in part, by appealing to reﬁned spectral diag-
+nostics which are not sensitive to attenuation by dust and
+
+2 A. Gallazzi et al.
+have diﬀerent sensitivities to age and metallicity. Studie s in
+this area have focused on a set of 25 absorption features
+deﬁned and calibrated in the spectra of 460 nearby Galac-
+tic stars obtained at Lick Observatory (e.g. Faber 1973;
+Worthey et al. 1994; Worthey & Ottaviani 1997). These
+studies all pertain to early-type galaxies, because the lac k
+of hot stars in the Lick library does not allow the spectral
+interpretation of star-forming galaxies. The conclusion f rom
+these studies is that, for early-type galaxies, comparison s
+of the strengths of metallic lines and age-sensitive Balmer
+lines can break the age-metallicity degeneracy, but only in
+a relative way: the derived ages and metallicities appear to
+depend strongly on the speciﬁc choice of metal indices (e.g.
+Kuntschner et al. 2001; Eisenstein et al. 2003; Thomas et al.
+2004). This is because the Galactic stars used to calibrate
+the Lick indices have approximately solar metal abundance
+ratios at any metallicity, whereas the ratio of α -elements to
+iron is seen to increase from dwarf to massive early-type
+galaxies (e.g. Worthey et al. 1992).
+A main weakness of the original calibration of Lick in-
+dices is that it relies on spectra which were not calibrated i n
+ﬂux, and for which the resolution ( ∼ 9 ˚
+A FWHM) is three
+times lower than achieved by modern spectroscopic galaxy
+surveys, such as the Sloan Digital Sky Survey (SDSS; York
+et al. 2000). Thus, the high-quality spectra from these sur-
+veys must be degraded to the calibration and resolution of
+the original Lick spectra for index-strength analyses to be
+performed. The situation has changed recently with the de-
+velopment of medium-high resolution ( ≲ 3 ˚
+A FWHM), ﬂux-
+calibrated population synthesis models including stars in
+the full temperature range (Vazdekis 2001; Bruzual & Char-
+lot 2003). These models can be compared directly to high-
+quality observed spectra of both early-type and late-type
+galaxies. Several studies have also quantiﬁed the sensitiv ity
+of stellar absorption features to changes in element abun-
+dance ratios in galaxy spectra (Tantalo et al. 1998; Trager
+et al. 2000; Thomas et al. 2003b). These developments coin-
+cide with the advent of large homogeneous samples of galaxy
+spectra gathered by modern surveys such as the SDSS.
+This is the ﬁrst paper of a series in which we combine
+modern population synthesis techniques with the statistic al
+power of the SDSS to investigate the connection between
+metallicity, age and stellar mass in nearby galaxies. Here, we
+use the medium-high resolution population synthesis code o f
+Bruzual & Charlot (2003, hereafter BC03) to derive esti-
+mates of the metallicities, ages and stellar masses of a samp le
+of ∼ 2 × 105 nearby galaxies from the SDSS Data Release
+Two (DR2). We adopt a Bayesian statistical approach and
+derive full likelihood distributions for these physical pa ram-
+eters by comparing the observed spectrum of each galaxy
+with a comprehensive library of model spectra correspond-
+ing to diﬀerent star formation histories. The comparison is
+driven by the strengths of 5 spectral features selected to de -
+pend only weakly on the α /Fe ratio, which we measure in
+the same way in model and observed spectra.
+An important speciﬁcity of our work is that we de-
+rive the above constraints not only for quiescent, early-ty pe
+galaxies, but also for late-type, star-forming galaxies, f or
+which the contamination of stellar absorption features by
+nebular emission must be removed. We explore the relation-
+ships between metallicity, age and stellar mass and the de-
+pendence of these relationships on galaxy structure. In a
+companion paper, we exploit these results to investigate th e
+physical origin of the colour-magnitude relation and of the
+relation between Mg 2-index strength and velocity disper-
+sion for early-type galaxies. The total metal content of the
+local Universe and the distribution of metals as a function o f
+galaxy properties will be the subject of a subsequent paper.
+The paper is organized as follows. In Section 2 below,
+we present our sample of SDSS spectra and the models used
+to interpret them. We also describe our method for deriving
+metallicities, ages and stellar masses from observed galax y
+spectra. The results are presented in Section 3, where we
+study the dependence of metallicity and age on total stellar
+mass and the age-metallicity relation as a function of galax y
+structure. We also address in that section the inﬂuence of
+aperture bias on our derived parameters. We summarize and
+brieﬂy discuss our results in Section 4.
+2 THE APPROACH
+In this section, we describe our approach for deriving esti-
+mates of light-weighted ages and metallicities from the ob-
+served spectra of SDSS galaxies. These spectra are discusse d
+in Section 2.1, along with the models we use to interpret
+them. In Section 2.2, we select a set of spectral absorption
+features which we argue should most robustly constrain age
+and metallicity. Then, in Section 2.3, we outline the statis ti-
+cal approach we adopt to derive ages and metallicities from
+galaxy spectra. We also highlight the sensitivity of our con -
+straints on age and metallicity to the observational signal -
+to-noise ratio (S/N) of the spectra.
+2.1 Observed and model spectra
+The observed spectra we consider are drawn from the SDSS
+DR2 (Abazajian et al. 2004). The SDSS is an imaging and
+spectroscopic survey of the high Galactic latitude sky, whi ch
+will obtain u,g,r,i andz photometry of almost a quarter of
+the sky and spectra of at least 700,000 objects (York et al.
+2000). The spectra are taken using 3 ′′-diameter ﬁbres, posi-
+tioned as close as possible to the centres of the target galax -
+ies. The ﬂux- and wavelength-calibrated spectra cover the
+range from 3800 to 9200 ˚
+A with a resolution of ∼ 1800. Our
+sample, drawn from the SDSS DR2, includes unique spec-
+tra of 196,673 galaxies with Petrosian r-band magnitudes in
+the range 14. 5 < r <17. 77 (after correction for foreground
+Galactic extinction using the extinction maps of Schlegel
+et al. 1998). The galaxies span the full range of types, from
+actively star-forming, late-type galaxies to dormant, ear ly-
+type galaxies. The median redshift is 0.13. A more detailed
+description of this sample is given in Section 3 below.
+To interpret these observed spectra in terms of physical
+parameters such as age, metallicity and stellar mass, we use
+the recent population synthesis models of BC03. These mod-
+els are based on ‘STELIB’, a newly available library of ob-
+served stellar spectra assembled by Le Borgne et al. (2003).
+The models have a spectral resolution of 3 ˚
+A FWHM across
+the whole wavelength range from 3200 to 9500 ˚
+A. They are
+thus ideally matched to the SDSS spectra.
+We note that, to interpret the spectra of star-forming
+and active galaxies with these models, we must ﬁrst remove
+
+The Ages and Metallicities of Galaxies in the Local Universe 3
+the contamination of the observed spectra by nebular emis-
+sion lines. This is achieved using the procedure outlined
+by Tremonti et al. (2004), which is optimized for use with
+SDSS galaxy spectra (see also Tremonti 2003). This consists
+in performing ﬁrst a non-negative least-squares ﬁt of the
+emission-line-free regions of the observed spectrum, usin g a
+set of model template spectra broadened to the observed
+velocity dispersion (the template spectra correspond to 30
+instantaneous-burst models of diﬀerent ages and metallici -
+ties computed using the BC03 code). Once the ﬁtted spec-
+trum is subtracted from the observed spectrum, the residu-
+als can be ﬁtted to Gaussian-broadened emission-line tem-
+plates. The method assumes a single broadening width for
+all the Balmer lines, and another (independent) width for
+all the forbidden lines. The strength of each line is ﬁtted in -
+dependently. Then, the ﬁtted emission lines are subtracted
+from the original observed spectrum to produce a ‘pure’
+absorption-line spectrum suited to our analysis.
+2.2 Stellar absorption diagnostics of age and
+metallicity
+The strongest stellar absorption features in the optical sp ec-
+tra of galaxies form the basis of the Lick system of spectral
+indices (Burstein et al. 1984; Gorgas et al. 1993; Worthey
+et al. 1994; Worthey & Ottaviani 1997; Trager et al. 1998; see
+also Section 1). Each index in this system is deﬁned by a cen-
+tral ‘feature bandpass’ and two adjacent ‘pseudo-continuu m
+bandpasses’. The above studies have shown that some Lick
+indices are primarily sensitive to age, such as those based o n
+H-Balmer lines, while others are primarily sensitive to met al-
+licity, such as several Fe- and Mg-based indices at wave-
+lengths between 4500 and 5700 ˚
+A. We also consider here the
+4000-˚
+A break index of Balogh et al. (1999), which we denote
+D4000, which is deﬁned as the ratio of the average ﬂux den-
+sities in the narrow bands 4000–4100 ˚
+A and 3850–3950 ˚
+A.1
+This index depends somewhat on metallicity but correlates
+more with the ratio of present to past-averaged star forma-
+tion rates in galaxies (see ﬁg. 2 of Kauﬀmann et al. 2003a
+and ﬁg. 27 of Brinchmann et al. 2004).
+In previous studies based on models with low spectral
+resolution, the strengths of Lick indices had to be mod-
+elled analytically as functions of the eﬀective temperatur es,
+gravities and metallicities of the stars (Worthey et al. 199 4;
+Worthey & Ottaviani 1997; Gorgas et al. 1999). These ‘ﬁt-
+ting functions’ were not appropriate for hot stars, and henc e,
+index-strength analyses had to be restricted to old stellar
+populations. Moreover, as mentioned in Section 1, the stel-
+lar spectra on which the Lick indices were originally cali-
+brated had lower resolution than typical galaxy spectra to-
+day and were not ﬂux-calibrated. These various weaknesses
+are resolved here by our adoption of the medium-high res-
+olution, ﬂux-calibrated BC03 models. These models can be
+compared directly to the SDSS spectra of galaxies with any
+star formation history, and the Lick indices can be measured
+in the same way in model and observed spectra.
+Like previous models, however, the BC03 models rely on
+a spectral library of nearby stars with near solar metal abun -
+dance ratios at any metallicity. The models are therefore
+1 This index is sometimes denoted by D n(4000).
+expected to show discrepancies when compared to galax-
+ies where the abundance ratios diﬀer from those of nearby
+stars.2 In fact, such discrepancies appear to be responsible
+for the fact that some spectral features, such as CN 1, CN 2,
+TiO1, TiO 2, Ca4227 and several Mg and Fe lines, were not
+well reproduced when BC03 compared their models with
+a sample of high-quality galaxy spectra drawn from SDSS
+Early Data Release (Stoughton et al. 2002).
+Several studies have addressed the dependence of Lick
+index strengths on changes in the relative ratios of heavy
+elements (Gonz´ alez 1993; Tripicco & Bell 1995; Tantalo et al.
+1998; Trager et al. 2000; Vazdekis 2001; Thomas et al. 2003b;
+Tantalo & Chiosi 2004; Thomas et al. 2004, see also BC03).
+These studies have led to the identiﬁcation of composite
+Mg+Fe indices, which are sensitive to metallicity (i.e. the
+fraction by mass of all elements heavier than helium over
+the total gas mass) but show little sensitivity to α /Fe (i.e.
+the ratio of the total mass of α elements to the mass of iron;
+see footnote 2). Among these, we use here
+[MgFe]′ =
+√
+Mgb (0. 72 Fe5270 + 0. 28 Fe5335), (1)
+as proposed by Thomas et al. 2003b, and
+[Mg2Fe] = 0. 6 Mg 2 + 0. 4 log(Fe4531 + Fe5015), (2)
+as deﬁned in BC03.
+We wish to extract ages and metallicities from the SDSS
+galaxy spectra. We therefore ﬁt simultaneously both metal-
+sensitive and age-sensitive indices. Among the 28 spectral
+indices studied by BC03, we concentrate on those that are
+best reproduced by the models. This requirement already
+excludes several Fe-based indices, the three Mg-based in-
+dices, Ca4227, Ca4455, the CN, TiO and NaD features (see
+ﬁg. 18 of BC03). Among the remaining indices we identify
+those that are known to have at most a weak dependence
+on α /Fe. [Mg 2Fe] and [MgFe] ′ are suitable metal-sensitive
+indices and Hβ is a suitable age-sensitive index. We also in-
+clude D4000, which is sensitive to the ratio of present to
+past-averaged star formation rate (see above). We are not
+aware of any study indicating the dependence of this index
+on α /Fe. Finally, to better constrain age we decided to in-
+clude also the two higher-order Balmer lines, H δ A and Hγ A.
+These indices have been recently shown to depend on vari-
+ations in element abundance ratios at metallicities around
+solar and above (Thomas et al. 2004; Korn et al. 2005). How-
+ever, we ﬁnd that including them in our procedure does not
+produce results systematically diﬀerent from those obtain ed
+without them, while it provides smaller errors on both age
+and metallicity estimates. Therefore, we decide to use also
+Hδ A+Hγ A. We choose the sum of H δ A and Hγ A because
+it is better reproduced by the models than the two indices
+separately (see ﬁg. 18 of BC03). Thus, our ﬁnal set of in-
+dices is composed of D4000, H β , Hδ A+Hγ A, [Mg 2Fe] and
+[MgFe]′. This is the minimum set that allows us to derive
+good constraints on metallicity and age simultaneously and
+to recover well the parameters of simulated galaxies (see se c-
+tion 2.4 below).
+2 The abundance ratio of α elements (such as N, O, Mg, Ca, Na,
+Ne, S, Si, Ti), which are produced mainly by Type II supernova e,
+to Fe-peak elements (such as Cr, Mn, Fe, Co, Ni, Cu, Zn), which
+are produced mainly by Type Ia supernovae, is observed to var y in
+external galaxies (e.g., W orthey et al. 1992; Thomas et al. 2 003a).
+
+4 A. Gallazzi et al.
+The solid histograms in Fig. 1 show the distributions
+in ‘resolving power’ of these ﬁve spectral features for the
+galaxies in our sample. The resolving power is deﬁned as
+the ratio between the 5–95 percent percentile range of the
+distribution of index strengths for all galaxies in the sam-
+ple, ∆ I , and the observational error for each galaxy, σ I .
+The resolving power is largest ( ∼ 30) for D4000 and slightly
+lower (∼ 10) for the other indices. Also shown as dotted his-
+tograms in Fig. 1 are the analogous distributions in resolvi ng
+power for a subsample of galaxies with mean signal-to-noise
+per pixel greater than 20. As expected, the distributions fo r
+these galaxies are shifted to higher values, because of the
+smaller observational errors.
+We note that the strengths of some spectral absorp-
+tion indices are sensitive to the stellar velocity dispersi on
+in a galaxy (e.g. Davies et al. 1993; Longhetti et al. 1998;
+Trager et al. 1998; Kuntschner 2004). The indices that are
+most aﬀected are those measured with the narrowest pseudo-
+continuum bandpass deﬁnitions. In particular this eﬀect is
+seen in Fe-based indices and therefore also in the compos-
+ite Mg+Fe indices. The BC03 population synthesis code
+provides SSP spectra broadened to diﬀerent velocity dis-
+persions. This allows us to compare each galaxy spectra
+with models that have a similar velocity dispersion (see Sec -
+tion 2.3).
+2.3 Statistical estimates of age and metallicity
+We wish to estimate not only the most likely values of the
+ages and metallicities of SDSS galaxies, but also the accu-
+racy of these values. To this purpose, we adopt a Bayesian
+statistical approach, similar to the one outlined by Kauﬀ-
+mann et al. (2003a). The goal is to obtain the likelihood
+distribution of a given parameter X in the space of all pos-
+sible values of X. This is obtained by comparing the obser-
+vational data with a set of models that populate the space of
+all possible X according to a prior distribution which repre-
+sents our prejudice about the relative likelihood of diﬀere nt
+X values in absence of any data.
+We generate a library of 150,000 Monte Carlo realiza-
+tions of a full range of physically plausible star formation his-
+tories. Following Kauﬀmann et al. (2003a), each star forma-
+tion history is parametrized in terms of a continuous model
+in which stars are formed from the time tform to the present
+according to the law ψ (t) ∝ exp(−γt ). Random bursts of
+star formation are superposed on this continuous model. We
+take the formation time tform to be uniformly distributed
+between 13.5 and 1.5 Gyr and the star formation time-scale
+parameter γ to be uniform over the interval from 0 to 1
+Gyr−1. The bursts can occur at all times after tform with
+equal probability, set in such a way that 10 percent of the
+galaxies in the library experience a burst in the last 2 Gyr. 3
+They are parametrized in terms of the fraction A of stellar
+mass produced during the burst relative to the total mass
+3 In Kauﬀmann et al. (2003a) this parameter was set such that
+50 percent of the models in the library experienced a burst in
+the last 2 Gyr. W e reduce this fraction to 10 percent because
+it provides a more uniform distribution of the models in ligh t-
+weighted age. The inﬂuence on our results from changing this
+fraction is discussed in Section 2.4.2.
+formed by the continuous model. The ratio A is logarithmi-
+cally distributed between 0.03 and 4. During a burst, stars
+form at a constant rate for a time distributed uniformly
+in the range 3 × 107–3 × 108 yr. The velocity dispersions
+of the models are distributed uniformly in the range 50–
+350 km s −1. We further take the models to be distributed
+logarithmically in metallicity in the range 0.2–2.5 Z⊙ and
+make the density of models drop smoothly as (log Z)1/3 at
+metallicities from 0.2 down to 0.02 Z⊙, in order not to over-
+represent extremely metal-poor models. All stars in a given
+model have the same ﬁxed metallicity, which we interpret as
+the ‘(optical) light-weighted’ metallicity.
+For each model in the library we compute the following
+properties:
+(i) the strengths of the D4000, H β , Hδ A+Hγ A, [Mg 2Fe]
+and [MgFe] ′ spectral indices, measured in the same way as
+in the SDSS spectra;
+(ii) the r-band light-weighted age, evaluated by the in-
+tegral tr =
+∫ t
+0 [dτψ (t −τ )fr(τ )τ ]/
+∫ t
+0 [dτψ (t −τ )fr(τ )],
+where fr(τ ) is the total r-band ﬂux produced by stars of
+ageτ . We refer below to the r-band light-weighted age sim-
+ply as the ‘age’ of a galaxy;
+(iii) the z-band stellar mass-to-light ratio M∗/L z, which
+accounts for the gas mass returned to the ISM by evolved
+stars (see also section 3.1 of BC03);
+(iv) the apparent u,g,r,i andz magnitudes of the model
+at redshifts between 0 and 0.3 in steps of 0.01.
+The models in the library provide accurate simultane-
+ous ﬁts to the strengths of the 5 spectral indices D4000,
+Hβ , Hδ A+Hγ A, [Mg 2Fe] and [MgFe] ′ that we have selected
+to derive age and metallicity estimates from SDSS galaxy
+spectra. To illustrate this, Fig. 2 shows the distribution o f
+the diﬀerences between the best-ﬁt and observed strengths o f
+each index, in units of the observational error, for the gala x-
+ies in our sample. Because of the dependence of the com-
+posite Mg+Fe indices on stellar velocity dispersion, when
+ﬁtting the index strengths of an observed galaxy, we only
+include those models for which the stellar velocity disper-
+sion is within ±15 km s −1 of the observed one. 4 The plain
+histograms in Fig. 2 show the distributions for the sample
+as a whole, while the hatched histograms show the distribu-
+tions for those galaxies with a median S/N per pixel greater
+than 20. For both samples, the deviations between observa-
+tions and best-ﬁt models are within the observational error s
+for all indices, as indicated by the comparison with a Gaus-
+sian distribution of unit standard deviation (dotted line) .
+There is no strong correlation between the residuals of the
+diﬀerent indices.
+The comparison of the strengths of D4000, H β ,
+Hδ A+Hγ A, [Mg 2Fe] and [MgFe] ′ in the spectrum of an ob-
+served SDSS galaxy with the strengths of these indices in ev-
+ery model spectrum in the library allows us to construct the
+probability density functions (PDFs) of physical paramete rs
+(such as age, metallicity and mass-to-light ratio) for that
+galaxy. This is achieved by assigning to each model a weight
+w = exp( −χ 2/ 2), where χ 2 is calculated by comparing the
+strengths of the 5 indices measured in the observed spec-
+4 The median uncertainty on velocity dispersion is ∼ 15 km s −1
+for the full sample and only ∼ 7 km s−1 for galaxies with S/N >20.
+
+The Ages and Metallicities of Galaxies in the Local Universe 5
+Figure 1. Distributions in ‘resolving power’ of the 5 spectral featur es selected to constrain the ages and metallicities of SDSS g alaxies,
+as indicated. The resolving power is deﬁned as the ratio betw een the 5%–95% percentile range ∆ I of index strengths in the sample and
+the observational error σ I of each galaxy. In each panel, the solid histogram shows the d istribution for our sample of 196,673 SDSS-DR2
+galaxies, and the dotted histogram the distribution for the subsample of 44,347 galaxies with mean signal-to-noise per pixel greater than
+20.
+Figure 2. Simultaneous ﬁt of the 5 spectral features chosen to derive a ge and metallicity estimates from SDSS galaxy spectra using the
+model library described in Section 2.3. The histograms show the distributions of the diﬀerences between the best-ﬁt ( I ﬁt ) and observed
+(I obs) strengths of each index (as indicated), in units of the obse rvational error ( σ I ). The plain histograms are for the full sample of
+196,673 galaxies, while the hatched histograms are for the s ubsample of 44,347 galaxies with mean S/N per pixel greater t han 20. Only
+those models for which the stellar velocity dispersion is wi thin ±15 km s −1 of the observed one are included in the ﬁt for each galaxy.
+For reference, the dotted line in each panel shows a Gaussian distribution with unit standard deviation.
+trum with those measured in the model spectrum, given the
+observational measurement errors. The PDF of a selected
+physical parameter is then simply given by the distribution
+in that parameter of the weights w of all the models in the
+library.
+The PDF of a given parameter can then be character-
+ized by its mode, which corresponds to the most likely value
+of the parameter, its median, which can diﬀer from the mode
+for non-symmetric distributions, and by a conﬁdence inter-
+val within which the parameter is constrained at a certain
+probability level. We often quote below the 68 percent con-
+ﬁdence interval corresponding to the 16%–84% percentile
+range of the PDF, which would be equivalent to the ±1σ
+range for a Gaussian distribution.
+2.4 Accuracy of the estimates
+2.4.1 Dependence on observational properties
+We now want to illustrate the kind of constraints that can
+be obtained on the ages and metallicities of SDSS galaxies
+with diﬀerent spectral properties using the method outline d
+above. Kauﬀmann et al. (2003a) have shown that the com-
+bination of H-Balmer lines and D4000 is a discriminating
+diagnostic of the recent star formation activity in galaxie s.
+We therefore draw 4 galaxies from our sample with high-
+quality spectra (median S/N per pixel larger than 30) lo-
+cated at diﬀerent positions along the sequence occupied by
+SDSS galaxies in the H δ A+Hγ A versus D4000 diagnostic di-
+agram.
+
+6 A. Gallazzi et al.
+The solid distributions in Fig. 3 show the constraints ob-
+tained on the metallicities (left-hand plot) and ages (righ t-
+hand plot) of these galaxies in two cases: when including
+only the age-sensitive indices D4000, H β and Hδ A+Hγ A to
+constrain the ﬁts (bottom panels), and when including also
+the metal-sensitive indices [Mg 2Fe] and [MgFe] ′ (top pan-
+els). As expected, the ages are well constrained by D4000,
+Hβ and Hδ A+Hγ A alone, and the corresponding PDFs do
+not change appreciably when including also the constraints
+from metal-sensitive indices. In contrast, the metallicit ies
+are well constrained only when the metal-sensitive indices
+are included in the ﬁt. In each panel in Fig. 3, the arrows
+indicate the median (longer one) and the 16 th and 84 th per-
+centiles (shorter ones) of the PDF. The 68 percent conﬁ-
+dence interval becomes narrower when all the ﬁve indices
+are included, and the median of the distribution in this case
+is consistent with that obtained when including only the
+age-sensitive indices. We note that age and metallicity ap-
+pear to correlate with D4000 (indicated on the ﬁgure) for
+these 4 galaxies, and that the constraints on metallicity ar e
+weakest for the galaxy with the lowest D4000. This is not a
+coincidence, as we shall see in Section 3 below.
+It is important to note that the observed S/N directly
+inﬂuences the uncertainties in the age and metallicity esti -
+mates. To investigate this, we consider a set of galaxies wit h
+index strengths similar to those of the galaxies in Fig. 3, bu t
+with lower median S/N per pixel, e.g. 20. We take the aver-
+age errors in the index strengths of these low-S/N galaxies
+to be typical of errors that would be measured at the same
+S/N for the galaxies in Fig. 3. We then mimic 100 real-
+izations of ‘degraded spectra’ of the high-S/N galaxies by
+randomly drawing index strengths from Gaussian distribu-
+tions centered on their index values, of widths the typical
+errors obtained from the lower-S/N galaxies. The PDFs of
+age and metallicity may be computed for each realization,
+and the average PDF of the 100 realizations is a good esti-
+mator of the results that would be obtained at low S/N for
+these galaxies.
+In the upper panels of Fig. 3, we show the average PDFs
+obtained in this way when the median S/N per pixel of each
+galaxy is degraded to 30 (long-dashed line), 20 (short-dash ed
+line) and 10 (dotted line). A median S/N per pixel of 10 is
+not suﬃcient to constrain metallicity well (except for the
+most metal-rich galaxy, which has the spectrum with the
+strongest absorption features). As we increase the S/N, the
+distributions narrow down and converge to the PDFs ob-
+tained from the original high-S/N spectra. We conclude that
+a median S/N per pixel of at least 20 is required to reliably
+constrain metallicity. This is higher than the median value
+of ∼ 15 for the SDSS-DR2 sample. The age estimates do not
+appear to be signiﬁcantly aﬀected by low S/N (except for
+the youngest galaxy), probably because they are constraine d
+strongly by D4000, which has small errors. The results of thi s
+exercise are summarized in Table 1.
+The results of Fig. 3 would not change dramatically if
+we restricted the ﬁt to only a subset of the selected spectral
+indices. We have checked this by using only H β to derive
+age estimates for the galaxies in Fig. 3, and only [MgFe] ′
+to derive metallicity estimates. The median-likelihood es ti-
+mates of age and metallicity obtained in this way fall within
+the 1σ errors of those shown in Fig. 3. The main eﬀect of
+reducing the number of indices included in the ﬁtting is to
+T able 1. Median-likelihood estimates of metallicity and age for
+the four galaxies shown in Fig. 3, obtained by degrading the a ctual
+signal-to-noise ratio of the spectrum (S / Nobs) to 30, 20 and 10.
+The quoted errors are one half the 68 percent conﬁdence range of
+the PDFs in the upper panels of Fig. 3. Each column correspond s
+to a galaxy, ordered from left to right as in Fig. 3.
+log(Z/Z ⊙)
+S/ N = 10 −0.43±0.57 −0.42±0.43 −0.07±0.27 0.09 ±0.12
+S/ N = 20 −0.36±0.44 −0.39±0.27 −0.02±0.21 0.12 ±0.08
+S/ N = 30 −0.34±0.35 −0.37±0.17 0.00 ±0.16 0.13 ±0.06
+S/ Nobs −0.41±0.22 −0.38±0.12 0.00 ±0.12 0.14 ±0.04
+log(tr/yr )
+S/ N = 10 9.19 ±0.21 9.68 ±0.18 9.84 ±0.15 9.92 ±0.11
+S/ N = 20 9.12 ±0.15 9.68 ±0.15 9.83 ±0.14 9.92 ±0.10
+S/ N = 30 9.12 ±0.12 9.66 ±0.13 9.79 ±0.14 9.92 ±0.09
+S/ Nobs 9.12±0.08 9.66 ±0.13 9.79 ±0.13 9.92 ±0.07
+broaden the derived likelihood distributions. For the gala x-
+ies of Fig. 3, the average error on age increases from 0.10
+dex to 0.14 dex when ﬁtting H β alone5, while the average
+error on metallicity increases from 0.13 dex to 0.29 dex when
+ﬁtting [MgFe] ′ alone.
+2.4.2 Possible systematic uncertainties
+To identify any potential bias in our method, we also tested
+how well it can recover ages and metallicities of model galax -
+ies for which these parameters are known. We selected 3000
+models at random from the library described in Section 2.3.
+We added Gaussian noise to the index strengths of these
+models to reﬂect the average observational errors of our
+SDSS sample. The ages and metallicities recovered by our
+method for these models showed no systematic deviation
+from the true values. For both age and metallicity, the de-
+viations ∆ log Z and ∆ log tr for the 3000 models followed
+Gaussian distributions centred on zero of width ∼ 0. 15. In-
+terestingly, the deviations in age and metallicity appear t o
+correlate with each other with a slope ∆ log Z/ ∆ log tr ≈
+−0. 74. This is consistent with the age-metallicity degener-
+acy identiﬁed in Section 3.3 below. We have checked that
+the way in which ∆ log Z and ∆ log tr respond to (noise-
+induced) changes in metal-sensitive and age-sensitive ind ices
+for galaxies with diﬀerent star formation histories cannot
+lead to spurious correlations between index strengths and
+metallicity/age residuals.
+We mentioned above that higher-order Balmer lines
+may be sensitive to the α /Fe ratio. To quantify the potential
+error on our metallicity and age estimates for galaxies with
+enhanced α /Fe relative to solar, we compared the predic-
+tions of the Thomas et al. (2004) stellar populations models
+at solar element abundance ratio, α/ Fe = 0, with those for
+5 It has been noticed that higher-order Balmer lines can yield
+younger ages than those predicted by H β , presumably because
+of the dependence of higher-order lines on α /Fe (e.g. Kuntschner
+2000; Eisenstein et al. 2003). However, we do not see any sign if-
+icant diﬀerence in the results when using either H δ A+Hγ A only
+or H β only.
+
+The Ages and Metallicities of Galaxies in the Local Universe 7
+Figure 3. Probability density functions of stellar metallicity (lef t-hand plot) and r-band light-weighted age (right-hand plot) for 4 SDSS
+galaxies with high-quality spectra (median S/N per pixel la rger than 30) and diﬀerent D4000 and H δ A+Hγ A strengths (indicated in the
+bottom panels of the left-hand plot). The solid PDFs in the bo ttom panels were obtained when including only the age-sensi tive indices
+D4000, H β and H δ A+Hγ A to constrain the ﬁts. Those in the top panels were obtained af ter including also the metal-sensitive indices
+[Mg2Fe] and [MgFe] ′. In each panel, the arrows indicate the median (longer one) a nd the 16 th and 84 th percentiles (shorter ones) of
+the PDF. The long-dashed, short-dashed and dotted PDFs in th e top panels show the constraints obtained when degrading th e original
+galaxy spectra to a median S/N per pixel of 30, 20 and 10, respe ctively (see text for detail).
+α/ Fe = 0. 3 (a typical ratio for massive elliptical galaxies).
+We chose 3000 models at random from our library and per-
+turbed their index strengths with Gaussian noise, as above.
+In addition, we increased the values of H δ A and Hγ A to re-
+ﬂect the diﬀerence between the α/ Fe = 0 and α/ Fe = 0. 3
+tracks, interpolating in metallicity and age to the values
+for each model considered. The distributions in ∆ log Z and
+∆ log tr are well represented by Gaussian centred on +0 . 05
+and −0. 05, respectively, of width given by the average error
+on metallicity and age (0.2 and 0.13 respectively). This tes t
+indicates that we tend to overestimate the stellar metallic -
+ities and underestimate the light-weighted ages of galaxie s
+with supersolar abundance ratios by ∼ 0. 05 dex. However,
+this seems in contradiction with the fact that the results
+on the galaxies in our sample do not vary systematically
+if we include or exclude H δ A+Hγ A in the ﬁt. This is true
+also for massive early-type galaxies, which are likely to be
+α -enhanced (e.g. Worthey et al. 1992). The oﬀset of ∼ 0. 05
+dex may thus be regarded as an upper limit to the error in
+the ages and metallicities derived from our analysis in the
+case of non-solar abundance ratios.
+Another possible source of systematic error is the choice
+of prior according to which our model library populates the
+parameter space. In particular, the mix of continuous and
+bursty star formation histories may inﬂuence the physical
+parameters in which we are interested, mainly the light-
+weighted age. To test for this eﬀect, we generated a Monte
+Carlo library with a modiﬁed prior, by increasing to 50 per-
+cent (instead of 10 percent) the fraction of models that can
+undergo a burst of star formation in the last 2 Gyrs. We
+then compared the (median-likelihood) estimates of light-
+weighted age and stellar metallicity derived with this mod-
+iﬁed prior and with our standard prior. Increasing the frac-
+tion of bursts, we derive ages ∼0.07 dex younger, on aver-
+age, than those derived with our standard prior. This bias
+mainly aﬀects old, early-type galaxies. Similarly the meta l-
+licities are on average 0.04 dex higher than those derived
+with the standard prior. The eﬀect of these oﬀsets on the
+relations between age, metallicity and stellar mass that we
+discuss in Section 3.2 is very small. The zeropoint of the
+relations changes according to the oﬀsets in metallicity an d
+age reported above, but the shape of the relations remains
+identical.
+2.4.3 Stellar mass estimates
+In the remainder of this paper, we will be interested in the
+dependence of age and metallicity not only on directly ob-
+served properties, such as spectral features and morpholog y,
+but also on ‘derived’ quantities, such as stellar mass. Kauﬀ -
+mann et al. (2003a) derived Bayesian likelihood estimates
+of the stellar masses of a sample of SDSS galaxies, based
+on ﬁts of the H δ A and D4000 absorption indices. We use
+a similar approach here and estimate stellar masses for all
+the galaxies in our sample, based on the ﬁts of D4000, H β ,
+Hδ A+Hγ A, [Mg 2Fe] and [MgFe] ′. We compute the PDF of
+the stellar mass for each galaxy by scaling the z-band mass-
+to-light ratio M∗/L z of each model to the observed, total
+z-band luminosity of the galaxy. 6 We compute M∗/L z at
+6 W e assume that the M∗/L z ratio is the same for the whole
+galaxy as it is in the region sampled by the ﬁbre. See Fig. 13 fo r
+the typical fraction of light that enters the ﬁbre.
+
+8 A. Gallazzi et al.
+the observed galaxy redshift and include the eﬀects of at-
+tenuation by dust. The z-band attenuation Az is inferred
+from the diﬀerence between the emission-line corrected ﬁ-
+bre r −i colour7 of the galaxy and the r −i colour of the
+redshifted (dust-free) model, assuming a single power law
+(∝λ −0.7) attenuation curve (Charlot & Fall 2000).
+The true attenuation can of course not be negative,
+but imposing strictly Az > 0 would not account for the er-
+rors aﬀecting the measurements of indices and magnitudes.
+Moreover, at high metallicities, there is a potential prob-
+lem that the dust-free models providing the best ﬁts to the
+observed absorption-line strengths can be redder than the
+observed galaxy (implying negative apparent attenuations ).
+This problem arises because of a discrepancy between the
+spectral absorption features and the integrated colours of
+the BC03 models at the metallicity 2 . 5Z⊙. The colours of
+these models correspond to stellar evolutionary tracks wit h
+(and colour-temperature calibrations for) Z = 2. 5Z⊙, but
+the absorption-line strengths had to be calibrated using st el-
+lar spectra for slightly lower metallicity, 1. 6 ≲ Z/Z ⊙ ≲ 2 (see
+Appendix A of BC03). Hence, the metallicity scale, which is
+linked to the evolutionary tracks and colours, may be biased
+high at supra-solar metallicities. This problem aﬀects mai nly
+the most metal-rich, early-type galaxies. To account for th is
+bias, we include models producing dust attenuations down
+to Az = −0. 1 when computing the PDFs of stellar mass,
+stellar metallicity and age. 8
+A comparison of our stellar mass estimates with those
+derived by Kauﬀmann et al. (2003a, which were based on
+a preliminary version of the BC03 models and an early cal-
+ibration of the SDSS spectra) for the galaxies in common
+between the two samples shows overall consistency, with a
+scatter of ∼ 0. 16 dex. Our stellar mass estimates tend to be
+systematically larger than theirs by ∼ 0. 1 dex. A diﬀerence
+of almost +0. 04 dex can be attributed to the diﬀerent prior
+used to generate the Monte Carlo library. The remaining
+oﬀset is likely to originate from their exclusion of all mode ls
+withr −i colour redder than that observed, while we include
+models which imply Az ‘attenuations’ down to −0. 1.
+3 THE AGES AND METALLICITIES OF
+NEARBY GALAXIES
+We now use the models described in Section 2 to estimate
+ages and metallicities for a sample of 196,673 galaxies draw n
+from the SDSS-DR2 (Abazajian et al. 2004, see also Sec-
+tion 2.1 above). Fig. 4 shows the distributions in median
+S/N per pixel (upper panel) and in redshift (lower panel) of
+this sample. Although the distribution in redshift extends
+up to 0.3, in what follows we discuss results only for galax-
+ies in the redshift range 0 . 005 < z⩽ 0. 22. The lower limit
+7 Fibre magnitudes are obtained using the SDSS photometry di-
+rectly out to the radius covered by the ﬁbre. They are thus dir ectly
+comparable to quantites derived from spectroscopy, provid ed that
+the ﬁbre is positioned at the centre of the galaxy. Correctio ns for
+emission lines are obtained by comparing the magnitudes mea -
+sured oﬀ the spectrum before and after removing emission lin es.
+8 The diﬀerence in r−i colour between two old stellar populations
+of metallicities 2 . 5 Z⊙ and 2 Z⊙, when interpreted as a colour
+excess, corresponds to a z-band attenuation Az ∼ 0. 1.
+is intended to avoid redshifts for which deviations from the
+Hubble ﬂow can be substantial, but still allows us to include
+galaxies at very low luminosity (corresponding roughly to a
+lower mass limit of ∼ 108M⊙). The upper limit corresponds
+roughly to the redshift at which a typical 10 11M⊙ galaxy is
+detected with median S/N per pixel greater than 20. These
+cuts leave us with 175,128 galaxies.
+In some applications below, it will be useful to distin-
+guish between diﬀerent morphological types of galaxies. Th is
+can be achieved on the basis of the ‘concentration parame-
+ter’C =R90/R 50, deﬁned as the ratio of the radii enclosing
+90 and 50 percent of the Petrosian r-band luminosity of a
+galaxy. Strateva et al. (2001) and Shimasaku et al. (2001)
+have shown that the concentration parameter allows a rough
+classiﬁcation into galaxy morphological types. Strateva e t al.
+(2001) propose a cut at C = 2. 6 to separate early- from
+late-type galaxies. To limit the contamination between the
+two types, here we deﬁne those galaxies with C ⩾ 2. 8 to
+be ‘early-type’ and those galaxies with C ⩽ 2. 4 to be ‘late-
+type’. The dotted and dashed lines in Fig. 4 show separately
+the distributions in median S/N per pixel and in redshift
+of the resulting subsamples of early- and late-type galax-
+ies, respectively. Early-type galaxies generally have a hi gher
+median S/N per pixel and are detected out to higher red-
+shifts than late-type galaxies, as expected from their high er
+surface brightnesses.
+We have shown in Section 2.4.1 and Fig. 3 the im-
+pact of the signal-to-noise ratio on our ability to derive
+reliable constraints on age and, especially, metallicity. In
+the remainder of this paper we focus on the subsample of
+44,254 galaxies with median S/N per pixel greater than 20,
+for which the constraints on metallicity are the most ac-
+curate. The properties of these high-S/N galaxies are sum-
+marized in Fig. 5 where we show their distribution (shaded
+histogram) in z-band surface brightness (averaged within
+the Petrosian R50 radius), Petrosian r-band absolute mag-
+nitude, redshift and D4000, compared to the distributions
+for the original sample (dot-dashed line). The red and blue
+lines distinguish early-type from late-type (high-S/N) ga lax-
+ies. The S/N requirement excludes about 75 percent of our
+sample. As can be seen from Fig. 5, this biases the sample
+toward higher-surface brightness, more concentrated, low er-
+redshift galaxies. There is not a bias instead in the lumi-
+nosity distribution. In the redshift range 0 . 005 < z⩽ 0. 22,
+high-S/N galaxies typically havez-band surface brightnesses
+brighter than 21 mag arcsec −2. They lie primarily at red-
+shifts less than 0.15, where they account for about 40 per-
+cent of the galaxies. They also represent roughly 40 percent
+of the high-concentration sample but only 10 percent of the
+low-concentration sample. Similarly, they constitute abo ut
+30 percent of the galaxies with D4000 > 1. 6 and 15 percent
+of those with D4000 < 1. 6. Our selection in S/N therefore
+excludes a substantial fraction of diﬀuse systems, with po-
+tentially subsolar metallicities. We will turn our attenti on to
+these systems in the third paper of this series. Their omis-
+sion here does not alter signiﬁcantly the results presented
+in the next sections. In particular, we have checked that the
+median ages and metallicities found for galaxies with stell ar
+masses less than ∼ 2 × 109M⊙ in Sections 3.2 and 3.3 below
+would change by at most 0.2 dex if we included galaxies with
+low S/N in our sample.
+
+The Ages and Metallicities of Galaxies in the Local Universe 9
+Figure 5. From top-left to bottom-right: distribution in z-band surface brightness, r-band absolute Petrosian magnitude (k-corrected at
+z = 0), redshift and 4000 ˚
+A-break strength for the galaxies in our sample. The dot-das hed line represents the distribution for the original
+sample of 175,128 galaxies in the redshift range 0 . 005 < z ⩽ 0. 22. The shaded histogram describes the distribution for the ﬁnal sample of
+44,254 high-S/N galaxies, while the red and blue histograms separate (high-S/N) early-type ( C ⩾ 2. 8) and late-type ( C ⩽ 2. 4) galaxies,
+respectively. (Note that the dot-dashed and the shaded hist ograms are both normalized to unit area.)
+Figure 4. Distributions in median S/N per pixel (upper panel)
+and in redshift (bottom panel) of the sample of 196,673 SDSS-
+DR2 galaxies (solid histograms). In each panel, the dotted a nd
+dashed histograms show the corresponding distributions fo r the
+subsamples of high-concentration ( C ⩾ 2. 8), early-type galaxies
+and low-concentration ( C ⩽ 2. 4), late-type galaxies, respectively.
+3.1 Age, metallicity and mass distributions
+We present here the distributions in age, metallicity and
+stellar mass of the 44,254 galaxies in our ﬁnal sample. We
+recall that we estimate r-band light-weighted ages but as-
+sume that all stars in a given galaxy have a single metal-
+licity (interpreted as the optical light-weighted metalli city).
+The left-hand panels of Fig. 6 show, from top to bottom,
+the distributions of the median-likelihood estimates of st el-
+lar metallicity, age and stellar mass for the galaxies in our
+sample (solid histograms). The distribution in metallicit y
+peaks around log(Z/Z ⊙) ∼ 0. 1, the number of galaxies with
+sub-solar metallicities decreasing smoothly down to 10 per -
+cent of solar. The distribution in age indicates that most of
+the galaxies have fairly old mean stellar populations, with
+tr ∼ 7 − 8 Gyr. The distribution in stellar mass reveals that
+our sample is dominated by relatively massive galaxies, wit h
+M∗ ∼ 1011M⊙, while only a small fraction of the sample has
+masses below 10 10M⊙.
+The right-hand panels of Fig. 6 show the distributions
+of one half the 68 percent conﬁdence range in the estimates
+of log(Z/Z ⊙), log(tr/ yr) and log( M∗/M ⊙). Stellar mass is
+the best constrained parameter, with a typical random un-
+certainty of ∼ 0. 08 dex. Almost all the galaxies in the sample
+have a stellar mass estimate with an uncertainty less than
+0.1 dex. Also, the ages are constrained within 0.2 dex for
+almost all the galaxies, the typical uncertainty being ∼ 0. 12
+dex. Similarly the average error on stellar metallicity is 0 .12
+
+10 A. Gallazzi et al.
+Figure 6. Distributions of the median-likelihood estimates of stell ar metallicity (top-left panel), age (middle-left panel) a nd stellar mass
+(bottom-left panel) for 44,254 SDSS-DR2 galaxies with reds hifts in the range 0 . 005 < z ⩽ 0. 22 and median S/N per pixel greater than 20
+(solid histograms). The right-hand panels show the corresp onding distributions of errors, computed as one half the 68 p ercent conﬁdence
+ranges in the estimates of log( Z/Z ⊙), log( tr/ yr) and log( M∗/M ⊙). The dotted histograms are for the original sample of 175,1 28 galaxies
+(all histograms are normalized to unit area).
+dex, but the distribution extends to larger errors ( ∼ 0. 3)
+than for light-weighted age.
+As a comparison, the dotted histograms show the dis-
+tributions in the derived parameters and the associated un-
+certainties for the original sample of 175,128 galaxies. Th ere
+is a signiﬁcant tail of galaxies with very broad stellar meta l-
+licity PDFs, resulting in uncertainties greater than 0.25 d ex.
+This further demonstrates that the uncertainties in metal-
+licity estimates depend sensitively on the S/N in the ob-
+served spectra, as discussed in Section 2.4. Also, the distr i-
+bution in stellar metallicity shows that with our S/N cut we
+have excluded preferentially galaxies with subsolar metal -
+licity. High-metallicity galaxies tend to be associated wi th
+small errors and low-metallicity galaxies with large error s
+(presumably because of their weaker absorption lines). In-
+cluding low-S/N galaxies also increases the average error o n
+light-weighted age to ∼ 0. 15 dex, but the trend of increasing
+error with decreasing age is less strong than the analogous
+trend for metallicity.
+3.2 Relations between age, stellar metallicity,
+stellar mass and gas-phase metallicity
+It is interesting to examine how age, metallicity and stel-
+lar mass (and the errors on these quantities) are distribute d
+among galaxies with diﬀerent star formation histories. As
+shown by Kauﬀmann et al. (2003a), galaxies with diﬀerent
+star formation histories populate diﬀerent areas of a dia-
+gram deﬁned by D4000 and the strength of a H-Balmer ab-
+sorption line (they illustrated this result for H δ A). Galaxies
+with smooth star formation histories form a sequence ex-
+tending from actively star-forming galaxies (correspondi ng
+to small D4000 and strong H-Balmer absorption) to quies-
+cent early-type galaxies (corresponding to large D4000 and
+weak H-Balmer absorption). Galaxies which experienced re-
+cent bursts of star formation exhibit the strongest H-Balme r
+absorption at ﬁxed D4000.
+We now explore how the 44,254 high-S/N galaxies in
+our sample populate such a diagram as a function of their
+physical parameters derived in Section 3.1 above. We con-
+sider here for consistency the diagram deﬁned by D4000
+and the H δ A+Hγ A absorption index. In the left-hand pan-
+els of Fig. 7, we have binned and colour-coded this diagram
+in order to reﬂect, from top to bottom, the average stellar
+metallicity, the average age and the average stellar mass of
+the galaxies falling into each bin. The widths of the bins
+in D4000 and H δ A+Hγ A correspond roughly to the mean
+observational errors in the two quantities for galaxies wit h
+median S/N per pixel greater than 20 (0.04 and 0.4, respec-
+tively).
+The bottom-left panel of Fig. 7 shows that stellar mass
+increases with D4000 along the sequence populated by SDSS
+galaxies in the H δ A+Hγ A versus D4000 diagram. The aver-
+age mass of galaxies with D4000 ≲ 1. 2 is less than 10 10M⊙,
+while that of galaxies with D4000 ≳ 1. 9 reaches 10 11M⊙.
+There is a smooth transition between these two regimes
+in the central region of the diagram. This conﬁrms the
+trends in D4000 and H δ A as functions of stellar mass ob-
+
+The Ages and Metallicities of Galaxies in the Local Universe 11
+served by Kauﬀmann et al. (2003b) (see their ﬁg. 1). Both
+stellar metallicity and age also appear to increase with in-
+creasing D4000 (upper- and middle-left panels of Fig. 7).
+The variation in age is very smooth. In the intermediate
+regime, age appears to decrease with increasing H δ A+Hγ A
+at almost ﬁxed D4000. The variation in metallicity is more
+noisy, partly because of the larger errors associated with
+metallicity estimates, especially for low D4000 (see Sec-
+tion 3.1). Near the middle of the galaxy sequence, i.e., for
+1. 4 ≲ D4000 ≲ 1. 8, stronger H-Balmer absorption appears
+to be associated to not only younger but also more metal-
+rich stellar populations. This is consistent with the idea
+that these galaxies could have experienced a burst of metal-
+enriched star formation about 1–2 Gyr ago. 9
+We have checked that the above trends in stellar metal-
+licity, age and stellar mass do not change signiﬁcantly if we
+include galaxies with lower S/N values. The main eﬀect is to
+increase the scatter in these physical parameters along the
+Hδ A+Hγ A versus D4000 sequence, mainly because of the
+larger observational errors in these two indices. Moreover ,
+the average S/N for the full sample does not vary signiﬁ-
+cantly along the relation. For these reasons, we believe tha t
+our results are not strongly biased by our cut in S/N.
+In the right-hand panels of Fig. 7, we have colour-coded
+the Hδ A+Hγ A versus D4000 diagram to reﬂect the average
+uncertainties in the determinations of stellar metallicit y, age
+and stellar mass (from top to bottom) for the galaxies fallin g
+into each bin. These diagrams illustrate how the tightness o f
+the constraints derived on the various physical parameters
+depends on the strengths of H δ A+Hγ A and D4000. The er-
+rors in all three parameters tend to be larger at lower D4000,
+the trend being especially strong for stellar metallicity. We
+emphasize that the right-hand panels of Fig. 7 do not re-
+ﬂect the rms scatter in the various physical parameters, but
+rather the average uncertainties associated with determin a-
+tions of these parameters. For reference, the rms scatter is
+typically comparable to (or smaller than) the average uncer -
+tainty for stellar metallicity and age, but always larger th an
+the average uncertainty for stellar mass.
+The results of Fig. 7 suggest that both stellar metal-
+licity and age correlate with stellar mass. We investigate
+this further in Fig. 8, where we show the distributions of
+metallicity (panel a) and age (panel b) as function of stel-
+lar mass for the 44,254 high-S/N galaxies in our sample.
+Rather than assigning each galaxy its median-likelihood es -
+timate of each of the three parameters, we keep here the
+whole information contained in the PDFs. In Fig. 8a, the
+likelihood distribution of stellar metallicity as a functi on of
+stellar mass was obtained by coadding the normalized 2-D
+likelihood distributions of metallicity and stellar mass f or
+all the galaxies and then re-normalizing along the metallic -
+ity axis in bins of stellar mass (we adopted a bin width of
+0.2 dex, roughly comparable to the 68 percent conﬁdence
+range in stellar mass estimates). The solid line indicates t he
+median of the ﬁnal conditional distribution, and the dashed
+lines the 16 th and 84 th percentiles. The percentiles of the
+9 At ﬁxed D4000 ∼ 1. 5, this trend in age and metallicity is not
+consistent with (and more pronounced than) the age-metalli city
+degeneracy described in Section 3.3.
+T able 2. Median (P50) and percentiles (P16, P84) of the distri-
+butions in stellar metallicity and age as a function of stell ar mass
+(Fig. 8a,b).
+log(Z/Z ⊙) log( tr /yr )
+log(M∗/M ⊙) P50 P16 P84 P50 P16 P84
+8.91 -0.60 -1.11 -0.00 9.06 8.80 9.46
+9.11 -0.61 -1.07 -0.00 9.09 8.81 9.48
+9.31 -0.65 -1.10 -0.05 9.11 8.85 9.44
+9.51 -0.61 -1.03 -0.01 9.17 8.89 9.49
+9.72 -0.52 -0.97 0.05 9.23 8.94 9.57
+9.91 -0.41 -0.90 0.09 9.32 9.00 9.71
+10.11 -0.23 -0.80 0.14 9.46 9.09 9.85
+10.31 -0.11 -0.65 0.17 9.61 9.23 9.93
+10.51 -0.01 -0.41 0.20 9.73 9.34 9.98
+10.72 0.04 -0.24 0.22 9.82 9.48 10.03
+10.91 0.07 -0.14 0.24 9.87 9.60 10.06
+11.11 0.10 -0.09 0.25 9.90 9.67 10.08
+11.31 0.12 -0.06 0.26 9.92 9.72 10.09
+11.51 0.13 -0.04 0.28 9.94 9.75 10.11
+11.72 0.14 -0.03 0.29 9.95 9.76 10.12
+11.91 0.15 -0.03 0.30 9.96 9.77 10.12
+metallicity and age distributions at ﬁxed stellar mass are
+provided in Table 2.
+The median shows that metallicity increases with stel-
+lar mass, from roughly 20 percent of solar for galaxies with
+masses below 10 10M⊙ to about 1.4 times solar for those
+with masses above 10 11M⊙. In between, stellar metallic-
+ity increases rapidly with stellar mass, the trend becom-
+ing shallower at M∗ ≳ 1010.5M⊙. Fig. 8b shows the anal-
+ogous conditional distribution of age as a function of stel-
+lar mass. The median ( r-band light-weighted) age increases
+from roughly 1 Gyr for galaxies with masses around 10 9M⊙
+to about 6.5 Gyr for those with masses around 10 10.5M⊙.
+For more massive galaxies, the median age continues to in-
+crease, but only by about 0.2 dex ( ∼ 1. 6 Gyr) over one order
+of magnitude in stellar mass.
+Although the median metallicity and age both increase
+with increasing stellar mass, the probability levels (indi cated
+by the colour) and the 68 percent conﬁdence ranges reveal
+broad distributions in the estimates of both parameters. We
+now explore whether the larger scatter in both distribution s
+at smaller masses can be accounted for by the larger uncer-
+tainties in metallicity and age estimates for more metal-po or
+and younger galaxies, or whether it is indicative of an intri n-
+sically broad distribution in metallicity and age for low-m ass
+galaxies. In the bottom panels of Fig. 8, we compare the
+scatter in these relations with the uncertainties in the es-
+timates of metallicity (panel c) and age (panel d) at ﬁxed
+stellar mass. In each panel, the diamonds show the diﬀer-
+ence between the 16 th and 84th percentiles of the conditional
+distribution shown above as a function of stellar mass. The
+stars show the mean 68 percent conﬁdence range in the indi-
+vidual estimates of metallicity or age for the galaxies fall ing
+into each stellar-mass bin. 10 Fig. 8c shows that the scatter in
+10 The stars in Fig. 8c,d are not computed using the joint likeli -
+hood distribution, but rather by adopting the median of the M∗
+
+12 A. Gallazzi et al.
+Figure 7. Physical parameters of 44,254 SDSS-DR2 galaxies with media n S/N per pixel greater than 20 as a function of position in the
+Hδ A+Hγ A versus D4000 diagram. In the left-hand panels, the diagram h as been binned and colour-coded in order to reﬂect the averag e
+stellar metallicity (top), age (middle) and stellar mass (b ottom) of the galaxies falling into each bin. In the right-ha nd panels, the diagram
+has been binned and colour-coded to reﬂect the average uncer tainty (corresponding to one half the 68 percent conﬁdence i nterval) in the
+derived stellar metallicities (top), ages (middle) and ste llar masses (bottom) of the galaxies falling into each bin. T he widths of the bins
+in D4000 and H δ A+Hγ A correspond roughly to the mean observational errors in thes e quantities (0.04 and 0.4, respectively).
+the mass-metallicity relation is always larger than the unc er-
+tainties in the metallicity estimates, by at least 0.1 dex, a nd
+is largest (compared to the error) at about 10 10M⊙. Simi-
+larly, the scatter in the mass-age relation (Fig. 8d) is alwa ys
+larger than the uncertainties in the age estimates and is als o
+largest at about 10 10M⊙. Fig. 8 clearly indicates that more
+massive galaxies are older and more metal-rich, while less
+massive galaxies are younger and more metal-poor. Metal-
+licity and age, however, are not uniquely determined by stel -
+lar mass. There is an intrinsic scatter in both parameters,
+which is particularly evident at intermediate stellar mass es.
+The results of Section 3.3 below indicate that part of this in -
+trinsic scatter can be accounted for by diﬀerences in galaxy
+PDF as our estimate of stellar mass. The comparison of the sta rs
+with the diamonds is consistent, given that the width of the s tellar
+mass bins is comparable with the error in stellar mass estima tes.
+morphology, the intermediate-mass regime corresponding t o
+the transition between disc-dominated and bulge-dominate d
+galaxies. However, a signiﬁcant scatter persists even when
+considering the two classes of galaxies separately.
+Tremonti et al. (2004) have shown that the emission-
+line galaxies in the DR2 sample exhibit a tight relation be-
+tween stellar mass and gas-phase oxygen abundance, as de-
+termined from their nebular spectra. The gas-phase oxygen
+abundance increases steadily from low to high stellar masse s,
+and then gradually ﬂattens around masses of 10 10.5M⊙.
+There is a striking similarity between the relation Tremont i
+et al. (2004) found for star forming galaxies and the relatio n
+found in Fig. 8 above between stellar metallicity and stella r
+mass, which includes both star-forming and quiescent galax -
+ies. However, the dispersion in the stellar metallicity ver sus
+stellar mass relation is much larger than that in the rela-
+tion between gas-phase oxygen abundance and stellar mass
+
+The Ages and Metallicities of Galaxies in the Local Universe 13
+Figure 8. Panels a and b: conditional distribution of stellar metalli city and age as a function of stellar mass for 44,254 SDSS-DR2 galaxies
+with median S/N per pixel greater than 20. Each distribution was obtained by coadding the normalized 2-D likelihood dist ributions of
+the desired parameter (stellar metallicity or age) and stel lar mass for all the galaxies and then re-normalizing along t he y-axis in bins of
+stellar mass (of width 0.2 dex). The solid line indicates the median of the ﬁnal conditional distribution, and the dashed lines the 16 th
+and 84 th percentiles. Panels c and d: comparison of the scatter in the metallicity and age distributions with the mean uncertaint y of the
+metallicity and age estimates as a function of stellar mass. The diamonds show the diﬀerence in log( Z/Z ⊙) or log( tr / yr) between the
+16th and 84 th percentiles of the conditional distributions of panels a an d b, while the stars represent the mean 68 percent conﬁdence
+range in log( Z/Z ⊙) or log( tr / yr) for the galaxies in each stellar mass bin.
+(±0. 1 dex). This may partly reﬂect the larger errors associ-
+ated with stellar metallicity determinations.
+In Fig. 9, we plot stellar metallicity against gas-phase
+oxygen abundance, 12+log(O/H), for the 7462 high-S/N
+galaxies of our sample for which both measures are avail-
+able. We note that gas-phase metallicity is best determined
+for star-forming galaxies, whereas stellar metallicity is best
+determined for early-type galaxies. The small dots show
+the median-likelihood estimates of the stellar and gas-pha se
+metallicities for each galaxy. The larger points indicate t he
+median stellar metallicity in bins of 12+log(O/H), while th e
+outer solid lines show the corresponding 16 th and 84 th per-
+centiles. There is a relation between the two parameters
+with approximately unit slope. However, the stellar metal-
+licity is generally lower than the gas-phase metallicity (b y
+∼ 0. 5dex), as demonstrated by the one-to-one relation (dot-
+dashed line). This is expected since the nebular metallicit y
+traces the metallicity of the last generations of stars to fo rm,
+whereas the stellar metallicity represents an average over
+the entire star formation history of the galaxy. Notably, th e
+large scatter in stellar metallicity at ﬁxed gas-phase oxyg en
+abundance (solid lines) cannot be solely accounted for by
+the errors in stellar metallicity estimates (indicated by t he
+dashed lines).
+To investigate the origin of this scatter, we compute the
+residuals in log(Z/Z ⊙) with respect to a simple linear ﬁt of
+the median relation (large dots) in Fig. 9. The residuals are
+plotted in Fig. 10 as a function of various galaxy properties ,
+including the star formation rate (from Brinchmann et al.
+2004) and an indirect estimate of the gas mass fraction in-
+ferred from the star formation rate (see eq. 5 of Tremonti
+et al. 2004). In each panel, we indicate the median trend of
+the residuals as a function of the property under considera-
+tion for galaxies in ﬁve bins of gas-phase oxygen abundance,
+
+14 A. Gallazzi et al.
+Figure 9. Stellar metallicity estimates (present work) plotted
+against gas-phase oxygen abundance 12+log(O/H) (Tremonti
+et al. 2004) for 7462 high-S/N SDSS-DR2 galaxies for which bo th
+measures are available. The small dots show the median-like lihood
+estimates of the two parameters for each galaxy. The larger p oints
+(joined by a solid line) show the median stellar metallicity in bins
+of 12+log(O/H) (each bin containing ∼ 300 galaxies), while the
+outer solid lines show the corresponding 16 th and 84th percentiles.
+The dashed lines indicate the mean 68 percent conﬁdence rang e
+in the stellar metallicity estimates for the galaxies in eac h bin
+of 12+log(O/H). Solar metallicity is 8.69 in these units (Al lende
+Prieto et al. 2001). The dot-dashed line represents the one- to-
+one relation, showing that stellar metallicity is always lo wer than
+gas-phase metallicity.
+from 8. 70 ± 0. 075 (blue) to 9. 3 ± 0. 075 (red). The log(Z/Z ⊙)
+residuals show positive correlations with stellar mass, su r-
+face mass density, concentration parameter and D4000 and
+negative correlations with speciﬁc star formation rate, ga s
+mass fraction and H δ A+Hγ A. These various trends are al-
+most independent of gas-phase oxygen abundance. 11 They
+imply that, at ﬁxed 12+log(O/H), the stars are most metal-
+rich in massive, high-concentration galaxies, which have e x-
+hausted most of their gas and form stars at a lower rate than
+in the past. The existence of a substantial range of stellar
+metallicities at ﬁxed gas-phase oxygen abundance in Fig. 9
+further suggests that the galaxies in our sample are not well
+approximated by ‘closed-box’ systems, for which stellar an d
+interstellar metallicities should be tightly related (e.g ., Tins-
+ley 1980). This indicates that gas ejection and/or accretio n
+may be important factors in galaxy chemical evolution.
+11 W e checked that the trends of log( Z/Z ⊙) residuals with the
+strengths of D4000 and H δ A+Hγ A are not caused by any bias in
+our estimates of stellar metallicity (see Section 2.4.2).
+3.3 Age versus metallicity
+Most previous population synthesis studies of the age-
+metallicity relation for nearby galaxies have focused on
+early-type galaxies (e.g. Gonzalez et al. 1993; Worthey 199 7;
+Bernardi et al. 1998; Terlevich et al. 1999; Ferreras et al.
+1999; Trager et al. 2000). A few studies have also included
+the bulges of spiral galaxies (Jablonka et al. 1996; Goud-
+frooij et al. 1999; Terlevich & Forbes 2002; Proctor & San-
+som 2002). Our determination, with a new method, of the
+ages and metallicities of a large sample of nearby galaxies
+spanning a wide range of star formation activities allows us
+to re-assess the relation between these two physical param-
+eters.
+We separate here high-concentration, bulge-dominated
+early-type galaxies and low-concentration, disk-dominat ed
+late-type galaxies as described above to understand whethe r
+diﬀerent conclusions can be drawn for diﬀerent types of
+galaxies. We have shown in Fig. 8 that both metallicity
+and age increase with stellar mass. We may therefore ex-
+pect that the distribution of galaxies over metallicity and
+age will change when diﬀerent masses are considered. This
+mass dependence may also be diﬀerent for diﬀerent types of
+galaxies. For this reason, we divide each morphological sub -
+sample into six bins of stellar mass. Figs 11 and 12 show the
+age-metallicity relation in these diﬀerent stellar-mass b ins
+for late-type and early-type galaxies, respectively. The s tel-
+lar mass increases from log( M/M ⊙) ⩽ 10 in the top-left
+panel to log(M/M ⊙)> 11 in the bottom-right panel. These
+relations were obtained by simply coadding the normalized
+joint likelihood distributions of age and metallicity for i n-
+dividual galaxies, without further normalization. The gre y
+levels indicate the probability associated with each value of
+metallicity and age in a square-root scale, while the contou rs
+enclose 26, 68, 95 and 99 percent of the total probability.
+Fig. 11 shows that the ages and metallicities of low-
+concentration, late-type galaxies change signiﬁcantly as a
+function of stellar mass. Galaxies less massive than 10 10M⊙
+have typically low metallicities ( Z ≈ 10−0.6Z⊙) and young
+ages (0. 8 ≲ tr/ Gyr ≲ 2. 5). At intermediate stellar masses,
+i.e. for 10 10 ≲ M∗/M ⊙ ≲ 1010.5, the distribution in metal-
+licity becomes broader and shifts gradually to higher metal -
+licities. The overall spread in age is roughly 0.8 dex, and th e
+distribution shifts slightly to older ages. Late-type gala x-
+ies more massive than 10 10.5M⊙ have predominantly high
+metallicities (Z ≳ Z⊙) and old ages (3 . 2 ≲ tr/ Gyr ≲ 10).
+The fraction of young metal-poor galaxies nearly vanishes
+at the highest masses.
+Fig. 12 shows that the ages and metallicities of
+high-concentration, early-type galaxies depend much more
+weakly on stellar mass than those of low-concentration, lat e-
+type galaxies. The gradual increase of metallicity with ste l-
+lar mass is still appreciable for early-type galaxies. Gala x-
+ies less massive than 10 10M⊙ have metallicities typically in
+the range 10 −0.4–10 0.1Z⊙, while galaxies more massive than
+1011M⊙ have metallicities typically above solar. The age
+range does not exhibit any signiﬁcant variation with stella r
+mass, except for a population of young metal-poor galaxies
+in the lowest-mass bin, which does not show up at higher
+masses. At low stellar masses, we also notice a small fractio n
+(∼ 1 percent) of galaxies clumping at much higher metallici-
+ties and younger ages than the bulk of the early-type galaxy
+
+The Ages and Metallicities of Galaxies in the Local Universe 15
+Figure 10. Residuals in log( Z/Z ⊙) with respect to a simple linear ﬁt of the median relation bet ween stellar metallicity and gas-phase
+oxygen abundance in Fig. 9, plotted against various galaxy p roperties. From left to right, top raw: star formation rate ( in units of
+M⊙yr−1), speciﬁc star formation rate (in units of yr −1) and gas mass fraction. Middle raw: r-band light-weighted age (in units of yr),
+D4000 and H δ A+Hγ A index strengths. Bottom raw: total stellar mass (in units of M⊙), surface mass density within the Petrosian r-band
+R50 radius (in units of M⊙kpc−2) and r-band concentration parameter. In each panel, curves of diﬀ erent colors indicate the median
+relations in diﬀerent bins of gas-phase oxygen abundance, i ncreasing from 8 . 7 ± 0. 075 (blue) to 9 . 3 ± 0. 075 (red).
+sample. Detailed inspection reveals that these galaxies ar e
+photometric outliers, for which we are uncertain of the ac-
+curacy of our ﬁts. Follow-up observations would be required
+to understand whether the unusual metallicities and ages
+of these galaxies are consistent with a substantial recent
+episode of metal-enriched star formation.
+We note that the typical light-weighted age for the mas-
+sive early-type galaxies in our sample is ∼8 Gyr, which is
+somewhat younger than the ages usually quoted for (clus-
+ter) ellipticals. Diﬀerences can arise from diﬀerences in t he
+adopted methods. In particular, the ages usually quoted in
+the literature are derived by comparing the observed dis-
+tributions in spectral indices with simple stellar populat ion
+predictions. What we quote here is a proper light-weighted
+age, calculated by weighting the age of each generation of
+stars by their luminosity along the entire SFH of each model
+galaxy. Nevertheless, the relatively young ages we ﬁnd coul d
+reﬂect an environmental dependence, since the SDSS sam-
+ple is composed predominantly of galaxies in lower density
+regions than those used in most studies of early-type galax-
+ies. Indeed, several studies have reported an age diﬀerence
+between early-type galaxies in clusters and in low-density re-
+gions from ∼1.2 Gyr (Bernardi et al. 1998) up to 2 − 3 Gyr
+(Kuntschner et al. 2002; Thomas et al. 2005). We will dis-
+cuss the properties of the early-type galaxies in our sample
+in more detail in the second paper of this series.
+A comparison of Figs 11 and 12 suggests that the ages
+and metallicities of late- and early-type galaxies diﬀer pr i-
+marily at the low-mass end. Low-mass late-type galaxies
+tend to be younger and more metal-poor than their early-
+type counterparts (by about 0.6 dex in both age and metal-
+licity). In contrast, massive late-type galaxies tend to ha ve
+old ages and high metallicities similar to those of their ear ly-
+type counterparts, even though there is a tail of young
+(tr ≲ 109.5 yr), metal-poor (Z ≈ 10−0.5Z⊙) late-type galax-
+ies with masses greater than 10 11M⊙ in our sample. The
+high metallicities of most massive late-type galaxies migh t
+reﬂect the inﬂuence of their metal-rich bulges. This may be
+enhanced by the fact that the SDSS spectra sample only the
+inner regions of the galaxies (see Section 3.4 below).
+Figs 11 and 12 also indicate that the relation between
+stellar metallicity and stellar mass discussed in Section 3 .2
+holds for both late-type and early-type galaxies. In contra st,
+the relation between age and stellar mass is much more
+pronounced for late-type galaxies, which cover a signiﬁcan t
+range in age ( ∼ 9 Gyr). Early-type galaxies do not show such
+
+16 A. Gallazzi et al.
+a clear trend, at least above 10 10.5M⊙. This is in agreement
+with previous ﬁndings of no signiﬁcant relation between the
+ages of early-type galaxies and luminosity (Kuntschner &
+Davies 1998; Kuntschner 1998; Terlevich & Forbes 2002).
+At fainter luminosities, however, there are indications of a
+spread to younger ages (see also Worthey & Ottaviani 1997;
+Caldwell & Rose 1998). We also ﬁnd that the fraction of
+young early-type galaxies increases at lower stellar masse s.
+This is true in particular below 10 10M⊙, reﬂecting a possi-
+ble contamination by S0 galaxies (e.g. Poggianti et al. 2001 ).
+Finally, we note that for both early-type galaxies and high-
+mass late-type galaxies, the probability contours of Figs 1 1
+and 12 hint at an anticorrelation between age and stellar
+metallicity, at given mass. Other workers have pointed out
+this anticorrelation (e.g. Worthey et al. 1995; Colless et a l.
+1999; Jørgensen 1999; Rakos et al. 2001; Poggianti et al.
+2001), but it is diﬃcult to assess its signiﬁcance here be-
+cause of the correlated errors on age and metallicity (see
+below).
+The dependence of the properties of SDSS galaxies on
+stellar mass has been addressed in previous studies (e.g.
+Shen et al. 2003; Brinchmann et al. 2004; Tremonti et al.
+2004; Kannappan 2004; Salim et al. 2005; Jimenez et al.
+2005). In particular, Kauﬀmann et al. (2003b) point out
+that, at masses around ∼ 1010.5M⊙, galaxies separate into
+two distinct classes of spectral and structural properties .
+Baldry et al. (2004) have recently shown that this transitio n
+around (2−3)×1010M⊙ can be seen directly from the colour-
+magnitude relation. Moreover, this mass range seems also to
+correspond to a shift in gas richness (Kannappan 2004). It
+is interesting to note that, around the same value of stellar
+mass, there appears to be also a gradual transition in the
+ages and metallicities of the galaxies. This transition, wh ich
+is particularly evident for late-type galaxies, causes the dis-
+persion in age and metallicity to be highest for galaxies of
+intermediate mass.
+We have not mentioned so far the potential inﬂuence
+of the ‘age-metallicity degeneracy’ on the results of Figs 1 1
+and 12 (see Section 1). This degeneracy, which arises from
+the competing eﬀects of age and metallicity on absorption-
+line strengths, can cause the confusion between old, metal-
+poor galaxies and young, metal-rich ones (Worthey 1994).
+To address this issue, we ﬁrst evaluate the slope of the age-
+metallicity degeneracy from the two-dimensional likeliho od
+distribution of each individual galaxy in our sample. This
+is achieved by computing the matrix of second moments of
+the likelihood distribution (inside the 68 percent probabi lity
+contour) with respect to the median log Z and logtr values.
+The direction of the eigenvector corresponding to the large st
+eigenvalue of this matrix deﬁnes the slope ∆ log Z/ ∆ log tr
+of the age-metallicity degeneracy. In each panel of Figs 11
+and 12, the straight line indicates the mean ∆ log Z/ ∆ log tr
+for the galaxies falling into the corresponding bin of stell ar
+mass. The slopes are listed in Table 3. 12 They tend to be
+12 These values are consistent with the results of W orthey (199 6),
+which imply that the change in metallicity needed to compens ate
+a change in age at ﬁxed index strength in the spectrum of an old
+stellar population should correspond to values of ∆ log Z/ ∆ log tr
+ranging from −1. 7 for age-sensitive indices to −0. 2 for metal-
+sensitive indices.
+T able 3. Average slope of the age-metallicity degeneracy in dif-
+ferent bins of stellar mass, for the low-concentration and h igh-
+concentration galaxies of Figs 11 and 12.
+Stellar mass ( M⊙) ∆ log Z/ ∆ log tr
+C ⩽ 2. 4 C ⩾ 2. 8
+log M∗ ⩽ 10 −1.78 −1.29
+10 < log M∗ ⩽ 10. 3 −1.41 −0.85
+10. 3 < log M∗ ⩽ 10. 5 −1.28 −0.84
+10. 5 < log M∗ ⩽ 10. 8 −1.15 −0.80
+10. 8 < log M∗ ⩽ 11 −1.05 −0.78
+log M∗ > 11 −0.95 −0.75
+steeper for low-concentration galaxies ( −1. 78 to −0. 95) than
+for high-concentration ones ( −1. 29 to −0. 75).
+The orientation of the age-metallicity degeneracy in
+Figs 11 and 12 indicates that it cannot be responsible for the
+trends in age and metallicity as a function of stellar mass
+identiﬁed above. However, it can account for the shape of
+the joint age-metallicity probability contours for early- type
+galaxies and the most massive late-type galaxies at high
+metallicities (Z ≳ Z⊙).
+3.4 Aperture bias
+The SDSS galaxy spectra on which our analysis is based
+are taken using 3 ′′-diameter ﬁbres, which collect only the
+light coming from limited inner regions of the galaxies. We
+can estimate the fraction of the total galaxy light enter-
+ing a ﬁbre from the ratio between the ﬁbre ﬂux and the
+total Petrosian ﬂux. Fig. 13 shows the distribution of this
+ratio for the 44,254 high-S/N galaxies in our sample. The
+median value is about 30 percent, and the maximum value
+about 60 percent. The dashed and dotted lines show the
+distributions for low-concentration, late-type galaxies and
+high-concentration, early-type galaxies, respectively. As ex-
+pected, the ﬁbre tends to collect a smaller fraction of the
+total light for low-concentration galaxies than for high-
+concentration galaxies.
+Radial gradients in the properties of stellar popula-
+tions are known to exist for both bulge-dominated (Henry
+& Worthey 1999; Saglia et al. 2000; Mehlert et al. 2003)
+and disk-dominated (Bell & de Jong 2000; MacArthur et al.
+2004) galaxies. Thus, aperture eﬀects are a signiﬁcant con-
+cern for our age and metallicity estimates. Fortunately, th e
+distribution of the fraction of total galaxy light that ente rs
+an SDSS ﬁbre does not vary appreciably with redshift (ex-
+cept at very low redshift), because larger galaxies are also
+brighter and hence selected out to larger distances.
+One way to test for the eﬀects of aperture bias on our
+results is to compare the ages and metallicities of galaxies
+of similar luminosity located at diﬀerent redshifts. Becau se
+of the presence of both a faint and a bright magnitude cut-
+oﬀ in the SDSS survey, this comparison is possible only for
+galaxies in a limited absolute-luminosity range, if we want to
+span a reasonably large redshift range. We consider galax-
+ies with r-band absolute magnitudes in the narrow range
+−21 ⩽ r ⩽ −22, which are observed at redshifts between
+0.02 and 0.12. At ﬁxed absolute magnitude within this range,
+
+The Ages and Metallicities of Galaxies in the Local Universe 17
+Figure 11. Two-dimensional distribution of stellar metallicity and a ge in 6 bins of stellar mass (as indicated) for the subsample o f 5616
+late-type ( C ⩽ 2. 4) SDSS-DR2 galaxies with median S/N per pixel greater than 2 0. Each distribution was obtained by coadding the
+normalized joint likelihood distributions of age and metal licity for individual galaxies. The grey levels indicate th e probability associated
+with each value of metallicity and age in a square-root scale , while the contours enclose 26, 68, 95 and 99 percent of the to tal probability.
+The straight line (which intersects the peak of the probabil ity distribution) indicates the mean slope of the age-metal licity degeneracy
+for the galaxies falling into each stellar-mass bin.
+Figure 12. Same as Fig. 11, but for the subsample of 26,003 early-type ( C ⩾ 2. 8) SDSS-DR2 galaxies with median S/N per pixel greater
+than 20.
+
+18 A. Gallazzi et al.
+Figure 13. Distribution of the fraction of the total r-band ﬂux
+collected by the SDSS ﬁbre, computed as the ratio between the
+ﬁbre ﬂux and the Petrosian ﬂux, for 44,254 high-S/N galaxies in
+the SDSS DR2. The vertical bar indicates the median fraction for
+this sample. The dashed and dotted lines show the distributi ons
+of low-concentration, late-type galaxies and high-concen tration,
+early-type galaxies, respectively.
+both low- and high-concentration galaxies show a decrease
+(by ∼ 0. 15 dex) in typical metallicity from redshift 0.02 to
+0.12. High-concentration galaxies do not exhibit any signi f-
+icant trend in age, but the typical age of low-concentration
+galaxies decreases by about 0.2 dex over the same redshift
+range.
+Another way to examine the potential eﬀects of aper-
+ture bias on our results is to compare the age and metallicity
+distributions of galaxies with similar properties as a func -
+tion of z/z max, where zmax is the minimum of the redshift
+at which the galaxy reaches the survey faint-magnitude limi t
+and that at which its median S/N per pixel drops below 20
+(we assume Poissonian noise, i.e. that the median S/N per
+pixel scales as the square root of the apparent ﬁbre luminos-
+ity). With this approach, we can avoid restricting our test
+to galaxies in a narrow magnitude range. Also, since we are
+interested in possible eﬀects of aperture bias on trends wit h
+galaxy mass, we divide our sample into the same 6 bins of
+stellar mass as in Figs 11 and 12 above.
+Fig. 14 shows the dependence on z/z max of the median
+(thick line) and the 16 th and 84 th percentiles (thin lines) of
+the distributions in stellar metallicity (left-hand plot) and
+age (right-hand plot) of the high-S/N galaxies in our sam-
+ple. The solid lines correspond to the subsample of 26,003
+early-type galaxies, while the dot-dashed lines correspon d
+to the subsample of 5616 late-type galaxies. For early-type
+galaxies of diﬀerent masses, the largest change in median
+metallicity from one edge of the survey to the other is about
+0.2 dex. This is comparable to the error associated with the
+metallicity estimates of most galaxies and smaller than the
+overall metallicity change with galaxy mass (see Fig. 8). Th is
+variation is also consistent with the metallicity gradient of
+−0. 2 dex per decade in radius reported by several studies of
+bulge-dominated galaxies (see Henry & Worthey 1999; Wu
+et al. 2004). We note that the largest variation arises for
+galaxies with intermediate stellar masses, which often hav e
+both a prominent bulge and a disk. For disk-dominated, late-
+type galaxies, the trends in median metallicity with z/z max
+are weaker than for early-type galaxies, although the distr i-
+butions are broader.
+The median age of early-type galaxies does not show
+any signiﬁcant trend with z/z max in any mass range in
+Fig. 14. This is in agreement with earlier ﬁndings of neg-
+ligible age gradients in such galaxies (Mehlert et al. 2003;
+Wu et al. 2004). Late-type galaxies of low and intermediate
+mass show a similar behaviour. Only the most massive late-
+type galaxies show a signiﬁcant decrease (by about 0.2 dex)
+in median age as a function of z/z max, as expected if age
+gradients in spiral galaxies are stronger for larger galaxi es
+(MacArthur et al. 2004).
+The occurrence of negative radial age and metallicity
+gradients in diﬀerent types of galaxies and the fact that the
+SDSS spectra sample no more than 50–60 percent of the to-
+tal light of a galaxy are likely to cause overestimates of the
+stellar metallicities and ages of some galaxies in our sampl e.
+However, the weak trends in log Z and logtr as a function of
+z/z max in Fig. 14 suggest that aperture biases are unlikely
+to have a signiﬁcant eﬀect on the trends we have found pre-
+viously for metallicity and age as a function of stellar mass .
+4 SUMMAR Y AND CONCLUSIONS
+We have used a new approach to derive estimates of light-
+weighted stellar metallicity, age and stellar mass from the
+optical spectra of a sample of ∼ 200,000 nearby galaxies
+(0. 005< z ⩽ 0. 22) drawn from the SDSS DR2. Our method
+relies on the comparison of the galaxy spectra to a large li-
+brary of model spectra at medium-high resolution, based on
+Monte Carlo star formation histories spanning the full phys -
+ically plausible range. Extending earlier work by Kauﬀmann
+et al. (2003a), we have adopted a Bayesian approach to de-
+rive the a posteriori likelihood distribution of each physi cal
+parameter by computing the goodness of ﬁt of the observed
+spectrum for all the models in the library. In practice, we
+compute only the strengths of a set of carefully selected
+spectral absorption features.
+Our analysis shows that stellar absorption features with
+diﬀerent sensitivities to age and metallicity must be ﬁtted
+simultaneously in galaxy spectra to obtain good constraint s
+on both age and metallicity. We focus on several newly cal-
+ibrated Lick indices and the 4000 ˚
+A break (see below). The
+resolution of our models is higher than that used in most
+previous studies and is well matched to the resolution of the
+SDSS spectra. This allows us to measure the indices in the
+same way in model and galaxy spectra, avoiding any loss of
+information from the observed spectra. We emphasize that,
+while most previous studies were restricted to the analy-
+sis of old stellar populations, our sample includes galaxie s
+in the full range of star formation activities. For actively
+star-forming galaxies, the higher resolution of the models is
+crucial to separate strong emission lines from the underlyi ng
+stellar absorption.
+Using this approach, we are able to constrain stellar
+
+The Ages and Metallicities of Galaxies in the Local Universe 19
+Figure 14. Dependence on z/z max of the median (thick line) and the 16 th and 84 th percentiles (thin lines) of the distributions in stellar
+metallicity (left-hand plot) and age (right-hand plot) of S DSS-DR2 galaxies with median S/N per pixel greater than 20. T he quantity
+zmax is the minimum of the redshift at which the galaxy reaches the survey magnitude limit and that at which its median S/N per
+pixel drops below 20. The solid lines correspond to the subsa mple of 26,003 early-type ( C ⩾ 2. 8) galaxies, while the dot-dashed lines
+correspond to the subsample of 5616 late-type ( C ⩽ 2. 4) galaxies.
+metallicity and light-weighted age to within ±0. 15 dex for
+the majority of the galaxies in the sample. Our stellar-mass
+estimates, determined within less than ±0. 1 dex for the
+whole sample, are in good agreement with those derived by
+Kauﬀmann et al. (2003a). While the uncertainties on the
+stellar mass are almost independent of galaxy type, we ﬁnd
+that, as expected, the smallest errors on age and especially
+metallicity are obtained for galaxies with the strongest ab -
+sorption lines.
+The estimates we derive of galaxy parameters are af-
+fected by limitations of both model and observed spectra.
+For example, the models do not include the eﬀects of vari-
+ations in heavy-element abundance ratios, while systemati c
+deviations from the solar abundance ratios are known to
+arise in external galaxies (e.g. Worthey et al. 1992). When
+estimating metallicity, we therefore consider only those s pec-
+tral features that have been shown by previous studies to
+depend negligibly on α /Fe abundance ratio (Trager et al.
+2000; Thomas et al. 2003b; Tantalo & Chiosi 2004). The
+inclusion of higher-order Balmer lines, which may depend
+on element abundance ratio at high metallicities (Thomas
+et al. 2004), could lead to an overestimate of the metallicit y
+and an underestimate of the age by ∼0.05 dex for galax-
+ies with non-solar abundance ratios in our sample. Another
+systematic uncertainty in our metallicity and age estimate s
+comes from the discrepancy between integrated colours and
+spectral index strengths for supra-solar metallicity mode ls
+(the model spectral indices correspond to lower metallici-
+ties than the colours). Therefore, we expect metallicities in-
+ferred using these models to be biased toward high values
+at high metallicities. This problem mainly aﬀects massive,
+early-type galaxies with strong absorption lines.
+We have shown that, in addition to these model un-
+certainties, the signal-to-noise ratio in a galaxy spectru m
+strongly aﬀects our estimates of age and especially metalli c-
+ity. We choose to rely primarily on results for galaxies with
+median S/N per pixel greater than 20. This cut reduces the
+original sample by about 75 percent and biases our analysis
+toward high surface brightness, high concentration galaxi es.
+Our main results appear unaﬀected by this cut in S/N; in-
+cluding lower-S/N galaxies mainly increases the scatter in
+the relations we ﬁnd, because of the larger associated uncer -
+tainties on metallicity.
+Another observational limitation is the small aperture
+sampled by the SDSS spectra. The fraction of light collected
+by an SDSS ﬁbre depends on the apparent size of the target
+galaxy, and this fraction is less than 30 percent for most
+galaxies in our sample. The stellar mass we derive from
+the spectrum has been scaled to the total luminosity of the
+galaxy, and hence, it represents the total stellar mass of th at
+galaxy. However, the age and the metallicity derived from
+the ﬁbre spectrum cannot be easily extrapolated to total
+values without information about radial gradients. We have
+shown that these two parameters vary weakly as a func-
+tion of the fraction of light entering the ﬁbre. This reassur es
+us that aperture bias does not have a major eﬀect on the
+relations between metallicity, age and stellar mass that we
+derive.
+We have explored how galaxies are distributed in metal-
+licity, age and stellar mass in the diagram deﬁned by 4000-
+˚
+A break and Balmer-line strength. As shown by Kauﬀ-
+mann et al. (2003a) the principal sequence in this plane
+reﬂects an increase in present to past-averaged star forma-
+tion rate with decreasing D4000 (see also Brinchmann et al.
+2004). Galaxies with particularly strong Balmer absorptio n
+at given D4000 have undergone recent starbursts. By includ-
+ing metallicity dependence in the modelling, we have shown
+that:
+
+20 A. Gallazzi et al.
+• In this diagram, the average stellar mass increases along
+the sequence populated by galaxies in our sample, from less
+than 10 10M⊙ to more than 10 11M⊙ from end to end of the
+sequence. The transition at intermediate D4000 is smooth
+between the two regimes. These results are in agreement
+with those of Kauﬀmann et al. (2003b).
+• Both stellar metallicity and light-weighted age also in-
+crease with D4000. Galaxies with particularly strong Balme r
+absorption at intermediate 4000- ˚
+A breaks (D4000 ∼ 1. 5)
+are on average younger and more metal-rich than the bulk
+of the sequence. This supports the idea that these galaxies
+may have recently undergone a burst of metal-enriched star
+formation.
+In addition, we have constructed the conditional dis-
+tributions of metallicity and age estimates as a function of
+stellar mass. This analysis shows that:
+• Both stellar metallicity and light-weighted age increase
+with stellar mass, the increase being rapid at intermediate
+masses. At masses above ∼ 3× 1010M⊙, a gradual ﬂattening
+occurs in both relations. This stellar mass corresponds to
+the transition mass identiﬁed by Kauﬀmann et al. (2003b)
+in plots of D4000, surface mass density and concentration
+against stellar mass.
+• Despite the above clear relations, metallicity and age
+are not uniquely determined by mass; there is an intrinsic
+scatter in both relations, which is largest at stellar masse s
+around 1010M⊙. This scatter persists even when considering
+low- and high-concentration galaxies separately.
+• The relation we ﬁnd between stellar metallicity and stel-
+lar mass is similar to that found by Tremonti et al. (2004)
+between gas-phase oxygen abundance and stellar mass. We
+conﬁrm that higher stellar metallicities are indeed associ ated
+with higher gas-phase metallicities. However, the relatio n
+between stellar and gas-phase metallicities has a substant ial
+scatter, which can only partly be attributed to the uncer-
+tainties in stellar-metallicity estimates. This suggests that a
+simple ‘closed-box’ scenario is not suﬃcient to explain the
+relation, and that a variety of gas accretion/ejection hist o-
+ries may be required.
+We have also explored relationships between metallic-
+ity, age and stellar mass for separate subsamples of high-
+concentration, early-type and low-concentration, late-t ype
+galaxies. The distribution in age-metallicity space in bin s of
+stellar mass shows that (Figs 11 and 12):
+• Relations between stellar metallicity, age and stellar
+mass hold for both early- and late-type galaxies. However,
+the age range of the sample is less mass-dependent for early-
+type than for late-type galaxies.
+• At masses below 1010M⊙, late-type galaxies are younger
+and more metal-poor than early-type galaxies. At masses
+above 1011M⊙ the metallicities and ages of late-type galaxies
+are similar to those of early-type galaxies.
+The above results indicate that young, metal-poor stel-
+lar populations are found predominantly in low-mass galax-
+ies. This is consistent with a ‘downsizing’ scenario, in whi ch
+the mass and luminosity of the galaxies undergoing active
+star formation become progressively lower as the Universe
+becomes older (Cowie et al. 1996). Taken at face value, this
+would imply that the low metallicities of low-mass galax-
+ies just reﬂect the fact that these galaxies have had less
+time to produce metals. This naive conclusion is not consis-
+tent with that of Tremonti et al. (2004), who showed that
+the eﬀective yields (from indirect gas-mass fraction measu re-
+ments) of low-mass, star-forming galaxies in the SDSS DR2
+are too low for these galaxies to be interpreted as young
+closed-box systems. This led Tremonti et al. (2004) to favor
+galatic winds as the most likely origin of the relation betwe en
+gas-phase metallicity and stellar mass. This interpretati on is
+supported here by the fact that galaxies with no H α emission
+in our sample (which have presumably completed their star
+formation) also show a trend of decreasing stellar metallic -
+ity with decreasing stellar mass for M∗ ≲ 2 × 1010M⊙ (the
+metallicity of closed-box galaxies should tend to the yield
+near gas exhaustion, independently of mass). The large scat -
+ter present in all relations between stellar metallicity, a ge
+and stellar mass (even when separated into late-type and
+early-type galaxies) further indicates that stellar mass i s not
+the unique parameter determining the star formation histor y
+and hence the physical parameters of present-day galaxies.
+Additional variations in star formation and enrichment his -
+tory (e.g. driven by gas infall or outﬂow) are required to
+explain these parameters.
+An advantage of the large samples available from the
+SDSS is that they allow us to study not only the mean re-
+lations between physical parameters of galaxies, but also
+the dependence of these parameters on various galaxy prop-
+erties. Our results are particularly useful for studying th e
+physical origin of well-known observed relations, such as f or
+example the colour-magnitude relation and the relation be-
+tween Mg2-index strength and velocity dispersion for early-
+type galaxies. Our analysis also enables us to estimate the
+total metal content of the local Universe and the distributi on
+of these metals over diﬀerent galaxy types. We will address
+these questions in forthcoming papers.
+A complete census of the physical parameters of galax-
+ies out to z ∼ 0. 1 is essential for constraining models of the
+star formation and chemical enrichment histories of galaxi es.
+The application of our method to large samples of galaxies
+at higher redshifts will enable us to study how the distri-
+bution of the physical parameters of galaxies evolves with
+lookback time. Ongoing deep redshift surveys, such as VVDS
+(Le F` evre et al. 2004) and DEEP2 (Davis et al. 2003) in the
+optical and GALEX in the ultraviolet (Martin et al. 2004),
+are already assembling large samples of high-redshift gala x-
+ies. Quantitative comparison with the SDSS samples should
+substantially deepen our understanding of galaxy evolutio n.
+ACKNOWLEDGMENTS
+We thank Guinevere Kauﬀmann and an anonymous ref-
+eree for useful comments. A.G. thanks Stefano Zibetti and
+Gabriella De Lucia for useful discussions. A.G. and S.C.
+thank the Alexander von Humboldt Foundation, the Federal
+Ministry of Education and Research, and the Programme for
+Investment in the Future (ZIP) of the German Government
+for funding through a Sofja Kovalevskaja award. J.B. ac-
+knowledges the support of an ESA post-doctoral fellowship.
+Funding for the creation and distribution of the SDSS
+Archive has been provided by the Alfred P. Sloan Founda-
+tion, the Participating Institutions, the National Aerona u-
+
+The Ages and Metallicities of Galaxies in the Local Universe 21
+tics and Space Administration, the National Science Foun-
+dation, the US Department of Energy, the Japanese Mon-
+bukagakusho, and the Max Planck Society. The SDSS Web
+site is http://www.sdss.org/. The Participating Institut ions
+are the University of Chicago, Fermilab, the Institute for
+Advanced Study, the Japan Participation Group, the Johns
+Hopkins University, the Max Planck Institute for Astron-
+omy (MPIA), the Max Planck Institute for Astrophysics
+(MPA), New Mexico State University, Princeton University,
+the United States Naval Observatory, and the University of
+Washington.
+REFERENCES
+Abazajian K., et al. 2004, AJ, 128, 502
+Allende Prieto C., Lambert D. L., Asplund M., 2001, ApJ,
+556, L63
+Baldry I. K., Glazebrook K., Brinkmann J., Ivezi´ c ˇZ., Lup-
+ton R. H., Nichol R. C., Szalay A. S., 2004, ApJ, 600,
+681
+Balogh M. L., Morris S. L., Yee H. K. C., Carlberg R. G.,
+Ellingson E., 1999, ApJ, 527, 54
+Bell E. F., de Jong R. S., 2000, MNRAS, 312, 497
+Bernardi M., Renzini A., da Costa L. N., Wegner G.,
+Alonso M. V., Pellegrini P. S., Rit´ e C., Willmer C. N. A.,
+1998, ApJ, 508, L143
+Bressan A., Chiosi C., Fagotto F., 1994, ApJS, 94, 63
+Brinchmann J., Charlot S., White S. D. M., Tremonti C.,
+Kauﬀmann G., Heckman T., Brinkmann J., 2004, MN-
+RAS, 351, 1151
+Bruzual G., Charlot S., 2003, MNRAS, 344, 1000
+Bruzual A. G., 1983, ApJ, 273, 105
+Bruzual A. G., Charlot S., 1993, ApJ, 405, 538
+Burstein D., Faber S. M., Gaskell C. M., Krumm N., 1984,
+ApJ, 287, 586
+Caldwell N., Rose J. A., 1998, AJ, 115, 1423
+Charlot S., Fall S. M., 2000, ApJ, 539, 718
+Colless M., et al 1999, MNRAS, 303, 813
+Cowie L. L., Songaila A., Hu E. M., Cohen J. G., 1996, AJ,
+112, 839
+Davies R. L., Sadler E. M., Peletier R. F., 1993, MNRAS,
+262, 650
+Davis M., et al. 2003, in Discoveries and Research
+Prospects from 6- to 10-Meter-Class Telescopes II. Edited
+by Guhathakurta, Puragra. Proceedings of the SPIE, Vol-
+ume 4834, pp. 161-172 (2003). Science Objectives and
+Early Results of the DEEP2 Redshift Survey. pp 161–172
+Eisenstein D. J., et al. 2003, ApJ, 585, 694
+Faber S. M., 1973, ApJ, 179, 731
+Ferreras I., Charlot S., Silk J., 1999, ApJ, 521, 81
+Fioc M., Rocca-Volmerange B., 1997, A&A, 326, 950
+Gonz´ alez J. J., 1993, Ph.D. Thesis
+Gonzalez J. J., Faber S. M., Worthey G., 1993, Bulletin of
+the American Astronomical Society, 25, 1355
+Gorgas J., Cardiel N., Pedraz S., Gonz´ alez J. J., 1999,
+A&AS, 139, 29
+Gorgas J., Faber S. M., Burstein D., Gonzalez J. J.,
+Courteau S., Prosser C., 1993, ApJS, 86, 153
+Goudfrooij P., Gorgas J., Jablonka P., 1999, Ap&SS, 269,
+109
+Henry R. B. C., Worthey G., 1999, PASP, 111, 919
+Jablonka P., Martin P., Arimoto N., 1996, AJ, 112, 1415
+Jimenez R., Panter B., Heavens A. F., Verde L., 2005, MN-
+RAS, 356, 495
+Jørgensen I., 1999, MNRAS, 306, 607
+Kannappan S. J., 2004, ApJ, 611, L89
+Kauﬀmann G., et al. 2003a, MNRAS, 341, 33
+Kauﬀmann G., et al. 2003b, MNRAS, 341, 54
+Korn A. J., Maraston C., Thomas D., 2005, astro-
+ph/0504574
+Kuntschner H., 1998, Ph.D. Thesis
+Kuntschner H., 2000, MNRAS, 315, 184
+Kuntschner H., 2004, A&A, 426, 737
+Kuntschner H., Davies R. L., 1998, MNRAS, 295, L29+
+Kuntschner H., Lucey J. R., Smith R. J., Hudson M. J.,
+Davies R. L., 2001, MNRAS, 323, 615
+Kuntschner H., Smith R. J., Colless M., Davies R. L.,
+Kaldare R., Vazdekis A., 2002, MNRAS, 337, 172
+Le Borgne J.-F., Bruzual G., Pell´ o R., Lan¸ con A., Rocca-
+Volmerange B., Sanahuja B., Schaerer D., Soubiran C.,
+V ´ ılchez-G´ omez R., 2003, A&A, 402, 433
+Le F` evre O., et al. 2004, A&A, 417, 839
+Longhetti M., Rampazzo R., Bressan A., Chiosi C., 1998,
+A&AS, 130, 251
+MacArthur L. A., Courteau S., Bell E., Holtzman J. A.,
+2004, ApJS, 152, 175
+Maraston C., 1998, MNRAS, 300, 872
+Martin C. D., et al. 2004, astro-ph/0411302
+Mehlert D., Thomas D., Saglia R. P., Bender R., Wegner
+G., 2003, A&A, 407, 423
+Poggianti B. M., Bridges T. J., Carter D., Mobasher B.,
+Doi M., Iye M., Kashikawa N., Komiyama Y., Okamura
+S., Sekiguchi M., Shimasaku K., Yagi M., Yasuda N., 2001,
+ApJ, 563, 118
+Poggianti B. M., Bridges T. J., Mobasher B., Carter D.,
+Doi M., Iye M., Kashikawa N., Komiyama Y., Okamura
+S., Sekiguchi M., Shimasaku K., Yagi M., Yasuda N., 2001,
+ApJ, 562, 689
+Proctor R. N., Sansom A. E., 2002, MNRAS, 333, 517
+Rakos K., Schombert J., Maitzen H. M., Prugovecki S.,
+Odell A., 2001, AJ, 121, 1974
+Saglia R. P., Maraston C., Greggio L., Bender R., Ziegler
+B., 2000, A&A, 360, 911
+Salim S., et al. 2005, ApJ, 619, L39
+Schlegel D. J., Finkbeiner D. P., Davis M., 1998, ApJ, 500,
+525
+Shen S., et al. 2003, MNRAS, 343, 978
+Shimasaku K., et al. 2001, AJ, 122, 1238
+Stoughton C., et al. 2002, AJ, 123, 485
+Strateva I., et al. 2001, AJ, 122, 1861
+Tantalo R., Chiosi C., 2004, MNRAS, 353, 917
+Tantalo R., Chiosi C., Bressan A., 1998, A&A, 333, 419
+Terlevich A. I., Forbes D. A., 2002, MNRAS, 330, 547
+Terlevich A. I., Kuntschner H., Bower R. G., Caldwell N.,
+Sharples R. M., 1999, MNRAS, 310, 445
+Thomas D., Maraston C., Bender R., 2003a, MNRAS, 343,
+279
+Thomas D., Maraston C., Bender R., 2003b, MNRAS, 339,
+897
+Thomas D., Maraston C., Bender R., de Oliveira C. M.,
+2005, ApJ, 621, 673
+Thomas D., Maraston C., Korn A., 2004, MNRAS, 351,
+L19
+
+22 A. Gallazzi et al.
+Tinsley B. M., 1978, ApJ, 222, 14
+Tinsley B. M., 1980, Fundamentals of Cosmic Physics, 5,
+287
+Trager S. C., Faber S. M., Worthey G., Gonz´ alez J. J.,
+2000, AJ, 120, 165
+Trager S. C., Worthey G., Faber S. M., Burstein D., Gon-
+zalez J. J., 1998, ApJS, 116, 1
+Tremonti C. A., 2003, Ph.D. Thesis
+Tremonti C. A., et al. 2004, ApJ, 613, 898
+Tripicco M. J., Bell R. A., 1995, AJ, 110, 3035
+Vazdekis A., 1999, ApJ, 513, 224
+Vazdekis A., 2001, Ap&SS, 276, 921
+Worthey G., 1994, ApJS, 95, 107
+Worthey G., 1996, in ASP Conf. Ser. 98: From Stars to
+Galaxies: the Impact of Stellar Physics on Galaxy Evo-
+lution Elliptical Galaxies: Abundance Ratio Trends and
+Implications. pp 467–+
+Worthey G., 1997, in American Institute of Physics Confer-
+ence Series Star Formation History of Elliptical Galaxies
+from Low-Redshift Evidence. pp 525–+
+Worthey G., Faber S. M., Gonzalez J. J., 1992, ApJ, 398,
+69
+Worthey G., Faber S. M., Gonzalez J. J., Burstein D., 1994,
+ApJS, 94, 687
+Worthey G., Ottaviani D. L., 1997, ApJS, 111, 377
+Worthey G., Trager S. C., Faber S. M., 1995, in ASP Conf.
+Ser. 86: Fresh Views of Elliptical Galaxies The Galaxian
+Age-Metallicity Relation. pp 203–+
+Wu H., Shao Z., Mo H. J., Xia X., Deng Z., 2004, astro-
+ph/0404226
+York D. G., et al. 2000, AJ, 120, 1579

@@ -1,4 +1,4 @@
-\begin{thebibliography}{56}
+\begin{thebibliography}{54}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Ahumada} {et~al.}(2020){Ahumada}, {Allende Prieto}, {Almeida},
@@ -34,11 +34,6 @@
 
 \bibitem[{{Coenda} {et~al.}(2012){Coenda}, {Muriel}, \& {Martinez}}]{Coenda+12}
 {Coenda}, V., {Muriel}, H., \& {Martinez}, H.~J. 2012, \aap, 543, A119
-
-\bibitem[{{Dariush} {et~al.}(2010){Dariush}, {Raychaudhury}, {Ponman},
-  {Khosroshahi}, {Benson}, {Bower}, \& {Pearce}}]{Dariush+10}
-{Dariush}, A.~A., {Raychaudhury}, S., {Ponman}, T.~J., {et~al.} 2010, \mnras,
-  405, 1873
 
 \bibitem[{{D{\'\i}az-Gim{\'e}nez} \& {Mamon}(2010)}]{DiazGimenez&Mamon10}
 {D{\'\i}az-Gim{\'e}nez}, E. \& {Mamon}, G.~A. 2010, \mnras, 409, 1227
@@ -94,10 +89,6 @@ Dom{\'i}nguez~S{\'a}nchez, H., Huertas-Company, M., Bernardi, M., Tuccillo, D.,
   {Charlton}, {Hornschemeier}, {Jarrett}, \& {Reines}}]{Johnson+07}
 {Johnson}, K.~E., {Hibbard}, J.~E., {Gallagher}, S.~C., {et~al.} 2007, \aj,
   134, 1522
-
-\bibitem[{{Jones} {et~al.}(2003){Jones}, {Ponman}, {Horton}, {Babul},
-  {Ebeling}, \& {Burke}}]{Jones+03}
-{Jones}, L.~R., {Ponman}, T.~J., {Horton}, A., {et~al.} 2003, \mnras, 343, 627
 
 \bibitem[{{Kauffmann} {et~al.}(2003{\natexlab{a}}){Kauffmann}, {Heckman},
   {Tremonti}, {Brinchmann}, {Charlot}, {White}, {Reichard}, \&
@@ -238,10 +229,6 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
 {Planck Collaboration}, {Ade}, P.~A.~R., {Aghanim}, N., {et~al.} 2016, \aap,
   594, A13
 
-\bibitem[{{Ponman} {et~al.}(1994){Ponman}, {Allan}, {Jones}, {Merrifield},
-  {McHardy}, {Lehto}, \& {Luppino}}]{Ponman+94}
-{Ponman}, T.~J., {Allan}, D.~J., {Jones}, L.~R., {et~al.} 1994, \nat, 369, 462
-
 \bibitem[{{Salim} {et~al.}(2007){Salim}, {Rich}, {Charlot}, {Brinchmann},
   {Johnson}, {Schiminovich}, {Seibert}, {Mallery}, {Heckman}, {Forster},
   {Friedman}, {Martin}, {Morrissey}, {Neff}, {Small}, {Wyder}, {Bianchi},
@@ -256,6 +243,37 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
   {McConnachie}}]{Simard2011}
 {Simard}, L., {Mendel}, J.~T., {Patton}, D.~R., {Ellison}, S.~L., \&
   {McConnachie}, A.~W. 2011, \apjs, 196, 11
+
+\bibitem[{{Stoughton} {et~al.}(2002){Stoughton}, {Lupton}, {Bernardi},
+  {Blanton}, {Burles}, {Castander}, {Connolly}, {Eisenstein}, {Frieman},
+  {Hennessy}, {Hindsley}, {Ivezi{\'c}}, {Kent}, {Kunszt}, {Lee}, {Meiksin},
+  {Munn}, {Newberg}, {Nichol}, {Nicinski}, {Pier}, {Richards}, {Richmond},
+  {Schlegel}, {Smith}, {Strauss}, {SubbaRao}, {Szalay}, {Thakar}, {Tucker},
+  {Vanden Berk}, {Yanny}, {Adelman}, {Anderson}, {Anderson}, {Annis},
+  {Bahcall}, {Bakken}, {Bartelmann}, {Bastian}, {Bauer}, {Berman},
+  {B{\"o}hringer}, {Boroski}, {Bracker}, {Briegel}, {Briggs}, {Brinkmann},
+  {Brunner}, {Carey}, {Carr}, {Chen}, {Christian}, {Colestock}, {Crocker},
+  {Csabai}, {Czarapata}, {Dalcanton}, {Davidsen}, {Davis}, {Dehnen},
+  {Dodelson}, {Doi}, {Dombeck}, {Donahue}, {Ellman}, {Elms}, {Evans}, {Eyer},
+  {Fan}, {Federwitz}, {Friedman}, {Fukugita}, {Gal}, {Gillespie}, {Glazebrook},
+  {Gray}, {Grebel}, {Greenawalt}, {Greene}, {Gunn}, {de Haas}, {Haiman},
+  {Haldeman}, {Hall}, {Hamabe}, {Hansen}, {Harris}, {Harris}, {Harvanek},
+  {Hawley}, {Hayes}, {Heckman}, {Helmi}, {Henden}, {Hogan}, {Hogg}, {Holmgren},
+  {Holtzman}, {Huang}, {Hull}, {Ichikawa}, {Ichikawa}, {Johnston}, {Kauffmann},
+  {Kim}, {Kimball}, {Kinney}, {Klaene}, {Kleinman}, {Klypin}, {Knapp},
+  {Korienek}, {Krolik}, {Kron}, {Krzesi{\'n}ski}, {Lamb}, {Leger},
+  {Limmongkol}, {Lindenmeyer}, {Long}, {Loomis}, {Loveday}, {MacKinnon},
+  {Mannery}, {Mantsch}, {Margon}, {McGehee}, {McKay}, {McLean}, {Menou},
+  {Merelli}, {Mo}, {Monet}, {Nakamura}, {Narayanan}, {Nash}, {Neilsen},
+  {Newman}, {Nitta}, {Odenkirchen}, {Okada}, {Okamura}, {Ostriker}, {Owen},
+  {Pauls}, {Peoples}, {Peterson}, {Petravick}, {Pope}, {Pordes}, {Postman},
+  {Prosapio}, {Quinn}, {Rechenmacher}, {Rivetta}, {Rix}, {Rockosi}, {Rosner},
+  {Ruthmansdorfer}, {Sandford}, {Schneider}, {Scranton}, {Sekiguchi}, {Sergey},
+  {Sheth}, {Shimasaku}, {Smee}, {Snedden}, {Stebbins}, {Stubbs}, {Szapudi},
+  {Szkody}, {Szokoly}, {Tabachnik}, {Tsvetanov}, {Uomoto}, {Vogeley}, {Voges},
+  {Waddell}, {Walterbos}, {Wang}, {Watanabe}, {Weinberg}, {White}, {White},
+  {Wilhite}, {Wolfe}, {Yasuda}, {York}, {Zehavi}, \& {Zheng}}]{Stoughton02}
+{Stoughton}, C., {Lupton}, R.~H., {Bernardi}, M., {et~al.} 2002, \aj, 123, 485
 
 \bibitem[{{Taverna} {et~al.}(2023){Taverna}, {Salerno}, {Daza-Perilla},
   {D{\'\i}az-Gim{\'e}nez}, {Zandivarez}, {Mart{\'\i}nez}, \&

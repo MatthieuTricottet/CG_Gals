@@ -1,15 +1,14 @@
 """Schematic of the sample definitions (new Fig. 1, gary-r2 A7).
 
-Left panel: one Embedded CG4 (in the corrected Zheng--Shen sense: the compact
+The figure shows one Embedded CG4 (in the corrected Zheng--Shen sense: the compact
 group contributes less than half of its host luminosity) whose Lim--Tempel
 host has at least eight members and whose redshift is the closest to the
-CG4 sample median.  All host members are plotted in projected proper kpc
+CG4 sample median.  All host members are plotted in projected physical kpc
 relative to the host BGG; the CG4 members, the would-be Control4B quartet
 (BGG plus the three brightest members within 3 mag) and the would-be
 Control4C quartet (BGG plus the three nearest projected members within
 3 mag) are marked.  Such hosts are excluded from the actual control samples
-because they contain CG4 galaxies.  Right panel: the RG4 group closest in
-redshift, on the same scale.  Positions only; no image cutouts.
+because they contain CG4 galaxies.  Positions only; no image cutouts.
 """
 
 from __future__ import annotations
@@ -20,6 +19,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from astropy.cosmology import Planck15
+from matplotlib.path import Path
 
 try:
     import config as co
@@ -32,10 +32,14 @@ except ModuleNotFoundError:  # pragma: no cover
 
 MIN_HOST_MEMBERS = 8
 MAG_WINDOW = 3.0
+CENTRED_TRIANGLE = Path(
+    np.array([[0.0, 2.0 / 3.0], [-1.0 / np.sqrt(3), -1.0 / 3.0],
+              [1.0 / np.sqrt(3), -1.0 / 3.0], [0.0, 2.0 / 3.0]])
+)
 
 
 def _projected_kpc(ra, dec, ra0, dec0, z):
-    """Small-angle projected offsets (proper kpc) relative to (ra0, dec0)."""
+    """Small-angle projected physical offsets (kpc) relative to (ra0, dec0)."""
 
     kpc_per_arcmin = Planck15.kpc_proper_per_arcmin(float(z)).value
     dx = (np.asarray(ra, float) - ra0) * np.cos(np.deg2rad(dec0)) * 60.0 * kpc_per_arcmin
@@ -73,44 +77,50 @@ def select_groups(sample: dict, pc_gals: pd.DataFrame):
     candidates = candidates.loc[candidates["n_host"] >= MIN_HOST_MEMBERS]
     candidates["dz"] = (candidates["z_group"] - z_median).abs()
     chosen = candidates.sort_values(["dz", "Group"]).iloc[0]
-    rg_groups = sample["RG4" + co.GRSUFF].copy()
-    rg_groups["dz"] = (rg_groups["z_group"] - chosen["z_group"]).abs()
-    rg_chosen = rg_groups.sort_values(["dz", "Group"]).iloc[0]
     return {
         "cg4_group": int(chosen["Group"]),
         "lim_host": int(chosen["lim"]),
         "n_host_members": int(chosen["n_host"]),
         "cg4_z_group": float(chosen["z_group"]),
         "cg4_sample_median_z": z_median,
-        "rg4_group": int(rg_chosen["Group"]),
-        "rg4_z_group": float(rg_chosen["z_group"]),
         "n_embedded_candidates": int(len(candidates)),
         "selection_rule": (
             f"Embedded CG4 (corrected Zheng--Shen label) with host richness >= {MIN_HOST_MEMBERS}, "
-            "minimising |z_group - median z_group(CG4)|; RG4 group minimising |z - z(CG4 chosen)|"
+            "minimising |z_group - median z_group(CG4)|"
         ),
     }
 
 
-def _draw_group(ax, members, origin, z, marks, title, style_note=None):
+def _draw_group(ax, members, origin, z, marks, title, style_note=None, show_labels=True):
     dx, dy = _projected_kpc(members["RA"], members["Dec"], origin["RA"], origin["Dec"], z)
     lum_scale = 10 ** (-0.4 * (members["M_r"].to_numpy(float) - members["M_r"].min()))
     size = 18 + 60 * lum_scale
-    ax.scatter(dx, dy, s=size, facecolor="0.75", edgecolor="0.45", linewidth=0.6,
-               zorder=2, label="other host members")
+    highlighted = set()
+    for objids, *_rest in marks.values():
+        highlighted.update(int(value) for value in objids)
+    other = ~members["objid"].astype("int64").isin(highlighted).to_numpy()
+    if other.any():
+        ax.scatter(dx[other], dy[other], s=size[other], facecolor="0.75",
+                   edgecolor="0.45", linewidth=0.7, zorder=2,
+                   label="other host members" if show_labels else None)
     for key, (objids, colour, marker, label, ms) in marks.items():
         sel = members["objid"].isin(objids).to_numpy()
-        ax.scatter(dx[sel], dy[sel], s=ms, facecolor="none", edgecolor=colour, marker=marker,
-                   linewidth=1.4, zorder=3 + (key == "CG4"), label=label)
+        marker_path = CENTRED_TRIANGLE if marker == "^" else marker
+        ax.scatter(dx[sel], dy[sel], s=size[sel] + ms, facecolor="none",
+                   edgecolor=colour, marker=marker_path, linewidth=1.4,
+                   zorder=3 + (key == "CG4"), label=label if show_labels else None)
     ax.axhline(0, color="0.85", lw=0.6, zorder=1)
     ax.axvline(0, color="0.85", lw=0.6, zorder=1)
     ax.set_title(title, fontsize=8.5)
-    ax.set_xlabel(r"$\Delta x$ (proper kpc)", fontsize=9)
-    ax.tick_params(labelsize=8)
+    ax.set_xlabel(r"$\Delta x$ (kpc)", fontsize=10)
+    ax.tick_params(labelsize=9, direction="in", top=True, right=True)
+    for spine in ax.spines.values():
+        spine.set_visible(True)
     ax.set_aspect("equal")
     ax.invert_xaxis()  # east to the left
     if style_note:
         ax.text(0.02, 0.02, style_note, transform=ax.transAxes, fontsize=7, va="bottom")
+    return dx, dy, size
 
 
 def run_schematic_figure(sample: dict, output_dir: str | None = None) -> dict:
@@ -133,16 +143,12 @@ def run_schematic_figure(sample: dict, output_dir: str | None = None) -> dict:
         "n_cg4_in_would_be_control4c": int(len(set(cg_objids) & set(c4c))),
     })
 
-    rg_gals = sample["RG4" + co.GASUFF]
-    rg = rg_gals.loc[rg_gals["Group"] == choice["rg4_group"]].copy()
-    rg_bgg = rg.sort_values("M_r").iloc[0]
-
     result = {"status": "ok", **choice}
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
         style = plt.style.context("default")  # earlier modules may set a seaborn style
         style.__enter__()
-        fig, axes = plt.subplots(1, 2, figsize=(7.1, 3.7), sharey=True)
+        fig, ax = plt.subplots(figsize=(6.6, 5.7))
         z_cg = host["z"].median()
         marks = {
             "C4B": (c4b, "#0072B2", "s", r"would-be Control$_{4B}$ quartet", 210),
@@ -150,31 +156,32 @@ def run_schematic_figure(sample: dict, output_dir: str | None = None) -> dict:
             "CG4": (cg_objids, "black", "o", r"CG$_4$ members", 110),
         }
         _draw_group(
-            axes[0], host, bgg, z_cg, marks,
-            f"(a) Embedded CG$_4$ {choice['cg4_group']} in Lim host {choice['lim_host']}\n"
+            ax, host, bgg, z_cg, marks,
+            f"Embedded CG$_4$ {choice['cg4_group']} in Lim host {choice['lim_host']}\n"
             f"($N_{{\\rm host}}={choice['n_host_members']}$, $z={choice['cg4_z_group']:.3f}$)",
         )
-        _draw_group(
-            axes[1], rg, rg_bgg, rg["z"].median(),
-            {"RG4": (rg["objid"].astype("int64").tolist(), "#009E73", "D", r"RG$_4$ members", 110)},
-            f"(b) RG$_4$ group {choice['rg4_group']}\n($N=4$, $z={choice['rg4_z_group']:.3f}$)",
-        )
-        # common scale: symmetric limits covering the host
+        # Symmetric limits covering the full host.
         dx, dy = _projected_kpc(host["RA"], host["Dec"], bgg["RA"], bgg["Dec"], z_cg)
         half = 1.08 * max(np.abs(dx).max(), np.abs(dy).max())
-        for ax in axes:
-            ax.set_xlim(half, -half)
-            ax.set_ylim(-half, half)
-        axes[0].set_ylabel(r"$\Delta y$ (proper kpc)", fontsize=9)
-        handles, labels = axes[0].get_legend_handles_labels()
-        h2, l2 = axes[1].get_legend_handles_labels()
-        for h, l in zip(h2, l2):
-            if l not in labels:
-                handles.append(h)
-                labels.append(l)
-        fig.legend(handles, labels, loc="lower center", ncol=5, frameon=False, fontsize=7.5,
-                   bbox_to_anchor=(0.5, -0.01), handletextpad=0.3, columnspacing=1.0)
-        fig.tight_layout(rect=(0, 0.06, 1, 1))
+        ax.set_xlim(half, -half)
+        ax.set_ylim(-half, half)
+        ax.set_ylabel(r"$\Delta y$ (kpc)", fontsize=11)
+        ax.set_xlabel(r"$\Delta x$ (kpc)", fontsize=11)
+        ax.set_title(ax.get_title(), fontsize=10.5, pad=8)
+        ax.tick_params(labelsize=10)
+        inset = ax.inset_axes([0.055, 0.545, 0.405, 0.405])
+        _draw_group(inset, host, bgg, z_cg, marks, "", show_labels=False)
+        inset.set_xlim(120, -120)
+        inset.set_ylim(-120, 120)
+        inset.set_xlabel("")
+        inset.set_ylabel("")
+        inset.set_title(r"central $\pm120$ kpc", fontsize=7, pad=1)
+        inset.tick_params(labelsize=6, length=2, pad=1, top=True, right=True)
+        ax.indicate_inset_zoom(inset, edgecolor="0.35", linewidth=0.8)
+        handles, labels = ax.get_legend_handles_labels()
+        fig.legend(handles, labels, loc="lower center", ncol=4, frameon=False, fontsize=9,
+                   bbox_to_anchor=(0.5, 0.005), handletextpad=0.4, columnspacing=1.25)
+        fig.tight_layout(rect=(0, 0.07, 1, 1))
         path = os.path.join(output_dir, "fig_sample_schematic.pdf")
         fig.savefig(path, format="pdf", bbox_inches="tight")
         plt.close(fig)

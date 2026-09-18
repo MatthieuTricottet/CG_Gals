@@ -1,0 +1,115 @@
+{
+  "created_utc": "2026-09-15T16:55:34+00:00",
+  "seed": 20260915,
+  "cluster_bootstrap_replicates": 1000,
+  "scope": "All writes are below exploration/metallicity",
+  "primary_product": "FIREFLY MILES light-weighted",
+  "primary_control": "Control4C",
+  "files": [
+    {
+      "path": "outputs/zstar/zstar_worktable.csv",
+      "bytes": 3894621,
+      "sha256": "d328fde5e169bf261f3e220a40742fcdfcc530b117e571831c8f15016eab7e46"
+    },
+    {
+      "path": "outputs/zstar/coverage.csv",
+      "bytes": 2151,
+      "sha256": "8c54b22568e13ebf08dbb130fe3bbe9db05645eb7a555a7b3b73ac4ebdf4a3f0"
+    },
+    {
+      "path": "outputs/zstar/selection_smd.csv",
+      "bytes": 1049,
+      "sha256": "3afe5c7619bef326bfc534efbd0a5604391d32c40c1eadece0c3729c0626a84d"
+    },
+    {
+      "path": "outputs/zstar/selection_rates.csv",
+      "bytes": 6241,
+      "sha256": "90c874b8c3e6b82e8677f4abf097a6538474f3370c05645763d7a28253807dcc"
+    },
+    {
+      "path": "outputs/zstar/crosscal_summary.csv",
+      "bytes": 2373,
+      "sha256": "70b766465893aa39182dc8928642a775253c26d068c05a5a3d148881347996f5"
+    },
+    {
+      "path": "outputs/zstar/crosscal_outliers.csv",
+      "bytes": 9112,
+      "sha256": "86b9e9a77cce41bdbc3f5aa9af5a5c30d73c697f84c4021c894028f5d46ef611"
+    },
+    {
+      "path": "outputs/zstar/zstar_contrasts.csv",
+      "bytes": 8196,
+      "sha256": "889ade8e43679d3f8defd0358deadca6f685850037e4e61bfac4166787bfe0df"
+    },
+    {
+      "path": "outputs/zstar/zstar_decomposition.csv",
+      "bytes": 7528,
+      "sha256": "3e189134a1b17e73060a9070d67f420c819ed6d30a2bc01357fe30ea8b233c1b"
+    },
+    {
+      "path": "outputs/zstar/zstar_robustness.csv",
+      "bytes": 7239,
+      "sha256": "5fd71252ede781fe5586001b2472d7bebfe93fcc9bf45fddc5805ac7fdd314cb"
+    },
+    {
+      "path": "outputs/zstar/index_mass_sensitivity.csv",
+      "bytes": 10771,
+      "sha256": "05570720535e2d6922af71b112ee89a0192e5fbb1826f15538341d5147a98733"
+    },
+    {
+      "path": "outputs/zstar/control_mzr_residuals.csv",
+      "bytes": 798211,
+      "sha256": "b2e46d081e4bfd51dce807e4291442627848ed8fbeb8c0184ec0e1f8c3267eb9"
+    },
+    {
+      "path": "figures/zstar/coverage.png",
+      "bytes": 77687,
+      "sha256": "a0613224fd7a68ee259a92ae55983adf3c9bc2bc8c82073e72503ed2ddd020bd"
+    },
+    {
+      "path": "figures/zstar/cross_calibration.png",
+      "bytes": 358406,
+      "sha256": "a4b62ec5ee02b8f76a0fc3ae48a41349d32d29a05770eb0a9bdc5e440836ae13"
+    },
+    {
+      "path": "figures/zstar/decomposition.png",
+      "bytes": 62455,
+      "sha256": "6a1a0919acd08b7a3b9cdf1e4a69069acba575d4d28f9f06a51957713bf4daa5"
+    },
+    {
+      "path": "figures/zstar/direct_effects.png",
+      "bytes": 64320,
+      "sha256": "14c40d499da85efe26832d7f6551dc6196c9cca93ded76afd500841268c6de29"
+    },
+    {
+      "path": "figures/zstar/index_mass_sensitivity.png",
+      "bytes": 59256,
+      "sha256": "62f88a2e5e1cfad59486bd9f95741f09992bb9c19241dbad80fdefac407d741a"
+    },
+    {
+      "path": "figures/zstar/mass_metallicity.png",
+      "bytes": 337734,
+      "sha256": "9ebe7f8a512e599c2f71bed83123faa30241a446f819b05e4c341421a0a441bc"
+    },
+    {
+      "path": "figures/zstar/robustness.png",
+      "bytes": 91006,
+      "sha256": "0f2c0c1f4d17435705e11aca85e03e18a0fee1ed134998855d1c87e3534d1c94"
+    },
+    {
+      "path": "figures/zstar/selection_functions.png",
+      "bytes": 115774,
+      "sha256": "3fa80fc11d58930240706145614412d9c650b59282cf717655c15fdeaba22c34"
+    },
+    {
+      "path": "figures/zstar/uncertainty_vs_sn.png",
+      "bytes": 213611,
+      "sha256": "3d96096df05babcfbdc8d720aa26b6f1cb81a4039547917f7561ce91d662e292"
+    },
+    {
+      "path": "ZSTAR_REPORT.md",
+      "bytes": 17971,
+      "sha256": "71bf6fc064cddfed9a21e6efe8ff3072e259aee85da6f481c77a6bb52b184536"
+    }
+  ]
+}

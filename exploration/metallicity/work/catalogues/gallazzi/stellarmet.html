@@ -1,0 +1,124 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>The ages and metallicities of galaxies in the local universe</title>
+     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link href="../../Styles/default.css" rel="stylesheet" type="text/css">
+ </head>
+
+  <body>
+    <table width="100%" border="0" cellpadding="4" cellspacing="0" bordercolor="#0099CC" bgcolor="#000099">
+      <tbody>
+	<tr style="text-align:left;"> 
+	  <td><a href="../index.html">Back to overview</a></td>
+	</tr>
+      </tbody>
+    </table>
+    <h1>The ages and metallicities of galaxies in the local universe</h1>
+
+        <h3 class="heading">Summary</h3>
+    <p class="abstract">
+      This page contains the DR4 version of the tables referenced in
+      <a href="http://esoads.eso.org/cgi-bin/nph-bib_query?bibcode=2005MNRAS.362...41G&amp;db_key=AST&amp;data_type=HTML&amp;format=&amp;high=4220caa73714423">
+	"The ages and metallicities of galaxies in the local universe"
+	by Gallazzi et al (2005)</a>, see also <a
+	href="http://esoads.eso.org/cgi-bin/nph-bib_query?bibcode=2006MNRAS.370.1106G&amp;db_key=AST&amp;data_type=HTML&amp;format=&amp;high=4220caa73714423">
+	"Ages and metallicities of early-type galaxies in the Sloan
+	Digital Sky Survey: new insight into the physical origin of
+	the colour-magnitude and the Mg<sub>2</sub>-&sigma;<sub>V</sub> relations", Gallazzi et
+	al (2006)</a>. Any use of these data should reference at least
+	Gallazzi et al (2005). The table contain the full set of
+	objects, 567486, and is matched to the star formation,
+	gas-phase metallcity and raw data tables provided on this
+	site.  Please see the papers for details about the
+	determination of these quantities and any caveats that should
+	be kept in mind when using these data.
+    </p>
+    <p>
+      Note that the stellar metallicities given in the catalogue are
+      not in solar units. To have them in solar units, as in Gallazzi
+      et al 2005, subtract log(Z<sub>sun</sub>=0.02) from the values in the
+      catalogue.
+    </p>
+
+    <a name="note"> <h3 class="heading"> A note on the mass estimates </h3></a>
+    <p>
+      We note that for galaxies already present in the DR2 data
+      release there have been small changes in the measured magnitudes
+      (but not in the absorbtion line indices). While stellar
+      metallicities and ages are only mildly affected by this, the
+      stellar masses derived using DR4 photometry show an offset of
+      &lt;~0.1dex with respect to the stellar masses based on DR2
+      photometry. This happens for a subset of galaxies which show a
+      similar offset in their z-band model magnitudes (which we use to
+      normalize the stellar mass-to-light ratio).  We provide here
+      also stellar masses based on the z-band Petrosian magnitudes,
+      which do not suffer from any systematic difference between DR2
+      and DR4 data releases. "Petrosian" stellar masses are on average
+      lower than "model" stellar masses by about 0.1dex. This reflects
+      the fact that Petrosian magnitudes recover about 80 percent of
+      the flux for a de Vaucouleurs profile, while model magnitudes
+      are (extrapolated) total magnitudes.
+    </p>
+
+    <h3 class="heading">Stellar metallicities</h3>
+    <p>
+      This table contains the estimates of stellar metallicities with
+      the columns having the following meaning:
+    </p>
+    <pre>
+Fortran format: format(1x,i5,1x,i8,1x,i5,6(1x,f10.4))
+
+  column  1: plate ID
+  column  2: MJD
+  column  3: fiber ID
+  column  4: 2.5 percentile of likelihood distribution of
+             stellar metallicity
+  column  5: 16 percentile
+  column  6: median of likelihood distribution of 
+             stellar metallicity (log Z)
+  column  7: 84 percentile
+  column  8: 97.5 percentile
+  column  9: mode of the distribution
+  column 10: The index (starting at 0) into the SDSS data files.
+    </pre>
+    <p class="download"> 
+      Download the catalogue <a href="Gallazzi/all_stat_z_log.dat.gz">here </a>
+      - gzipped text file.
+    </p>
+
+    <h3 class="heading">r-band weighted ages</h3>
+    <p>
+      This table contains the estimates of r-band weighted ages with
+      the same format and the same meaning of the columns as for the
+      stellar metallicity catalogue. The units are log yr.
+    </p>
+    <p class="download"> 
+      Download the catalogue <a href="Gallazzi/all_stat_age.dat.gz">here </a>
+    </p>
+
+
+    <h3 class="heading">Stellar mass estimates</h3>
+    <p>
+      This table contains the estimates of the stellar mass in units
+      of log solar mass from the model fits. As noted <a
+	href="#note">above</a> there are two mass estimates available,
+      one based on model magnitudes and one based on Petrosian
+      magnitudes. 
+    </p>
+    <p class="download"> 
+      Download the mass estimates based on z-band Petrosian magnitudes
+      <a href="Gallazzi/all_stat_mstar.petromag.dat.gz">here </a>
+    </p>
+    <p class="download"> 
+      Download the mass estimates based on z-band Model magnitudes
+      <a href="Gallazzi/all_stat_mstar.dat.gz">here </a>
+    </p>
+
+    <hr>
+<!-- Created: Wed Jun 22 15:57:52 CEST 2005 -->
+<!-- hhmts start -->
+Last modified: Sat May 24 13:47:07 CEST 2008
+<!-- hhmts end -->
+  </body>
+</html>

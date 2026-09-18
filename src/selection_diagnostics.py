@@ -179,18 +179,19 @@ def _plot_availability(availability_counts, path):
     for row in range(len(samples)):
         for column in range(len(quantities)):
             item = availability_counts.get(samples[row], {}).get(quantities[column], {})
-            n_available = item.get("n_available", 0)
-            n_total = item.get("n_total", 0)
             ax.text(
                 column,
                 row,
-                f"{n_available}/{n_total}\n({100 * matrix[row, column]:.1f}%)",
+                f"{100 * matrix[row, column]:.1f}%",
                 ha="center",
                 va="center",
                 color="white" if matrix[row, column] < 0.55 else "black",
                 fontsize=8.2,
             )
     fig.colorbar(image, ax=ax, label="Available fraction of final sample")
+    ax.tick_params(direction="in", top=True, right=True)
+    for spine in ax.spines.values():
+        spine.set_visible(True)
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)

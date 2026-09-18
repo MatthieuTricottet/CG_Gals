@@ -247,7 +247,7 @@ def _prepare_frame(data) -> tuple[pd.DataFrame, dict[str, str | None], list[str]
         frame["elliptical"] = pd.to_numeric(frame["elliptical"], errors="coerce")
     frame["early_type"] = frame["elliptical"]
     warnings.append(
-        "No S0/lenticular class is available; early_type is therefore elliptical-only."
+        "No S0/lenticular class is available; early_type is therefore the GZ1 E class."
     )
 
     if "dist2BGG_projected_kpc" not in frame:
@@ -1057,7 +1057,7 @@ def run_phase_space_segregation_analysis(
         figures["earlytype_fraction_by_distance"] = _plot_distance_fraction(
             distance_bins,
             "early_type",
-            "Elliptical satellite fraction",
+            "GZ1 E-class satellite fraction",
             os.path.join(
                 output_dir,
                 "phase_space_satellite_earlytype_fraction_by_distance.pdf",
