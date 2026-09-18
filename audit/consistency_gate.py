@@ -72,6 +72,9 @@ def check_vocabulary(tex: str) -> None:
         r"|treat \\texttt\{specsfr\\_tot\\_p50\} \\\(= -9999\\\) as"
         r"|\\texttt\{sfr\\_tot\\_p50\} \\\(= -9999\\\), as \\emph"
         r"|including the \\\(-9999\\\) sentinel"
+        # gary-r2 (2026-09) rephrasing of the classification and App. A sentences
+        r"|\\\(-9999\\\) is the missing-value sentinel"
+        r"|is the \\\(-9999\\\) sentinel"
     )
     for match in re.finditer(r"-9999", tex):
         window = tex[match.start() - 60 : match.end() + 80]

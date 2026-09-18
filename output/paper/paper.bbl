@@ -1,4 +1,4 @@
-\begin{thebibliography}{55}
+\begin{thebibliography}{56}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
 
 \bibitem[{{Ahumada} {et~al.}(2020){Ahumada}, {Allende Prieto}, {Almeida},
@@ -187,6 +187,9 @@ Montaguth, G.~P., Torres-Flores, S., Monachesi, A., {et~al.} 2023, \mnras, 524,
 Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
   Res., 12, 2825
 
+\bibitem[{{Peng} {et~al.}(2015){Peng}, {Maiolino}, \& {Cochrane}}]{Peng+15}
+{Peng}, Y., {Maiolino}, R., \& {Cochrane}, R. 2015, \nat, 521, 192
+
 \bibitem[{{Planck Collaboration} {et~al.}(2016){Planck Collaboration}, {Ade},
   {Aghanim}, {Arnaud}, {Ashdown}, {Aumont}, {Baccigalupi}, {Banday},
   {Barreiro}, {Bartlett}, {Bartolo}, {Battaner}, {Battye}, {Benabed},
@@ -239,6 +242,12 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
   {McHardy}, {Lehto}, \& {Luppino}}]{Ponman+94}
 {Ponman}, T.~J., {Allan}, D.~J., {Jones}, L.~R., {et~al.} 1994, \nat, 369, 462
 
+\bibitem[{{Salim} {et~al.}(2007){Salim}, {Rich}, {Charlot}, {Brinchmann},
+  {Johnson}, {Schiminovich}, {Seibert}, {Mallery}, {Heckman}, {Forster},
+  {Friedman}, {Martin}, {Morrissey}, {Neff}, {Small}, {Wyder}, {Bianchi},
+  {Donas}, {Lee}, {Madore}, {Milliard}, {Szalay}, {Welsh}, \& {Yi}}]{Salim+07}
+{Salim}, S., {Rich}, R.~M., {Charlot}, S., {et~al.} 2007, \apjs, 173, 267
+
 \bibitem[{{Seabold} \& {Perktold}(2010)}]{Seabold2010}
 {Seabold}, S. \& {Perktold}, J. 2010, in Proceedings of the 9th Python in
   Science Conference, 92--96
@@ -290,11 +299,6 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
 
 \bibitem[{{Zepf} \& {Whitmore}(1993)}]{ZepfWhitmore93}
 {Zepf}, S.~E. \& {Whitmore}, B.~C. 1993, \apj, 418, 72
-
-\bibitem[{{Zeraatgari} {et~al.}(2024){Zeraatgari}, {Hafezianzadeh}, {Zhang},
-  {Mosallanezhad}, \& {Zhang}}]{Zeraatgari+24}
-{Zeraatgari}, F.~Z., {Hafezianzadeh}, F., {Zhang}, Y.-X., {Mosallanezhad}, A.,
-  \& {Zhang}, J.-Y. 2024, \aap, 688, A33
 
 \bibitem[{{Zheng} \& {Shen}(2021)}]{Zheng&Shen21}
 {Zheng}, Y.-L. \& {Shen}, S.-Y. 2021, \apj, 911, 105
