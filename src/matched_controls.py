@@ -38,6 +38,7 @@ try:
     from extended_stats import (
         bootstrap_difference,
         empirical_p_two_sided,
+        holm_correction,
         safe_json,
         standardized_mean_difference,
     )
@@ -46,6 +47,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from .extended_stats import (
         bootstrap_difference,
         empirical_p_two_sided,
+        holm_correction,
         safe_json,
         standardized_mean_difference,
     )
@@ -783,6 +785,12 @@ def per_control_group_level_matches(prepared, n_boot=N_BOOT_DEFAULT, seed=202606
                     "diagnostic of the corresponding primary per-control match."
                 )
             results[control_label]["satellite_mass_balanced_variant"] = variant
+    # Holm bookkeeping across the three per-control permutation p-values
+    # (Table 3, gary-r2 A8); the raw paired sign-flip p remains primary.
+    labels = [label for label in results if results[label].get("status") == "ok"]
+    adjusted = holm_correction([results[label]["p_permutation"] for label in labels])
+    for label, value in zip(labels, adjusted):
+        results[label]["p_permutation_holm_across_controls"] = value
     return results
 
 

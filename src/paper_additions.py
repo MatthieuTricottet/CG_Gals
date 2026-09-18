@@ -365,12 +365,16 @@ def zheng_shen_block(sample: dict) -> dict:
     check("fE_isolated_all", iso["fE_all"]["p"], 7 / 18, 1e-9)
     check("fE_isolated_sat", iso["fE_sat"]["p"], 4 / 14, 1e-9)
     check("lM200_isolated", iso["median_host_lM200"], 12.86, 0.02)
+    # Reference values after the 2026-09-17 label repair (gary-r2 D3): the
+    # inherited export had Embedded/Predominant swapped relative to Zheng &
+    # Shen (2021, Eq. 1); Embedded CGs (< half of the host luminosity) live in
+    # the richer, more massive hosts.
     check("lM200_embedded", block["per_class"]["Embedded"]["median_host_lM200"],
-          13.13, 0.02)
+          13.83, 0.02)
     check("lM200_predominant",
           block["per_class"]["Predom" if "Predom" in block["per_class"]
                              else "Predominant"]["median_host_lM200"],
-          13.83, 0.02)
+          13.13, 0.02)
 
     fe_cg = _group_sat_fe(gals)
     iso_groups = set(cls.index[cls == "Isolated"])
@@ -408,6 +412,57 @@ def zheng_shen_block(sample: dict) -> dict:
           block["permutations"]["isolated_vs_Control4C"]["p"], 0.3, 0.15,
           note="reference approximate; Control4C is the repaired sample")
     return block
+
+
+def control_satellite_fe(sample: dict) -> dict:
+    """Satellite elliptical fractions E/(E+Sp) with Wilson intervals per control."""
+
+    out = {}
+    for name in ("Control4B", "Control4C", "RG4"):
+        gals = sample[f"{name}_Gals"]
+        sat = gals[(gals["rank_M"] > 1) & gals["morphology"].isin(["Elliptical", "Spiral"])]
+        k, n = int((sat["morphology"] == "Elliptical").sum()), int(len(sat))
+        lo, hi = wilson(k, n)
+        out[name] = dict(n_E=k, n_classified=n, p=k / n, wilson_lo=lo, wilson_hi=hi)
+    return out
+
+
+def plot_cg4_classes(zheng: dict, controls: dict, path: str) -> str:
+    """Fig.: satellite f_E by Zheng--Shen class with control bands (gary-r2 A5)."""
+
+    import matplotlib.pyplot as plt
+    from utils import labels_utils as lu
+
+    order = ["Isolated", "Embedded", "Predominant"]
+    colours = {"Control4B": "#0072B2", "Control4C": "#D55E00", "RG4": "#009E73"}
+    fig, ax = plt.subplots(figsize=(4.4, 3.4))
+    for name, entry in controls.items():
+        ax.axhspan(entry["wilson_lo"], entry["wilson_hi"], color=colours[name], alpha=0.16, lw=0)
+        ax.axhline(entry["p"], color=colours[name], lw=1.0, ls="--",
+                   label=f"{lu.sample_tex_label(name)} satellites")
+    x = np.arange(len(order))
+    for i, cname in enumerate(order):
+        e = zheng["per_class"][cname]["fE_sat"]
+        ax.errorbar(i, e["p"], yerr=[[e["p"] - e["wilson_lo"]], [e["wilson_hi"] - e["p"]]],
+                    fmt="o", color="black", ms=6, capsize=3, lw=1.2,
+                    label=r"CG$_4$ satellites" if i == 0 else None)
+        ax.annotate(f"$N_{{\\rm gr}}={zheng['per_class'][cname]['n_groups']}$\n"
+                    f"$\\log M_{{200c}}={zheng['per_class'][cname]['median_host_lM200']:.2f}$",
+                    (i, e["wilson_hi"]), textcoords="offset points", xytext=(0, 6),
+                    ha="center", va="bottom", fontsize=7.5)
+    ax.set_xticks(x, order)
+    ax.set_xlim(-0.6, len(order) - 0.4)
+    ax.set_ylim(0, 1.0)
+    ax.set_ylabel(r"satellite $f_{\rm E} = N_{\rm E}/(N_{\rm E}+N_{\rm S})$", fontsize=9)
+    ax.set_xlabel("Zheng--Shen class", fontsize=9)
+    ax.tick_params(labelsize=8)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.legend(fontsize=7, frameon=False, loc="lower right")
+    fig.tight_layout()
+    fig.savefig(path, format="pdf", bbox_inches="tight")
+    plt.close(fig)
+    return os.path.basename(path)
 
 
 # --------------------------------------------------------------------------
@@ -729,6 +784,10 @@ def main() -> None:
     sep = separations_block(sample)
     quench = quenched_block(sample)
     zheng = zheng_shen_block(sample)
+    zheng["control_satellite_fE"] = control_satellite_fe(sample)
+    zheng["figure"] = plot_cg4_classes(
+        zheng, zheng["control_satellite_fE"],
+        os.path.join(co.FIGURES_PATH, "fig_cg4_classes.pdf"))
     tidal, _ = tidal_block(sample, results)
 
     macros = build_macros(sep, quench, zheng, tidal)

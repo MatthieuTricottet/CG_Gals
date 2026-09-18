@@ -28,13 +28,19 @@ if os.environ.get("MPLBACKEND") is None:
 import matplotlib.pyplot as plt
 import numpy as np
 
+from matplotlib.ticker import NullFormatter
+
+try:
+    from utils.labels_utils import sample_tex_label
+except ModuleNotFoundError:  # pragma: no cover
+    from .utils.labels_utils import sample_tex_label
 try:
     from extended_data import ensure_galaxy_frame
-    from extended_stats import fit_logistic_model, safe_json
+    from extended_stats import fit_logistic_model, holm_correction, safe_json
     from specialness_models import LABELS, MODEL_SPECS, _covariates
 except ModuleNotFoundError:  # pragma: no cover
     from .extended_data import ensure_galaxy_frame
-    from .extended_stats import fit_logistic_model, safe_json
+    from .extended_stats import fit_logistic_model, holm_correction, safe_json
     from .specialness_models import LABELS, MODEL_SPECS, _covariates
 
 CONTRAST_QUESTIONS = {
@@ -43,7 +49,8 @@ CONTRAST_QUESTIONS = {
     "RG4": "true four-member ordinary groups",
 }
 PLOT_OUTCOMES = ["elliptical_all", "quenched_all"]
-PLOT_COLOURS = {"Control4B": "#2864A6", "Control4C": "#25876E", "RG4": "#A74752"}
+# same control palette as Fig. 2 (descriptive_trends.SAMPLE_STYLES)
+PLOT_COLOURS = {"Control4B": "#0072B2", "Control4C": "#D55E00", "RG4": "#009E73"}
 
 
 def _plot(results, path):
@@ -71,14 +78,16 @@ def _plot(results, path):
     ax.axvline(1, color="0.45", linestyle=":", linewidth=1)
     ax.set_xscale("log")
     ax.set_xticks([0.25, 0.5, 1, 2, 4], labels=["0.25", "0.5", "1", "2", "4"])
+    ax.set_xticks([], minor=True)  # no 4x10^-1-style minor labels
+    ax.xaxis.set_minor_formatter(NullFormatter())
     ax.set_yticks(
         y,
         [
-            f"{LABELS.get(outcome, outcome)} vs {control}"
+            f"{LABELS.get(outcome, outcome)} vs {sample_tex_label(control)}"
             for outcome, control, _ in rows
         ],
     )
-    ax.set_xlabel("CG4 odds ratio (95% confidence interval)")
+    ax.set_xlabel(r"CG$_4$ odds ratio (95% confidence interval)")
     ax.invert_yaxis()
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
@@ -127,6 +136,16 @@ def run_primary_contrasts(data, output_dir: str | None = None, frame=None):
                 continuous=[column for column in continuous if column in predictors],
             )
         results["contrasts"][control] = contrast
+    # Holm bookkeeping across the three per-control tests of each model
+    # family (gary-r2 D6/A8): stored next to the raw p-values; the controls
+    # remain separate pre-specified contrasts and the raw p is primary.
+    for name in MODEL_SPECS:
+        controls = list(CONTRAST_QUESTIONS)
+        raw = [results["contrasts"][c].get(name, {}).get("cg4_p") for c in controls]
+        adjusted = holm_correction(raw)
+        for control, value in zip(controls, adjusted):
+            if results["contrasts"][control].get(name, {}).get("status") == "ok":
+                results["contrasts"][control][name]["cg4_p_holm_across_controls"] = value
     if output_dir:
         os.makedirs(output_dir, exist_ok=True)
         results["figure"] = _plot(

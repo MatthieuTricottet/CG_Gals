@@ -104,6 +104,16 @@ def build_host_frame(sample) -> pd.DataFrame:
     members = pc[pc["Group"].isin(hosts)].copy()
     members["is_CG_member"] = members["objid"].isin(cg_member_objids).astype(int)
     members["host_lim_group"] = members["Group"]
+    # bookkeeping: hosts containing more than one CG4 (56 systems -> 54 hosts)
+    cg_host = (
+        cg4_gals.loc[cg4_gals["Group"].isin(analysis_groups), ["objid", "Group"]]
+        .merge(pc[["objid", "Group"]].rename(columns={"Group": "host"}), on="objid")
+        .drop_duplicates(["Group", "host"])
+    )
+    per_host = cg_host.groupby("host")["Group"].nunique()
+    members.attrs["n_cg4_systems"] = int(len(analysis_groups))
+    members.attrs["n_hosts_with_multiple_cg4"] = int((per_host > 1).sum())
+    members.attrs["max_cg4_per_host"] = int(per_host.max()) if len(per_host) else 0
     members["logMstar"] = pd.to_numeric(members["lgm_tot_p50"], errors="coerce")
     members["rank_parent"] = pd.to_numeric(members["rank_M"], errors="coerce")
     z_group = pd.to_numeric(members["Yang_z_CMB_group"], errors="coerce").fillna(
@@ -349,6 +359,9 @@ def run_host_controlled_analysis(sample, output_dir: str | None = None):
         ),
         "cluster_unit": "host_lim_group",
         "n_hosts": int(members["host_lim_group"].nunique()),
+        "n_cg4_systems": members.attrs.get("n_cg4_systems"),
+        "n_hosts_with_multiple_cg4": members.attrs.get("n_hosts_with_multiple_cg4"),
+        "max_cg4_per_host": members.attrs.get("max_cg4_per_host"),
         "n_members": int(len(members)),
         "n_cg_members": int(members["is_CG_member"].sum()),
         "covariates": covariates,

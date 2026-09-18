@@ -273,6 +273,21 @@ def _load_referee_values():
     return values
 
 
+def _load_gary_r2_diagnostics():
+    """Read-only diagnostics of the gary-r2 round (Phase 1, D1--D7).
+
+    The canonical file is ``results/diagnostics/gary_r2/diagnostics_gary_r2.json``;
+    it is exposed as ``diag`` in the render context so the manuscript can cite
+    the missing-sSFR provenance, the SFMS sign explanation, and the class
+    audit without literals. Absent file -> empty mapping.
+    """
+
+    path = os.path.join(
+        co.BASE_PATH, "results", "diagnostics", "gary_r2", "diagnostics_gary_r2.json"
+    )
+    return _load_json(path) if os.path.exists(path) else {}
+
+
 def _build_render_context(build_data, results_data):
     """Construct the single coherent Jinja context from both result files."""
 
@@ -312,6 +327,11 @@ def _build_render_context(build_data, results_data):
         ctx["extended_specialness"].get("phase_space_segregation", {}),
     )
     ctx["referee"] = _load_referee_values()
+    ctx["diag"] = _load_gary_r2_diagnostics()
+    # Submission-additions values (src/paper_additions.py); the macros in
+    # additions_macros.tex remain the primary route, this exposes the same
+    # JSON (figure names, provenance) to guarded template blocks.
+    ctx["additions"] = _load_json(os.path.join(co.OUTPUT_PATH, "paper_additions.json"))
     _validate_render_context(ctx)
     return ctx, render_data
 

@@ -9,6 +9,7 @@ try:
     import config as co
     import generate_report as report
     from agn_environment import run_agn_environment_analysis
+    from descriptive_properties import run_descriptive_properties
     from extended_data import build_galaxy_frame
     from extended_stats import safe_json
     from fossilness import run_fossilness_analysis
@@ -28,6 +29,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from . import generate_report as report
     from .agn_environment import run_agn_environment_analysis
+    from .descriptive_properties import run_descriptive_properties
     from .extended_data import build_galaxy_frame
     from .extended_stats import safe_json
     from .fossilness import run_fossilness_analysis
@@ -54,8 +56,20 @@ def _failed(exc):
 
 
 def run_extended_specialness(sample, output_dir: str | None = None):
-    """Run every extended analysis independently and append one JSON object."""
+    """Run every extended analysis independently and append one JSON object.
 
+    The figures are drawn under matplotlib's default style so that they share
+    the look of Fig. 2 whatever seaborn style an earlier exploration module
+    may have activated.
+    """
+
+    import matplotlib.pyplot as plt
+
+    with plt.style.context("default"):
+        return _run_extended_specialness(sample, output_dir)
+
+
+def _run_extended_specialness(sample, output_dir):
     output_dir = output_dir or co.FIGURES_PATH
     os.makedirs(output_dir, exist_ok=True)
     galaxies = build_galaxy_frame(sample)
@@ -81,6 +95,7 @@ def run_extended_specialness(sample, output_dir: str | None = None):
         ("tidal_indices", run_tidal_indices_analysis),
         ("selection_diagnostics", run_selection_diagnostics),
         ("size_analysis", run_size_analysis),
+        ("descriptive_properties", run_descriptive_properties),
     ]
     results = {"status": "ok", "n_galaxies": int(len(galaxies))}
     for name, function in analyses:

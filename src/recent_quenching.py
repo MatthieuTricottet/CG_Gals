@@ -13,15 +13,17 @@ import numpy as np
 from scipy import stats
 
 try:
+    import config as co
     from extended_data import ensure_galaxy_frame
     from extended_stats import safe_json
 except ModuleNotFoundError:  # pragma: no cover
+    from . import config as co
     from .extended_data import ensure_galaxy_frame
     from .extended_stats import safe_json
 
 
 DN4000_ALIASES = ["Dn4000", "dn4000", "d4000"]
-HDELTA_ALIASES = ["H_delta_A", "h_delta_A", "lick_hd_a"]
+HDELTA_ALIASES = ["HdeltaA", "H_delta_A", "h_delta_A", "lick_hd_a"]
 HALPHA_ALIASES = ["h_alpha_eqw", "H_alpha_eqw", "halpha_eqw"]
 
 
@@ -73,7 +75,10 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
             "missing_columns": ["Dn4000/d4000", "H_delta_A", "h_alpha_eqw"],
         }
 
-    if dn4000 and hdelta and halpha:
+    # The Dn4000/HdeltaA columns are now attached to the frame (Appendix A
+    # provenance, Fig. F.2), but a post-starburst classification is deferred
+    # to Paper III as a scope choice: it only runs when the config flag is set.
+    if dn4000 and hdelta and halpha and getattr(co, "POST_STARBURST_CLASSIFICATION", False):
         work = frame[["sample", dn4000, hdelta, halpha]].copy()
         for column in [dn4000, hdelta, halpha]:
             work[column] = np.asarray(work[column], dtype=float)
@@ -152,7 +157,12 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
 
     result = {
         "status": "limited",
-        "reason": "Dn4000_and_Hdelta_unavailable",
+        "reason": (
+            "post_starburst_classification_deferred_by_scope"
+            if (dn4000 and hdelta)
+            else "Dn4000_and_Hdelta_unavailable"
+        ),
+        "age_sensitive_indices_available": bool(dn4000 and hdelta),
         "columns_used": [halpha],
         "classification_thresholds": {
             "strong_halpha_emission": r"\mathrm{H}\alpha\,\mathrm{EW} \leq -3\,\text{\AA}",

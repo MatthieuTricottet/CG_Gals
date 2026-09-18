@@ -171,8 +171,12 @@ def test_kitagawa_isolated_and_leave_one_outputs():
     assert zheng["per_class"]["Isolated"]["n_groups"] == 6
     assert zheng["per_class"]["Isolated"]["fE_all"]["p"] == pytest.approx(0.389, abs=0.001)
     assert zheng["per_class"]["Isolated"]["fE_sat"]["p"] == pytest.approx(0.286, abs=0.001)
-    assert zheng["per_class"]["Embedded"]["fE_sat"]["p"] == pytest.approx(0.562, abs=0.001)
-    assert zheng["per_class"]["Predominant"]["fE_sat"]["p"] == pytest.approx(0.638, abs=0.001)
+    # labels follow Zheng & Shen (2021) since the 2026-09-17 repair (gary-r2 D3):
+    # the 19 embedded CGs (rich hosts) have f_E,sat = 0.638, the 37 predominant 0.562
+    assert zheng["per_class"]["Embedded"]["n_groups"] == 19
+    assert zheng["per_class"]["Predominant"]["n_groups"] == 37
+    assert zheng["per_class"]["Embedded"]["fE_sat"]["p"] == pytest.approx(0.638, abs=0.001)
+    assert zheng["per_class"]["Predominant"]["fE_sat"]["p"] == pytest.approx(0.562, abs=0.001)
     assert zheng["isolated_satellite_classification_support"][
         "n_isolated_groups_with_classified_satellites"
     ] == 5

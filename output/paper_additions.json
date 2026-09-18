@@ -2,9 +2,9 @@
  "meta": {
   "script": "src/paper_additions.py",
   "seed": 42,
-  "generated_utc": "2026-07-22T14:02:57.173064+00:00",
-  "git_head": "2b99fb9",
-  "runtime_s": 10.9
+  "generated_utc": "2026-09-17T19:51:24.334422+00:00",
+  "git_head": "71011cd",
+  "runtime_s": 11.3
  },
  "canonical_gate": {
   "CG4": {
@@ -257,24 +257,6 @@
     }
    },
    "Embedded": {
-    "n_groups": 37,
-    "median_host_lM200": 13.134806937099691,
-    "fE_all": {
-     "n_E": 76,
-     "n_classified": 129,
-     "p": 0.5891472868217055,
-     "wilson_lo": 0.5028661010486245,
-     "wilson_hi": 0.6702726178737927
-    },
-    "fE_sat": {
-     "n_E": 54,
-     "n_classified": 96,
-     "p": 0.5625,
-     "wilson_lo": 0.46275882627554077,
-     "wilson_hi": 0.6574317252422498
-    }
-   },
-   "Predominant": {
     "n_groups": 19,
     "median_host_lM200": 13.825752463831812,
     "fE_all": {
@@ -290,6 +272,24 @@
      "p": 0.6382978723404256,
      "wilson_lo": 0.4953589653479511,
      "wilson_hi": 0.7603378675428585
+    }
+   },
+   "Predominant": {
+    "n_groups": 37,
+    "median_host_lM200": 13.134806937099691,
+    "fE_all": {
+     "n_E": 76,
+     "n_classified": 129,
+     "p": 0.5891472868217055,
+     "wilson_lo": 0.5028661010486245,
+     "wilson_hi": 0.6702726178737927
+    },
+    "fE_sat": {
+     "n_E": 54,
+     "n_classified": 96,
+     "p": 0.5625,
+     "wilson_lo": 0.46275882627554077,
+     "wilson_hi": 0.6574317252422498
     }
    }
   },
@@ -446,7 +446,31 @@
     "n_omissions": 5
    }
   },
-  "statistic": "difference of the means over groups of the per-group satellite elliptical fraction E/(E+Sp); two-sided, add-one convention p=(k+1)/(B+1)"
+  "statistic": "difference of the means over groups of the per-group satellite elliptical fraction E/(E+Sp); two-sided, add-one convention p=(k+1)/(B+1)",
+  "control_satellite_fE": {
+   "Control4B": {
+    "n_E": 701,
+    "n_classified": 1772,
+    "p": 0.3955981941309255,
+    "wilson_lo": 0.3730805265854362,
+    "wilson_hi": 0.4185675407788031
+   },
+   "Control4C": {
+    "n_E": 710,
+    "n_classified": 1744,
+    "p": 0.40711009174311924,
+    "wilson_lo": 0.3842808985713506,
+    "wilson_hi": 0.43034759741442963
+   },
+   "RG4": {
+    "n_E": 39,
+    "n_classified": 142,
+    "p": 0.2746478873239437,
+    "wilson_lo": 0.2079022473768976,
+    "wilson_hi": 0.35326506048248635
+   }
+  },
+  "figure": "fig_cg4_classes.pdf"
  },
  "tidal": {
   "published_inputs": {
@@ -729,16 +753,16 @@
   },
   {
    "name": "lM200_embedded",
-   "computed": 13.134806937099691,
-   "reference": 13.13,
+   "computed": 13.825752463831812,
+   "reference": 13.83,
    "tol": 0.02,
    "status": "PASS",
    "note": ""
   },
   {
    "name": "lM200_predominant",
-   "computed": 13.825752463831812,
-   "reference": 13.83,
+   "computed": 13.134806937099691,
+   "reference": 13.13,
    "tol": 0.02,
    "status": "PASS",
    "note": ""
@@ -912,14 +936,14 @@
   "feSatIso": "0.286^{+0.261}_{-0.169}",
   "lMIso": "12.86",
   "nGrIso": "6",
-  "feAllEmb": "0.589^{+0.081}_{-0.086}",
-  "feSatEmb": "0.562^{+0.095}_{-0.100}",
-  "lMEmb": "13.13",
-  "nGrEmb": "37",
-  "feAllPre": "0.651^{+0.106}_{-0.123}",
-  "feSatPre": "0.638^{+0.122}_{-0.143}",
-  "lMPre": "13.83",
-  "nGrPre": "19",
+  "feAllEmb": "0.651^{+0.106}_{-0.123}",
+  "feSatEmb": "0.638^{+0.122}_{-0.143}",
+  "lMEmb": "13.83",
+  "nGrEmb": "19",
+  "feAllPre": "0.589^{+0.081}_{-0.086}",
+  "feSatPre": "0.562^{+0.095}_{-0.100}",
+  "lMPre": "13.13",
+  "nGrPre": "37",
   "pIsoRest": "0.023",
   "pIsoRG": "1.00",
   "pIsoCC": "0.40",

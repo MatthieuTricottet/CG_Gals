@@ -14,6 +14,10 @@ import pandas as pd
 from scipy import stats
 
 try:
+    from utils.labels_utils import sample_tex_label
+except ModuleNotFoundError:  # pragma: no cover
+    from .utils.labels_utils import sample_tex_label
+try:
     from extended_data import ensure_galaxy_frame
     from extended_stats import (
         holm_correction,
@@ -39,6 +43,7 @@ AVAILABILITY = {
     "petrosian_size": ["size_ok_petro"],
     "colours": ["u_minus_r", "u_minus_g", "g_minus_r", "r_minus_i"],
     "spectral_lines": ["h_alpha_eqw", "h_beta_eqw", "oiii_5007_eqw", "nii_6584_eqw"],
+    "spectral_indices": ["Dn4000", "HdeltaA"],
     "velocity_data": ["V_norm"],
     "group_scale_quantities": [
         "R_scale",
@@ -56,6 +61,7 @@ AVAILABILITY_LABELS = {
     "petrosian_size": "Petrosian size",
     "colours": "SDSS colour columns",
     "spectral_lines": "BPT lines",
+    "spectral_indices": r"$D_n4000$, H$\delta_A$",
     "velocity_data": "velocity data",
     "group_scale_quantities": "group-scale covariates",
 }
@@ -72,6 +78,12 @@ AVAILABILITY_NOTES = {
         "The SDSS colour-columns row counts complete broad photometric columns in the "
         "final merged frame. The stricter colour-analysis matched subset is reported "
         "separately from the colour module."
+    ),
+    "spectral_indices": (
+        "The D_n4000/HdeltaA row counts galaxies whose stored DR12 spectrum has a "
+        "galSpecIndx entry with finite, non-sentinel values and positive errors for "
+        "both indices; BOSS spectra outside the MPA-JHU coverage are missing here as "
+        "they are for the sSFR class."
     ),
     "simard_size": (
         "The Simard-size column counts galaxies that pass the DR7 bridge, redshift, "
@@ -161,7 +173,7 @@ def _plot_availability(availability_counts, path):
         ha="right",
         rotation_mode="anchor",
     )
-    ax.set_yticks(np.arange(len(samples)), samples)
+    ax.set_yticks(np.arange(len(samples)), [sample_tex_label(name) for name in samples])
     ax.tick_params(axis="x", labelsize=9)
     ax.tick_params(axis="y", labelsize=10)
     for row in range(len(samples)):

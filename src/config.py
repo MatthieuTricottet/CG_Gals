@@ -70,6 +70,10 @@ P_LIMIT = 5e-2
 # with non-CG members of the same Lim host group for Embedded/Predominant
 # CG4s. Toggle so the authors can disable the new analysis wholesale.
 HOST_CONTROLLED_ANALYSIS = True
+# D_n4000 / HdeltaA are attached to the galaxy frame (src/spectral_indices.py)
+# for descriptive use only; the post-starburst classification is deferred to
+# Paper III and stays off unless this flag is set.
+POST_STARBURST_CLASSIFICATION = False
 
 #* Galaxy-size quality cuts (Planck15 kpc after the Scale->arcsec re-conversion)
 SIZE_MIN_KPC = 0.1  # smallest physically credible half-light radius

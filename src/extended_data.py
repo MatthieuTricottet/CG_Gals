@@ -173,6 +173,15 @@ def build_galaxy_frame(samples: dict[str, pd.DataFrame]) -> pd.DataFrame:
         )
         frame["control_source_labels"] = frame["objid"].map(labels_by_objid)
     frame = _merge_sdss_columns(frame, samples)
+    # MPA-JHU galSpecIndx D_n4000 / HdeltaA by stored DR12 specobjid (descriptive use only)
+    try:
+        try:
+            from spectral_indices import attach_spectral_indices
+        except ModuleNotFoundError:  # pragma: no cover
+            from .spectral_indices import attach_spectral_indices
+        frame = attach_spectral_indices(frame)
+    except Exception as exc:  # pragma: no cover - offline or cache failure
+        print(f"[extended data] spectral indices unavailable: {exc}")
 
     frame["logMstar"] = _numeric(frame, ["lgm_tot_p50", "lgm", "logMstar"])
     frame["rank"] = _numeric(frame, ["rank_M_CG", "rank_M_LT", "rank_M"])

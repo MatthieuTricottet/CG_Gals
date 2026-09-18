@@ -617,8 +617,8 @@ def plot_classification(
     y_centres = 0.5 * (y_edges[:-1] + y_edges[1:])
 
     panels = [
-        (co.Morphologies[0], "Early-type"),
-        (co.Morphologies[1], "Late-type"),
+        (co.Morphologies[0], "Elliptical"),
+        (co.Morphologies[1], "Spiral"),
         (co.Morphologies[2], "Uncertain"),
     ]
     fig, axes = plt.subplots(1, 3, figsize=fig_size, sharex=True, sharey=True)
@@ -2196,6 +2196,66 @@ def plot_main_sequence_residuals(
     else:
         plt.close(fig)
     return fig, ax
+
+
+def plot_residual_ecdf_panels(
+    sample: dict,
+    panels,
+    figname: str | None = None,
+    suffix: str | None = None,
+    figsize: tuple[float, float] = (7.1, 3.4),
+    xlabel: str = r"$\Delta \log_{10}(\mathrm{sSFR}/\mathrm{yr}^{-1})$",
+    ylabel: str = "Cumulative fraction",
+    labelsize: int = 10,
+    ticksize: int = 8,
+    legendsize: int = 8,
+):
+    """ECDFs of stored residual columns, one panel per column (Fig. D.1).
+
+    ``panels`` is a sequence of ``(residual_column, title)`` pairs.  Sample
+    medians are drawn as filled markers at the 0.5 level.  Nothing is fitted
+    here; the residual columns are computed upstream.
+    """
+
+    if suffix is None:
+        suffix = co.GASUFF
+    styles = {
+        "CG4_Gals": ("#000000", "-", "o"),
+        "Control4B_Gals": ("#0072B2", "--", "s"),
+        "Control4C_Gals": ("#D55E00", "-.", "^"),
+        "RG4_Gals": ("#009E73", ":", "D"),
+    }
+    fig, axes = plt.subplots(1, len(panels), figsize=figsize, sharey=True)
+    axes = np.atleast_1d(axes)
+    for ax, (res_col, title) in zip(axes, panels):
+        for index, (key, df) in enumerate(sample.items()):
+            if not str(key).endswith(suffix) or res_col not in df.columns:
+                continue
+            residuals = pd.to_numeric(df[res_col], errors="coerce").to_numpy()
+            residuals = np.sort(residuals[np.isfinite(residuals)])
+            if residuals.size == 0:
+                continue
+            ecdf = np.arange(1, residuals.size + 1, dtype=float) / residuals.size
+            colour, linestyle, marker = styles.get(str(key), (f"C{index}", "-", "o"))
+            ax.step(residuals, ecdf, where="post", color=colour, linestyle=linestyle,
+                    linewidth=1.5, label=lu.sample_tex_label(str(key)))
+            ax.plot(float(np.median(residuals)), 0.5, marker=marker, markersize=6.0,
+                    markerfacecolor=colour, markeredgecolor="white", markeredgewidth=0.8,
+                    linestyle="none", zorder=5)
+        ax.axvline(0, color="0.45", linewidth=1.0, zorder=0)
+        ax.set_xlabel(xlabel, fontsize=labelsize)
+        ax.set_title(title, fontsize=labelsize - 1)
+        ax.set_ylim(0, 1)
+        ax.tick_params(axis="both", which="major", labelsize=ticksize)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+    axes[0].set_ylabel(ylabel, fontsize=labelsize)
+    axes[0].legend(fontsize=legendsize, frameon=False, loc="upper left")
+    fig.tight_layout()
+    if figname is not None:
+        fig.savefig(co.FIGURES_PATH + figname + ".pdf", format="pdf", bbox_inches="tight")
+    plt.close(fig)
+    return fig, axes
 
 
 def _grouped_finite_values(frame, value_col: str, group_col: str):

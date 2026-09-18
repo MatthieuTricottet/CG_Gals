@@ -342,6 +342,18 @@ def main():
     ssfr_robustness.run(sample)
     extended_specialness.run_extended_specialness(sample)
 
+    # gary-r2 additions: exploratory second-order battery (appendix) and the
+    # sample-definition schematic (Fig. 1); both consume the group samples.
+    import second_order_battery
+    import schematic_figure
+    report.append_json(
+        "second_order_battery", second_order_battery.run_second_order_battery(sample)
+    )
+    report.append_json(
+        "schematic_figure",
+        schematic_figure.run_schematic_figure(sample, output_dir=co.FIGURES_PATH),
+    )
+
     # CG4-in-parent-quartet overlap summary (appendix table): the Lim groups
     # whose would-be Control4C quartet contains a CG4 galaxy, by CG4 class.
     import identity
@@ -368,6 +380,13 @@ def main():
     
 
     # correlations_by_morph(sample)
+
+    # gary-r2 read-only diagnostics (D1-D7) are mirrored into results.json so
+    # the block survives pipeline reruns; the canonical file lives under
+    # results/diagnostics/gary_r2/ and is what the template reads as ``diag``.
+    diagnostics = report._load_gary_r2_diagnostics()
+    if diagnostics:
+        report.append_json("diagnostics_gary_r2", diagnostics)
 
     report.finalize_json()
     report.generate_report()
