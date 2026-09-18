@@ -36,6 +36,8 @@ CG_Gals/
 │   ├── paper_template/   # Jinja2 LaTeX template (A&A)
 │   └── utils/            # shared helpers
 ├── audit/                # 2026 statistical-audit records and verification
+├── analysis/gary_r2/     # 2026-09 revision-round diagnostics and checks
+├── results/diagnostics/  # read-only diagnostic tables + diagnostics_gary_r2.json
 ├── tests/                # pytest suite (identity, samples, inference, render)
 ├── output/               # generated results.json, figures, paper/
 └── notebooks/            # exploratory notebooks (not part of the pipeline)
@@ -74,7 +76,11 @@ external catalogues fetched on first run and cached under `data/`:
   from VizieR `J/ApJS/196/11`, with a CDS FTP fallback into
   `data/simard2011_raw/` (gitignored).
 
-Both fetches are idempotent: once the caches cover the sample's object IDs,
+- **MPA-JHU spectral indices** (`data/galspecindx_dr12.csv`): `d4000_n` and
+  `lick_hd_a` with errors from DR12 `galSpecIndx`, keyed by the stored DR12
+  `specObjID` (`src/spectral_indices.py`); descriptive use only.
+
+All fetches are idempotent: once the caches cover the sample's identifiers,
 reruns are fully offline. The SDSS spectroscopic sample itself is cached in
 `data/processed_sample.pkl`.
 

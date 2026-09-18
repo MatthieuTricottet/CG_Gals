@@ -443,10 +443,10 @@ def _per_control(frame: pd.DataFrame, output_dir: str | None) -> dict:
 
 def _plot_forest(comparisons: dict, path: str) -> str | None:
     labels = {
-        "pooled": "Ordinary pooled",
-        "Control4B": "Control4B",
-        "Control4C": "Control4C",
-        "RG4": "RG4",
+        "pooled": "pooled controls",
+        "Control4B": r"Control$_{4B}$",
+        "Control4C": r"Control$_{4C}$",
+        "RG4": r"RG$_4$",
     }
     rows = [
         (labels.get(k, k), v) for k, v in comparisons.items() if v.get("status") == "ok"

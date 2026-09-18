@@ -1,3 +1,96 @@
+# Revision round gary-r2 (2026-09-17) — readability review by G. Mamon
+
+Starting point: tag `pre-gary-r2` (= 71011cd). Nothing was tuned to reproduce
+a previous number; every manuscript value is rendered from `output/results.json`,
+`output/paper/additions_macros.tex`, `referee/values/*.json`, or the new
+read-only diagnostics file `results/diagnostics/gary_r2/diagnostics_gary_r2.json`
+(exposed to the template as `diag`, mirrored into `results.json` under
+`diagnostics_gary_r2` on every pipeline run).
+
+## Phase 1 — read-only diagnostics (`analysis/gary_r2/d*.py`, `results/diagnostics/gary_r2/`)
+
+| Item | Finding |
+|---|---|
+| D1 missing sSFR | 332/394 missing rows are BOSS-instrument spectra outside the MPA-JHU coverage, 60 are legacy `sfr_tot_p50 = -9999` sentinels, 2 have no spectrum id; the missing rows have *higher* S/N than the classified ones. |
+| D2 SFMS sign | Raw median offsets (+0.05 dex, all SF galaxies) and the matched mean over 39 both-SF pairs (−0.15 dex) are different statistics of different subsets, plus a strong mass dependence of the residuals about the field-fitted relation. Not a bug. |
+| D3 Zheng–Shen classes | **The inherited `Class` labels had Embedded/Predom swapped** relative to Zheng & Shen (2021, Eq. 1) and Paper I Sect. 3.3 (all 56 non-isolated groups). Repaired (below). |
+| D4 DS18 → GZ1 | TType ≤ 0 & P_S0 > 0.5: 70 % E / 19 % S / 6 % U / 5 % NoGZ (63/25/8/5 % for P_S0 ≥ 0.8); f_E drops from 0.77 (face-on) to 0.47 (inclined). Pooled only. |
+| D5 σ_v match | With/without-σ_v Control4B group matches share 7/54 control groups; without σ_v the controls are dynamically cooler and less balanced in z. With-σ_v stays primary. |
+| D6 Holm | Table 4 permutation p: 0.047 / 0.080 / 0.053 (C4B / C4C / RG4). |
+| D7 Fig. 2 statistic | Medians of the bimodal vote fractions exaggerated the gap; fractions and means agree. |
+
+## Data repair
+
+* `data/CG4_Groups.csv` and `data/processed_sample.pkl`: `Class` labels
+  `Embedded` ↔ `Predom` swapped back to the published definition
+  (`analysis/gary_r2/fix_zheng_shen_labels.py`; original kept in
+  `data/attic/CG4_Groups_paper1_export.csv`; regression test
+  `tests/test_zheng_shen_classes.py`). Correct counts: 6 Isolated, 19 Embedded
+  (median host log M200c 13.83), 37 Predominant (13.13). Paper I's Sect. 3.3
+  counts and Table 5 class rows are affected (author decision); the isolated-group
+  results are not.
+
+## Analyses and figures
+
+* Fig. 2 top row: fraction classified E / S among usable classifications
+  (group-blocked 16–84 % intervals) with mean debiased votes as open markers
+  (`src/descriptive_trends.py`).
+* Fig. 4 (ex-D.1): two panels; new quenched-sequence fit (order selected by
+  5-fold CV RMS on the reference quenched galaxies) with per-control median
+  offsets (`descriptive_mass_trends.quenched_sequence`).
+* `src/spectral_indices.py`: MPA-JHU `galSpecIndx` D_n4000 / HδA (+ errors) by
+  stored DR12 specObjID, cached in `data/galspecindx_dr12.csv`, sentinels → NaN;
+  availability row in Fig. F.2. Post-starburst classification stays off
+  (`config.POST_STARBURST_CLASSIFICATION = False`).
+* New figure `fig_property_trends.pdf` (`src/descriptive_properties.py`):
+  strong-Hα fraction, AGN-like fraction, median D_n4000, median log R_chl,r vs M*.
+* New figure `fig_cg4_classes.pdf` (`src/paper_additions.py`): satellite f_E by
+  class with Wilson intervals and control bands.
+* New appendix battery (`src/second_order_battery.py`): E-vs-S satellite
+  logistic vs log R_ij,med, σ_v, f_L,BGG, log t_cross, f_L,BGG > median; BH-FDR
+  across 20 tests; dominance tables also with a median f_L,BGG split
+  (`output/second_order_battery.csv`, `domination_distribution_tests_median_split.csv`).
+* New Fig. 1 schematic (`src/schematic_figure.py`): embedded CG4 204 in Lim host
+  1117 with the would-be Control4B/4C quartets, and RG4 group 10914
+  (`results.json['schematic_figure']`).
+* Holm-adjusted values stored next to the per-control permutation and adjusted
+  odds-ratio p-values (`p_permutation_holm_across_controls`,
+  `cg4_p_holm_across_controls`); Table 4 shows the Holm column.
+* Forest plots: no minor log-tick labels; all figure legends use the manuscript
+  labels (`labels_utils.sample_tex_label`) and elliptical/spiral; extended
+  figures drawn under matplotlib's default style.
+* `host_controlled`: bookkeeping of hosts containing two CG4s (56 systems → 54 hosts).
+
+## Manuscript
+
+Restructured: Sect. 2 (Samples with Fig. 1 and Table 1 / Classifications incl.
+what the E class contains / Sizes / Statistical approach in two paragraphs),
+Sect. 3 (Morphology / Star formation at fixed morphology incl. Kitagawa and
+Fig. 4 / Compact-group classes / Local projected density / Other properties /
+Robustness), Sect. 4 retitled "Interpretation and comparison with previous work".
+New appendices: D (statistical conventions), G (second-order battery), I
+(robustness details). Specific fixes: abstract ≤ 300 words without citations and
+with the Control4C matched value; "Control4C is higher still" corrected; SFMS
+"largest offset" removed and the sign difference explained; gap-correlation
+screen states its sample; colour-audit sentence moved to the colour appendix
+(p to 3 decimals); Fig. 4 caption without the normalisation sentence;
+Zeraatgari citation replaced by Brinchmann+04 / Kauffmann+03b; aperture
+corrections cite Brinchmann+04 and Salim+07; S-PLUS citations added;
+56 → 54 hosts explained; Dn4000 sentence updated; metallicity deferral
+justified; file paths moved to Data availability.
+Style rules checked by `analysis/gary_r2/style_checks.py`; count bookkeeping and
+references by `analysis/gary_r2/phase4_checks.py`. Main-text words (texcount "words in text",
+\maketitle to Data availability): 7277 → 4706 (−35 %; cap +5 %); captions 423 → 689;
+compiled PDF 21 pages (main text + references 11, appendices 10 — the appendix
+block grew by two pages because the secondary diagnostics moved there).
+
+## Proposed commits (not made autonomously)
+
+1. `gary-r2: read-only diagnostics D1–D7` — `analysis/gary_r2/{common,d1…d7,style_checks,phase4_checks}.py`, `results/diagnostics/gary_r2/`.
+2. `gary-r2: Zheng–Shen label repair, new analyses and figures` — data repair (+attic, test), `src/{descriptive_trends,descriptive_properties,schematic_figure,second_order_battery,spectral_indices,extended_data,extended_specialness,selection_diagnostics,recent_quenching,config,main,matched_controls,primary_contrasts,host_controlled,sSFR,paper_additions,generate_report}.py`, `data/galspecindx_dr12.csv`, regenerated `output/` JSON/CSV/figures.
+3. `gary-r2: manuscript restructure` — `src/paper_template/paper_template.tex`, rendered `output/paper/`, `audit/consistency_gate.py`, `tests/test_size_render_smoke.py`, `tests/test_submission_qc.py`.
+4. `gary-r2: figure notation fixes and docs` — `src/utils/labels_utils.py`, `src/{specialness_models,size_analysis,exploration_coulours,phase_space_segregation}.py`, `README.md`, `CHANGES.md`.
+
 # Statistical refactor — branch `refactor/statistical-audit`
 
 This branch repairs the sample-construction and inference defects identified

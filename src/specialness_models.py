@@ -9,6 +9,7 @@ import matplotlib
 if os.environ.get("MPLBACKEND") is None:
     matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.ticker import NullFormatter
 import numpy as np
 
 try:
@@ -83,8 +84,10 @@ def _plot(results, path):
     ax.axvline(1, color="0.45", linestyle=":", linewidth=1)
     ax.set_xscale("log")
     ax.set_xticks([0.5, 1, 2, 3], labels=["0.5", "1", "2", "3"])
+    ax.set_xticks([], minor=True)  # no 4x10^-1-style minor labels
+    ax.xaxis.set_minor_formatter(NullFormatter())
     ax.set_yticks(y, [row[0] for row in rows])
-    ax.set_xlabel("CG4 odds ratio (95% confidence interval)")
+    ax.set_xlabel(r"CG$_4$ odds ratio (95% confidence interval)")
     ax.invert_yaxis()
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")

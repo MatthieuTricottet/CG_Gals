@@ -1057,7 +1057,7 @@ def run_phase_space_segregation_analysis(
         figures["earlytype_fraction_by_distance"] = _plot_distance_fraction(
             distance_bins,
             "early_type",
-            "Early-type satellite fraction",
+            "Elliptical satellite fraction",
             os.path.join(
                 output_dir,
                 "phase_space_satellite_earlytype_fraction_by_distance.pdf",

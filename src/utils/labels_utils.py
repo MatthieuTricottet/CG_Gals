@@ -157,6 +157,31 @@ def formatted_sample_name(name):
     }
     return switcher.get(name,"Invalid sample name")
 
+SAMPLE_TEX_LABELS = {
+    "CG4": r"CG$_4$",
+    "Control4B": r"Control$_{4B}$",
+    "Control4C": r"Control$_{4C}$",
+    "RG4": r"RG$_4$",
+    "SDSS": "SDSS ref.",
+    "controls": "pooled controls",
+    "pooled_controls": "pooled controls",
+}
+
+
+def sample_tex_label(value):
+    """Matplotlib-mathtext sample label matching the manuscript notation.
+
+    Accepts internal names with or without the ``_Gals``/``_Groups`` suffix
+    (``Control4B_Gals`` -> ``Control$_{4B}$``); unknown names pass through.
+    """
+
+    key = str(value)
+    for suffix in ("_Gals", "_Groups"):
+        if key.endswith(suffix):
+            key = key[: -len(suffix)]
+    return SAMPLE_TEX_LABELS.get(key, str(value))
+
+
 def display_label(value):
     """Return publication-facing labels while preserving internal category names."""
 

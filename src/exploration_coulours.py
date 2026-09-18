@@ -1161,7 +1161,7 @@ def plot_colour_robustness_coefficients(
             capsize=2.5,
             markersize=4,
             linewidth=1.0,
-            label=comparison,
+            label=lu.sample_tex_label(comparison),
         )
     axes[1].set_yticks(y_base, labels)
     axes[1].set_title("Mass + redshift, separate controls")
