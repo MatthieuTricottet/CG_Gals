@@ -313,6 +313,8 @@ def plot_mass_trends(trends: pd.DataFrame, filename: str) -> None:
             )
         ax.set_title(title, fontsize=10)
         ax.set_ylim(-0.03, 1.03)
+    for ax in axes[:, -1]:
+        ax.tick_params(axis="y", labelright=True)
     finish_binned_figure(fig, axes, filename)
 
 

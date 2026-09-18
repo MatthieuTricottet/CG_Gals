@@ -702,6 +702,7 @@ def plot_classification(
 
     axes[0].set_ylabel(lu.formatted_label("sSFR"), fontsize=label_fontsize, labelpad=3)
     axes[1].set_xlabel(lu.formatted_label("lgm"), fontsize=label_fontsize, labelpad=3)
+    axes[-1].tick_params(axis="y", labelright=True)
 
     legend_handles = [
         mlines.Line2D([], [], color="0.18", linewidth=0.8, label="Morphology density"),

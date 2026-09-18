@@ -458,7 +458,7 @@ def plot_cg4_classes(zheng: dict, controls: dict, path: str) -> str:
 
     order = ["Isolated", "Embedded", "Predominant"]
     del controls, lu
-    fig, axes = plt.subplots(1, 2, figsize=(7.1, 3.4), sharey=True)
+    fig, axes = plt.subplots(1, 2, figsize=(7.1, 3.9), sharey=True)
     x = np.arange(len(order))
     bin_titles = (r"(a) $7.0\leq\log M_\star<10.5$",
                   r"(b) $10.5\leq\log M_\star<12.5$")
@@ -470,16 +470,18 @@ def plot_cg4_classes(zheng: dict, controls: dict, path: str) -> str:
                         fmt="o", color="black", ms=6, capsize=3, lw=1.2)
             ax.annotate(f"$N={e['n_classified']}$\n$N_{{\\rm gr}}={e['n_groups']}$",
                         (i, e["wilson_hi"]), textcoords="offset points", xytext=(0, 5),
-                        ha="center", va="bottom", fontsize=8)
+                        ha="center", va="bottom", fontsize=12)
         ax.set_xticks(x, order)
         ax.set_xlim(-0.55, len(order) - 0.45)
-        ax.set_ylim(0, 1.08)
-        ax.set_title(title, fontsize=10)
-        ax.set_xlabel("Zheng--Shen class", fontsize=10)
-        ax.tick_params(labelsize=9, direction="in", top=True, right=True)
+        ax.set_ylim(0, 1.16)
+        ax.set_title(title, fontsize=16)
+        ax.set_xlabel("Zheng--Shen class", fontsize=16)
+        ax.tick_params(labelsize=14, direction="in", top=True, right=True)
+        plt.setp(ax.get_xticklabels(), rotation=20, ha="right", rotation_mode="anchor")
         for spine in ax.spines.values():
             spine.set_visible(True)
-    axes[0].set_ylabel(r"satellite $f_{\rm E}=N_{\rm E}/(N_{\rm E}+N_{\rm S})$", fontsize=10)
+    axes[0].set_ylabel(r"satellite $f_{\rm E}=N_{\rm E}/(N_{\rm E}+N_{\rm S})$", fontsize=16)
+    axes[1].tick_params(axis="y", labelright=True)
     fig.tight_layout()
     fig.savefig(path, format="pdf", bbox_inches="tight")
     plt.close(fig)

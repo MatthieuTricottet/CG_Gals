@@ -367,14 +367,14 @@ def _plot_balance(before, after, path):
     ax.scatter([abs(after[v]) for v in variables], y, s=42, label="After", color="#25876E")
     ax.axvline(0.1, color="0.35", linestyle=":", linewidth=1.2,
                label="0.1 balance guide")
-    ax.set_yticks(y, [COVARIATE_LABELS.get(v, v) for v in variables], fontsize=12)
+    ax.set_yticks(y, [COVARIATE_LABELS.get(v, v) for v in variables], fontsize=18)
     ax.invert_yaxis()
-    ax.set_xlabel("Absolute standardized mean difference", fontsize=12)
-    ax.tick_params(axis="x", labelsize=11, direction="in", top=True)
+    ax.set_xlabel("Absolute standardized mean difference", fontsize=18)
+    ax.tick_params(axis="x", labelsize=16, direction="in", top=True)
     ax.tick_params(axis="y", direction="in", right=True)
     for spine in ax.spines.values():
         spine.set_visible(True)
-    ax.legend(frameon=False, fontsize=11)
+    ax.legend(frameon=False, fontsize=16)
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)

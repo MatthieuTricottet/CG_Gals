@@ -205,11 +205,11 @@ We use the compact-group and control samples constructed in our previous study \
 
 The three control samples are built from Lim--Tempel groups satisfying the same redshift and BGG-luminosity limits, with at least four members and at least three satellites within 3 magnitudes of the BGG, and serve different purposes (Fig.~\ref{fig:schematic}). \RG{} contains regular groups with exactly four members and is the most direct equal-membership comparison. \CB{} contains the four brightest eligible members of each regular group and tests whether the \CG{} population resembles the luminous core of an ordinary group. \CC{} contains the BGG and its three closest projected companions among members within 3 magnitudes of the BGG, reconstructed here from the eligible parent groups by applying the magnitude criterion before ranking companions by projected distance; it is the most compact-core-like analogue, but not a compactness-matched sample<% if cdiag.get('overlap_coefficient_compactness_score') %>: the \CG{}--\CC{} overlap coefficient in \(-\log \langle R_{ij}\rangle\) is << cdiag.get('overlap_coefficient_compactness_score')|fmt(2) >>, and << cdiag.get('fraction_cg4_above_control4c_p95_compactness')|pct(0) >>\% of \CG{} groups lie above the \CC{} 95th percentile in compactness<% endif %>. Every control group containing at least one \CG{} galaxy is excluded, so no galaxy appears on both sides of any comparison; <% set ov0 = r.get('cg4_pc_quartet_overlap', {}).get('by_class', {}) %><% set ov0_pre = ov0.get('Predom', ov0.get('Predominant', {})) %><% set ov0_emb = ov0.get('Embedded', {}) %>Appendix~\ref{app:cg_core_overlap} shows that this exclusion removes the hosts of << (ov0_pre.get('n_cg4_groups', 0) + ov0_emb.get('n_cg4_groups', 0)) >> of the << (ov0_pre.get('n_cg4_groups_total', 0) + ov0_emb.get('n_cg4_groups_total', 0)) >> non-isolated compact groups, whose members form the would-be \CC{} cores of those hosts. We also remove the systems associated with Lim group 3688, whose single outlying-redshift member ($z=0.048$, against $0.032$--$0.034$ for the other six) enters both the \CB{} and \CC{} quartets and inflates their velocity dispersions to $\simeq 2000 \kms$. Table~\ref{tab:samples} summarises the final samples; the \CB{} and \CC{} group counts differ because the luminosity-ranked and distance-ranked definitions retain different Lim groups after the compact-group exclusion.
 
-<% if schem.get('figure') %>
+<% if schem.get('figure') %><% set schem_b = schem.get('panel_b', {}) %>
 \begin{figure*}
     \centering
-    \includegraphics[width=0.76\textwidth]{<< SUBFIGURES_PATH >><< schem.get('figure') >>}
-    \caption{Sample definitions on the sky. All << schem.get('n_host_members') >> members of Lim group << schem.get('lim_host') >>, which hosts embedded \CG{}~<< schem.get('cg4_group') >>, are shown in projected physical coordinates relative to the host BGG. Grey circles are the seven non-highlighted host members; symbol area scales with $r$-band luminosity. Black circles mark the \CG{} members, blue squares the would-be \CB{} quartet, and centroid-centred orange triangles the would-be \CC{} quartet; the enlarged inset resolves the overlapping central markers.}
+    \includegraphics[width=\textwidth]{<< SUBFIGURES_PATH >><< schem.get('figure') >>}
+    \caption{Sample definitions on the sky: two Lim--Tempel groups hosting embedded compact groups, in projected physical coordinates relative to the host BGG (east to the left, common scale); disc area is proportional to $r$-band luminosity. Black circles mark the \CG{} members, blue squares the four brightest members within 3 mag of the BGG (the \CB{} quartet), and orange triangles the BGG and its three nearest projected companions within 3 mag (the \CC{} quartet); the right-hand panels enlarge the boxed $\pm<< schem.get('inset_half_kpc')|fmt(0) >>$~kpc windows around the compact groups. \textit{(a)} \CG{}~<< schem.get('cg4_group') >> is the would-be \CC{} core of Lim group << schem.get('lim_host') >> and contains its BGG, so both quartets are excluded from the controls, as for << (ov0_pre.get('n_cg4_groups', 0) + ov0_emb.get('n_cg4_groups', 0)) >> of the << (ov0_pre.get('n_cg4_groups_total', 0) + ov0_emb.get('n_cg4_groups_total', 0)) >> non-isolated compact groups (Appendix~\ref{app:cg_core_overlap}). \textit{(b)} \CG{}~<< schem_b.get('cg4_group') >> is an off-centre substructure << ((schem_b.get('cg4_centre_offset_kpc', 0) / 10)|round|int) * 10 >>~kpc from the BGG of Lim group << schem_b.get('lim_host') >>: the \CC{} quartet contains no compact-group galaxy and is retained, whereas the \CB{} quartet contains the brightest \CG{} member and is excluded.}
     \label{fig:schematic}
 \end{figure*}
 <% endif %>
@@ -418,7 +418,7 @@ The early-type-like excess belongs to the compact groups that live inside richer
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{fig_cg4_classes.pdf}
-    \caption{Mass-controlled satellite E-class fractions. Panels use the common mass bins shown above each axis; points and bars give class fractions and Wilson 95\% intervals, with classified-galaxy and contributing-group counts. Three bins were rejected because they would contain only 4, 5, and 5 isolated satellites; even the adopted two-bin comparison remains exploratory.}
+    \caption{Mass-controlled satellite E-class fractions. Panels use the common mass bins shown above each axis; points and bars give class fractions and Wilson 95\% intervals, with classified-galaxy and contributing-group counts.}
     \label{fig:cg4_classes}
 \end{figure}
 
@@ -494,25 +494,22 @@ Test & Result \\
 <% set crowd_c4c_ell_list = crowd_tests|selectattr('control', 'equalto', 'Control4C')|selectattr('outcome', 'equalto', 'elliptical')|list %>
 <% set crowd_c4c_ell = crowd_c4c_ell_list|first if crowd_c4c_ell_list|length > 0 else {} %>
 <% set crowd_model_ell = crowd.get('adjusted_models_with_close_flag', {}).get('elliptical', {}) %>
-\makecell[l]{55-arcsec neighbour\\exclusion} & \makecell[l]{all-row E: << crowd_cg.get('elliptical_fraction_after_excluding_close')|pct(1) >>\% / << crowd_c4c.get('elliptical_fraction_after_excluding_close')|pct(1) >>\%\\(\CG / \CC); E/S Fisher\\<< pval_text(crowd_c4c_ell.get('p_value')) >>} \\
+\makecell[l]{55-arcsec neighbour\\exclusion} & \makecell[l]{all-row E: << crowd_cg.get('elliptical_fraction_after_excluding_close')|pct(1) >>\% / << crowd_c4c.get('elliptical_fraction_after_excluding_close')|pct(1) >>\%\\(\CG / \CC); E/S Fisher\\<< pval_text(crowd_c4c_ell.get('p_value')) >>} \\[2pt]
 <% if crowd_model_ell.get('status') == 'ok' %>
-\makecell[l]{Add close-neighbour\\flag to model} & \makecell[l]{\CG{} OR \(<< crowd_model_ell.get('cg4_odds_ratio')|fmt(2) >>\) \([<< crowd_model_ell.get('cg4_ci95')[0]|fmt(2) >>, << crowd_model_ell.get('cg4_ci95')[1]|fmt(2) >>]\);\\<< pval_text(crowd_model_ell.get('cg4_p')) >>} \\
+\makecell[l]{Add close-neighbour\\flag to model} & \makecell[l]{\CG{} OR \(<< crowd_model_ell.get('cg4_odds_ratio')|fmt(2) >>\) \([<< crowd_model_ell.get('cg4_ci95')[0]|fmt(2) >>, << crowd_model_ell.get('cg4_ci95')[1]|fmt(2) >>]\);\\<< pval_text(crowd_model_ell.get('cg4_p')) >>} \\[2pt]
 <% endif %>
 <% endif %>
 <% if t10_early.get('same_direction') %>
-\addlinespace[2pt]
-DS18 \(T\mathrm{Type}\leq0\) & \makecell[l]{OR << t10_cb.get('model', {}).get('cg4_odds_ratio')|fmt(2) >> / << t10_cc.get('model', {}).get('cg4_odds_ratio')|fmt(2) >> / << t10_rg.get('model', {}).get('cg4_odds_ratio')|fmt(2) >>\\(\CB{} / \CC{} / \RG{});\\all \(p\leq<< t10_cc.get('model', {}).get('cg4_p')|fmt(3) >>\)} \\
+DS18 \(T\mathrm{Type}\leq0\) & \makecell[l]{OR << t10_cb.get('model', {}).get('cg4_odds_ratio')|fmt(2) >> / << t10_cc.get('model', {}).get('cg4_odds_ratio')|fmt(2) >> / << t10_rg.get('model', {}).get('cg4_odds_ratio')|fmt(2) >>\\(\CB{} / \CC{} / \RG{});\\all \(p\leq<< t10_cc.get('model', {}).get('cg4_p')|fmt(3) >>\)} \\[2pt]
 <% endif %>
 <% if sweep.get('status') == 'ok' %>
-\addlinespace[2pt]
-Threshold sweep 0.4--0.8 & OR \(<< sweep.get('or_range')[0]|fmt(2) >>\)--\(<< sweep.get('or_range')[1]|fmt(2) >>\) \\
-Continuous \(p_E\) offset & \makecell[l]{\(<< sweep.get('continuous', {}).get('cg4_coefficient')|fmt(3) >>\) \([<< sweep.get('continuous', {}).get('cg4_ci95')[0]|fmt(3) >>, << sweep.get('continuous', {}).get('cg4_ci95')[1]|fmt(3) >>]\);\\<< pval_text(sweep.get('continuous', {}).get('cg4_p')) >>} \\
+Threshold sweep 0.4--0.8 & OR \(<< sweep.get('or_range')[0]|fmt(2) >>\)--\(<< sweep.get('or_range')[1]|fmt(2) >>\) \\[2pt]
+Continuous \(p_E\) offset & \makecell[l]{\(<< sweep.get('continuous', {}).get('cg4_coefficient')|fmt(3) >>\) \([<< sweep.get('continuous', {}).get('cg4_ci95')[0]|fmt(3) >>, << sweep.get('continuous', {}).get('cg4_ci95')[1]|fmt(3) >>]\);\\<< pval_text(sweep.get('continuous', {}).get('cg4_p')) >>} \\[2pt]
 <% if sersic.get('cg4_odds_ratio') %>
-S\'ersic \(n_g > 2.5\) & OR \(<< sersic.get('cg4_odds_ratio')|fmt(2) >>\); << pval_text(sersic.get('cg4_p')) >> \\
+S\'ersic \(n_g > 2.5\) & OR \(<< sersic.get('cg4_odds_ratio')|fmt(2) >>\); << pval_text(sersic.get('cg4_p')) >> \\[2pt]
 <% endif %>
 <% endif %>
 <% if t3.get('no_sigma_v') %>
-\addlinespace[2pt]
 Without \(\sigma_v\) & \makecell[l]{OR << t3['no_sigma_v'].get('primary', {}).get('Control4B', {}).get('elliptical_all', {}).get('odds_ratio')|fmt(2) >> / << t3['no_sigma_v'].get('primary', {}).get('Control4C', {}).get('elliptical_all', {}).get('odds_ratio')|fmt(2) >> / << t3['no_sigma_v'].get('primary', {}).get('RG4', {}).get('elliptical_all', {}).get('odds_ratio')|fmt(2) >>\\(\CB{} / \CC{} / \RG{})} \\
 <% endif %>
 \hline
@@ -659,6 +656,7 @@ Table~\ref{tab:quenched_by_morphology} gives the quenched fractions among sSFR-c
 \caption{Conditional quenched fractions}
 \label{tab:quenched_by_morphology}
 \tabcolsep=2pt
+\renewcommand{\arraystretch}{1.35}
 \begin{tabular}{lcccc}
 \hline\hline
  & \CG & \CB & \CC & \RG \\
@@ -676,7 +674,7 @@ Spiral & \(\qSpcgCell\) & \(\qSpcbCell\) & \(\qSpccCell\) & \(\qSprgCell\) \\
 <% if overlap %>
 \section{Compact groups as projected cores of ordinary groups}\label{app:cg_core_overlap}
 
-The compact-group exclusion of Sect.~\ref{sec:samples} is not a technicality: for << overlap.get('n_lim_groups') >> of the 765 parent Lim groups, the would-be \CC{} quartet (BGG plus the three closest projected companions within 3 magnitudes) contains at least one \CG{} galaxy---<< overlap.get('n_galaxies') >> \CG{} galaxies in total. <% set ov_pre = overlap.get('by_class', {}).get('Predom', overlap.get('by_class', {}).get('Predominant', {})) %><% set ov_emb = overlap.get('by_class', {}).get('Embedded', {}) %>Table~\ref{tab:cg_core_overlap} breaks this overlap down by the \citet{Zheng&Shen21} class: << ov_pre.get('n_cg4_groups') >> of the << ov_pre.get('n_cg4_groups_total') >> predominant and << ov_emb.get('n_cg4_groups') >> of the << ov_emb.get('n_cg4_groups_total') >> embedded compact groups \emph{are} the projected cores of their host groups, as Fig.~\ref{fig:schematic} illustrates; the remaining embedded systems sit in rich hosts whose BGG-centred core is made of other members. <% set iso_row = overlap.get('by_class', {}).get('Isolated', {}) %><% if iso_row %>The isolated entries are trivial self-overlap: for each of the << iso_row.get('n_cg4_groups') >> isolated systems, the overlapping Lim group is the compact group's own host, whose BGG and three nearest projected companions are exactly the four \CG{} members.<% endif %> Had these groups not been excluded, the same galaxies would have appeared on both sides of the comparisons, biasing every contrast toward null.
+The compact-group exclusion of Sect.~\ref{sec:samples} is not a technicality: for << overlap.get('n_lim_groups') >> of the 765 parent Lim groups, the would-be \CC{} quartet (BGG plus the three closest projected companions within 3 magnitudes) contains at least one \CG{} galaxy---<< overlap.get('n_galaxies') >> \CG{} galaxies in total. <% set ov_pre = overlap.get('by_class', {}).get('Predom', overlap.get('by_class', {}).get('Predominant', {})) %><% set ov_emb = overlap.get('by_class', {}).get('Embedded', {}) %>Table~\ref{tab:cg_core_overlap} breaks this overlap down by the \citet{Zheng&Shen21} class: << ov_pre.get('n_cg4_groups') >> of the << ov_pre.get('n_cg4_groups_total') >> predominant and << ov_emb.get('n_cg4_groups') >> of the << ov_emb.get('n_cg4_groups_total') >> embedded compact groups \emph{are} the projected cores of their host groups, as Fig.~\ref{fig:schematic}a illustrates; <% set offc = schem.get('off_centre_embedded', {}) %>the remaining << offc.get('n') >> embedded systems sit in rich hosts whose BGG-centred core is made of other members (Fig.~\ref{fig:schematic}b). The \CC{} quartets of << offc.get('n_host_control4c_retained') >> of these hosts contain no compact-group galaxy and are retained in the control sample (the other << offc.get('n_host_control4c_with_other_cg4') >> hosts also contain a core-forming compact group), whereas all << offc.get('n_cg4_bgg_in_would_be_control4b') >> would-be \CB{} quartets contain the compact group's brightest member and are excluded. <% set iso_row = overlap.get('by_class', {}).get('Isolated', {}) %><% if iso_row %>The isolated entries are trivial self-overlap: for each of the << iso_row.get('n_cg4_groups') >> isolated systems, the overlapping Lim group is the compact group's own host, whose BGG and three nearest projected companions are exactly the four \CG{} members.<% endif %> Had these groups not been excluded, the same galaxies would have appeared on both sides of the comparisons, biasing every contrast toward null.
 
 \begin{table}
     \centering
@@ -933,7 +931,7 @@ Descriptor & \CG{} & \CB{} & \CC{} & \RG{} \\
 <% for key, spec in battery.get('descriptors', {}).items() %>
 <% if key != 'f_L_BGG_above_cg4_median' %>
 \(<< spec.label >>\) <% for s in ['CG4', 'Control4B', 'Control4C', 'RG4'] %><% set row = brows|selectattr('sample', 'equalto', s)|selectattr('descriptor', 'equalto', key)|list|first %>& <% if row and row.status == 'ok' %>\makecell[l]{<< row.odds_ratio|fmt(2) >> [<< row.ci95_low|fmt(2) >>, << row.ci95_high|fmt(2) >>]\\\(p_{\rm BH}\)=<< pshort(row.p_bh_battery) >>}<% else %>---<% endif %> <% endfor %>\\
-\addlinespace[2pt]
+\addlinespace[4pt]
 <% endif %>
 <% endfor %>
 \hline

@@ -52,7 +52,20 @@ read-only diagnostics file `results/diagnostics/gary_r2/diagnostics_gary_r2.json
   (`output/second_order_battery.csv`, `domination_distribution_tests_median_split.csv`).
 * New Fig. 1 schematic (`src/schematic_figure.py`): embedded CG4 204 in Lim host
   1117 with the would-be Control4B/4C quartets, and RG4 group 10914
-  (`results.json['schematic_figure']`).
+  (`results.json['schematic_figure']`). Rebuilt 2026-09-18 (RG4 panel dropped
+  earlier): the in-panel inset hid three host members, one of them a CG4 member
+  that was also outside the inset window, so only three of the four CG4 members
+  were visible. Now two hosts on a common scale plus a zoom column — (a) Lim
+  1117 / CG4 204, the host-core case (both quartets excluded); (b) Lim 1289 /
+  CG4 330, an off-centre embedded group whose host Control4C quartet contains
+  no CG4 galaxy and is *retained* while its Control4B quartet (which holds the
+  CG4's brightest member) is excluded — chosen among the 3 such hosts as the one
+  closest in richness to (a). All members drawn as luminosity-scaled discs;
+  in-panel exclusion status; caption and Appendix C numbers rendered from
+  `schematic_figure.off_centre_embedded` (5 off-centre embedded systems: 3
+  hosts keep Control4C, 2 also contain a core-forming CG4, all 5 would-be
+  Control4B quartets contain the CG4 BGG). `python src/schematic_figure.py`
+  regenerates the figure and the JSON entry; `tests/test_schematic_figure.py`.
 * Holm-adjusted values stored next to the per-control permutation and adjusted
   odds-ratio p-values (`p_permutation_holm_across_controls`,
   `cg4_p_holm_across_controls`); Table 4 shows the Holm column.

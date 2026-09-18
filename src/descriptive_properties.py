@@ -106,6 +106,8 @@ def plot_property_trends(trends: pd.DataFrame, filename: str) -> None:
                 ax.set_ylim(*ylim)
         axes[0, 0].set_ylabel("Fraction", fontsize=9)
         axes[1, 0].set_ylabel("Median", fontsize=9)
+        for ax in axes[:, -1]:
+            ax.tick_params(axis="y", labelleft=False, labelright=True)
         finish_binned_figure(fig, axes, filename, ylabel="")
 
 
