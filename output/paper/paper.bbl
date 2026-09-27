@@ -32,6 +32,11 @@
 {Brinchmann}, J., {Charlot}, S., {White}, S.~D.~M., {et~al.} 2004, \mnras, 351,
   1151
 
+\bibitem[{{Cid Fernandes} {et~al.}(2011){Cid Fernandes}, {Stasi{\'n}ska},
+  {Mateus}, \& {Vale Asari}}]{CidFernandes+11}
+{Cid Fernandes}, R., {Stasi{\'n}ska}, G., {Mateus}, A., \& {Vale Asari}, N.
+  2011, \mnras, 413, 1687
+
 \bibitem[{{Coenda} {et~al.}(2012){Coenda}, {Muriel}, \& {Martinez}}]{Coenda+12}
 {Coenda}, V., {Muriel}, H., \& {Martinez}, H.~J. 2012, \aap, 543, A119
 
@@ -124,10 +129,6 @@ Dom{\'i}nguez~S{\'a}nchez, H., Huertas-Company, M., Bernardi, M., Tuccillo, D.,
 {Lintott}, C.~J., {Schawinski}, K., {Slosar}, A., {et~al.} 2008, \mnras, 389,
   1179
 
-\bibitem[{{Mahajan} {et~al.}(2011){Mahajan}, {Mamon}, \&
-  {Raychaudhury}}]{Mahajan+11}
-{Mahajan}, S., {Mamon}, G.~A., \& {Raychaudhury}, S. 2011, \mnras, 416, 2882
-
 \bibitem[{{Mamon}(1986)}]{Mamon86}
 {Mamon}, G.~A. 1986, \apj, 307, 426
 
@@ -169,9 +170,6 @@ Montaguth, G.~P., O'Mill, A.~L., Mendes~de Oliveira, C., {et~al.}
   Lopes, Hernandez-Jimenez, Kanaan, Ribeiro, \& Schoenell}]{Montaguth2023}
 Montaguth, G.~P., Torres-Flores, S., Monachesi, A., {et~al.} 2023, \mnras, 524,
   5340
-
-\bibitem[{{Oman} \& {Hudson}(2016)}]{Oman&Hudson16}
-{Oman}, K.~A. \& {Hudson}, M.~J. 2016, \mnras, 463, 3083
 
 \bibitem[{Pedregosa {et~al.}(2011)Pedregosa, Varoquaux, Gramfort,
   {et~al.}}]{Pedregosa2011}
@@ -228,6 +226,9 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
   {Zonca}}]{Planck15}
 {Planck Collaboration}, {Ade}, P.~A.~R., {Aghanim}, N., {et~al.} 2016, \aap,
   594, A13
+
+\bibitem[{{Postman} \& {Geller}(1984)}]{Postman&Geller84}
+{Postman}, M. \& {Geller}, M.~J. 1984, \apj, 281, 95
 
 \bibitem[{{Salim} {et~al.}(2007){Salim}, {Rich}, {Charlot}, {Brinchmann},
   {Johnson}, {Schiminovich}, {Seibert}, {Mallery}, {Heckman}, {Forster},
@@ -310,10 +311,8 @@ Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
 \bibitem[{{Wainer} \& {Thissen}(1976)}]{Wainer&Thissen76}
 {Wainer}, H. \& {Thissen}, D. 1976, Psychometrika, 41, 9
 
-\bibitem[{{Wetzel} {et~al.}(2013){Wetzel}, {Tinker}, {Conroy}, \& {van den
-  Bosch}}]{Wetzel+13}
-{Wetzel}, A.~R., {Tinker}, J.~L., {Conroy}, C., \& {van den Bosch}, F.~C. 2013,
-  \mnras, 432, 336
+\bibitem[{{Whitmore} {et~al.}(1993){Whitmore}, {Gilmore}, \& {Jones}}]{WGJ93}
+{Whitmore}, B.~C., {Gilmore}, D.~M., \& {Jones}, C. 1993, \apj, 407, 489
 
 \bibitem[{{Zepf} \& {Whitmore}(1993)}]{ZepfWhitmore93}
 {Zepf}, S.~E. \& {Whitmore}, B.~C. 1993, \apj, 418, 72

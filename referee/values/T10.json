@@ -4,8 +4,8 @@
   "source_notebook": "notebooks/audit_gz1_vs_ds18.ipynb",
   "inputs": {
     "processed_sample": "data/processed_sample.pkl",
-    "photoobjdr7_bridge": "${CG_GALS_DS18_CACHE:-~/.cache/cg_gals_audit}/photoobjdr7_map.csv",
-    "ds18_catalogue": "${CG_GALS_DS18_CACHE:-~/.cache/cg_gals_audit}/ds18/catalog.dat.gz"
+    "photoobjdr7_bridge": "data/photoobjdr7_map.csv",
+    "ds18_catalogue": "data/ds18_subset.csv (VizieR J/MNRAS/476/3661)"
   },
   "composition": {
     "unique_sample": 3857,
@@ -98,6 +98,7 @@
             "log_group_luminosity",
             "velocity_dispersion"
           ],
+          "predictors_dropped": [],
           "standardized_predictors": [
             "logMstar",
             "z_numeric",
@@ -200,6 +201,7 @@
             "is_satellite",
             "log_group_luminosity"
           ],
+          "predictors_dropped": [],
           "standardized_predictors": [
             "logMstar",
             "z_numeric",
@@ -366,6 +368,7 @@
             "log_group_luminosity",
             "velocity_dispersion"
           ],
+          "predictors_dropped": [],
           "standardized_predictors": [
             "logMstar",
             "z_numeric",
@@ -468,6 +471,7 @@
             "is_satellite",
             "log_group_luminosity"
           ],
+          "predictors_dropped": [],
           "standardized_predictors": [
             "logMstar",
             "z_numeric",
@@ -634,6 +638,7 @@
             "log_group_luminosity",
             "velocity_dispersion"
           ],
+          "predictors_dropped": [],
           "standardized_predictors": [
             "logMstar",
             "z_numeric",
@@ -736,6 +741,7 @@
             "is_satellite",
             "log_group_luminosity"
           ],
+          "predictors_dropped": [],
           "standardized_predictors": [
             "logMstar",
             "z_numeric",

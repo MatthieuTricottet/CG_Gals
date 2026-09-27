@@ -109,20 +109,66 @@ The raw colour--mass fits do not show a single common relation for every sample:
 \clearpage
 \section{Pooled adjusted models}
 
-For a compact summary across the heterogeneous control definitions, the article also fits binomial models to a pooled catalogue. Because the control catalogues overlap heavily, the control side is first deduplicated by SDSS object identifier and standard errors are clustered by physical Lim group. The common adjustment set contains stellar mass, redshift, satellite/BGG rank, group luminosity, and velocity dispersion. The figure below visualises the coefficients tabulated in Appendix H of the article. The pooled model is a summary, not a replacement for the separate-control contrasts: it reinforces the satellite E-class morphology shift, whereas the quenched estimate changes across controls and is not reproduced by the matched comparison.
+For a compact summary across the heterogeneous control definitions, the article also fits binomial models to a pooled catalogue. Because the control catalogues overlap heavily, the control side is first deduplicated by SDSS object identifier and standard errors are clustered by physical Lim group. The adjustment set contains stellar mass, redshift, a BGG/satellite indicator, quartet luminosity, and velocity dispersion. The figure below visualises the pooled coefficients quoted in the appendix on pooled models of the article. The pooled model is a summary, not a replacement for the separate-control contrasts: it reinforces the satellite E-class morphology shift, whereas the quenched estimate depends on the control sample.
 
 \begin{center}
   \includegraphics[width=\columnwidth]{fig_specialness_logistic_coefficients.pdf}
   \par\smallskip
   \begin{minipage}{\columnwidth}\small
-  \textbf{Fig. S.7.} Adjusted \CG{} odds ratios from the pooled models. The GZ1 E-class outcomes refer to the smooth early-type-like GZ1 class, not to a physically pure sample of classical ellipticals. Points are odds ratios and bars are 95\% confidence intervals; the vertical line marks no difference.
+  \refstepcounter{figure}\label{fig:supp_pooled}\textbf{Fig.~\thefigure.} Adjusted \CG{} odds ratios from the pooled models. The GZ1 E-class outcomes refer to the smooth early-type-like GZ1 class, not to a physically pure sample of classical ellipticals. Points are odds ratios and bars are 95\% confidence intervals; the vertical line marks no difference.
   \end{minipage}
 \end{center}
+
+
+
+\section{Projected phase space}
+
+We ask whether the \CG{}--\RG{} satellite contrasts vary with projected position relative to the BGG, using 174 \CG{} and 166 \RG{} satellites ranked by projected BGG-centric distance and, when available, \(|\Delta v_{\rm BGG}|/\sigma_v\); such coordinates are statistical proxies for infall state, not orbital reconstructions (Mahajan et al. 2011; Oman \& Hudson 2016; Wetzel et al. 2013).
+
+In the innermost satellite-distance bin, the quenched fractions are 68.3\% for \CG{} and 48.2\% for \RG, a difference of \(20.1\) percentage points; the corresponding GZ1 E-class fractions are 64.7\% and 35.6\% (difference \(29.1\) points).
+
+The quenched-fraction contrast is similar between the inner and outer distance ranks, so the data do not isolate the \CG{} offset to the immediate BGG environment.
+
+
+
+After adjusting for stellar mass, redshift, distance bin, and available group-scale controls, the quenched-status model gives a \CG{} odds ratio of 1.18 (95\% CI 0.43--3.24; \(p = 0.742\)), and the analogous E-class model gives 2.42 (\(p = 0.078\)).
+
+
+A nearest-neighbour mass--redshift matched check on 126 \CG{}--\RG{} satellite pairs gives matched quenched- and E-class-fraction differences of \(9.5\) and \(18.7\) percentage points.
+
+In compact groups the member counts are small, velocity dispersions are noisy, and projection mixes recently accreted and long-resident satellites, so these bins locate where the contrast appears; they are not a dynamical clock.
+
+
+
+
+\section{Galaxy-level matching balance}
+
+Figure~\ref{fig:supp_matched_balance} shows the covariate balance of the galaxy-level match described in the article's appendix on matching.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{figures/fig_matched_control_balance.pdf}
+    \caption{Balance of the galaxy-level match of the article's appendix on matching. Absolute standardised mean differences before and after matching; the labelled 0.1 line is a conventional diagnostic guide.}
+    \label{fig:supp_matched_balance}
+\end{figure}
+
+
+
+\section{Measurement availability}
+
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{figures/fig_data_availability_by_sample.pdf}
+    \caption{Measurement availability in the four samples. Cells give percentages of the final per-sample galaxy count. The colour row describes the four derived SDSS columns, the spectral-index row requires finite non-sentinel values with positive errors, and the Simard row includes all size-quality cuts.}
+    \label{fig:supp_availability}
+\end{figure*}
+
 
 \clearpage
 \section{Additional environmental diagnostics}
 
-The distance-to-BGG, magnitude-gap, and luminosity-dominance screens are retained here because they are useful provenance checks but do not add a control-independent signal to the article. Satellite sSFR shows no consistent monotonic dependence on projected BGG distance across the four samples. Binary dominance splits and further subdivision by BGG morphology produce small, heterogeneous subsets; their occasional low p-values do not survive as a coherent compact-group effect. Likewise, magnitude-gap differences are sensitive to the control definition. These diagnostics support the article's choice to retain the continuous group-scale screen and projected phase-space result as the more interpretable summaries.
+The distance-to-BGG, magnitude-gap, and luminosity-dominance screens are retained here because they are useful provenance checks but do not add a control-independent signal to the article. Satellite sSFR shows no consistent monotonic dependence on projected BGG distance across the four samples. Binary dominance splits and further subdivision by BGG morphology produce small, heterogeneous subsets; their occasional low p-values do not survive as a coherent compact-group effect. Likewise, magnitude-gap differences are sensitive to the control definition. These diagnostics support the article's choice to retain the continuous group-scale screen and the projected-position analysis as the more interpretable summaries.
 
 The optical-colour panels above give the corresponding full distributional diagnostics: matched-photometry retention is selective, and fitted offsets depend on the control definition and split sample.
 
@@ -132,7 +178,7 @@ The optical-colour panels above give the corresponding full distributional diagn
 \begin{figure}[H]
   \centering
   \includegraphics[width=\columnwidth]{size_forest_per_control.pdf}
-  \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control catalogue separately. Every model uses the article's main adjustment set: stellar mass, redshift, rank, group luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii at fixed covariates.}
+  \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control catalogue separately. Every model uses the article's main adjustment set: stellar mass, redshift, a BGG/satellite indicator, quartet luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii at fixed covariates.}
   \label{fig:supp_size_per_control}
 \end{figure}
 

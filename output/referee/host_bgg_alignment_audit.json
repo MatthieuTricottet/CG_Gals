@@ -6,14 +6,14 @@
  "n_ambiguous_or_duplicate": 0,
  "by_class": {
   "Embedded": {
-   "CG4 BGG equals Lim-host BGG": 37
+   "CG4 BGG equals Lim-host BGG": 13,
+   "CG4 BGG differs from Lim-host BGG": 6
   },
   "Isolated": {
    "CG4 BGG equals Lim-host BGG": 6
   },
   "Predom": {
-   "CG4 BGG equals Lim-host BGG": 13,
-   "CG4 BGG differs from Lim-host BGG": 6
+   "CG4 BGG equals Lim-host BGG": 37
   }
  },
  "n_isolated_trivial_equal": 6,

@@ -2,9 +2,9 @@
  "meta": {
   "script": "src/paper_additions.py",
   "seed": 42,
-  "generated_utc": "2026-09-18T16:53:55.580144+00:00",
-  "git_head": "f3bbb4c",
-  "runtime_s": 12.3
+  "generated_utc": "2026-09-27T16:43:04.408296+00:00",
+  "git_head": "a3d08b2",
+  "runtime_s": 11.9
  },
  "canonical_gate": {
   "CG4": {
@@ -640,397 +640,37 @@
    }
   }
  },
- "regression_checks": [
-  {
-   "name": "sep_median_CG4_kpc",
-   "computed": 143.1621561045922,
-   "reference": 143.0,
-   "tol": 2.0,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "sep_q25_CG4_kpc",
-   "computed": 114.14684549250879,
-   "reference": 114.0,
-   "tol": 2.0,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "sep_q75_CG4_kpc",
-   "computed": 176.94544368146364,
-   "reference": 177.0,
-   "tol": 2.0,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "sep_median_RG4_kpc",
-   "computed": 429.89846355064844,
-   "reference": 430.0,
-   "tol": 2.0,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "sep_q25_RG4_kpc",
-   "computed": 292.3629386065869,
-   "reference": 292.0,
-   "tol": 2.0,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "sep_q75_RG4_kpc",
-   "computed": 492.2113394107523,
-   "reference": 494.0,
-   "tol": 2.0,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "sep_median_Control4B_kpc",
-   "computed": 448.2522653659966,
-   "reference": 448.0,
-   "tol": 10.0,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "sep_median_Control4C_kpc",
-   "computed": 293.3928139585739,
-   "reference": 293.0,
-   "tol": 2.0,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "PQE_CG4",
-   "computed": 0.9083333333333333,
-   "reference": 0.908,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "PQSp_CG4",
-   "computed": 0.32558139534883723,
-   "reference": 0.326,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "PQE_Control4B",
-   "computed": 0.903107861060329,
-   "reference": 0.903,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "PQSp_Control4B",
-   "computed": 0.35714285714285715,
-   "reference": 0.357,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "PQE_Control4C",
-   "computed": 0.8871841155234657,
-   "reference": 0.887,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "PQSp_Control4C",
-   "computed": 0.32816326530612244,
-   "reference": 0.328,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "PQE_RG4",
-   "computed": 0.85,
-   "reference": 0.85,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "PQSp_RG4",
-   "computed": 0.29457364341085274,
-   "reference": 0.295,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "chi2_PQE_homogeneity_p",
-   "computed": 0.3927829542867437,
-   "reference": 0.39,
-   "tol": 0.01,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "kitagawa_conditional_Control4B",
-   "computed": -0.016707949227852566,
-   "reference": -0.034,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "kitagawa_conditional_Control4C",
-   "computed": 0.0020159043213517818,
-   "reference": -0.016,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "kitagawa_conditional_RG4",
-   "computed": 0.049686846569613766,
-   "reference": 0.035,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "fE_isolated_all",
-   "computed": 0.3888888888888889,
-   "reference": 0.3888888888888889,
-   "tol": 1e-09,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "fE_isolated_sat",
-   "computed": 0.2857142857142857,
-   "reference": 0.2857142857142857,
-   "tol": 1e-09,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "lM200_isolated",
-   "computed": 12.863515744439251,
-   "reference": 12.86,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "lM200_embedded",
-   "computed": 13.825752463831812,
-   "reference": 13.83,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "lM200_predominant",
-   "computed": 13.134806937099691,
-   "reference": 13.13,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "perm_iso_vs_rest_p",
-   "computed": 0.02279886005699715,
-   "reference": 0.022,
-   "tol": 0.01,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "perm_iso_vs_RG4_p",
-   "computed": 1.0,
-   "reference": 1.0,
-   "tol": 0.1,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "perm_iso_vs_C4C_p",
-   "computed": 0.4007799610019499,
-   "reference": 0.3,
-   "tol": 0.15,
-   "status": "PASS",
-   "note": "reference approximate; Control4C is the repaired sample"
-  },
-  {
-   "name": "tidal_median_logT_CG4_recomputed",
-   "computed": 5.065757841919673,
-   "reference": 5.065757841919673,
-   "tol": 1e-06,
-   "status": "PASS",
-   "note": "recomputation must reproduce the published pipeline value"
-  },
-  {
-   "name": "tidal_gap_Control4B",
-   "computed": 1.3354372512151094,
-   "reference": 1.34,
-   "tol": 0.1,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "tidal_gap_Control4C",
-   "computed": 0.810477265362179,
-   "reference": 0.81,
-   "tol": 0.1,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "tidal_gap_RG4",
-   "computed": 1.223700987503756,
-   "reference": 1.22,
-   "tol": 0.1,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "hostT_median_delta_CG4",
-   "computed": 0.0020326673239545734,
-   "reference": 0.0,
-   "tol": 0.03,
-   "status": "PASS",
-   "note": "criterion: median shift <= 0.03 dex"
-  },
-  {
-   "name": "hostT_median_delta_Control4B",
-   "computed": 0.023232478055238204,
-   "reference": 0.0,
-   "tol": 0.03,
-   "status": "PASS",
-   "note": "criterion: median shift <= 0.03 dex"
-  },
-  {
-   "name": "hostT_median_delta_Control4C",
-   "computed": 0.0062923295679486735,
-   "reference": 0.0,
-   "tol": 0.03,
-   "status": "PASS",
-   "note": "criterion: median shift <= 0.03 dex"
-  },
-  {
-   "name": "hostT_median_delta_RG4",
-   "computed": 0.0,
-   "reference": 0.0,
-   "tol": 0.03,
-   "status": "PASS",
-   "note": "criterion: median shift <= 0.03 dex"
-  },
-  {
-   "name": "hostT_pooled_median_delta",
-   "computed": 0.008854727590274614,
-   "reference": 0.009,
-   "tol": 0.002,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "hostT_pooled_spearman",
-   "computed": 0.9111478885786152,
-   "reference": 0.91,
-   "tol": 0.01,
-   "status": "PASS",
-   "note": ""
-  },
-  {
-   "name": "hostT_refit_or",
-   "computed": 1.3287910684643205,
-   "reference": 1.33,
-   "tol": 0.02,
-   "status": "PASS",
-   "note": ""
-  }
- ],
  "macros": {
-  "SepCG": "143",
-  "SepCGIqr": "114--177",
-  "SepCB": "448",
-  "SepCBIqr": "323--607",
-  "SepCC": "293",
-  "SepCCIqr": "187--437",
-  "SepRG": "430",
-  "SepRGIqr": "292--492",
-  "SepSpan": "3.1",
-  "SepLoose": "440",
-  "qEcg": "0.908",
-  "qSpcg": "0.326",
   "qUcg": "0.429",
   "qEcgCell": "0.908^{+0.040}_{-0.065}",
   "qSpcgCell": "0.326^{+0.105}_{-0.090}",
-  "qUcgCell": "0.429^{+0.321}_{-0.270}",
   "nUcg": "7",
-  "qEcb": "0.903",
-  "qSpcb": "0.357",
   "qUcb": "0.552",
   "qEcbCell": "0.903^{+0.016}_{-0.019}",
   "qSpcbCell": "0.357^{+0.027}_{-0.026}",
-  "qUcbCell": "0.552^{+0.087}_{-0.091}",
   "nUcb": "116",
-  "qEcc": "0.887",
-  "qSpcc": "0.328",
   "qUcc": "0.594",
   "qEccCell": "0.887^{+0.017}_{-0.020}",
   "qSpccCell": "0.328^{+0.027}_{-0.026}",
-  "qUccCell": "0.594^{+0.077}_{-0.082}",
   "nUcc": "143",
-  "qErg": "0.850",
-  "qSprg": "0.295",
   "qUrg": "0.267",
   "qErgCell": "0.850^{+0.069}_{-0.111}",
   "qSprgCell": "0.295^{+0.084}_{-0.072}",
-  "qUrgCell": "0.267^{+0.253}_{-0.158}",
   "nUrg": "15",
   "pQEhom": "0.39",
-  "condCB": "-0.017",
-  "condCBlo": "-0.073",
-  "condCBhi": "+0.038",
-  "condBoundCB": "0.07",
-  "condCC": "+0.002",
-  "condCClo": "-0.054",
-  "condCChi": "+0.058",
-  "condBoundCC": "0.06",
-  "condRG": "+0.050",
-  "condRGlo": "-0.035",
-  "condRGhi": "+0.136",
-  "condBoundRG": "0.14",
-  "feAllIso": "0.389^{+0.225}_{-0.186}",
   "feSatIso": "0.286^{+0.261}_{-0.169}",
   "lMIso": "12.86",
   "nGrIso": "6",
-  "feAllEmb": "0.651^{+0.106}_{-0.123}",
   "feSatEmb": "0.638^{+0.122}_{-0.143}",
   "lMEmb": "13.83",
   "nGrEmb": "19",
-  "feAllPre": "0.589^{+0.081}_{-0.086}",
   "feSatPre": "0.562^{+0.095}_{-0.100}",
   "lMPre": "13.13",
   "nGrPre": "37",
   "pIsoRest": "0.023",
   "pIsoRG": "1.00",
-  "pIsoCC": "0.40",
-  "gapCB": "+1.34",
-  "gapCC": "+0.81",
-  "gapRG": "+1.22",
   "sdlogT": "1.07",
-  "ORbase": "1.95",
   "ORresid": "1.39",
-  "ORtidal": "1.42",
-  "gapPooled": "1.07",
-  "ORconsistency": "1.99",
-  "expTid": "1.01",
   "dTall": "0.009",
   "dTmaxSamp": "0.02",
   "rhoTT": "0.91",

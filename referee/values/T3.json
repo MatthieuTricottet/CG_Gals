@@ -10,8 +10,8 @@
   "prob_above_1p5": 0.12632
  },
  "sigma_v_completeness": {
-  "rule_adjusted_models": "covariate used when notna fraction >= 0.65 of the model frame (specialness_models._covariates)",
-  "rule_matching": "variable used when notna fraction >= 0.70 (both arms for the galaxy match; group tables >= 0.70)",
+  "rule_adjusted_models": "fixed covariate set; an entry below 65% completeness raises (specialness_models._covariates)",
+  "rule_matching": "fixed variable set; an entry below 70% completeness in either arm raises (matched_controls._select_variables)",
   "realized": {
    "CG4+Control4B": 1.0,
    "CG4+Control4C": 1.0,
@@ -74,12 +74,12 @@
    },
    {
     "file": "src/extended_data.py",
-    "line": 228,
+    "line": 234,
     "code": "frame[\"velocity_dispersion\"] = _numeric(frame, [\"Vdisp\", \"sigma_v\", \"group_Vdisp\"])"
    },
    {
     "file": "src/extended_data.py",
-    "line": 271,
+    "line": 277,
     "code": "frame[\"V_norm\"] = frame[\"delta_v\"].abs() / frame[\"velocity_dispersion\"]"
    },
    {
@@ -93,43 +93,53 @@
     "code": "\"velocity_dispersion\","
    },
    {
+    "file": "src/halpha_emission.py",
+    "line": 46,
+    "code": "TABLE4_COVARIATES = [\"logMstar\", \"z_numeric\", \"log_group_luminosity\", \"velocity_dispersion\"]"
+   },
+   {
     "file": "src/matched_controls.py",
-    "line": 60,
+    "line": 61,
     "code": "\"velocity_dispersion\","
    },
    {
     "file": "src/matched_controls.py",
-    "line": 66,
+    "line": 67,
     "code": "\"velocity_dispersion\","
    },
    {
     "file": "src/matched_controls.py",
-    "line": 354,
+    "line": 383,
     "code": "\"velocity_dispersion\": r\"$\\sigma_v$\","
    },
    {
     "file": "src/matched_controls.py",
-    "line": 453,
+    "line": 487,
     "code": "\"velocity_dispersion\": float(group[\"velocity_dispersion\"].median())"
    },
    {
     "file": "src/matched_controls.py",
-    "line": 454,
+    "line": 488,
     "code": "if \"velocity_dispersion\" in group"
    },
    {
     "file": "src/matched_controls.py",
-    "line": 513,
+    "line": 547,
     "code": "\"velocity_dispersion\": float(group[\"velocity_dispersion\"].median())"
    },
    {
     "file": "src/matched_controls.py",
-    "line": 514,
+    "line": 548,
     "code": "if \"velocity_dispersion\" in group"
+   },
+   {
+    "file": "src/matched_controls.py",
+    "line": 1194,
+    "code": "perturbed[\"velocity_dispersion\"] = perturbed[\"velocity_dispersion\"] * rng.choice("
    },
    {
     "file": "src/morphology_robustness.py",
-    "line": 142,
+    "line": 130,
     "code": "(\"velocity_dispersion\", True),"
    },
    {
@@ -169,22 +179,32 @@
    },
    {
     "file": "src/phase_space_segregation.py",
-    "line": 564,
+    "line": 563,
+    "code": "\"velocity_dispersion\","
+   },
+   {
+    "file": "src/quenching_morphology.py",
+    "line": 47,
+    "code": "COVARIATES = [\"logMstar\", \"z_numeric\", \"log_group_luminosity\", \"velocity_dispersion\"]"
+   },
+   {
+    "file": "src/radial_position.py",
+    "line": 67,
     "code": "\"velocity_dispersion\","
    },
    {
     "file": "src/selection_diagnostics.py",
-    "line": 45,
+    "line": 50,
     "code": "\"velocity_dispersion\","
    },
    {
     "file": "src/selection_diagnostics.py",
-    "line": 88,
+    "line": 100,
     "code": "\"velocity_dispersion\","
    },
    {
     "file": "src/selection_diagnostics.py",
-    "line": 99,
+    "line": 110,
     "code": "\"velocity_dispersion\","
    },
    {
@@ -194,8 +214,13 @@
    },
    {
     "file": "src/specialness_models.py",
-    "line": 45,
+    "line": 49,
     "code": "(\"velocity_dispersion\", True),"
+   },
+   {
+    "file": "src/ssfr_robustness.py",
+    "line": 202,
+    "code": "covariates = [\"logMstar\", \"z_numeric\", \"log_group_luminosity\", \"velocity_dispersion\"]"
    }
   ]
  },

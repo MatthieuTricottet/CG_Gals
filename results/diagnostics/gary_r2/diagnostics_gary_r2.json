@@ -436,9 +436,9 @@
   "implemented": "inherited 'Class' column of data/CG4_Groups.csv (Paper I export); used verbatim by paper_additions.zheng_shen_block, morphology_dominance, host_controlled, identity",
   "class_crosstab_stored_vs_rederived": {
    "Embedded": {
-    "Embedded": 0,
+    "Embedded": 19,
     "Isolated": 0,
-    "Predominant": 37,
+    "Predominant": 0,
     "Split": 0
    },
    "Isolated": {
@@ -448,9 +448,9 @@
     "Split": 0
    },
    "Predominant": {
-    "Embedded": 19,
+    "Embedded": 0,
     "Isolated": 0,
-    "Predominant": 0,
+    "Predominant": 37,
     "Split": 0
    },
    "Split": {
@@ -463,16 +463,16 @@
   "per_class_stored_labels": [
    {
     "class_stored": "Embedded",
-    "n_groups": 37,
-    "median_host_logM200c": 13.134806937099691,
-    "q16_host_logM200c": 12.870097190697242,
-    "q84_host_logM200c": 13.427489379671101,
-    "median_host_richness": 8.0,
-    "min_host_richness": 5.0,
-    "max_host_richness": 24.0,
-    "median_fL_cg_over_host": 0.8315278556235871,
-    "min_fL": 0.5149770839880735,
-    "max_fL": 0.9816392799469428
+    "n_groups": 19,
+    "median_host_logM200c": 13.825752463831812,
+    "q16_host_logM200c": 13.543484880731999,
+    "q84_host_logM200c": 14.069929612479168,
+    "median_host_richness": 26.0,
+    "min_host_richness": 13.0,
+    "max_host_richness": 93.0,
+    "median_fL_cg_over_host": 0.30844076625421263,
+    "min_fL": 0.0638612190860448,
+    "max_fL": 0.4780105787862962
    },
    {
     "class_stored": "Isolated",
@@ -489,21 +489,21 @@
    },
    {
     "class_stored": "Predominant",
-    "n_groups": 19,
-    "median_host_logM200c": 13.825752463831812,
-    "q16_host_logM200c": 13.543484880731999,
-    "q84_host_logM200c": 14.069929612479168,
-    "median_host_richness": 26.0,
-    "min_host_richness": 13.0,
-    "max_host_richness": 93.0,
-    "median_fL_cg_over_host": 0.30844076625421263,
-    "min_fL": 0.0638612190860448,
-    "max_fL": 0.4780105787862962
+    "n_groups": 37,
+    "median_host_logM200c": 13.134806937099691,
+    "q16_host_logM200c": 12.870097190697242,
+    "q84_host_logM200c": 13.427489379671101,
+    "median_host_richness": 8.0,
+    "min_host_richness": 5.0,
+    "max_host_richness": 24.0,
+    "median_fL_cg_over_host": 0.8315278556235871,
+    "min_fL": 0.5149770839880735,
+    "max_fL": 0.9816392799469428
    }
   ],
-  "predominant_hosts_more_massive_than_embedded_with_stored_labels": true,
-  "n_nonsplit_groups_with_swapped_label": 56,
-  "verdict": "CONFIRMED numerically for the stored labels: median host log M200c is 13.83 for the 19 groups labelled 'Predom' and 13.13 for the 37 labelled 'Embedded' (Table E.2), BUT this CONTRADICTS the definitions: every group labelled 'Embedded' contributes >= 0.51 (median 0.83) of its host r-band luminosity (host richness 5--24), i.e. it DOMINATES the host and is 'Predominant' under Zheng & Shen (2021) Eq. 1 and under Paper I Sect. 3.3, whereas every group labelled 'Predom' contributes <= 0.48 (median 0.31; host richness 13--93) and is 'Embedded'. The two labels are swapped in data/CG4_Groups.csv for all 56/56 non-isolated non-split groups (the 0.5 luminosity-fraction boundary is reproduced exactly: no group is ambiguous). With the correct labels, Embedded hosts (rich groups/clusters) are the massive ones, as the definitions imply. Paper I's Sect. 4.3 prose already carried the inconsistency ('Embedded CG4s ... contributing over half the luminosity of the host').",
+  "predominant_hosts_more_massive_than_embedded_with_stored_labels": false,
+  "n_nonsplit_groups_with_swapped_label": 0,
+  "verdict": "CONFIRMED numerically for the stored labels: median host log M200c is 13.13 for the 19 groups labelled 'Predom' and 13.83 for the 37 labelled 'Embedded' (Table E.2), BUT this CONTRADICTS the definitions: every group labelled 'Embedded' contributes >= 0.06 (median 0.31) of its host r-band luminosity (host richness 13--93), i.e. it DOMINATES the host and is 'Predominant' under Zheng & Shen (2021) Eq. 1 and under Paper I Sect. 3.3, whereas every group labelled 'Predom' contributes <= 0.98 (median 0.83; host richness 5--24) and is 'Embedded'. The two labels are swapped in data/CG4_Groups.csv for all 0/56 non-isolated non-split groups (the 0.5 luminosity-fraction boundary is reproduced exactly: no group is ambiguous). With the correct labels, Embedded hosts (rich groups/clusters) are the massive ones, as the definitions imply. Paper I's Sect. 4.3 prose already carried the inconsistency ('Embedded CG4s ... contributing over half the luminosity of the host').",
   "n_isolated_groups": 6,
   "satellite_logistic_models": {
    "class_stored": {
@@ -516,366 +516,7 @@
       "is_Predominant",
       "logMstar"
      ],
-     "standardized_predictors": [
-      "logMstar"
-     ],
-     "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 195.63964795344293,
-     "bic": 207.86463117483618,
-     "terms": {
-      "const": {
-       "coefficient": -1.1013732729745498,
-       "standard_error": 0.30533911145668136,
-       "odds_ratio": 0.3324142745684346,
-       "ci95": [
-        0.1827151430039603,
-        0.6047624084144113
-       ],
-       "p": 0.00030969866019625245
-      },
-      "is_Embedded": {
-       "coefficient": 1.4916180840961801,
-       "standard_error": 0.39775243782907244,
-       "odds_ratio": 4.44428092442358,
-       "ci95": [
-        2.038140008047016,
-        9.691008889090845
-       ],
-       "p": 0.0001767522491072057
-      },
-      "is_Predominant": {
-       "coefficient": 1.5441081571817012,
-       "standard_error": 0.43995607499287903,
-       "odds_ratio": 4.683792557007852,
-       "ci95": [
-        1.97745387486869,
-        11.094019939422815
-       ],
-       "p": 0.0004486343129006147
-      },
-      "logMstar": {
-       "coefficient": 0.8540811924365836,
-       "standard_error": 0.1969198410177389,
-       "odds_ratio": 2.3492149122294506,
-       "ci95": [
-        1.5969976475689687,
-        3.455741285682068
-       ],
-       "p": 1.4430777678225598e-05
-      }
-     }
-    },
-    "class_plus_logMstar_plus_logM200c": {
-     "status": "ok",
-     "n": 157,
-     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_M200c",
-     "predictors_used": [
-      "is_Embedded",
-      "is_Predominant",
-      "logMstar",
-      "log_M200c"
-     ],
-     "standardized_predictors": [
-      "logMstar",
-      "log_M200c"
-     ],
-     "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 197.16240998577268,
-     "bic": 212.4436390125142,
-     "terms": {
-      "const": {
-       "coefficient": -1.2723243499482537,
-       "standard_error": 0.3873073251472699,
-       "odds_ratio": 0.28017962883625,
-       "ci95": [
-        0.1311474838436883,
-        0.5985675219540006
-       ],
-       "p": 0.0010196388154068141
-      },
-      "is_Embedded": {
-       "coefficient": 1.6074352507659924,
-       "standard_error": 0.4858221515811474,
-       "odds_ratio": 4.989996711603883,
-       "ci95": [
-        1.925607169577605,
-        12.931021225517958
-       ],
-       "p": 0.0009373331474168577
-      },
-      "is_Predominant": {
-       "coefficient": 1.871307577009512,
-       "standard_error": 0.6238629977031973,
-       "odds_ratio": 6.496785895614846,
-       "ci95": [
-        1.9127817004486685,
-        22.066410904892862
-       ],
-       "p": 0.002703797062605487
-      },
-      "logMstar": {
-       "coefficient": 0.9014668007561966,
-       "standard_error": 0.22545880204182914,
-       "odds_ratio": 2.463213506078023,
-       "ci95": [
-        1.5834019555025343,
-        3.831889151987015
-       ],
-       "p": 6.37812822861291e-05
-      },
-      "log_M200c": {
-       "coefficient": -0.1726794415937586,
-       "standard_error": 0.20440614584148473,
-       "odds_ratio": 0.8414072917991656,
-       "ci95": [
-        0.5636577005430171,
-        1.2560215712670386
-       ],
-       "p": 0.39823035645647165
-      }
-     }
-    },
-    "logMstar_plus_logM200c_no_class": {
-     "status": "ok",
-     "n": 157,
-     "formula": "elliptical ~ logMstar + log_M200c",
-     "predictors_used": [
-      "logMstar",
-      "log_M200c"
-     ],
-     "standardized_predictors": [
-      "logMstar",
-      "log_M200c"
-     ],
-     "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 199.36912153712046,
-     "bic": 208.5378589531654,
-     "terms": {
-      "const": {
-       "coefficient": 0.2739409601541521,
-       "standard_error": 0.1712497626653379,
-       "odds_ratio": 1.3151371544517227,
-       "ci95": [
-        0.940162630952819,
-        1.8396665407414725
-       ],
-       "p": 0.1096745941513046
-      },
-      "logMstar": {
-       "coefficient": 0.8033727710121368,
-       "standard_error": 0.20773757360754863,
-       "odds_ratio": 2.2330598410799527,
-       "ci95": [
-        1.4861882319647994,
-        3.3552656026966377
-       ],
-       "p": 0.00011007035674480844
-      },
-      "log_M200c": {
-       "coefficient": 0.059974337918960716,
-       "standard_error": 0.17815405370255893,
-       "odds_ratio": 1.0618092979594809,
-       "ci95": [
-        0.7488615260178667,
-        1.505537333755756
-       ],
-       "p": 0.7363859404086716
-      }
-     }
-    },
-    "class_plus_logMstar_plus_logNhost": {
-     "status": "ok",
-     "n": 157,
-     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_N_host",
-     "predictors_used": [
-      "is_Embedded",
-      "is_Predominant",
-      "logMstar",
-      "log_N_host"
-     ],
-     "standardized_predictors": [
-      "logMstar",
-      "log_N_host"
-     ],
-     "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 197.29136024678309,
-     "bic": 212.5725892735246,
-     "terms": {
-      "const": {
-       "coefficient": -1.3757117022173158,
-       "standard_error": 0.5402371138314764,
-       "odds_ratio": 0.2526597133227605,
-       "ci95": [
-        0.08763656245993168,
-        0.7284280549630915
-       ],
-       "p": 0.010881042809772
-      },
-      "is_Embedded": {
-       "coefficient": 1.692068907168141,
-       "standard_error": 0.5512562484251183,
-       "odds_ratio": 5.430704714322608,
-       "ci95": [
-        1.8434273220169832,
-        15.99876129746008
-       ],
-       "p": 0.002144332239711655
-      },
-      "is_Predominant": {
-       "coefficient": 2.047206563300292,
-       "standard_error": 0.9420289876795545,
-       "odds_ratio": 7.746232245662688,
-       "ci95": [
-        1.2224581089297466,
-        49.084801814826676
-       ],
-       "p": 0.029766132912986853
-      },
-      "logMstar": {
-       "coefficient": 0.8778771267469562,
-       "standard_error": 0.2135311769335723,
-       "odds_ratio": 2.4057871005418536,
-       "ci95": [
-        1.5830663757612768,
-        3.6560763728875822
-       ],
-       "p": 3.935461656132474e-05
-      },
-      "log_N_host": {
-       "coefficient": -0.19634912570533397,
-       "standard_error": 0.2998717134049699,
-       "odds_ratio": 0.8217252991681571,
-       "ci95": [
-        0.4565363822107027,
-        1.479033202180502
-       ],
-       "p": 0.5126112877418914
-      }
-     }
-    },
-    "predominant_vs_embedded_only_plus_logMstar": {
-     "status": "ok",
-     "n": 143,
-     "formula": "elliptical ~ is_Predominant + logMstar",
-     "predictors_used": [
-      "is_Predominant",
-      "logMstar"
-     ],
-     "standardized_predictors": [
-      "logMstar"
-     ],
-     "covariance": "cluster",
-     "n_clusters": 54,
-     "aic": 175.38483314663554,
-     "bic": 184.27336703741526,
-     "terms": {
-      "const": {
-       "coefficient": 0.40001922223607805,
-       "standard_error": 0.2373810257380806,
-       "odds_ratio": 1.4918533741234077,
-       "ci95": [
-        0.9368434946428748,
-        2.3756652019362168
-       ],
-       "p": 0.09196240849069452
-      },
-      "is_Predominant": {
-       "coefficient": 0.030434684562529846,
-       "standard_error": 0.38427808946368824,
-       "odds_ratio": 1.0309025539984595,
-       "ci95": [
-        0.48542206428830886,
-        2.1893526356258435
-       ],
-       "p": 0.9368738346232215
-      },
-      "logMstar": {
-       "coefficient": 0.9365905453246701,
-       "standard_error": 0.22213558133996097,
-       "odds_ratio": 2.5512681399182364,
-       "ci95": [
-        1.6507220631430344,
-        3.9431042130548293
-       ],
-       "p": 2.4834188135059895e-05
-      }
-     }
-    },
-    "predominant_vs_embedded_only_plus_logMstar_logM200c": {
-     "status": "ok",
-     "n": 143,
-     "formula": "elliptical ~ is_Predominant + logMstar + log_M200c",
-     "predictors_used": [
-      "is_Predominant",
-      "logMstar",
-      "log_M200c"
-     ],
-     "standardized_predictors": [
-      "logMstar",
-      "log_M200c"
-     ],
-     "covariance": "cluster",
-     "n_clusters": 54,
-     "aic": 176.64891066224772,
-     "bic": 188.50028918328735,
-     "terms": {
-      "const": {
-       "coefficient": 0.31179411401482016,
-       "standard_error": 0.1989100011953803,
-       "odds_ratio": 1.3658734498776026,
-       "ci95": [
-        0.9249067804010653,
-        2.017079256648506
-       ],
-       "p": 0.11699471102270356
-      },
-      "is_Predominant": {
-       "coefficient": 0.29638841093801244,
-       "standard_error": 0.38674376669427696,
-       "odds_ratio": 1.344992465175368,
-       "ci95": [
-        0.6302646660162741,
-        2.8702302840689518
-       ],
-       "p": 0.4434568079011699
-      },
-      "logMstar": {
-       "coefficient": 1.0028889956272875,
-       "standard_error": 0.25880133214571066,
-       "odds_ratio": 2.726146287499163,
-       "ci95": [
-        1.6415611429283323,
-        4.527320601405057
-       ],
-       "p": 0.00010656747134715708
-      },
-      "log_M200c": {
-       "coefficient": -0.2192863023420808,
-       "standard_error": 0.2176254894563249,
-       "odds_ratio": 0.8030917581848844,
-       "ci95": [
-        0.5242301760737725,
-        1.230292343899194
-       ],
-       "p": 0.3136313921373821
-      }
-     }
-    }
-   },
-   "class_rederived_ZS21": {
-    "class_plus_logMstar": {
-     "status": "ok",
-     "n": 157,
-     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar",
-     "predictors_used": [
-      "is_Embedded",
-      "is_Predominant",
-      "logMstar"
-     ],
+     "predictors_dropped": [],
      "standardized_predictors": [
       "logMstar"
      ],
@@ -936,6 +577,7 @@
       "logMstar",
       "log_M200c"
      ],
+     "predictors_dropped": [],
      "standardized_predictors": [
       "logMstar",
       "log_M200c"
@@ -1005,6 +647,7 @@
       "logMstar",
       "log_M200c"
      ],
+     "predictors_dropped": [],
      "standardized_predictors": [
       "logMstar",
       "log_M200c"
@@ -1056,6 +699,7 @@
       "logMstar",
       "log_N_host"
      ],
+     "predictors_dropped": [],
      "standardized_predictors": [
       "logMstar",
       "log_N_host"
@@ -1125,6 +769,7 @@
       "is_Predominant",
       "logMstar"
      ],
+     "predictors_dropped": [],
      "standardized_predictors": [
       "logMstar"
      ],
@@ -1174,6 +819,373 @@
       "logMstar",
       "log_M200c"
      ],
+     "predictors_dropped": [],
+     "standardized_predictors": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 54,
+     "aic": 176.64891066224774,
+     "bic": 188.50028918328738,
+     "terms": {
+      "const": {
+       "coefficient": 0.6081825249528316,
+       "standard_error": 0.3655405038480211,
+       "odds_ratio": 1.8370894984684594,
+       "ci95": [
+        0.8973909255014894,
+        3.760788893087034
+       ],
+       "p": 0.0961544632050659
+      },
+      "is_Predominant": {
+       "coefficient": -0.29638841093801166,
+       "standard_error": 0.386743766694278,
+       "odds_ratio": 0.7434985889453403,
+       "ci95": [
+        0.3484041003784404,
+        1.5866350343272804
+       ],
+       "p": 0.44345680790117237
+      },
+      "logMstar": {
+       "coefficient": 1.0028889956272877,
+       "standard_error": 0.25880133214571094,
+       "odds_ratio": 2.7261462874991635,
+       "ci95": [
+        1.6415611429283319,
+        4.5273206014050595
+       ],
+       "p": 0.0001065674713471585
+      },
+      "log_M200c": {
+       "coefficient": -0.21928630234208085,
+       "standard_error": 0.21762548945632534,
+       "odds_ratio": 0.8030917581848843,
+       "ci95": [
+        0.5242301760737721,
+        1.230292343899195
+       ],
+       "p": 0.3136313921373829
+      }
+     }
+    }
+   },
+   "class_rederived_ZS21": {
+    "class_plus_logMstar": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar",
+     "predictors_used": [
+      "is_Embedded",
+      "is_Predominant",
+      "logMstar"
+     ],
+     "predictors_dropped": [],
+     "standardized_predictors": [
+      "logMstar"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 195.63964795344293,
+     "bic": 207.86463117483618,
+     "terms": {
+      "const": {
+       "coefficient": -1.1013732729745498,
+       "standard_error": 0.305339111456681,
+       "odds_ratio": 0.3324142745684346,
+       "ci95": [
+        0.18271514300396038,
+        0.6047624084144109
+       ],
+       "p": 0.00030969866019624724
+      },
+      "is_Embedded": {
+       "coefficient": 1.5441081571817017,
+       "standard_error": 0.43995607499287953,
+       "odds_ratio": 4.683792557007854,
+       "ci95": [
+        1.977453874868689,
+        11.094019939422829
+       ],
+       "p": 0.0004486343129006199
+      },
+      "is_Predominant": {
+       "coefficient": 1.4916180840961801,
+       "standard_error": 0.3977524378290735,
+       "odds_ratio": 4.44428092442358,
+       "ci95": [
+        2.0381400080470113,
+        9.691008889090863
+       ],
+       "p": 0.00017675224910721277
+      },
+      "logMstar": {
+       "coefficient": 0.8540811924365843,
+       "standard_error": 0.196919841017739,
+       "odds_ratio": 2.3492149122294523,
+       "ci95": [
+        1.5969976475689693,
+        3.455741285682071
+       ],
+       "p": 1.443077767822549e-05
+      }
+     }
+    },
+    "class_plus_logMstar_plus_logM200c": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_M200c",
+     "predictors_used": [
+      "is_Embedded",
+      "is_Predominant",
+      "logMstar",
+      "log_M200c"
+     ],
+     "predictors_dropped": [],
+     "standardized_predictors": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 197.16240998577268,
+     "bic": 212.4436390125142,
+     "terms": {
+      "const": {
+       "coefficient": -1.2723243499482555,
+       "standard_error": 0.3873073251472705,
+       "odds_ratio": 0.28017962883624953,
+       "ci95": [
+        0.13114748384368788,
+        0.5985675219540003
+       ],
+       "p": 0.0010196388154068141
+      },
+      "is_Embedded": {
+       "coefficient": 1.8713075770095158,
+       "standard_error": 0.6238629977031998,
+       "odds_ratio": 6.496785895614871,
+       "ci95": [
+        1.9127817004486665,
+        22.06641090489305
+       ],
+       "p": 0.0027037970626055453
+      },
+      "is_Predominant": {
+       "coefficient": 1.607435250765992,
+       "standard_error": 0.4858221515811486,
+       "odds_ratio": 4.989996711603881,
+       "ci95": [
+        1.9256071695775994,
+        12.931021225517986
+       ],
+       "p": 0.0009373331474168863
+      },
+      "logMstar": {
+       "coefficient": 0.9014668007561965,
+       "standard_error": 0.22545880204182914,
+       "odds_ratio": 2.463213506078023,
+       "ci95": [
+        1.5834019555025343,
+        3.831889151987015
+       ],
+       "p": 6.378128228612928e-05
+      },
+      "log_M200c": {
+       "coefficient": -0.17267944159375967,
+       "standard_error": 0.204406145841485,
+       "odds_ratio": 0.8414072917991646,
+       "ci95": [
+        0.5636577005430162,
+        1.2560215712670377
+       ],
+       "p": 0.3982303564564694
+      }
+     }
+    },
+    "logMstar_plus_logM200c_no_class": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ logMstar + log_M200c",
+     "predictors_used": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "predictors_dropped": [],
+     "standardized_predictors": [
+      "logMstar",
+      "log_M200c"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 199.36912153712046,
+     "bic": 208.5378589531654,
+     "terms": {
+      "const": {
+       "coefficient": 0.2739409601541521,
+       "standard_error": 0.1712497626653379,
+       "odds_ratio": 1.3151371544517227,
+       "ci95": [
+        0.940162630952819,
+        1.8396665407414725
+       ],
+       "p": 0.1096745941513046
+      },
+      "logMstar": {
+       "coefficient": 0.8033727710121368,
+       "standard_error": 0.20773757360754863,
+       "odds_ratio": 2.2330598410799527,
+       "ci95": [
+        1.4861882319647994,
+        3.3552656026966377
+       ],
+       "p": 0.00011007035674480844
+      },
+      "log_M200c": {
+       "coefficient": 0.059974337918960716,
+       "standard_error": 0.17815405370255893,
+       "odds_ratio": 1.0618092979594809,
+       "ci95": [
+        0.7488615260178667,
+        1.505537333755756
+       ],
+       "p": 0.7363859404086716
+      }
+     }
+    },
+    "class_plus_logMstar_plus_logNhost": {
+     "status": "ok",
+     "n": 157,
+     "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_N_host",
+     "predictors_used": [
+      "is_Embedded",
+      "is_Predominant",
+      "logMstar",
+      "log_N_host"
+     ],
+     "predictors_dropped": [],
+     "standardized_predictors": [
+      "logMstar",
+      "log_N_host"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 59,
+     "aic": 197.29136024678309,
+     "bic": 212.5725892735246,
+     "terms": {
+      "const": {
+       "coefficient": -1.3757117022173162,
+       "standard_error": 0.5402371138314718,
+       "odds_ratio": 0.2526597133227604,
+       "ci95": [
+        0.08763656245993245,
+        0.7284280549630844
+       ],
+       "p": 0.010881042809771292
+      },
+      "is_Embedded": {
+       "coefficient": 2.0472065633002914,
+       "standard_error": 0.9420289876795499,
+       "odds_ratio": 7.746232245662685,
+       "ci95": [
+        1.2224581089297568,
+        49.084801814826235
+       ],
+       "p": 0.029766132912986097
+      },
+      "is_Predominant": {
+       "coefficient": 1.6920689071681418,
+       "standard_error": 0.5512562484251134,
+       "odds_ratio": 5.430704714322612,
+       "ci95": [
+        1.8434273220170025,
+        15.998761297459945
+       ],
+       "p": 0.002144332239711448
+      },
+      "logMstar": {
+       "coefficient": 0.8778771267469554,
+       "standard_error": 0.21353117693357218,
+       "odds_ratio": 2.405787100541852,
+       "ci95": [
+        1.5830663757612762,
+        3.6560763728875783
+       ],
+       "p": 3.9354616561325036e-05
+      },
+      "log_N_host": {
+       "coefficient": -0.1963491257053343,
+       "standard_error": 0.29987171340496926,
+       "odds_ratio": 0.8217252991681568,
+       "ci95": [
+        0.4565363822107031,
+        1.4790332021804997
+       ],
+       "p": 0.5126112877418898
+      }
+     }
+    },
+    "predominant_vs_embedded_only_plus_logMstar": {
+     "status": "ok",
+     "n": 143,
+     "formula": "elliptical ~ is_Predominant + logMstar",
+     "predictors_used": [
+      "is_Predominant",
+      "logMstar"
+     ],
+     "predictors_dropped": [],
+     "standardized_predictors": [
+      "logMstar"
+     ],
+     "covariance": "cluster",
+     "n_clusters": 54,
+     "aic": 175.38483314663554,
+     "bic": 184.27336703741526,
+     "terms": {
+      "const": {
+       "coefficient": 0.4304539067986074,
+       "standard_error": 0.30987908332533287,
+       "odds_ratio": 1.5379554535750395,
+       "ci95": [
+        0.8378652959745263,
+        2.82301580999378
+       ],
+       "p": 0.16480148805662254
+      },
+      "is_Predominant": {
+       "coefficient": -0.030434684562528846,
+       "standard_error": 0.3842780894636887,
+       "odds_ratio": 0.9700237875261829,
+       "ci95": [
+        0.4567560217242675,
+        2.060062929908492
+       ],
+       "p": 0.9368738346232236
+      },
+      "logMstar": {
+       "coefficient": 0.9365905453246697,
+       "standard_error": 0.22213558133996092,
+       "odds_ratio": 2.5512681399182355,
+       "ci95": [
+        1.650722063143034,
+        3.9431042130548266
+       ],
+       "p": 2.483418813506003e-05
+      }
+     }
+    },
+    "predominant_vs_embedded_only_plus_logMstar_logM200c": {
+     "status": "ok",
+     "n": 143,
+     "formula": "elliptical ~ is_Predominant + logMstar + log_M200c",
+     "predictors_used": [
+      "is_Predominant",
+      "logMstar",
+      "log_M200c"
+     ],
+     "predictors_dropped": [],
      "standardized_predictors": [
       "logMstar",
       "log_M200c"
@@ -1230,10 +1242,10 @@
   "satellite_counts_by_stored_class": [
    {
     "class_stored": "Embedded",
-    "n_sat": 96,
-    "n_E": 54.0,
-    "n_groups": 36,
-    "fE": 0.5625
+    "n_sat": 47,
+    "n_E": 30.0,
+    "n_groups": 18,
+    "fE": 0.6382978723404256
    },
    {
     "class_stored": "Isolated",
@@ -1244,10 +1256,10 @@
    },
    {
     "class_stored": "Predominant",
-    "n_sat": 47,
-    "n_E": 30.0,
-    "n_groups": 18,
-    "fE": 0.6382978723404256
+    "n_sat": 96,
+    "n_E": 54.0,
+    "n_groups": 36,
+    "fE": 0.5625
    }
   ],
   "satellite_fE_by_class_file": "d3_satellite_fE_by_class.csv",
@@ -2011,7 +2023,6 @@
  "d7_fig2_statistic_audit": {
   "bins": [
    7.0,
-   9.5,
    10.0,
    10.5,
    11.0,
@@ -2022,35 +2033,18 @@
    {
     "sample": "CG4",
     "bin_left": 7.0,
-    "bin_right": 9.5,
-    "n_galaxies_votes": 10,
-    "n_groups_votes": 8,
-    "n_usable_ES": 9,
-    "n_groups_usable": 7,
-    "median_p_el": 0.1464999988675115,
-    "median_p_cs": 0.7435000240802765,
-    "mean_p_el": 0.1303000011481344,
-    "mean_p_cs": 0.75450000166893,
-    "frac_E": 0.0,
-    "frac_S": 1.0,
-    "frac_uncertain_of_votes": 0.1,
-    "displayed": true
-   },
-   {
-    "sample": "CG4",
-    "bin_left": 9.5,
     "bin_right": 10.0,
-    "n_galaxies_votes": 38,
-    "n_groups_votes": 30,
-    "n_usable_ES": 36,
-    "n_groups_usable": 29,
-    "median_p_el": 0.273999996483326,
-    "median_p_cs": 0.615000009536743,
-    "mean_p_el": 0.350473685410658,
-    "mean_p_cs": 0.5924210534676124,
-    "frac_E": 0.3888888888888889,
-    "frac_S": 0.6111111111111112,
-    "frac_uncertain_of_votes": 0.05263157894736842,
+    "n_galaxies_votes": 48,
+    "n_groups_votes": 35,
+    "n_usable_ES": 45,
+    "n_groups_usable": 34,
+    "median_p_el": 0.20750000327825552,
+    "median_p_cs": 0.686499983072281,
+    "mean_p_el": 0.3046041678559656,
+    "mean_p_cs": 0.6261875010095537,
+    "frac_E": 0.3111111111111111,
+    "frac_S": 0.6888888888888889,
+    "frac_uncertain_of_votes": 0.0625,
     "displayed": true
    },
    {
@@ -2107,35 +2101,18 @@
    {
     "sample": "Control4B",
     "bin_left": 7.0,
-    "bin_right": 9.5,
-    "n_galaxies_votes": 80,
-    "n_groups_votes": 70,
-    "n_usable_ES": 67,
-    "n_groups_usable": 61,
-    "median_p_el": 0.129499994218349,
-    "median_p_cs": 0.764499992132187,
-    "mean_p_el": 0.17142500099726019,
-    "mean_p_cs": 0.6815374999307096,
-    "frac_E": 0.05970149253731343,
-    "frac_S": 0.9402985074626866,
-    "frac_uncertain_of_votes": 0.1625,
-    "displayed": true
-   },
-   {
-    "sample": "Control4B",
-    "bin_left": 9.5,
     "bin_right": 10.0,
-    "n_galaxies_votes": 291,
-    "n_groups_votes": 234,
-    "n_usable_ES": 270,
-    "n_groups_usable": 220,
-    "median_p_el": 0.172999992966652,
-    "median_p_cs": 0.737999975681305,
-    "mean_p_el": 0.2666701027592228,
-    "mean_p_cs": 0.6526323021981622,
-    "frac_E": 0.2222222222222222,
-    "frac_S": 0.7777777777777778,
-    "frac_uncertain_of_votes": 0.07216494845360824,
+    "n_galaxies_votes": 371,
+    "n_groups_votes": 263,
+    "n_usable_ES": 337,
+    "n_groups_usable": 247,
+    "median_p_el": 0.157000005245209,
+    "median_p_cs": 0.746999979019165,
+    "mean_p_el": 0.24613207542510687,
+    "mean_p_cs": 0.6588652289329433,
+    "frac_E": 0.18991097922848665,
+    "frac_S": 0.8100890207715133,
+    "frac_uncertain_of_votes": 0.09164420485175202,
     "displayed": true
    },
    {
@@ -2192,35 +2169,18 @@
    {
     "sample": "Control4C",
     "bin_left": 7.0,
-    "bin_right": 9.5,
-    "n_galaxies_votes": 138,
-    "n_groups_votes": 120,
-    "n_usable_ES": 120,
-    "n_groups_usable": 110,
-    "median_p_el": 0.107500001788139,
-    "median_p_cs": 0.761000007390976,
-    "mean_p_el": 0.1577536234146227,
-    "mean_p_cs": 0.7032971021489821,
-    "frac_E": 0.058333333333333334,
-    "frac_S": 0.9416666666666667,
-    "frac_uncertain_of_votes": 0.13043478260869565,
-    "displayed": true
-   },
-   {
-    "sample": "Control4C",
-    "bin_left": 9.5,
     "bin_right": 10.0,
-    "n_galaxies_votes": 503,
-    "n_groups_votes": 379,
-    "n_usable_ES": 460,
-    "n_groups_usable": 355,
-    "median_p_el": 0.231000006198883,
-    "median_p_cs": 0.669000029563904,
-    "mean_p_el": 0.31619681897119545,
-    "mean_p_cs": 0.6024353865896969,
-    "frac_E": 0.30217391304347824,
-    "frac_S": 0.6978260869565217,
-    "frac_uncertain_of_votes": 0.08548707753479125,
+    "n_galaxies_votes": 641,
+    "n_groups_votes": 438,
+    "n_usable_ES": 580,
+    "n_groups_usable": 414,
+    "median_p_el": 0.18299999833107,
+    "median_p_cs": 0.695999979972839,
+    "mean_p_el": 0.2820858033911533,
+    "mean_p_cs": 0.6241497652904477,
+    "frac_E": 0.2517241379310345,
+    "frac_S": 0.7482758620689656,
+    "frac_uncertain_of_votes": 0.09516380655226209,
     "displayed": true
    },
    {
@@ -2277,35 +2237,18 @@
    {
     "sample": "RG4",
     "bin_left": 7.0,
-    "bin_right": 9.5,
-    "n_galaxies_votes": 25,
-    "n_groups_votes": 21,
-    "n_usable_ES": 19,
-    "n_groups_usable": 17,
-    "median_p_el": 0.164000004529953,
-    "median_p_cs": 0.689000010490417,
-    "mean_p_el": 0.1854400010406971,
-    "mean_p_cs": 0.6583199983835221,
-    "frac_E": 0.05263157894736842,
-    "frac_S": 0.9473684210526315,
-    "frac_uncertain_of_votes": 0.24,
-    "displayed": true
-   },
-   {
-    "sample": "RG4",
-    "bin_left": 9.5,
     "bin_right": 10.0,
-    "n_galaxies_votes": 48,
-    "n_groups_votes": 38,
-    "n_usable_ES": 45,
-    "n_groups_usable": 36,
-    "median_p_el": 0.1730000004172325,
-    "median_p_cs": 0.737500011920929,
-    "mean_p_el": 0.2577708327056219,
-    "mean_p_cs": 0.6721666684995095,
-    "frac_E": 0.2,
-    "frac_S": 0.8,
-    "frac_uncertain_of_votes": 0.0625,
+    "n_galaxies_votes": 73,
+    "n_groups_votes": 46,
+    "n_usable_ES": 64,
+    "n_groups_usable": 43,
+    "median_p_el": 0.171000003814697,
+    "median_p_cs": 0.711000025272369,
+    "mean_p_el": 0.23299999994366136,
+    "mean_p_cs": 0.6674246581858152,
+    "frac_E": 0.15625,
+    "frac_S": 0.84375,
+    "frac_uncertain_of_votes": 0.1232876712328767,
     "displayed": true
    },
    {
@@ -2362,78 +2305,6 @@
   ],
   "sign_disagreements": [
    {
-    "control": "Control4B",
-    "bin_left": 7.0,
-    "bin_right": 9.5,
-    "median_stat": "median_p_el",
-    "alt_stat": "frac_E",
-    "delta_median": 0.017000004649162487,
-    "delta_alt": -0.05970149253731343
-   },
-   {
-    "control": "Control4B",
-    "bin_left": 7.0,
-    "bin_right": 9.5,
-    "median_stat": "median_p_el",
-    "alt_stat": "mean_p_el",
-    "delta_median": 0.017000004649162487,
-    "delta_alt": -0.04112499984912579
-   },
-   {
-    "control": "Control4B",
-    "bin_left": 7.0,
-    "bin_right": 9.5,
-    "median_stat": "median_p_cs",
-    "alt_stat": "frac_S",
-    "delta_median": -0.02099996805191051,
-    "delta_alt": 0.05970149253731338
-   },
-   {
-    "control": "Control4B",
-    "bin_left": 7.0,
-    "bin_right": 9.5,
-    "median_stat": "median_p_cs",
-    "alt_stat": "mean_p_cs",
-    "delta_median": -0.02099996805191051,
-    "delta_alt": 0.0729625017382205
-   },
-   {
-    "control": "Control4C",
-    "bin_left": 7.0,
-    "bin_right": 9.5,
-    "median_stat": "median_p_el",
-    "alt_stat": "frac_E",
-    "delta_median": 0.0389999970793725,
-    "delta_alt": -0.058333333333333334
-   },
-   {
-    "control": "Control4C",
-    "bin_left": 7.0,
-    "bin_right": 9.5,
-    "median_stat": "median_p_el",
-    "alt_stat": "mean_p_el",
-    "delta_median": 0.0389999970793725,
-    "delta_alt": -0.027453622266488314
-   },
-   {
-    "control": "Control4C",
-    "bin_left": 7.0,
-    "bin_right": 9.5,
-    "median_stat": "median_p_cs",
-    "alt_stat": "frac_S",
-    "delta_median": -0.017499983310699463,
-    "delta_alt": 0.05833333333333335
-   },
-   {
-    "control": "Control4C",
-    "bin_left": 7.0,
-    "bin_right": 9.5,
-    "median_stat": "median_p_cs",
-    "alt_stat": "mean_p_cs",
-    "delta_median": -0.017499983310699463,
-    "delta_alt": 0.05120289951994794
-   },
-   {
     "control": "Control4C",
     "bin_left": 11.0,
     "bin_right": 12.5,
@@ -2461,7 +2332,7 @@
     "delta_alt": 0.02276607854297097
    }
   ],
-  "n_sign_disagreements": 11,
+  "n_sign_disagreements": 3,
   "n_displayed_bins_with_median_vote_near_0_or_1": 1,
   "note": "Medians of bimodal vote fractions collapse toward 0/1 and hide the class mix; fractions classified E/S among usable E/S rows and mean debiased votes track the class mix directly. Flags list bins where the CG4-minus-control sign differs between the median and the fraction/mean statistic (|Delta| > 0.02)."
  }
