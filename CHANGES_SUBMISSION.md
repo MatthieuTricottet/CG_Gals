@@ -1,5 +1,13 @@
 # Submission additions — number provenance
 
+> **Update 2026-09-27 (audit-r3):** the macro set was pruned to the macros the
+> manuscript still cites (`src/paper_additions.py::build_macros`); the
+> separation (`Sep*`), morphology-only Kitagawa (`cond*`), tidal-gap (`gap*`,
+> `OR*` except `ORresid`/`ORresidAll`) and several per-class macros were
+> removed. The values remain in `output/paper_additions.json`. The map below
+> documents the original submission set.
+
+
 One line per macro inserted at submission: LaTeX macro → key path in
 `output/paper_additions.json` → producing function in
 `src/paper_additions.py`. All macros are generated mechanically by

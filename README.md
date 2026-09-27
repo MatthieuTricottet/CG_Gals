@@ -35,6 +35,7 @@ CG_Gals/
 │   ├── host_controlled.py      # within-host CG-member experiment
 │   ├── paper_template/   # Jinja2 LaTeX template (A&A)
 │   └── utils/            # shared helpers
+├── reproduce.py          # single entry point: every number, figure and the PDF
 ├── audit/                # 2026 statistical-audit records and verification
 ├── analysis/gary_r2/     # 2026-09 revision-round diagnostics and checks
 ├── results/diagnostics/  # read-only diagnostic tables + diagnostics_gary_r2.json
@@ -45,46 +46,54 @@ CG_Gals/
 
 ## Reproduction
 
+Python 3.13 (the pinned `scipy==1.15.1` has no wheels for 3.14) with the
+exact versions of `requirements.lock`; pdflatex and bibtex for the paper.
+
 ```bash
-python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt        # or requirements.lock for exact pins
-python audit/run_full_pipeline.py      # analyses + paper from cached sample
-python audit/run_full_pipeline.py --rebuild   # additionally rebuild the
-                                              # processed sample (SDSS query,
-                                              # falls back to the cache)
-pytest                                 # invariants and render smoke tests
+python3.13 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.lock
+python reproduce.py            # every analysis, value file, figure, and the PDFs
+python reproduce.py --render   # re-render the paper from existing outputs only
+pytest                         # invariants, statistics helpers, render checks
 ```
 
-`python -m src.main` honours the flags in `src/config.py`
-(`RENDER_PAPER_ONLY = True` renders the paper from the existing JSON without
-re-running analyses). The paper and its online diagnostic supplement are
-compiled to `output/paper/paper.pdf` and
-`output/paper/online_supplement.pdf` (pdflatex + bibtex required). Every
-stochastic step uses a fixed, documented
-seed; `output/results.json` and `output/results_build.json` are regenerated
-by the pipeline and feed the Jinja2 template — never edit
-`output/paper/paper.tex` by hand.
+`reproduce.py` is the single provenance path of the manuscript: it runs the
+full pipeline (`src/main.py` via `audit/run_full_pipeline.py`, writing
+`output/results.json` and the figures), `src/paper_additions.py` (macros),
+the referee value scripts still cited by the paper (`referee/T3`, `T4`, `T5`,
+`T7`, `T9`, `T10` -> `referee/values/`), the read-only diagnostics
+(`analysis/gary_r2/d1`-`d7`), and then renders
+`output/paper/paper.pdf` and `output/paper/online_supplement.pdf` from
+`src/paper_template/`. Every stochastic step uses a fixed, documented seed;
+never edit `output/paper/paper.tex` by hand. `python -m src.main` alone
+honours the flags in `src/config.py` (`RENDER_PAPER_ONLY = True` renders
+without re-running analyses).
 
-## External data caches
+## Data
 
-The galaxy-size analysis (`src/size_data.py`, `src/size_analysis.py`) uses two
-external catalogues fetched on first run and cached under `data/`:
+All inputs are tracked in `data/`:
 
-- **SDSS DR16 Petrosian and seeing columns** (`data/sdss_size_columns.csv`):
-  `petroR50_r`, `petroR90_r`, their uncertainties, `petroRad_r`, the field
-  seeing `psfWidth_r`, and the DR7 cross-match identifier `dr7objid`.
-- **Simard et al. (2011, ApJS 196, 11) structural subset**
-  (`data/simard2011_subset.csv`): pure-Sérsic half-light radii and indices
-  from VizieR `J/ApJS/196/11`, with a CDS FTP fallback into
-  `data/simard2011_raw/` (gitignored).
+- the compact-group and control catalogues (`CG4_*`, `Control4B_*`,
+  `Control4C_*`, `RG4_*`), the parent Lim groups (`PC_*`), and the full
+  Lim et al. (2017) SDSS galaxy and group catalogues (`SDSS(L) *.dat`, used
+  for the host groups and the 55-arcsec crowding flag);
+- `processed_sample.pkl`: the processed samples plus the cached SDSS DR16
+  reference query (MPA-JHU masses and SFRs, Galaxy Zoo 1, `galSpecLine`);
+- cached public-catalogue retrievals, refreshed only for missing identifiers:
+  `sdss_size_columns.csv` (DR16 Petrosian and seeing columns),
+  `simard2011_subset.csv` (Simard et al. 2011, VizieR `J/ApJS/196/11`),
+  `galspecindx_dr12.csv` (MPA-JHU `d4000_n`, `lick_hd_a`),
+  `galspecline_dr16.csv` (MPA-JHU line fluxes, equivalent widths and errors
+  of the stored spectra, `src/emission_lines.py`),
+  `sdss_spectral_provenance_dr12.csv` (spectrum provenance and
+  `specsfr_tot_p50`), `ds18_subset.csv` and `photoobjdr7_map.csv`
+  (Dominguez Sanchez et al. 2018, VizieR `J/MNRAS/476/3661`, and the DR8->DR7
+  identifier bridge);
+- `galspecindx_dr12_queried_ids.txt` and `galspecline_dr16_queried_ids.txt`:
+  identifiers already queried, including the BOSS spectra that have no
+  MPA-JHU row, so that they are not queried again.
 
-- **MPA-JHU spectral indices** (`data/galspecindx_dr12.csv`): `d4000_n` and
-  `lick_hd_a` with errors from DR12 `galSpecIndx`, keyed by the stored DR12
-  `specObjID` (`src/spectral_indices.py`); descriptive use only.
-
-All fetches are idempotent: once the caches cover the sample's identifiers,
-reruns are fully offline. The SDSS spectroscopic sample itself is cached in
-`data/processed_sample.pkl`.
+Once these caches exist the whole reproduction runs offline.
 
 ## Verification
 

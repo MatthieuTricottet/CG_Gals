@@ -1,5 +1,7 @@
 # Referee response draft — "Are galaxies in compact groups special?"
 
+> Note (2026-09-27, audit-r3): the T1 and T2 artefacts cited below were moved to `referee/superseded/`; their crowding flag used quartet co-members only and has been replaced by the full-catalogue flag of `src/crowding.py`.
+
 Assembled from the per-task summaries (order: T0, T6, T1, T2, T3, T4, T5, T7, T8).
 All new analyses are labelled sensitivity families with their own multiplicity
 corrections; the published Holm/BH families are frozen. Every number quoted here

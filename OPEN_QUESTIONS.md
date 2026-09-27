@@ -28,3 +28,13 @@ The earlier investigation notes are kept below for the record: the
 earlier parent-catalogue revision (75 groups absent from the committed
 `PC_Gals.csv`, 200/224 RG4 galaxies), which compounded the discrepancy but
 was not the cause of the 60-vs-61 gap.
+
+## 2. Author inputs still needed before submission (audit-r3, 2026-09-27)
+
+Moved here from `% TODO(MT)` comments in the manuscript template so that the
+paper source carries no TODO markers:
+
+* DOI of the archived article release (Data availability section);
+* personal acknowledgements (colleagues, informal readers);
+* funding statements: MT; GAM; EDG (CONICET and SECyT--UNC, Argentina, grant
+  numbers).

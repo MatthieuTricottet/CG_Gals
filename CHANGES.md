@@ -1,3 +1,64 @@
+# Revision round audit-r3 (2026-09-27) — response to the referee-style audit
+
+Starting point: tag `pre-audit-r3` (= a3d08b2). The audit in
+`audit_claude_referee/` (scripts and outputs) was re-derived with the
+project's own galaxy frame before any text changed; the working note is
+`results/diagnostics/audit_r3/SCIENTIFIC_STORY.md`. `python reproduce.py`
+regenerates every number of the paper.
+
+## New analyses (all in the pipeline, `results.json['extended_specialness']`)
+
+| Module | Content |
+|---|---|
+| `src/radial_position.py` | satellite E-class models with projected BGG distance (log R, log R/r200, spline, common support); fractions at the CG4 covariates with group bootstrap; Fig. `fig_radial_position.pdf` |
+| `src/quenching_morphology.py` | quenched at fixed GZ1 class and continuous mass (+ spline, class x mass, + log R), E class at fixed sSFR class, missing-sSFR extremes in the adjusted models, class x mass-tercile Kitagawa (descriptive) |
+| `src/halpha_emission.py`, `src/emission_lines.py` | galSpecLine fluxes/EWs with errors (cached `data/galspecline_dr16.csv`); WHAN-style split of strong emitters, BPT mix of strong emitters, SF-emitter strength |
+| `src/crowding.py` | 55-arcsec flag from the full Lim catalogue (was: quartet co-members only), exclusion refits with E/(E+S) denominators, missing-data diagnostics |
+| `src/sample_sensitivity.py` | split groups restored and Lim 3688 retained (previously hard-coded in the template) |
+| `host_controlled.radial_specifications/radial_overlap` | within-host radius specifications and overlap (AUC, co-member fraction inside member radii) |
+| `matched_controls.group_level_regression/group_match_sensitivity` | all-quartet group regression; matching sensitivity (unpenalised, random order, sigma_v noise, dedup pool) |
+| `ssfr_robustness.classifier_variants` | specsfr_p50 boundary, unconstrained EM mixture, fixed -11 cut |
+
+## Fixes
+
+* `log_group_mass` was built from `M_group`, an absolute magnitude, so it was
+  all-NaN and silently dropped from every model: removed. `_covariates` and
+  the matching-variable selection now raise instead of dropping a variable;
+  `fit_logistic_model` records `predictors_dropped`.
+* Matching documents its penalised propensity model (scikit-learn L2, C=1).
+* `config.BASE_PATH` is derived from the file location; the unused root
+  `common.py` (private `MattUtils` dependency) is removed; DS18 inputs are
+  tracked subsets (`data/ds18_subset.csv`, `data/photoobjdr7_map.csv`).
+* New attach steps preserve `DataFrame.attrs` (the size availability audit had
+  silently disappeared); the renderer now stops if a cited block is skipped.
+* Stale expected-value checks removed from `src/paper_additions.py`; unused
+  LaTeX macros pruned; referee T1/T2 artefacts moved to `referee/superseded/`.
+* Rerunning the value scripts refreshed two stale inputs computed before the
+  Zheng--Shen label repair (T9 host-BGG alignment by class, D3 stored-class
+  models); quoted totals unchanged.
+* `src/spectral_indices.py` re-queried SDSS on every run for the 213 BOSS
+  spectra that have no `galSpecIndx` row; queried identifiers are now kept in
+  `data/galspecindx_dr12_queried_ids.txt` (as for `galSpecLine`), so the
+  pipeline runs offline. The split-group sensitivity had added 64 rows to the
+  cache (restored split-group and Lim 3688 galaxies).
+* Online supplement: the hand-written "Fig. S.7" caption did not advance the
+  figure counter (two figures carried S.7); fixed with `\refstepcounter`.
+* Abstract kept below the A&A limit of 300 words (the aa class warns above).
+
+## Manuscript
+
+Abstract, Sects. 2.2, 2.4, 3 (new 3.2 "Position within the group"; Table 4
+restructured by control with BGG, position- and class-adjusted rows; new
+Table 5 of fractions at the CG4 covariates; new radial figure), 3.3
+(continuous-mass result replaces the morphology-only Kitagawa claim), 3.4
+(H-alpha decomposition, exploratory; property figure panels a/b), 3.5, 4, 5;
+compact-group classes and isolated systems moved to Appendix F; matching to
+Appendix G; Appendix A (missing data associated with crowding), B (classifier
+described as a constrained KL fit; variants; adjusted extremes), D
+(conventions), H (generated sensitivities, crowding, position specifications
+table). All `\iffalse` blocks and TODO markers removed (author inputs listed
+in `OPEN_QUESTIONS.md` #2).
+
 # Revision round gary-r2 (2026-09-17) — readability review by G. Mamon
 
 Starting point: tag `pre-gary-r2` (= 71011cd). Nothing was tuned to reproduce

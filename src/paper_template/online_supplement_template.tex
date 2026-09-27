@@ -109,20 +109,72 @@ The raw colour--mass fits do not show a single common relation for every sample:
 \clearpage
 \section{Pooled adjusted models}
 
-For a compact summary across the heterogeneous control definitions, the article also fits binomial models to a pooled catalogue. Because the control catalogues overlap heavily, the control side is first deduplicated by SDSS object identifier and standard errors are clustered by physical Lim group. The common adjustment set contains stellar mass, redshift, satellite/BGG rank, group luminosity, and velocity dispersion. The figure below visualises the coefficients tabulated in Appendix H of the article. The pooled model is a summary, not a replacement for the separate-control contrasts: it reinforces the satellite E-class morphology shift, whereas the quenched estimate changes across controls and is not reproduced by the matched comparison.
+For a compact summary across the heterogeneous control definitions, the article also fits binomial models to a pooled catalogue. Because the control catalogues overlap heavily, the control side is first deduplicated by SDSS object identifier and standard errors are clustered by physical Lim group. The adjustment set contains stellar mass, redshift, a BGG/satellite indicator, quartet luminosity, and velocity dispersion. The figure below visualises the pooled coefficients quoted in the appendix on pooled models of the article. The pooled model is a summary, not a replacement for the separate-control contrasts: it reinforces the satellite E-class morphology shift, whereas the quenched estimate depends on the control sample.
 
 \begin{center}
   \includegraphics[width=\columnwidth]{fig_specialness_logistic_coefficients.pdf}
   \par\smallskip
   \begin{minipage}{\columnwidth}\small
-  \textbf{Fig. S.7.} Adjusted \CG{} odds ratios from the pooled models. The GZ1 E-class outcomes refer to the smooth early-type-like GZ1 class, not to a physically pure sample of classical ellipticals. Points are odds ratios and bars are 95\% confidence intervals; the vertical line marks no difference.
+  \refstepcounter{figure}\label{fig:supp_pooled}\textbf{Fig.~\thefigure.} Adjusted \CG{} odds ratios from the pooled models. The GZ1 E-class outcomes refer to the smooth early-type-like GZ1 class, not to a physically pure sample of classical ellipticals. Points are odds ratios and bars are 95\% confidence intervals; the vertical line marks no difference.
   \end{minipage}
 \end{center}
+
+<% set phase = phase_space_segregation if phase_space_segregation else es.get('phase_space_segregation', es.get('phase_space', {})) %>
+<% if phase.get('status') == 'ok' %>
+\section{Projected phase space}
+<% set pst = phase.get('text_summary', {}) %>
+We ask whether the \CG{}--\RG{} satellite contrasts vary with projected position relative to the BGG, using << pst.get('cg_satellite_n') >> \CG{} and << pst.get('rg_satellite_n') >> \RG{} satellites ranked by projected BGG-centric distance and, when available, \(|\Delta v_{\rm BGG}|/\sigma_v\); such coordinates are statistical proxies for infall state, not orbital reconstructions (Mahajan et al. 2011; Oman \& Hudson 2016; Wetzel et al. 2013).
+<% set inner_early_delta_display = ((pst.get('cg_earlytype_fraction_inner') * 100)|round(1)) - ((pst.get('rg_earlytype_fraction_inner') * 100)|round(1)) %>
+In the innermost satellite-distance bin, the quenched fractions are << pst.get('cg_quenched_fraction_inner')|pct(1) >>\% for \CG{} and << pst.get('rg_quenched_fraction_inner')|pct(1) >>\% for \RG, a difference of \(<< pst.get('delta_quenched_fraction_inner')|pct(1) >>\) percentage points; the corresponding GZ1 E-class fractions are << pst.get('cg_earlytype_fraction_inner')|pct(1) >>\% and << pst.get('rg_earlytype_fraction_inner')|pct(1) >>\% (difference \(<< inner_early_delta_display|fmt(1) >>\) points).
+<% if pst.get('quenched_radial_trend') == 'stronger_inner' %>
+The quenched-fraction contrast is larger in the inner bin than in the outer bin, favouring a centrally concentrated environmental component.
+<% elif pst.get('quenched_radial_trend') == 'stronger_outer' %>
+The quenched-fraction contrast is not confined to the inner bin; it is at least as large at larger projected distance, which is more consistent with preprocessing or a global sample difference.
+<% elif pst.get('quenched_radial_trend') == 'similar_at_inner_and_outer_ranks' %>
+The quenched-fraction contrast is similar between the inner and outer distance ranks, so the data do not isolate the \CG{} offset to the immediate BGG environment.
+<% else %>
+The radial dependence of the quenched-fraction contrast cannot be determined robustly with the available bin counts.
+<% endif %>
+<% set quenched_model = phase.get('regression_results', {}).get('quenched_distance', {}) %>
+<% if quenched_model.get('status') == 'ok' %>
+After adjusting for stellar mass, redshift, distance bin, and available group-scale controls, the quenched-status model gives a \CG{} odds ratio of << pst.get('quenched_model_sample_cg_or')|fmt(2) >> (95\% CI << pst.get('quenched_model_sample_cg_ci_low')|fmt(2) >>--<< pst.get('quenched_model_sample_cg_ci_high')|fmt(2) >>; << pval_text(pst.get('quenched_model_sample_cg_p')) >>)<% endif %><% set early_model = phase.get('regression_results', {}).get('early_type_distance', {}) %><% if early_model.get('status') == 'ok' %>, and the analogous E-class model gives << pst.get('earlytype_model_sample_cg_or')|fmt(2) >> (<< pval_text(pst.get('earlytype_model_sample_cg_p')) >>)<% endif %>.
+<% set matched_phase = phase.get('matched_robustness', {}) %>
+<% if matched_phase.get('status') == 'ok' %>
+A nearest-neighbour mass--redshift matched check on << matched_phase.get('n_cg4_matched') >> \CG{}--\RG{} satellite pairs gives matched quenched- and E-class-fraction differences of \(<< pst.get('matched_delta_quenched')|pct(1) >>\) and \(<< pst.get('matched_delta_earlytype')|pct(1) >>\) percentage points.
+<% endif %>
+In compact groups the member counts are small, velocity dispersions are noisy, and projection mixes recently accreted and long-resident satellites, so these bins locate where the contrast appears; they are not a dynamical clock.
+<% endif %>
+
+
+<% if matched.get('balance_figure') %>
+\section{Galaxy-level matching balance}
+
+Figure~\ref{fig:supp_matched_balance} shows the covariate balance of the galaxy-level match described in the article's appendix on matching.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{<< SUBFIGURES_PATH >><< matched.get('balance_figure') >>}
+    \caption{Balance of the galaxy-level match of the article's appendix on matching. Absolute standardised mean differences before and after matching; the labelled 0.1 line is a conventional diagnostic guide.}
+    \label{fig:supp_matched_balance}
+\end{figure}
+<% endif %>
+
+<% set selection = es.get('selection_diagnostics', {}) %>
+\section{Measurement availability}
+
+<% if selection.get('availability_figure') %>
+\begin{figure*}
+    \centering
+    \includegraphics[width=\textwidth]{<< SUBFIGURES_PATH >><< selection.get('availability_figure') >>}
+    \caption{Measurement availability in the four samples. Cells give percentages of the final per-sample galaxy count. The colour row describes the four derived SDSS columns, the spectral-index row requires finite non-sentinel values with positive errors, and the Simard row includes all size-quality cuts.}
+    \label{fig:supp_availability}
+\end{figure*}
+<% endif %>
 
 \clearpage
 \section{Additional environmental diagnostics}
 
-The distance-to-BGG, magnitude-gap, and luminosity-dominance screens are retained here because they are useful provenance checks but do not add a control-independent signal to the article. Satellite sSFR shows no consistent monotonic dependence on projected BGG distance across the four samples. Binary dominance splits and further subdivision by BGG morphology produce small, heterogeneous subsets; their occasional low p-values do not survive as a coherent compact-group effect. Likewise, magnitude-gap differences are sensitive to the control definition. These diagnostics support the article's choice to retain the continuous group-scale screen and projected phase-space result as the more interpretable summaries.
+The distance-to-BGG, magnitude-gap, and luminosity-dominance screens are retained here because they are useful provenance checks but do not add a control-independent signal to the article. Satellite sSFR shows no consistent monotonic dependence on projected BGG distance across the four samples. Binary dominance splits and further subdivision by BGG morphology produce small, heterogeneous subsets; their occasional low p-values do not survive as a coherent compact-group effect. Likewise, magnitude-gap differences are sensitive to the control definition. These diagnostics support the article's choice to retain the continuous group-scale screen and the projected-position analysis as the more interpretable summaries.
 
 The optical-colour panels above give the corresponding full distributional diagnostics: matched-photometry retention is selective, and fitted offsets depend on the control definition and split sample.
 
@@ -132,7 +184,7 @@ The optical-colour panels above give the corresponding full distributional diagn
 \begin{figure}[H]
   \centering
   \includegraphics[width=\columnwidth]{<< sz.get('per_control', {}).get('figure') >>}
-  \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control catalogue separately. Every model uses the article's main adjustment set: stellar mass, redshift, rank, group luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii at fixed covariates.}
+  \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control catalogue separately. Every model uses the article's main adjustment set: stellar mass, redshift, a BGG/satellite indicator, quartet luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii at fixed covariates.}
   \label{fig:supp_size_per_control}
 \end{figure}
 <% endif %>
