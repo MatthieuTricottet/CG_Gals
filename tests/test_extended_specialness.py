@@ -62,7 +62,6 @@ def synthetic_frame(seed=20260612):
             "dist2BGG_kpc": rng.uniform(5, 350, n),
             "R_scale": rng.uniform(120, 300, n),
             "velocity_dispersion": rng.uniform(80, 350, n),
-            "log_group_mass": np.repeat(rng.normal(12.7, 0.4, n_groups), members),
             "log_group_luminosity": np.repeat(rng.normal(11.0, 0.2, n_groups), members),
             "dominance": np.repeat(rng.uniform(0.35, 0.8, n_groups), members),
             "M_r": -19.5 - 0.8 * (4 - rank) + rng.normal(0, 0.15, n),
@@ -119,9 +118,10 @@ def test_all_modules_skip_gracefully_with_missing_columns():
         assert function(empty)["status"] == "skipped"
 
 
-def test_group_scale_availability_does_not_require_absent_mass():
+def test_group_scale_availability_has_no_group_mass_column():
+    # the catalogue M_group column is an absolute magnitude; no group-mass
+    # covariate exists, so none may be audited (or silently dropped)
     frame = synthetic_frame()
-    frame["log_group_mass"] = np.nan
 
     result = run_selection_diagnostics(frame)
 
@@ -134,9 +134,8 @@ def test_group_scale_availability_does_not_require_absent_mass():
             "n_total"
         ]
     )
-    assert (
-        "log_group_mass"
-        in result["group_scale_column_audit"]["missing_or_sparse_columns"]
+    assert "log_group_mass" not in result["group_scale_column_audit"].get(
+        "missing_or_sparse_columns", []
     )
 
 

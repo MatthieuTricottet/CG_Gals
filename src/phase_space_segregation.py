@@ -559,7 +559,6 @@ def _add_model_terms(satellites: pd.DataFrame, include_velocity: bool = False):
     continuous = ["logMstar", "z_numeric"]
 
     optional_controls = [
-        "log_group_mass",
         "log_group_luminosity",
         "velocity_dispersion",
         "dominance",

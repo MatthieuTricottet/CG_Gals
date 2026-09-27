@@ -181,6 +181,30 @@ def _validate_render_context(ctx):
             if _get_path(ctx, path) is None:
                 missing.append(path)
 
+    # Blocks whose numbers the manuscript cites: in a full pipeline output a
+    # skipped or failed analysis must stop the render instead of silently
+    # dropping a sentence.
+    extended = _get_path(ctx, "extended_specialness")
+    required_blocks = []
+    if isinstance(extended, dict) and extended.get("status") == "ok":
+        required_blocks = [
+            "extended_specialness.primary_contrasts",
+            "extended_specialness.radial_position",
+            "extended_specialness.quenching_morphology",
+            "extended_specialness.halpha_emission",
+            "extended_specialness.crowding",
+            "extended_specialness.group_level_robustness",
+            "extended_specialness.ssfr_classifier_variants",
+            "extended_specialness.sample_sensitivity",
+            "extended_specialness.host_controlled",
+        ]
+        if isinstance(size_analysis, dict) and size_analysis.get("status") == "ok":
+            required_blocks.append("extended_specialness.size_analysis.availability_audit")
+    for path in required_blocks:
+        block = _get_path(ctx, path)
+        if not isinstance(block, dict) or block.get("status") != "ok":
+            missing.append(f"{path} (status: {None if block is None else block.get('status')})")
+
     if missing:
         joined = "\n  - ".join(missing)
         raise KeyError(f"Render context missing required keys:\n  - {joined}")

@@ -14,8 +14,8 @@ Three parts.
     non-missing for >= 65% of the model frame; matching: >= 70%), plus
     the realized completeness per family.
 
-(3) Sensitivity reruns WITHOUT sigma_v (column dropped before the
-    covariate/matching-variable auto-selection): the three per-control
+(3) Sensitivity reruns WITHOUT sigma_v (excluded explicitly from the
+    covariate and matching-variable sets): the three per-control
     adjusted families, the pooled secondary models, the galaxy-level
     propensity match, and the group-level matched satellite-composition
     contrasts (pooled + per-control). Same seeds, B = 9999, clustering,
@@ -135,8 +135,8 @@ def main() -> None:
 
     # ---- (2) enumeration -------------------------------------------------
     completeness = {
-        "rule_adjusted_models": "covariate used when notna fraction >= 0.65 of the model frame (specialness_models._covariates)",
-        "rule_matching": "variable used when notna fraction >= 0.70 (both arms for the galaxy match; group tables >= 0.70)",
+        "rule_adjusted_models": "fixed covariate set; an entry below 65% completeness raises (specialness_models._covariates)",
+        "rule_matching": "fixed variable set; an entry below 70% completeness in either arm raises (matched_controls._select_variables)",
         "realized": {},
     }
     for control in ["Control4B", "Control4C", "RG4"]:
@@ -163,11 +163,12 @@ def main() -> None:
 
     # ---- (3) reruns without sigma_v -------------------------------------
     print("rerunning primary contrasts without sigma_v ...")
-    primary_wo = run_primary_contrasts(None, frame=frame_wo)
+    no_sigma = ("velocity_dispersion",)
+    primary_wo = run_primary_contrasts(None, frame=frame_wo, exclude_covariates=no_sigma)
     print("rerunning pooled models without sigma_v ...")
-    pooled_wo = fit_logistic_specialness_models(frame_wo)
+    pooled_wo = fit_logistic_specialness_models(frame_wo, exclude_covariates=no_sigma)
     print("rerunning matched analyses without sigma_v (9999 bootstraps) ...")
-    matched_wo = run_matched_control_analysis(frame_wo)
+    matched_wo = run_matched_control_analysis(frame_wo, exclude_variables=no_sigma)
 
     values["published"] = {
         "primary": {

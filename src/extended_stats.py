@@ -362,12 +362,15 @@ def fit_logistic_model(
 
     used_predictors = []
     standardized = []
+    dropped = []
     for predictor in predictors:
         if work[predictor].nunique(dropna=True) < 2:
+            dropped.append({"predictor": predictor, "reason": "constant_in_fitted_frame"})
             continue
         if predictor in set(continuous):
             std = float(work[predictor].std(ddof=0))
             if not math.isfinite(std) or std == 0:
+                dropped.append({"predictor": predictor, "reason": "zero_variance"})
                 continue
             work[predictor] = (work[predictor] - float(work[predictor].mean())) / std
             standardized.append(predictor)
@@ -421,6 +424,7 @@ def fit_logistic_model(
         "n": int(fitted.nobs),
         "formula": f"{outcome} ~ " + " + ".join(used_predictors),
         "predictors_used": used_predictors,
+        "predictors_dropped": dropped,
         "standardized_predictors": standardized,
         "covariance": covariance,
         "n_clusters": int(groups.nunique()) if groups is not None else None,
@@ -440,3 +444,172 @@ def fit_logistic_model(
             }
         )
     return result
+
+
+def restricted_cubic_spline(values, knots) -> np.ndarray:
+    """Non-linear basis column of a three-knot restricted cubic spline.
+
+    Harrell's parametrisation: with the linear term ``x`` this spans the
+    natural cubic spline that is linear beyond the outer knots.  ``knots``
+    are fixed by the caller (the 10th, 50th and 90th percentiles of the
+    analysis frame) so that resampled refits share one basis.
+    """
+
+    x = np.asarray(values, dtype=float)
+    k0, k1, k2 = (float(k) for k in knots)
+
+    def cube(u):
+        return np.clip(u, 0.0, None) ** 3
+
+    return (
+        cube(x - k0)
+        - cube(x - k1) * (k2 - k0) / (k2 - k1)
+        + cube(x - k2) * (k1 - k0) / (k2 - k1)
+    ) / (k2 - k0) ** 2
+
+
+def standardized_contrast(
+    frame: pd.DataFrame,
+    outcome: str,
+    predictors: list[str],
+    *,
+    continuous: Iterable[str] = (),
+    treatment: str = "is_CG4",
+    cluster_col: str = "physical_group",
+    n_boot: int = 2000,
+    seed: int = DEFAULT_SEED,
+) -> dict[str, object]:
+    """Adjusted CG4 fraction contrast standardised to the CG4 galaxies.
+
+    A binomial GLM of ``outcome`` on ``predictors`` (which must include the
+    treatment indicator) is fitted to the complete cases.  For the CG4 rows
+    the predicted outcome is averaged with the indicator set to one (this
+    reproduces the observed CG4 fraction) and to zero (the fraction the
+    control relation predicts for galaxies with the CG4 covariate values).
+    Their difference is a fraction difference at the CG4 covariate
+    distribution, which unlike an odds ratio can be compared directly
+    between nested models.  Intervals come from a bootstrap that resamples
+    physical groups separately within the CG4 and the control sample
+    (percentile 95 per cent limits); the odds ratio of the indicator is
+    reported with its cluster-robust Wald interval.
+    """
+
+    if sm is None:
+        return _skipped("statsmodels_unavailable")
+    if treatment not in predictors:
+        raise ValueError("predictors must contain the treatment indicator")
+    required = [outcome, *predictors, cluster_col]
+    missing = [column for column in required if column not in frame.columns]
+    if missing:
+        raise KeyError(f"standardized_contrast: missing columns {missing}")
+    work = frame[required].replace([np.inf, -np.inf], np.nan).dropna().copy()
+    for column in [outcome, *predictors]:
+        work[column] = pd.to_numeric(work[column], errors="coerce")
+    work = work.dropna()
+    treated_rows = work[treatment].to_numpy() == 1
+    if treated_rows.sum() < 10 or (~treated_rows).sum() < 10:
+        return _skipped("too_few_complete_cases", n=int(len(work)))
+    design = work[predictors].astype(float).copy()
+    for column in continuous:
+        if column in design:
+            std = float(design[column].std(ddof=0))
+            if not math.isfinite(std) or std == 0:
+                raise ValueError(f"standardized_contrast: {column} has no variance")
+            design[column] = (design[column] - float(design[column].mean())) / std
+    design.insert(0, "const", 1.0)
+    y = work[outcome].to_numpy(dtype=float)
+    groups = work[cluster_col].to_numpy()
+
+    def _fractions(x_matrix, y_values, rows):
+        fitted = sm.GLM(y_values, x_matrix, family=sm.families.Binomial()).fit()
+        treated = x_matrix[rows]
+        as_cg4 = treated.copy()
+        as_cg4[:, 1] = 1.0
+        as_control = treated.copy()
+        as_control[:, 1] = 0.0
+        return (
+            float(np.mean(fitted.predict(as_cg4))),
+            float(np.mean(fitted.predict(as_control))),
+        )
+
+    x_all = design.to_numpy(dtype=float)
+    if list(design.columns).index(treatment) != 1:
+        raise AssertionError("treatment indicator must follow the constant")
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore")
+        robust = sm.GLM(y, design, family=sm.families.Binomial()).fit(
+            cov_type="cluster", cov_kwds={"groups": pd.factorize(groups)[0]}
+        )
+        p_cg4, p_control = _fractions(x_all, y, treated_rows)
+
+        rng = np.random.default_rng(seed)
+        members = {}
+        for arm in (True, False):
+            arm_groups = pd.unique(groups[treated_rows == arm])
+            members[arm] = [
+                np.flatnonzero((groups == g) & (treated_rows == arm)) for g in arm_groups
+            ]
+        draws = []
+        for _ in range(n_boot):
+            rows = np.concatenate(
+                [
+                    np.concatenate(
+                        [members[arm][j] for j in rng.integers(0, len(members[arm]), len(members[arm]))]
+                    )
+                    for arm in (True, False)
+                ]
+            )
+            try:
+                draws.append(_fractions(x_all[rows], y[rows], treated_rows[rows]))
+            except Exception:  # pragma: no cover - rare separation in a draw
+                continue
+    draws = np.asarray(draws)
+    difference = draws[:, 0] - draws[:, 1]
+    confidence = robust.conf_int()
+    return {
+        "status": "ok",
+        "outcome": outcome,
+        "predictors": list(predictors),
+        "n": int(len(work)),
+        "n_cg4": int(treated_rows.sum()),
+        "n_clusters": int(pd.Series(groups).nunique()),
+        "odds_ratio": float(np.exp(robust.params[treatment])),
+        "odds_ratio_ci95": [
+            float(np.exp(confidence.loc[treatment, 0])),
+            float(np.exp(confidence.loc[treatment, 1])),
+        ],
+        "odds_ratio_p": float(robust.pvalues[treatment]),
+        "fraction_cg4": p_cg4,
+        "fraction_control_standardised": p_control,
+        "fraction_control_standardised_ci95": [
+            float(np.quantile(draws[:, 1], 0.025)),
+            float(np.quantile(draws[:, 1], 0.975)),
+        ],
+        "difference": p_cg4 - p_control,
+        "difference_ci95": [
+            float(np.quantile(difference, 0.025)),
+            float(np.quantile(difference, 0.975)),
+        ],
+        "difference_p": empirical_p_two_sided(difference),
+        "n_boot": int(len(draws)),
+        "seed": int(seed),
+        "resampling": "physical groups, resampled separately within CG4 and the control",
+    }
+
+
+def overlap_coefficient(a, b, n_bins: int = 60) -> float | None:
+    """Overlap of two distributions: integral of the minimum of their densities.
+
+    Densities are 60-bin histograms on the common range (the definition used
+    for the compactness and tidal-index support diagnostics); 0 means
+    disjoint and 1 identical samples.
+    """
+
+    a = pd.to_numeric(pd.Series(a), errors="coerce").dropna().to_numpy(dtype=float)
+    b = pd.to_numeric(pd.Series(b), errors="coerce").dropna().to_numpy(dtype=float)
+    if a.size < 2 or b.size < 2:
+        return None
+    grid = np.linspace(min(a.min(), b.min()), max(a.max(), b.max()), n_bins + 1)
+    density_a, _ = np.histogram(a, bins=grid, density=True)
+    density_b, _ = np.histogram(b, bins=grid, density=True)
+    return float(np.sum(np.minimum(density_a, density_b)) * (grid[1] - grid[0]))

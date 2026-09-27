@@ -36,14 +36,21 @@ def _clean_ids(values) -> np.ndarray:
 
 
 def fetch_spectral_indices(specobjids, cache_path: str = CACHE_PATH) -> pd.DataFrame:
-    """Return the cached ``galSpecIndx`` rows, querying SDSS only for missing ids."""
+    """Return the cached ``galSpecIndx`` rows, querying SDSS only for new ids."""
 
     ids = _clean_ids(specobjids)
     cached = pd.DataFrame(columns=["specobjid", *INDEX_COLUMNS])
     if os.path.exists(cache_path):
         cached = pd.read_csv(cache_path)
         cached["specobjid"] = cached["specobjid"].astype("int64")
+    # ids already queried without a galSpecIndx row (BOSS spectra, outside the
+    # MPA-JHU coverage) are remembered so that reruns stay offline.
+    queried_path = cache_path.replace(".csv", "_queried_ids.txt")
+    queried = set()
+    if os.path.exists(queried_path):
+        queried = {int(line) for line in open(queried_path) if line.strip()}
     missing = np.setdiff1d(ids, cached["specobjid"].to_numpy(dtype="int64"))
+    missing = np.array(sorted(set(missing.tolist()) - queried), dtype="int64")
     if missing.size == 0:
         return cached
     try:
@@ -65,6 +72,7 @@ def fetch_spectral_indices(specobjids, cache_path: str = CACHE_PATH) -> pd.DataF
             if co.VERBOSE:
                 print(f"[spectral indices] query failed: {exc}")
             break
+        queried.update(int(value) for value in chunk)
         if result is not None and len(result):
             pieces.append(result.to_pandas())
     if pieces:
@@ -77,6 +85,9 @@ def fetch_spectral_indices(specobjids, cache_path: str = CACHE_PATH) -> pd.DataF
             .sort_values("specobjid")
         )
         cached.to_csv(cache_path, index=False)
+    queried -= set(cached["specobjid"].tolist())
+    with open(queried_path, "w") as handle:
+        handle.write("".join(f"{value}\n" for value in sorted(queried)))
     return cached
 
 

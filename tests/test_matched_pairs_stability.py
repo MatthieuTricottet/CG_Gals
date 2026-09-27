@@ -83,6 +83,9 @@ def test_matched_controls_return_dict_unchanged_by_refactor():
         "two_sided_cluster_sensitivity",
         "satellite_decomposition",
         "complementarity_audit",
+        # documented propensity model and matching algorithm (audit-r3)
+        "propensity_model",
+        "matching_algorithm",
     }
     assert set(first.keys()) == expected_keys
     assert set(first["effects"].keys()) == {

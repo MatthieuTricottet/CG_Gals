@@ -364,6 +364,7 @@ def main():
         .nunique()
     )
     overlap = {
+        "n_parent_groups": int(identity.load_raw_samples()["PC"]["Group"].nunique()),
         "n_lim_groups": int(overlap_table["lim_group"].nunique()),
         "n_galaxies": int(len(overlap_table)),
         "by_class": {

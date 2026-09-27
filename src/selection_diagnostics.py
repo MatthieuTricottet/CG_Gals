@@ -98,7 +98,6 @@ AVAILABILITY_NOTES = {
 GROUP_SCALE_AUDIT_COLUMNS = [
     "R_scale",
     "velocity_dispersion",
-    "log_group_mass",
     "log_group_luminosity",
     "dominance",
 ]
@@ -126,28 +125,13 @@ def _availability_mask(part, quantity, columns):
 
 
 def _nearest_angular(frame):
-    values = np.full(len(frame), np.nan)
-    positions = {index: position for position, index in enumerate(frame.index)}
-    for _, group in frame.groupby("group_uid", observed=True):
-        clean = group[["RA", "Dec"]].apply(
-            lambda column: np.asarray(column, dtype=float)
-        )
-        if len(group) < 2 or not np.isfinite(clean.to_numpy()).all():
-            continue
-        ra = np.deg2rad(clean["RA"].to_numpy())
-        dec = np.deg2rad(clean["Dec"].to_numpy())
-        delta_ra = ra[:, None] - ra[None, :]
-        delta_dec = dec[:, None] - dec[None, :]
-        a = (
-            np.sin(delta_dec / 2) ** 2
-            + np.cos(dec[:, None]) * np.cos(dec[None, :]) * np.sin(delta_ra / 2) ** 2
-        )
-        angular = 2 * np.arcsin(np.sqrt(np.clip(a, 0, 1)))
-        np.fill_diagonal(angular, np.inf)
-        nearest_arcsec = np.min(angular, axis=1) * 180 / np.pi * 3600
-        for index, value in zip(group.index, nearest_arcsec):
-            values[positions[index]] = value
-    return values
+    """Nearest Lim-catalogue neighbour separation (arcsec); see ``crowding``."""
+
+    try:
+        from morphology_robustness import _nearest_angular as nearest
+    except ModuleNotFoundError:  # pragma: no cover
+        from .morphology_robustness import _nearest_angular as nearest
+    return nearest(frame)
 
 
 def _plot_availability(availability_counts, path):
@@ -403,7 +387,7 @@ def run_selection_diagnostics(data, output_dir: str | None = None):
                 }
 
     angular_result = {"status": "skipped", "reason": "missing_RA_Dec"}
-    if {"RA", "Dec", "group_uid"}.issubset(frame.columns):
+    if {"RA", "Dec", "objid"}.issubset(frame.columns):
         frame["nearest_angular_separation_arcsec"] = _nearest_angular(frame)
         angular_result = two_sample_summary(
             frame.loc[frame["is_CG4"] == 1, "nearest_angular_separation_arcsec"],

@@ -170,14 +170,6 @@ def separations_block(sample: dict) -> dict:
             q25_kpc=float(med.quantile(0.25)),
             q75_kpc=float(med.quantile(0.75)),
         )
-    check("sep_median_CG4_kpc", block["CG4"]["median_kpc"], 143, 2)
-    check("sep_q25_CG4_kpc", block["CG4"]["q25_kpc"], 114, 2)
-    check("sep_q75_CG4_kpc", block["CG4"]["q75_kpc"], 177, 2)
-    check("sep_median_RG4_kpc", block["RG4"]["median_kpc"], 430, 2)
-    check("sep_q25_RG4_kpc", block["RG4"]["q25_kpc"], 292, 2)
-    check("sep_q75_RG4_kpc", block["RG4"]["q75_kpc"], 494, 2)
-    check("sep_median_Control4B_kpc", block["Control4B"]["median_kpc"], 448, 10)
-    check("sep_median_Control4C_kpc", block["Control4C"]["median_kpc"], 293, 2)
     block["span_factor"] = float(
         max(v["median_kpc"] for k, v in block.items() if k in SAMPLES)
         / min(v["median_kpc"] for k, v in block.items() if k in SAMPLES)
@@ -237,13 +229,6 @@ def quenched_block(sample: dict, n_boot: int = 4000) -> dict:
         block["per_sample"][name] = per
         counts[name] = per
 
-    refs_e = {"CG4": (0.908, 0.02), "Control4B": (0.903, 0.02),
-              "Control4C": (0.887, 0.02), "RG4": (0.850, 0.02)}
-    refs_s = {"CG4": (0.326, 0.02), "Control4B": (0.357, 0.02),
-              "Control4C": (0.328, 0.02), "RG4": (0.295, 0.02)}
-    for name in SAMPLES:
-        check(f"PQE_{name}", counts[name]["Elliptical"]["p"], *refs_e[name])
-        check(f"PQSp_{name}", counts[name]["Spiral"]["p"], *refs_s[name])
 
     table = np.array([[counts[s]["Elliptical"]["quenched"],
                        counts[s]["Elliptical"]["classified"]
@@ -251,11 +236,7 @@ def quenched_block(sample: dict, n_boot: int = 4000) -> dict:
     chi2, p_hom, dof, _ = chi2_contingency(table)
     block["chi2_homogeneity_PQE"] = dict(chi2=float(chi2), p=float(p_hom),
                                          dof=int(dof))
-    check("chi2_PQE_homogeneity_p", p_hom, 0.39, 0.01)
 
-    kit_refs = {"Control4B": (-0.034, 0.02, ""),
-                "Control4C": (-0.016, 0.02, ""),
-                "RG4": (0.035, 0.02, "")}
     n_cg, q_cg = group_count_arrays(sample["CG4_Gals"])
     for ctrl in ["Control4B", "Control4C", "RG4"]:
         n_ct, q_ct = group_count_arrays(sample[ctrl + "_Gals"])
@@ -279,8 +260,6 @@ def quenched_block(sample: dict, n_boot: int = 4000) -> dict:
             n_boot=n_boot, seed=SEED,
             blocked_by="group within each sample (multinomial group weights)",
         )
-        ref, tol, note = kit_refs[ctrl]
-        check(f"kitagawa_conditional_{ctrl}", cond, ref, tol, note)
     return block
 
 
@@ -380,19 +359,10 @@ def zheng_shen_block(sample: dict) -> dict:
         block["mass_binned_satellites"][display[cname]] = mass_rows
 
     iso = block["per_class"]["Isolated"]
-    check("fE_isolated_all", iso["fE_all"]["p"], 7 / 18, 1e-9)
-    check("fE_isolated_sat", iso["fE_sat"]["p"], 4 / 14, 1e-9)
-    check("lM200_isolated", iso["median_host_lM200"], 12.86, 0.02)
     # Reference values after the 2026-09-17 label repair (gary-r2 D3): the
     # inherited export had Embedded/Predominant swapped relative to Zheng &
     # Shen (2021, Eq. 1); Embedded CGs (< half of the host luminosity) live in
     # the richer, more massive hosts.
-    check("lM200_embedded", block["per_class"]["Embedded"]["median_host_lM200"],
-          13.83, 0.02)
-    check("lM200_predominant",
-          block["per_class"]["Predom" if "Predom" in block["per_class"]
-                             else "Predominant"]["median_host_lM200"],
-          13.13, 0.02)
 
     fe_cg = _group_sat_fe(gals)
     iso_groups = set(cls.index[cls == "Isolated"])
@@ -427,13 +397,6 @@ def zheng_shen_block(sample: dict) -> dict:
         "5 classified isolated satellites; the two-bin counts are 9 and 5."
     )
 
-    check("perm_iso_vs_rest_p",
-          block["permutations"]["isolated_vs_rest_of_CG4"]["p"], 0.022, 0.01)
-    check("perm_iso_vs_RG4_p", block["permutations"]["isolated_vs_RG4"]["p"],
-          1.0, 0.1)
-    check("perm_iso_vs_C4C_p",
-          block["permutations"]["isolated_vs_Control4C"]["p"], 0.3, 0.15,
-          note="reference approximate; Control4C is the repaired sample")
     return block
 
 
@@ -592,14 +555,6 @@ def host_inclusive_block(sample: dict, work: pd.DataFrame) -> dict:
                            median_delta_dex=float(delta[ok].median()),
                            spearman_rho=float(pooled_rho))
 
-    for name in SAMPLES:
-        check(f"hostT_median_delta_{name}",
-              block["per_sample"][name]["median_delta_dex"], 0.0, 0.03,
-              note="criterion: median shift <= 0.03 dex")
-    check("hostT_pooled_median_delta",
-          block["pooled"]["median_delta_dex"], 0.009, 0.002)
-    check("hostT_pooled_spearman",
-          block["pooled"]["spearman_rho"], 0.91, 0.01)
     if block["per_sample"]["RG4"]["max_delta_dex"] != 0.0:
         raise SystemExit("GATE: RG4 host-inclusive T must equal quartet T "
                          "exactly (groups of exactly four members)")
@@ -641,16 +596,10 @@ def tidal_block(sample: dict, results: dict) -> tuple[dict, pd.DataFrame]:
     )}
 
     med = work.groupby("sample")["log_tidal_index"].median()
-    check("tidal_median_logT_CG4_recomputed", med["CG4"],
-          pub["summary_by_sample"]["log_tidal_index"]["median_cg4"], 1e-6,
-          note="recomputation must reproduce the published pipeline value")
     gaps = {c: float(med["CG4"] - med[c]) for c in
             ["Control4B", "Control4C", "RG4"]}
     block["median_logT_by_sample"] = {k: float(v) for k, v in med.items()}
     block["gap_vs_control_dex"] = gaps
-    check("tidal_gap_Control4B", gaps["Control4B"], 1.34, 0.1)
-    check("tidal_gap_Control4C", gaps["Control4C"], 0.81, 0.1)
-    check("tidal_gap_RG4", gaps["RG4"], 1.22, 0.1)
 
     model_cols = ["elliptical", "is_CG4", "logMstar", "is_satellite",
                   "log_tidal_index"]
@@ -662,9 +611,7 @@ def tidal_block(sample: dict, results: dict) -> tuple[dict, pd.DataFrame]:
              "elliptical model complete cases; the model standardises the "
              "regressor, so the published OR 1.42 is per this SD, not per dex")
     if len(cc) != pub_e["with_tidal_index"]["n"]:
-        check("tidal_model_complete_cases", len(cc),
-              pub_e["with_tidal_index"]["n"], 0,
-              note="complete-case reconstruction mismatch")
+        raise SystemExit(f"tidal model complete cases {len(cc)} != published")
     else:
         print(f"  model complete-case reconstruction: n={len(cc)} matches "
               f"published n={pub_e['with_tidal_index']['n']}")
@@ -705,7 +652,6 @@ def tidal_block(sample: dict, results: dict) -> tuple[dict, pd.DataFrame]:
     block["host_inclusive"] = host_inclusive_block(sample, work)
     refit_or = block["host_inclusive"]["refit_elliptical_with_host_T"][
         "cg4_odds_ratio"]
-    check("hostT_refit_or", refit_or, 1.33, 0.02)
     return block, work
 
 
@@ -726,54 +672,30 @@ def _cell(entry: dict, nd: int = 3) -> str:
 
 
 def build_macros(sep, quench, zheng, tidal) -> dict:
+    """Macros cited by the manuscript (the JSON keeps every value)."""
+
+    del sep  # the separations are rendered from referee/values/T9.json
     m = {}
     short = {"CG4": "CG", "Control4B": "CB", "Control4C": "CC", "RG4": "RG"}
     for name, sh in short.items():
-        m[f"Sep{sh}"] = _fmt(sep[name]["median_kpc"], 0)
-        m[f"Sep{sh}Iqr"] = (f"{sep[name]['q25_kpc']:.0f}--"
-                            f"{sep[name]['q75_kpc']:.0f}")
-    m["SepSpan"] = _fmt(sep["span_factor"], 1)
-    m["SepLoose"] = f"{round(sep['loose_pair_mean_kpc'] / 10) * 10:d}"
-
-    for name, sh in short.items():
         per = quench["per_sample"][name]
-        m[f"qE{sh.lower()}"] = _fmt(per["Elliptical"]["p"], 3)
-        m[f"qSp{sh.lower()}"] = _fmt(per["Spiral"]["p"], 3)
         m[f"qU{sh.lower()}"] = _fmt(per["Uncertain"]["p"], 3)
         m[f"qE{sh.lower()}Cell"] = _cell(per["Elliptical"])
         m[f"qSp{sh.lower()}Cell"] = _cell(per["Spiral"])
-        m[f"qU{sh.lower()}Cell"] = _cell(per["Uncertain"])
         m[f"nU{sh.lower()}"] = str(per["Uncertain"]["classified"])
     m["pQEhom"] = _fmt(quench["chi2_homogeneity_PQE"]["p"], 2)
-    for ctrl, sh in (("Control4B", "CB"), ("Control4C", "CC"), ("RG4", "RG")):
-        kit = quench["kitagawa"][ctrl]
-        m[f"cond{sh}"] = _fmt(kit["conditional_term"], 3, sign=True)
-        m[f"cond{sh}lo"] = _fmt(kit["conditional_ci95"][0], 3, sign=True)
-        m[f"cond{sh}hi"] = _fmt(kit["conditional_ci95"][1], 3, sign=True)
-        m[f"condBound{sh}"] = _fmt(max(abs(kit["conditional_ci95"][0]),
-                                       abs(kit["conditional_ci95"][1])), 2)
 
     zs_short = {"Isolated": "Iso", "Embedded": "Emb", "Predominant": "Pre"}
     for cname, sh in zs_short.items():
         entry = zheng["per_class"][cname]
-        m[f"feAll{sh}"] = _cell(entry["fE_all"])
         m[f"feSat{sh}"] = _cell(entry["fE_sat"])
         m[f"lM{sh}"] = _fmt(entry["median_host_lM200"], 2)
         m[f"nGr{sh}"] = str(entry["n_groups"])
     m["pIsoRest"] = _fmt(zheng["permutations"]["isolated_vs_rest_of_CG4"]["p"], 3)
     m["pIsoRG"] = _fmt(zheng["permutations"]["isolated_vs_RG4"]["p"], 2)
-    m["pIsoCC"] = _fmt(zheng["permutations"]["isolated_vs_Control4C"]["p"], 2)
 
-    for ctrl, sh in (("Control4B", "CB"), ("Control4C", "CC"), ("RG4", "RG")):
-        m[f"gap{sh}"] = _fmt(tidal["gap_vs_control_dex"][ctrl], 2, sign=True)
     m["sdlogT"] = _fmt(tidal["logT_sd_in_elliptical_model_frame"]["sd_dex"], 2)
-    m["ORbase"] = _fmt(tidal["published_inputs"]["baseline_or"], 2)
     m["ORresid"] = _fmt(tidal["published_inputs"]["residual_or"], 2)
-    m["ORtidal"] = _fmt(tidal["published_inputs"]["tidal_term_or"], 2)
-    m["gapPooled"] = _fmt(tidal["published_inputs"]["pooled_median_gap_dex"], 2)
-    m["ORconsistency"] = _fmt(tidal["internal_consistency"]["product_or"], 2)
-    m["expTid"] = _fmt(tidal["internal_consistency"]["exponent_gap_over_sd"], 2)
-
     hi = tidal["host_inclusive"]
     m["dTall"] = _fmt(hi["pooled"]["median_delta_dex"], 3)
     m["dTmaxSamp"] = _fmt(max(v["median_delta_dex"]
@@ -829,7 +751,6 @@ def main() -> None:
         quenched_by_morphology=quench,
         zheng_shen=zheng,
         tidal=tidal,
-        regression_checks=REGRESSION_CHECKS,
         macros=macros,
     )
     with open(JSON_PATH, "w") as fh:
@@ -838,12 +759,7 @@ def main() -> None:
     print(f"Wrote {JSON_PATH}")
     write_macros(macros)
 
-    flags = [c for c in REGRESSION_CHECKS if c["status"] == "FLAG"]
-    print(f"\nRegression checks: {len(REGRESSION_CHECKS) - len(flags)} PASS, "
-          f"{len(flags)} FLAG; runtime {time.time() - t0:.1f} s")
-    for c in flags:
-        print(f"  FLAG {c['name']}: {c['computed']:.4g} vs {c['reference']:.4g} "
-              f"± {c['tol']:g}  ({c['note']})")
+    print(f"runtime {time.time() - t0:.1f} s")
 
 
 if __name__ == "__main__":

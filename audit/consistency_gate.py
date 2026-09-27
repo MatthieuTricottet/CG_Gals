@@ -95,6 +95,26 @@ def check_vocabulary(tex: str) -> None:
     else:
         ok("no 'n/a' placeholders")
 
+    # claims and jargon removed in the audit-r3 revision must not return
+    retired = {
+        "GMM": "the classifier is a constrained mixture fit, not a plain GMM",
+        "no additional quenching": "quenching at fixed morphology is control-dependent",
+        "unrelated to the star-formation": "missing sSFR is associated with crowding",
+        "galaxy rank": "models use a BGG/satellite indicator",
+        "causal": "no causal language",
+        "mediation": "no mediation language",
+        "mediator": "no mediation language",
+        "estimand": "no statistical jargon",
+        "positivity": "no statistical jargon",
+        "upper bound": "the position-adjusted contrast is not a bound",
+        "fewer AGN": "the high-[NII] class is not an AGN census",
+    }
+    body = tex.split("\\begin{document}", 1)[-1]
+    for phrase, reason in retired.items():
+        if phrase.lower() in body.lower():
+            fail(f"retired phrase '{phrase}' in the paper ({reason})")
+    ok("no retired phrases")
+
 
 def check_sample_counts(tex: str) -> None:
     data = os.path.join(BASE, "data")
@@ -168,6 +188,34 @@ def check_headline_traceability(tex: str) -> None:
     model = host.get("models", {}).get("elliptical", {})
     expect_in_tex(model.get("cg_member_odds_ratio"), 2,
                   "within-host elliptical OR")
+
+    for control in ["Control4B", "Control4C", "RG4"]:
+        model = contrasts.get(control, {}).get("elliptical_satellites", {})
+        expect_in_tex(model.get("cg4_odds_ratio"), 2, f"satellite elliptical OR vs {control}")
+        radial = es.get("radial_position", {}).get("morphology", {}).get(control, {})
+        expect_in_tex(radial.get("log_r", {}).get("fraction_control_standardised"), 2,
+                      f"control E fraction at CG4 radii ({control})")
+        quench = es.get("quenching_morphology", {}).get("models", {}).get(
+            "satellites", {}).get(control, {}).get("quenched_given_class", {})
+        expect_in_tex(quench.get("cg4_odds_ratio"), 2, f"quenched OR at fixed class vs {control}")
+        halpha = es.get("halpha_emission", {}).get("models", {}).get(control, {})
+        expect_in_tex(halpha.get("sf_emission", {}).get("mass_class", {}).get("cg4_odds_ratio"), 2,
+                      f"SF-like strong H-alpha OR vs {control}")
+        expect_in_tex(halpha.get("high_nii_emission", {}).get("mass_class", {}).get("cg4_odds_ratio"), 2,
+                      f"high-[NII] strong H-alpha OR vs {control}")
+    # the abstract must quote the same position-adjusted fractions as the body
+    abstract = tex.split("\\abstract", 1)[-1].split("\\keywords", 1)[0]
+    for control in ["Control4B", "Control4C", "RG4"]:
+        value = es.get("radial_position", {}).get("morphology", {}).get(control, {}).get(
+            "log_r", {}).get("fraction_control_standardised")
+        if value is not None:
+            if f"{value:.2f}" in abstract:
+                ok(f"abstract fraction at CG4 radii ({control}) = {value:.2f}")
+            else:
+                fail(f"abstract does not quote the log R fraction {value:.2f} ({control})")
+    crowd = es.get("crowding", {}).get("crowded_fraction", {}).get("CG4")
+    if crowd is not None:
+        expect_in_tex(100 * crowd, 0, "crowded CG4 percentage")
 
 
 def main() -> int:

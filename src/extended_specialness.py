@@ -25,6 +25,13 @@ try:
     from primary_contrasts import run_primary_contrasts
     from specialness_models import fit_logistic_specialness_models
     from tidal_indices import run_tidal_indices_analysis
+    from crowding import attach_crowding, run_crowding_analysis
+    from halpha_emission import attach_line_measurements, run_halpha_emission_analysis
+    from matched_controls import group_level_regression, group_match_sensitivity
+    from quenching_morphology import run_quenching_morphology_analysis
+    from radial_position import run_radial_position_analysis
+    from sample_sensitivity import run_sample_sensitivity
+    from ssfr_robustness import classifier_variants
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from . import generate_report as report
@@ -45,6 +52,24 @@ except ModuleNotFoundError:  # pragma: no cover
     from .primary_contrasts import run_primary_contrasts
     from .specialness_models import fit_logistic_specialness_models
     from .tidal_indices import run_tidal_indices_analysis
+    from .crowding import attach_crowding, run_crowding_analysis
+    from .halpha_emission import attach_line_measurements, run_halpha_emission_analysis
+    from .matched_controls import group_level_regression, group_match_sensitivity
+    from .quenching_morphology import run_quenching_morphology_analysis
+    from .radial_position import run_radial_position_analysis
+    from .sample_sensitivity import run_sample_sensitivity
+    from .ssfr_robustness import classifier_variants
+
+
+def _group_level_robustness(galaxies, output_dir=None):
+    """All-quartet group regression and the sensitivity of the group match."""
+
+    del output_dir
+    return {
+        "status": "ok",
+        "all_quartet_regression": group_level_regression(galaxies),
+        "match_sensitivity": group_match_sensitivity(galaxies),
+    }
 
 
 def _failed(exc):
@@ -81,6 +106,10 @@ def _run_extended_specialness(sample, output_dir):
     except Exception as exc:
         if co.VERBOSE:
             print(f"[extended specialness] size columns unavailable: {exc}")
+    # One crowding flag (full Lim catalogue) and one set of emission-line
+    # measurements (galSpecLine of the stored spectrum) for every analysis.
+    galaxies = attach_crowding(galaxies)
+    galaxies = attach_line_measurements(galaxies)
     analyses = [
         ("primary_contrasts", run_primary_contrasts),
         ("specialness_models", fit_logistic_specialness_models),
@@ -96,6 +125,11 @@ def _run_extended_specialness(sample, output_dir):
         ("selection_diagnostics", run_selection_diagnostics),
         ("size_analysis", run_size_analysis),
         ("descriptive_properties", run_descriptive_properties),
+        ("radial_position", run_radial_position_analysis),
+        ("quenching_morphology", run_quenching_morphology_analysis),
+        ("halpha_emission", run_halpha_emission_analysis),
+        ("crowding", run_crowding_analysis),
+        ("group_level_robustness", _group_level_robustness),
     ]
     results = {"status": "ok", "n_galaxies": int(len(galaxies))}
     for name, function in analyses:
@@ -164,6 +198,18 @@ def _run_extended_specialness(sample, output_dir):
         if co.VERBOSE:
             print(f"[extended specialness] host_controlled failed: {exc}")
             traceback.print_exc()
+    # analyses that need the full sample dictionary (reference tables, raw CSVs)
+    for name, function in (
+        ("ssfr_classifier_variants", lambda: classifier_variants(sample, galaxies)),
+        ("sample_sensitivity", lambda: run_sample_sensitivity(sample)),
+    ):
+        try:
+            results[name] = function()
+        except Exception as exc:
+            results[name] = _failed(exc)
+            if co.VERBOSE:
+                print(f"[extended specialness] {name} failed: {exc}")
+                traceback.print_exc()
     results["skipped_analyses"] = [
         name for name, _ in analyses if results[name].get("status") == "skipped"
     ]

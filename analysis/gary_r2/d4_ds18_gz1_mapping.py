@@ -30,10 +30,9 @@ EDGE_LABELS = ["0-0.1", "0.1-0.3", "0.3-0.5", "0.5-0.7", "0.7-1"]
 
 def main() -> None:
     sample, bridge, ds18_min = t10._load_inputs()
-    with gzip.open(t10.DS18_PATH, "rt") as stream:
-        ds18 = pd.read_fwf(stream, colspecs=t10.DS18_COLSPECS, names=t10.DS18_COLUMNS,
-                           header=None, usecols=["objID", "TType", "P_S0", "P_edge_on"],
-                           dtype={"objID": str})
+    # tracked subset of the DS18 catalogue (see referee/T10_ds18_morphology.py)
+    ds18 = pd.read_csv(t10.DS18_PATH, usecols=["objID", "TType", "P_S0", "P_edge_on"],
+                       dtype={"objID": str})
     ds18["objID"] = ds18["objID"].str.strip().astype("int64")
     for c in ("TType", "P_S0", "P_edge_on"):
         ds18[c] = pd.to_numeric(ds18[c], errors="coerce")

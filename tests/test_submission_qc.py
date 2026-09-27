@@ -83,7 +83,8 @@ def test_host_bgg_alignment_uses_objids_and_preserves_satellite_status():
     assert alignment["n_different"] == 6
     assert alignment["n_no_reliable_mapping"] == 0
     assert alignment["n_ambiguous_or_duplicate"] == 0
-    assert alignment["by_class"]["Predom"]["CG4 BGG differs from Lim-host BGG"] == 6
+    # after the Zheng--Shen label repair the six misaligned systems are embedded
+    assert alignment["by_class"]["Embedded"]["CG4 BGG differs from Lim-host BGG"] == 6
     assert alignment["n_isolated_trivial_equal"] == 6
 
     per_group = pd.read_csv(ROOT / "output/referee/host_bgg_alignment_per_group.csv")
@@ -94,7 +95,7 @@ def test_host_bgg_alignment_uses_objids_and_preserves_satellite_status():
             == per_group.loc[equal, "lim_host_bgg_objid"].astype("int64")).all()
     assert (per_group.loc[different, "cg4_bgg_objid"].astype("int64")
             != per_group.loc[different, "lim_host_bgg_objid"].astype("int64")).all()
-    assert set(per_group.loc[different, "zheng_shen_class"]) == {"Predom"}
+    assert set(per_group.loc[different, "zheng_shen_class"]) == {"Embedded"}
     assert per_group.loc[per_group["zheng_shen_class"].eq("Isolated"),
                          "isolated_equality_trivial"].all()
 

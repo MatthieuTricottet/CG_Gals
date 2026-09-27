@@ -56,10 +56,10 @@ except ImportError:  # pragma: no cover
 
 try:
     import config as co
-    from extended_stats import fit_logistic_model, safe_json
+    from extended_stats import fit_logistic_model, restricted_cubic_spline, safe_json
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
-    from .extended_stats import fit_logistic_model, safe_json
+    from .extended_stats import fit_logistic_model, restricted_cubic_spline, safe_json
 
 CG_CLASSES = ["Embedded", "Predom"]
 OUTCOMES = ["elliptical", "quenched"]
@@ -334,6 +334,96 @@ def _fit_fe_glm(members, outcome, covariates):
     }
 
 
+RADIAL_BINS_KPC = [0.0, 100.0, 200.0, 400.0, 800.0, 6000.0]
+
+
+def radial_overlap(members: pd.DataFrame) -> dict:
+    """How far the host-centric radii of members and co-members overlap.
+
+    Satellites only (the host BGG sits at R = 0).  Reports the radius
+    quantiles of CG members and co-members, the area under the ROC curve
+    of CG membership predicted by -R alone, the fraction of co-member
+    satellites no farther out than the most distant CG member of their own
+    host, and the E-class fractions of both populations in radial bins.
+    """
+
+    satellites = members.loc[pd.to_numeric(members["rank_parent"], errors="coerce") > 1].copy()
+    satellites = satellites.dropna(subset=["dist_host_kpc"])
+    is_member = satellites["is_CG_member"] == 1
+    radius = satellites["dist_host_kpc"]
+    # Mann-Whitney form of the AUC: P(R_member < R_comember)
+    ranks = radius.rank()
+    n1, n0 = int(is_member.sum()), int((~is_member).sum())
+    auc = 1.0 - (ranks[is_member].sum() - n1 * (n1 + 1) / 2) / (n1 * n0)
+    host_max = satellites.loc[is_member].groupby("host_lim_group")["dist_host_kpc"].max()
+    comembers = satellites.loc[~is_member]
+    inside = comembers["dist_host_kpc"] <= comembers["host_lim_group"].map(host_max)
+    classified = satellites.dropna(subset=["elliptical"]).copy()
+    classified["radial_bin"] = pd.cut(classified["dist_host_kpc"], RADIAL_BINS_KPC)
+    bins = []
+    for interval, part in classified.groupby("radial_bin", observed=True):
+        for flag, label in ((1, "member"), (0, "comember")):
+            values = part.loc[part["is_CG_member"] == flag, "elliptical"]
+            bins.append(
+                {
+                    "bin_left_kpc": float(interval.left),
+                    "bin_right_kpc": float(interval.right),
+                    "population": label,
+                    "n": int(len(values)),
+                    "fraction_E": float(values.mean()) if len(values) else None,
+                }
+            )
+    return {
+        "n_member_satellites": n1,
+        "n_comember_satellites": n0,
+        "member_quantiles_kpc": {str(q): float(radius[is_member].quantile(q)) for q in (0.05, 0.5, 0.95)},
+        "comember_quantiles_kpc": {str(q): float(radius[~is_member].quantile(q)) for q in (0.05, 0.5, 0.95)},
+        "auc_membership_from_radius": float(auc),
+        "comember_fraction_inside_host_member_max": float(inside.mean()),
+        "binned_E_fractions": bins,
+    }
+
+
+def radial_specifications(members: pd.DataFrame) -> dict:
+    """Conditional-logit member odds ratios under several radius terms.
+
+    E class (and quenched status) against CG membership within hosts:
+    without a radius term, with the published linear radius, and for
+    satellites with log radius, a restricted cubic spline in log radius, and
+    on the radial common support (co-members no farther out than the 95th
+    percentile of the members' radii).
+    """
+
+    work = members.copy()
+    work["is_host_bgg"] = (pd.to_numeric(work["rank_parent"], errors="coerce") == 1).astype(float)
+    radius = pd.to_numeric(work["dist_host_kpc"], errors="coerce")
+    work["log_dist_host"] = np.log10(radius.where(radius > 0))
+    satellites = work.loc[work["is_host_bgg"] == 0].copy()
+    knots = np.nanquantile(satellites["log_dist_host"], [0.1, 0.5, 0.9])
+    satellites["log_dist_host_rcs"] = restricted_cubic_spline(satellites["log_dist_host"], knots)
+    member_p95 = satellites.loc[satellites["is_CG_member"] == 1, "dist_host_kpc"].quantile(0.95)
+    support = satellites.loc[satellites["dist_host_kpc"] <= member_p95]
+    specs = {
+        "all_mass_rank": (work, ["logMstar", "rank_parent"]),
+        "all_mass_rank_linear_r": (work, ["logMstar", "rank_parent", "dist_host_kpc"]),
+        "satellites_mass_rank": (satellites, ["logMstar", "rank_parent"]),
+        "satellites_mass_rank_log_r": (satellites, ["logMstar", "rank_parent", "log_dist_host"]),
+        "satellites_mass_spline_log_r": (
+            satellites, ["logMstar", "log_dist_host", "log_dist_host_rcs"]
+        ),
+        "satellites_common_support_mass": (support, ["logMstar"]),
+        "satellites_common_support_mass_log_r": (support, ["logMstar", "log_dist_host"]),
+    }
+    results = {"common_support_max_kpc": float(member_p95)}
+    for name, (frame, covariates) in specs.items():
+        results[name] = _fit_conditional_logit(frame, "elliptical", covariates)
+    results["quenched"] = {
+        name: _fit_conditional_logit(frame, "quenched", covariates)
+        for name, (frame, covariates) in specs.items()
+    }
+    return results
+
+
 def run_host_controlled_analysis(sample, output_dir: str | None = None):
     """Fit the within-host CG-membership models."""
 
@@ -419,4 +509,6 @@ def run_host_controlled_analysis(sample, output_dir: str | None = None):
 
         results["models"][outcome] = outcome_results
 
+    results["radial_overlap"] = radial_overlap(members)
+    results["radial_specifications"] = radial_specifications(members)
     return safe_json(results)

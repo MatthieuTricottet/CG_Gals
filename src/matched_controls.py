@@ -57,7 +57,6 @@ MATCHING_CANDIDATES = [
     "logMstar",
     "z_numeric",
     "rank",
-    "log_group_mass",
     "log_group_luminosity",
     "velocity_dispersion",
 ]
@@ -68,6 +67,14 @@ GROUP_MATCHING_CANDIDATES = [
     "velocity_dispersion",
 ]
 SPATIAL_DIAGNOSTICS = ["dist2BGG_kpc", "R_norm"]
+# Propensity model of every match: logistic regression on standardised
+# covariates with scikit-learn's default L2 penalty (C = 1); the unpenalised
+# fit is run as a sensitivity.  Matching is greedy 1:1 nearest-neighbour
+# without replacement, treated units taken in order of their closest
+# available control, within a caliper of 0.2 SD of the propensity logit.
+PROPENSITY_PENALTY = "l2"
+PROPENSITY_C = 1.0
+MIN_MATCHING_COMPLETENESS = 0.7
 OUTCOMES = {
     "quenched_fraction": ("quenched", np.mean),
     "elliptical_fraction": ("elliptical", np.mean),
@@ -220,16 +227,39 @@ def prepare_matched_frame(frame: pd.DataFrame) -> pd.DataFrame:
     return prepared
 
 
-def _select_variables(frame):
+def _select_variables(frame, candidates=MATCHING_CANDIDATES, exclude=()):
+    """Matching variables; an incomplete candidate is an error, not a silent drop."""
+
     variables = []
-    for column in MATCHING_CANDIDATES:
-        if (
-            column in frame
-            and frame.loc[frame["is_CG4"] == 1, column].notna().mean() >= 0.7
-        ):
-            if frame.loc[frame["is_CG4"] == 0, column].notna().mean() >= 0.7:
-                variables.append(column)
+    for column in candidates:
+        if column in exclude:
+            continue
+        for arm in (1, 0):
+            completeness = (
+                float(frame.loc[frame["is_CG4"] == arm, column].notna().mean())
+                if column in frame
+                else 0.0
+            )
+            if completeness < MIN_MATCHING_COMPLETENESS:
+                raise ValueError(
+                    f"matching variable {column!r} is only {completeness:.0%} complete"
+                )
+        variables.append(column)
     return variables
+
+
+def _propensity_logit(design, treated, penalty=PROPENSITY_PENALTY, seed=20260612):
+    """Propensity logit from the (penalised by default) logistic model."""
+
+    kwargs = {"max_iter": 2000, "random_state": seed}
+    if penalty is None:
+        kwargs["penalty"] = None
+    else:
+        kwargs["C"] = PROPENSITY_C
+    model = LogisticRegression(**kwargs)
+    model.fit(design, treated)
+    propensity = np.clip(model.predict_proba(design)[:, 1], 1e-8, 1 - 1e-8)
+    return np.log(propensity / (1 - propensity))
 
 
 def _greedy_match(frame, variables):
@@ -241,10 +271,7 @@ def _greedy_match(frame, variables):
     means = work[propensity_variables].mean()
     scales = work[propensity_variables].std(ddof=0).replace(0, 1)
     design = (work[propensity_variables] - means) / scales
-    propensity_model = LogisticRegression(max_iter=2000, random_state=20260612)
-    propensity_model.fit(design, work["is_CG4"])
-    propensity = np.clip(propensity_model.predict_proba(design)[:, 1], 1e-8, 1 - 1e-8)
-    work["propensity_logit"] = np.log(propensity / (1 - propensity))
+    work["propensity_logit"] = _propensity_logit(design, work["is_CG4"])
     caliper = 0.2 * float(work["propensity_logit"].std(ddof=0))
 
     treated = work.loc[work["is_CG4"] == 1]
@@ -280,7 +307,7 @@ def _greedy_match(frame, variables):
     return pairs, work, caliper
 
 
-def matched_pairs(frame: pd.DataFrame):
+def matched_pairs(frame: pd.DataFrame, exclude_variables=()):
     """Shared entry point: dedup the control pool, then match.
 
     Returns ``(pairs, work, caliper, prepared_frame, variables)``. Used by
@@ -289,7 +316,7 @@ def matched_pairs(frame: pd.DataFrame):
     """
 
     prepared = prepare_matched_frame(frame)
-    variables = _select_variables(prepared)
+    variables = _select_variables(prepared, exclude=exclude_variables)
     if not variables:
         return [], None, None, prepared, variables
     pairs, work, caliper = _greedy_match(prepared, variables)
@@ -525,7 +552,14 @@ def _group_table_for_control(prepared, control_label):
     return pd.DataFrame(rows)
 
 
-def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT):
+def _run_one_group_match(
+    table,
+    variables,
+    seed=20260612,
+    n_boot=N_BOOT_DEFAULT,
+    penalty=PROPENSITY_PENALTY,
+    order_rng=None,
+):
     """Fit 1:1 propensity group match and return full diagnostics.
 
     Returns a dict with n_matched, delta, CI, bootstrap p, sign-flip
@@ -544,10 +578,9 @@ def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT)
     means = work[variables].mean()
     scales = work[variables].std(ddof=0).replace(0, 1)
     design = (work[variables] - means) / scales
-    model = LogisticRegression(max_iter=2000, random_state=seed)
-    model.fit(design, work["is_CG4"])
-    propensity = np.clip(model.predict_proba(design)[:, 1], 1e-8, 1 - 1e-8)
-    work["propensity_logit"] = np.log(propensity / (1 - propensity))
+    work["propensity_logit"] = _propensity_logit(
+        design, work["is_CG4"], penalty=penalty, seed=seed
+    )
     caliper = 0.2 * float(work["propensity_logit"].std(ddof=0))
 
     # SMD before matching for each covariate
@@ -570,6 +603,8 @@ def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT)
         - controls["propensity_logit"].to_numpy()[None, :]
     )
     order = np.argsort(distance.min(axis=1))
+    if order_rng is not None:  # sensitivity: random processing order
+        order = order_rng.permutation(len(order))
     available = set(range(len(controls)))
     pair_rows = []
     for position in order:
@@ -672,6 +707,7 @@ def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT)
         "n_control_groups_available": int(controls_all.shape[0]),
         "n_matched_groups": n_pairs,
         "propensity_caliper_logit_sd": 0.2,
+        "propensity_penalty": "none" if penalty is None else f"{penalty}, C={PROPENSITY_C:g}",
         "delta_smooth_satellite_fraction": obs_delta,
         "ci95": [float(low), float(high)],
         "p": empirical_p_two_sided(boot),
@@ -700,7 +736,9 @@ def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT)
     }
 
 
-def group_level_matched_analysis(prepared, n_boot=N_BOOT_DEFAULT, seed=20260612):
+def group_level_matched_analysis(
+    prepared, n_boot=N_BOOT_DEFAULT, seed=20260612, exclude_variables=()
+):
     """Primary group-level contrast: elliptical-vote satellite counts per group.
 
     CG groups are matched 1:1 without replacement to control groups on
@@ -727,18 +765,18 @@ def group_level_matched_analysis(prepared, n_boot=N_BOOT_DEFAULT, seed=20260612)
         table["mean_sat_logMstar"] = table["group_uid"].map(sat_mass)
     if table.empty:
         return {"status": "skipped", "reason": "no_groups"}
-    variables = [
-        column
-        for column in GROUP_MATCHING_CANDIDATES
-        if column in table and table[column].notna().mean() >= 0.7
-    ]
+    variables = _select_variables(
+        table, candidates=GROUP_MATCHING_CANDIDATES, exclude=exclude_variables
+    )
     if not variables:
         return {"status": "skipped", "reason": "no_matching_variables"}
     result = _run_one_group_match(table, variables, seed=seed, n_boot=n_boot)
     return result
 
 
-def per_control_group_level_matches(prepared, n_boot=N_BOOT_DEFAULT, seed=20260612):
+def per_control_group_level_matches(
+    prepared, n_boot=N_BOOT_DEFAULT, seed=20260612, exclude_variables=()
+):
     """Per-control group-level matched contrasts.
 
     Runs 1:1 propensity group matching three times, each time restricting the
@@ -759,11 +797,9 @@ def per_control_group_level_matches(prepared, n_boot=N_BOOT_DEFAULT, seed=202606
                 .mean()
             )
             table["mean_sat_logMstar"] = table["group_uid"].map(sat_mass)
-        variables = [
-            column
-            for column in GROUP_MATCHING_CANDIDATES
-            if column in table and table[column].notna().mean() >= 0.7
-        ]
+        variables = _select_variables(
+            table, candidates=GROUP_MATCHING_CANDIDATES, exclude=exclude_variables
+        )
         results[control_label] = _run_one_group_match(
             table, variables, seed=seed, n_boot=n_boot
         )
@@ -800,7 +836,10 @@ def per_control_group_level_matches(prepared, n_boot=N_BOOT_DEFAULT, seed=202606
 
 
 def run_matched_control_analysis(
-    data, output_dir: str | None = None, n_boot: int = N_BOOT_DEFAULT
+    data,
+    output_dir: str | None = None,
+    n_boot: int = N_BOOT_DEFAULT,
+    exclude_variables=(),
 ):
     """Run the deduplicated 1:1 matching and the group-level primary."""
 
@@ -808,7 +847,9 @@ def run_matched_control_analysis(
     if frame.empty or "is_CG4" not in frame:
         return {"status": "skipped", "reason": "no_galaxy_samples"}
     n_control_rows = int((frame["is_CG4"] == 0).sum())
-    pairs, match_frame, caliper, prepared, variables = matched_pairs(frame)
+    pairs, match_frame, caliper, prepared, variables = matched_pairs(
+        frame, exclude_variables=exclude_variables
+    )
     if not variables:
         return {"status": "skipped", "reason": "no_matching_variables"}
     if len(pairs) < 10:
@@ -948,14 +989,26 @@ def run_matched_control_analysis(
     control_host_audit = _control_host_dependence_audit(
         treated, control, provenance, two_sided_blocks
     )
-    group_level = group_level_matched_analysis(frame, n_boot=n_boot)
-    per_control_group = per_control_group_level_matches(frame, n_boot=n_boot)
+    group_level = group_level_matched_analysis(
+        frame, n_boot=n_boot, exclude_variables=exclude_variables
+    )
+    per_control_group = per_control_group_level_matches(
+        frame, n_boot=n_boot, exclude_variables=exclude_variables
+    )
 
     result = {
         "status": "ok",
         "method": (
             "1:1 propensity-score nearest neighbour without replacement, exact "
             "rank strata, on the objid-deduplicated control pool"
+        ),
+        "propensity_model": (
+            f"logistic regression on standardised covariates, penalty "
+            f"{PROPENSITY_PENALTY} with C={PROPENSITY_C:g} (scikit-learn default)"
+        ),
+        "matching_algorithm": (
+            "greedy nearest neighbour, treated units in order of their closest "
+            "available control, caliper 0.2 SD of the propensity logit"
         ),
         "replacement": False,
         "common_support": "enforced_by_caliper",
@@ -1049,3 +1102,116 @@ def run_matched_control_analysis(
         provenance.to_csv(provenance_path, index=False)
         result["provenance_file"] = os.path.basename(provenance_path)
     return safe_json(result)
+
+
+def group_level_regression(frame, exclude_variables=()) -> dict:
+    """All-quartet version of the group-level satellite-composition contrast.
+
+    For each control, every quartet with at least one classified satellite
+    enters a binomial GLM of its E-class satellite count (out of its
+    classified satellites) on the CG4 indicator and the matching covariates
+    (standardised), with cluster-robust errors by physical Lim group.  Unlike
+    the one-to-one match it uses all control quartets.
+    """
+
+    import statsmodels.api as sm
+
+    results = {}
+    for control_label in ("Control4B", "Control4C", "RG4"):
+        table = _group_table_for_control(frame, control_label)
+        variables = _select_variables(
+            table, candidates=GROUP_MATCHING_CANDIDATES, exclude=exclude_variables
+        )
+        work = table.loc[table["n_sat_classified"] > 0].dropna(subset=variables).copy()
+        design = (work[variables] - work[variables].mean()) / work[variables].std(ddof=0)
+        design.insert(0, "is_CG4", work["is_CG4"].astype(float).to_numpy())
+        design = sm.add_constant(design, has_constant="add")
+        counts = np.column_stack(
+            [work["n_smooth_sat"], work["n_sat_classified"] - work["n_smooth_sat"]]
+        )
+        fitted = sm.GLM(counts, design, family=sm.families.Binomial()).fit(
+            cov_type="cluster", cov_kwds={"groups": pd.factorize(work["physical_group"])[0]}
+        )
+        low, high = np.exp(fitted.conf_int().loc["is_CG4"])
+        results[control_label] = {
+            "status": "ok",
+            "n_cg4_groups": int(work["is_CG4"].sum()),
+            "n_control_groups": int((work["is_CG4"] == 0).sum()),
+            "variables": variables,
+            "odds_ratio": float(np.exp(fitted.params["is_CG4"])),
+            "ci95": [float(low), float(high)],
+            "p": float(fitted.pvalues["is_CG4"]),
+        }
+    return results
+
+
+def _gapper_ratio_draws(n_draws=100_000, seed=20260721):
+    """Monte-Carlo sigma_gapper/sigma_true for four Gaussian velocities."""
+
+    rng = np.random.default_rng(seed)
+    draws = np.sort(rng.standard_normal((n_draws, 4)), axis=1)
+    return np.sqrt(np.pi) / 12.0 * np.diff(draws, axis=1) @ np.array([3.0, 4.0, 3.0])
+
+
+def group_match_sensitivity(frame, n_orders=200, n_noise=200, seed=20260927) -> dict:
+    """How much the per-control group-level match depends on its choices.
+
+    Variants: an unpenalised propensity model; random processing orders of
+    the treated groups; the deduplicated control pool; and sigma_v perturbed
+    by one further realisation of the four-member gapper noise in both arms
+    (multiplicative factors drawn from the Monte-Carlo ratio distribution).
+    Permutation p-values use 1999 sign flips in the resampled variants.
+    """
+
+    ratios = _gapper_ratio_draws()
+    rng = np.random.default_rng(seed)
+    deduplicated = prepare_matched_frame(frame)
+    results = {}
+    for control_label in ("Control4B", "Control4C", "RG4"):
+        table = _group_table_for_control(frame, control_label)
+        sat_mass = (
+            frame.loc[frame["rank"] > 1].groupby("group_uid", observed=True)["logMstar"].mean()
+        )
+        table["mean_sat_logMstar"] = table["group_uid"].map(sat_mass)
+        variables = _select_variables(table, candidates=GROUP_MATCHING_CANDIDATES)
+        entry = {}
+        unpenalised = _run_one_group_match(table, variables, n_boot=999, penalty=None)
+        entry["unpenalised"] = {
+            k: unpenalised.get(k)
+            for k in ("n_matched_groups", "delta_smooth_satellite_fraction", "p_permutation")
+        }
+        orders = []
+        for _ in range(n_orders):
+            run = _run_one_group_match(table, variables, n_boot=199, order_rng=rng)
+            if run.get("status") == "ok":
+                orders.append(run["delta_smooth_satellite_fraction"])
+        entry["random_order_delta_quantiles"] = [
+            float(q) for q in np.quantile(orders, [0.05, 0.5, 0.95])
+        ]
+        noisy_delta, noisy_p = [], []
+        for _ in range(n_noise):
+            perturbed = table.copy()
+            perturbed["velocity_dispersion"] = perturbed["velocity_dispersion"] * rng.choice(
+                ratios, len(perturbed)
+            )
+            run = _run_one_group_match(perturbed, variables, n_boot=1999)
+            if run.get("status") == "ok":
+                noisy_delta.append(run["delta_smooth_satellite_fraction"])
+                noisy_p.append(run["p_permutation"])
+        entry["sigma_v_noise"] = {
+            "n_realisations": len(noisy_delta),
+            "delta_quantiles": [float(q) for q in np.quantile(noisy_delta, [0.05, 0.5, 0.95])],
+            "fraction_p_below_0p05": float(np.mean(np.asarray(noisy_p) < 0.05)),
+        }
+        if control_label == "Control4B":
+            # dedup keeps RG4 labels first, so Control4B loses the quartets it
+            # shares with RG4; Control4C loses most BGG rows and cannot be matched
+            dedup_table = _group_table_for_control(deduplicated, control_label)
+            dedup_run = _run_one_group_match(dedup_table, variables, n_boot=999)
+            entry["deduplicated_pool"] = {
+                k: dedup_run.get(k)
+                for k in ("n_matched_groups", "n_control_groups_available",
+                          "delta_smooth_satellite_fraction", "p_permutation")
+            }
+        results[control_label] = entry
+    return results

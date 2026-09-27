@@ -15,11 +15,15 @@ from scipy import stats
 
 try:
     import config as co
+    from crowding import THRESHOLD_ARCSEC as CROWDING_THRESHOLD_ARCSEC
+    from crowding import nearest_lim_neighbour
     from extended_data import ensure_galaxy_frame
     from extended_stats import fit_logistic_model, safe_json
     from utils import labels_utils as lu
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
+    from .crowding import THRESHOLD_ARCSEC as CROWDING_THRESHOLD_ARCSEC
+    from .crowding import nearest_lim_neighbour
     from .extended_data import ensure_galaxy_frame
     from .extended_stats import fit_logistic_model, safe_json
     from .utils import labels_utils as lu
@@ -28,34 +32,18 @@ except ModuleNotFoundError:  # pragma: no cover
 SAMPLES = ["CG4", "Control4B", "Control4C", "RG4"]
 CONTROL_SAMPLES = ["Control4B", "Control4C", "RG4"]
 MORPH_OUTCOMES = ["elliptical"]
-CROWDING_THRESHOLD_ARCSEC = 55.0
 
 
 def _nearest_angular(frame: pd.DataFrame) -> np.ndarray:
-    """Nearest projected neighbour separation within each sample/group, in arcsec."""
+    """Separation (arcsec) of the nearest galaxy in the full Lim catalogue.
 
-    values = np.full(len(frame), np.nan)
-    positions = {index: position for position, index in enumerate(frame.index)}
-    for _, group in frame.groupby("group_uid", observed=True):
-        if len(group) < 2 or not {"RA", "Dec"}.issubset(group.columns):
-            continue
-        coords = group[["RA", "Dec"]].apply(lambda column: np.asarray(column, dtype=float))
-        if not np.isfinite(coords.to_numpy()).all():
-            continue
-        ra = np.deg2rad(coords["RA"].to_numpy())
-        dec = np.deg2rad(coords["Dec"].to_numpy())
-        delta_ra = ra[:, None] - ra[None, :]
-        delta_dec = dec[:, None] - dec[None, :]
-        hav = (
-            np.sin(delta_dec / 2) ** 2
-            + np.cos(dec[:, None]) * np.cos(dec[None, :]) * np.sin(delta_ra / 2) ** 2
-        )
-        angular = 2 * np.arcsin(np.sqrt(np.clip(hav, 0, 1)))
-        np.fill_diagonal(angular, np.inf)
-        nearest_arcsec = np.min(angular, axis=1) * 180.0 / np.pi * 3600.0
-        for index, value in zip(group.index, nearest_arcsec):
-            values[positions[index]] = value
-    return values
+    Shared by the crowding, size and selection diagnostics so that every
+    55-arcsec flag in the paper is the same one (``crowding.attach_crowding``).
+    """
+
+    if "nearest_neighbour_arcsec" in frame:
+        return frame["nearest_neighbour_arcsec"].to_numpy(dtype=float)
+    return nearest_lim_neighbour(frame)["nearest_neighbour_arcsec"].to_numpy(dtype=float)
 
 
 def _fraction_rows(frame: pd.DataFrame) -> list[dict[str, object]]:

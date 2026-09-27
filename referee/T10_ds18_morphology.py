@@ -1,9 +1,12 @@
 """Reproduce the DS18 morphology audit values used in the manuscript.
 
 This is an isolated validation analysis, not a dependency of the main sample
-construction.  It consumes the existing processed sample and the two caches
-created and validated by ``notebooks/audit_gz1_vs_ds18.ipynb``; it never
-downloads data and never modifies the source catalogues.
+construction.  It consumes the processed sample and two tracked subsets of
+public catalogues: ``data/photoobjdr7_map.csv`` (SDSS ``PhotoObjDR7`` bridge
+from the DR8+ to the DR7 object identifiers of the sample) and
+``data/ds18_subset.csv`` (the rows of Dominguez Sanchez et al. 2018,
+VizieR J/MNRAS/476/3661, for those DR7 identifiers).  Both were extracted
+by ``notebooks/audit_gz1_vs_ds18.ipynb``; this script never downloads data.
 
 Run from the repository root with::
 
@@ -37,14 +40,9 @@ from extended_stats import fit_logistic_model, safe_json  # noqa: E402
 from specialness_models import _covariates  # noqa: E402
 
 
-CACHE = Path(
-    os.environ.get(
-        "CG_GALS_DS18_CACHE", Path.home() / ".cache" / "cg_gals_audit"
-    )
-)
 SAMPLE_PATH = REPO / "data" / "processed_sample.pkl"
-BRIDGE_PATH = CACHE / "photoobjdr7_map.csv"
-DS18_PATH = CACHE / "ds18" / "catalog.dat.gz"
+BRIDGE_PATH = REPO / "data" / "photoobjdr7_map.csv"
+DS18_PATH = REPO / "data" / "ds18_subset.csv"
 OUTPUT_PATH = REPO / "referee" / "values" / "T10.json"
 
 GALAXY_TABLES = ["CG4_Gals", "RG4_Gals", "Control4B_Gals", "Control4C_Gals"]
@@ -90,7 +88,7 @@ def _require_inputs() -> None:
         raise FileNotFoundError(
             "Missing validated DS18-audit input(s):\n  - "
             + joined
-            + "\nRun notebooks/audit_gz1_vs_ds18.ipynb to create the external cache."
+            + "\nThese tracked inputs come from notebooks/audit_gz1_vs_ds18.ipynb."
         )
 
 
@@ -106,16 +104,8 @@ def _load_inputs() -> tuple[dict, pd.DataFrame, pd.DataFrame]:
     if bridge["dr8objid"].duplicated().any() or bridge["dr7objid"].duplicated().any():
         raise ValueError("PhotoObjDR7 bridge must be one-to-one")
 
-    with gzip.open(DS18_PATH, "rt") as stream:
-        ds18 = pd.read_fwf(
-            stream,
-            colspecs=DS18_COLSPECS,
-            names=DS18_COLUMNS,
-            header=None,
-            usecols=["objID", "TType", "P_S0"],
-            dtype={"objID": str},
-        )
-    ds18["objID"] = ds18["objID"].str.strip().astype("int64")
+    ds18 = pd.read_csv(DS18_PATH, usecols=["objID", "TType", "P_S0"])
+    ds18["objID"] = ds18["objID"].astype("int64")
     ds18["TType"] = pd.to_numeric(ds18["TType"], errors="coerce")
     ds18["P_S0"] = pd.to_numeric(ds18["P_S0"], errors="coerce")
     if ds18["objID"].duplicated().any():
@@ -367,14 +357,8 @@ def build_results() -> dict:
             "source_notebook": "notebooks/audit_gz1_vs_ds18.ipynb",
             "inputs": {
                 "processed_sample": str(SAMPLE_PATH.relative_to(REPO)),
-                "photoobjdr7_bridge": (
-                    "${CG_GALS_DS18_CACHE:-~/.cache/cg_gals_audit}/"
-                    "photoobjdr7_map.csv"
-                ),
-                "ds18_catalogue": (
-                    "${CG_GALS_DS18_CACHE:-~/.cache/cg_gals_audit}/"
-                    "ds18/catalog.dat.gz"
-                ),
+                "photoobjdr7_bridge": "data/photoobjdr7_map.csv",
+                "ds18_catalogue": "data/ds18_subset.csv (VizieR J/MNRAS/476/3661)",
             },
             "composition": _composition_results(ours, audited),
             "early_type_robustness": _independent_early_type_models(

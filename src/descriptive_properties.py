@@ -1,10 +1,12 @@
-"""Other galaxy properties versus stellar mass (descriptive figure, gary-r2 A4).
+"""Other galaxy properties versus stellar mass (descriptive figure).
 
 Four panels in the style and binning of the morphology row of Fig. 2, for
 all galaxies of the four samples:
 
-  (a) strong H-alpha emission fraction (EW <= -3 A, SDSS sign convention);
-  (b) AGN fraction among BPT-classified galaxies (Sect. 3.7 scheme);
+  (a) fraction with strong, star-forming-like H-alpha emission
+      (W(Halpha) >= 3 A, log [N II]/Halpha < -0.4; ``halpha_emission``);
+  (b) fraction with strong H-alpha emission and log [N II]/Halpha >= -0.4;
+      (a) + (b) is the strong-emission fraction;
   (c) median D_n4000 (MPA-JHU galSpecIndx, Appendix A provenance);
   (d) median log R_e,r (seeing-corrected Simard half-light radius, kpc).
 
@@ -22,7 +24,7 @@ import pandas as pd
 
 try:
     import config as co
-    from agn_environment import _classify as classify_bpt
+    from halpha_emission import classify_emission
     from descriptive_trends import (
         MORPHOLOGY_MASS_BINS,
         SAMPLES,
@@ -34,7 +36,7 @@ try:
     from extended_stats import safe_json
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
-    from .agn_environment import _classify as classify_bpt
+    from .halpha_emission import classify_emission
     from .descriptive_trends import (
         MORPHOLOGY_MASS_BINS,
         SAMPLES,
@@ -45,12 +47,11 @@ except ModuleNotFoundError:  # pragma: no cover
     from .extended_data import ensure_galaxy_frame
     from .extended_stats import safe_json
 
-STRONG_HALPHA_EW = -3.0
 PANELS = (
-    ("strong_halpha", "strong_halpha", "fraction",
-     "(a) Strong H$\\alpha$ emission fraction (EW $\\leq -3$ \u00c5)", (-0.03, 1.03)),
-    ("agn_like", "agn_like", "fraction",
-     "(b) AGN fraction (BPT-classified)", (-0.03, 1.03)),
+    ("sf_emission", "sf_emission", "fraction",
+     "(a) Strong H$\\alpha$, star-forming-like", (-0.03, 0.83)),
+    ("high_nii_emission", "high_nii_emission", "fraction",
+     "(b) Strong H$\\alpha$, high [N II]/H$\\alpha$", (-0.03, 0.83)),
     ("dn4000", "Dn4000", "median", r"(c) Median $D_n4000$", None),
     ("log_rchl", "log_Rchl_r_kpc", "median",
      r"(d) Median $\log_{10}(R_{e,r}/{\rm kpc})$", None),
@@ -58,11 +59,7 @@ PANELS = (
 
 
 def _prepare(frame: pd.DataFrame) -> pd.DataFrame:
-    work = classify_bpt(frame)
-    halpha = pd.to_numeric(work.get("h_alpha_eqw", np.nan), errors="coerce")
-    work["strong_halpha"] = np.where(
-        np.isfinite(halpha), (halpha <= STRONG_HALPHA_EW).astype(float), np.nan
-    )
+    work = classify_emission(frame)
     # _mass_bin_rows expects the catalogue column names used by Fig. 2
     work["rank_M"] = work["rank"]
     work["lgm"] = work["logMstar"]
@@ -123,7 +120,6 @@ def run_descriptive_properties(data, output_dir: str | None = None) -> dict:
             {"panel": panel, "column": column, "statistic": statistic}
             for panel, column, statistic, _t, _y in PANELS
         ],
-        "strong_halpha_threshold_angstrom": STRONG_HALPHA_EW,
         "rows": trends.to_dict(orient="records"),
     }
     if output_dir:

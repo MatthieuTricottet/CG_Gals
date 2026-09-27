@@ -1188,7 +1188,7 @@ def run_size_analysis(data, output_dir: str | None = None) -> dict[str, object]:
 
     frame = frame.copy()
     # Reuse the crowding-analysis nearest-neighbour geometry and threshold.
-    if {"RA", "Dec", "group_uid"}.issubset(frame.columns):
+    if {"RA", "Dec", "objid"}.issubset(frame.columns):
         frame["nearest_angular_separation_arcsec"] = _nearest_angular(frame)
         frame["close_neighbour"] = (
             frame["nearest_angular_separation_arcsec"] < CROWDING_THRESHOLD_ARCSEC

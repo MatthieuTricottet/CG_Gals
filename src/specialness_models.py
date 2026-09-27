@@ -36,20 +36,41 @@ LABELS = {
 }
 
 
-def _covariates(frame):
-    candidates = [
-        ("logMstar", True),
-        ("z_numeric", True),
-        ("is_satellite", False),
-        ("log_group_mass", True),
-        ("log_group_luminosity", True),
-        ("velocity_dispersion", True),
-    ]
+# The adjustment set of every per-control and pooled model: stellar mass,
+# redshift, the BGG/satellite indicator, the quartet luminosity and the
+# quartet velocity dispersion.  No group-mass term enters: the catalogue
+# ``M_group`` column is an absolute magnitude, and the host-halo mass is a
+# host property collinear with luminosity (Appendix sensitivity only).
+COVARIATES = [
+    ("logMstar", True),
+    ("z_numeric", True),
+    ("is_satellite", False),
+    ("log_group_luminosity", True),
+    ("velocity_dispersion", True),
+]
+MIN_COVARIATE_COMPLETENESS = 0.65
+
+
+def _covariates(frame, exclude=()):
+    """Return the adjustment set; a candidate that cannot enter is an error.
+
+    A covariate below the completeness threshold (or absent) would silently
+    change the meaning of every adjusted model, so it raises instead.
+    ``exclude`` removes covariates on purpose (e.g. the no-sigma_v
+    sensitivity).
+    """
+
     selected = []
     continuous = []
-    for column, is_continuous in candidates:
-        if column not in frame or frame[column].notna().mean() < 0.65:
+    for column, is_continuous in COVARIATES:
+        if column in exclude:
             continue
+        completeness = float(frame[column].notna().mean()) if column in frame else 0.0
+        if completeness < MIN_COVARIATE_COMPLETENESS:
+            raise ValueError(
+                f"covariate {column!r} is only {completeness:.0%} complete; "
+                "the adjustment set would change silently"
+            )
         selected.append(column)
         if is_continuous:
             continuous.append(column)
@@ -95,7 +116,9 @@ def _plot(results, path):
     return os.path.basename(path)
 
 
-def fit_logistic_specialness_models(data, output_dir: str | None = None):
+def fit_logistic_specialness_models(
+    data, output_dir: str | None = None, exclude_covariates=()
+):
     """Fit pooled adjusted binary-outcome models (secondary).
 
     This pooled analysis is a *summary across heterogeneous control
@@ -112,7 +135,7 @@ def fit_logistic_specialness_models(data, output_dir: str | None = None):
         return {"status": "skipped", "reason": "no_galaxy_samples"}
     n_control_rows = int((frame["is_CG4"] == 0).sum())
     frame = dedup_control_pool(frame)
-    covariates, continuous = _covariates(frame)
+    covariates, continuous = _covariates(frame, exclude=exclude_covariates)
     results = {
         "status": "ok",
         "covariates_considered": covariates,

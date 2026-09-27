@@ -61,6 +61,7 @@ def synthetic_size_frame(seed=20260612, n_cg4_groups=60, n_control_groups=150):
             "logMstar": log_mass,
             "M_r": -20.5 - 2.0 * (log_mass - 10.4) + rng.normal(0, 0.2, n),
             "z_numeric": z,
+            "z_group_numeric": z_group,
             "z": z,
             "RA": ra,
             "Dec": dec,

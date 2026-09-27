@@ -465,6 +465,12 @@ def run(sample: dict[str, pd.DataFrame]) -> dict:
     residuals_path = os.path.join(co.OUTPUT_PATH, "sfms_residual_summary.csv")
     residuals.to_csv(residuals_path, index=False)
 
+    # The plotted bars are binomial 68% intervals; compare their half-widths
+    # with the group-resampling 16-84% intervals of the same bins.
+    shown = trends.loc[trends["displayed"] & (trends["estimate"] > 0) & (trends["estimate"] < 1)]
+    binomial_half = np.sqrt(shown["estimate"] * (1 - shown["estimate"]) / shown["n_galaxies"])
+    ratio = ((shown["ci84"] - shown["ci16"]) / 2) / binomial_half
+
     return {
         "status": "ok",
         "figure": "fig_mass_trends.pdf",
@@ -473,7 +479,17 @@ def run(sample: dict[str, pd.DataFrame]) -> dict:
         "quenched_mass_bins": MASS_BINS.tolist(),
         "minimum_galaxies_displayed": MIN_GALAXIES_TO_PLOT,
         "minimum_groups_displayed": MIN_GROUPS_TO_PLOT,
-        "plot_uncertainties": "Gary Mamon binomialerrorplot (upstream commit 88fea77)",
+        "plot_uncertainties": (
+            "binomial 68% intervals, Wilson limits for empty or full bins "
+            "(G. Mamon's binomialerrorplot, upstream commit 88fea77)"
+        ),
+        "interval_width_ratio": {
+            "definition": "group-resampling 16-84% half-width / binomial standard error",
+            "median": float(ratio.median()),
+            "min": float(ratio.min()),
+            "max": float(ratio.max()),
+            "n_bins": int(len(ratio)),
+        },
         "x_coordinate": "median stellar mass of contributing galaxies",
         "connecting_lines": False,
         "counts_file": os.path.basename(trends_path),

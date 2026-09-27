@@ -226,9 +226,6 @@ def build_galaxy_frame(samples: dict[str, pd.DataFrame]) -> pd.DataFrame:
     frame.loc[missing_group_z, "z_group_numeric"] = frame.groupby("group_uid")[
         "z_numeric"
     ].transform("median")[missing_group_z]
-    frame["log_group_mass"] = np.log10(
-        _numeric(frame, ["M_group", "group_M_group"]).where(lambda values: values > 0)
-    )
     frame["log_group_luminosity"] = np.log10(
         _numeric(frame, ["Lum_group", "group_Lum_group"]).where(
             lambda values: values > 0

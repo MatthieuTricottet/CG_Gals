@@ -5,8 +5,10 @@ REBUILD_SAMPLE = False
 # Render the paper from existing JSON outputs without rerunning analyses.
 RENDER_PAPER_ONLY = True
 
-#* File system
-BASE_PATH = "/Users/matt/Astrophysics/CG_Gals/"
+#* File system (repository root, resolved from this file's location)
+import os as _os
+
+BASE_PATH = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))) + _os.sep
 DATA_PATH = BASE_PATH + "data/"
 OUTPUT_PATH = BASE_PATH + "output/"
 CG_PATH = DATA_PATH + "CG_in_SDSSDR16/"
