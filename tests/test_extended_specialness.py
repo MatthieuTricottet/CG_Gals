@@ -1,4 +1,6 @@
 import json
+import os
+import sys
 from pathlib import Path
 
 import numpy as np
@@ -162,7 +164,12 @@ def test_size_availability_counts_positive_quality_flags_only():
     assert rg4_petro["n_available"] < rg4_petro["n_total"]
 
 
-def test_all_modules_execute_on_synthetic_data_and_create_figures(tmp_path):
+def test_all_modules_execute_on_synthetic_data_and_create_figures(tmp_path, monkeypatch):
+    # some modules write their tables to config.OUTPUT_PATH; keep the
+    # synthetic run away from the tracked pipeline outputs
+    for name in ("config", "src.config"):
+        if name in sys.modules:
+            monkeypatch.setattr(sys.modules[name], "OUTPUT_PATH", str(tmp_path) + os.sep)
     frame = synthetic_frame()
     results = {
         "specialness_models": fit_logistic_specialness_models(frame, tmp_path),

@@ -44,6 +44,11 @@ regenerates every number of the paper.
 * Online supplement: the hand-written "Fig. S.7" caption did not advance the
   figure counter (two figures carried S.7); fixed with `\refstepcounter`.
 * Abstract kept below the A&A limit of 300 words (the aa class warns above).
+* A clean-clone `reproduce.py` run matches the committed outputs except for
+  timestamps. It exposed two leaks, now fixed: the synthetic-data test
+  overwrote `output/morphology_crowding_*.csv` (its `OUTPUT_PATH` is now a
+  temporary directory), and the PDFs recorded absolute build paths
+  (`\pdfsuppressptexinfo=-1` in both templates).
 
 ## Manuscript
 
