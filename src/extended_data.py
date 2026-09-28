@@ -173,6 +173,35 @@ def build_galaxy_frame(samples: dict[str, pd.DataFrame]) -> pd.DataFrame:
         )
         frame["control_source_labels"] = frame["objid"].map(labels_by_objid)
     frame = _merge_sdss_columns(frame, samples)
+
+    # The colour analysis is defined by the narrower SDSS table.  The
+    # broader SDSS_withAGN merge above is used for spectroscopy and must not
+    # silently broaden the colour-selection diagnostic.
+    colour_source = samples.get("SDSS")
+    colour_columns = ["u_obs", "g_obs", "r_obs", "i_obs"]
+    if (
+        colour_source is not None
+        and "objid" in colour_source
+        and "objid" in frame
+        and set(colour_columns).issubset(colour_source.columns)
+    ):
+        finite_colour = (
+            colour_source[colour_columns]
+            .apply(pd.to_numeric, errors="coerce")
+            .replace([np.inf, -np.inf], np.nan)
+            .notna()
+            .all(axis=1)
+        )
+        retained_objids = set(
+            pd.to_numeric(
+                colour_source.loc[finite_colour, "objid"], errors="coerce"
+            ).dropna()
+        )
+        frame["colour_analysis_retained"] = pd.to_numeric(
+            frame["objid"], errors="coerce"
+        ).isin(retained_objids)
+    else:
+        frame["colour_analysis_retained"] = False
     # MPA-JHU galSpecIndx D_n4000 / HdeltaA by stored DR12 specobjid (descriptive use only)
     try:
         try:

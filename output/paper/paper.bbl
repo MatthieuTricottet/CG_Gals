@@ -134,6 +134,10 @@ Dom{\'i}nguez~S{\'a}nchez, H., Huertas-Company, M., Bernardi, M., Tuccillo, D.,
 \bibitem[{{Mamon}(1992)}]{Mamon92}
 {Mamon}, G.~A. 1992, \apjl, 401, L3
 
+\bibitem[{{Mart{\'\i}nez} {et~al.}(2013){Mart{\'\i}nez}, {Coenda}, \&
+  {Muriel}}]{Martinez+13}
+{Mart{\'\i}nez}, H.~J., {Coenda}, V., \& {Muriel}, H. 2013, \aap, 557, A61
+
 \bibitem[{{McKinney}(2010)}]{McKinney2010}
 {McKinney}, W. 2010, in Proceedings of the 9th Python in Science Conference,
   56--61
@@ -177,9 +181,6 @@ Montaguth, G.~P., Torres-Flores, S., Monachesi, A., {et~al.} 2023, \mnras, 524,
   {et~al.}}]{Pedregosa2011}
 Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
   Res., 12, 2825
-
-\bibitem[{{Peng} {et~al.}(2015){Peng}, {Maiolino}, \& {Cochrane}}]{Peng+15}
-{Peng}, Y., {Maiolino}, R., \& {Cochrane}, R. 2015, \nat, 521, 192
 
 \bibitem[{{Planck Collaboration} {et~al.}(2016){Planck Collaboration}, {Ade},
   {Aghanim}, {Arnaud}, {Ashdown}, {Aumont}, {Baccigalupi}, {Banday},

@@ -223,6 +223,75 @@ def cg4_in_pc_quartets_table(frames: dict[str, pd.DataFrame] | None = None) -> p
     return table.sort_values(["cg4_group", "cg4_rank_M"]).reset_index(drop=True)
 
 
+def cg4_projected_core_overlap(
+    frames: dict[str, pd.DataFrame] | None = None,
+) -> tuple[pd.DataFrame, dict]:
+    """Audit partial and exact overlap with each non-isolated host core.
+
+    The would-be projected core is the four-member Control4C selection from
+    the parent catalogue before CG-overlap exclusion.  The returned table has
+    one row per embedded or predominant CG4, including systems with no shared
+    member, so overlap and exact identity cannot be conflated.
+    """
+
+    if frames is None:
+        frames = load_raw_samples()
+    quartet_members = (
+        sc.select_control4c_quartets(frames["PC"])
+        .groupby("Group", observed=True)["objid"]
+        .agg(lambda values: frozenset(values))
+    )
+    cg_members = (
+        frames["CG4"].groupby("Group", observed=True)["objid"]
+        .agg(lambda values: frozenset(values))
+    )
+    hosts = cg4_host_lim_map(frames)
+    classes = cg4_class_map(frames)
+    rows = []
+    for cg_group, members in cg_members.items():
+        class_name = classes.get(cg_group)
+        if class_name not in {"Embedded", "Predom"}:
+            continue
+        host = hosts.get(cg_group)
+        core = quartet_members.get(host, frozenset())
+        overlap = len(members.intersection(core))
+        rows.append(
+            {
+                "cg4_group": int(cg_group),
+                "cg4_class": str(class_name),
+                "host_lim_group": int(host) if pd.notna(host) else np.nan,
+                "overlap_members": int(overlap),
+                "any_overlap": bool(overlap > 0),
+                "exact_four_member_identity": bool(members == core and len(core) == 4),
+            }
+        )
+    table = pd.DataFrame(rows).sort_values(["cg4_class", "cg4_group"])
+    distribution = {
+        str(int(shared)): int(count)
+        for shared, count in table["overlap_members"].value_counts().sort_index().items()
+    }
+    summary = {
+        "population": "non-isolated CG4s (Embedded and Predom)",
+        "n_non_isolated": int(len(table)),
+        "n_any_overlap": int(table["any_overlap"].sum()),
+        "n_exact_four_member_identity": int(
+            table["exact_four_member_identity"].sum()
+        ),
+        "overlap_member_count_distribution": distribution,
+        "by_class": {
+            str(class_name): {
+                "n_total": int(len(part)),
+                "n_any_overlap": int(part["any_overlap"].sum()),
+                "n_exact_four_member_identity": int(
+                    part["exact_four_member_identity"].sum()
+                ),
+            }
+            for class_name, part in table.groupby("cg4_class", observed=True)
+        },
+    }
+    return table.reset_index(drop=True), summary
+
+
 def write_audit_products() -> None:
     """Write the identity catalogue and derived audit tables to audit/."""
 
@@ -240,6 +309,10 @@ def write_audit_products() -> None:
     quartet_table = cg4_in_pc_quartets_table(frames)
     quartet_table.to_csv(
         os.path.join(AUDIT_DIR, "cg4_in_pc_quartets.csv"), index=False
+    )
+    core_table, _ = cg4_projected_core_overlap(frames)
+    core_table.to_csv(
+        os.path.join(AUDIT_DIR, "cg4_projected_core_overlap.csv"), index=False
     )
     print(
         f"identity catalog: {len(catalog)} unique objids; "

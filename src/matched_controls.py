@@ -482,6 +482,24 @@ def _permutation_p_sign_flip(differences, seed=20260612, n_perm=9999):
     return float((n_extreme + 1) / (n_perm + 1))
 
 
+def _permutation_p_component_sign_flip(
+    differences, components, seed=20260612, n_perm=9999
+):
+    """Sign-flip whole connected host components as the exchangeable units."""
+
+    differences = np.asarray(differences, dtype=float)
+    components = np.asarray(components)
+    if differences.size != components.size:
+        raise ValueError("components must align with pair differences")
+    unique, component_index = np.unique(components, return_inverse=True)
+    rng = np.random.default_rng(seed)
+    signs = 2 * rng.integers(0, 2, (n_perm, len(unique))) - 1
+    null_means = np.mean(signs[:, component_index] * differences, axis=1)
+    observed = float(np.mean(differences))
+    n_extreme = int(np.sum(np.abs(null_means) >= abs(observed)))
+    return float((n_extreme + 1) / (n_perm + 1))
+
+
 def _group_table_for_control(prepared, control_label):
     """One row per group for CG4 vs a single control label (no cross-label dedup).
 
@@ -613,16 +631,25 @@ def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT)
     differences = t_frac - c_frac
     obs_delta = float(np.mean(differences))
 
-    # Bootstrap CI and p
-    rng = np.random.default_rng(seed)
-    boot = np.empty(n_boot)
-    for index in range(n_boot):
-        draw = rng.integers(0, n_pairs, n_pairs)
-        boot[index] = float(np.mean(t_frac[draw]) - np.mean(c_frac[draw]))
-    low, high = float(np.quantile(boot, 0.025)), float(np.quantile(boot, 0.975))
+    components = matched_cluster_components(
+        work.loc[t_idx, "physical_group"], work.loc[c_idx, "physical_group"]
+    )
+    effect = bootstrap_difference(
+        t_frac,
+        c_frac,
+        statistic=np.mean,
+        paired=True,
+        n_boot=n_boot,
+        seed=seed,
+        blocks=components,
+    )
+    low, high = effect["ci95"]
 
-    # Sign-flip permutation p
-    p_perm = _permutation_p_sign_flip(differences, seed=seed, n_perm=n_boot)
+    # The sharp-null permutation flips every pair in a connected/shared-host
+    # component together, matching the bootstrap's exchangeability unit.
+    p_perm = _permutation_p_component_sign_flip(
+        differences, components, seed=seed, n_perm=n_boot
+    )
 
     def _count_dist(subset):
         counts = work.loc[subset, "n_smooth_sat"].value_counts().sort_index()
@@ -630,10 +657,8 @@ def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT)
 
     # Satellite-mass balance audit: the match conditions on group covariates
     # but never on satellite stellar mass, so quantify the per-pair gap in
-    # mean satellite log M* (CG4 minus control) with a pair-resampling
-    # bootstrap CI (each pair contains exactly one CG4 group, so pair
-    # resampling is group-blocked). A fresh generator keeps the existing
-    # bootstrap and permutation streams untouched.
+    # mean satellite log M* (CG4 minus control) with the same connected-host
+    # component resampling used for the primary quartet contrast.
     satellite_mass_balance = {"status": "skipped", "reason": "no_mean_sat_logMstar"}
     if "mean_sat_logMstar" in work.columns:
         t_mass = work.loc[t_idx, "mean_sat_logMstar"].to_numpy(dtype=float)
@@ -646,20 +671,23 @@ def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT)
             }
         else:
             mass_diff = t_mass[mass_mask] - c_mass[mass_mask]
-            mass_rng = np.random.default_rng(seed + 1)
             n_mass = int(mass_diff.size)
-            mass_boot = np.empty(n_boot)
-            for index in range(n_boot):
-                draw = mass_rng.integers(0, n_mass, n_mass)
-                mass_boot[index] = float(np.mean(mass_diff[draw]))
+            mass_effect = bootstrap_difference(
+                t_mass[mass_mask],
+                c_mass[mass_mask],
+                statistic=np.mean,
+                paired=True,
+                n_boot=n_boot,
+                seed=seed + 1,
+                blocks=components[mass_mask],
+            )
             satellite_mass_balance = {
                 "status": "ok",
                 "n_pairs": n_mass,
                 "mean_paired_diff_dex": float(np.mean(mass_diff)),
-                "ci95": [
-                    float(np.quantile(mass_boot, 0.025)),
-                    float(np.quantile(mass_boot, 0.975)),
-                ],
+                "ci95": mass_effect["ci95"],
+                "resampling_unit": "bipartite_connected_component",
+                "n_components": mass_effect["n_blocks"],
                 "smd_before": smd_before.get("mean_sat_logMstar"),
                 "smd_after": smd_after.get("mean_sat_logMstar"),
             }
@@ -674,8 +702,11 @@ def _run_one_group_match(table, variables, seed=20260612, n_boot=N_BOOT_DEFAULT)
         "propensity_caliper_logit_sd": 0.2,
         "delta_smooth_satellite_fraction": obs_delta,
         "ci95": [float(low), float(high)],
-        "p": empirical_p_two_sided(boot),
+        "p": effect["p"],
         "p_permutation": p_perm,
+        "resampling_unit": "bipartite_connected_component",
+        "n_components": int(pd.Series(components).nunique()),
+        "permutation_unit": "bipartite_connected_component",
         "n_boot": int(n_boot),
         "p_floor": float(2 / (n_boot + 1)),
         "mean_fraction_cg4": float(np.mean(t_frac)),
@@ -707,8 +738,8 @@ def group_level_matched_analysis(prepared, n_boot=N_BOOT_DEFAULT, seed=20260612)
     redshift, BGG stellar mass, total quartet luminosity and velocity
     dispersion (propensity caliper 0.2 SD of the logit). The effect is the
     matched difference in per-group elliptical-vote satellite fraction, with a
-    pair-resampling bootstrap (groups are the independent unit) and an
-    add-one empirical p-value, plus a paired sign-flip permutation p
+    connected/shared-host-component bootstrap and an add-one empirical
+    p-value, plus a component-level sign-flip permutation p
     (9999 permutations, add-one). SMD diagnostics are stored for the four
     matching covariates before and after matching, plus mean satellite
     log M* per group as an unrestricted balance diagnostic.

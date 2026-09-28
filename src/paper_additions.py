@@ -44,7 +44,7 @@ if SRC not in sys.path:
 
 import config as co  # noqa: E402
 from astropy.cosmology import Planck15  # noqa: E402
-from scipy.stats import chi2_contingency, spearmanr  # noqa: E402
+from scipy.stats import spearmanr  # noqa: E402
 
 from extended_data import build_galaxy_frame  # noqa: E402
 from extended_stats import fit_logistic_model  # noqa: E402
@@ -192,19 +192,40 @@ def separations_block(sample: dict) -> dict:
 # Task 2 -- conditional quenched fractions and Kitagawa decomposition
 # --------------------------------------------------------------------------
 
-def group_count_arrays(gals: pd.DataFrame) -> tuple[np.ndarray, np.ndarray]:
-    """Per-group (classified, quenched) counts by morphology, for blocked draws."""
+def physical_host_count_frames(
+    frame: pd.DataFrame, sample_name: str
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Physical-host counts for the common decomposition analysis subset.
 
-    groups = np.sort(gals["Group"].unique())
-    cl = gals[gals["sSFR_status"].isin(["Quenched", "Starforming"])]
-    n = (cl.pivot_table(index="Group", columns="morphology", aggfunc="size",
-                        fill_value=0)
-         .reindex(index=groups, columns=MORPHS, fill_value=0))
-    q = (cl[cl["sSFR_status"] == "Quenched"]
-         .pivot_table(index="Group", columns="morphology", aggfunc="size",
-                      fill_value=0)
-         .reindex(index=groups, columns=MORPHS, fill_value=0))
-    return n.to_numpy(float), q.to_numpy(float)
+    Every term uses galaxies with a classified sSFR and one of the three
+    finite Galaxy Zoo labels in ``MORPHS``.  Indexing by ``physical_group``
+    makes a Lim host shared by CG4 and a control one resampling block.
+    """
+
+    part = frame[
+        frame["sample"].eq(sample_name)
+        & frame["sSFR_status"].isin(["Quenched", "Starforming"])
+        & frame["morphology"].isin(MORPHS)
+        & frame["physical_group"].notna()
+    ]
+    n = (
+        part.pivot_table(
+            index="physical_group", columns="morphology", aggfunc="size",
+            fill_value=0,
+        )
+        .reindex(columns=MORPHS, fill_value=0)
+        .astype(float)
+    )
+    q = (
+        part[part["sSFR_status"].eq("Quenched")]
+        .pivot_table(
+            index="physical_group", columns="morphology", aggfunc="size",
+            fill_value=0,
+        )
+        .reindex(index=n.index, columns=MORPHS, fill_value=0)
+        .astype(float)
+    )
+    return n, q
 
 
 def _mix_cond(n_cg, q_cg, n_ct, q_ct):
@@ -221,8 +242,19 @@ def _mix_cond(n_cg, q_cg, n_ct, q_ct):
 
 
 def quenched_block(sample: dict, n_boot: int = 4000) -> dict:
-    print("\n== Task 2: P(Q|morphology), homogeneity, Kitagawa ==")
-    block = {"per_sample": {}, "chi2_homogeneity_PQE": {}, "kitagawa": {}}
+    print("\n== Task 2: P(Q|morphology) and host-blocked Kitagawa decomposition ==")
+    block = {
+        "per_sample": {},
+        "kitagawa": {},
+        "analysis_subset": {
+            "sSFR": ["Quenched", "Starforming"],
+            "morphology": MORPHS,
+            "excluded": ["NosSFR", NO_MORPH],
+            "same_subset_for": [
+                "raw_delta_fQ", "morphology_mix_term", "conditional_term"
+            ],
+        },
+    }
     counts = {}
     for name in SAMPLES:
         g = sample[name + "_Gals"]
@@ -245,39 +277,78 @@ def quenched_block(sample: dict, n_boot: int = 4000) -> dict:
         check(f"PQE_{name}", counts[name]["Elliptical"]["p"], *refs_e[name])
         check(f"PQSp_{name}", counts[name]["Spiral"]["p"], *refs_s[name])
 
-    table = np.array([[counts[s]["Elliptical"]["quenched"],
-                       counts[s]["Elliptical"]["classified"]
-                       - counts[s]["Elliptical"]["quenched"]] for s in SAMPLES])
-    chi2, p_hom, dof, _ = chi2_contingency(table)
-    block["chi2_homogeneity_PQE"] = dict(chi2=float(chi2), p=float(p_hom),
-                                         dof=int(dof))
-    check("chi2_PQE_homogeneity_p", p_hom, 0.39, 0.01)
-
     kit_refs = {"Control4B": (-0.034, 0.02, ""),
                 "Control4C": (-0.016, 0.02, ""),
                 "RG4": (0.035, 0.02, "")}
-    n_cg, q_cg = group_count_arrays(sample["CG4_Gals"])
+    frame = build_galaxy_frame(sample)
+    n_cg_frame, q_cg_frame = physical_host_count_frames(frame, "CG4")
     for ctrl in ["Control4B", "Control4C", "RG4"]:
-        n_ct, q_ct = group_count_arrays(sample[ctrl + "_Gals"])
+        n_ct_frame, q_ct_frame = physical_host_count_frames(frame, ctrl)
+        host_union = n_cg_frame.index.union(n_ct_frame.index).sort_values()
+        n_cg = n_cg_frame.reindex(host_union, fill_value=0).to_numpy(float)
+        q_cg = q_cg_frame.reindex(host_union, fill_value=0).to_numpy(float)
+        n_ct = n_ct_frame.reindex(host_union, fill_value=0).to_numpy(float)
+        q_ct = q_ct_frame.reindex(host_union, fill_value=0).to_numpy(float)
         mix, cond = _mix_cond(n_cg.sum(0), q_cg.sum(0), n_ct.sum(0), q_ct.sum(0))
         raw = (q_cg.sum() / n_cg.sum()) - (q_ct.sum() / n_ct.sum())
         assert abs(raw - (mix + cond)) < 1e-12, "Kitagawa identity violated"
 
         rng = np.random.default_rng(SEED)
-        g_cg, g_ct = len(n_cg), len(n_ct)
-        w_cg = rng.multinomial(g_cg, np.full(g_cg, 1 / g_cg), size=n_boot)
-        w_ct = rng.multinomial(g_ct, np.full(g_ct, 1 / g_ct), size=n_boot)
-        mix_b, cond_b = _mix_cond(w_cg @ n_cg, w_cg @ q_cg,
-                                  w_ct @ n_ct, w_ct @ q_ct)
+        n_hosts = len(host_union)
+        weights = rng.multinomial(
+            n_hosts, np.full(n_hosts, 1 / n_hosts), size=n_boot
+        )
+        bn_cg, bq_cg = weights @ n_cg, weights @ q_cg
+        bn_ct, bq_ct = weights @ n_ct, weights @ q_ct
+        valid = (bn_cg.sum(axis=1) > 0) & (bn_ct.sum(axis=1) > 0)
+        raw_b = (
+            bq_cg[valid].sum(axis=1) / bn_cg[valid].sum(axis=1)
+            - bq_ct[valid].sum(axis=1) / bn_ct[valid].sum(axis=1)
+        )
+        mix_b, cond_b = _mix_cond(
+            bn_cg[valid], bq_cg[valid], bn_ct[valid], bq_ct[valid]
+        )
+        all_cg = frame[
+            frame["sample"].eq("CG4") & frame["quenched"].notna()
+        ]["quenched"]
+        all_ct = frame[
+            frame["sample"].eq(ctrl) & frame["quenched"].notna()
+        ]["quenched"]
         block["kitagawa"][ctrl] = dict(
             raw_delta_fQ=float(raw), mix_term=float(mix),
             conditional_term=float(cond),
+            raw_ci95=[float(np.percentile(raw_b, 2.5)),
+                      float(np.percentile(raw_b, 97.5))],
             conditional_ci95=[float(np.percentile(cond_b, 2.5)),
                               float(np.percentile(cond_b, 97.5))],
             mix_ci95=[float(np.percentile(mix_b, 2.5)),
                       float(np.percentile(mix_b, 97.5))],
+            denominators={
+                "CG4": int(n_cg.sum()),
+                ctrl: int(n_ct.sum()),
+            },
+            classified_by_morphology={
+                "CG4": {m: int(value) for m, value in zip(MORPHS, n_cg.sum(0))},
+                ctrl: {m: int(value) for m, value in zip(MORPHS, n_ct.sum(0))},
+            },
+            all_ssfr_classified_reconciliation={
+                "CG4_denominator": int(len(all_cg)),
+                f"{ctrl}_denominator": int(len(all_ct)),
+                "delta_fQ": float(all_cg.mean() - all_ct.mean()),
+                "difference_from_decomposition_raw_due_to_missing_morphology":
+                    float((all_cg.mean() - all_ct.mean()) - raw),
+            },
+            physical_hosts={
+                "CG4": int(len(n_cg_frame)),
+                ctrl: int(len(n_ct_frame)),
+                "union": int(n_hosts),
+                "shared": int(len(n_cg_frame.index.intersection(n_ct_frame.index))),
+            },
             n_boot=n_boot, seed=SEED,
-            blocked_by="group within each sample (multinomial group weights)",
+            blocked_by=(
+                "physical Lim host over the CG4-control union; a shared host "
+                "receives the same multinomial bootstrap weight in both samples"
+            ),
         )
         ref, tol, note = kit_refs[ctrl]
         check(f"kitagawa_conditional_{ctrl}", cond, ref, tol, note)
@@ -744,12 +815,24 @@ def build_macros(sep, quench, zheng, tidal) -> dict:
         m[f"qSp{sh.lower()}Cell"] = _cell(per["Spiral"])
         m[f"qU{sh.lower()}Cell"] = _cell(per["Uncertain"])
         m[f"nU{sh.lower()}"] = str(per["Uncertain"]["classified"])
-    m["pQEhom"] = _fmt(quench["chi2_homogeneity_PQE"]["p"], 2)
     for ctrl, sh in (("Control4B", "CB"), ("Control4C", "CC"), ("RG4", "RG")):
         kit = quench["kitagawa"][ctrl]
+        m[f"raw{sh}"] = _fmt(kit["raw_delta_fQ"], 3, sign=True)
+        m[f"raw{sh}lo"] = _fmt(kit["raw_ci95"][0], 3, sign=True)
+        m[f"raw{sh}hi"] = _fmt(kit["raw_ci95"][1], 3, sign=True)
+        m[f"mix{sh}"] = _fmt(kit["mix_term"], 3, sign=True)
+        m[f"mix{sh}lo"] = _fmt(kit["mix_ci95"][0], 3, sign=True)
+        m[f"mix{sh}hi"] = _fmt(kit["mix_ci95"][1], 3, sign=True)
         m[f"cond{sh}"] = _fmt(kit["conditional_term"], 3, sign=True)
         m[f"cond{sh}lo"] = _fmt(kit["conditional_ci95"][0], 3, sign=True)
         m[f"cond{sh}hi"] = _fmt(kit["conditional_ci95"][1], 3, sign=True)
+        m[f"nDecCG{sh}"] = str(kit["denominators"]["CG4"])
+        m[f"nDec{sh}"] = str(kit["denominators"][ctrl])
+        m[f"nHostShared{sh}"] = str(kit["physical_hosts"]["shared"])
+        m[f"allRaw{sh}"] = _fmt(
+            kit["all_ssfr_classified_reconciliation"]["delta_fQ"], 3,
+            sign=True,
+        )
         m[f"condBound{sh}"] = _fmt(max(abs(kit["conditional_ci95"][0]),
                                        abs(kit["conditional_ci95"][1])), 2)
 

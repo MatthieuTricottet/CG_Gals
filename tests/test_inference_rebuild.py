@@ -19,7 +19,11 @@ from src.matched_controls import (
     matched_cluster_components,
     run_matched_control_analysis,
 )
-from src.primary_contrasts import run_primary_contrasts
+from src.primary_contrasts import (
+    MORPHOLOGY_ADJUSTED_QUENCHING_KEY,
+    SAME_CASE_NO_MORPHOLOGY_KEY,
+    run_primary_contrasts,
+)
 from tests.test_matched_pairs_stability import add_matched_outcome_columns
 from tests.test_size_models import synthetic_size_frame
 
@@ -130,6 +134,8 @@ def test_group_level_analysis_reports_counts():
     group_level = result["group_level"]
     assert group_level["status"] == "ok"
     assert group_level["unit"] == "group"
+    assert group_level["resampling_unit"] == "bipartite_connected_component"
+    assert group_level["permutation_unit"] == "bipartite_connected_component"
     assert group_level["n_matched_groups"] >= 10
     distribution = group_level["n_smooth_sat_distribution_cg4"]
     assert set(distribution) <= {"0", "1", "2", "3"}
@@ -141,6 +147,11 @@ def test_group_level_analysis_reports_counts():
         if item.get("status") == "ok"
     ]
     assert ok_per_control
+    assert all(
+        item["resampling_unit"] == "bipartite_connected_component"
+        and item["permutation_unit"] == "bipartite_connected_component"
+        for item in ok_per_control
+    )
 
 
 def test_primary_contrasts_fit_three_control_specific_comparisons():
@@ -159,3 +170,25 @@ def test_primary_contrasts_fit_three_control_specific_comparisons():
         for model in ok_models:
             assert "cg4_p_adj" not in model
             assert model.get("cg4_p") is not None
+
+
+def test_morphology_adjusted_quenching_is_satellite_complete_case_and_clustered():
+    frame = add_matched_outcome_columns(synthetic_size_frame())
+    # Synthetic fixtures predate the conservative binary morphology column;
+    # make it explicit and leave a few missing rows to exercise exclusion.
+    frame["elliptical"] = (frame["objid"].astype(int) % 3 == 0).astype(float)
+    frame.loc[frame.index[:4], "elliptical"] = np.nan
+    result = run_primary_contrasts(frame)
+    assert set(result["contrasts"]) == {"Control4B", "Control4C", "RG4"}
+    for contrast in result["contrasts"].values():
+        model = contrast[MORPHOLOGY_ADJUSTED_QUENCHING_KEY]
+        assert model["status"] == "ok"
+        assert "elliptical" in model["predictors_used"]
+        assert "is_satellite" not in model["predictors_used"]
+        assert model["covariance"] == "cluster"
+        assert model["n_clusters"] >= 2
+    same_case = result["contrasts"]["Control4B"]
+    assert (
+        same_case[MORPHOLOGY_ADJUSTED_QUENCHING_KEY]["n"]
+        == same_case[SAME_CASE_NO_MORPHOLOGY_KEY]["n"]
+    )

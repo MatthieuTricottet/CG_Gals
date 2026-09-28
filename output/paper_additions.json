@@ -2,9 +2,9 @@
  "meta": {
   "script": "src/paper_additions.py",
   "seed": 42,
-  "generated_utc": "2026-09-18T16:53:55.580144+00:00",
-  "git_head": "f3bbb4c",
-  "runtime_s": 12.3
+  "generated_utc": "2026-09-28T07:51:42.044650+00:00",
+  "git_head": "a3d08b2",
+  "runtime_s": 11.6
  },
  "canonical_gate": {
   "CG4": {
@@ -180,60 +180,171 @@
     }
    }
   },
-  "chi2_homogeneity_PQE": {
-   "chi2": 2.992500132626825,
-   "p": 0.3927829542867437,
-   "dof": 3
-  },
   "kitagawa": {
    "Control4B": {
     "raw_delta_fQ": 0.04917982931326148,
     "mix_term": 0.06588777854111406,
     "conditional_term": -0.016707949227852566,
+    "raw_ci95": [
+     -0.023373145250666395,
+     0.11746019978226022
+    ],
     "conditional_ci95": [
-     -0.07324166202002484,
-     0.03792440121506374
+     -0.07330906205024768,
+     0.03906524595573657
     ],
     "mix_ci95": [
-     0.02868215596524301,
-     0.10515193573099504
+     0.029438300213552086,
+     0.10158666779873232
     ],
+    "denominators": {
+     "CG4": 213,
+     "Control4B": 2470
+    },
+    "classified_by_morphology": {
+     "CG4": {
+      "Elliptical": 120,
+      "Spiral": 86,
+      "Uncertain": 7
+     },
+     "Control4B": {
+      "Elliptical": 1094,
+      "Spiral": 1260,
+      "Uncertain": 116
+     }
+    },
+    "all_ssfr_classified_reconciliation": {
+     "CG4_denominator": 230,
+     "Control4B_denominator": 2612,
+     "delta_fQ": 0.024905120181103912,
+     "difference_from_decomposition_raw_due_to_missing_morphology": -0.024274709132157568
+    },
+    "physical_hosts": {
+     "CG4": 57,
+     "Control4B": 679,
+     "union": 736,
+     "shared": 0
+    },
     "n_boot": 4000,
     "seed": 42,
-    "blocked_by": "group within each sample (multinomial group weights)"
+    "blocked_by": "physical Lim host over the CG4-control union; a shared host receives the same multinomial bootstrap weight in both samples"
    },
    "Control4C": {
     "raw_delta_fQ": 0.06357747995782992,
     "mix_term": 0.06156157563647821,
     "conditional_term": 0.0020159043213517818,
+    "raw_ci95": [
+     -0.009853793620233241,
+     0.1303123615704487
+    ],
     "conditional_ci95": [
-     -0.05414701047517009,
-     0.05763538162601387
+     -0.05587454728833572,
+     0.056439065091433246
     ],
     "mix_ci95": [
-     0.02283333254468059,
-     0.10061054113139706
+     0.0243730115818928,
+     0.09990893883399739
     ],
+    "denominators": {
+     "CG4": 213,
+     "Control4C": 2476
+    },
+    "classified_by_morphology": {
+     "CG4": {
+      "Elliptical": 120,
+      "Spiral": 86,
+      "Uncertain": 7
+     },
+     "Control4C": {
+      "Elliptical": 1108,
+      "Spiral": 1225,
+      "Uncertain": 143
+     }
+    },
+    "all_ssfr_classified_reconciliation": {
+     "CG4_denominator": 230,
+     "Control4C_denominator": 2621,
+     "delta_fQ": 0.0395899341439544,
+     "difference_from_decomposition_raw_due_to_missing_morphology": -0.02398754581387552
+    },
+    "physical_hosts": {
+     "CG4": 57,
+     "Control4C": 685,
+     "union": 739,
+     "shared": 3
+    },
     "n_boot": 4000,
     "seed": 42,
-    "blocked_by": "group within each sample (multinomial group weights)"
+    "blocked_by": "physical Lim host over the CG4-control union; a shared host receives the same multinomial bootstrap weight in both samples"
    },
    "RG4": {
     "raw_delta_fQ": 0.2013946423639879,
     "mix_term": 0.1517077957943741,
     "conditional_term": 0.049686846569613766,
+    "raw_ci95": [
+     0.10496139402760135,
+     0.3025983069969825
+    ],
     "conditional_ci95": [
-     -0.03506463652145961,
-     0.13644165191958013
+     -0.03470052002699253,
+     0.1359933875621311
     ],
     "mix_ci95": [
-     0.09903390880205587,
-     0.20796998289562466
+     0.10195850539126312,
+     0.20835122078912718
     ],
+    "denominators": {
+     "CG4": 213,
+     "RG4": 204
+    },
+    "classified_by_morphology": {
+     "CG4": {
+      "Elliptical": 120,
+      "Spiral": 86,
+      "Uncertain": 7
+     },
+     "RG4": {
+      "Elliptical": 60,
+      "Spiral": 129,
+      "Uncertain": 15
+     }
+    },
+    "all_ssfr_classified_reconciliation": {
+     "CG4_denominator": 230,
+     "RG4_denominator": 219,
+     "delta_fQ": 0.17359539408378005,
+     "difference_from_decomposition_raw_due_to_missing_morphology": -0.027799248280207856
+    },
+    "physical_hosts": {
+     "CG4": 57,
+     "RG4": 55,
+     "union": 112,
+     "shared": 0
+    },
     "n_boot": 4000,
     "seed": 42,
-    "blocked_by": "group within each sample (multinomial group weights)"
+    "blocked_by": "physical Lim host over the CG4-control union; a shared host receives the same multinomial bootstrap weight in both samples"
    }
+  },
+  "analysis_subset": {
+   "sSFR": [
+    "Quenched",
+    "Starforming"
+   ],
+   "morphology": [
+    "Elliptical",
+    "Spiral",
+    "Uncertain"
+   ],
+   "excluded": [
+    "NosSFR",
+    "NoGZ"
+   ],
+   "same_subset_for": [
+    "raw_delta_fQ",
+    "morphology_mix_term",
+    "conditional_term"
+   ]
   }
  },
  "zheng_shen": {
@@ -770,14 +881,6 @@
    "note": ""
   },
   {
-   "name": "chi2_PQE_homogeneity_p",
-   "computed": 0.3927829542867437,
-   "reference": 0.39,
-   "tol": 0.01,
-   "status": "PASS",
-   "note": ""
-  },
-  {
    "name": "kitagawa_conditional_Control4B",
    "computed": -0.016707949227852566,
    "reference": -0.034,
@@ -993,18 +1096,47 @@
   "qSprgCell": "0.295^{+0.084}_{-0.072}",
   "qUrgCell": "0.267^{+0.253}_{-0.158}",
   "nUrg": "15",
-  "pQEhom": "0.39",
+  "rawCB": "+0.049",
+  "rawCBlo": "-0.023",
+  "rawCBhi": "+0.117",
+  "mixCB": "+0.066",
+  "mixCBlo": "+0.029",
+  "mixCBhi": "+0.102",
   "condCB": "-0.017",
   "condCBlo": "-0.073",
-  "condCBhi": "+0.038",
+  "condCBhi": "+0.039",
+  "nDecCGCB": "213",
+  "nDecCB": "2470",
+  "nHostSharedCB": "0",
+  "allRawCB": "+0.025",
   "condBoundCB": "0.07",
+  "rawCC": "+0.064",
+  "rawCClo": "-0.010",
+  "rawCChi": "+0.130",
+  "mixCC": "+0.062",
+  "mixCClo": "+0.024",
+  "mixCChi": "+0.100",
   "condCC": "+0.002",
-  "condCClo": "-0.054",
-  "condCChi": "+0.058",
+  "condCClo": "-0.056",
+  "condCChi": "+0.056",
+  "nDecCGCC": "213",
+  "nDecCC": "2476",
+  "nHostSharedCC": "3",
+  "allRawCC": "+0.040",
   "condBoundCC": "0.06",
+  "rawRG": "+0.201",
+  "rawRGlo": "+0.105",
+  "rawRGhi": "+0.303",
+  "mixRG": "+0.152",
+  "mixRGlo": "+0.102",
+  "mixRGhi": "+0.208",
   "condRG": "+0.050",
   "condRGlo": "-0.035",
   "condRGhi": "+0.136",
+  "nDecCGRG": "213",
+  "nDecRG": "204",
+  "nHostSharedRG": "0",
+  "allRawRG": "+0.174",
   "condBoundRG": "0.14",
   "feAllIso": "0.389^{+0.225}_{-0.186}",
   "feSatIso": "0.286^{+0.261}_{-0.169}",

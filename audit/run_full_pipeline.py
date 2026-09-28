@@ -14,6 +14,9 @@ import sys
 os.environ.setdefault("MPLBACKEND", "Agg")
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# This runner always targets the checkout that contains it, even if a shell
+# inherited an override intended for another copy.
+os.environ["CG_GALS_ROOT"] = BASE
 sys.path.insert(0, os.path.join(BASE, "src"))
 
 import config as co  # noqa: E402

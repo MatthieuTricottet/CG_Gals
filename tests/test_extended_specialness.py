@@ -85,7 +85,24 @@ def synthetic_frame(seed=20260612):
     frame.loc[
         frame.index % 5 == 0, ["u_minus_r", "u_minus_g", "g_minus_r", "r_minus_i"]
     ] = np.nan
+    frame["colour_analysis_retained"] = frame[
+        ["u_minus_r", "u_minus_g", "g_minus_r", "r_minus_i"]
+    ].notna().all(axis=1)
     return frame
+
+
+def test_colour_diagnostic_uses_explicit_analysis_retention_mask():
+    frame = synthetic_frame()
+    frame["colour_analysis_retained"] = False
+    retained = frame.groupby("sample", observed=True).head(3).index
+    frame.loc[retained, "colour_analysis_retained"] = True
+
+    result = run_selection_diagnostics(frame)
+
+    for sample in frame["sample"].unique():
+        assert result["colour_analysis_retained_counts_by_sample"][sample][
+            "n_retained"
+        ] == 3
 
 
 def test_safe_json_is_strictly_serializable():

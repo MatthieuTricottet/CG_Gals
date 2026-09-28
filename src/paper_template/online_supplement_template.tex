@@ -28,6 +28,7 @@
 <% set es = extended_specialness if extended_specialness else {} %>
 <% set matched = es.get('matched_controls', {}) %>
 <% set sz = es.get('size_analysis', {}) %>
+<% set selection = es.get('selection_diagnostics', {}) %>
 <% set diag = diag if diag else {} %>
 <% set d2 = diag.get('d2_sfms_sign', {}) %>
 <% set mass_trends = r.get('descriptive_mass_trends', {}) %>
@@ -74,7 +75,8 @@ The raw colour--mass fits do not show a single common relation for every sample:
 \begin{figure*}
   \centering
   \includegraphics[width=0.9\textwidth]{fig_colour_matched_selection_bias.pdf}
-  \caption{Selection diagnostics for the matched-photometry colour subset. The plotted comparisons show how galaxies retained for the colour analysis differ from those not retained in the audited quantities.}
+<% set colour_n = selection.get('colour_analysis_retained_counts_by_sample', {}) %>
+  \caption{Stellar-mass selection diagnostics for the exact colour-analysis retained population versus galaxies not retained, shown separately by sample. Retained counts are << colour_n.get('CG4', {}).get('n_retained', 110) >>/<< colour_n.get('CG4', {}).get('n_total', 248) >> for \CG{}, << colour_n.get('Control4B', {}).get('n_retained', 931) >>/<< colour_n.get('Control4B', {}).get('n_total', 2792) >> for \CB{}, << colour_n.get('Control4C', {}).get('n_retained', 1153) >>/<< colour_n.get('Control4C', {}).get('n_total', 2812) >> for \CC{}, and << colour_n.get('RG4', {}).get('n_retained', 102) >>/<< colour_n.get('RG4', {}).get('n_total', 224) >> for \RG{}. These are the same retained galaxies used by the colour analysis. Histograms are density-normalised within each retained or non-retained subset.}
   \label{fig:supp_colour_selection}
 \end{figure*}
 
@@ -106,30 +108,30 @@ The raw colour--mass fits do not show a single common relation for every sample:
   \label{fig:supp_colour_radius}
 \end{figure*}
 
-\clearpage
 \section{Pooled adjusted models}
 
-For a compact summary across the heterogeneous control definitions, the article also fits binomial models to a pooled catalogue. Because the control catalogues overlap heavily, the control side is first deduplicated by SDSS object identifier and standard errors are clustered by physical Lim group. The common adjustment set contains stellar mass, redshift, satellite/BGG rank, group luminosity, and velocity dispersion. The figure below visualises the coefficients tabulated in Appendix H of the article. The pooled model is a summary, not a replacement for the separate-control contrasts: it reinforces the satellite E-class morphology shift, whereas the quenched estimate changes across controls and is not reproduced by the matched comparison.
+For a compact summary across the heterogeneous control definitions, the article also fits binomial models to a pooled catalogue. Because the control catalogues overlap heavily, the control side is first deduplicated by SDSS object identifier and standard errors are clustered by physical Lim group. The common adjustment set contains stellar mass, redshift, satellite/BGG rank, group luminosity, and velocity dispersion. The figure below visualises the coefficients tabulated in Appendix G of the article. The pooled model is a summary, not a replacement for the separate-control contrasts: it reinforces the satellite E-class morphology shift, whereas the quenched estimate changes across controls and is not reproduced by the matched comparison.
 
-\begin{center}
-  \includegraphics[width=\columnwidth]{fig_specialness_logistic_coefficients.pdf}
-  \par\smallskip
-  \begin{minipage}{\columnwidth}\small
-  \textbf{Fig. S.7.} Adjusted \CG{} odds ratios from the pooled models. The GZ1 E-class outcomes refer to the smooth early-type-like GZ1 class, not to a physically pure sample of classical ellipticals. Points are odds ratios and bars are 95\% confidence intervals; the vertical line marks no difference.
-  \end{minipage}
-\end{center}
-
-\clearpage
 \section{Additional environmental diagnostics}
 
 The distance-to-BGG, magnitude-gap, and luminosity-dominance screens are retained here because they are useful provenance checks but do not add a control-independent signal to the article. Satellite sSFR shows no consistent monotonic dependence on projected BGG distance across the four samples. Binary dominance splits and further subdivision by BGG morphology produce small, heterogeneous subsets; their occasional low p-values do not survive as a coherent compact-group effect. Likewise, magnitude-gap differences are sensitive to the control definition. These diagnostics support the article's choice to retain the continuous group-scale screen and projected phase-space result as the more interpretable summaries.
 
 The optical-colour panels above give the corresponding full distributional diagnostics: matched-photometry retention is selective, and fitted offsets depend on the control definition and split sample.
 
+% Flush Figs. S.1--S.6 first, so that Fig. S.7 (Sect. 3), the Sect. 5 heading and Fig. S.8 share the last page.
+\clearpage
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=\columnwidth]{fig_specialness_logistic_coefficients.pdf}
+  \caption{Adjusted \CG{} odds ratios from the pooled models. The GZ1 E-class outcomes refer to the smooth early-type-like GZ1 class, not to a physically pure sample of classical ellipticals. Points are odds ratios and bars are cluster-robust 95\% confidence intervals; the vertical line marks no difference.}
+  \label{fig:supp_pooled_models}
+\end{figure}
+
 <% if sz.get('per_control', {}).get('figure') %>
+\newpage
 \section{Size-model comparison by control}
 
-\begin{figure}[H]
+\begin{figure}[!htbp]
   \centering
   \includegraphics[width=\columnwidth]{<< sz.get('per_control', {}).get('figure') >>}
   \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control catalogue separately. Every model uses the article's main adjustment set: stellar mass, redshift, rank, group luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii at fixed covariates.}

@@ -142,6 +142,22 @@ def test_aligned_morphology_sensitivities_are_labelled_and_separate():
         )
 
 
+def test_colour_selection_diagnostic_uses_the_analysis_population():
+    selection = _json("output/results.json")["extended_specialness"][
+        "selection_diagnostics"
+    ]
+    counts = selection["colour_analysis_retained_counts_by_sample"]
+    assert {
+        sample: (row["n_retained"], row["n_total"])
+        for sample, row in counts.items()
+    } == {
+        "CG4": (110, 248),
+        "Control4B": (931, 2792),
+        "Control4C": (1153, 2812),
+        "RG4": (102, 224),
+    }
+
+
 def test_kitagawa_isolated_and_leave_one_outputs():
     additions = _json("output/paper_additions.json")
     quench = additions["quenched_by_morphology"]
@@ -150,11 +166,11 @@ def test_kitagawa_isolated_and_leave_one_outputs():
         {"CG4": 0.9083333333, "Control4B": 0.9031078611,
          "Control4C": 0.8871841155, "RG4": 0.85}
     )
-    assert quench["chi2_homogeneity_PQE"]["p"] == pytest.approx(0.3927829543)
+    assert "chi2_homogeneity_PQE" not in quench
     expected_cond = {
-        "Control4B": (-0.0167079492, -0.0732416620, 0.0379244012),
-        "Control4C": (0.0020159043, -0.0541470105, 0.0576353816),
-        "RG4": (0.0496868466, -0.0350646365, 0.1364416519),
+        "Control4B": (-0.0167079492, -0.0733090621, 0.0390652460),
+        "Control4C": (0.0020159043, -0.0558745473, 0.0564390651),
+        "RG4": (0.0496868466, -0.0347005200, 0.1359933876),
     }
     for control, (cond, lo, hi) in expected_cond.items():
         item = quench["kitagawa"][control]
@@ -165,7 +181,11 @@ def test_kitagawa_isolated_and_leave_one_outputs():
         )
         assert item["n_boot"] == 4000
         assert item["seed"] == 42
-        assert item["blocked_by"].startswith("group within each sample")
+        assert item["blocked_by"].startswith("physical Lim host")
+        assert item["denominators"] == {
+            "CG4": 213,
+            control: {"Control4B": 2470, "Control4C": 2476, "RG4": 204}[control],
+        }
 
     zheng = additions["zheng_shen"]
     assert zheng["per_class"]["Isolated"]["n_groups"] == 6

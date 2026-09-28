@@ -65,6 +65,11 @@ seed; `output/results.json` and `output/results_build.json` are regenerated
 by the pipeline and feed the Jinja2 template — never edit
 `output/paper/paper.tex` by hand.
 
+Paths resolve from the checkout containing `src/config.py`. For an unusual
+layout, set `CG_GALS_ROOT` to an absolute checkout path containing `src/` and
+`data/`; the value is validated at import time. `audit/run_full_pipeline.py`
+always pins this variable to its own checkout so it cannot read another copy.
+
 ## External data caches
 
 The galaxy-size analysis (`src/size_data.py`, `src/size_analysis.py`) uses two

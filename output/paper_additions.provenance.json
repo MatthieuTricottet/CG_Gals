@@ -1,0 +1,7 @@
+{
+ "script": "src/paper_additions.py",
+ "seed": 42,
+ "generated_utc": "2026-09-27T17:47:25.285590+00:00",
+ "git_head": "f690c4f",
+ "runtime_s": 13.2
+}

@@ -96,3 +96,18 @@ def test_cg4_in_pc_quartets_matches_paper_i_exclusion_counts(frames):
     assert table["lim_group"].nunique() == 61
     c4c = frames["Control4C"]
     assert not set(table["lim_group"]) & set(c4c["Group"])
+
+
+def test_nonisolated_projected_core_overlap_distinguishes_partial_and_exact(frames):
+    table, summary = identity.cg4_projected_core_overlap(frames)
+    assert len(table) == summary["n_non_isolated"] == 56
+    assert summary["n_any_overlap"] == 51
+    assert summary["n_exact_four_member_identity"] == 46
+    assert summary["overlap_member_count_distribution"] == {
+        "0": 5,
+        "1": 1,
+        "3": 4,
+        "4": 46,
+    }
+    assert summary["by_class"]["Predom"]["n_exact_four_member_identity"] == 34
+    assert summary["by_class"]["Embedded"]["n_exact_four_member_identity"] == 12

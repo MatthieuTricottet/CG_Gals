@@ -376,6 +376,8 @@ def main():
             for class_name, part in overlap_table.groupby("cg4_class")
         },
     }
+    _, exact_overlap = identity.cg4_projected_core_overlap()
+    overlap["non_isolated_projected_core"] = exact_overlap
     report.append_json("cg4_pc_quartet_overlap", overlap)
     
 

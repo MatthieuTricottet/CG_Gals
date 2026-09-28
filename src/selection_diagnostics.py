@@ -199,32 +199,37 @@ def _plot_availability(availability_counts, path):
 
 
 def _plot_colour_bias(frame, path):
-    if "colour_matched" not in frame:
+    if "colour_analysis_retained" not in frame:
         return None
-    matched = frame.loc[frame["colour_matched"], "logMstar"].dropna()
-    unmatched = frame.loc[~frame["colour_matched"], "logMstar"].dropna()
-    if matched.empty or unmatched.empty:
+    samples = ["CG4", "Control4B", "Control4C", "RG4"]
+    fig, axes = plt.subplots(2, 2, figsize=(9.0, 6.8), sharex=True, sharey=True)
+    plotted = False
+    for ax, sample_name in zip(axes.flat, samples):
+        part = frame[frame["sample"] == sample_name]
+        retained_mask = part["colour_analysis_retained"].astype(bool)
+        retained = part.loc[retained_mask, "logMstar"].dropna()
+        omitted = part.loc[~retained_mask, "logMstar"].dropna()
+        if not retained.empty:
+            ax.hist(retained, bins=20, density=True, histtype="step",
+                    linewidth=1.8, label="Retained")
+            plotted = True
+        if not omitted.empty:
+            ax.hist(omitted, bins=20, density=True, histtype="step",
+                    linewidth=1.8, label="Not retained")
+            plotted = True
+        ax.set_title(
+            f"{sample_tex_label(sample_name)}: "
+            f"{int(retained_mask.sum())}/{len(part)} retained"
+        )
+        ax.tick_params(direction="in", top=True, right=True)
+    if not plotted:
+        plt.close(fig)
         return None
-    fig, ax = plt.subplots(figsize=(6.5, 4.5))
-    ax.hist(
-        matched,
-        bins=25,
-        density=True,
-        histtype="step",
-        linewidth=2,
-        label="Colour matched",
-    )
-    ax.hist(
-        unmatched,
-        bins=25,
-        density=True,
-        histtype="step",
-        linewidth=2,
-        label="Unmatched",
-    )
-    ax.set_xlabel(r"$\log(M_\star/M_\odot)$")
-    ax.set_ylabel("Density")
-    ax.legend(frameon=False)
+    axes[1, 0].set_xlabel(r"$\log(M_\star/M_\odot)$")
+    axes[1, 1].set_xlabel(r"$\log(M_\star/M_\odot)$")
+    axes[0, 0].set_ylabel("Density")
+    axes[1, 0].set_ylabel("Density")
+    axes[0, 0].legend(frameon=False)
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
@@ -288,6 +293,11 @@ def _sample_size_audit(frame):
             "all_colours_N": (
                 int(part[colour_columns].notna().all(axis=1).sum())
                 if colour_columns
+                else 0
+            ),
+            "colour_analysis_retained_N": (
+                int(part["colour_analysis_retained"].astype(bool).sum())
+                if "colour_analysis_retained" in part
                 else 0
             ),
             "satellites_BGG_distance_N": (
@@ -364,15 +374,17 @@ def run_selection_diagnostics(data, output_dir: str | None = None):
     for key, adjusted in zip(keys, holm_correction(tests)):
         missingness[key]["p_adj"] = adjusted
 
-    colour_columns = [
-        column
-        for column in ["u_minus_r", "u_minus_g", "g_minus_r", "r_minus_i"]
-        if column in frame
-    ]
     frame = frame.copy()
-    frame["colour_matched"] = (
-        frame[colour_columns].notna().all(axis=1) if colour_columns else False
-    )
+    frame["colour_matched"] = frame.get(
+        "colour_analysis_retained", pd.Series(False, index=frame.index)
+    ).astype(bool)
+    colour_retained_counts = {
+        sample_name: {
+            "n_retained": int(part["colour_matched"].sum()),
+            "n_total": int(len(part)),
+        }
+        for sample_name, part in frame.groupby("sample", observed=True)
+    }
     matched_unmatched = {}
     for column in ["logMstar", "z_numeric", "rank"]:
         if column in frame:
@@ -429,6 +441,7 @@ def run_selection_diagnostics(data, output_dir: str | None = None):
         "availability_counts_by_sample": availability_counts,
         "availability_labels": AVAILABILITY_LABELS,
         "availability_notes": AVAILABILITY_NOTES,
+        "colour_analysis_retained_counts_by_sample": colour_retained_counts,
         "sample_size_audit": _sample_size_audit(frame),
         "group_scale_column_audit": _group_scale_audit(frame),
         "missingness_comparisons": missingness,

@@ -1,3 +1,7 @@
+import os
+from pathlib import Path
+
+
 #* Display graphs or not while running the code
 VERBOSE = True
 SHOW = False
@@ -6,7 +10,22 @@ REBUILD_SAMPLE = False
 RENDER_PAPER_ONLY = True
 
 #* File system
-BASE_PATH = "/Users/matt/Astrophysics/CG_Gals/"
+# Resolve paths from this checkout by default.  CG_GALS_ROOT is an explicit
+# override for unusual layouts; validate it immediately so a run cannot
+# silently read data or write outputs in a different working copy.
+_DEFAULT_PROJECT_ROOT = Path(__file__).resolve().parents[1]
+_ROOT_OVERRIDE = os.environ.get("CG_GALS_ROOT")
+_PROJECT_ROOT = (
+    Path(_ROOT_OVERRIDE).expanduser().resolve()
+    if _ROOT_OVERRIDE
+    else _DEFAULT_PROJECT_ROOT
+)
+if not (_PROJECT_ROOT / "src").is_dir() or not (_PROJECT_ROOT / "data").is_dir():
+    raise RuntimeError(
+        "CG_GALS_ROOT must identify a CG_Gals checkout containing src/ and data/: "
+        f"{_PROJECT_ROOT}"
+    )
+BASE_PATH = str(_PROJECT_ROOT) + os.sep
 DATA_PATH = BASE_PATH + "data/"
 OUTPUT_PATH = BASE_PATH + "output/"
 CG_PATH = DATA_PATH + "CG_in_SDSSDR16/"

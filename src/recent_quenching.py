@@ -124,6 +124,7 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
     for sample_name, part in values.groupby("sample", observed=True):
         fractions[sample_name] = {
             "n_with_halpha": int(len(part)),
+            "n_strong_halpha": int(part["strong_halpha_emission"].sum()),
             "median_halpha_eqw": float(part[halpha].median()),
             "strong_emission_fraction": float(part["strong_halpha_emission"].mean()),
         }

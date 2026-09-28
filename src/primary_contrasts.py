@@ -51,6 +51,10 @@ CONTRAST_QUESTIONS = {
 PLOT_OUTCOMES = ["elliptical_all", "quenched_all"]
 # same control palette as Fig. 2 (descriptive_trends.SAMPLE_STYLES)
 PLOT_COLOURS = {"Control4B": "#0072B2", "Control4C": "#D55E00", "RG4": "#009E73"}
+MORPHOLOGY_ADJUSTED_QUENCHING_KEY = "quenched_satellites_morphology_adjusted"
+SAME_CASE_NO_MORPHOLOGY_KEY = (
+    "quenched_satellites_same_complete_case_no_morphology"
+)
 
 
 def _plot(results, path):
@@ -112,6 +116,20 @@ def run_primary_contrasts(data, output_dir: str | None = None, frame=None):
         "status": "ok",
         "covariates_considered": covariates,
         "cluster_unit": "physical_group",
+        "morphology_adjusted_quenching": {
+            "population": "satellites_only",
+            "outcome": "quenched versus star-forming",
+            "morphology_predictor": "binary GZ1 E versus S class",
+            "missing_data": (
+                "complete cases require measured sSFR class, binary GZ1 E/S "
+                "morphology, all continuous covariates, and physical Lim host"
+            ),
+            "uncertainty": "cluster-robust by physical_group; Wald 95% CI",
+            "standardized_absolute_effect": {
+                "status": "not_computed",
+                "reason": "no established standardization/marginalization framework in repository",
+            },
+        },
         "contrasts": {},
     }
     for control, question in CONTRAST_QUESTIONS.items():
@@ -135,6 +153,44 @@ def run_primary_contrasts(data, output_dir: str | None = None, frame=None):
                 predictors,
                 continuous=[column for column in continuous if column in predictors],
             )
+
+        # Direct quenching test requested for satellites: retain the principal
+        # satellite-quenching covariates and add the existing conservative
+        # binary GZ1 E/S indicator.  Uncertain and NoGZ rows are NaN in
+        # ``elliptical`` and therefore excluded rather than promoted to a
+        # third class or imputed.
+        satellite_panel = subset.loc[subset["is_satellite"] == 1].copy()
+        base_predictors = [
+            "is_CG4", *[column for column in covariates if column != "is_satellite"]
+        ]
+        morphology_predictors = [*base_predictors, "elliptical"]
+        required = [
+            "quenched", *morphology_predictors, "physical_group"
+        ]
+        complete_case = satellite_panel.replace([np.inf, -np.inf], np.nan).dropna(
+            subset=required
+        )
+        contrast[MORPHOLOGY_ADJUSTED_QUENCHING_KEY] = fit_logistic_model(
+            complete_case,
+            "quenched",
+            morphology_predictors,
+            continuous=[
+                column for column in continuous if column in morphology_predictors
+            ],
+        )
+        if control == "Control4B":
+            same_case = fit_logistic_model(
+                complete_case,
+                "quenched",
+                base_predictors,
+                continuous=[
+                    column for column in continuous if column in base_predictors
+                ],
+            )
+            same_case["complete_case_defined_by"] = (
+                MORPHOLOGY_ADJUSTED_QUENCHING_KEY
+            )
+            contrast[SAME_CASE_NO_MORPHOLOGY_KEY] = same_case
         results["contrasts"][control] = contrast
     # Holm bookkeeping across the three per-control tests of each model
     # family (gary-r2 D6/A8): stored next to the raw p-values; the controls
