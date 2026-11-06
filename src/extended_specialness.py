@@ -23,6 +23,8 @@ try:
     from size_analysis import run_size_analysis
     from size_data import attach_size_columns
     from primary_contrasts import run_primary_contrasts
+    from rank_split_diagnostics import run_rank_split_diagnostics
+    from rank_split_properties import run_rank_split_properties
     from specialness_models import fit_logistic_specialness_models
     from tidal_indices import run_tidal_indices_analysis
 except ModuleNotFoundError:  # pragma: no cover
@@ -43,6 +45,8 @@ except ModuleNotFoundError:  # pragma: no cover
     from .size_analysis import run_size_analysis
     from .size_data import attach_size_columns
     from .primary_contrasts import run_primary_contrasts
+    from .rank_split_diagnostics import run_rank_split_diagnostics
+    from .rank_split_properties import run_rank_split_properties
     from .specialness_models import fit_logistic_specialness_models
     from .tidal_indices import run_tidal_indices_analysis
 
@@ -96,6 +100,8 @@ def _run_extended_specialness(sample, output_dir):
         ("selection_diagnostics", run_selection_diagnostics),
         ("size_analysis", run_size_analysis),
         ("descriptive_properties", run_descriptive_properties),
+        ("rank_split_properties", run_rank_split_properties),
+        ("rank_split_diagnostics", run_rank_split_diagnostics),
     ]
     results = {"status": "ok", "n_galaxies": int(len(galaxies))}
     for name, function in analyses:

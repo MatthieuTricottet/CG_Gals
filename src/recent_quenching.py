@@ -10,16 +10,17 @@ if os.environ.get("MPLBACKEND") is None:
     matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from scipy import stats
 
 try:
     import config as co
     from extended_data import ensure_galaxy_frame
-    from extended_stats import safe_json
+    from extended_stats import fit_logistic_model, safe_json
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from .extended_data import ensure_galaxy_frame
-    from .extended_stats import safe_json
+    from .extended_stats import fit_logistic_model, safe_json
 
 
 DN4000_ALIASES = ["Dn4000", "dn4000", "d4000"]
@@ -59,6 +60,38 @@ def _plot_halpha(frame, column, path):
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
     return os.path.basename(path)
+
+
+def _morphology_adjusted_models(frame, halpha):
+    """Strong-H-alpha odds ratios at fixed stellar mass and GZ1 E/S class.
+
+    CG4 against each control separately, all ranks, rows with a finite EW,
+    stellar mass and an E or S class; stellar mass standardised; binomial GLM
+    clustered by physical group.  The ``mass_class`` model is the one quoted
+    in Sect. 3 (originally computed outside the pipeline, reproduced by the
+    audit-r3 referee script a4c_halpha.py); ``mass_class_satellite`` adds
+    satellite status as a sensitivity.
+    """
+
+    work = frame.copy()
+    values = pd.to_numeric(work[halpha], errors="coerce")
+    work["strong_halpha"] = np.where(
+        np.isfinite(values), (values <= -3).astype(float), np.nan
+    )
+    specifications = {
+        "mass_class": ["is_CG4", "logMstar", "elliptical"],
+        "mass_class_satellite": ["is_CG4", "logMstar", "elliptical", "is_satellite"],
+    }
+    models = {}
+    for control_name in ["Control4B", "Control4C", "RG4"]:
+        part = work.loc[work["sample"].isin(["CG4", control_name])]
+        models[control_name] = {
+            name: fit_logistic_model(
+                part, "strong_halpha", predictors, continuous=["logMstar"]
+            )
+            for name, predictors in specifications.items()
+        }
+    return models
 
 
 def run_recent_quenching_analysis(data, output_dir: str | None = None):
@@ -171,6 +204,7 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
         },
         "fractions_by_sample": fractions,
         "comparisons": comparisons,
+        "morphology_adjusted_models": _morphology_adjusted_models(frame, halpha),
         "recent_quenching_classification_available": False,
         "any_low_p_comparison": any(
             value.get("fisher_p", 1) < 0.05 for value in comparisons.values()

@@ -1,0 +1,4012 @@
+{
+ "rank_split_properties": {
+  "status": "ok",
+  "support_min_logmstar": 10.5,
+  "cg4_bgg_counts_upper_bins": {
+   "[10.5, 11.0)": 13,
+   "[11.0, 12.5)": 44
+  },
+  "controls": [
+   "Control4B",
+   "Control4C",
+   "RG4"
+  ],
+  "primary_outcomes": [
+   "strong_halpha",
+   "agn_like",
+   "Dn4000",
+   "log_Rchl_r_kpc"
+  ],
+  "sensitivity_outcomes": [
+   "log_petroR50_kpc",
+   "log_Rchl_r_kpc_incl_pegged"
+  ],
+  "mass_adjustment": {
+   "spline": "cr(logMstar, df=3, constraints='center') - 1",
+   "basis_scaling": "each column standardised on the pooled rows (reparametrisation only)",
+   "basis_built_on": {
+    "models_I_R": "pooled rows of the four samples with log M* >= 10.5",
+    "model_S": "pooled satellite rows of the four samples, all masses"
+   },
+   "n_basis_rows": {
+    "models_I_R": 2977,
+    "model_S": 4328
+   }
+  },
+  "cluster": "physical_group",
+  "effect_scale": {
+   "logit": "log odds ratio",
+   "ols": "difference in outcome units"
+  },
+  "mde_factor_se": 2.8,
+  "holm_families": {
+   "model_I_interaction": "12 tests (4 outcomes x 3 controls), secondary diagnostics",
+   "model_S_cg": "12 tests (4 outcomes x 3 controls), secondary diagnostics"
+  },
+  "class_rules": {
+   "SAT": "CG_sat CI excludes 0, CG_bgg CI includes 0, interaction Holm p < 0.05",
+   "SAT?": "CG_sat CI excludes 0, CG_bgg CI includes 0, interaction not significant",
+   "HOST": "both exclude 0 with the same sign, interaction not significant",
+   "OPP": "both exclude 0 with opposite signs",
+   "BGG": "CG_bgg CI excludes 0, CG_sat CI includes 0",
+   "NULL": "neither excludes 0"
+  },
+  "class_rules_ci": "analytic cluster-robust 95% intervals of Model R",
+  "interaction_models": [
+   {
+    "outcome": "strong_halpha",
+    "kind": "logit",
+    "control": "Control4B",
+    "counts": {
+     "n": 1607,
+     "n_cg4_sat": 43,
+     "n_cg4_bgg": 54,
+     "n_control_sat": 894,
+     "n_control_bgg": 616,
+     "n_clusters": 717,
+     "n_cg4_clusters": 56,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 6,
+     "n_events_cg4_bgg": 8
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -1.0231858223962036,
+     "se": 0.5053315527592109,
+     "ci95": [
+      -2.013617466055959,
+      -0.03275417873644802
+     ],
+     "p": 0.042889837452822245
+    },
+    "cg_bgg": {
+     "estimate": -0.43976128815655596,
+     "se": 0.391288770399971,
+     "ci95": [
+      -1.2066731856954616,
+      0.3271506093823496
+     ],
+     "p": 0.2610643003692106
+    },
+    "interaction": {
+     "estimate": 0.5834245342396464,
+     "se": 0.6596875049478554,
+     "ci95": [
+      -0.709539216509239,
+      1.8763882849885318
+     ],
+     "p": 0.3764828548247997
+    },
+    "identity_residual": 1.2212453270876722e-15,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 1.4149283477257906,
+      "odds_ratio_high": 4.116191520923088,
+      "odds_ratio_low": 0.2429430202450206
+     },
+     "cg_bgg": {
+      "log_odds": 1.0956085571199188,
+      "odds_ratio_high": 2.9910023254199785,
+      "odds_ratio_low": 0.3343360824233348
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 12,
+     "seed": 3581216233,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       -2.5164536682498326,
+       -0.20464075753298042
+      ],
+      "sd": 0.5738673377164621
+     },
+     "cg_bgg": {
+      "ci95": [
+       -1.438545070315522,
+       0.25457531124709204
+      ],
+      "sd": 0.42735120857837944
+     },
+     "interaction": {
+      "ci95": [
+       -0.738745094432347,
+       2.2405459356715802
+      ],
+      "sd": 0.7354106526798229
+     }
+    },
+    "interaction_p_holm": 1.0,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "SAT?"
+   },
+   {
+    "outcome": "strong_halpha",
+    "kind": "logit",
+    "control": "Control4C",
+    "counts": {
+     "n": 1222,
+     "n_cg4_sat": 43,
+     "n_cg4_bgg": 54,
+     "n_control_sat": 506,
+     "n_control_bgg": 619,
+     "n_clusters": 705,
+     "n_cg4_clusters": 56,
+     "n_clusters_shared_cg4_control": 3,
+     "n_events_cg4_sat": 6,
+     "n_events_cg4_bgg": 8
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.8927378705646638,
+     "se": 0.5112548161660908,
+     "ci95": [
+      -1.894778897172848,
+      0.10930315604352048
+     ],
+     "p": 0.0807813997267277
+    },
+    "cg_bgg": {
+     "estimate": -0.4474211103985569,
+     "se": 0.39641634908234247,
+     "ci95": [
+      -1.2243828774828058,
+      0.329540656685692
+     ],
+     "p": 0.2590393370599452
+    },
+    "interaction": {
+     "estimate": 0.4453167601661111,
+     "se": 0.6712160657398499,
+     "ci95": [
+      -0.8702425545286638,
+      1.760876074860886
+     ],
+     "p": 0.507043859861102
+    },
+    "identity_residual": -4.218847493575595e-15,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 1.4315134852650542,
+      "odds_ratio_high": 4.185028379935558,
+      "odds_ratio_low": 0.23894700566293373
+     },
+     "cg_bgg": {
+      "log_odds": 1.109965777430559,
+      "odds_ratio_high": 3.034254552671689,
+      "odds_ratio_low": 0.32957023962260873
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 13,
+     "seed": 2758677879,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       -2.2330357224957855,
+       0.016056507807762258
+      ],
+      "sd": 0.5711784509140341
+     },
+     "cg_bgg": {
+      "ci95": [
+       -1.4412306351928337,
+       0.21392984128123632
+      ],
+      "sd": 0.4311260924773586
+     },
+     "interaction": {
+      "ci95": [
+       -0.9638207802607842,
+       1.9969318390616424
+      ],
+      "sd": 0.7476009386627692
+     }
+    },
+    "interaction_p_holm": 1.0,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "NULL"
+   },
+   {
+    "outcome": "strong_halpha",
+    "kind": "logit",
+    "control": "RG4",
+    "counts": {
+     "n": 174,
+     "n_cg4_sat": 43,
+     "n_cg4_bgg": 54,
+     "n_control_sat": 28,
+     "n_control_bgg": 49,
+     "n_clusters": 108,
+     "n_cg4_clusters": 56,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 6,
+     "n_events_cg4_bgg": 8
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -1.289776424167123,
+     "se": 0.6955469457121974,
+     "ci95": [
+      -2.653023387319866,
+      0.07347053898562
+     ],
+     "p": 0.06369137550919066
+    },
+    "cg_bgg": {
+     "estimate": -0.3476206894671755,
+     "se": 0.5449153580343985,
+     "ci95": [
+      -1.4156351658373452,
+      0.7203937869029943
+     ],
+     "p": 0.5235158610450211
+    },
+    "interaction": {
+     "estimate": 0.9421557346999496,
+     "se": 0.9439261661158356,
+     "ci95": [
+      -0.9079055549520605,
+      2.7922170243519595
+     ],
+     "p": 0.3182190414642031
+    },
+    "identity_residual": -2.1094237467877974e-15,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 1.9475314479941528,
+      "odds_ratio_high": 7.011358297681821,
+      "odds_ratio_low": 0.14262571637946844
+     },
+     "cg_bgg": {
+      "log_odds": 1.5257630024963158,
+      "odds_ratio_high": 4.598651013245077,
+      "odds_ratio_low": 0.21745507478601672
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 12,
+     "seed": 541501442,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       -3.106653566132944,
+       -0.01148490799033742
+      ],
+      "sd": 0.7730220691499652
+     },
+     "cg_bgg": {
+      "ci95": [
+       -1.628951297353397,
+       0.7410230022142622
+      ],
+      "sd": 0.6044136164686437
+     },
+     "interaction": {
+      "ci95": [
+       -0.9592010695742808,
+       3.125392758099075
+      ],
+      "sd": 1.0327497888746966
+     }
+    },
+    "interaction_p_holm": 1.0,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "NULL"
+   },
+   {
+    "outcome": "agn_like",
+    "kind": "logit",
+    "control": "Control4B",
+    "counts": {
+     "n": 1516,
+     "n_cg4_sat": 36,
+     "n_cg4_bgg": 50,
+     "n_control_sat": 845,
+     "n_control_bgg": 585,
+     "n_clusters": 704,
+     "n_cg4_clusters": 54,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 19,
+     "n_events_cg4_bgg": 27
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": 0.11211287580286519,
+     "se": 0.3163232646482622,
+     "ci95": [
+      -0.5078693303798607,
+      0.7320950819855911
+     ],
+     "p": 0.7230203952138685
+    },
+    "cg_bgg": {
+     "estimate": -0.23450496242951302,
+     "se": 0.3091595613298171,
+     "ci95": [
+      -0.8404465681121566,
+      0.3714366432531306
+     ],
+     "p": 0.4481373212541696
+    },
+    "interaction": {
+     "estimate": -0.34661783823237635,
+     "se": 0.44790950767742677,
+     "ci95": [
+      -1.2245043416131995,
+      0.531268665148447
+     ],
+     "p": 0.43901545246491047
+    },
+    "identity_residual": -1.887379141862766e-15,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 0.8857051410151341,
+      "odds_ratio_high": 2.4246935396834446,
+      "odds_ratio_low": 0.4124232541694959
+     },
+     "cg_bgg": {
+      "log_odds": 0.8656467717234878,
+      "odds_ratio_high": 2.376542669612492,
+      "odds_ratio_low": 0.4207793164357766
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 0,
+     "seed": 2818305169,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       -0.5143980970081385,
+       0.7350400723319188
+      ],
+      "sd": 0.31573595390374254
+     },
+     "cg_bgg": {
+      "ci95": [
+       -0.8583756853248292,
+       0.3876924974441697
+      ],
+      "sd": 0.3226684367888146
+     },
+     "interaction": {
+      "ci95": [
+       -1.2367233157629622,
+       0.5180109677003588
+      ],
+      "sd": 0.44928696729271317
+     }
+    },
+    "interaction_p_holm": 1.0,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "NULL"
+   },
+   {
+    "outcome": "agn_like",
+    "kind": "logit",
+    "control": "Control4C",
+    "counts": {
+     "n": 1146,
+     "n_cg4_sat": 36,
+     "n_cg4_bgg": 50,
+     "n_control_sat": 473,
+     "n_control_bgg": 587,
+     "n_clusters": 684,
+     "n_cg4_clusters": 54,
+     "n_clusters_shared_cg4_control": 3,
+     "n_events_cg4_sat": 19,
+     "n_events_cg4_bgg": 27
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": 0.1604236274016197,
+     "se": 0.3249130646361824,
+     "ci95": [
+      -0.4763942773918325,
+      0.7972415321950719
+     ],
+     "p": 0.6214875275206383
+    },
+    "cg_bgg": {
+     "estimate": -0.24065438510267312,
+     "se": 0.30854117592782376,
+     "ci95": [
+      -0.8453839776688444,
+      0.36407520746349825
+     ],
+     "p": 0.4354056260347412
+    },
+    "interaction": {
+     "estimate": -0.40107801250429326,
+     "se": 0.45313197505276104,
+     "ci95": [
+      -1.289200363851207,
+      0.4870443388426206
+     ],
+     "p": 0.3760897253171115
+    },
+    "identity_residual": 4.440892098500626e-16,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 0.9097565809813107,
+      "odds_ratio_high": 2.483717875627217,
+      "odds_ratio_low": 0.402622218011564
+     },
+     "cg_bgg": {
+      "log_odds": 0.8639152925979064,
+      "odds_ratio_high": 2.3724312959949674,
+      "odds_ratio_low": 0.42150851815525925
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 0,
+     "seed": 3539409951,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       -0.5166578107346109,
+       0.8367265592228987
+      ],
+      "sd": 0.33798281716498074
+     },
+     "cg_bgg": {
+      "ci95": [
+       -0.8595525472218233,
+       0.4141038553900712
+      ],
+      "sd": 0.3251722533148171
+     },
+     "interaction": {
+      "ci95": [
+       -1.32776727152176,
+       0.5208433293909404
+      ],
+      "sd": 0.474902274478148
+     }
+    },
+    "interaction_p_holm": 1.0,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "NULL"
+   },
+   {
+    "outcome": "agn_like",
+    "kind": "logit",
+    "control": "RG4",
+    "counts": {
+     "n": 157,
+     "n_cg4_sat": 36,
+     "n_cg4_bgg": 50,
+     "n_control_sat": 26,
+     "n_control_bgg": 45,
+     "n_clusters": 103,
+     "n_cg4_clusters": 54,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 19,
+     "n_events_cg4_bgg": 27
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": 0.32105609619706565,
+     "se": 0.568362308657605,
+     "ci95": [
+      -0.7929135589418779,
+      1.4350257513360092
+     ],
+     "p": 0.5721558724237659
+    },
+    "cg_bgg": {
+     "estimate": 0.04827830941971691,
+     "se": 0.47443032508751254,
+     "ci95": [
+      -0.8815880409254373,
+      0.9781446597648711
+     ],
+     "p": 0.9189467084596084
+    },
+    "interaction": {
+     "estimate": -0.27277778677734876,
+     "se": 0.7206114442616937,
+     "ci95": [
+      -1.6851502643776608,
+      1.1395946908229635
+     ],
+     "p": 0.7050320298786598
+    },
+    "identity_residual": 0.0,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 1.5914144642412937,
+      "odds_ratio_high": 4.910690013635247,
+      "odds_ratio_low": 0.2036373701502954
+     },
+     "cg_bgg": {
+      "log_odds": 1.328404910245035,
+      "odds_ratio_high": 3.775017091517469,
+      "odds_ratio_low": 0.26489946290495425
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 0,
+     "seed": 2438598265,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       -0.8549629100736923,
+       1.638199034294505
+      ],
+      "sd": 0.6253983373693448
+     },
+     "cg_bgg": {
+      "ci95": [
+       -0.9214604800422156,
+       1.040938686401047
+      ],
+      "sd": 0.49498329911698324
+     },
+     "interaction": {
+      "ci95": [
+       -1.8496823793591,
+       1.2028021190966989
+      ],
+      "sd": 0.7744118054856692
+     }
+    },
+    "interaction_p_holm": 1.0,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "NULL"
+   },
+   {
+    "outcome": "Dn4000",
+    "kind": "ols",
+    "control": "Control4B",
+    "counts": {
+     "n": 1699,
+     "n_cg4_sat": 46,
+     "n_cg4_bgg": 57,
+     "n_control_sat": 952,
+     "n_control_bgg": 644,
+     "n_clusters": 743,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": 0.07419554607824247,
+     "se": 0.022192100072189844,
+     "ci95": [
+      0.03069982919544164,
+      0.11769126296104329
+     ],
+     "p": 0.0008277896392074959
+    },
+    "cg_bgg": {
+     "estimate": -0.009097703925990436,
+     "se": 0.02671205510009774,
+     "ci95": [
+      -0.06145236987523148,
+      0.043256962023250606
+     ],
+     "p": 0.73341662535894
+    },
+    "interaction": {
+     "estimate": -0.0832932500042334,
+     "se": 0.034338537434783385,
+     "ci95": [
+      -0.15059554665818925,
+      -0.01599095335027756
+     ],
+     "p": 0.01528102802414262
+    },
+    "identity_residual": 4.996003610813204e-16,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.06213788020213156
+     },
+     "cg_bgg": {
+      "delta": 0.07479375428027367
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 0,
+     "seed": 3518647770,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       0.030523956922929276,
+       0.1154202154029604
+      ],
+      "sd": 0.02241079853211824
+     },
+     "cg_bgg": {
+      "ci95": [
+       -0.06720636151604767,
+       0.0411189149002545
+      ],
+      "sd": 0.02691316816272922
+     },
+     "interaction": {
+      "ci95": [
+       -0.15301427149823243,
+       -0.01691988037942887
+      ],
+      "sd": 0.035245021938868255
+     }
+    },
+    "interaction_p_holm": 0.18337233628971145,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "SAT?"
+   },
+   {
+    "outcome": "Dn4000",
+    "kind": "ols",
+    "control": "Control4C",
+    "counts": {
+     "n": 1295,
+     "n_cg4_sat": 46,
+     "n_cg4_bgg": 57,
+     "n_control_sat": 544,
+     "n_control_bgg": 648,
+     "n_clusters": 735,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": 0.055141136425243015,
+     "se": 0.02300036467648166,
+     "ci95": [
+      0.010061250028051708,
+      0.10022102282243432
+     ],
+     "p": 0.016511765578304933
+    },
+    "cg_bgg": {
+     "estimate": -0.009711507441060738,
+     "se": 0.026641988921080578,
+     "ci95": [
+      -0.0619288462028938,
+      0.042505831320772326
+     ],
+     "p": 0.7154705925892018
+    },
+    "interaction": {
+     "estimate": -0.0648526438663031,
+     "se": 0.03515083723208086,
+     "ci95": [
+      -0.1337470188676112,
+      0.004041731135004986
+     ],
+     "p": 0.06504023202314295
+    },
+    "identity_residual": -6.522560269672795e-16,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.06440102109414865
+     },
+     "cg_bgg": {
+      "delta": 0.07459756897902561
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 0,
+     "seed": 2830581060,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       0.0066830531012720355,
+       0.09973857092414218
+      ],
+      "sd": 0.02337854025443838
+     },
+     "cg_bgg": {
+      "ci95": [
+       -0.06393005175989067,
+       0.03814204231492141
+      ],
+      "sd": 0.026036755603649896
+     },
+     "interaction": {
+      "ci95": [
+       -0.13541925421677992,
+       0.003322570208772495
+      ],
+      "sd": 0.03528096183549638
+     }
+    },
+    "interaction_p_holm": 0.7154425522545724,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "SAT?"
+   },
+   {
+    "outcome": "Dn4000",
+    "kind": "ols",
+    "control": "RG4",
+    "counts": {
+     "n": 187,
+     "n_cg4_sat": 46,
+     "n_cg4_bgg": 57,
+     "n_control_sat": 32,
+     "n_control_bgg": 52,
+     "n_clusters": 112,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": 0.07954244949591112,
+     "se": 0.03695562544677397,
+     "ci95": [
+      0.007110754594082197,
+      0.15197414439774004
+     ],
+     "p": 0.03136764970269516
+    },
+    "cg_bgg": {
+     "estimate": -0.0010877575106469917,
+     "se": 0.03878052409926469,
+     "ci95": [
+      -0.0770961880467934,
+      0.07492067302549942
+     ],
+     "p": 0.977623016883529
+    },
+    "interaction": {
+     "estimate": -0.08063020700655742,
+     "se": 0.05532392486786054,
+     "ci95": [
+      -0.18906310723096392,
+      0.027802693217849103
+     ],
+     "p": 0.14500041766552188
+    },
+    "identity_residual": -6.938893903907228e-16,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.10347575125096711
+     },
+     "cg_bgg": {
+      "delta": 0.10858546747794112
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 0,
+     "seed": 2130820473,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       0.008859529876659243,
+       0.1515612777291727
+      ],
+      "sd": 0.03598787136523733
+     },
+     "cg_bgg": {
+      "ci95": [
+       -0.07805831912412316,
+       0.06916607864965896
+      ],
+      "sd": 0.0378749230384398
+     },
+     "interaction": {
+      "ci95": [
+       -0.19709692562334585,
+       0.02324561254693005
+      ],
+      "sd": 0.05446457034296648
+     }
+    },
+    "interaction_p_holm": 1.0,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "SAT?"
+   },
+   {
+    "outcome": "log_Rchl_r_kpc",
+    "kind": "ols",
+    "control": "Control4B",
+    "counts": {
+     "n": 1006,
+     "n_cg4_sat": 45,
+     "n_cg4_bgg": 24,
+     "n_control_sat": 716,
+     "n_control_bgg": 221,
+     "n_clusters": 551,
+     "n_cg4_clusters": 46,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.01363945879768802,
+     "se": 0.028471423736157114,
+     "ci95": [
+      -0.0694424239091348,
+      0.04216350631375875
+     ],
+     "p": 0.6318974804729229
+    },
+    "cg_bgg": {
+     "estimate": 0.005627687498074685,
+     "se": 0.026854543556533012,
+     "ci95": [
+      -0.04700625069399219,
+      0.05826162569014156
+     ],
+     "p": 0.834009667321941
+    },
+    "interaction": {
+     "estimate": 0.01926714629576254,
+     "se": 0.038787525471104006,
+     "ci95": [
+      -0.0567550066770313,
+      0.09528929926855638
+     ],
+     "p": 0.6193754860133929
+    },
+    "identity_residual": 1.6653345369377348e-16,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.07971998646123991
+     },
+     "cg_bgg": {
+      "delta": 0.07519272195829244
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 0,
+     "seed": 820075782,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       -0.07004273770340418,
+       0.04484297328049106
+      ],
+      "sd": 0.028873069021676967
+     },
+     "cg_bgg": {
+      "ci95": [
+       -0.04645184551554541,
+       0.05754302288590526
+      ],
+      "sd": 0.026684218385597116
+     },
+     "interaction": {
+      "ci95": [
+       -0.05688576895309177,
+       0.09566862106115467
+      ],
+      "sd": 0.039082382484185586
+     }
+    },
+    "interaction_p_holm": 1.0,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "NULL"
+   },
+   {
+    "outcome": "log_Rchl_r_kpc",
+    "kind": "ols",
+    "control": "Control4C",
+    "counts": {
+     "n": 732,
+     "n_cg4_sat": 45,
+     "n_cg4_bgg": 24,
+     "n_control_sat": 442,
+     "n_control_bgg": 221,
+     "n_clusters": 482,
+     "n_cg4_clusters": 46,
+     "n_clusters_shared_cg4_control": 2
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.0013363644033758115,
+     "se": 0.0291100307713067,
+     "ci95": [
+      -0.05839097630398968,
+      0.055718247497238055
+     ],
+     "p": 0.963384095019655
+    },
+    "cg_bgg": {
+     "estimate": 0.004008114776341776,
+     "se": 0.02663094664713423,
+     "ci95": [
+      -0.048187581526249024,
+      0.056203811078932575
+     ],
+     "p": 0.8803654908014648
+    },
+    "interaction": {
+     "estimate": 0.005344479179717365,
+     "se": 0.03939038885835531,
+     "ci95": [
+      -0.07185926431968685,
+      0.08254822267912158
+     ],
+     "p": 0.8920744354100041
+    },
+    "identity_residual": 2.220446049250313e-16,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.08150808615965875
+     },
+     "cg_bgg": {
+      "delta": 0.07456665061197584
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 0,
+     "seed": 1507863960,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       -0.05625596189600607,
+       0.057819448835077426
+      ],
+      "sd": 0.0288440064834304
+     },
+     "cg_bgg": {
+      "ci95": [
+       -0.04718882756031931,
+       0.0590688937624744
+      ],
+      "sd": 0.026863776634705218
+     },
+     "interaction": {
+      "ci95": [
+       -0.06844947581162802,
+       0.08445899444547242
+      ],
+      "sd": 0.03984058108784525
+     }
+    },
+    "interaction_p_holm": 1.0,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "NULL"
+   },
+   {
+    "outcome": "log_Rchl_r_kpc",
+    "kind": "ols",
+    "control": "RG4",
+    "counts": {
+     "n": 136,
+     "n_cg4_sat": 45,
+     "n_cg4_bgg": 24,
+     "n_control_sat": 30,
+     "n_control_bgg": 37,
+     "n_clusters": 86,
+     "n_cg4_clusters": 46,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.03383292702892481,
+     "se": 0.038937099432493294,
+     "ci95": [
+      -0.11014823957906664,
+      0.04248238552121702
+     ],
+     "p": 0.384895067564884
+    },
+    "cg_bgg": {
+     "estimate": 0.016228139513159216,
+     "se": 0.034768788035385884,
+     "ci95": [
+      -0.051917432822304266,
+      0.08437371184862269
+     ],
+     "p": 0.6406827099636279
+    },
+    "interaction": {
+     "estimate": 0.0500610665420843,
+     "se": 0.05362650033296477,
+     "ci95": [
+      -0.055044942727451855,
+      0.15516707581162045
+     ],
+     "p": 0.350554859948506
+    },
+    "identity_residual": -2.706168622523819e-16,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.10902387841098121
+     },
+     "cg_bgg": {
+      "delta": 0.09735260649908047
+     }
+    },
+    "bootstrap": {
+     "n_boot": 2000,
+     "n_failed": 0,
+     "seed": 1717836078,
+     "resampling": "physical groups with replacement, within each sample",
+     "cg_sat": {
+      "ci95": [
+       -0.11542677168858707,
+       0.03763316744638895
+      ],
+      "sd": 0.03875733033738478
+     },
+     "cg_bgg": {
+      "ci95": [
+       -0.05116538970725979,
+       0.08480898544663526
+      ],
+      "sd": 0.03564082591625455
+     },
+     "interaction": {
+      "ci95": [
+       -0.05150790201701888,
+       0.16648528826186587
+      ],
+      "sd": 0.054796780562774004
+     }
+    },
+    "interaction_p_holm": 1.0,
+    "interaction_p_holm_family_size": 12,
+    "class_code": "NULL"
+   }
+  ],
+  "satellite_models": [
+   {
+    "outcome": "strong_halpha",
+    "kind": "logit",
+    "control": "Control4B",
+    "counts": {
+     "n": 2032,
+     "n_cg4_sat": 163,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1869,
+     "n_control_bgg": 0,
+     "n_clusters": 736,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 62,
+     "n_events_cg4_bgg": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": -1.0413772175027873,
+     "se": 0.19647850702351097,
+     "ci95": [
+      -1.4264680150050688,
+      -0.6562864200005059
+     ],
+     "p": 1.1566997809982028e-07
+    },
+    "mde": {
+     "log_odds": 0.5501398196658307,
+     "odds_ratio_high": 1.733495377668092,
+     "odds_ratio_low": 0.5768691470900867
+    },
+    "cg_p_holm": 1.3880397371978433e-06,
+    "cg_p_holm_family_size": 12
+   },
+   {
+    "outcome": "strong_halpha",
+    "kind": "logit",
+    "control": "Control4C",
+    "counts": {
+     "n": 2032,
+     "n_cg4_sat": 163,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1869,
+     "n_control_bgg": 0,
+     "n_clusters": 736,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 3,
+     "n_events_cg4_sat": 62,
+     "n_events_cg4_bgg": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": -0.582802139667081,
+     "se": 0.18408547749300377,
+     "ci95": [
+      -0.9436030456302271,
+      -0.22200123370393499
+     ],
+     "p": 0.0015458682387155234
+    },
+    "mde": {
+     "log_odds": 0.5154393369804106,
+     "odds_ratio_high": 1.6743739546271912,
+     "odds_ratio_low": 0.5972381481666416
+    },
+    "cg_p_holm": 0.013912814148439711,
+    "cg_p_holm_family_size": 12
+   },
+   {
+    "outcome": "strong_halpha",
+    "kind": "logit",
+    "control": "RG4",
+    "counts": {
+     "n": 318,
+     "n_cg4_sat": 163,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 155,
+     "n_control_bgg": 0,
+     "n_clusters": 113,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 62,
+     "n_events_cg4_bgg": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": -1.0912168602114192,
+     "se": 0.29433497998974434,
+     "ci95": [
+      -1.6681028203816357,
+      -0.5143309000412026
+     ],
+     "p": 0.0002093998708675452
+    },
+    "mde": {
+     "log_odds": 0.8241379439712841,
+     "odds_ratio_high": 2.27991450389427,
+     "odds_ratio_low": 0.4386129384641059
+    },
+    "cg_p_holm": 0.002093998708675452,
+    "cg_p_holm_family_size": 12
+   },
+   {
+    "outcome": "agn_like",
+    "kind": "logit",
+    "control": "Control4B",
+    "counts": {
+     "n": 1867,
+     "n_cg4_sat": 134,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1733,
+     "n_control_bgg": 0,
+     "n_clusters": 732,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 43,
+     "n_events_cg4_bgg": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": 0.5288018560119245,
+     "se": 0.21295756094688986,
+     "ci95": [
+      0.11141270632052676,
+      0.9461910057033223
+     ],
+     "p": 0.01302326096522946
+    },
+    "mde": {
+     "log_odds": 0.5962811706512916,
+     "odds_ratio_high": 1.815355235585266,
+     "odds_ratio_low": 0.550856372569748
+    },
+    "cg_p_holm": 0.10418608772183569,
+    "cg_p_holm_family_size": 12
+   },
+   {
+    "outcome": "agn_like",
+    "kind": "logit",
+    "control": "Control4C",
+    "counts": {
+     "n": 1799,
+     "n_cg4_sat": 134,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1665,
+     "n_control_bgg": 0,
+     "n_clusters": 729,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 3,
+     "n_events_cg4_sat": 43,
+     "n_events_cg4_bgg": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": 0.38630817168120196,
+     "se": 0.19920057030418603,
+     "ci95": [
+      -0.0041177718148416465,
+      0.7767341151772454
+     ],
+     "p": 0.05246573180918386
+    },
+    "mde": {
+     "log_odds": 0.5577615968517209,
+     "odds_ratio_high": 1.746758172016583,
+     "odds_ratio_low": 0.5724890920908234
+    },
+    "cg_p_holm": 0.2623286590459193,
+    "cg_p_holm_family_size": 12
+   },
+   {
+    "outcome": "agn_like",
+    "kind": "logit",
+    "control": "RG4",
+    "counts": {
+     "n": 278,
+     "n_cg4_sat": 134,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 144,
+     "n_control_bgg": 0,
+     "n_clusters": 113,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 43,
+     "n_events_cg4_bgg": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": 0.2582625578422759,
+     "se": 0.2952107848397077,
+     "ci95": [
+      -0.32033994829135415,
+      0.8368650639759061
+     ],
+     "p": 0.38166031530592237
+    },
+    "mde": {
+     "log_odds": 0.8265901975511815,
+     "odds_ratio_high": 2.2855122931925136,
+     "odds_ratio_low": 0.43753866604810593
+    },
+    "cg_p_holm": 1.0,
+    "cg_p_holm_family_size": 12
+   },
+   {
+    "outcome": "Dn4000",
+    "kind": "ols",
+    "control": "Control4B",
+    "counts": {
+     "n": 2167,
+     "n_cg4_sat": 177,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1990,
+     "n_control_bgg": 0,
+     "n_clusters": 758,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": 0.06542482238059771,
+     "se": 0.01750165423120387,
+     "ci95": [
+      0.031122210417565077,
+      0.09972743434363035
+     ],
+     "p": 0.00018533664865051186
+    },
+    "mde": {
+     "delta": 0.04900463184737083
+    },
+    "cg_p_holm": 0.0020387031351556304,
+    "cg_p_holm_family_size": 12
+   },
+   {
+    "outcome": "Dn4000",
+    "kind": "ols",
+    "control": "Control4C",
+    "counts": {
+     "n": 2171,
+     "n_cg4_sat": 177,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1994,
+     "n_control_bgg": 0,
+     "n_clusters": 759,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": 0.020469951423559923,
+     "se": 0.017225989805478674,
+     "ci95": [
+      -0.013292368193232408,
+      0.054232271040352255
+     ],
+     "p": 0.2347082020229746
+    },
+    "mde": {
+     "delta": 0.04823277145534029
+    },
+    "cg_p_holm": 0.9388328080918984,
+    "cg_p_holm_family_size": 12
+   },
+   {
+    "outcome": "Dn4000",
+    "kind": "ols",
+    "control": "RG4",
+    "counts": {
+     "n": 343,
+     "n_cg4_sat": 177,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 166,
+     "n_control_bgg": 0,
+     "n_clusters": 116,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": 0.05149314157776841,
+     "se": 0.024725297714172985,
+     "ci95": [
+      0.003032448550958834,
+      0.09995383460457799
+     ],
+     "p": 0.03728682642024698
+    },
+    "mde": {
+     "delta": 0.06923083359968435
+    },
+    "cg_p_holm": 0.22372095852148188,
+    "cg_p_holm_family_size": 12
+   },
+   {
+    "outcome": "log_Rchl_r_kpc",
+    "kind": "ols",
+    "control": "Control4B",
+    "counts": {
+     "n": 1862,
+     "n_cg4_sat": 168,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1694,
+     "n_control_bgg": 0,
+     "n_clusters": 727,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": -0.03770919498464404,
+     "se": 0.015339070324591135,
+     "ci95": [
+      -0.06777322037716979,
+      -0.007645169592118299
+     ],
+     "p": 0.013956715144866088
+    },
+    "mde": {
+     "delta": 0.04294939690885517
+    },
+    "cg_p_holm": 0.10418608772183569,
+    "cg_p_holm_family_size": 12
+   },
+   {
+    "outcome": "log_Rchl_r_kpc",
+    "kind": "ols",
+    "control": "Control4C",
+    "counts": {
+     "n": 1975,
+     "n_cg4_sat": 168,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1807,
+     "n_control_bgg": 0,
+     "n_clusters": 751,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": 0.0002275467764040126,
+     "se": 0.014994406351385475,
+     "ci95": [
+      -0.029160949641870156,
+      0.02961604319467818
+     ],
+     "p": 0.9878922121229052
+    },
+    "mde": {
+     "delta": 0.041984337783879326
+    },
+    "cg_p_holm": 1.0,
+    "cg_p_holm_family_size": 12
+   },
+   {
+    "outcome": "log_Rchl_r_kpc",
+    "kind": "ols",
+    "control": "RG4",
+    "counts": {
+     "n": 328,
+     "n_cg4_sat": 168,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 160,
+     "n_control_bgg": 0,
+     "n_clusters": 116,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": -0.013835588877992355,
+     "se": 0.02194100535721231,
+     "ci95": [
+      -0.05683916916272887,
+      0.029167991406744156
+     ],
+     "p": 0.5283142934194943
+    },
+    "mde": {
+     "delta": 0.061434815000194466
+    },
+    "cg_p_holm": 1.0,
+    "cg_p_holm_family_size": 12
+   }
+  ],
+  "sensitivity_interaction_models": [
+   {
+    "outcome": "log_petroR50_kpc",
+    "kind": "ols",
+    "control": "Control4B",
+    "counts": {
+     "n": 1700,
+     "n_cg4_sat": 46,
+     "n_cg4_bgg": 57,
+     "n_control_sat": 952,
+     "n_control_bgg": 645,
+     "n_clusters": 743,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.018100659188271646,
+     "se": 0.028254773704422375,
+     "ci95": [
+      -0.07347899804026886,
+      0.037277679663725576
+     ],
+     "p": 0.5217676228174464
+    },
+    "cg_bgg": {
+     "estimate": -0.006021636316730597,
+     "se": 0.019412692625070786,
+     "ci95": [
+      -0.044069814704815656,
+      0.03202654207135446
+     ],
+     "p": 0.7564159578828877
+    },
+    "interaction": {
+     "estimate": 0.012079022871540834,
+     "se": 0.035542489734110935,
+     "ci95": [
+      -0.057582976928201204,
+      0.08174102267128287
+     ],
+     "p": 0.7339714469595806
+    },
+    "identity_residual": 2.1510571102112408e-16,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.07911336637238264
+     },
+     "cg_bgg": {
+      "delta": 0.0543555393501982
+     }
+    },
+    "class_code_unadjusted": "NULL"
+   },
+   {
+    "outcome": "log_petroR50_kpc",
+    "kind": "ols",
+    "control": "Control4C",
+    "counts": {
+     "n": 1296,
+     "n_cg4_sat": 46,
+     "n_cg4_bgg": 57,
+     "n_control_sat": 544,
+     "n_control_bgg": 649,
+     "n_clusters": 735,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": 0.005860829455487117,
+     "se": 0.02870520161642339,
+     "ci95": [
+      -0.05040033188166367,
+      0.06212199079263791
+     ],
+     "p": 0.8382182464876521
+    },
+    "cg_bgg": {
+     "estimate": -0.004955554709919156,
+     "se": 0.01959646481251375,
+     "ci95": [
+      -0.04336391996675257,
+      0.03345281054691426
+     ],
+     "p": 0.8003609178251295
+    },
+    "interaction": {
+     "estimate": -0.010816384165406591,
+     "se": 0.03617043081476834,
+     "ci95": [
+      -0.08170912586765029,
+      0.06007635753683711
+     ],
+     "p": 0.7649099783730231
+    },
+    "identity_residual": 3.174543961037557e-16,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.08037456452598549
+     },
+     "cg_bgg": {
+      "delta": 0.0548701014750385
+     }
+    },
+    "class_code_unadjusted": "NULL"
+   },
+   {
+    "outcome": "log_petroR50_kpc",
+    "kind": "ols",
+    "control": "RG4",
+    "counts": {
+     "n": 187,
+     "n_cg4_sat": 46,
+     "n_cg4_bgg": 57,
+     "n_control_sat": 32,
+     "n_control_bgg": 52,
+     "n_clusters": 112,
+     "n_cg4_clusters": 58,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.034870738978733704,
+     "se": 0.04139087881192092,
+     "ci95": [
+      -0.11599537073856073,
+      0.04625389278109332
+     ],
+     "p": 0.3995226905907715
+    },
+    "cg_bgg": {
+     "estimate": -0.002542643973338871,
+     "se": 0.030113915687526527,
+     "ci95": [
+      -0.0615648341543666,
+      0.05647954620768886
+     ],
+     "p": 0.932711227426796
+    },
+    "interaction": {
+     "estimate": 0.03232809500539503,
+     "se": 0.051583459280276966,
+     "ci95": [
+      -0.06877362738193624,
+      0.1334298173927263
+     ],
+     "p": 0.53084648488353
+    },
+    "identity_residual": -2.0122792321330962e-16,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.11589446067337857
+     },
+     "cg_bgg": {
+      "delta": 0.08431896392507426
+     }
+    },
+    "class_code_unadjusted": "NULL"
+   },
+   {
+    "outcome": "log_Rchl_r_kpc_incl_pegged",
+    "kind": "ols",
+    "control": "Control4B",
+    "counts": {
+     "n": 1011,
+     "n_cg4_sat": 45,
+     "n_cg4_bgg": 24,
+     "n_control_sat": 721,
+     "n_control_bgg": 221,
+     "n_clusters": 553,
+     "n_cg4_clusters": 46,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.014365304750946217,
+     "se": 0.02843988223869043,
+     "ci95": [
+      -0.07010644966333983,
+      0.041375840161447394
+     ],
+     "p": 0.6134806932047956
+    },
+    "cg_bgg": {
+     "estimate": 0.005949354385436478,
+     "se": 0.02690713681829325,
+     "ci95": [
+      -0.046787664705509956,
+      0.05868637347638291
+     ],
+     "p": 0.8250091753479016
+    },
+    "interaction": {
+     "estimate": 0.020314659136382224,
+     "se": 0.03877178970773534,
+     "ci95": [
+      -0.055676652306939786,
+      0.09630597057970423
+     ],
+     "p": 0.6003100892138622
+    },
+    "identity_residual": 4.718447854656915e-16,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.0796316702683332
+     },
+     "cg_bgg": {
+      "delta": 0.0753399830912211
+     }
+    },
+    "class_code_unadjusted": "NULL"
+   },
+   {
+    "outcome": "log_Rchl_r_kpc_incl_pegged",
+    "kind": "ols",
+    "control": "Control4C",
+    "counts": {
+     "n": 734,
+     "n_cg4_sat": 45,
+     "n_cg4_bgg": 24,
+     "n_control_sat": 444,
+     "n_control_bgg": 221,
+     "n_clusters": 484,
+     "n_cg4_clusters": 46,
+     "n_clusters_shared_cg4_control": 2
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": 0.00041690732048021983,
+     "se": 0.029138550726705494,
+     "ci95": [
+      -0.05669360266555597,
+      0.05752741730651641
+     ],
+     "p": 0.9885844505994017
+    },
+    "cg_bgg": {
+     "estimate": 0.004207710576711765,
+     "se": 0.02660482762766194,
+     "ci95": [
+      -0.047936793388401844,
+      0.056352214541825374
+     ],
+     "p": 0.8743339494926929
+    },
+    "interaction": {
+     "estimate": 0.0037908032562316007,
+     "se": 0.03940503748335997,
+     "ci95": [
+      -0.07344165102060478,
+      0.08102325753306798
+     ],
+     "p": 0.9233609518261514
+    },
+    "identity_residual": -5.551115123125783e-17,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.08158794203477537
+     },
+     "cg_bgg": {
+      "delta": 0.07449351735745342
+     }
+    },
+    "class_code_unadjusted": "NULL"
+   },
+   {
+    "outcome": "log_Rchl_r_kpc_incl_pegged",
+    "kind": "ols",
+    "control": "RG4",
+    "counts": {
+     "n": 136,
+     "n_cg4_sat": 45,
+     "n_cg4_bgg": 24,
+     "n_control_sat": 30,
+     "n_control_bgg": 37,
+     "n_clusters": 86,
+     "n_cg4_clusters": 46,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.03383292702892481,
+     "se": 0.038937099432493294,
+     "ci95": [
+      -0.11014823957906664,
+      0.04248238552121702
+     ],
+     "p": 0.384895067564884
+    },
+    "cg_bgg": {
+     "estimate": 0.016228139513159216,
+     "se": 0.034768788035385884,
+     "ci95": [
+      -0.051917432822304266,
+      0.08437371184862269
+     ],
+     "p": 0.6406827099636279
+    },
+    "interaction": {
+     "estimate": 0.0500610665420843,
+     "se": 0.05362650033296477,
+     "ci95": [
+      -0.055044942727451855,
+      0.15516707581162045
+     ],
+     "p": 0.350554859948506
+    },
+    "identity_residual": -2.706168622523819e-16,
+    "mde": {
+     "cg_sat": {
+      "delta": 0.10902387841098121
+     },
+     "cg_bgg": {
+      "delta": 0.09735260649908047
+     }
+    },
+    "class_code_unadjusted": "NULL"
+   }
+  ],
+  "sensitivity_satellite_models": [
+   {
+    "outcome": "log_petroR50_kpc",
+    "kind": "ols",
+    "control": "Control4B",
+    "counts": {
+     "n": 2168,
+     "n_cg4_sat": 177,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1991,
+     "n_control_bgg": 0,
+     "n_clusters": 758,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": -0.0454017535479149,
+     "se": 0.012423094570138411,
+     "ci95": [
+      -0.06975057148192129,
+      -0.021052935613908506
+     ],
+     "p": 0.00025755803046724924
+    },
+    "mde": {
+     "delta": 0.034784664796387546
+    }
+   },
+   {
+    "outcome": "log_petroR50_kpc",
+    "kind": "ols",
+    "control": "Control4C",
+    "counts": {
+     "n": 2168,
+     "n_cg4_sat": 177,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1991,
+     "n_control_bgg": 0,
+     "n_clusters": 759,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": -0.008026464193399623,
+     "se": 0.012060782951264925,
+     "ci95": [
+      -0.03166516440323358,
+      0.015612236016434331
+     ],
+     "p": 0.5057300469779735
+    },
+    "mde": {
+     "delta": 0.03377019226354179
+    }
+   },
+   {
+    "outcome": "log_petroR50_kpc",
+    "kind": "ols",
+    "control": "RG4",
+    "counts": {
+     "n": 343,
+     "n_cg4_sat": 177,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 166,
+     "n_control_bgg": 0,
+     "n_clusters": 116,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": -0.03068490947277222,
+     "se": 0.018363043169455313,
+     "ci95": [
+      -0.06667581273145888,
+      0.00530599378591444
+     ],
+     "p": 0.09471883452806175
+    },
+    "mde": {
+     "delta": 0.051416520874474875
+    }
+   },
+   {
+    "outcome": "log_Rchl_r_kpc_incl_pegged",
+    "kind": "ols",
+    "control": "Control4B",
+    "counts": {
+     "n": 1889,
+     "n_cg4_sat": 173,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1716,
+     "n_control_bgg": 0,
+     "n_clusters": 727,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": -0.034982049485040426,
+     "se": 0.014476463810774838,
+     "ci95": [
+      -0.06335539717765656,
+      -0.0066087017924242805
+     ],
+     "p": 0.015671493545586432
+    },
+    "mde": {
+     "delta": 0.04053409867016954
+    }
+   },
+   {
+    "outcome": "log_Rchl_r_kpc_incl_pegged",
+    "kind": "ols",
+    "control": "Control4C",
+    "counts": {
+     "n": 2011,
+     "n_cg4_sat": 173,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 1838,
+     "n_control_bgg": 0,
+     "n_clusters": 751,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": 0.004046874964635384,
+     "se": 0.014171648430368161,
+     "ci95": [
+      -0.0237290455604498,
+      0.03182279548972057
+     ],
+     "p": 0.7752141144819221
+    },
+    "mde": {
+     "delta": 0.03968061560503085
+    }
+   },
+   {
+    "outcome": "log_Rchl_r_kpc_incl_pegged",
+    "kind": "ols",
+    "control": "RG4",
+    "counts": {
+     "n": 335,
+     "n_cg4_sat": 173,
+     "n_cg4_bgg": 0,
+     "n_control_sat": 162,
+     "n_control_bgg": 0,
+     "n_clusters": 116,
+     "n_cg4_clusters": 60,
+     "n_clusters_shared_cg4_control": 0
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg": {
+     "estimate": -0.011912055158667001,
+     "se": 0.02145191244760517,
+     "ci95": [
+      -0.05395703095547961,
+      0.030132920638145606
+     ],
+     "p": 0.578695594162169
+    },
+    "mde": {
+     "delta": 0.060065354853294464
+    }
+   }
+  ],
+  "table_file": "rank_split_properties.csv"
+ },
+ "rank_split_diagnostics": {
+  "status": "ok",
+  "support_min_logmstar": 10.5,
+  "mass_adjustment": {
+   "spline": "cr(logMstar, df=3, constraints='center') - 1",
+   "basis_scaling": "each column standardised on the pooled rows (reparametrisation only)",
+   "basis_built_on": {
+    "models_I_R": "pooled rows of the four samples with log M* >= 10.5",
+    "model_S": "pooled satellite rows of the four samples, all masses"
+   },
+   "n_basis_rows": {
+    "models_I_R": 2977,
+    "model_S": 4328
+   }
+  },
+  "retired_criterion": "|EW(Halpha)| < 3 A (WHAN retired; emission negative)",
+  "retired_share": [
+   {
+    "sample": "CG4",
+    "rank": "bgg",
+    "mass_bin": "all",
+    "n_agn_like": 27,
+    "n_with_ew": 27,
+    "n_retired_like": 24,
+    "retired_share": 0.8888888888888888
+   },
+   {
+    "sample": "CG4",
+    "rank": "bgg",
+    "mass_bin": "7-10",
+    "n_agn_like": 0,
+    "n_with_ew": 0,
+    "n_retired_like": 0,
+    "retired_share": null
+   },
+   {
+    "sample": "CG4",
+    "rank": "bgg",
+    "mass_bin": "10-10.5",
+    "n_agn_like": 0,
+    "n_with_ew": 0,
+    "n_retired_like": 0,
+    "retired_share": null
+   },
+   {
+    "sample": "CG4",
+    "rank": "bgg",
+    "mass_bin": "10.5-11",
+    "n_agn_like": 9,
+    "n_with_ew": 9,
+    "n_retired_like": 8,
+    "retired_share": 0.8888888888888888
+   },
+   {
+    "sample": "CG4",
+    "rank": "bgg",
+    "mass_bin": "11-12.5",
+    "n_agn_like": 18,
+    "n_with_ew": 18,
+    "n_retired_like": 16,
+    "retired_share": 0.8888888888888888
+   },
+   {
+    "sample": "CG4",
+    "rank": "satellite",
+    "mass_bin": "all",
+    "n_agn_like": 43,
+    "n_with_ew": 43,
+    "n_retired_like": 41,
+    "retired_share": 0.9534883720930233
+   },
+   {
+    "sample": "CG4",
+    "rank": "satellite",
+    "mass_bin": "7-10",
+    "n_agn_like": 1,
+    "n_with_ew": 1,
+    "n_retired_like": 1,
+    "retired_share": 1.0
+   },
+   {
+    "sample": "CG4",
+    "rank": "satellite",
+    "mass_bin": "10-10.5",
+    "n_agn_like": 23,
+    "n_with_ew": 23,
+    "n_retired_like": 22,
+    "retired_share": 0.9565217391304348
+   },
+   {
+    "sample": "CG4",
+    "rank": "satellite",
+    "mass_bin": "10.5-11",
+    "n_agn_like": 18,
+    "n_with_ew": 18,
+    "n_retired_like": 17,
+    "retired_share": 0.9444444444444444
+   },
+   {
+    "sample": "CG4",
+    "rank": "satellite",
+    "mass_bin": "11-12.5",
+    "n_agn_like": 1,
+    "n_with_ew": 1,
+    "n_retired_like": 1,
+    "retired_share": 1.0
+   },
+   {
+    "sample": "Control4B",
+    "rank": "bgg",
+    "mass_bin": "all",
+    "n_agn_like": 352,
+    "n_with_ew": 352,
+    "n_retired_like": 284,
+    "retired_share": 0.8068181818181818
+   },
+   {
+    "sample": "Control4B",
+    "rank": "bgg",
+    "mass_bin": "7-10",
+    "n_agn_like": 0,
+    "n_with_ew": 0,
+    "n_retired_like": 0,
+    "retired_share": null
+   },
+   {
+    "sample": "Control4B",
+    "rank": "bgg",
+    "mass_bin": "10-10.5",
+    "n_agn_like": 1,
+    "n_with_ew": 1,
+    "n_retired_like": 1,
+    "retired_share": 1.0
+   },
+   {
+    "sample": "Control4B",
+    "rank": "bgg",
+    "mass_bin": "10.5-11",
+    "n_agn_like": 82,
+    "n_with_ew": 82,
+    "n_retired_like": 58,
+    "retired_share": 0.7073170731707317
+   },
+   {
+    "sample": "Control4B",
+    "rank": "bgg",
+    "mass_bin": "11-12.5",
+    "n_agn_like": 269,
+    "n_with_ew": 269,
+    "n_retired_like": 225,
+    "retired_share": 0.8364312267657993
+   },
+   {
+    "sample": "Control4B",
+    "rank": "satellite",
+    "mass_bin": "all",
+    "n_agn_like": 585,
+    "n_with_ew": 585,
+    "n_retired_like": 523,
+    "retired_share": 0.8940170940170941
+   },
+   {
+    "sample": "Control4B",
+    "rank": "satellite",
+    "mass_bin": "7-10",
+    "n_agn_like": 21,
+    "n_with_ew": 21,
+    "n_retired_like": 19,
+    "retired_share": 0.9047619047619048
+   },
+   {
+    "sample": "Control4B",
+    "rank": "satellite",
+    "mass_bin": "10-10.5",
+    "n_agn_like": 120,
+    "n_with_ew": 120,
+    "n_retired_like": 105,
+    "retired_share": 0.875
+   },
+   {
+    "sample": "Control4B",
+    "rank": "satellite",
+    "mass_bin": "10.5-11",
+    "n_agn_like": 346,
+    "n_with_ew": 346,
+    "n_retired_like": 311,
+    "retired_share": 0.8988439306358381
+   },
+   {
+    "sample": "Control4B",
+    "rank": "satellite",
+    "mass_bin": "11-12.5",
+    "n_agn_like": 98,
+    "n_with_ew": 98,
+    "n_retired_like": 88,
+    "retired_share": 0.8979591836734694
+   },
+   {
+    "sample": "Control4C",
+    "rank": "bgg",
+    "mass_bin": "all",
+    "n_agn_like": 354,
+    "n_with_ew": 354,
+    "n_retired_like": 285,
+    "retired_share": 0.8050847457627118
+   },
+   {
+    "sample": "Control4C",
+    "rank": "bgg",
+    "mass_bin": "7-10",
+    "n_agn_like": 0,
+    "n_with_ew": 0,
+    "n_retired_like": 0,
+    "retired_share": null
+   },
+   {
+    "sample": "Control4C",
+    "rank": "bgg",
+    "mass_bin": "10-10.5",
+    "n_agn_like": 1,
+    "n_with_ew": 1,
+    "n_retired_like": 1,
+    "retired_share": 1.0
+   },
+   {
+    "sample": "Control4C",
+    "rank": "bgg",
+    "mass_bin": "10.5-11",
+    "n_agn_like": 82,
+    "n_with_ew": 82,
+    "n_retired_like": 58,
+    "retired_share": 0.7073170731707317
+   },
+   {
+    "sample": "Control4C",
+    "rank": "bgg",
+    "mass_bin": "11-12.5",
+    "n_agn_like": 271,
+    "n_with_ew": 271,
+    "n_retired_like": 226,
+    "retired_share": 0.8339483394833949
+   },
+   {
+    "sample": "Control4C",
+    "rank": "satellite",
+    "mass_bin": "all",
+    "n_agn_like": 424,
+    "n_with_ew": 424,
+    "n_retired_like": 378,
+    "retired_share": 0.8915094339622641
+   },
+   {
+    "sample": "Control4C",
+    "rank": "satellite",
+    "mass_bin": "7-10",
+    "n_agn_like": 43,
+    "n_with_ew": 43,
+    "n_retired_like": 38,
+    "retired_share": 0.8837209302325582
+   },
+   {
+    "sample": "Control4C",
+    "rank": "satellite",
+    "mass_bin": "10-10.5",
+    "n_agn_like": 146,
+    "n_with_ew": 146,
+    "n_retired_like": 126,
+    "retired_share": 0.863013698630137
+   },
+   {
+    "sample": "Control4C",
+    "rank": "satellite",
+    "mass_bin": "10.5-11",
+    "n_agn_like": 204,
+    "n_with_ew": 204,
+    "n_retired_like": 186,
+    "retired_share": 0.9117647058823529
+   },
+   {
+    "sample": "Control4C",
+    "rank": "satellite",
+    "mass_bin": "11-12.5",
+    "n_agn_like": 31,
+    "n_with_ew": 31,
+    "n_retired_like": 28,
+    "retired_share": 0.9032258064516129
+   },
+   {
+    "sample": "RG4",
+    "rank": "bgg",
+    "mass_bin": "all",
+    "n_agn_like": 25,
+    "n_with_ew": 25,
+    "n_retired_like": 22,
+    "retired_share": 0.88
+   },
+   {
+    "sample": "RG4",
+    "rank": "bgg",
+    "mass_bin": "7-10",
+    "n_agn_like": 0,
+    "n_with_ew": 0,
+    "n_retired_like": 0,
+    "retired_share": null
+   },
+   {
+    "sample": "RG4",
+    "rank": "bgg",
+    "mass_bin": "10-10.5",
+    "n_agn_like": 0,
+    "n_with_ew": 0,
+    "n_retired_like": 0,
+    "retired_share": null
+   },
+   {
+    "sample": "RG4",
+    "rank": "bgg",
+    "mass_bin": "10.5-11",
+    "n_agn_like": 12,
+    "n_with_ew": 12,
+    "n_retired_like": 12,
+    "retired_share": 1.0
+   },
+   {
+    "sample": "RG4",
+    "rank": "bgg",
+    "mass_bin": "11-12.5",
+    "n_agn_like": 13,
+    "n_with_ew": 13,
+    "n_retired_like": 10,
+    "retired_share": 0.7692307692307693
+   },
+   {
+    "sample": "RG4",
+    "rank": "satellite",
+    "mass_bin": "all",
+    "n_agn_like": 32,
+    "n_with_ew": 32,
+    "n_retired_like": 26,
+    "retired_share": 0.8125
+   },
+   {
+    "sample": "RG4",
+    "rank": "satellite",
+    "mass_bin": "7-10",
+    "n_agn_like": 5,
+    "n_with_ew": 5,
+    "n_retired_like": 5,
+    "retired_share": 1.0
+   },
+   {
+    "sample": "RG4",
+    "rank": "satellite",
+    "mass_bin": "10-10.5",
+    "n_agn_like": 13,
+    "n_with_ew": 13,
+    "n_retired_like": 9,
+    "retired_share": 0.6923076923076923
+   },
+   {
+    "sample": "RG4",
+    "rank": "satellite",
+    "mass_bin": "10.5-11",
+    "n_agn_like": 13,
+    "n_with_ew": 13,
+    "n_retired_like": 11,
+    "retired_share": 0.8461538461538461
+   },
+   {
+    "sample": "RG4",
+    "rank": "satellite",
+    "mass_bin": "11-12.5",
+    "n_agn_like": 1,
+    "n_with_ew": 1,
+    "n_retired_like": 1,
+    "retired_share": 1.0
+   }
+  ],
+  "agn_like_whan_definition": "agn_like == 1 and EW(Halpha) <= -3 A; 0 for other BPT-classified rows",
+  "agn_like_whan_models": [
+   {
+    "outcome": "agn_like_whan",
+    "kind": "logit",
+    "control": "Control4B",
+    "counts": {
+     "n": 1516,
+     "n_cg4_sat": 36,
+     "n_cg4_bgg": 50,
+     "n_control_sat": 845,
+     "n_control_bgg": 585,
+     "n_clusters": 704,
+     "n_cg4_clusters": 54,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 1,
+     "n_events_cg4_bgg": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.723152916500097,
+     "se": 1.0167855494230094,
+     "ci95": [
+      -2.7160159733699665,
+      1.2697101403697726
+     ],
+     "p": 0.4769511476197815
+    },
+    "cg_bgg": {
+     "estimate": -0.7199713226070332,
+     "se": 0.608891630610064,
+     "ci95": [
+      -1.9133769890906251,
+      0.4734343438765587
+     ],
+     "p": 0.237035391265494
+    },
+    "interaction": {
+     "estimate": 0.003181593893064452,
+     "se": 1.190541170125144,
+     "ci95": [
+      -2.330236221664391,
+      2.3365994094505202
+     ],
+     "p": 0.9978677414203354
+    },
+    "identity_residual": -6.245004513516506e-16,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 2.846999538384426,
+      "odds_ratio_high": 17.23598825592507,
+      "odds_ratio_low": 0.05801814117947305
+     },
+     "cg_bgg": {
+      "log_odds": 1.7048965657081792,
+      "odds_ratio_high": 5.500816664708668,
+      "odds_ratio_low": 0.1817911886457975
+     }
+    },
+    "event_counts": {
+     "CG4|sat": {
+      "n": 36,
+      "events": 1
+     },
+     "CG4|bgg": {
+      "n": 50,
+      "events": 3
+     },
+     "Control4B|sat": {
+      "n": 845,
+      "events": 45
+     },
+     "Control4B|bgg": {
+      "n": 585,
+      "events": 68
+     }
+    }
+   },
+   {
+    "outcome": "agn_like_whan",
+    "kind": "logit",
+    "control": "Control4C",
+    "counts": {
+     "n": 1146,
+     "n_cg4_sat": 36,
+     "n_cg4_bgg": 50,
+     "n_control_sat": 473,
+     "n_control_bgg": 587,
+     "n_clusters": 684,
+     "n_cg4_clusters": 54,
+     "n_clusters_shared_cg4_control": 3,
+     "n_events_cg4_sat": 1,
+     "n_events_cg4_bgg": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.5441287183507018,
+     "se": 1.036999288326851,
+     "ci95": [
+      -2.576609975464997,
+      1.4883525387635936
+     ],
+     "p": 0.5997815717465247
+    },
+    "cg_bgg": {
+     "estimate": -0.7494442080283675,
+     "se": 0.5988436604495031,
+     "ci95": [
+      -1.9231562148795267,
+      0.42426779882279175
+     ],
+     "p": 0.21075737003476913
+    },
+    "interaction": {
+     "estimate": -0.20531548967766486,
+     "se": 1.198702306833322,
+     "ci95": [
+      -2.554728839256057,
+      2.1440978599007274
+     ],
+     "p": 0.8640024522654587
+    },
+    "identity_residual": -9.159339953157541e-16,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 2.903598007315183,
+      "odds_ratio_high": 18.23965385676696,
+      "odds_ratio_low": 0.05482560183722989
+     },
+     "cg_bgg": {
+      "log_odds": 1.6767622492586085,
+      "odds_ratio_high": 5.348211731612341,
+      "odds_ratio_low": 0.18697838645564
+     }
+    },
+    "event_counts": {
+     "CG4|sat": {
+      "n": 36,
+      "events": 1
+     },
+     "CG4|bgg": {
+      "n": 50,
+      "events": 3
+     },
+     "Control4C|sat": {
+      "n": 473,
+      "events": 21
+     },
+     "Control4C|bgg": {
+      "n": 587,
+      "events": 69
+     }
+    }
+   },
+   {
+    "outcome": "agn_like_whan",
+    "kind": "logit",
+    "control": "RG4",
+    "counts": {
+     "n": 157,
+     "n_cg4_sat": 36,
+     "n_cg4_bgg": 50,
+     "n_control_sat": 26,
+     "n_control_bgg": 45,
+     "n_clusters": 103,
+     "n_cg4_clusters": 54,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 1,
+     "n_events_cg4_bgg": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -1.3406835985364687,
+     "se": 1.6965251905854764,
+     "ci95": [
+      -4.6658118709489536,
+      1.9844446738760162
+     ],
+     "p": 0.42938020914678476
+    },
+    "cg_bgg": {
+     "estimate": -0.11685788956797045,
+     "se": 0.9571916169501177,
+     "ci95": [
+      -1.9929189850938602,
+      1.7592032059579195
+     ],
+     "p": 0.9028324037114823
+    },
+    "interaction": {
+     "estimate": 1.2238257089684952,
+     "se": 2.1037823127792823,
+     "ci95": [
+      -2.8995118553912773,
+      5.347163273328268
+     ],
+     "p": 0.5607509868552114
+    },
+    "identity_residual": 3.1086244689504383e-15,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 4.750270533639333,
+      "odds_ratio_high": 115.61555819442928,
+      "odds_ratio_low": 0.008649354945104465
+     },
+     "cg_bgg": {
+      "log_odds": 2.6801365274603293,
+      "odds_ratio_high": 14.587084697564556,
+      "odds_ratio_low": 0.06855379403993993
+     }
+    },
+    "event_counts": {
+     "CG4|sat": {
+      "n": 36,
+      "events": 1
+     },
+     "CG4|bgg": {
+      "n": 50,
+      "events": 3
+     },
+     "RG4|sat": {
+      "n": 26,
+      "events": 2
+     },
+     "RG4|bgg": {
+      "n": 45,
+      "events": 3
+     }
+    }
+   }
+  ],
+  "line_sn": {
+   "status": "ok",
+   "path": "galspecline_dr16.csv",
+   "n_classified": 4949,
+   "n_classified_with_errors": 4949,
+   "n_classified_sn_ge_3": 3576
+  },
+  "sn_cut": "S/N >= 3 in H-alpha, H-beta, [O III] 5007 and [N II] 6584",
+  "agn_like_sn3_models": [
+   {
+    "outcome": "agn_like_sn3",
+    "kind": "logit",
+    "control": "Control4B",
+    "counts": {
+     "n": 1063,
+     "n_cg4_sat": 19,
+     "n_cg4_bgg": 37,
+     "n_control_sat": 590,
+     "n_control_bgg": 417,
+     "n_clusters": 611,
+     "n_cg4_clusters": 44,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 12,
+     "n_events_cg4_bgg": 22
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": 0.42967745549862935,
+     "se": 0.5015358292260853,
+     "ci95": [
+      -0.5533147067409289,
+      1.4126696177381874
+     ],
+     "p": 0.39159779587896804
+    },
+    "cg_bgg": {
+     "estimate": -0.264682734628559,
+     "se": 0.3704966526248769,
+     "ci95": [
+      -0.9908428301659651,
+      0.46147736090884706
+     ],
+     "p": 0.4749799954683046
+    },
+    "interaction": {
+     "estimate": -0.6943601901271867,
+     "se": 0.6546031820565474,
+     "ci95": [
+      -1.977358851123336,
+      0.5886384708689625
+     ],
+     "p": 0.2888105687994348
+    },
+    "identity_residual": -1.5543122344752192e-15,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 1.4043003218330388,
+      "odds_ratio_high": 4.072676181541287,
+      "odds_ratio_low": 0.2455387944988924
+     },
+     "cg_bgg": {
+      "log_odds": 1.0373906273496554,
+      "odds_ratio_high": 2.8218441563028693,
+      "odds_ratio_low": 0.3543781812919755
+     }
+    },
+    "event_counts": {
+     "CG4|sat": {
+      "n": 19,
+      "events": 12
+     },
+     "CG4|bgg": {
+      "n": 37,
+      "events": 22
+     },
+     "Control4B|sat": {
+      "n": 590,
+      "events": 320
+     },
+     "Control4B|bgg": {
+      "n": 417,
+      "events": 276
+     }
+    }
+   },
+   {
+    "outcome": "agn_like_sn3",
+    "kind": "logit",
+    "control": "Control4C",
+    "counts": {
+     "n": 788,
+     "n_cg4_sat": 19,
+     "n_cg4_bgg": 37,
+     "n_control_sat": 313,
+     "n_control_bgg": 419,
+     "n_clusters": 553,
+     "n_cg4_clusters": 44,
+     "n_clusters_shared_cg4_control": 3,
+     "n_events_cg4_sat": 12,
+     "n_events_cg4_bgg": 22
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": 0.4940839726310784,
+     "se": 0.5147271538860106,
+     "ci95": [
+      -0.5147627108503086,
+      1.5029306561124653
+     ],
+     "p": 0.33710811057853796
+    },
+    "cg_bgg": {
+     "estimate": -0.2793899898530942,
+     "se": 0.37008815443018367,
+     "ci95": [
+      -1.004749443641152,
+      0.4459694639349635
+     ],
+     "p": 0.45029205526561855
+    },
+    "interaction": {
+     "estimate": -0.773473962484172,
+     "se": 0.6657669891123952,
+     "ci95": [
+      -2.078353283240137,
+      0.5314053582717928
+     ],
+     "p": 0.24532533442484628
+    },
+    "identity_residual": -6.661338147750939e-16,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 1.4412360308808296,
+      "odds_ratio_high": 4.225915952824894,
+      "odds_ratio_low": 0.23663508956715787
+     },
+     "cg_bgg": {
+      "log_odds": 1.0362468324045142,
+      "odds_ratio_high": 2.8186183903799726,
+      "odds_ratio_low": 0.35478374916343036
+     }
+    },
+    "event_counts": {
+     "CG4|sat": {
+      "n": 19,
+      "events": 12
+     },
+     "CG4|bgg": {
+      "n": 37,
+      "events": 22
+     },
+     "Control4C|sat": {
+      "n": 313,
+      "events": 160
+     },
+     "Control4C|bgg": {
+      "n": 419,
+      "events": 278
+     }
+    }
+   },
+   {
+    "outcome": "agn_like_sn3",
+    "kind": "logit",
+    "control": "RG4",
+    "counts": {
+     "n": 109,
+     "n_cg4_sat": 19,
+     "n_cg4_bgg": 37,
+     "n_control_sat": 20,
+     "n_control_bgg": 33,
+     "n_clusters": 86,
+     "n_cg4_clusters": 44,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 12,
+     "n_events_cg4_bgg": 22
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.0338181989913008,
+     "se": 0.7125828903084899,
+     "ci95": [
+      -1.430454999995397,
+      1.3628186020127953
+     ],
+     "p": 0.962147711417092
+    },
+    "cg_bgg": {
+     "estimate": 0.20721957893412607,
+     "se": 0.5336019429551044,
+     "ci95": [
+      -0.8386210113384751,
+      1.2530601692067271
+     ],
+     "p": 0.6977636071314901
+    },
+    "interaction": {
+     "estimate": 0.24103777792542597,
+     "se": 0.9066626395012425,
+     "ci95": [
+      -1.5359883416250317,
+      2.0180638974758836
+     ],
+     "p": 0.79035344677309
+    },
+    "identity_residual": 8.881784197001252e-16,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 1.9952320928637715,
+      "odds_ratio_high": 7.353909619782807,
+      "odds_ratio_low": 0.13598209003138856
+     },
+     "cg_bgg": {
+      "log_odds": 1.4940854402742922,
+      "odds_ratio_high": 4.455260087602819,
+      "odds_ratio_low": 0.22445378728451662
+     }
+    },
+    "event_counts": {
+     "CG4|sat": {
+      "n": 19,
+      "events": 12
+     },
+     "CG4|bgg": {
+      "n": 37,
+      "events": 22
+     },
+     "RG4|sat": {
+      "n": 20,
+      "events": 13
+     },
+     "RG4|bgg": {
+      "n": 33,
+      "events": 18
+     }
+    }
+   }
+  ],
+  "agn_like_whan_sn3_models": [
+   {
+    "outcome": "agn_like_whan_sn3",
+    "kind": "logit",
+    "control": "Control4B",
+    "counts": {
+     "n": 1063,
+     "n_cg4_sat": 19,
+     "n_cg4_bgg": 37,
+     "n_control_sat": 590,
+     "n_control_bgg": 417,
+     "n_clusters": 611,
+     "n_cg4_clusters": 44,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 1,
+     "n_events_cg4_bgg": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.41599544534945954,
+     "se": 1.054967770955677,
+     "ci95": [
+      -2.483694281273088,
+      1.6517033905741685
+     ],
+     "p": 0.6933444115618463
+    },
+    "cg_bgg": {
+     "estimate": -0.8067170901548182,
+     "se": 0.6167149226120059,
+     "ci95": [
+      -2.0154561272027562,
+      0.40202194689311993
+     ],
+     "p": 0.1908436278530894
+    },
+    "interaction": {
+     "estimate": -0.3907216448053603,
+     "se": 1.206376556208946,
+     "ci95": [
+      -2.7551762467683543,
+      1.9737329571576336
+     ],
+     "p": 0.7460286315672668
+    },
+    "identity_residual": 1.6653345369377348e-15,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 2.953909758675896,
+      "odds_ratio_high": 19.180799615918744,
+      "odds_ratio_low": 0.052135469846109485
+     },
+     "cg_bgg": {
+      "log_odds": 1.7268017833136164,
+      "odds_ratio_high": 5.622642692214832,
+      "odds_ratio_low": 0.17785231158021303
+     }
+    },
+    "event_counts": {
+     "CG4|sat": {
+      "n": 19,
+      "events": 1
+     },
+     "CG4|bgg": {
+      "n": 37,
+      "events": 3
+     },
+     "Control4B|sat": {
+      "n": 590,
+      "events": 45
+     },
+     "Control4B|bgg": {
+      "n": 417,
+      "events": 68
+     }
+    }
+   },
+   {
+    "outcome": "agn_like_whan_sn3",
+    "kind": "logit",
+    "control": "Control4C",
+    "counts": {
+     "n": 788,
+     "n_cg4_sat": 19,
+     "n_cg4_bgg": 37,
+     "n_control_sat": 313,
+     "n_control_bgg": 419,
+     "n_clusters": 553,
+     "n_cg4_clusters": 44,
+     "n_clusters_shared_cg4_control": 3,
+     "n_events_cg4_sat": 1,
+     "n_events_cg4_bgg": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.23447765999078762,
+     "se": 1.0879381276756366,
+     "ci95": [
+      -2.366797207642974,
+      1.897841887661399
+     ],
+     "p": 0.8293581697162277
+    },
+    "cg_bgg": {
+     "estimate": -0.8265436306888203,
+     "se": 0.6060908328756659,
+     "ci95": [
+      -2.0144598344850104,
+      0.36137257310736975
+     ],
+     "p": 0.17265288098825882
+    },
+    "interaction": {
+     "estimate": -0.5920659706980282,
+     "se": 1.2271031026017427,
+     "ci95": [
+      -2.9971438571148026,
+      1.8130119157187463
+     ],
+     "p": 0.6294573248103092
+    },
+    "identity_residual": -4.440892098500626e-15,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 3.046226757491782,
+      "odds_ratio_high": 21.035821231881506,
+      "odds_ratio_low": 0.047537958655230354
+     },
+     "cg_bgg": {
+      "log_odds": 1.6970543320518645,
+      "odds_ratio_high": 5.457846685654616,
+      "odds_ratio_low": 0.18322244240176191
+     }
+    },
+    "event_counts": {
+     "CG4|sat": {
+      "n": 19,
+      "events": 1
+     },
+     "CG4|bgg": {
+      "n": 37,
+      "events": 3
+     },
+     "Control4C|sat": {
+      "n": 313,
+      "events": 21
+     },
+     "Control4C|bgg": {
+      "n": 419,
+      "events": 69
+     }
+    }
+   },
+   {
+    "outcome": "agn_like_whan_sn3",
+    "kind": "logit",
+    "control": "RG4",
+    "counts": {
+     "n": 109,
+     "n_cg4_sat": 19,
+     "n_cg4_bgg": 37,
+     "n_control_sat": 20,
+     "n_control_bgg": 33,
+     "n_clusters": 86,
+     "n_cg4_clusters": 44,
+     "n_clusters_shared_cg4_control": 0,
+     "n_events_cg4_sat": 1,
+     "n_events_cg4_bgg": 3
+    },
+    "status": "ok",
+    "covariance": "cluster",
+    "cg_sat": {
+     "estimate": -0.8828824346730677,
+     "se": 1.4057594470060617,
+     "ci95": [
+      -3.638120321731891,
+      1.8723554523857557
+     ],
+     "p": 0.529973416261454
+    },
+    "cg_bgg": {
+     "estimate": -0.2278566951709102,
+     "se": 0.9634086385943198,
+     "ci95": [
+      -2.116102929210542,
+      1.6603895388687218
+     ],
+     "p": 0.8130362091346129
+    },
+    "interaction": {
+     "estimate": 0.6550257395021553,
+     "se": 1.8156190034162438,
+     "ci95": [
+      -2.903522116840188,
+      4.213573595844498
+     ],
+     "p": 0.718269385106103
+    },
+    "identity_residual": 2.220446049250313e-15,
+    "mde": {
+     "cg_sat": {
+      "log_odds": 3.9361264516169725,
+      "odds_ratio_high": 51.21981411504859,
+      "odds_ratio_low": 0.019523694438910427
+     },
+     "cg_bgg": {
+      "log_odds": 2.697544188064095,
+      "odds_ratio_high": 14.843234735313935,
+      "odds_ratio_low": 0.06737075966472951
+     }
+    },
+    "event_counts": {
+     "CG4|sat": {
+      "n": 19,
+      "events": 1
+     },
+     "CG4|bgg": {
+      "n": 37,
+      "events": 3
+     },
+     "RG4|sat": {
+      "n": 20,
+      "events": 2
+     },
+     "RG4|bgg": {
+      "n": 33,
+      "events": 3
+     }
+    }
+   }
+  ],
+  "fibre_aperture": {
+   "fibre_radius_arcsec": 1.5,
+   "n_support_rows": 2977,
+   "n_rows_with_log_fib_frac": 2977,
+   "log_fib_frac_median": {
+    "CG4|bgg": {
+     "n": 57,
+     "median": -0.7100396423028065
+    },
+    "CG4|satellite": {
+     "n": 46,
+     "median": -0.42465042752243487
+    },
+    "Control4B|bgg": {
+     "n": 645,
+     "median": -0.6797320385116133
+    },
+    "Control4B|satellite": {
+     "n": 952,
+     "median": -0.5158404351013268
+    },
+    "Control4C|bgg": {
+     "n": 649,
+     "median": -0.6797320385116133
+    },
+    "Control4C|satellite": {
+     "n": 544,
+     "median": -0.4707332084562085
+    },
+    "RG4|bgg": {
+     "n": 52,
+     "median": -0.554951991699673
+    },
+    "RG4|satellite": {
+     "n": 32,
+     "median": -0.4307591785645002
+    }
+   },
+   "models": [
+    {
+     "outcome": "strong_halpha",
+     "control": "Control4B",
+     "status": "ok",
+     "cg_sat": {
+      "without": {
+       "estimate": -1.0231858223962036,
+       "se": 0.5053315527592109,
+       "ci95": [
+        -2.013617466055959,
+        -0.03275417873644802
+       ],
+       "p": 0.042889837452822245
+      },
+      "with_log_fib_frac": {
+       "estimate": -0.9669612177166798,
+       "se": 0.5413604519665247,
+       "ci95": [
+        -2.028008206225394,
+        0.09408577079203458
+       ],
+       "p": 0.07407191056744526
+      },
+      "shift": 0.05622460467952384,
+      "shift_in_se": 0.11126280235723714
+     },
+     "cg_bgg": {
+      "without": {
+       "estimate": -0.43976128815655596,
+       "se": 0.391288770399971,
+       "ci95": [
+        -1.2066731856954616,
+        0.3271506093823496
+       ],
+       "p": 0.2610643003692106
+      },
+      "with_log_fib_frac": {
+       "estimate": -0.3501896241604278,
+       "se": 0.40514357427793246,
+       "ci95": [
+        -1.1442564383130036,
+        0.44387718999214804
+       ],
+       "p": 0.3873905329449413
+      },
+      "shift": 0.08957166399612815,
+      "shift_in_se": 0.22891447639698168
+     },
+     "n": 1607
+    },
+    {
+     "outcome": "strong_halpha",
+     "control": "Control4C",
+     "status": "ok",
+     "cg_sat": {
+      "without": {
+       "estimate": -0.8927378705646638,
+       "se": 0.5112548161660908,
+       "ci95": [
+        -1.894778897172848,
+        0.10930315604352048
+       ],
+       "p": 0.0807813997267277
+      },
+      "with_log_fib_frac": {
+       "estimate": -0.9173128958932214,
+       "se": 0.5439916587353621,
+       "ci95": [
+        -1.9835169549047351,
+        0.14889116311829223
+       ],
+       "p": 0.09174519335644891
+      },
+      "shift": -0.024575025328557598,
+      "shift_in_se": -0.04806805638105507
+     },
+     "cg_bgg": {
+      "without": {
+       "estimate": -0.4474211103985569,
+       "se": 0.39641634908234247,
+       "ci95": [
+        -1.2243828774828058,
+        0.329540656685692
+       ],
+       "p": 0.2590393370599452
+      },
+      "with_log_fib_frac": {
+       "estimate": -0.35837489153026403,
+       "se": 0.40742608288056653,
+       "ci95": [
+        -1.1569153403384056,
+        0.4401655572778774
+       ],
+       "p": 0.3790721695720335
+      },
+      "shift": 0.08904621886829289,
+      "shift_in_se": 0.22462801817943304
+     },
+     "n": 1222
+    },
+    {
+     "outcome": "strong_halpha",
+     "control": "RG4",
+     "status": "ok",
+     "cg_sat": {
+      "without": {
+       "estimate": -1.289776424167123,
+       "se": 0.6955469457121974,
+       "ci95": [
+        -2.653023387319866,
+        0.07347053898562
+       ],
+       "p": 0.06369137550919066
+      },
+      "with_log_fib_frac": {
+       "estimate": -1.427375349864029,
+       "se": 0.7203944238240255,
+       "ci95": [
+        -2.8393224752226027,
+        -0.015428224505455354
+       ],
+       "p": 0.04754863659177261
+      },
+      "shift": -0.1375989256969059,
+      "shift_in_se": -0.19782838030582256
+     },
+     "cg_bgg": {
+      "without": {
+       "estimate": -0.3476206894671755,
+       "se": 0.5449153580343985,
+       "ci95": [
+        -1.4156351658373452,
+        0.7203937869029943
+       ],
+       "p": 0.5235158610450211
+      },
+      "with_log_fib_frac": {
+       "estimate": -0.42063905437252763,
+       "se": 0.580485676040096,
+       "ci95": [
+        -1.5583700729525012,
+        0.717091964207446
+       ],
+       "p": 0.4686772321827496
+      },
+      "shift": -0.07301836490535213,
+      "shift_in_se": -0.13399946217104555
+     },
+     "n": 174
+    },
+    {
+     "outcome": "agn_like",
+     "control": "Control4B",
+     "status": "ok",
+     "cg_sat": {
+      "without": {
+       "estimate": 0.11211287580286519,
+       "se": 0.3163232646482622,
+       "ci95": [
+        -0.5078693303798607,
+        0.7320950819855911
+       ],
+       "p": 0.7230203952138685
+      },
+      "with_log_fib_frac": {
+       "estimate": 0.08277005454176954,
+       "se": 0.3168521778222533,
+       "ci95": [
+        -0.5382488024129277,
+        0.7037889114964668
+       ],
+       "p": 0.7939181619021072
+      },
+      "shift": -0.02934282126109565,
+      "shift_in_se": -0.09276213462744701
+     },
+     "cg_bgg": {
+      "without": {
+       "estimate": -0.23450496242951302,
+       "se": 0.3091595613298171,
+       "ci95": [
+        -0.8404465681121566,
+        0.3714366432531306
+       ],
+       "p": 0.4481373212541696
+      },
+      "with_log_fib_frac": {
+       "estimate": -0.24389283865956185,
+       "se": 0.30897331028110464,
+       "ci95": [
+        -0.8494693989946462,
+        0.3616837216755225
+       ],
+       "p": 0.42989847619673105
+      },
+      "shift": -0.00938787623004883,
+      "shift_in_se": -0.03036579619167486
+     },
+     "n": 1516
+    },
+    {
+     "outcome": "agn_like",
+     "control": "Control4C",
+     "status": "ok",
+     "cg_sat": {
+      "without": {
+       "estimate": 0.1604236274016197,
+       "se": 0.3249130646361824,
+       "ci95": [
+        -0.4763942773918325,
+        0.7972415321950719
+       ],
+       "p": 0.6214875275206383
+      },
+      "with_log_fib_frac": {
+       "estimate": 0.154982518412448,
+       "se": 0.3252834166649118,
+       "ci95": [
+        -0.48256126301891517,
+        0.7925262998438111
+       ],
+       "p": 0.6337511173097437
+      },
+      "shift": -0.005441108989171689,
+      "shift_in_se": -0.016746353352286115
+     },
+     "cg_bgg": {
+      "without": {
+       "estimate": -0.24065438510267312,
+       "se": 0.30854117592782376,
+       "ci95": [
+        -0.8453839776688444,
+        0.36407520746349825
+       ],
+       "p": 0.4354056260347412
+      },
+      "with_log_fib_frac": {
+       "estimate": -0.24356405460811031,
+       "se": 0.3083912477447915,
+       "ci95": [
+        -0.8479997933352708,
+        0.36087168411905013
+       ],
+       "p": 0.4296509294855728
+      },
+      "shift": -0.0029096695054371957,
+      "shift_in_se": -0.009430409074858285
+     },
+     "n": 1146
+    },
+    {
+     "outcome": "agn_like",
+     "control": "RG4",
+     "status": "ok",
+     "cg_sat": {
+      "without": {
+       "estimate": 0.32105609619706565,
+       "se": 0.568362308657605,
+       "ci95": [
+        -0.7929135589418779,
+        1.4350257513360092
+       ],
+       "p": 0.5721558724237659
+      },
+      "with_log_fib_frac": {
+       "estimate": 0.27906328885887843,
+       "se": 0.5657730900739005,
+       "ci95": [
+        -0.8298315911079026,
+        1.3879581688256595
+       ],
+       "p": 0.621841307016975
+      },
+      "shift": -0.04199280733818722,
+      "shift_in_se": -0.07388387072564429
+     },
+     "cg_bgg": {
+      "without": {
+       "estimate": 0.04827830941971691,
+       "se": 0.47443032508751254,
+       "ci95": [
+        -0.8815880409254373,
+        0.9781446597648711
+       ],
+       "p": 0.9189467084596084
+      },
+      "with_log_fib_frac": {
+       "estimate": 0.08461022512293198,
+       "se": 0.48690064449196574,
+       "ci95": [
+        -0.8696975021306614,
+        1.0389179523765255
+       ],
+       "p": 0.862043800762525
+      },
+      "shift": 0.03633191570321507,
+      "shift_in_se": 0.07658008727944056
+     },
+     "n": 157
+    },
+    {
+     "outcome": "Dn4000",
+     "control": "Control4B",
+     "status": "ok",
+     "cg_sat": {
+      "without": {
+       "estimate": 0.07419554607824247,
+       "se": 0.022192100072189844,
+       "ci95": [
+        0.03069982919544164,
+        0.11769126296104329
+       ],
+       "p": 0.0008277896392074959
+      },
+      "with_log_fib_frac": {
+       "estimate": 0.06333897694190488,
+       "se": 0.020787874728135296,
+       "ci95": [
+        0.022595491159629333,
+        0.10408246272418042
+       ],
+       "p": 0.002311997635094612
+      },
+      "shift": -0.01085656913633759,
+      "shift_in_se": -0.48920873198217785
+     },
+     "cg_bgg": {
+      "without": {
+       "estimate": -0.009097703925990436,
+       "se": 0.02671205510009774,
+       "ci95": [
+        -0.06145236987523148,
+        0.043256962023250606
+       ],
+       "p": 0.73341662535894
+      },
+      "with_log_fib_frac": {
+       "estimate": -0.014149666123179694,
+       "se": 0.028079703401471933,
+       "ci95": [
+        -0.06918487348663153,
+        0.04088554124027215
+       ],
+       "p": 0.6143240528854628
+      },
+      "shift": -0.005051962197189258,
+      "shift_in_se": -0.189126676261265
+     },
+     "n": 1699
+    },
+    {
+     "outcome": "Dn4000",
+     "control": "Control4C",
+     "status": "ok",
+     "cg_sat": {
+      "without": {
+       "estimate": 0.055141136425243015,
+       "se": 0.02300036467648166,
+       "ci95": [
+        0.010061250028051708,
+        0.10022102282243432
+       ],
+       "p": 0.016511765578304933
+      },
+      "with_log_fib_frac": {
+       "estimate": 0.05155324308893006,
+       "se": 0.021609736579954093,
+       "ci95": [
+        0.009198937676822283,
+        0.09390754850103784
+       ],
+       "p": 0.017049021671781538
+      },
+      "shift": -0.0035878933363129514,
+      "shift_in_se": -0.1559928891032604
+     },
+     "cg_bgg": {
+      "without": {
+       "estimate": -0.009711507441060738,
+       "se": 0.026641988921080578,
+       "ci95": [
+        -0.0619288462028938,
+        0.042505831320772326
+       ],
+       "p": 0.7154705925892018
+      },
+      "with_log_fib_frac": {
+       "estimate": -0.013784601395975808,
+       "se": 0.027656058478901305,
+       "ci95": [
+        -0.06798947996895596,
+        0.04042027717700434
+       ],
+       "p": 0.6181811956926586
+      },
+      "shift": -0.0040730939549150705,
+      "shift_in_se": -0.15288250314120574
+     },
+     "n": 1295
+    },
+    {
+     "outcome": "Dn4000",
+     "control": "RG4",
+     "status": "ok",
+     "cg_sat": {
+      "without": {
+       "estimate": 0.07954244949591112,
+       "se": 0.03695562544677397,
+       "ci95": [
+        0.007110754594082197,
+        0.15197414439774004
+       ],
+       "p": 0.03136764970269516
+      },
+      "with_log_fib_frac": {
+       "estimate": 0.07966001487691274,
+       "se": 0.03542877219356907,
+       "ci95": [
+        0.010220897361043244,
+        0.14909913239278222
+       ],
+       "p": 0.024547164680479704
+      },
+      "shift": 0.00011756538100161917,
+      "shift_in_se": 0.003181258051523033
+     },
+     "cg_bgg": {
+      "without": {
+       "estimate": -0.0010877575106469917,
+       "se": 0.03878052409926469,
+       "ci95": [
+        -0.0770961880467934,
+        0.07492067302549942
+       ],
+       "p": 0.977623016883529
+      },
+      "with_log_fib_frac": {
+       "estimate": 0.0033824839101482193,
+       "se": 0.040036532968457425,
+       "ci95": [
+        -0.07508767877387884,
+        0.08185264659417527
+       ],
+       "p": 0.9326708796541889
+      },
+      "shift": 0.004470241420795211,
+      "shift_in_se": 0.11527026837886314
+     },
+     "n": 187
+    }
+   ]
+  }
+ },
+ "recent_quenching.morphology_adjusted_models": {
+  "Control4B": {
+   "mass_class": {
+    "status": "ok",
+    "n": 2582,
+    "formula": "strong_halpha ~ is_CG4 + logMstar + elliptical",
+    "predictors_used": [
+     "is_CG4",
+     "logMstar",
+     "elliptical"
+    ],
+    "standardized_predictors": [
+     "logMstar"
+    ],
+    "covariance": "cluster",
+    "n_clusters": 738,
+    "aic": 2350.941805335173,
+    "bic": 2374.3670836207993,
+    "terms": {
+     "const": {
+      "coefficient": 0.47300312355378277,
+      "standard_error": 0.06507445166395988,
+      "odds_ratio": 1.604806395667518,
+      "ci95": [
+       1.4126389374233186,
+       1.8231152344370156
+      ],
+      "p": 3.631097727308011e-13
+     },
+     "is_CG4": {
+      "coefficient": -0.6004392046672101,
+      "standard_error": 0.19676994818229698,
+      "odds_ratio": 0.5485706483873714,
+      "ci95": [
+       0.373028215903915,
+       0.8067211632850176
+      ],
+      "p": 0.002277175938670089
+     },
+     "logMstar": {
+      "coefficient": -1.0305067491482836,
+      "standard_error": 0.0655695614963215,
+      "odds_ratio": 0.35682609342695326,
+      "ci95": [
+       0.3137933194323039,
+       0.4057602666006061
+      ],
+      "p": 1.1707422024832108e-55
+     },
+     "elliptical": {
+      "coefficient": -2.2703217425580164,
+      "standard_error": 0.1135073046350623,
+      "odds_ratio": 0.10327894550478182,
+      "ci95": [
+       0.08267880714651102,
+       0.12901178612407949
+      ],
+      "p": 5.3389946907394634e-89
+     }
+    },
+    "cg4_coefficient": -0.6004392046672101,
+    "cg4_standard_error": 0.19676994818229698,
+    "cg4_odds_ratio": 0.5485706483873714,
+    "cg4_ci95": [
+     0.373028215903915,
+     0.8067211632850176
+    ],
+    "cg4_p": 0.002277175938670089
+   },
+   "mass_class_satellite": {
+    "status": "ok",
+    "n": 2582,
+    "formula": "strong_halpha ~ is_CG4 + logMstar + elliptical + is_satellite",
+    "predictors_used": [
+     "is_CG4",
+     "logMstar",
+     "elliptical",
+     "is_satellite"
+    ],
+    "standardized_predictors": [
+     "logMstar"
+    ],
+    "covariance": "cluster",
+    "n_clusters": 738,
+    "aic": 2334.181904263288,
+    "bic": 2363.4635021203208,
+    "terms": {
+     "const": {
+      "coefficient": 1.0246127218959524,
+      "standard_error": 0.15110542275933908,
+      "odds_ratio": 2.7860162885034265,
+      "ci95": [
+       2.071869905321287,
+       3.746319563728962
+      ],
+      "p": 1.1952826530282557e-11
+     },
+     "is_CG4": {
+      "coefficient": -0.6710322815966993,
+      "standard_error": 0.1963641260949624,
+      "odds_ratio": 0.5111806229847158,
+      "ci95": [
+       0.34787957894789406,
+       0.7511381671362231
+      ],
+      "p": 0.0006324891245161608
+     },
+     "logMstar": {
+      "coefficient": -1.2126603673593805,
+      "standard_error": 0.08526512974767114,
+      "odds_ratio": 0.29740501943961706,
+      "ci95": [
+       0.2516346737128635,
+       0.3515006270113937
+      ],
+      "p": 6.669239476494311e-46
+     },
+     "elliptical": {
+      "coefficient": -2.301750863935321,
+      "standard_error": 0.11420751496337246,
+      "odds_ratio": 0.10008345771245683,
+      "ci95": [
+       0.08001081387328067,
+       0.1251918087415703
+      ],
+      "p": 2.4767049132570154e-90
+     },
+     "is_satellite": {
+      "coefficient": -0.681007289235356,
+      "standard_error": 0.16843919456173723,
+      "odds_ratio": 0.5061069394512626,
+      "ci95": [
+       0.3638032628410866,
+       0.7040734933501978
+      ],
+      "p": 5.276142825198726e-05
+     }
+    },
+    "cg4_coefficient": -0.6710322815966993,
+    "cg4_standard_error": 0.1963641260949624,
+    "cg4_odds_ratio": 0.5111806229847158,
+    "cg4_ci95": [
+     0.34787957894789406,
+     0.7511381671362231
+    ],
+    "cg4_p": 0.0006324891245161608
+   }
+  },
+  "Control4C": {
+   "mass_class": {
+    "status": "ok",
+    "n": 2557,
+    "formula": "strong_halpha ~ is_CG4 + logMstar + elliptical",
+    "predictors_used": [
+     "is_CG4",
+     "logMstar",
+     "elliptical"
+    ],
+    "standardized_predictors": [
+     "logMstar"
+    ],
+    "covariance": "cluster",
+    "n_clusters": 740,
+    "aic": 2311.5609166345084,
+    "bic": 2334.947276535673,
+    "terms": {
+     "const": {
+      "coefficient": 0.6913614937740258,
+      "standard_error": 0.06729231459293385,
+      "odds_ratio": 1.9964318132083123,
+      "ci95": [
+       1.749746605747298,
+       2.2778955373872343
+      ],
+      "p": 9.22930062000292e-25
+     },
+     "is_CG4": {
+      "coefficient": -0.4239893685323655,
+      "standard_error": 0.19220671521323798,
+      "odds_ratio": 0.6544308394321626,
+      "ci95": [
+       0.44901112784085967,
+       0.9538287517713315
+      ],
+      "p": 0.027390792565882244
+     },
+     "logMstar": {
+      "coefficient": -0.9704849568300183,
+      "standard_error": 0.06590723341560456,
+      "odds_ratio": 0.37889924376468853,
+      "ci95": [
+       0.332984025825843,
+       0.43114571808480656
+      ],
+      "p": 4.453752189162874e-49
+     },
+     "elliptical": {
+      "coefficient": -2.4317337618529593,
+      "standard_error": 0.11082593914416966,
+      "odds_ratio": 0.08788432992023595,
+      "ci95": [
+       0.07072553402287932,
+       0.10920603926483355
+      ],
+      "p": 1.0344419013746856e-106
+     }
+    },
+    "cg4_coefficient": -0.4239893685323655,
+    "cg4_standard_error": 0.19220671521323798,
+    "cg4_odds_ratio": 0.6544308394321626,
+    "cg4_ci95": [
+     0.44901112784085967,
+     0.9538287517713315
+    ],
+    "cg4_p": 0.027390792565882244
+   },
+   "mass_class_satellite": {
+    "status": "ok",
+    "n": 2557,
+    "formula": "strong_halpha ~ is_CG4 + logMstar + elliptical + is_satellite",
+    "predictors_used": [
+     "is_CG4",
+     "logMstar",
+     "elliptical",
+     "is_satellite"
+    ],
+    "standardized_predictors": [
+     "logMstar"
+    ],
+    "covariance": "cluster",
+    "n_clusters": 740,
+    "aic": 2295.670342214488,
+    "bic": 2324.903292090944,
+    "terms": {
+     "const": {
+      "coefficient": 1.2732793854404103,
+      "standard_error": 0.1630333394068089,
+      "odds_ratio": 3.5725491387126214,
+      "ci95": [
+       2.5953980913507495,
+       4.917591405746107
+      ],
+      "p": 5.72185949747064e-15
+     },
+     "is_CG4": {
+      "coefficient": -0.4462427886968719,
+      "standard_error": 0.18994615787828875,
+      "odds_ratio": 0.6400283615445916,
+      "ci95": [
+       0.4410793811438381,
+       0.9287133361780747
+      ],
+      "p": 0.01880813923427758
+     },
+     "logMstar": {
+      "coefficient": -1.1982003596153326,
+      "standard_error": 0.09470951613760518,
+      "odds_ratio": 0.30173674121198185,
+      "ci95": [
+       0.25061745145986836,
+       0.36328300550053944
+      ],
+      "p": 1.100113445424329e-36
+     },
+     "elliptical": {
+      "coefficient": -2.444830802343963,
+      "standard_error": 0.11145144434893244,
+      "odds_ratio": 0.08674081000193494,
+      "ci95": [
+       0.0697197517301349,
+       0.10791731084922523
+      ],
+      "p": 1.1708014130783644e-106
+     },
+     "is_satellite": {
+      "coefficient": -0.7378935430054248,
+      "standard_error": 0.18961207713850406,
+      "odds_ratio": 0.4781199947248696,
+      "ci95": [
+       0.32971508203417943,
+       0.693322028053336
+      ],
+      "p": 9.958709598876732e-05
+     }
+    },
+    "cg4_coefficient": -0.4462427886968719,
+    "cg4_standard_error": 0.18994615787828875,
+    "cg4_odds_ratio": 0.6400283615445916,
+    "cg4_ci95": [
+     0.4410793811438381,
+     0.9287133361780747
+    ],
+    "cg4_p": 0.01880813923427758
+   }
+  },
+  "RG4": {
+   "mass_class": {
+    "status": "ok",
+    "n": 399,
+    "formula": "strong_halpha ~ is_CG4 + logMstar + elliptical",
+    "predictors_used": [
+     "is_CG4",
+     "logMstar",
+     "elliptical"
+    ],
+    "standardized_predictors": [
+     "logMstar"
+    ],
+    "covariance": "cluster",
+    "n_clusters": 113,
+    "aic": 323.54876386583976,
+    "bic": 339.5046095333992,
+    "terms": {
+     "const": {
+      "coefficient": 0.9892929569782117,
+      "standard_error": 0.23300783835654482,
+      "odds_ratio": 2.68933232632437,
+      "ci95": [
+       1.703365475768848,
+       4.246010890967901
+      ],
+      "p": 2.1786374358487458e-05
+     },
+     "is_CG4": {
+      "coefficient": -0.5749412436603805,
+      "standard_error": 0.31923249589600206,
+      "odds_ratio": 0.562737932256667,
+      "ci95": [
+       0.3010058924101622,
+       1.052052429488646
+      ],
+      "p": 0.07170114274553442
+     },
+     "logMstar": {
+      "coefficient": -1.3372247809183775,
+      "standard_error": 0.1584096050737235,
+      "odds_ratio": 0.26257335695649886,
+      "ci95": [
+       0.1924917657164631,
+       0.3581699587345434
+      ],
+      "p": 3.131200522179232e-17
+     },
+     "elliptical": {
+      "coefficient": -2.612558632206885,
+      "standard_error": 0.3084842026277902,
+      "odds_ratio": 0.07334663640648638,
+      "ci95": [
+       0.0400680284112556,
+       0.1342648811398487
+      ],
+      "p": 2.4746790718702532e-17
+     }
+    },
+    "cg4_coefficient": -0.5749412436603805,
+    "cg4_standard_error": 0.31923249589600206,
+    "cg4_odds_ratio": 0.562737932256667,
+    "cg4_ci95": [
+     0.3010058924101622,
+     1.052052429488646
+    ],
+    "cg4_p": 0.07170114274553442
+   },
+   "mass_class_satellite": {
+    "status": "ok",
+    "n": 399,
+    "formula": "strong_halpha ~ is_CG4 + logMstar + elliptical + is_satellite",
+    "predictors_used": [
+     "is_CG4",
+     "logMstar",
+     "elliptical",
+     "is_satellite"
+    ],
+    "standardized_predictors": [
+     "logMstar"
+    ],
+    "covariance": "cluster",
+    "n_clusters": 113,
+    "aic": 321.2498699967126,
+    "bic": 341.19467708116196,
+    "terms": {
+     "const": {
+      "coefficient": 1.7207499273899258,
+      "standard_error": 0.488968253245629,
+      "odds_ratio": 5.588718025868382,
+      "ci95": [
+       2.1433923012388347,
+       14.572119697646455
+      ],
+      "p": 0.00043294087018866503
+     },
+     "is_CG4": {
+      "coefficient": -0.5358262241808279,
+      "standard_error": 0.3129183391650724,
+      "odds_ratio": 0.5851855958627799,
+      "ci95": [
+       0.31691081066976906,
+       1.0805632691467637
+      ],
+      "p": 0.08683188960242669
+     },
+     "logMstar": {
+      "coefficient": -1.6768550195771548,
+      "standard_error": 0.24858646657130426,
+      "odds_ratio": 0.1869610412157414,
+      "ci95": [
+       0.11485606524463124,
+       0.3043324778541292
+      ],
+      "p": 1.524375267722824e-11
+     },
+     "elliptical": {
+      "coefficient": -2.5874218050819584,
+      "standard_error": 0.31739271080354475,
+      "odds_ratio": 0.07521370591828323,
+      "ci95": [
+       0.04037679310272577,
+       0.14010774812079102
+      ],
+      "p": 3.576146603771431e-16
+     },
+     "is_satellite": {
+      "coefficient": -0.9834124733494508,
+      "standard_error": 0.544289067902894,
+      "odds_ratio": 0.3740325424893012,
+      "ci95": [
+       0.12870923079309257,
+       1.0869487913101485
+      ],
+      "p": 0.07079605203911787
+     }
+    },
+    "cg4_coefficient": -0.5358262241808279,
+    "cg4_standard_error": 0.3129183391650724,
+    "cg4_odds_ratio": 0.5851855958627799,
+    "cg4_ci95": [
+     0.31691081066976906,
+     1.0805632691467637
+    ],
+    "cg4_p": 0.08683188960242669
+   }
+  }
+ }
+}

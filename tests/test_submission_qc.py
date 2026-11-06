@@ -266,5 +266,9 @@ def test_influence_and_deduplication_policies():
     assert matched["control_pool_deduplicated_by_objid"]
     assert matched["n_control_rows_before_dedup"] > matched["n_control_galaxies_unique_pool"]
     template = (ROOT / "src/paper_template/paper_template.tex").read_text()
-    assert "without} objid deduplication" in template
+    tidal = template.split(r"\subsection{Local projected density}", 1)[1]
+    tidal = tidal.split(r"\subsection{Other galaxy properties}", 1)[0]
+    assert "controls are deduplicated by objid" in tidal
+    assert "t4e.get('dedup_control_pool'" in tidal
+    assert "Retaining all catalogue rows instead" in tidal
     assert "deduplicated by SDSS objid" in template
