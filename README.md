@@ -1,7 +1,7 @@
 # CG_Gals — Are galaxies in compact groups special? (Paper II)
 
 Analysis pipeline and manuscript source for *"Are galaxies in compact groups
-special?"* (Tricottet, Mamon & Díaz-Giménez, in prep.), the companion paper to
+special?"* (Tricottet & Mamon, in prep.), the companion paper to
 [Tricottet, Mamon & Díaz-Giménez 2025, A&A 699, A329](https://doi.org/10.1051/0004-6361/202451727)
 (Paper I). It compares the member galaxies of 62 non-split compact groups of
 four galaxies (CG4, 248 galaxies, from the HMCG catalogue of
