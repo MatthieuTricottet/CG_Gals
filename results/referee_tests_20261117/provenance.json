@@ -1,0 +1,40 @@
+{
+  "python": "3.13.2",
+  "versions": {
+    "numpy": "2.2.2",
+    "pandas": "2.2.3",
+    "scipy": "1.15.1",
+    "statsmodels": "0.14.6",
+    "astropy": "7.0.1",
+    "matplotlib": "3.10.0",
+    "patsy": "1.0.2"
+  },
+  "sha256": {
+    "results/referee_tests_20261117/inputs/EugeTableD1.dat": "b809282643d54bc9f30653acb817d32863bb551f482acd5cb1392a64ef2e6ac1",
+    "results/referee_tests_20261117/inputs/SDSS_to_Euge.csv": "2562791e13be2b7051dcdc105cb3d6d34b621723f1e951f285644532e40c036a",
+    "results/referee_tests_20261117/inputs/gal_in_SDSSCG18_ObjID.dat": "ab0aed6aea7b5fc976601ff6d005f63dffa6c377aeaabdebdfd5150ef84c349c",
+    "results/referee_tests_20261117/inputs/gz1_paper1_crossmatch.csv": "2d1cbb7cfe9620c6841dad3630197923f169d58303b184fef63ea71cf6e46993",
+    "results/referee_tests_20261117/inputs/tempel_lowz.csv.gz": "32062c9067f75e0664d638a3d1232c81bab5ec2ae22501e6e06eed2da9e2a9b4",
+    "data/processed_sample.pkl": "0908e8c631354eea03cbb95fd16cf069e92f2c6ca65bd191e6fa2dd4c6c98611",
+    "data/PC_Gals.csv": "632c1911c4628f9a28daae10a2e64cd5387adf969b6e2e63fd3d502002263df8",
+    "data/PC_Groups.csv": "83572db898150918959352a64e845578f1eed8af909bcd7e8a9b8f758127d1da",
+    "data/CG4_Gals.csv": "1c5d0ddd0ae3d458c3029bae2e682783471fb4bdef31cb32182bfaec5cbfdf71",
+    "data/CG4_Groups.csv": "093220ca3e9ec8f9b9f24112ba2981f9a30d5de00ad706c16cee927df86c6e69",
+    "data/Control4C_Gals.csv": "7076a383285ce2345e61564ed33a7ebf0ebcfff6f39ac8c50c2b4825a616360f",
+    "data/Control4C_Groups.csv": "5871e75eeb59c1281c744ea71985b33bd8866c799e01d3603e95c2a023a0598d",
+    "data/Control4B_Groups.csv": "7fd9fb6abca07fcb3fd488e7313df5d73948f4e00bc01e0de3e911963f12e239",
+    "data/RG4_Groups.csv": "e19e4820242d6f2fc8269b170cc7eb3d8d17139d5e6a09c0ac28f8bf88f1ebab",
+    "data/galspecindx_dr12.csv": "e43710a551d95277c74fd583be94087c0dce780bd8fd115d2a4d376659f0e0c9",
+    "data/galspecline_dr16.csv": "74593bc62bd3f8823ced1bbe30d99625111404ec68839e0194cf4c9ae1454a10",
+    "data/sdss_spectral_provenance_dr12.csv": "c522d16761a043cacdc92543bb18730878ffb8c51711b445744087438ca06aa7",
+    "data/sdss_size_columns.csv": "0d4115f79238010b85f7b053672c8810193ba131ca1275972277239538db5fea",
+    "data/simard2011_subset.csv": "ecf1cfdcc16f4669aa72d2c73186eadf5de20dd63bc2a8c4a7533c8b41b9f437",
+    "output/paper/paper.tex": "dc49f73d5a0b239250b6a4ad0a479c8303190c246f7795011c9afabff31515a9",
+    "output/paper/paper.pdf": "33764d0ee31a89622488c8d6bbc817e85480cd2f550b3079432cf066d309bdda",
+    "output/paper/online_supplement.tex": "83844744bcd54d7fe5b7fbc905fb9727e6ecfd6a74e07d43f5a3bd20caeb22d4",
+    "output/paper/online_supplement.pdf": "c1dd3520f79f8f06cebcadbb7eca2e7a5ece1c8899852a9c1646c57d527c24fa",
+    "output/ssfr_spectral_provenance.csv": "51641b6e900a2de1e5514bac5ebe39200077f7b0c00459142ac9b8442ffe1175",
+    "output/results.json": "e231fb20755fb12073c0838a8b9eac2e9b1387b081c26388bfda8a2e00a96501",
+    "output/results_build.json": "8a62f3c9026516b66937df3bee96ef79eb5e8722d5a297e9ea1a0879d1f42b8e"
+  }
+}

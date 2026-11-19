@@ -1,0 +1,828 @@
+sample,group,stage,R_mean,in_overlap,mu_proxy,bright_r,diam_arcmin,ratio_censored_at_10,n_neighbours_within_3r,passes_isolation_proxy,passes_surface_brightness_proxy,passes_apparent_concordance,all_members_on_Tempel_index,hmcg_catalogue_mu,hmcg_member_velocity_ok
+CG4,25,CG4,164.551113,True,26.31032775,14.3701,5.715838726,3.230444675,0,True,True,True,True,26.183,True
+CG4,27,CG4,180.3813211,True,26.06370124,14.7419,4.803511993,3.611041787,0,True,True,True,True,26.004,True
+CG4,28,CG4,197.4180441,True,25.54768731,13.5267,5.592515556,5.107507073,0,True,True,True,True,25.405,True
+CG4,33,CG4,89.76788153,False,24.45567366,14.1802,3.088660162,10,0,True,True,True,True,24.393,True
+CG4,42,CG4,134.9357856,True,25.58366746,12.8607,8.374982643,10,0,True,True,True,True,25.509,True
+CG4,52,CG4,81.06973713,False,23.8437152,12.9232,3.558389095,3.994691985,0,True,True,True,True,23.585,True
+CG4,61,CG4,51.35637457,False,23.97439837,14.5216,1.779346796,5.809523521,0,True,True,True,True,23.913,True
+CG4,63,CG4,230.1215982,False,25.34093011,12.9953,6.563276262,5.084907248,0,True,True,True,True,25.304,True
+CG4,73,CG4,231.5116278,False,26.28431541,12.4461,12.33075389,5.631633977,0,True,True,True,True,26.277,True
+CG4,80,CG4,191.597043,True,25.96693751,13.3683,9.422703725,4.084246413,0,True,True,True,True,25.961,True
+CG4,82,CG4,193.0159028,True,26.35122021,14.1912,5.993629335,3.185212718,0,True,False,True,True,26.268,True
+CG4,84,CG4,123.1803963,True,25.58546549,13.5932,5.942581792,2.969852797,1,False,True,True,True,25.546,True
+CG4,99,CG4,156.1265645,True,25.33930988,13.8686,4.327613267,6.206092222,0,True,True,True,True,25.284,True
+CG4,101,CG4,52.65798746,False,23.14728975,13.5557,2.041949662,8.162726192,0,True,True,True,True,23.001,True
+CG4,106,CG4,216.1449593,False,26.30851545,12.6375,12.73913608,7.170204754,0,True,True,True,True,26.184,True
+CG4,112,CG4,128.1100992,True,24.79226291,13.5514,4.109012842,3.107722428,0,True,True,True,True,24.7,True
+CG4,117,CG4,182.5439123,True,25.96853344,13.8467,6.035655841,4.733757749,0,True,True,True,True,25.868,True
+CG4,121,CG4,82.82753577,False,24.47776069,13.3823,4.308253487,8.365011216,0,True,True,True,True,24.429,True
+CG4,128,CG4,127.9220938,True,24.68191649,13.8938,4.741417802,2.154198149,1,False,True,True,True,24.699,True
+CG4,131,CG4,48.90648234,False,22.39628198,13.1459,1.592248571,3.44926353,0,True,True,True,True,22.358,True
+CG4,142,CG4,146.0130171,True,25.66733264,14.074,4.867377163,3.510137522,0,True,True,True,True,25.628,True
+CG4,147,CG4,117.8459761,True,24.71919923,13.7463,4.083878981,6.375121237,0,True,True,True,True,24.654,True
+CG4,154,CG4,103.4172606,True,24.6490534,13.0832,4.760563474,4.496634018,0,True,True,True,True,24.547,True
+CG4,158,CG4,183.3300506,True,26.07836749,14.0872,5.827095222,10,0,True,True,True,True,26.1,True
+CG4,165,CG4,100.6991254,True,24.02174393,12.919,3.774528431,3.978222489,0,True,True,True,True,23.918,True
+CG4,167,CG4,141.2924264,True,25.37270143,13.4412,6.078629353,3.105886433,0,True,True,True,True,25.34,True
+CG4,173,CG4,210.4478999,True,25.36238488,12.6051,7.84802898,7.667235415,0,True,True,False,True,25.287,True
+CG4,175,CG4,118.0209235,True,25.21018162,14.5118,3.460561406,5.459236489,0,True,True,True,True,25.271,True
+CG4,188,CG4,78.49248313,False,24.35402828,13.1648,3.799584402,3.959140809,0,True,True,True,True,24.216,True
+CG4,197,CG4,140.0140328,True,25.73157431,14.0977,5.051236583,3.080173247,0,True,True,True,True,25.751,True
+CG4,204,CG4,141.6046306,True,25.48836368,13.7695,4.99853231,3.486716359,0,True,True,True,True,25.404,True
+CG4,206,CG4,57.49646652,False,23.6774298,14.6645,1.822620176,2.521739027,1,False,True,True,True,23.465,True
+CG4,207,CG4,158.6748572,True,25.58045867,13.6735,5.680866421,3.055492345,0,True,True,True,True,25.451,True
+CG4,214,CG4,190.2322339,True,25.95033976,14.4217,5.675362518,10,0,True,True,True,True,25.939,True
+CG4,229,CG4,174.8159372,True,25.93242343,14.1715,5.595843994,3.767420217,0,True,True,False,True,25.827,True
+CG4,231,CG4,117.2090344,True,25.05204493,13.4574,4.635671453,7.122936662,0,True,True,True,True,24.947,True
+CG4,239,CG4,177.7205952,True,26.12239372,14.1705,6.385812035,8.830647859,0,True,True,True,True,26.063,True
+CG4,259,CG4,199.2149415,True,26.26169145,13.3627,8.152329489,3.249749485,0,True,True,True,True,26.225,True
+CG4,265,CG4,160.3741978,True,25.9989514,13.7612,7.578882965,2.033063354,1,False,True,True,True,25.862,True
+CG4,271,CG4,176.1504197,True,25.90051079,13.8195,6.116341237,4.574275735,0,True,True,True,True,25.826,True
+CG4,276,CG4,118.5295968,True,25.31785753,13.4614,5.854612233,3.367423988,0,True,True,True,True,25.223,True
+CG4,293,CG4,119.7993506,True,24.66510886,13.6701,3.383060682,3.747885947,0,True,True,True,True,24.669,True
+CG4,303,CG4,138.3373144,True,25.69511497,14.4366,4.855269315,5.050870939,0,True,True,True,True,25.608,True
+CG4,309,CG4,145.2056472,True,25.21539602,14.2353,4.184323428,3.153379095,0,True,True,True,True,25.165,True
+CG4,315,CG4,154.1485615,True,26.14427617,14.5502,5.203545694,3.440799523,0,True,True,True,True,26.024,True
+CG4,316,CG4,233.4882673,False,26.24225559,12.8961,10.21833536,3.080960293,0,True,True,True,True,26.182,True
+CG4,322,CG4,128.5071046,True,25.67035703,14.3208,4.427652146,4.571182775,0,True,True,True,True,25.694,True
+CG4,323,CG4,154.1939791,True,25.28903066,14.2097,4.093954534,3.83200858,0,True,True,True,True,25.19,True
+CG4,330,CG4,99.94277876,True,24.88606934,14.0461,3.407364154,3.195038106,0,True,True,True,True,24.893,True
+CG4,333,CG4,54.86459057,False,22.38185769,13.0956,1.821832237,4.267419187,0,True,True,True,True,22.476,True
+CG4,337,CG4,127.2916217,True,24.93243794,14.1017,3.842309188,3.170046121,0,True,True,True,True,24.9,True
+CG4,341,CG4,183.7172648,True,24.89246073,13.1183,5.150835772,2.074233896,1,False,True,True,True,24.745,True
+CG4,354,CG4,176.9373163,True,25.90375338,13.024,7.945216283,3.201938886,0,True,True,False,True,25.844,True
+CG4,360,CG4,155.748101,True,26.05936065,13.7768,6.824830645,3.118814876,0,True,True,True,True,25.991,True
+CG4,368,CG4,57.39829144,False,23.84792156,14.2193,1.877046751,4.369241861,0,True,True,True,True,23.862,True
+CG4,369,CG4,135.1099793,True,25.51021803,13.9615,5.159524734,0.4739085965,1,False,True,True,True,25.46,True
+CG4,373,CG4,110.5245916,True,24.65109781,13.6221,4.319401205,0.6171995583,1,False,True,True,True,24.713,True
+CG4,374,CG4,134.2905017,True,25.12812829,13.6786,4.794744495,4.114500422,0,True,True,True,True,25.1,True
+CG4,386,CG4,172.9594749,True,25.836845,13.795,5.657472205,5.919049884,0,True,True,True,True,25.798,True
+CG4,393,CG4,161.7724884,True,25.22909808,12.8118,7.613751826,4.655385824,0,True,True,True,True,25.094,True
+CG4,394,CG4,161.3790796,True,25.91175668,13.6791,6.503195357,3.356252926,0,True,True,True,True,26.276,True
+CG4,405,CG4,163.4229491,True,25.83620556,13.854,6.550449307,3.572399844,0,True,True,True,True,25.781,True
+Control4C_candidate,1,Retained Control4C,70.8982992,False,23.19715898,11.6921,4.378295011,2.081104884,3,False,True,True,True,,False
+Control4C_candidate,3,Retained Control4C,167.068733,True,25.16450431,13.1078,6.289508321,1.062443701,1,False,True,True,True,,True
+Control4C_candidate,5,Retained Control4C,75.43441416,False,23.39289722,12.0667,4.203923278,0.743691839,6,False,True,True,True,,True
+Control4C_candidate,6,Retained Control4C,195.1051641,True,25.14278949,12.8819,5.995075121,1.339631964,10,False,True,True,True,,True
+Control4C_candidate,13,Retained Control4C,137.7164744,True,24.9740592,12.6219,7.538895555,0.9848726601,6,False,True,True,True,,True
+Control4C_candidate,27,Retained Control4C,127.4923567,True,25.07350477,13.2653,5.329291567,1.21689634,9,False,True,True,True,,False
+Control4C_candidate,30,Excluded by CG4 overlap,54.86459057,False,22.38185769,13.0956,1.821832237,4.267419187,0,True,True,True,True,,True
+Control4C_candidate,32,Retained Control4C,48.29848953,False,22.53810274,13.0696,1.816013956,2.551258343,1,False,True,True,True,,False
+Control4C_candidate,33,Retained Control4C,56.30600863,False,22.82919147,12.4743,3.209282337,1.44028818,1,False,True,True,True,,True
+Control4C_candidate,36,Excluded by CG4 overlap,100.6991254,True,24.02174393,12.919,3.774528431,3.978222489,0,True,True,True,True,,True
+Control4C_candidate,37,Retained Control4C,61.12354069,False,23.52489752,13.1319,2.824177265,2.955967613,1,False,True,True,True,,True
+Control4C_candidate,39,Retained Control4C,259.3071869,False,26.53393403,12.7261,14.17572101,0.6387209212,19,False,False,True,True,,True
+Control4C_candidate,40,Retained Control4C,166.9251237,True,25.55041164,13.122,6.623788977,2.273518683,3,False,True,True,True,,True
+Control4C_candidate,46,Retained Control4C,330.1217878,False,26.37848625,13.0204,10.97290155,1.696867813,8,False,False,True,True,,True
+Control4C_candidate,50,Retained Control4C,193.2964661,True,25.70382606,13.0926,7.663884677,1.029449135,10,False,True,True,True,,False
+Control4C_candidate,51,Retained Control4C,161.2315278,True,25.60931424,13.4849,5.766640134,1.531822679,8,False,True,True,True,,True
+Control4C_candidate,61,Retained Control4C,70.97518584,False,23.49626959,13.3193,2.740446075,2.878655632,2,False,True,True,True,,True
+Control4C_candidate,70,Retained Control4C,140.5106224,True,24.76321808,13.317,4.209454792,1.738314446,3,False,True,True,True,,True
+Control4C_candidate,71,Retained Control4C,118.5037071,True,23.90219897,12.6455,4.678711211,2.731139029,2,False,True,True,True,,True
+Control4C_candidate,76,Excluded by CG4 overlap,183.7172648,True,24.89246073,13.1183,5.150835772,2.074233896,1,False,True,True,True,,True
+Control4C_candidate,78,Retained Control4C,187.729311,True,25.18973373,12.5972,7.119883603,1.44083644,6,False,True,True,True,,True
+Control4C_candidate,79,Retained Control4C,171.1378911,True,24.96013108,13.6097,4.759511809,1.364280706,4,False,True,True,True,,True
+Control4C_candidate,85,Retained Control4C,149.21437,True,25.51602596,13.005,6.98912634,0.8120857766,16,False,True,True,True,,True
+Control4C_candidate,94,Retained Control4C,206.7376659,True,25.47978583,12.2223,10.45117525,2.055129724,2,False,True,True,True,,True
+Control4C_candidate,95,Retained Control4C,327.554973,False,26.77653476,11.9757,19.35558647,0.5482297624,7,False,False,True,True,,True
+Control4C_candidate,96,Retained Control4C,359.606015,False,26.89410313,12.9875,15.48524479,0.9740155814,8,False,False,True,True,,True
+Control4C_candidate,99,Retained Control4C,131.0871811,True,24.65396031,13.4042,4.171589825,1.107177142,2,False,True,True,True,,True
+Control4C_candidate,100,Retained Control4C,83.89214384,False,23.55633157,13.2403,3.065425312,1.083595851,6,False,True,True,True,,True
+Control4C_candidate,102,Retained Control4C,567.7504105,False,27.6241021,13.018,17.25985591,1.158901865,9,False,False,False,True,,True
+Control4C_candidate,106,Retained Control4C,163.8930247,True,24.88581306,11.5713,11.68794659,1.498447433,2,False,True,True,True,,True
+Control4C_candidate,112,Retained Control4C,161.7428505,True,25.29950724,11.9823,10.14368027,1.197344575,7,False,True,True,True,,True
+Control4C_candidate,120,Retained Control4C,378.2213732,False,26.79601769,12.3239,17.28359297,1.529875909,2,False,False,True,True,,True
+Control4C_candidate,125,Retained Control4C,160.1894001,True,25.32904048,13.1157,6.120052325,2.227827492,4,False,True,True,True,,True
+Control4C_candidate,126,Excluded by CG4 overlap,48.90648234,False,22.39628198,13.1459,1.592248571,3.44926353,0,True,True,True,True,,True
+Control4C_candidate,129,Retained Control4C,138.673356,True,25.13992269,12.7556,6.356880257,1.574048495,5,False,True,True,True,,False
+Control4C_candidate,131,Retained Control4C,190.2403286,True,25.95125406,13.5585,6.646370021,1.480185352,6,False,True,True,True,,True
+Control4C_candidate,143,Retained Control4C,416.4701997,False,26.80512602,12.6056,15.46732802,1.716715472,2,False,False,True,True,,True
+Control4C_candidate,146,Retained Control4C,235.5656205,False,26.14479503,12.6795,10.58871097,1.590423496,3,False,True,True,True,,True
+Control4C_candidate,152,Retained Control4C,326.2259956,False,26.64819596,13.0859,11.51687916,1.226106315,11,False,False,True,True,,True
+Control4C_candidate,153,Retained Control4C,967.7977672,False,29.46753431,12.0917,65.20748467,0.2189154173,22,False,False,True,True,,True
+Control4C_candidate,154,Retained Control4C,326.4901793,False,26.18134212,12.3651,15.25369805,1.355554106,4,False,True,True,True,,True
+Control4C_candidate,157,Retained Control4C,146.3692882,True,24.50414458,12.9427,4.609503802,1.893957853,2,False,True,True,True,,True
+Control4C_candidate,174,Retained Control4C,69.74397967,False,23.31649672,13.2497,2.380837921,2.664959174,1,False,True,True,True,,True
+Control4C_candidate,180,Retained Control4C,445.5072464,False,27.39583612,12.8381,18.33596882,0.661013434,5,False,False,True,True,,True
+Control4C_candidate,189,Retained Control4C,109.1088615,True,24.39840764,13.0558,4.81679802,2.911280905,1,False,True,True,True,,True
+Control4C_candidate,191,Retained Control4C,168.0481152,True,25.1687566,13.1217,7.054668815,1.2331653,4,False,True,True,True,,True
+Control4C_candidate,200,Retained Control4C,177.3495265,True,25.51476304,13.4714,6.20391454,0.8177562319,7,False,True,True,True,,True
+Control4C_candidate,202,Retained Control4C,106.9947349,True,24.69413813,13.7791,3.447657119,1.645875698,6,False,True,True,True,,True
+Control4C_candidate,213,Retained Control4C,400.5635888,False,27.24638545,12.5525,24.40144243,0.4979078891,33,False,False,True,True,,True
+Control4C_candidate,214,Retained Control4C,162.8519475,True,25.19077264,13.0682,6.199871858,2.006430224,2,False,True,True,True,,True
+Control4C_candidate,224,Retained Control4C,225.9128538,False,25.83817048,12.9472,9.916956831,3.125877884,0,True,True,True,True,,True
+Control4C_candidate,225,Excluded by CG4 overlap,81.06973713,False,23.8437152,12.9232,3.558389095,3.994691985,0,True,True,True,True,,True
+Control4C_candidate,226,Retained Control4C,88.30276597,False,24.31906103,13.3432,3.538581503,3.846820837,0,True,True,True,True,,True
+Control4C_candidate,227,Retained Control4C,81.03568594,False,24.25316881,13.4739,3.104240245,1.930514158,2,False,True,True,True,,True
+Control4C_candidate,229,Retained Control4C,261.6555881,False,26.95842038,13.9335,10.08097758,0.4055201664,20,False,False,True,True,,True
+Control4C_candidate,240,Excluded by CG4 overlap,128.1100992,True,24.79226291,13.5514,4.109012842,3.107722428,0,True,True,True,True,,True
+Control4C_candidate,242,Retained Control4C,120.9932296,True,24.60483014,12.6197,6.662939786,1.262696894,4,False,True,True,True,,True
+Control4C_candidate,243,Retained Control4C,265.5454205,False,26.16431805,13.3526,8.879764364,0.05012248246,5,False,True,True,True,,True
+Control4C_candidate,244,Retained Control4C,197.4321632,True,26.46226255,13.0308,10.86340314,0.8357546829,12,False,False,True,True,,True
+Control4C_candidate,260,Retained Control4C,128.867903,True,25.04292955,13.3931,4.717221228,2.466877437,1,False,True,True,True,,True
+Control4C_candidate,273,Retained Control4C,221.9032669,False,26.11119325,12.9316,10.06985432,1.281901058,7,False,True,True,True,,True
+Control4C_candidate,286,Retained Control4C,252.2775686,False,25.6568922,13.1938,8.702934578,2.445241119,1,False,True,True,True,,True
+Control4C_candidate,288,Retained Control4C,418.4412548,False,27.27006374,13.2305,14.6051503,1.310040973,15,False,False,True,True,,True
+Control4C_candidate,290,Retained Control4C,189.7915322,True,26.08002066,13.3099,7.819378108,1.540869479,5,False,True,True,True,,True
+Control4C_candidate,291,Retained Control4C,187.4805976,True,25.50165853,13.771,5.579023357,0.575823233,7,False,True,True,True,,True
+Control4C_candidate,292,Retained Control4C,81.52842716,False,24.32125615,13.624,3.805979245,1.085479373,4,False,True,True,True,,True
+Control4C_candidate,293,Retained Control4C,203.8666662,True,26.27216385,12.7023,14.52641173,0.4637163413,12,False,True,True,True,,True
+Control4C_candidate,307,Retained Control4C,175.9792173,True,25.7187961,13.5335,6.180003363,1.251223837,3,False,True,True,True,,True
+Control4C_candidate,308,Retained Control4C,363.6944843,False,27.07189043,12.7671,16.06360151,1.473070775,7,False,False,True,True,,True
+Control4C_candidate,310,Excluded by CG4 overlap,119.7993506,True,24.66510886,13.6701,3.383060682,3.747885947,0,True,True,True,True,,True
+Control4C_candidate,312,Retained Control4C,174.941374,True,25.73742694,13.0403,8.337108455,1.65587433,4,False,True,True,True,,True
+Control4C_candidate,313,Retained Control4C,371.0721882,False,26.9025218,12.487,19.11639192,0.5664037941,13,False,False,True,True,,True
+Control4C_candidate,316,Excluded by CG4 overlap,336.8854592,False,27.9190453,13.0794,20.92759342,1.21399819,18,False,False,True,True,,True
+Control4C_candidate,329,Retained Control4C,413.5724057,False,27.13703896,13.2522,12.80186445,1.230404612,6,False,False,True,True,,True
+Control4C_candidate,335,Retained Control4C,243.7035054,False,26.40037427,13.1062,11.69207101,1.803859751,4,False,False,True,True,,True
+Control4C_candidate,336,Retained Control4C,157.3874823,True,25.55022991,13.4737,5.964668868,0.5163252648,3,False,True,True,True,,True
+Control4C_candidate,348,Retained Control4C,288.9771186,False,26.75577786,13.5015,10.53326936,1.298489135,9,False,False,True,True,,True
+Control4C_candidate,350,Retained Control4C,140.8225665,True,25.10442897,13.9391,5.05186992,0.7969211393,9,False,True,True,True,,True
+Control4C_candidate,351,Retained Control4C,181.028466,True,26.0785482,12.6341,13.28231381,1.368021866,8,False,True,True,True,,True
+Control4C_candidate,369,Excluded by CG4 overlap,161.7724884,True,25.22909808,12.8118,7.613751826,4.655385824,0,True,True,True,True,,True
+Control4C_candidate,379,Retained Control4C,428.1706187,False,27.7507119,13.2289,19.05613069,0.5530425312,15,False,False,True,True,,True
+Control4C_candidate,387,Retained Control4C,1044.570562,False,29.60844518,13.0284,44.24619091,1.989738556,5,False,False,True,True,,True
+Control4C_candidate,389,Excluded by CG4 overlap,230.1215982,False,25.34093011,12.9953,6.563276262,5.084907248,0,True,True,True,True,,True
+Control4C_candidate,402,Retained Control4C,352.0039646,False,26.88492121,13.7212,11.02679158,1.799014561,5,False,False,True,True,,True
+Control4C_candidate,403,Retained Control4C,153.5644764,True,24.81904383,13.0468,5.634408997,1.513641283,6,False,True,True,True,,True
+Control4C_candidate,406,Excluded by CG4 overlap,158.6748572,True,25.58045867,13.6735,5.680866421,3.055492345,0,True,True,True,True,,True
+Control4C_candidate,407,Retained Control4C,250.6044768,False,26.28343687,12.8749,12.81595488,1.766171523,4,False,True,True,True,,True
+Control4C_candidate,410,Retained Control4C,371.8806197,False,27.72905806,13.8586,13.99459928,1.347826314,10,False,False,True,True,,True
+Control4C_candidate,412,Retained Control4C,145.7549299,True,25.32614753,12.9893,6.893424901,1.786606034,2,False,True,True,True,,True
+Control4C_candidate,428,Retained Control4C,175.9329343,True,25.36377489,13.607,5.700006213,1.459325619,4,False,True,True,True,,True
+Control4C_candidate,436,Retained Control4C,540.5291981,False,28.45809227,13.3455,22.04329139,1.056578066,9,False,False,True,True,,True
+Control4C_candidate,442,Excluded by CG4 overlap,476.1840528,False,28.03965628,13.5276,17.6229544,1.273254207,12,False,False,True,True,,True
+Control4C_candidate,443,Retained Control4C,413.1710897,False,26.90440791,12.4066,20.69188593,0.6434734203,8,False,False,True,True,,True
+Control4C_candidate,444,Retained Control4C,229.3209894,False,26.39067805,13.5198,8.163047502,1.235586284,7,False,False,True,True,,True
+Control4C_candidate,446,Retained Control4C,129.696704,True,24.80579967,13.0166,5.505796488,1.511552055,2,False,True,True,True,,True
+Control4C_candidate,470,Retained Control4C,417.0360082,False,27.26893245,12.4193,20.05508126,0.3877353133,3,False,False,True,True,,True
+Control4C_candidate,477,Retained Control4C,508.9786098,False,27.63465654,13.3122,16.93698252,1.541370323,10,False,False,True,True,,True
+Control4C_candidate,479,Retained Control4C,143.0142004,True,25.22114517,13.0392,6.379831175,2.974321814,1,False,True,True,True,,True
+Control4C_candidate,480,Retained Control4C,306.4501154,False,26.79673949,13.2986,10.60265706,0.7861610607,10,False,False,True,True,,True
+Control4C_candidate,481,Retained Control4C,469.597622,False,27.52588074,13.5628,13.90024598,1.198177638,9,False,False,True,True,,True
+Control4C_candidate,482,Retained Control4C,86.23515915,False,24.52679703,14.1448,2.771291186,1.06729877,4,False,True,True,True,,True
+Control4C_candidate,483,Retained Control4C,119.1285588,True,25.24086181,13.5656,5.200639549,1.95839408,4,False,True,True,True,,True
+Control4C_candidate,484,Retained Control4C,117.1345579,True,24.99950849,14.0643,3.78163163,1.902081987,4,False,True,True,True,,True
+Control4C_candidate,510,Retained Control4C,100.463939,True,23.46535941,12.2869,3.983181022,4.209821744,0,True,True,True,True,,True
+Control4C_candidate,521,Retained Control4C,90.14226435,False,23.59355968,13.1317,3.677282597,1.697638526,3,False,True,True,True,,True
+Control4C_candidate,526,Retained Control4C,109.12629,True,25.30501041,13.8678,4.34316792,1.326889018,2,False,True,True,True,,True
+Control4C_candidate,555,Retained Control4C,522.4248707,False,27.64815121,12.9775,19.34918754,3.247019282,0,True,False,True,True,,True
+Control4C_candidate,567,Retained Control4C,78.24852058,False,23.89699832,13.5956,2.613564018,2.741242934,2,False,True,True,True,,True
+Control4C_candidate,568,Retained Control4C,581.3540595,False,28.5104103,13.0127,26.74998373,0.9801088256,8,False,False,True,True,,True
+Control4C_candidate,574,Retained Control4C,500.3857469,False,28.18057848,13.1766,22.82068447,1.400887419,5,False,False,True,True,,True
+Control4C_candidate,576,Retained Control4C,108.0252221,True,24.34810703,13.7307,2.961326376,2.298771582,1,False,True,True,True,,True
+Control4C_candidate,578,Retained Control4C,97.60292019,True,24.30691402,13.61,3.422472516,1.449688292,1,False,True,True,True,,True
+Control4C_candidate,581,Retained Control4C,140.8349783,True,25.27839607,13.3653,5.544380503,1.765397744,1,False,True,True,True,,True
+Control4C_candidate,583,Retained Control4C,32.60642575,False,22.25858304,13.9461,1.073792777,5.33180544,0,True,True,True,True,,True
+Control4C_candidate,587,Retained Control4C,191.7594516,True,25.80598655,12.8449,10.10741191,2.212723384,5,False,True,True,True,,True
+Control4C_candidate,590,Retained Control4C,371.6417037,False,27.49517738,13.1444,18.02882863,0.1303636155,40,False,False,True,True,,True
+Control4C_candidate,609,Retained Control4C,439.2975728,False,27.45593595,12.6618,19.62829606,1.635560564,1,False,False,True,True,,True
+Control4C_candidate,623,Retained Control4C,573.5064853,False,28.24432454,13.2635,24.02337684,1.190001798,4,False,False,True,True,,True
+Control4C_candidate,624,Retained Control4C,173.6685581,True,25.31959881,12.3877,9.377256669,2.461663733,1,False,True,True,True,,True
+Control4C_candidate,626,Retained Control4C,113.0260443,True,24.42855113,13.8141,3.188009074,2.454468674,2,False,True,True,True,,True
+Control4C_candidate,629,Retained Control4C,326.1984686,False,26.89177991,12.5131,15.78969352,3.283529021,0,True,False,True,True,,True
+Control4C_candidate,631,Retained Control4C,425.34603,False,27.42430131,13.6148,14.91938148,1.615923882,9,False,False,True,True,,True
+Control4C_candidate,634,Retained Control4C,229.9819842,False,25.67020957,13.6615,7.251917794,0.2435251707,5,False,True,True,True,,True
+Control4C_candidate,637,Retained Control4C,53.41025693,False,22.9190252,13.1214,2.313702799,1.718515401,3,False,True,True,True,,True
+Control4C_candidate,639,Excluded by CG4 overlap,347.063662,False,27.29855449,13.2346,17.08269631,0.4569782463,16,False,False,True,True,,True
+Control4C_candidate,640,Retained Control4C,102.9202879,True,24.5088692,12.8379,5.150894696,0.6757050993,3,False,True,True,True,,True
+Control4C_candidate,641,Retained Control4C,83.42342482,False,24.35426829,13.1323,4.306429303,0.8756375303,2,False,True,True,True,,True
+Control4C_candidate,642,Retained Control4C,217.3673127,False,26.60966291,13.8936,8.731756803,0.8846999836,7,False,False,True,True,,True
+Control4C_candidate,643,Retained Control4C,179.4338295,True,26.17009438,12.4952,12.67899111,1.050109289,1,False,True,True,True,,True
+Control4C_candidate,689,Retained Control4C,812.6436605,False,28.50170986,12.3553,39.28796697,1.16795498,3,False,False,True,True,,True
+Control4C_candidate,691,Retained Control4C,228.81633,False,26.74057507,12.9173,12.29788457,1.430626906,2,False,False,True,True,,True
+Control4C_candidate,693,Retained Control4C,502.164223,False,27.58138461,13.7971,12.79030511,2.588667194,2,False,False,True,True,,True
+Control4C_candidate,697,Retained Control4C,983.2701151,False,29.48746069,12.7457,51.87599505,1.459599044,18,False,False,True,True,,True
+Control4C_candidate,699,Retained Control4C,160.1749679,True,24.65090624,13.1832,5.406614686,2.641323608,1,False,True,True,True,,True
+Control4C_candidate,704,Retained Control4C,209.8612542,True,26.11484824,13.322,9.919003319,1.830645796,2,False,True,True,True,,True
+Control4C_candidate,705,Retained Control4C,255.5030439,False,26.39887708,13.3614,9.549653469,1.058567396,3,False,False,True,True,,True
+Control4C_candidate,708,Retained Control4C,76.8725483,False,23.94072038,13.8696,2.75072991,2.798703549,1,False,True,True,True,,True
+Control4C_candidate,711,Retained Control4C,185.7354614,True,25.49194849,13.3262,6.852065651,1.067475862,2,False,True,False,True,,True
+Control4C_candidate,712,Retained Control4C,309.273594,False,26.75413294,13.5144,12.75635097,1.203439267,4,False,False,True,True,,True
+Control4C_candidate,713,Retained Control4C,432.722428,False,27.87537204,13.911,14.59331564,1.701420752,11,False,False,True,True,,True
+Control4C_candidate,714,Retained Control4C,331.0908315,False,26.9448229,13.1576,14.36339227,1.020217572,5,False,False,True,True,,True
+Control4C_candidate,715,Retained Control4C,271.4712253,False,26.79891076,13.2421,10.9968625,3.336979803,0,True,False,False,True,,True
+Control4C_candidate,716,Retained Control4C,119.2806054,True,24.92595344,13.8912,3.43084632,2.522776587,2,False,True,True,True,,True
+Control4C_candidate,717,Retained Control4C,58.28782606,False,23.32940044,13.195,2.468729283,2.667780963,1,False,True,True,True,,True
+Control4C_candidate,718,Retained Control4C,243.1963927,False,26.70598331,13.3345,10.76292774,1.967485176,3,False,False,False,True,,True
+Control4C_candidate,721,Excluded by CG4 overlap,92.14092198,False,24.71246022,13.9615,3.487011613,2.014881067,1,False,True,True,True,,True
+Control4C_candidate,722,Retained Control4C,231.3912234,False,26.44053283,13.551,9.936542306,1.243558602,6,False,False,False,True,,True
+Control4C_candidate,724,Retained Control4C,565.1538436,False,28.42075015,12.8467,28.01286554,1.65722751,4,False,False,True,True,,True
+Control4C_candidate,725,Retained Control4C,165.9889459,True,26.03355222,13.1048,9.555326539,2.60328471,2,False,True,True,True,,True
+Control4C_candidate,726,Retained Control4C,95.03582823,False,24.59748014,13.5272,3.999863722,1.324035306,1,False,True,True,True,,True
+Control4C_candidate,727,Retained Control4C,103.7443451,True,24.83169724,14.1531,3.848631197,2.164509913,3,False,True,True,True,,True
+Control4C_candidate,757,Excluded by CG4 overlap,197.4180441,True,25.54768731,13.5267,5.592515556,5.107507073,0,True,True,True,True,,True
+Control4C_candidate,774,Retained Control4C,848.0260542,False,28.92777774,13.457,28.97670994,1.30359598,8,False,False,True,True,,True
+Control4C_candidate,780,Retained Control4C,283.06132,False,26.98294157,13.9178,9.994405272,1.023706789,7,False,False,True,True,,True
+Control4C_candidate,784,Retained Control4C,333.6625932,False,27.14696732,13.803,11.30867124,1.577462245,8,False,False,True,True,,True
+Control4C_candidate,786,Retained Control4C,418.5852379,False,27.15222067,13.5514,12.26230025,1.386175313,4,False,False,True,True,,True
+Control4C_candidate,788,Retained Control4C,386.2310228,False,27.55719933,13.5026,15.57657296,0.3954433489,13,False,False,True,True,,True
+Control4C_candidate,789,Retained Control4C,210.8764048,True,26.010361,13.5271,7.8724478,1.198879396,3,False,True,True,True,,True
+Control4C_candidate,790,Retained Control4C,218.2222181,False,26.00692282,13.8049,6.745067851,1.761278208,2,False,True,True,True,,True
+Control4C_candidate,793,Retained Control4C,320.2693746,False,27.42648025,13.3779,14.51286881,1.230324852,5,False,False,True,True,,True
+Control4C_candidate,795,Retained Control4C,292.3918563,False,27.02369933,13.5333,12.14056666,1.469006986,7,False,False,True,True,,True
+Control4C_candidate,796,Retained Control4C,280.2253197,False,26.75326524,13.3399,12.60368608,2.061869851,3,False,False,True,True,,True
+Control4C_candidate,797,Retained Control4C,185.4603984,True,25.91519046,13.4215,8.362303158,2.744153386,1,False,True,True,True,,True
+Control4C_candidate,798,Retained Control4C,432.0810137,False,27.57745014,12.104,30.05268095,1.243938298,8,False,False,True,True,,True
+Control4C_candidate,800,Excluded by CG4 overlap,78.49248313,False,24.35402828,13.1648,3.799584402,3.959140809,0,True,True,True,True,,True
+Control4C_candidate,801,Retained Control4C,172.980747,True,25.79521135,13.1358,9.716243219,1.340265512,5,False,True,True,True,,True
+Control4C_candidate,802,Retained Control4C,389.4113456,False,28.1490943,13.2575,22.04811048,0.5350252887,17,False,False,True,True,,True
+Control4C_candidate,803,Retained Control4C,463.4111399,False,27.68691552,14.2491,14.37853091,0.9046268208,25,False,False,True,True,,True
+Control4C_candidate,804,Retained Control4C,333.0017765,False,27.68660142,13.0147,20.13725123,1.293312732,12,False,False,True,True,,True
+Control4C_candidate,805,Retained Control4C,121.5729829,True,24.96286895,13.7215,4.795679656,3.956885295,0,True,True,True,True,,True
+Control4C_candidate,841,Retained Control4C,712.7119409,False,28.29394068,13.5254,23.8001723,1.037182808,5,False,False,True,True,,True
+Control4C_candidate,844,Retained Control4C,169.4910352,True,25.74698821,13.6082,5.644105739,3.015436686,0,True,True,True,True,,True
+Control4C_candidate,847,Retained Control4C,605.1557244,False,28.37575693,13.0286,28.44145511,1.233412059,2,False,False,True,True,,True
+Control4C_candidate,859,Retained Control4C,369.5224806,False,27.29623147,13.518,12.15227146,1.449463525,1,False,False,True,True,,True
+Control4C_candidate,864,Retained Control4C,213.8170796,True,25.96014619,13.6717,6.698403829,0.9115102167,3,False,True,True,True,,True
+Control4C_candidate,867,Retained Control4C,371.1399359,False,27.74491661,13.6113,14.6930402,1.010466504,5,False,False,False,True,,True
+Control4C_candidate,871,Retained Control4C,153.9961771,True,25.31923706,13.5891,5.707117651,0.9242992696,7,False,True,True,True,,True
+Control4C_candidate,879,Excluded by CG4 overlap,103.4172606,True,24.6490534,13.0832,4.760563474,4.496634018,0,True,True,True,True,,True
+Control4C_candidate,883,Retained Control4C,94.56963463,False,24.7863378,14.0256,3.2661038,0.6149875411,1,False,True,True,True,,True
+Control4C_candidate,885,Retained Control4C,97.13772132,True,24.77192538,13.8783,3.714115208,2.68570884,1,False,True,True,True,,True
+Control4C_candidate,886,Retained Control4C,376.0996573,False,27.98737908,13.3212,17.73071244,1.204935547,5,False,False,True,True,,True
+Control4C_candidate,887,Retained Control4C,358.2410612,False,27.57394216,13.7221,13.20187879,0.6676664207,18,False,False,True,True,,True
+Control4C_candidate,888,Retained Control4C,173.0665977,True,26.39920865,12.9522,11.96528119,0.9231673242,9,False,False,True,True,,True
+Control4C_candidate,889,Retained Control4C,171.815008,True,26.33571098,13.4001,9.684417753,2.396348363,3,False,False,True,True,,True
+Control4C_candidate,962,Retained Control4C,1019.066909,False,29.04959188,12.8508,49.64189681,1.281935154,9,False,False,True,True,,True
+Control4C_candidate,974,Retained Control4C,488.2035529,False,27.86657819,12.8185,25.27660741,1.396816568,4,False,False,True,True,,True
+Control4C_candidate,975,Retained Control4C,301.144376,False,26.7900842,13.7246,8.59305269,1.496208916,5,False,False,True,True,,True
+Control4C_candidate,984,Retained Control4C,525.3958574,False,27.95289689,12.5368,27.77498954,1.021473674,4,False,False,True,True,,True
+Control4C_candidate,985,Retained Control4C,301.5053642,False,26.85951841,14.0376,9.969962052,0.7112296574,13,False,False,True,True,,True
+Control4C_candidate,988,Retained Control4C,455.1324169,False,27.95229312,13.2509,19.19590232,2.26041021,2,False,False,True,True,,True
+Control4C_candidate,993,Retained Control4C,350.259874,False,27.05853455,13.3323,12.7269247,3.160575322,0,True,False,True,True,,True
+Control4C_candidate,996,Retained Control4C,402.0360487,False,27.63819034,12.812,21.38151562,0.5493419666,8,False,False,True,True,,True
+Control4C_candidate,998,Retained Control4C,256.2103456,False,26.7880164,14.0456,8.675777078,2.406900687,2,False,False,True,True,,True
+Control4C_candidate,1001,Retained Control4C,216.5514807,False,25.88650093,12.9223,10.84024717,2.311924789,3,False,True,True,True,,True
+Control4C_candidate,1004,Retained Control4C,73.43164277,False,24.44745274,14.257,2.355262833,3.083018736,0,True,True,True,True,,True
+Control4C_candidate,1005,Retained Control4C,119.8039887,True,25.27278213,14.3426,3.892202502,1.939263747,2,False,True,True,True,,True
+Control4C_candidate,1006,Retained Control4C,219.9037616,False,26.52362524,13.5308,9.568115519,1.010733391,5,False,False,True,True,,True
+Control4C_candidate,1007,Retained Control4C,268.0349431,False,27.04213134,13.6273,13.54615576,0.6017256212,15,False,False,True,True,,True
+Control4C_candidate,1088,Retained Control4C,588.2142758,False,27.81298641,12.8584,23.3229501,0.45459404,2,False,False,True,True,,True
+Control4C_candidate,1090,Retained Control4C,275.9672742,False,26.60756382,13.1075,12.91274503,4.049980154,0,True,False,True,True,,True
+Control4C_candidate,1093,Retained Control4C,219.2824502,False,25.99539794,12.828,9.309479669,2.344702007,1,False,True,True,True,,True
+Control4C_candidate,1104,Retained Control4C,420.9182274,False,27.52637578,12.8071,19.03499781,1.043587236,3,False,False,True,True,,True
+Control4C_candidate,1109,Retained Control4C,509.654102,False,28.36016825,12.2569,35.70205594,1.552852289,2,False,False,True,True,,True
+Control4C_candidate,1110,Retained Control4C,623.5250009,False,28.26807395,13.2227,22.62484745,0.4542104716,9,False,False,True,True,,True
+Control4C_candidate,1117,Excluded by CG4 overlap,141.6046306,True,25.48836368,13.7695,4.99853231,3.486716359,0,True,True,True,True,,True
+Control4C_candidate,1118,Retained Control4C,148.0819343,True,25.22328038,13.8929,4.341733927,1.083123022,4,False,True,True,True,,True
+Control4C_candidate,1122,Retained Control4C,199.0471914,True,26.33472796,13.8783,6.606338073,0.3132659309,2,False,False,True,True,,True
+Control4C_candidate,1124,Retained Control4C,557.6598706,False,28.06004796,13.2111,21.9786196,1.737621231,6,False,False,True,True,,True
+Control4C_candidate,1131,Retained Control4C,205.9185518,True,26.04739675,13.6617,7.781389613,3.04871807,0,True,True,True,True,,True
+Control4C_candidate,1132,Retained Control4C,125.0006411,True,25.36054724,14.1484,3.936267223,1.69700182,2,False,True,True,True,,True
+Control4C_candidate,1133,Retained Control4C,199.3062812,True,26.62423019,13.7899,7.959155568,1.289785099,4,False,False,True,True,,True
+Control4C_candidate,1134,Retained Control4C,331.8327185,False,27.48312908,13.3178,16.72407628,0.9582876093,5,False,False,True,True,,True
+Control4C_candidate,1142,Retained Control4C,110.2472961,True,24.49116555,13.8177,3.535208849,0.8766788626,4,False,True,True,True,,True
+Control4C_candidate,1143,Retained Control4C,331.3509193,False,27.56615399,13.3313,18.37166042,1.73187901,9,False,False,True,True,,True
+Control4C_candidate,1145,Retained Control4C,157.039335,True,25.7852507,14.4652,5.231128462,0.4656696495,10,False,True,True,True,,True
+Control4C_candidate,1248,Excluded by CG4 overlap,199.2149415,True,26.26169145,13.3627,8.152329489,3.249749485,0,True,True,True,True,,True
+Control4C_candidate,1259,Retained Control4C,427.1687102,False,27.44903568,13.4202,16.78075197,1.456354266,1,False,False,True,True,,True
+Control4C_candidate,1264,Retained Control4C,274.7644089,False,26.80169454,13.6084,10.49149462,0.677015271,7,False,False,True,True,,True
+Control4C_candidate,1265,Retained Control4C,603.2350021,False,27.7521847,13.6785,18.63117052,1.251361804,4,False,False,True,True,,True
+Control4C_candidate,1266,Retained Control4C,295.9479725,False,26.72130194,13.2744,10.29625078,2.317326155,1,False,False,True,True,,True
+Control4C_candidate,1270,Retained Control4C,246.4736382,False,26.69714323,13.9976,7.280371309,1.288521461,1,False,False,True,True,,True
+Control4C_candidate,1272,Retained Control4C,352.3848513,False,27.12606295,12.8633,17.11843984,2.176335568,1,False,False,True,True,,True
+Control4C_candidate,1274,Retained Control4C,151.1217864,True,25.45857385,13.6532,6.537845668,1.255931109,1,False,True,True,True,,True
+Control4C_candidate,1275,Retained Control4C,571.3752988,False,28.44066648,13.618,22.1064273,0.8008033645,19,False,False,True,True,,True
+Control4C_candidate,1278,Retained Control4C,249.5943824,False,25.93165256,13.5451,7.486271235,1.88015464,1,False,True,True,True,,True
+Control4C_candidate,1282,Retained Control4C,472.4548892,False,27.90609775,13.053,26.3061186,1.311628892,5,False,False,True,True,,True
+Control4C_candidate,1283,Retained Control4C,386.6113346,False,27.11167511,12.8365,19.64211782,3.628127142,0,True,False,True,True,,True
+Control4C_candidate,1284,Excluded by CG4 overlap,118.5295968,True,25.31785753,13.4614,5.854612233,3.367423988,0,True,True,True,True,,True
+Control4C_candidate,1286,Retained Control4C,230.3658024,False,26.77164086,14.3177,7.427805781,1.173393359,6,False,False,True,True,,True
+Control4C_candidate,1288,Excluded by CG4 overlap,231.5116278,False,26.28431541,12.4461,12.33075389,5.631633977,0,True,True,True,True,,True
+Control4C_candidate,1289,Retained Control4C,441.8985025,False,27.86184359,13.8469,15.79367381,1.356063166,5,False,False,True,True,,True
+Control4C_candidate,1295,Retained Control4C,205.349791,True,26.13144926,12.7739,11.41553628,1.204394102,3,False,True,True,True,,True
+Control4C_candidate,1296,Retained Control4C,104.7132094,True,25.24979284,12.9088,6.686172654,2.314788788,1,False,True,True,True,,True
+Control4C_candidate,1297,Retained Control4C,312.1545446,False,27.52887251,13.6791,14.26168809,0.3717816749,19,False,False,True,True,,True
+Control4C_candidate,1298,Retained Control4C,282.2624592,False,26.78323446,13.8903,9.809431445,1.450627115,8,False,False,True,True,,True
+Control4C_candidate,1300,Retained Control4C,145.0865816,True,25.64366556,13.2727,6.786107478,2.493566801,1,False,True,True,True,,True
+Control4C_candidate,1301,Retained Control4C,44.84217999,False,22.92575926,14.3967,1.487499043,0.8937122791,3,False,True,True,True,,True
+Control4C_candidate,1302,Retained Control4C,233.4223056,False,26.55017974,12.8527,15.52313068,1.054256502,4,False,False,True,True,,True
+Control4C_candidate,1404,Retained Control4C,368.6890762,False,26.69889429,13.5085,9.998692985,3.80077304,0,True,False,True,True,,True
+Control4C_candidate,1436,Retained Control4C,351.6916576,False,27.53905612,13.8449,13.13670435,2.931132721,1,False,False,True,True,,True
+Control4C_candidate,1437,Retained Control4C,303.3754822,False,26.53590175,12.6165,14.26396804,2.068624993,2,False,False,True,True,,True
+Control4C_candidate,1443,Retained Control4C,134.1579799,True,25.45393163,13.6623,4.899549686,2.930758792,1,False,True,True,True,,True
+Control4C_candidate,1447,Retained Control4C,794.2362406,False,28.8766762,13.2331,33.2315515,1.088439304,36,False,False,True,True,,True
+Control4C_candidate,1451,Retained Control4C,672.5238556,False,28.82916807,12.8286,36.21999558,1.308036749,3,False,False,True,True,,True
+Control4C_candidate,1455,Retained Control4C,973.2592093,False,29.53886774,13.8699,32.35697159,1.013565513,16,False,False,True,True,,True
+Control4C_candidate,1459,Retained Control4C,352.0468462,False,27.00297115,13.1172,13.54394146,2.867936808,1,False,False,True,True,,True
+Control4C_candidate,1460,Retained Control4C,129.2194245,True,24.76492671,13.7581,3.775983279,1.274783305,2,False,True,True,True,,True
+Control4C_candidate,1464,Retained Control4C,106.3282182,True,24.857429,13.2967,4.492710378,2.89012001,1,False,True,True,True,,True
+Control4C_candidate,1466,Retained Control4C,161.5774388,True,25.67075379,14.0456,4.970633024,0.5469513555,6,False,True,True,True,,True
+Control4C_candidate,1472,Retained Control4C,352.8874978,False,27.1845613,12.9575,16.1092462,0.263394224,6,False,False,True,True,,True
+Control4C_candidate,1475,Retained Control4C,408.400427,False,27.31230071,14.1177,13.2577758,1.193428542,17,False,False,True,True,,True
+Control4C_candidate,1480,Retained Control4C,104.0305356,True,24.39994407,14.4264,2.70681853,2.705419194,1,False,True,True,True,,True
+Control4C_candidate,1482,Retained Control4C,463.6762257,False,28.32133968,13.0844,24.80318076,0.6944108149,10,False,False,True,True,,True
+Control4C_candidate,1483,Retained Control4C,253.4415684,False,26.75627617,13.0187,13.19369211,0.6850010353,5,False,False,True,True,,True
+Control4C_candidate,1484,Retained Control4C,234.9721122,False,26.95016532,14.0017,9.096050774,2.191869676,3,False,False,True,True,,True
+Control4C_candidate,1485,Retained Control4C,187.8193938,True,26.44514572,13.6647,7.91173993,1.304499427,4,False,False,True,True,,True
+Control4C_candidate,1486,Retained Control4C,340.8028726,False,27.54865005,13.0155,18.975106,1.106378298,4,False,False,True,True,,True
+Control4C_candidate,1488,Retained Control4C,451.3875469,False,28.104289,13.4819,19.02657783,2.042935931,1,False,False,True,True,,True
+Control4C_candidate,1490,Retained Control4C,426.5145176,False,28.30752044,13.657,20.65584077,1.37629177,3,False,False,True,True,,True
+Control4C_candidate,1492,Retained Control4C,88.77684036,False,24.48096518,14.0488,2.912969811,1.25437805,3,False,True,True,True,,True
+Control4C_candidate,1493,Excluded by CG4 overlap,123.1803963,True,25.58546549,13.5932,5.942581792,2.969852797,1,False,True,True,True,,True
+Control4C_candidate,1494,Retained Control4C,160.1039519,True,25.87021352,14.5273,4.90023697,1.605539009,5,False,True,True,True,,True
+Control4C_candidate,1496,Retained Control4C,378.5844031,False,27.50462435,13.206,17.1544164,0.710593488,14,False,False,True,True,,True
+Control4C_candidate,1497,Retained Control4C,153.6645796,True,25.61693266,14.0997,5.086534832,3.603446042,0,True,True,True,True,,True
+Control4C_candidate,1498,Retained Control4C,186.6784997,True,26.41396991,13.1295,10.11008205,2.28046458,3,False,False,True,True,,True
+Control4C_candidate,1499,Retained Control4C,286.0896022,False,27.13517787,14.0627,10.43569477,0.9802501746,9,False,False,True,True,,True
+Control4C_candidate,1599,Retained Control4C,509.0087992,False,27.70238974,13.6311,16.34282803,0.9500992119,3,False,False,True,True,,True
+Control4C_candidate,1600,Retained Control4C,597.4356597,False,28.43742432,13.2089,24.45989509,1.50657791,10,False,False,True,True,,True
+Control4C_candidate,1616,Retained Control4C,280.603396,False,26.68034069,13.6078,9.52520521,1.658876982,3,False,False,True,True,,True
+Control4C_candidate,1619,Retained Control4C,1019.82617,False,29.6499592,13.7515,34.85613434,1.174065381,6,False,False,True,True,,True
+Control4C_candidate,1632,Excluded by CG4 overlap,380.6173048,False,27.32410202,13.024,16.54373121,2.991097463,1,False,False,True,True,,True
+Control4C_candidate,1659,Retained Control4C,625.0228612,False,28.49877779,12.5669,36.8113053,0.3381069566,8,False,False,True,True,,True
+Control4C_candidate,1664,Retained Control4C,148.0734104,True,25.24939356,13.6012,5.218763893,1.248664169,1,False,True,True,True,,True
+Control4C_candidate,1670,Retained Control4C,498.9812599,False,28.00078577,13.0244,23.10421241,0.2947660899,1,False,False,True,True,,True
+Control4C_candidate,1675,Excluded by CG4 overlap,156.1265645,True,25.33930988,13.8686,4.327613267,6.206092222,0,True,True,True,True,,True
+Control4C_candidate,1678,Retained Control4C,559.5813664,False,28.35566303,13.1933,24.29909349,0.2760061265,10,False,False,True,True,,True
+Control4C_candidate,1685,Excluded by CG4 overlap,154.1939791,True,25.28903066,14.2097,4.093954534,3.83200858,0,True,True,True,True,,True
+Control4C_candidate,1698,Retained Control4C,295.8609181,False,26.95490887,13.6834,11.5012137,3.331245839,0,True,False,True,True,,True
+Control4C_candidate,1701,Retained Control4C,155.240324,True,25.97293745,14.1381,5.19606787,2.654592324,1,False,True,True,True,,True
+Control4C_candidate,1714,Retained Control4C,56.52176571,False,23.18359012,13.4808,2.278048416,2.481971997,1,False,True,True,True,,True
+Control4C_candidate,1716,Retained Control4C,161.9600501,True,25.7566244,13.9767,5.670387769,1.908094806,1,False,True,True,True,,True
+Control4C_candidate,1718,Retained Control4C,284.5038397,False,27.14831011,13.0685,14.72840206,4.073669821,0,True,False,True,True,,False
+Control4C_candidate,1719,Retained Control4C,335.3354305,False,27.02631407,13.6704,12.23873686,1.432273952,4,False,False,True,True,,True
+Control4C_candidate,1722,Retained Control4C,259.6604573,False,26.76293189,13.8895,8.667911115,0.5388868283,14,False,False,True,True,,True
+Control4C_candidate,1729,Retained Control4C,175.82019,True,25.80471472,13.5278,6.360387835,2.791321094,1,False,True,True,True,,True
+Control4C_candidate,1731,Retained Control4C,253.0076049,False,26.43533974,13.7199,9.399898176,2.512448243,2,False,False,True,True,,True
+Control4C_candidate,1732,Retained Control4C,239.1262738,False,26.4735428,13.0211,10.9169656,0.5008834966,8,False,False,True,True,,True
+Control4C_candidate,1733,Retained Control4C,284.1890402,False,27.0106698,14.301,8.10849255,1.944211307,2,False,False,True,True,,True
+Control4C_candidate,1737,Retained Control4C,137.5209804,True,26.03449733,14.2094,4.917960905,1.371001543,5,False,True,True,True,,True
+Control4C_candidate,1739,Retained Control4C,439.414527,False,28.33511345,13.5363,20.56212012,1.103651733,2,False,False,True,True,,True
+Control4C_candidate,1740,Retained Control4C,155.2802746,True,25.57534047,14.2027,4.879912975,1.889369914,3,False,True,True,True,,True
+Control4C_candidate,1741,Excluded by CG4 overlap,57.49646652,False,23.6774298,14.6645,1.822620176,2.521739027,1,False,True,True,True,,True
+Control4C_candidate,1743,Retained Control4C,143.195497,True,25.79276904,13.8986,5.8699473,0.6463777733,4,False,True,True,True,,True
+Control4C_candidate,1744,Retained Control4C,284.6355133,False,26.97363554,13.5862,12.53667944,1.398619467,2,False,False,True,True,,True
+Control4C_candidate,1746,Retained Control4C,179.3674648,True,26.14252186,12.9644,11.27817688,2.197136786,3,False,True,True,True,,True
+Control4C_candidate,1747,Retained Control4C,231.14198,False,26.96433683,14.0502,8.782674689,1.114596159,6,False,False,True,True,,True
+Control4C_candidate,1749,Retained Control4C,260.5429446,False,26.86031209,14.3997,7.454745568,2.218027392,4,False,False,True,True,,True
+Control4C_candidate,1750,Retained Control4C,275.3279037,False,26.34301354,12.6668,16.70480694,1.122715765,5,False,False,True,True,,True
+Control4C_candidate,1751,Retained Control4C,336.5063681,False,26.96183935,13.931,10.59362093,0.855540786,7,False,False,True,True,,True
+Control4C_candidate,1753,Retained Control4C,249.053654,False,27.35153085,12.8083,18.2130246,0.4310245154,5,False,False,True,True,,True
+Control4C_candidate,1754,Retained Control4C,195.4215838,True,26.61905404,13.8722,9.49908537,1.251668357,2,False,False,True,True,,True
+Control4C_candidate,1756,Retained Control4C,32.02126277,False,22.23991074,14.41,1.08052894,2.592164973,2,False,True,True,True,,True
+Control4C_candidate,1757,Retained Control4C,202.6743356,True,26.4244427,13.7802,9.785991424,1.090582185,7,False,False,True,True,,True
+Control4C_candidate,1758,Retained Control4C,257.1195361,False,26.93430785,14.5518,7.594103528,1.039609413,12,False,False,True,True,,True
+Control4C_candidate,1759,Retained Control4C,253.1839852,False,26.77087836,14.6765,6.996970915,0.5814511837,17,False,False,True,True,,True
+Control4C_candidate,1824,Excluded by CG4 overlap,747.5327811,False,28.33683825,12.6051,31.4971441,2.170357877,2,False,False,True,True,,True
+Control4C_candidate,1877,Excluded by CG4 overlap,233.4882673,False,26.24225559,12.8961,10.21833536,3.080960293,0,True,True,True,True,,True
+Control4C_candidate,1939,Retained Control4C,366.268766,False,27.25274968,13.2187,15.14420245,1.496140678,2,False,False,True,True,,True
+Control4C_candidate,1948,Retained Control4C,582.4874329,False,27.96372901,13.4042,18.54471296,2.076516239,1,False,False,True,True,,True
+Control4C_candidate,1949,Retained Control4C,555.7700893,False,28.25506598,13.9229,15.8155423,1.060251543,3,False,False,True,True,,True
+Control4C_candidate,1953,Retained Control4C,445.2310789,False,27.73063169,13.6376,15.14532814,1.799848141,6,False,False,True,True,,True
+Control4C_candidate,1954,Retained Control4C,302.3000383,False,26.74584286,13.8675,9.709794433,2.39030868,1,False,False,True,True,,True
+Control4C_candidate,1977,Retained Control4C,441.8614894,False,27.89038769,13.2619,21.42612588,1.726328507,1,False,False,True,True,,True
+Control4C_candidate,1996,Retained Control4C,239.1960794,False,26.69904182,13.7195,8.881700865,0.9627100284,1,False,False,True,True,,True
+Control4C_candidate,2009,Retained Control4C,222.3092352,False,26.53498544,13.6416,8.625528764,2.171753008,1,False,False,True,True,,True
+Control4C_candidate,2018,Retained Control4C,171.80549,True,25.32318769,14.0164,4.909437178,2.375136629,1,False,True,True,True,,True
+Control4C_candidate,2021,Retained Control4C,243.7645232,False,26.46442333,13.2435,9.949747984,4.297423596,0,True,False,True,True,,True
+Control4C_candidate,2025,Retained Control4C,124.2804586,True,25.26399661,13.9878,4.41674453,1.703857412,2,False,True,True,True,,True
+Control4C_candidate,2038,Retained Control4C,301.0641174,False,27.02719264,14.133,9.558460912,1.736391523,4,False,False,True,True,,True
+Control4C_candidate,2039,Retained Control4C,208.8306782,True,26.18313419,13.9193,6.404739459,1.610816242,3,False,True,False,True,,True
+Control4C_candidate,2041,Retained Control4C,99.12320332,True,24.2666047,12.8909,4.881013124,2.718973049,1,False,True,True,True,,True
+Control4C_candidate,2044,Excluded by CG4 overlap,52.65798746,False,23.14728975,13.5557,2.041949662,8.162726192,0,True,True,True,True,,True
+Control4C_candidate,2045,Excluded by CG4 overlap,191.597043,True,25.96693751,13.3683,9.422703725,4.084246413,0,True,True,True,True,,True
+Control4C_candidate,2050,Excluded by CG4 overlap,150.2701936,True,25.7903459,14.2006,5.213061444,1.158303246,2,False,True,True,True,,True
+Control4C_candidate,2051,Retained Control4C,266.313094,False,26.4501465,13.426,9.728020047,3.890094693,0,True,False,True,True,,True
+Control4C_candidate,2052,Retained Control4C,157.1894659,True,25.94087503,13.9159,6.205710538,1.007148126,2,False,True,True,True,,True
+Control4C_candidate,2055,Retained Control4C,101.7354472,True,24.69269164,13.1199,4.962575325,2.368635984,1,False,True,True,True,,True
+Control4C_candidate,2057,Retained Control4C,209.8864514,True,26.37689531,13.7559,7.259358788,2.920780538,2,False,False,True,True,,True
+Control4C_candidate,2064,Retained Control4C,337.4906862,False,26.88048551,13.8631,10.74200561,1.148333617,4,False,False,True,True,,True
+Control4C_candidate,2065,Retained Control4C,228.334309,False,26.96227893,13.9076,9.753238077,1.620306796,4,False,False,True,True,,True
+Control4C_candidate,2067,Retained Control4C,212.8299514,True,26.75333959,13.1324,11.57022243,0.9340226404,3,False,False,True,True,,True
+Control4C_candidate,2068,Retained Control4C,439.5906938,False,27.69944072,13.393,17.67812657,2.063997153,1,False,False,True,True,,True
+Control4C_candidate,2070,Retained Control4C,119.2532761,True,24.98690044,13.966,4.135410172,2.984151862,1,False,True,True,True,,True
+Control4C_candidate,2071,Retained Control4C,91.68147327,False,24.65468591,13.5884,3.880455052,1.962267943,1,False,True,True,True,,True
+Control4C_candidate,2072,Retained Control4C,159.5518389,True,25.81042617,13.6957,6.107481886,2.338428804,1,False,True,True,True,,True
+Control4C_candidate,2073,Retained Control4C,241.0879251,False,26.65344067,13.6914,9.198373212,0.8655418164,4,False,False,True,True,,True
+Control4C_candidate,2074,Retained Control4C,206.5833616,True,26.35266121,14.4442,5.715320513,1.730564878,3,False,False,True,True,,True
+Control4C_candidate,2077,Retained Control4C,174.1123046,True,26.33874105,14.1389,6.218972658,3.327269295,0,True,False,True,True,,True
+Control4C_candidate,2078,Retained Control4C,121.408259,True,25.34943293,14.3439,3.479097527,3.422379138,0,True,True,True,True,,True
+Control4C_candidate,2079,Retained Control4C,279.8076564,False,27.21559676,12.2663,21.83822901,2.456092516,1,False,False,True,True,,True
+Control4C_candidate,2080,Retained Control4C,120.8764092,True,25.70717939,14.0883,5.112804608,1.114015819,4,False,True,True,True,,True
+Control4C_candidate,2081,Retained Control4C,396.6804758,False,27.81655551,13.2248,23.01966066,1.176365575,10,False,False,True,True,,True
+Control4C_candidate,2083,Retained Control4C,522.8934181,False,28.61672864,13.8157,21.90413098,1.193097207,6,False,False,True,True,,True
+Control4C_candidate,2084,Retained Control4C,106.6858407,True,25.00980536,13.7295,4.15825225,3.102734708,0,True,True,True,True,,True
+Control4C_candidate,2086,Retained Control4C,331.1302174,False,27.78969552,13.5721,16.89026913,1.161823916,2,False,False,True,True,,True
+Control4C_candidate,2088,Retained Control4C,377.1153517,False,27.78126333,13.762,16.69926037,0.8768132186,11,False,False,True,True,,True
+Control4C_candidate,2089,Retained Control4C,241.6399975,False,27.03039699,13.4171,13.81036255,1.243938566,2,False,False,True,True,,True
+Control4C_candidate,2090,Retained Control4C,346.3148391,False,27.49450166,13.8772,13.75011479,1.204770195,5,False,False,True,True,,True
+Control4C_candidate,2091,Retained Control4C,141.4273871,True,25.82580506,14.3495,4.382198934,1.554781102,4,False,True,True,True,,True
+Control4C_candidate,2093,Retained Control4C,153.7118038,True,25.98454199,13.7109,6.69913184,2.900715909,1,False,True,True,True,,True
+Control4C_candidate,2095,Retained Control4C,301.1668735,False,27.46538071,13.3974,15.34532594,1.293838678,4,False,False,True,True,,True
+Control4C_candidate,2252,Retained Control4C,577.0886077,False,28.10610085,12.8207,24.57872144,2.265869427,2,False,False,True,True,,True
+Control4C_candidate,2283,Retained Control4C,305.9488363,False,26.87086501,13.4628,11.79305114,1.23341636,1,False,False,True,True,,True
+Control4C_candidate,2304,Excluded by CG4 overlap,134.2905017,True,25.12812829,13.6786,4.794744495,4.114500422,0,True,True,True,True,,True
+Control4C_candidate,2306,Retained Control4C,459.2741776,False,27.7553907,12.7537,23.45372356,1.313759356,3,False,False,True,True,,True
+Control4C_candidate,2318,Retained Control4C,759.994691,False,28.42793443,13.051,28.06958044,1.346532214,3,False,False,True,True,,True
+Control4C_candidate,2345,Retained Control4C,596.9688139,False,28.52147424,12.0176,41.72990822,3.767607807,0,True,False,True,True,,True
+Control4C_candidate,2355,Retained Control4C,234.2563676,False,26.03132299,13.4305,7.557554152,1.436049825,2,False,True,True,True,,True
+Control4C_candidate,2376,Retained Control4C,477.5692868,False,28.35876264,13.6025,19.50493596,2.085385725,1,False,False,True,True,,True
+Control4C_candidate,2417,Retained Control4C,538.4826459,False,28.38613493,13.457,22.62687156,1.142264115,7,False,False,True,True,,True
+Control4C_candidate,2423,Retained Control4C,349.0675278,False,27.183071,13.8053,13.95652666,1.206680149,12,False,False,True,True,,True
+Control4C_candidate,2435,Retained Control4C,122.9049296,True,25.00789619,13.8736,4.537158152,1.557473519,4,False,True,True,True,,True
+Control4C_candidate,2454,Retained Control4C,211.9374365,True,26.51857194,13.9892,6.925182701,1.61674254,3,False,False,True,True,,True
+Control4C_candidate,2456,Retained Control4C,471.3384648,False,28.09371401,12.9427,25.70099516,1.564347731,2,False,False,True,True,,True
+Control4C_candidate,2457,Retained Control4C,663.4653674,False,28.87952205,14.0604,20.89560464,1.462932536,2,False,False,True,True,,True
+Control4C_candidate,2462,Retained Control4C,374.7570701,False,27.16248422,13.4709,13.44122006,1.924567476,6,False,False,True,True,,True
+Control4C_candidate,2471,Retained Control4C,488.1605854,False,28.01226817,12.6576,27.60251762,2.543844951,1,False,False,True,True,,True
+Control4C_candidate,2477,Retained Control4C,237.3205258,False,26.76098586,14.0598,7.962518483,0.6757448749,5,False,False,True,True,,True
+Control4C_candidate,2482,Retained Control4C,217.3942318,False,26.37035394,13.1696,9.938984173,3.608305913,0,True,False,True,True,,True
+Control4C_candidate,2485,Retained Control4C,538.4654374,False,28.17761631,14.1063,15.39828101,2.447381036,1,False,False,True,True,,True
+Control4C_candidate,2489,Retained Control4C,421.0798878,False,27.68957771,13.5874,15.66195192,1.404564607,3,False,False,True,True,,True
+Control4C_candidate,2491,Retained Control4C,336.896199,False,27.47620304,13.6313,13.32351149,1.418840811,3,False,False,True,True,,True
+Control4C_candidate,2494,Retained Control4C,135.1410727,True,25.08877294,14.1069,4.805216219,1.243326602,3,False,True,True,True,,True
+Control4C_candidate,2497,Retained Control4C,246.4892691,False,26.62350809,13.1467,13.29496623,5.213757756,0,True,False,True,True,,True
+Control4C_candidate,2498,Retained Control4C,258.4568033,False,26.83760233,14.0068,9.954004311,1.217141703,8,False,False,True,True,,True
+Control4C_candidate,2499,Retained Control4C,170.4967185,True,26.46831055,13.6293,8.425701002,2.98805465,1,False,False,True,True,,True
+Control4C_candidate,2500,Retained Control4C,233.3701817,False,26.82034357,13.6896,9.700094075,0.9702603504,3,False,False,True,True,,True
+Control4C_candidate,2501,Retained Control4C,241.721928,False,26.43662012,13.877,7.66711302,3.425745073,0,True,False,True,True,,True
+Control4C_candidate,2503,Retained Control4C,556.5038924,False,28.12480714,13.5118,22.09766585,3.26994086,0,True,False,True,True,,True
+Control4C_candidate,2504,Retained Control4C,205.5147254,True,26.18909342,14.07,6.645545692,1.838227366,2,False,True,True,True,,True
+Control4C_candidate,2510,Retained Control4C,377.4948957,False,27.93516173,12.2573,31.29531891,1.263418206,8,False,False,True,True,,True
+Control4C_candidate,2513,Retained Control4C,152.4548044,True,26.11465723,14.3932,4.823748542,1.422438145,1,False,True,True,True,,True
+Control4C_candidate,2514,Retained Control4C,197.3416257,True,26.53400234,14.2015,6.86443672,2.110007177,3,False,False,True,True,,True
+Control4C_candidate,2519,Retained Control4C,175.6095038,True,25.72851667,14.1711,5.49594994,1.41392563,1,False,True,True,True,,True
+Control4C_candidate,2524,Retained Control4C,202.9168998,True,26.25574547,14.4306,6.894415468,1.936819412,4,False,True,True,True,,True
+Control4C_candidate,2526,Retained Control4C,338.4307456,False,27.22333642,14.3459,10.22645517,1.544196194,3,False,False,True,True,,True
+Control4C_candidate,2530,Retained Control4C,190.5263924,True,26.03236839,14.2484,5.776451391,1.361050868,2,False,True,True,True,,True
+Control4C_candidate,2535,Excluded by CG4 overlap,324.9471843,False,27.68840574,13.5284,15.22460726,1.10434597,2,False,False,True,True,,True
+Control4C_candidate,2538,Retained Control4C,148.1081686,True,25.73154669,13.6402,6.986467703,1.259935967,3,False,True,True,True,,True
+Control4C_candidate,2539,Retained Control4C,92.53628643,False,24.88531234,14.2214,3.190655628,2.138840797,3,False,True,True,True,,True
+Control4C_candidate,2540,Retained Control4C,437.0267169,False,27.76371031,13.1024,20.11839257,0.3511079214,5,False,False,True,True,,True
+Control4C_candidate,2542,Excluded by CG4 overlap,155.748101,True,26.05936065,13.7768,6.824830645,3.118814876,0,True,True,True,True,,True
+Control4C_candidate,2543,Retained Control4C,164.8780274,True,25.83430931,14.153,6.1391791,2.091719156,2,False,True,True,True,,True
+Control4C_candidate,2547,Retained Control4C,389.2693606,False,27.76295577,13.1891,18.85696033,1.423282378,5,False,False,True,True,,True
+Control4C_candidate,2548,Retained Control4C,206.8050882,True,26.56254742,14.5845,5.735881163,1.604268356,4,False,False,True,True,,True
+Control4C_candidate,2549,Retained Control4C,245.1402536,False,26.94177139,13.0482,14.45555413,0.5150964234,6,False,False,True,True,,True
+Control4C_candidate,2550,Retained Control4C,211.640535,True,26.14966934,14.0368,7.718239597,1.2671658,3,False,True,True,True,,True
+Control4C_candidate,2554,Retained Control4C,100.1785543,True,24.63100523,12.5839,7.551416524,2.634397491,2,False,True,True,True,,True
+Control4C_candidate,2689,Retained Control4C,479.0682894,False,27.52310496,13.3845,14.96606218,3.952301819,0,True,False,True,True,,True
+Control4C_candidate,2832,Retained Control4C,491.9523476,False,27.28016965,12.8802,18.43533682,2.221551721,4,False,False,True,True,,True
+Control4C_candidate,2838,Retained Control4C,511.9244856,False,27.97328038,13.4799,19.83552312,1.518645867,5,False,False,True,True,,True
+Control4C_candidate,2857,Retained Control4C,104.8591483,True,24.17797114,13.354,3.356525604,1.304500661,1,False,True,True,True,,True
+Control4C_candidate,2892,Retained Control4C,499.5968821,False,28.26531258,13.5761,19.93264318,1.097050062,2,False,False,True,True,,True
+Control4C_candidate,2904,Retained Control4C,1006.976982,False,29.71911544,13.205,43.30152382,0.9540701171,17,False,False,True,True,,True
+Control4C_candidate,2917,Retained Control4C,583.8557483,False,28.51497828,13.0732,27.08032607,1.571423263,2,False,False,True,True,,True
+Control4C_candidate,2959,Retained Control4C,554.5176254,False,28.17628344,13.5891,19.28637075,1.689024363,8,False,False,True,True,,True
+Control4C_candidate,2975,Retained Control4C,585.9267539,False,28.23057046,14.0727,18.27293706,1.218343696,3,False,False,True,True,,True
+Control4C_candidate,2995,Retained Control4C,83.38363017,False,24.12393002,13.5229,3.321162109,4.872310309,0,True,True,True,True,,True
+Control4C_candidate,2999,Retained Control4C,251.0050515,False,26.90410812,13.9345,8.464780532,2.018744958,1,False,False,True,True,,True
+Control4C_candidate,3000,Retained Control4C,483.2523731,False,28.21550564,12.5347,30.28496926,2.481013095,4,False,False,True,True,,True
+Control4C_candidate,3008,Retained Control4C,447.8007475,False,27.28914074,13.6372,14.11111019,1.897698366,3,False,False,True,True,,True
+Control4C_candidate,3017,Retained Control4C,123.0602355,True,25.00303979,13.1885,5.27542438,2.761243211,1,False,True,True,True,,True
+Control4C_candidate,3018,Retained Control4C,213.258205,True,26.1600148,14.1023,5.360895687,2.841169456,1,False,True,True,True,,True
+Control4C_candidate,3025,Retained Control4C,565.9200279,False,27.82428203,14.0792,15.85496874,1.648968841,14,False,False,True,True,,True
+Control4C_candidate,3026,Retained Control4C,344.7879351,False,27.37154963,13.9112,10.34560231,1.146980504,3,False,False,True,True,,True
+Control4C_candidate,3027,Retained Control4C,126.2389954,True,24.97277977,13.7556,4.392714815,1.189331412,2,False,True,True,True,,True
+Control4C_candidate,3030,Retained Control4C,197.7544699,True,26.56688582,12.8364,11.53473177,2.580265143,2,False,False,True,True,,True
+Control4C_candidate,3033,Excluded by CG4 overlap,193.0159028,True,26.35122021,14.1912,5.993629335,3.185212718,0,True,False,True,True,,True
+Control4C_candidate,3034,Retained Control4C,689.6550707,False,28.9581881,12.7368,39.3960677,2.553593374,2,False,False,True,True,,True
+Control4C_candidate,3035,Retained Control4C,386.7384257,False,27.41972048,14.0834,13.09607473,2.261826492,4,False,False,True,True,,True
+Control4C_candidate,3040,Retained Control4C,364.1589482,False,27.6665999,13.7598,14.144015,1.486025109,1,False,False,True,True,,True
+Control4C_candidate,3043,Retained Control4C,754.5841736,False,29.05986646,13.1925,32.18828686,1.255788994,4,False,False,True,True,,True
+Control4C_candidate,3046,Retained Control4C,304.7653561,False,27.11497807,13.636,12.07215711,1.385010601,1,False,False,True,True,,True
+Control4C_candidate,3047,Excluded by CG4 overlap,117.2090344,True,25.05204493,13.4574,4.635671453,7.122936662,0,True,True,True,True,,True
+Control4C_candidate,3050,Retained Control4C,662.7527771,False,28.62841799,13.3616,28.55406565,0.341638722,6,False,False,True,True,,True
+Control4C_candidate,3053,Retained Control4C,332.1403363,False,26.72789094,14.1443,8.517212418,2.243566895,1,False,False,True,True,,True
+Control4C_candidate,3059,Retained Control4C,478.158387,False,28.47544691,14.0707,16.32131595,1.629246414,3,False,False,True,True,,True
+Control4C_candidate,3062,Retained Control4C,122.7747466,True,25.07259867,14.3749,3.735434882,1.199256455,3,False,True,True,True,,True
+Control4C_candidate,3067,Retained Control4C,287.9356806,False,26.68339295,13.5912,11.02879923,1.955360025,2,False,False,True,True,,True
+Control4C_candidate,3072,Retained Control4C,319.7109259,False,27.0544772,14.0697,10.90734508,0.7156127265,4,False,False,True,True,,True
+Control4C_candidate,3073,Excluded by CG4 overlap,91.4713216,False,24.29251499,13.6221,3.612699269,1.454770162,1,False,True,True,True,,True
+Control4C_candidate,3075,Retained Control4C,136.0726167,True,25.41592926,13.8685,4.598615487,3.837530753,0,True,True,True,True,,True
+Control4C_candidate,3080,Excluded by CG4 overlap,182.5439123,True,25.96853344,13.8467,6.035655841,4.733757749,0,True,True,True,True,,True
+Control4C_candidate,3085,Retained Control4C,280.479532,False,26.54831986,13.2615,11.82847567,3.346598884,0,True,False,True,True,,True
+Control4C_candidate,3092,Retained Control4C,504.4140379,False,28.14974602,13.4301,20.70907232,0.691426891,2,False,False,True,True,,True
+Control4C_candidate,3094,Retained Control4C,557.7741885,False,28.16171501,12.9307,27.29345576,1.087842261,3,False,False,True,True,,True
+Control4C_candidate,3097,Retained Control4C,427.0247713,False,28.0848938,14.3755,13.94104471,0.7965857014,3,False,False,True,True,,True
+Control4C_candidate,3099,Excluded by CG4 overlap,216.1449593,False,26.30851545,12.6375,12.73913608,7.170204754,0,True,True,True,True,,True
+Control4C_candidate,3103,Retained Control4C,203.4503734,True,26.18633783,14.252,6.17638039,1.462480671,1,False,True,True,True,,True
+Control4C_candidate,3110,Retained Control4C,353.0848554,False,27.53748635,13.9567,12.44185992,1.477177132,5,False,False,True,True,,True
+Control4C_candidate,3113,Retained Control4C,131.458222,True,25.72578498,14.5567,4.057937995,1.672041963,1,False,True,True,True,,True
+Control4C_candidate,3116,Retained Control4C,336.2519871,False,27.73949836,14.5109,11.096711,0.1535993018,6,False,False,True,True,,True
+Control4C_candidate,3119,Retained Control4C,325.7759643,False,27.67371642,13.2092,19.53476097,1.838533067,6,False,False,True,True,,True
+Control4C_candidate,3125,Retained Control4C,249.0452971,False,27.06415707,14.0674,9.898811757,0.6735208284,3,False,False,True,True,,True
+Control4C_candidate,3126,Retained Control4C,243.0172552,False,27.0324728,13.0863,14.27401753,2.606402838,1,False,False,True,True,,True
+Control4C_candidate,3127,Retained Control4C,256.8499054,False,26.42025893,13.7674,8.914054558,2.369071925,1,False,False,True,True,,True
+Control4C_candidate,3130,Retained Control4C,356.965497,False,28.12613662,13.7197,17.8123363,0.4194092026,6,False,False,True,True,,True
+Control4C_candidate,3131,Retained Control4C,141.737815,True,25.68408873,13.7908,5.689807948,2.097126307,2,False,True,True,True,,True
+Control4C_candidate,3133,Retained Control4C,479.211413,False,28.50050029,13.52,22.20830997,1.447550647,3,False,False,True,True,,True
+Control4C_candidate,3135,Retained Control4C,343.806886,False,27.63632485,14.084,11.58711285,1.85220899,5,False,False,True,True,,True
+Control4C_candidate,3136,Retained Control4C,303.5578732,False,27.34111076,13.1624,15.2085186,4.041387131,0,True,False,True,True,,True
+Control4C_candidate,3140,Retained Control4C,291.9727278,False,27.33874231,13.5532,13.72155718,1.748718292,2,False,False,True,True,,True
+Control4C_candidate,3141,Excluded by CG4 overlap,163.4229491,True,25.83620556,13.854,6.550449307,3.572399844,0,True,True,True,True,,True
+Control4C_candidate,3142,Retained Control4C,192.4941855,True,25.73712712,13.1445,9.326771788,1.195964515,1,False,True,True,True,,True
+Control4C_candidate,3143,Retained Control4C,231.2579293,False,26.5328899,14.2077,7.419629145,2.776380384,1,False,False,True,True,,True
+Control4C_candidate,3147,Retained Control4C,342.1535023,False,27.51182945,13.3715,17.94178299,0.8735518113,5,False,False,True,True,,True
+Control4C_candidate,3150,Retained Control4C,61.44526088,False,23.85639984,14.6725,2.014211772,2.811879871,1,False,True,True,True,,True
+Control4C_candidate,3156,Retained Control4C,203.1318998,True,26.6698497,14.5367,7.394979404,1.402077662,5,False,False,True,True,,True
+Control4C_candidate,3157,Excluded by CG4 overlap,160.3741978,True,25.9989514,13.7612,7.578882965,2.033063354,1,False,True,True,True,,True
+Control4C_candidate,3172,Retained Control4C,341.8488701,False,26.99298385,13.7547,12.67643321,1.237009184,4,False,False,True,True,,True
+Control4C_candidate,3476,Retained Control4C,378.8702897,False,26.83645521,13.6658,10.52227334,2.61032553,1,False,False,True,True,,True
+Control4C_candidate,3602,Retained Control4C,1170.13948,False,29.22000673,13.3946,45.94996383,2.516317909,1,False,False,True,True,,True
+Control4C_candidate,3607,Retained Control4C,657.883208,False,28.36248335,13.1737,23.53236454,2.918432848,2,False,False,True,True,,True
+Control4C_candidate,3623,Retained Control4C,331.2048698,False,26.8522307,13.2203,12.31495012,1.854349691,1,False,False,True,True,,True
+Control4C_candidate,3649,Retained Control4C,371.3689471,False,26.95055457,12.6798,16.14378201,3.042384018,0,True,False,True,True,,True
+Control4C_candidate,3664,Retained Control4C,609.9762304,False,28.33817633,14.0695,19.47372881,1.435878616,2,False,False,True,True,,True
+Control4C_candidate,3684,Retained Control4C,806.3832242,False,28.84207559,13.6292,26.28837391,0.8354814139,13,False,False,True,True,,True
+Control4C_candidate,3688,Excluded Lim 3688,320.6033632,False,27.17330655,13.5611,13.55533959,2.649711895,1,False,False,True,True,,False
+Control4C_candidate,3718,Retained Control4C,655.8255814,False,29.0688054,13.5454,26.82188451,1.036328532,9,False,False,False,True,,True
+Control4C_candidate,3730,Retained Control4C,474.5331716,False,28.19154058,12.8621,27.69829115,0.9158989414,6,False,False,True,True,,True
+Control4C_candidate,3739,Retained Control4C,307.0737111,False,27.08371053,14.0763,9.589944487,1.25678418,3,False,False,True,True,,True
+Control4C_candidate,3743,Retained Control4C,299.1731002,False,26.85158254,13.8695,9.430396866,6.233555054,0,True,False,True,True,,True
+Control4C_candidate,3745,Retained Control4C,506.0289837,False,28.34655099,13.9464,17.1856001,2.113737983,2,False,False,True,True,,True
+Control4C_candidate,3754,Retained Control4C,284.6113008,False,27.28247399,13.6636,11.41780129,2.475673128,1,False,False,True,True,,True
+Control4C_candidate,3762,Retained Control4C,504.8658601,False,28.14617427,13.4069,20.75887333,1.989082114,6,False,False,True,True,,True
+Control4C_candidate,3770,Retained Control4C,438.7724149,False,28.21771302,13.2021,22.18483565,2.131209965,2,False,False,True,True,,True
+Control4C_candidate,3772,Retained Control4C,333.4354718,False,27.18613491,14.1182,10.23915427,4.568628922,0,True,False,True,True,,True
+Control4C_candidate,3776,Retained Control4C,439.8837175,False,27.35957885,13.8779,12.24328223,1.512651625,3,False,False,True,True,,True
+Control4C_candidate,3777,Retained Control4C,381.262902,False,26.93379196,13.2225,16.22657716,0.1574881945,1,False,False,True,True,,True
+Control4C_candidate,3779,Retained Control4C,730.8582665,False,28.69591063,13.7258,25.24820435,2.069533659,3,False,False,True,True,,True
+Control4C_candidate,3789,Retained Control4C,458.3349277,False,28.10639987,12.9947,24.31744674,2.886442056,1,False,False,True,True,,True
+Control4C_candidate,3826,Retained Control4C,295.8614208,False,27.38577052,13.3569,14.37425024,4.894267823,0,True,False,True,True,,True
+Control4C_candidate,3829,Retained Control4C,308.435702,False,27.15908208,13.1654,13.58217779,3.567719487,0,True,False,True,True,,True
+Control4C_candidate,3849,Retained Control4C,304.3151489,False,26.92873187,13.7972,10.93720763,1.638045797,4,False,False,True,True,,True
+Control4C_candidate,3853,Retained Control4C,446.1096874,False,27.89758446,13.7251,15.32740598,0.9942273404,17,False,False,True,True,,True
+Control4C_candidate,3857,Retained Control4C,387.3769879,False,28.22679166,13.8859,16.01016018,1.411591613,9,False,False,True,True,,True
+Control4C_candidate,3859,Excluded by CG4 overlap,145.2056472,True,25.21539602,14.2353,4.184323428,3.153379095,0,True,True,True,True,,True
+Control4C_candidate,3863,Excluded by CG4 overlap,134.9357856,True,25.58366746,12.8607,8.374982643,10,0,True,True,True,True,,True
+Control4C_candidate,3867,Retained Control4C,191.4297576,True,26.50287976,14.148,6.982796289,1.729800325,2,False,False,True,True,,True
+Control4C_candidate,3868,Retained Control4C,438.9574249,False,27.87183797,13.5695,17.864384,1.924979676,2,False,False,True,True,,True
+Control4C_candidate,3873,Retained Control4C,223.7113892,False,25.70832633,14.2721,5.543518978,1.34650225,1,False,True,True,True,,True
+Control4C_candidate,3879,Retained Control4C,324.4556149,False,27.51746353,13.9546,13.09891653,1.015797486,2,False,False,True,True,,True
+Control4C_candidate,3895,Retained Control4C,560.9903597,False,28.72416288,13.826,23.48325366,1.919981759,1,False,False,True,True,,True
+Control4C_candidate,3899,Retained Control4C,509.5947249,False,28.03173085,12.8987,28.22659433,2.121889952,3,False,False,True,True,,True
+Control4C_candidate,3901,Retained Control4C,49.22819873,False,23.30020266,14.3585,1.375086241,6.489752091,0,True,True,True,True,,True
+Control4C_candidate,3906,Retained Control4C,213.9188461,True,26.55931809,14.0551,8.202049029,3.24710262,0,True,False,True,True,,True
+Control4C_candidate,3916,Excluded by CG4 overlap,172.9594749,True,25.836845,13.795,5.657472205,5.919049884,0,True,True,True,True,,True
+Control4C_candidate,3917,Retained Control4C,487.9232953,False,28.07322277,13.746,17.77748015,1.385244824,6,False,False,True,True,,True
+Control4C_candidate,3935,Retained Control4C,205.086454,True,25.77306303,13.0736,10.68569923,2.980701024,1,False,True,True,True,,True
+Control4C_candidate,3939,Retained Control4C,336.99173,False,27.45824101,14.3402,9.521969389,2.18754622,1,False,False,True,True,,True
+Control4C_candidate,3943,Retained Control4C,548.0956202,False,28.43801225,13.3499,24.17492755,1.901393041,1,False,False,True,True,,True
+Control4C_candidate,3951,Retained Control4C,164.0881715,True,25.59380094,13.9259,6.723353704,1.559661879,3,False,True,True,True,,True
+Control4C_candidate,3959,Retained Control4C,101.3174209,True,24.96222304,14.0015,4.353798852,2.939622121,1,False,True,True,True,,True
+Control4C_candidate,3964,Retained Control4C,284.2127662,False,27.16384776,13.6213,11.47324184,0.9123846025,4,False,False,True,True,,True
+Control4C_candidate,3966,Retained Control4C,622.3852032,False,28.76067629,13.198,28.69830457,2.43687814,3,False,False,True,True,,True
+Control4C_candidate,3977,Retained Control4C,400.6189619,False,28.1260532,13.3661,19.94248903,2.873575129,1,False,False,True,True,,True
+Control4C_candidate,3978,Retained Control4C,693.3935813,False,28.75247099,13.9998,23.57536394,0.9752917776,5,False,False,True,True,,True
+Control4C_candidate,3980,Retained Control4C,645.8542464,False,29.00981516,13.5539,28.33147221,2.351502118,2,False,False,True,True,,True
+Control4C_candidate,3993,Retained Control4C,477.0740801,False,28.29736394,14.1482,15.65548439,1.043915012,4,False,False,True,True,,True
+Control4C_candidate,3994,Retained Control4C,290.620669,False,27.47501724,13.9113,13.56148598,1.849217864,1,False,False,True,True,,True
+Control4C_candidate,3995,Retained Control4C,446.5061957,False,28.4559281,14.1817,15.73862912,1.038410724,5,False,False,True,True,,True
+Control4C_candidate,3997,Retained Control4C,266.6647729,False,27.19846168,14.2047,8.297494696,3.354206271,0,True,False,False,True,,True
+Control4C_candidate,3999,Excluded by CG4 overlap,146.0130171,True,25.66733264,14.074,4.867377163,3.510137522,0,True,True,True,True,,True
+Control4C_candidate,4000,Retained Control4C,300.5070581,False,27.82573932,14.3553,10.52556899,1.506673817,3,False,False,True,True,,True
+Control4C_candidate,4005,Retained Control4C,494.498339,False,28.49924023,13.2329,25.91272405,1.19558562,5,False,False,True,True,,True
+Control4C_candidate,4007,Retained Control4C,359.4696238,False,28.58309017,14.6206,13.02005575,1.226680355,3,False,False,True,True,,True
+Control4C_candidate,4008,Retained Control4C,181.1606809,True,26.10889574,14.3639,5.304744351,2.767489419,1,False,True,True,True,,True
+Control4C_candidate,4010,Retained Control4C,261.3229932,False,27.50178242,14.4231,9.333598359,1.175400041,6,False,False,True,True,,True
+Control4C_candidate,4011,Retained Control4C,279.9313914,False,26.85404023,13.9703,10.85933084,1.252482216,3,False,False,True,True,,True
+Control4C_candidate,4012,Retained Control4C,100.2957768,True,25.42437283,14.5579,3.694198545,2.99329263,1,False,True,True,True,,True
+Control4C_candidate,4013,Retained Control4C,163.2858555,True,25.71599295,13.7606,6.25058299,1.393201598,2,False,True,True,True,,True
+Control4C_candidate,4016,Retained Control4C,393.6553941,False,28.20950203,13.3135,22.27718867,0.4918599578,6,False,False,True,True,,True
+Control4C_candidate,4018,Excluded by CG4 overlap,82.82753577,False,24.47776069,13.3823,4.308253487,8.365011216,0,True,True,True,True,,True
+Control4C_candidate,4023,Retained Control4C,308.3056698,False,27.62427716,13.918,12.89052637,1.515367377,1,False,False,True,True,,True
+Control4C_candidate,4026,Retained Control4C,306.2269844,False,27.9304323,13.6408,15.79831771,1.681633868,2,False,False,True,True,,True
+Control4C_candidate,4032,Retained Control4C,130.6882515,True,25.67776414,13.6471,5.813194908,1.956266908,1,False,True,True,True,,True
+Control4C_candidate,4036,Retained Control4C,381.1114901,False,28.4646406,13.9268,17.42764725,0.1673179928,13,False,False,True,True,,True
+Control4C_candidate,4038,Excluded by CG4 overlap,51.35637457,False,23.97439837,14.5216,1.779346796,5.809523521,0,True,True,True,True,,True
+Control4C_candidate,4040,Retained Control4C,248.4379887,False,27.59582592,14.6782,8.323624963,1.416964807,4,False,False,True,True,,True
+Control4C_candidate,4045,Retained Control4C,210.930544,True,26.72725178,14.304,8.001423958,2.125340903,2,False,False,True,True,,True
+Control4C_candidate,4047,Retained Control4C,230.4740498,False,27.27304104,14.2139,8.587455491,1.77201784,2,False,False,True,True,,True
+Control4C_candidate,4051,Retained Control4C,62.99717172,False,23.96887745,13.3858,3.249444089,6.918994014,0,True,True,True,True,,True
+Control4C_candidate,4060,Retained Control4C,244.0467822,False,26.98861528,13.4168,10.90684931,1.097360015,4,False,False,False,True,,True
+Control4C_candidate,4101,Retained Control4C,286.0436523,False,27.57123937,13.1941,22.05968896,0.1254822899,32,False,False,True,True,,True
+Control4C_candidate,4437,Retained Control4C,480.6006054,False,27.6630517,13.6248,17.43835033,4.353513266,0,True,False,True,True,,True
+Control4C_candidate,4499,Retained Control4C,775.2521784,False,28.299734,13.6868,23.62255447,3.59056366,0,True,False,True,True,,True
+Control4C_candidate,4653,Retained Control4C,220.0431684,False,25.97717262,13.9327,5.983406859,2.190852304,1,False,True,True,True,,True
+Control4C_candidate,4659,Retained Control4C,751.2085547,False,28.38912654,13.6135,20.89860013,1.264299756,3,False,False,True,True,,True
+Control4C_candidate,4690,Retained Control4C,493.0814655,False,28.04750764,13.4064,19.93920399,1.69065519,3,False,False,True,True,,True
+Control4C_candidate,4742,Retained Control4C,637.3505406,False,28.34227467,13.9602,17.10070278,1.238862928,1,False,False,True,True,,True
+Control4C_candidate,4776,Retained Control4C,201.0648958,True,25.32066064,14.0977,5.06477123,4.970102374,0,True,True,False,True,,True
+Control4C_candidate,4779,Retained Control4C,255.0545641,False,26.73955303,13.9458,8.842931065,0.8590677643,9,False,False,True,True,,True
+Control4C_candidate,4797,Retained Control4C,390.3662282,False,27.29494979,13.5866,13.3349834,1.131147064,1,False,False,False,True,,True
+Control4C_candidate,4805,Retained Control4C,712.1668092,False,28.28231856,13.1998,27.43835489,1.98787556,1,False,False,True,True,,True
+Control4C_candidate,4816,Retained Control4C,152.5539052,True,25.47988591,14.048,4.30599926,6.960824546,0,True,True,False,True,,True
+Control4C_candidate,4850,Retained Control4C,314.0218307,False,27.50472332,13.8449,11.81185851,4.475214905,0,True,False,True,True,,True
+Control4C_candidate,4855,Retained Control4C,230.5635911,False,26.25250587,14.0145,6.033681594,6.714077566,0,True,True,True,True,,True
+Control4C_candidate,4871,Retained Control4C,551.9834807,False,28.48211454,13.0858,26.97634878,2.363086612,2,False,False,True,True,,True
+Control4C_candidate,4905,Retained Control4C,524.8768693,False,28.30597574,13.0964,25.05635791,1.169602875,4,False,False,True,True,,True
+Control4C_candidate,4912,Retained Control4C,501.2831592,False,28.14390396,13.7974,18.77157049,2.283170602,2,False,False,True,True,,True
+Control4C_candidate,4953,Retained Control4C,280.5379974,False,26.79345312,14.0504,10.32608009,4.933251738,0,True,False,True,True,,True
+Control4C_candidate,4956,Retained Control4C,365.7083567,False,27.36805587,13.7298,14.48313425,1.676873052,1,False,False,True,True,,True
+Control4C_candidate,4961,Retained Control4C,575.6901706,False,28.28007261,13.5975,22.65879728,2.142536955,4,False,False,True,True,,True
+Control4C_candidate,4967,Retained Control4C,361.9575825,False,27.29324367,14.1554,10.83941428,2.146076743,1,False,False,True,True,,True
+Control4C_candidate,4977,Retained Control4C,690.9451057,False,29.21161762,14.0403,24.42543804,1.450612008,12,False,False,True,True,,True
+Control4C_candidate,5025,Retained Control4C,326.2923,False,27.11324575,14.007,12.1115805,1.627664953,3,False,False,True,True,,True
+Control4C_candidate,5050,Retained Control4C,353.7410821,False,27.19393577,14.0646,10.42981184,1.168351878,14,False,False,True,True,,True
+Control4C_candidate,5055,Retained Control4C,429.4993457,False,28.00268144,13.9994,16.81595936,2.356733848,3,False,False,True,True,,True
+Control4C_candidate,5064,Retained Control4C,358.8888992,False,27.36674571,13.7057,12.17501235,6.231618819,0,True,False,True,True,,True
+Control4C_candidate,5070,Retained Control4C,222.5199711,False,26.94500441,13.9665,8.812563138,1.867044833,1,False,False,True,True,,True
+Control4C_candidate,5074,Retained Control4C,288.5725571,False,27.23053742,14.3336,9.303928917,2.431404983,1,False,False,True,True,,True
+Control4C_candidate,5093,Excluded by CG4 overlap,176.1504197,True,25.90051079,13.8195,6.116341237,4.574275735,0,True,True,True,True,,True
+Control4C_candidate,5098,Retained Control4C,650.1902126,False,28.70213752,14.0107,22.88787479,2.97106986,1,False,False,True,True,,True
+Control4C_candidate,5101,Retained Control4C,816.6464279,False,28.75595116,13.6247,29.54480722,1.834179114,10,False,False,True,True,,True
+Control4C_candidate,5117,Retained Control4C,666.869866,False,28.60516293,13.7787,26.694198,1.037915096,5,False,False,True,True,,True
+Control4C_candidate,5118,Retained Control4C,415.5264592,False,28.27772982,14.368,14.63304354,1.015597215,3,False,False,True,True,,True
+Control4C_candidate,5143,Retained Control4C,148.4784745,True,24.91235931,13.2713,5.966073405,5.806209901,0,True,True,True,True,,True
+Control4C_candidate,5146,Retained Control4C,504.2610235,False,28.5333277,13.7881,19.83948871,4.129962827,0,True,False,True,True,,True
+Control4C_candidate,5151,Retained Control4C,149.6025565,True,25.61853025,14.3047,4.082848798,2.590502315,1,False,True,True,True,,True
+Control4C_candidate,5153,Retained Control4C,430.2347273,False,27.66440932,13.9732,13.72107048,1.999256511,2,False,False,True,True,,True
+Control4C_candidate,5161,Retained Control4C,454.272913,False,28.53314784,14.1519,16.1839648,1.555874786,3,False,False,True,True,,True
+Control4C_candidate,5169,Retained Control4C,249.6636093,False,26.81032865,14.4358,8.127315313,1.434506134,2,False,False,True,True,,True
+Control4C_candidate,5170,Retained Control4C,229.5053552,False,26.76701009,13.6471,10.22742747,10,0,True,False,True,True,,True
+Control4C_candidate,5174,Retained Control4C,267.1335491,False,27.17398335,13.7686,12.13883849,0.7165642919,2,False,False,True,True,,True
+Control4C_candidate,5191,Retained Control4C,458.4273791,False,28.07806098,13.6163,19.02265577,4.228949392,0,True,False,True,True,,True
+Control4C_candidate,5195,Retained Control4C,129.7302397,True,25.08808188,14.1115,4.632085699,2.091522826,2,False,True,True,True,,True
+Control4C_candidate,5200,Retained Control4C,256.0412408,False,26.36615881,14.3222,6.987029162,2.08716668,1,False,False,True,True,,True
+Control4C_candidate,5206,Retained Control4C,112.6546303,True,25.52778829,13.2282,6.170046777,1.552063679,3,False,True,True,True,,True
+Control4C_candidate,5208,Retained Control4C,155.9431652,True,25.78152343,13.9839,4.888944027,1.975916804,3,False,True,True,True,,True
+Control4C_candidate,5210,Retained Control4C,316.5757251,False,27.30224311,14.3581,9.60000714,1.292847482,1,False,False,False,True,,True
+Control4C_candidate,5217,Retained Control4C,123.86466,True,25.2926528,14.4284,3.995088124,3.618730845,0,True,True,True,True,,True
+Control4C_candidate,5219,Excluded by CG4 overlap,161.3790796,True,25.91175668,13.6791,6.503195357,3.356252926,0,True,True,True,True,,True
+Control4C_candidate,5222,Retained Control4C,273.7951314,False,27.0294135,14.2812,8.106083878,3.567533095,0,True,False,True,True,,True
+Control4C_candidate,5232,Retained Control4C,140.7453234,True,25.27465038,14.298,4.143782038,1.677811629,1,False,True,True,True,,True
+Control4C_candidate,5238,Retained Control4C,205.3689985,True,26.2658903,14.055,7.708148974,2.973671668,1,False,True,True,True,,True
+Control4C_candidate,5240,Excluded by CG4 overlap,154.1485615,True,26.14427617,14.5502,5.203545694,3.440799523,0,True,True,True,True,,True
+Control4C_candidate,5249,Retained Control4C,597.3426834,False,28.58336672,13.9556,20.48699608,0.8945477856,18,False,False,True,True,,True
+Control4C_candidate,5253,Retained Control4C,125.6790072,True,25.18876892,14.6621,3.574185724,2.92375052,1,False,True,True,True,,True
+Control4C_candidate,5260,Retained Control4C,190.6609641,True,26.88595092,13.3129,11.30131649,1.357452743,1,False,False,True,True,,True
+Control4C_candidate,5261,Retained Control4C,337.1651019,False,27.31661548,13.7974,12.89401911,2.075886303,4,False,False,True,True,,True
+Control4C_candidate,5265,Retained Control4C,168.4204008,True,26.41812189,14.3581,6.008717363,2.148709561,1,False,False,True,True,,True
+Control4C_candidate,5285,Retained Control4C,470.4416676,False,27.67990295,14.0499,15.80834705,0.7624408769,4,False,False,True,True,,True
+Control4C_candidate,5291,Retained Control4C,236.341553,False,26.54571365,13.0295,14.24491385,5.319428718,0,True,False,True,True,,True
+Control4C_candidate,5301,Retained Control4C,439.8212786,False,28.2526714,14.1583,16.57479835,0.7840800977,14,False,False,True,True,,True
+Control4C_candidate,5303,Retained Control4C,215.2924832,True,26.67740959,13.2499,11.50411717,2.374859195,1,False,False,True,True,,True
+Control4C_candidate,5304,Retained Control4C,377.0639424,False,27.84151529,13.125,18.72808228,0.2031064263,12,False,False,True,True,,True
+Control4C_candidate,5305,Retained Control4C,439.9500999,False,27.74190597,13.9511,17.29346655,1.655884138,1,False,False,True,True,,True
+Control4C_candidate,5307,Retained Control4C,482.0138317,False,28.23222585,14.3298,14.88828963,1.783141406,3,False,False,True,True,,True
+Control4C_candidate,5308,Retained Control4C,346.3418624,False,28.04355798,14.4031,13.8315016,0.9259502565,7,False,False,True,True,,True
+Control4C_candidate,5309,Retained Control4C,388.476599,False,27.89689714,13.2924,21.29476512,2.11793744,2,False,False,True,True,,True
+Control4C_candidate,5310,Retained Control4C,199.4933752,True,26.34484958,14.036,7.797890192,3.239719634,0,True,False,True,True,,True
+Control4C_candidate,5316,Excluded by CG4 overlap,164.551113,True,26.31032775,14.3701,5.715838726,3.230444675,0,True,True,True,True,,True
+Control4C_candidate,5322,Retained Control4C,245.277095,False,27.03303826,13.7459,11.78627154,3.874595983,0,True,False,True,True,,True
+Control4C_candidate,5323,Retained Control4C,210.3015074,True,27.08670546,14.7582,6.888894464,1.55429318,2,False,False,True,True,,True
+Control4C_candidate,5324,Retained Control4C,446.4358507,False,27.88564636,14.387,13.54008905,1.09255762,5,False,False,True,True,,True
+Control4C_candidate,5326,Retained Control4C,169.2728116,True,26.40946626,13.8858,6.994158184,5.951413569,0,True,False,True,True,,True
+Control4C_candidate,5328,Retained Control4C,121.4776984,True,25.60406825,13.7631,5.56222872,2.815416602,1,False,True,True,True,,True
+Control4C_candidate,5329,Retained Control4C,401.0376688,False,27.67430189,14.5625,11.27379739,1.235190624,3,False,False,True,True,,True
+Control4C_candidate,5332,Retained Control4C,146.7182478,True,26.24118713,14.3838,5.398895797,0.9238208501,4,False,True,True,True,,True
+Control4C_candidate,5334,Retained Control4C,186.0086162,True,26.16199966,14.5794,6.200027106,1.691421377,2,False,True,True,True,,True
+Control4C_candidate,5335,Excluded by CG4 overlap,127.9220938,True,24.68191649,13.8938,4.741417802,2.154198149,1,False,True,True,True,,True
+Control4C_candidate,5336,Retained Control4C,467.888971,False,28.24264391,14.7209,12.39801868,0.9308164991,19,False,False,True,True,,True
+Control4C_candidate,5337,Retained Control4C,247.4423488,False,26.99529928,13.7342,11.63373854,1.692273831,1,False,False,True,True,,True
+Control4C_candidate,5341,Retained Control4C,203.9734811,True,26.50489269,13.975,7.756031379,2.054036885,1,False,False,True,True,,True
+Control4C_candidate,5343,Retained Control4C,219.7846382,False,26.50009264,13.6707,9.040046558,1.668437123,14,False,False,True,True,,True
+Control4C_candidate,5344,Retained Control4C,448.5921199,False,28.75717044,13.1872,28.1231147,0.5558316019,4,False,False,True,True,,True
+Control4C_candidate,5352,Retained Control4C,255.3854257,False,27.29039853,14.4923,7.693578615,1.378313811,2,False,False,True,True,,True
+Control4C_candidate,5360,Excluded by CG4 overlap,140.0140328,True,25.73157431,14.0977,5.051236583,3.080173247,0,True,True,True,True,,True
+Control4C_candidate,5361,Retained Control4C,275.5757726,False,26.62704623,14.7605,6.65394088,0.3752521805,4,False,False,True,True,,True
+Control4C_candidate,5374,Retained Control4C,106.4270625,True,25.3980104,14.5108,3.454914698,5.942338403,0,True,True,True,True,,True
+Control4C_candidate,5383,Retained Control4C,304.7442414,False,27.7625184,14.419,11.42299796,1.665179391,2,False,False,True,True,,True
+Control4C_candidate,5413,Retained Control4C,320.0936983,False,27.18892064,13.9582,12.17709747,1.237429814,10,False,False,True,True,,True
+Control4C_candidate,5500,Retained Control4C,75.56365461,False,24.55271354,14.0199,2.966437182,0.9594877489,3,False,True,True,True,,True
+Control4C_candidate,6134,Retained Control4C,282.8245557,False,26.81969728,13.4957,10.30394399,5.679983585,0,True,False,True,True,,True
+Control4C_candidate,6411,Retained Control4C,396.9841288,False,27.10837362,13.9361,10.15637566,2.648071382,1,False,False,True,True,,True
+Control4C_candidate,6449,Retained Control4C,657.863169,False,28.76069809,13.2097,29.77534921,2.320331806,2,False,False,True,True,,True
+Control4C_candidate,6457,Retained Control4C,985.5611512,False,29.32794403,13.3257,34.90040433,1.386954931,4,False,False,True,True,,True
+Control4C_candidate,6466,Retained Control4C,205.9216959,True,26.05449712,13.9647,5.80007603,4.821867874,0,True,True,True,True,,True
+Control4C_candidate,6488,Retained Control4C,770.0474501,False,29.01841952,13.6768,29.53877231,1.833329207,1,False,False,True,True,,True
+Control4C_candidate,6516,Retained Control4C,402.2835717,False,27.53098054,14.0998,11.64933755,2.610585798,2,False,False,True,True,,True
+Control4C_candidate,6618,Retained Control4C,592.3606092,False,28.02376781,13.3924,20.61698307,1.38717295,4,False,False,True,True,,True
+Control4C_candidate,6725,Retained Control4C,355.7867643,False,27.36041418,12.9987,17.07449633,3.65421137,0,True,False,True,True,,True
+Control4C_candidate,6726,Retained Control4C,660.5236951,False,28.68028581,14.0889,18.07357452,2.302941148,2,False,False,True,True,,True
+Control4C_candidate,6728,Retained Control4C,387.6481707,False,27.80247251,14.0538,13.55331938,0.8678189788,1,False,False,True,True,,True
+Control4C_candidate,6736,Retained Control4C,449.2444452,False,27.88757672,14.0132,15.18532789,2.179783199,1,False,False,True,True,,True
+Control4C_candidate,6739,Excluded by CG4 overlap,89.76788153,False,24.45567366,14.1802,3.088660162,10,0,True,True,True,True,,True
+Control4C_candidate,6788,Retained Control4C,389.0808407,False,27.68672353,14.23,12.93907496,3.969818204,0,True,False,True,True,,True
+Control4C_candidate,6816,Retained Control4C,451.5438135,False,27.96996755,14.042,14.67870989,1.54004587,3,False,False,True,True,,True
+Control4C_candidate,6852,Retained Control4C,285.6383993,False,27.07602715,14.255,7.980168322,5.048781536,0,True,False,True,True,,True
+Control4C_candidate,6858,Retained Control4C,197.9138972,True,26.21344421,13.5405,8.983325433,0.678550137,1,False,True,True,True,,True
+Control4C_candidate,6888,Retained Control4C,463.3893867,False,28.03743945,14.2808,17.57366368,2.074884013,4,False,False,True,True,,True
+Control4C_candidate,6945,Retained Control4C,379.9291573,False,27.52890107,13.8923,12.44396928,0.6593180168,4,False,False,True,True,,True
+Control4C_candidate,6950,Retained Control4C,485.0585506,False,28.2586091,13.394,20.70620444,3.492528803,0,True,False,True,True,,True
+Control4C_candidate,6954,Retained Control4C,394.6388252,False,27.69944829,14.1754,12.42742932,2.349206498,1,False,False,True,True,,True
+Control4C_candidate,6978,Retained Control4C,193.4442113,True,26.41858186,14.2166,6.509208859,2.434540547,1,False,False,True,True,,True
+Control4C_candidate,6989,Retained Control4C,597.4967295,False,28.54280873,13.5239,27.69450032,1.804792648,1,False,False,True,True,,True
+Control4C_candidate,7000,Retained Control4C,548.17259,False,27.88835583,14.1561,18.04127545,1.138550962,4,False,False,True,True,,True
+Control4C_candidate,7007,Retained Control4C,388.1613562,False,27.61809983,13.5572,18.31047125,1.415476334,15,False,False,True,True,,True
+Control4C_candidate,7009,Retained Control4C,494.3303107,False,28.48648828,14.478,14.77248891,1.106915207,1,False,False,True,True,,True
+Control4C_candidate,7010,Retained Control4C,409.3468778,False,28.34137937,14.0838,16.6243227,1.297504076,4,False,False,True,True,,True
+Control4C_candidate,7021,Retained Control4C,267.5776751,False,26.53189662,14.513,7.563219788,3.486617758,0,True,False,True,True,,True
+Control4C_candidate,7023,Retained Control4C,846.0446015,False,29.51667344,13.9841,35.07142688,0.6805082045,60,False,False,True,True,,True
+Control4C_candidate,7035,Retained Control4C,732.8573438,False,29.43498922,14.2637,26.14292793,0.8429188717,12,False,False,True,True,,True
+Control4C_candidate,7044,Retained Control4C,275.1979217,False,26.7000867,13.5098,11.53362441,2.762380672,1,False,False,True,True,,True
+Control4C_candidate,7051,Retained Control4C,512.9089002,False,28.79034439,14.1045,21.67357288,1.028926358,2,False,False,True,True,,True
+Control4C_candidate,7052,Retained Control4C,352.1024207,False,27.74022942,14.4048,10.77177624,1.00332121,3,False,False,True,True,,True
+Control4C_candidate,7058,Retained Control4C,426.310602,False,27.84924982,13.4943,16.77960227,7.052022879,0,True,False,True,True,,True
+Control4C_candidate,7059,Retained Control4C,478.90627,False,27.87267209,14.5286,12.37996612,1.06150484,19,False,False,True,True,,True
+Control4C_candidate,7067,Retained Control4C,454.5839023,False,28.42686562,14.4121,13.84489088,0.6834880835,35,False,False,True,True,,True
+Control4C_candidate,7069,Retained Control4C,361.8175487,False,27.79077124,14.0394,13.28625835,3.764725957,0,True,False,True,True,,True
+Control4C_candidate,7090,Retained Control4C,501.9595801,False,27.91559808,13.9368,16.18694331,1.286180349,2,False,False,True,True,,True
+Control4C_candidate,7114,Retained Control4C,265.5078497,False,27.26528574,14.4351,9.150992263,2.396149915,1,False,False,True,True,,True
+Control4C_candidate,7121,Retained Control4C,355.0409684,False,27.84538267,13.9672,14.36959652,1.267221103,2,False,False,True,True,,True
+Control4C_candidate,7123,Retained Control4C,328.4284631,False,27.73196467,14.0328,12.1615995,1.339399437,9,False,False,True,True,,True
+Control4C_candidate,7128,Retained Control4C,287.4105822,False,26.89356801,14.2312,9.800917924,4.738437092,0,True,False,True,True,,True
+Control4C_candidate,7144,Retained Control4C,82.50307603,False,23.96998397,14.2955,2.41206986,3.807784879,0,True,True,True,True,,True
+Control4C_candidate,7146,Retained Control4C,404.7010577,False,28.24629328,14.1872,14.44444951,3.920561396,0,True,False,True,True,,True
+Control4C_candidate,7158,Retained Control4C,116.6433353,True,24.99064107,14.7088,3.447031524,7.086373787,0,True,True,True,True,,True
+Control4C_candidate,7162,Retained Control4C,340.5662408,False,27.84113589,14.078,14.10556434,3.160176352,0,True,False,True,True,,True
+Control4C_candidate,7163,Retained Control4C,79.37487085,False,24.40970484,14.5332,2.353293094,1.611221562,2,False,True,True,True,,True
+Control4C_candidate,7183,Retained Control4C,323.257406,False,27.76603579,14.2599,10.74552627,2.357640838,1,False,False,True,True,,True
+Control4C_candidate,7184,Retained Control4C,151.565626,True,25.86817699,14.1999,4.719166596,2.924542588,1,False,True,False,True,,True
+Control4C_candidate,7185,Retained Control4C,110.0289943,True,25.0059727,14.181,3.4416248,1.051372715,4,False,True,False,True,,True
+Control4C_candidate,7186,Retained Control4C,564.0344581,False,28.26175071,13.298,25.47879533,5.313295015,0,True,False,True,True,,True
+Control4C_candidate,7197,Retained Control4C,204.1141873,True,26.99527699,13.4339,10.75597102,5.781702429,0,True,False,True,True,,True
+Control4C_candidate,7213,Retained Control4C,466.108124,False,28.22276927,13.7937,17.7902291,1.162920424,2,False,False,False,True,,True
+Control4C_candidate,7219,Retained Control4C,352.558301,False,28.0468357,14.4256,12.35224763,3.76085997,0,True,False,True,True,,True
+Control4C_candidate,7220,Retained Control4C,196.1343687,True,27.16263244,14.6513,6.904822935,1.346509425,4,False,False,True,True,,True
+Control4C_candidate,7224,Retained Control4C,354.0996729,False,27.45837216,14.6081,10.39522132,1.115193531,1,False,False,True,True,,True
+Control4C_candidate,7233,Retained Control4C,551.0357543,False,28.34969629,14.1069,16.93068568,3.739138777,0,True,False,True,True,,True
+Control4C_candidate,7240,Retained Control4C,278.8891661,False,26.87905519,14.3446,7.220582372,2.558424338,2,False,False,True,True,,True
+Control4C_candidate,7241,Retained Control4C,383.2776227,False,27.9249096,14.0116,16.20331382,2.066300739,3,False,False,True,True,,True
+Control4C_candidate,7256,Retained Control4C,295.8707868,False,27.22706286,14.6376,9.138416721,1.92194777,5,False,False,True,True,,True
+Control4C_candidate,7264,Retained Control4C,401.8215136,False,28.60036407,13.4561,23.50012718,2.420771331,3,False,False,True,True,,True
+Control4C_candidate,7269,Retained Control4C,374.3125826,False,27.74106016,14.5148,12.09346462,1.743119957,2,False,False,True,True,,True
+Control4C_candidate,7271,Retained Control4C,94.65349455,False,25.33626832,13.9223,4.322847918,2.487054059,1,False,True,True,True,,True
+Control4C_candidate,7274,Retained Control4C,365.9798526,False,27.79449814,13.7134,16.90987798,3.508041397,0,True,False,True,True,,True
+Control4C_candidate,7297,Retained Control4C,368.638113,False,28.37853445,14.5954,14.04963325,3.059578642,0,True,False,True,True,,True
+Control4C_candidate,7300,Retained Control4C,376.8046546,False,28.09433234,14.0561,14.15100547,0.8198741911,9,False,False,True,True,,True
+Control4C_candidate,7327,Retained Control4C,189.1085297,True,26.78110937,14.1571,7.41056075,0.2303498828,1,False,False,True,True,,True
+Control4C_candidate,7336,Retained Control4C,324.7296937,False,27.96848325,14.6575,12.09069888,1.01668616,1,False,False,True,True,,True
+Control4C_candidate,7339,Retained Control4C,469.4796973,False,28.30018351,13.3884,26.87901821,1.645852702,2,False,False,True,True,,True
+Control4C_candidate,7340,Retained Control4C,322.4406663,False,27.86477946,13.8183,14.4390016,0.8880129359,2,False,False,True,True,,True
+Control4C_candidate,7359,Retained Control4C,307.5522877,False,27.68558041,13.918,12.00206348,1.508299825,2,False,False,True,True,,True
+Control4C_candidate,7367,Retained Control4C,227.3491778,False,27.36307062,14.2935,9.099238116,1.968929753,3,False,False,True,True,,True
+Control4C_candidate,7372,Retained Control4C,531.1766541,False,28.42719348,14.3885,17.80371995,0.8524710022,17,False,False,True,True,,True
+Control4C_candidate,7386,Retained Control4C,208.2829146,True,27.23115009,14.2274,9.372904866,0.06343960146,7,False,False,True,True,,True
+Control4C_candidate,7404,Excluded by CG4 overlap,128.5071046,True,25.67035703,14.3208,4.427652146,4.571182775,0,True,True,True,True,,True
+Control4C_candidate,7407,Retained Control4C,342.5674035,False,28.0292673,13.8249,16.66081238,1.531138968,2,False,False,True,True,,True
+Control4C_candidate,7422,Retained Control4C,374.3335618,False,28.31154546,14.5241,12.21023541,2.047178929,1,False,False,True,True,,True
+Control4C_candidate,7425,Retained Control4C,297.5259214,False,27.59756538,13.0749,16.97819588,0.3667384293,1,False,False,False,True,,True
+Control4C_candidate,7436,Retained Control4C,412.5344769,False,28.21746724,14.1682,14.02301209,1.509632599,6,False,False,True,True,,True
+Control4C_candidate,7455,Retained Control4C,398.9451583,False,28.16022527,13.309,23.54602557,0.41331112,10,False,False,True,True,,True
+Control4C_candidate,9394,Retained Control4C,248.4292455,False,26.72594159,13.8261,7.962980504,5.109592886,0,True,False,True,True,,True
+Control4C_candidate,9578,Retained Control4C,605.8080003,False,28.50715702,14.1268,20.37010325,3.476833433,0,True,False,True,True,,True
+Control4C_candidate,9765,Retained Control4C,448.6440628,False,27.74448571,14.0626,15.3793972,4.327870236,0,True,False,True,True,,True
+Control4C_candidate,9774,Retained Control4C,264.2267436,False,26.66434449,13.3593,10.13022377,3.832175306,0,True,False,False,True,,True
+Control4C_candidate,9790,Retained Control4C,565.3972531,False,28.39884434,14.1333,18.73058903,0.9048939174,10,False,False,True,True,,True
+Control4C_candidate,9833,Retained Control4C,509.2132313,False,28.06052045,13.9662,15.96398763,3.201860767,0,True,False,True,True,,True
+Control4C_candidate,9869,Retained Control4C,629.7868442,False,28.49237303,14.0253,16.87634345,1.244233872,7,False,False,True,True,,True
+Control4C_candidate,9952,Excluded by CG4 overlap,117.8459761,True,24.71919923,13.7463,4.083878981,6.375121237,0,True,True,True,True,,True
+Control4C_candidate,9995,Retained Control4C,329.3899002,False,27.54284978,13.1121,18.05273278,5.196784626,0,True,False,True,True,,True
+Control4C_candidate,10027,Retained Control4C,406.9473103,False,27.74917149,14.0057,12.05804542,3.678920767,0,True,False,True,True,,True
+Control4C_candidate,10074,Retained Control4C,454.5209378,False,28.04250829,14.4476,15.97276543,2.233129782,1,False,False,True,True,,True
+Control4C_candidate,10120,Retained Control4C,491.9190413,False,28.05752765,14.2907,13.82629493,5.632032046,0,True,False,True,True,,True
+Control4C_candidate,10121,Retained Control4C,540.1686429,False,28.60586011,13.7517,23.0245022,1.529030884,3,False,False,True,True,,True
+Control4C_candidate,10163,Retained Control4C,323.7537186,False,27.27978425,13.2877,14.28875989,3.836379964,0,True,False,True,True,,True
+Control4C_candidate,10218,Retained Control4C,355.7431281,False,27.85795182,14.1431,13.68335625,0.5173661845,4,False,False,True,True,,True
+Control4C_candidate,10236,Retained Control4C,424.0535846,False,27.39620054,13.6608,15.52984701,5.976809196,0,True,False,True,True,,True
+Control4C_candidate,10247,Retained Control4C,469.0334613,False,28.27351119,14.0514,17.38999078,1.572128797,5,False,False,True,True,,True
+Control4C_candidate,10324,Retained Control4C,870.2658369,False,29.23933811,13.7836,32.41557777,1.966438287,1,False,False,True,True,,True
+Control4C_candidate,10423,Retained Control4C,323.1732281,False,27.46410138,14.3937,9.866484147,5.472403955,0,True,False,True,True,,True
+Control4C_candidate,10427,Retained Control4C,318.3726628,False,27.63713469,14.2257,10.72998986,0.3376107028,5,False,False,True,True,,True
+Control4C_candidate,10458,Retained Control4C,446.367883,False,28.48191864,14.3933,15.87726617,1.880826208,2,False,False,True,True,,True
+Control4C_candidate,10485,Retained Control4C,615.2023698,False,28.79577071,13.7996,22.86566114,1.155058509,12,False,False,True,True,,True
+Control4C_candidate,10497,Retained Control4C,574.1735358,False,28.48274567,14.6278,16.91092297,1.660598935,1,False,False,True,True,,True
+Control4C_candidate,10506,Retained Control4C,534.3772612,False,28.06868978,14.4475,14.45749866,1.244172827,6,False,False,True,True,,True
+Control4C_candidate,10574,Retained Control4C,462.0455039,False,27.97833743,14.6335,13.02327389,1.709402201,1,False,False,True,True,,True
+Control4C_candidate,10581,Retained Control4C,473.6088701,False,28.36777993,13.7118,17.93028965,4.00547448,0,True,False,True,True,,True
+Control4C_candidate,10610,Retained Control4C,406.3552698,False,27.32056058,14.1818,12.34016894,3.284872277,0,True,False,True,True,,True
+Control4C_candidate,10657,Retained Control4C,552.9429122,False,28.45606308,14.3432,16.37597259,2.260461164,3,False,False,True,True,,True
+Control4C_candidate,10673,Retained Control4C,443.9181909,False,27.71146982,14.4999,11.97918585,3.182395006,0,True,False,True,True,,True
+Control4C_candidate,10693,Retained Control4C,259.0459382,False,27.06264593,14.4924,8.108806153,10,0,True,False,True,True,,True
+Control4C_candidate,10757,Retained Control4C,216.893877,False,26.6665472,14.531,7.410405881,3.20510422,0,True,False,True,True,,True
+Control4C_candidate,10767,Retained Control4C,455.4859605,False,28.51115644,14.0657,18.71514591,1.466050803,10,False,False,True,True,,True
+Control4C_candidate,10806,Retained Control4C,287.626644,False,27.17469804,14.6044,7.674816312,2.982869956,1,False,False,True,True,,True
+Control4C_candidate,10811,Excluded by CG4 overlap,138.3373144,True,25.69511497,14.4366,4.855269315,5.050870939,0,True,True,True,True,,True
+Control4C_candidate,10818,Excluded by CG4 overlap,190.2322339,True,25.95033976,14.4217,5.675362518,10,0,True,True,True,True,,True
+Control4C_candidate,10843,Retained Control4C,240.7757592,False,26.93057391,14.6009,7.539251719,2.03614261,2,False,False,True,True,,True
+Control4C_candidate,10883,Retained Control4C,351.4240752,False,27.69074155,14.081,14.17411438,2.847803457,1,False,False,True,True,,True
+Control4C_candidate,10900,Retained Control4C,460.9848614,False,28.41779111,13.4007,25.4363812,1.22625301,2,False,False,True,True,,True
+Control4C_candidate,10908,Retained Control4C,244.4209347,False,27.45100446,14.5623,8.709169245,2.788336852,1,False,False,True,True,,True
+Control4C_candidate,10913,Retained Control4C,395.1694414,False,27.74748453,13.989,15.00944612,0.7086647705,5,False,False,True,True,,True
+Control4C_candidate,10914,Retained Control4C,356.0117067,False,27.74626549,14.1691,14.13851748,1.431521338,4,False,False,True,True,,True
+Control4C_candidate,10929,Retained Control4C,362.5550334,False,27.46386885,14.6689,10.33892549,1.01849225,1,False,False,True,True,,True
+Control4C_candidate,10955,Retained Control4C,238.3301641,False,27.35530566,13.4989,13.13891104,7.398825191,0,True,False,True,True,,True
+Control4C_candidate,10964,Retained Control4C,475.9513873,False,28.00503447,14.7874,13.32531406,1.248063983,16,False,False,True,True,,False
+Control4C_candidate,10990,Retained Control4C,263.0155618,False,27.19545899,14.2211,10.0584268,4.058205749,0,True,False,True,True,,True
+Control4C_candidate,10996,Excluded by CG4 overlap,183.3300506,True,26.07836749,14.0872,5.827095222,10,0,True,True,True,True,,True
+Control4C_candidate,11010,Excluded by CG4 overlap,177.7205952,True,26.12239372,14.1705,6.385812035,8.830647859,0,True,True,True,True,,True
+Control4C_candidate,11021,Retained Control4C,438.6043337,False,28.28882342,14.5042,14.49262193,1.392756984,2,False,False,True,True,,True
+Control4C_candidate,11071,Retained Control4C,273.8035199,False,27.14438123,14.3508,8.134417147,6.514690544,0,True,False,True,True,,True
+Control4C_candidate,11076,Retained Control4C,288.6948284,False,27.67146864,14.7078,8.967144115,6.380999479,0,True,False,True,True,,True
+Control4C_candidate,11078,Retained Control4C,492.7815394,False,28.24727811,14.0719,17.96825931,0.8881664641,3,False,False,True,True,,True
+Control4C_candidate,11108,Retained Control4C,231.5565423,False,26.57825232,14.2973,7.100571003,3.62062774,0,True,False,True,True,,True
+Control4C_candidate,11129,Retained Control4C,310.8034002,False,27.52609832,14.3058,9.949504577,0.7276465815,4,False,False,False,True,,True
+Control4C_candidate,11153,Retained Control4C,443.5633833,False,28.69175636,13.9528,19.50061579,1.610281055,4,False,False,True,True,,True
+Control4C_candidate,11175,Excluded by CG4 overlap,118.0209235,True,25.21018162,14.5118,3.460561406,5.459236489,0,True,True,True,True,,True
+Control4C_candidate,11198,Retained Control4C,421.0468137,False,27.87033264,14.0699,13.912529,1.858156996,6,False,False,True,True,,True
+Control4C_candidate,11252,Retained Control4C,222.6838588,False,27.23365547,14.0055,10.4024125,2.411550877,2,False,False,False,True,,True
+Control4C_candidate,11265,Retained Control4C,374.3620468,False,27.474052,13.6927,13.81764608,0.929410063,6,False,False,True,True,,True
+Control4C_candidate,11278,Retained Control4C,330.8074562,False,28.27137714,14.269,13.46817163,2.562498933,1,False,False,True,True,,True
+Control4C_candidate,11305,Retained Control4C,201.2254989,True,27.09999555,14.5984,6.95175153,6.083429902,0,True,False,True,True,,True
+Control4C_candidate,11370,Retained Control4C,276.6955938,False,27.83668833,14.6333,9.563085819,6.584081032,0,True,False,True,True,,True
+Control4C_candidate,11562,Retained Control4C,268.5324696,False,27.63387988,14.1906,10.90027533,1.103640737,12,False,False,True,True,,True

@@ -1,0 +1,98 @@
+spec,sample,term,beta,se,low,high,p,formula,warning,n,quartets,hosts,cg_n,cg_quartets,cg_hosts,control_n,control_quartets,control_hosts
+single_xc,CG4,Intercept,0.08498765902,0.2027061894,-0.3209244837,0.4908998017,0.6765982017,elliptical ~ xc + m,,157,59,58,157,59,58,0,0,0
+single_xc,CG4,xc,-2.454235465,0.7722403737,-4.00062014,-0.9078507903,0.002395699848,elliptical ~ xc + m,,157,59,58,157,59,58,0,0,0
+single_xc,CG4,m,1.942795249,0.4612504676,1.01915712,2.866433379,9.104130052e-05,elliptical ~ xc + m,,157,59,58,157,59,58,0,0,0
+single_xcm,CG4,Intercept,0.08889101741,0.1963774017,-0.3043479465,0.4821299813,0.6525161229,elliptical ~ xcm + m,,157,59,58,157,59,58,0,0,0
+single_xcm,CG4,xcm,-2.448822736,0.7568625355,-3.964413821,-0.9332316512,0.002023692973,elliptical ~ xcm + m,,157,59,58,157,59,58,0,0,0
+single_xcm,CG4,m,1.922787813,0.4684782134,0.9846763725,2.860899254,0.0001306379632,elliptical ~ xcm + m,,157,59,58,157,59,58,0,0,0
+single_xc,RG4,Intercept,-0.7371382536,0.4501252038,-1.639584952,0.1653084445,0.107313989,elliptical ~ xc + m,,142,55,55,0,0,0,142,55,55
+single_xc,RG4,xc,-0.2819899606,1.394138783,-3.077069932,2.513090011,0.8404671736,elliptical ~ xc + m,,142,55,55,0,0,0,142,55,55
+single_xc,RG4,m,1.511251816,0.4150877878,0.6790509072,2.343452724,0.0006095772646,elliptical ~ xc + m,,142,55,55,0,0,0,142,55,55
+single_xcm,RG4,Intercept,-0.6486460318,0.4080152666,-1.466667389,0.1693753255,0.1177273343,elliptical ~ xcm + m,,142,55,55,0,0,0,142,55,55
+single_xcm,RG4,xcm,-0.5422564655,1.274405292,-3.097285239,2.012772308,0.6721649438,elliptical ~ xcm + m,,142,55,55,0,0,0,142,55,55
+single_xcm,RG4,m,1.52311337,0.4149507047,0.6911872963,2.355039443,0.0005554827605,elliptical ~ xcm + m,,142,55,55,0,0,0,142,55,55
+single_xc,Control4B,Intercept,-0.2695847804,0.1075430059,-0.480743262,-0.0584262987,0.01241785199,elliptical ~ xc + m,,1772,677,677,0,0,0,1772,677,677
+single_xc,Control4B,xc,-1.039786722,0.2479216494,-1.526575784,-0.5529976587,3.10573684e-05,elliptical ~ xc + m,,1772,677,677,0,0,0,1772,677,677
+single_xc,Control4B,m,1.316220678,0.1275538179,1.065771379,1.566669978,2.778722441e-23,elliptical ~ xc + m,,1772,677,677,0,0,0,1772,677,677
+single_xcm,Control4B,Intercept,-0.2762969284,0.1046779257,-0.481829884,-0.07076397277,0.008494385155,elliptical ~ xcm + m,,1772,677,677,0,0,0,1772,677,677
+single_xcm,Control4B,xcm,-1.025800967,0.2394161266,-1.495889611,-0.5557123233,2.096517154e-05,elliptical ~ xcm + m,,1772,677,677,0,0,0,1772,677,677
+single_xcm,Control4B,m,1.315572187,0.127608383,1.065015749,1.566128624,3.026420242e-23,elliptical ~ xcm + m,,1772,677,677,0,0,0,1772,677,677
+single_xc,Control4C,Intercept,-0.079944889,0.06642337165,-0.210365124,0.05047534596,0.2291775558,elliptical ~ xc + m,,1744,679,679,0,0,0,1744,679,679
+single_xc,Control4C,xc,-1.344018963,0.2071677786,-1.750786486,-0.9372514395,1.682789316e-10,elliptical ~ xc + m,,1744,679,679,0,0,0,1744,679,679
+single_xc,Control4C,m,1.128849984,0.1171872024,0.8987565376,1.35894343,1.138734668e-20,elliptical ~ xc + m,,1744,679,679,0,0,0,1744,679,679
+single_xcm,Control4C,Intercept,-0.08048171586,0.06520404502,-0.2085078407,0.04754440899,0.2175167034,elliptical ~ xcm + m,,1744,679,679,0,0,0,1744,679,679
+single_xcm,Control4C,xcm,-1.366979016,0.202711463,-1.764996701,-0.9689613306,3.313999217e-11,elliptical ~ xcm + m,,1744,679,679,0,0,0,1744,679,679
+single_xcm,Control4C,m,1.128000587,0.1172007591,0.8978805227,1.358120651,1.223224268e-20,elliptical ~ xcm + m,,1744,679,679,0,0,0,1744,679,679
+full_no_compactness,CG4–Control4C,Intercept,-0.5156840797,4.937975632,-10.20994564,9.178577485,0.9168548708,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,1901,738,734,157,59,58,1744,679,679
+full_no_compactness,CG4–Control4C,cg,0.658575786,0.1631502924,0.3382782133,0.9788733586,5.992983795e-05,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,1901,738,734,157,59,58,1744,679,679
+full_no_compactness,CG4–Control4C,m,1.133864428,0.1268004295,0.884929111,1.382799745,3.072844996e-18,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,1901,738,734,157,59,58,1744,679,679
+full_no_compactness,CG4–Control4C,z_numeric,-1.514138097,7.505460077,-16.24889958,13.22062339,0.8401773604,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,1901,738,734,157,59,58,1744,679,679
+full_no_compactness,CG4–Control4C,log_group_luminosity,-0.004183102105,0.4518329406,-0.8912240752,0.882857871,0.9926157515,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,1901,738,734,157,59,58,1744,679,679
+full_no_compactness,CG4–Control4C,velocity_dispersion,0.001456100567,0.0004580056281,0.0005569413394,0.002355259795,0.001538815821,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,1901,738,734,157,59,58,1744,679,679
+window_no_compactness,CG4–Control4C,Intercept,-4.52850664,8.801131421,-21.87211269,12.81509941,0.6073839796,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+window_no_compactness,CG4–Control4C,cg,0.2405065293,0.2051059126,-0.1636774303,0.6446904889,0.242203055,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+window_no_compactness,CG4–Control4C,m,0.966788477,0.2189391662,0.5353445563,1.398232398,1.566101267e-05,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+window_no_compactness,CG4–Control4C,z_numeric,-14.06045902,13.33018079,-40.3290594,12.20814137,0.2926605605,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+window_no_compactness,CG4–Control4C,log_group_luminosity,0.4507386583,0.8089436589,-1.143374583,2.044851899,0.5779511261,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+window_no_compactness,CG4–Control4C,velocity_dispersion,7.932291807e-05,0.0006848227138,-0.001270196228,0.001428842064,0.9078911583,elliptical ~ cg + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+common_slope,CG4–Control4C,Intercept,-4.690407806,9.145851673,-22.71332336,13.33250775,0.6085648501,elliptical ~ cg + xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+common_slope,CG4–Control4C,cg,0.1953506726,0.2037455156,-0.2061524736,0.5968538188,0.3386945438,elliptical ~ cg + xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+common_slope,CG4–Control4C,xc,-2.182330772,0.9538190198,-4.061936987,-0.3027245562,0.02307087603,elliptical ~ cg + xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+common_slope,CG4–Control4C,m,0.9662128248,0.2193857857,0.5338887908,1.398536859,1.645292271e-05,elliptical ~ cg + xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+common_slope,CG4–Control4C,z_numeric,-14.5599822,13.09555252,-40.36622153,11.24625714,0.2674046309,elliptical ~ cg + xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+common_slope,CG4–Control4C,log_group_luminosity,0.4606785254,0.8407240776,-1.196061557,2.117418608,0.5842687788,elliptical ~ cg + xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+common_slope,CG4–Control4C,velocity_dispersion,-0.0001248551306,0.000700462505,-0.001505194221,0.00125548396,0.8586903324,elliptical ~ cg + xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+interaction,CG4–Control4C,Intercept,-5.154277959,9.126800744,-23.13965155,12.83109563,0.5728150928,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+interaction,CG4–Control4C,cg,0.1004368945,0.2385812045,-0.3697138423,0.5705876313,0.6741764401,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+interaction,CG4–Control4C,xc,-1.964763338,1.072472621,-4.07818964,0.1486629636,0.06828014649,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+interaction,CG4–Control4C,cg:xc,-1.410464547,1.999161152,-5.350033425,2.529104331,0.4812146423,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+interaction,CG4–Control4C,m,0.9601856502,0.2195952528,0.5274488381,1.392922462,1.881075377e-05,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+interaction,CG4–Control4C,z_numeric,-13.92825412,13.15694515,-39.85547445,11.99896621,0.2909114169,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+interaction,CG4–Control4C,log_group_luminosity,0.5022277049,0.8389949238,-1.151104888,2.155560298,0.550040243,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+interaction,CG4–Control4C,velocity_dispersion,-0.0001442999988,0.0007042879238,-0.001532177501,0.001243577504,0.8378458467,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+minimal_interaction,CG4–Control4C,Intercept,0.3402207681,0.4556629579,-0.5577136513,1.238155187,0.4560577736,elliptical ~ cg * xc + m + z_numeric,,575,226,225,122,45,44,453,181,181
+minimal_interaction,CG4–Control4C,cg,0.1211305443,0.2332740917,-0.3385619376,0.5808230263,0.6040902054,elliptical ~ cg * xc + m + z_numeric,,575,226,225,122,45,44,453,181,181
+minimal_interaction,CG4–Control4C,xc,-1.99006963,1.07352695,-4.105573605,0.1254343445,0.06508714135,elliptical ~ cg * xc + m + z_numeric,,575,226,225,122,45,44,453,181,181
+minimal_interaction,CG4–Control4C,cg:xc,-1.235856646,2.015351909,-5.207331208,2.735617916,0.5403521859,elliptical ~ cg * xc + m + z_numeric,,575,226,225,122,45,44,453,181,181
+minimal_interaction,CG4–Control4C,m,1.036723014,0.1924397623,0.657499109,1.415946919,1.80607709e-07,elliptical ~ cg * xc + m + z_numeric,,575,226,225,122,45,44,453,181,181
+minimal_interaction,CG4–Control4C,z_numeric,-13.80717195,13.12497458,-39.67139073,12.05704683,0.293943589,elliptical ~ cg * xc + m + z_numeric,,575,226,225,122,45,44,453,181,181
+exclude_sigma,CG4–Control4C,Intercept,-4.652114428,8.700446397,-21.79730946,12.49308061,0.5933887958,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity,,575,226,225,122,45,44,453,181,181
+exclude_sigma,CG4–Control4C,cg,0.1084412631,0.233248944,-0.3512016626,0.5680841888,0.6424429259,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity,,575,226,225,122,45,44,453,181,181
+exclude_sigma,CG4–Control4C,xc,-1.947101899,1.065606783,-4.046998306,0.1527945085,0.06899672792,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity,,575,226,225,122,45,44,453,181,181
+exclude_sigma,CG4–Control4C,cg:xc,-1.385872247,1.989961251,-5.3073117,2.535567206,0.4868804986,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity,,575,226,225,122,45,44,453,181,181
+exclude_sigma,CG4–Control4C,m,0.9627809604,0.2184277869,0.5323447694,1.393217151,1.620311123e-05,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity,,575,226,225,122,45,44,453,181,181
+exclude_sigma,CG4–Control4C,z_numeric,-14.01709935,13.18379169,-39.99722376,11.96302506,0.288832936,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity,,575,226,225,122,45,44,453,181,181
+exclude_sigma,CG4–Control4C,log_group_luminosity,0.4541723763,0.7958827632,-1.114202921,2.022547673,0.5688073185,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity,,575,226,225,122,45,44,453,181,181
+quadratic_mass,CG4–Control4C,Intercept,-7.053117067,9.368530726,-25.51484641,11.40861227,0.4523293275,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion + I(m**2),,575,226,225,122,45,44,453,181,181
+quadratic_mass,CG4–Control4C,cg,0.05396281538,0.253435507,-0.4454599727,0.5533856034,0.8315789281,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion + I(m**2),,575,226,225,122,45,44,453,181,181
+quadratic_mass,CG4–Control4C,xc,-2.007709129,1.078545207,-4.133102137,0.1176838782,0.06398387111,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion + I(m**2),,575,226,225,122,45,44,453,181,181
+quadratic_mass,CG4–Control4C,cg:xc,-1.147619108,2.066185981,-5.219267849,2.924029633,0.5791557058,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion + I(m**2),,575,226,225,122,45,44,453,181,181
+quadratic_mass,CG4–Control4C,m,0.9231694525,0.2311955097,0.4675730469,1.378765858,8.846381679e-05,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion + I(m**2),,575,226,225,122,45,44,453,181,181
+quadratic_mass,CG4–Control4C,z_numeric,-12.0667339,13.36641939,-38.40674645,14.27327866,0.3676204434,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion + I(m**2),,575,226,225,122,45,44,453,181,181
+quadratic_mass,CG4–Control4C,log_group_luminosity,0.6992743241,0.8619159311,-0.9992266573,2.397775306,0.4180533416,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion + I(m**2),,575,226,225,122,45,44,453,181,181
+quadratic_mass,CG4–Control4C,velocity_dispersion,-0.0003562868942,0.0007137291051,-0.001762769292,0.001050195504,0.6181349915,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion + I(m**2),,575,226,225,122,45,44,453,181,181
+quadratic_mass,CG4–Control4C,I(m ** 2),-1.636124971,0.4219052608,-2.467536102,-0.8047138394,0.0001384678131,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion + I(m**2),,575,226,225,122,45,44,453,181,181
+median_interaction,CG4–Control4C,Intercept,-3.92453837,9.063849633,-21.78585981,13.93678307,0.6654400867,elliptical ~ cg * xcm + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+median_interaction,CG4–Control4C,cg,0.1514860698,0.2321463582,-0.3059840881,0.6089562278,0.5147184072,elliptical ~ cg * xcm + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+median_interaction,CG4–Control4C,xcm,-2.713520985,0.9864507177,-4.657431582,-0.7696103885,0.006431267491,elliptical ~ cg * xcm + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+median_interaction,CG4–Control4C,cg:xcm,-0.813170239,2.013022088,-4.780053631,3.153713153,0.6866312357,elliptical ~ cg * xcm + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+median_interaction,CG4–Control4C,m,0.9661120472,0.2203509573,0.5318860354,1.400338059,1.788851733e-05,elliptical ~ cg * xcm + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+median_interaction,CG4–Control4C,z_numeric,-15.4083597,13.1931386,-41.40690324,10.59018384,0.2440858453,elliptical ~ cg * xcm + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+median_interaction,CG4–Control4C,log_group_luminosity,0.3920797824,0.8336122138,-1.250645583,2.034805148,0.638570932,elliptical ~ cg * xcm + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+median_interaction,CG4–Control4C,velocity_dispersion,-0.0002469085805,0.0007025775126,-0.001631415528,0.001137598367,0.7255942347,elliptical ~ cg * xcm + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+joint_satellite_support,CG4–Control4C,Intercept,-9.660334877,9.647547453,-28.68546707,9.36479732,0.3178916341,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,494,200,199,122,45,44,372,155,155
+joint_satellite_support,CG4–Control4C,cg,0.03353389405,0.2389117459,-0.4376042445,0.5046720326,0.8885174464,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,494,200,199,122,45,44,372,155,155
+joint_satellite_support,CG4–Control4C,xc,-1.769332738,1.224031499,-4.183144248,0.6444787726,0.1498994766,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,494,200,199,122,45,44,372,155,155
+joint_satellite_support,CG4–Control4C,cg:xc,-1.571204942,2.06467966,-5.642789318,2.500379433,0.4475671145,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,494,200,199,122,45,44,372,155,155
+joint_satellite_support,CG4–Control4C,m,0.8095368233,0.2581760452,0.3004091498,1.318664497,0.001976142101,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,494,200,199,122,45,44,372,155,155
+joint_satellite_support,CG4–Control4C,z_numeric,-31.89323365,16.26129707,-63.96079569,0.1743283857,0.05124634455,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,494,200,199,122,45,44,372,155,155
+joint_satellite_support,CG4–Control4C,log_group_luminosity,0.9811193892,0.8882421037,-0.7705095638,2.732748342,0.2706894492,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,494,200,199,122,45,44,372,155,155
+joint_satellite_support,CG4–Control4C,velocity_dispersion,-0.0004469378338,0.001069874775,-0.00255674959,0.001662873922,0.6765841813,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,494,200,199,122,45,44,372,155,155
+without_shared_hosts,CG4–Control4C,Intercept,-5.758108871,9.168563701,-23.82711328,12.31089553,0.5306344507,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,568,223,222,116,43,42,452,180,180
+without_shared_hosts,CG4–Control4C,cg,0.1028160289,0.2382935724,-0.366802523,0.5724345809,0.6665487818,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,568,223,222,116,43,42,452,180,180
+without_shared_hosts,CG4–Control4C,xc,-1.984347263,1.072680744,-4.098339564,0.1296450387,0.06566363928,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,568,223,222,116,43,42,452,180,180
+without_shared_hosts,CG4–Control4C,cg:xc,-1.141371415,2.233053702,-5.542175999,3.25943317,0.6097731988,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,568,223,222,116,43,42,452,180,180
+without_shared_hosts,CG4–Control4C,m,0.9377447869,0.2194675933,0.5052276513,1.370261923,2.869166467e-05,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,568,223,222,116,43,42,452,180,180
+without_shared_hosts,CG4–Control4C,z_numeric,-14.15212381,13.12953913,-40.02724537,11.72299775,0.2822605143,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,568,223,222,116,43,42,452,180,180
+without_shared_hosts,CG4–Control4C,log_group_luminosity,0.5590237018,0.8427087335,-1.101749819,2.219797222,0.5077880056,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,568,223,222,116,43,42,452,180,180
+without_shared_hosts,CG4–Control4C,velocity_dispersion,-0.0002394697344,0.0007125470303,-0.001643726262,0.001164786794,0.7371326528,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,568,223,222,116,43,42,452,180,180

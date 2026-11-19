@@ -363,8 +363,8 @@ def _plot_balance(before, after, path):
     variables = list(before)
     y = np.arange(len(variables))
     fig, ax = plt.subplots(figsize=(7.2, 0.62 * len(variables) + 1.8))
-    ax.scatter([abs(before[v]) for v in variables], y, s=42, label="Before", color="#A74752")
-    ax.scatter([abs(after[v]) for v in variables], y, s=42, label="After", color="#25876E")
+    ax.scatter([abs(before[v]) for v in variables], y, s=76, label="Before", color="#A74752")
+    ax.scatter([abs(after[v]) for v in variables], y, s=76, label="After", color="#25876E")
     ax.axvline(0.1, color="0.35", linestyle=":", linewidth=1.2,
                label="0.1 balance guide")
     ax.set_yticks(y, [COVARIATE_LABELS.get(v, v) for v in variables], fontsize=18)

@@ -1,0 +1,7 @@
+spec,radius_caliper,pool_cg,pool_cc,complete_cg,complete_cc,admissible_edges,admissible_cg,admissible_cc,matched_cg,matched_cc
+without_compactness_full,,62,703,53,594,4871,53,557,53,53
+without_compactness_same_pool,,48,187,42,152,1025,42,132,42,42
+compactness_matched,0.08,48,187,42,152,442,41,110,41,41
+tighter_radius,0.05,48,187,42,152,275,41,100,41,41
+wider_radius,0.12,48,187,42,152,629,41,122,41,41
+velocity_balanced,0.08,48,187,42,152,272,41,95,41,41

@@ -178,11 +178,10 @@ def _plot_availability(availability_counts, path):
     ax.tick_params(axis="y", labelsize=10)
     for row in range(len(samples)):
         for column in range(len(quantities)):
-            item = availability_counts.get(samples[row], {}).get(quantities[column], {})
             ax.text(
                 column,
                 row,
-                f"{100 * matrix[row, column]:.1f}%",
+                f"{100 * matrix[row, column]:.0f}%",
                 ha="center",
                 va="center",
                 color="white" if matrix[row, column] < 0.55 else "black",

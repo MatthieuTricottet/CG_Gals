@@ -1,0 +1,8 @@
+stage,in_overlap,n,mu_median,ratio_median,n_pass_isolation,n_pass_SB,n_pass_appearance,n_pass_velocity,n_Tempel_all
+CG4,False,14,24.16421332,4.727074555,13,14,14,14,14
+CG4,True,48,25.58206306,3.591720816,42,47,45,48,48
+Excluded Lim 3688,False,1,27.17330655,2.649711895,0,0,1,0,1
+Excluded by CG4 overlap,False,21,24.71246022,3.44926353,12,15,21,21,21
+Excluded by CG4 overlap,True,40,25.62639907,3.789947264,35,39,40,40,40
+Retained Control4C,False,516,27.52762415,1.517006622,83,52,501,512,516
+Retained Control4C,True,187,25.61853025,1.730564878,21,152,181,184,187

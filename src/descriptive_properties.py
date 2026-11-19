@@ -117,10 +117,14 @@ def compute_property_trends(frame: pd.DataFrame) -> pd.DataFrame:
 
 
 def plot_property_trends(trends: pd.DataFrame, filename: str) -> None:
-    """Four properties (rows) for BGGs (left) and satellites (right)."""
+    """Plot rank-split trends or the pooled trends from older results."""
 
     # explicit default style: an earlier module may have set a seaborn style
     with plt.style.context("default"):
+        if "scope" not in trends or trends["scope"].eq("all").all():
+            _plot_pooled_property_trends(trends, filename)
+            return
+
         fig, axes = plt.subplots(
             len(FIGURE_ROWS), len(FIGURE_SCOPES), figsize=(7.1, 8.0),
             sharex=True, sharey="row",
@@ -151,9 +155,31 @@ def plot_property_trends(trends: pd.DataFrame, filename: str) -> None:
                 axes[0, 0].plot(
                     [], [], color=style["colour"], linestyle="none",
                     marker=style["marker"], markersize=4.3,
+                    markeredgecolor="black", markeredgewidth=0.7,
                     label=SAMPLE_LABELS[sample_name],
                 )
         finish_binned_figure(fig, axes, filename, ylabel="")
+
+
+def _plot_pooled_property_trends(trends: pd.DataFrame, filename: str) -> None:
+    fig, axes = plt.subplots(2, 2, figsize=(7.1, 5.3))
+    displayed = trends.loc[trends["displayed"]]
+    titles = (
+        "(a) Strong H$\\alpha$ emission fraction (EW $\\leq -3$ \u00c5)",
+        "(b) AGN-like fraction (BPT-classified)",
+        r"(c) Median $D_n4000$",
+        r"(d) Median $\log_{10}(R_{e,r}/{\rm kpc})$",
+    )
+    for ax, title, (panel, _, _, ylim) in zip(axes.flat, titles, FIGURE_ROWS):
+        draw_binned_series(ax, displayed.loc[displayed["panel"] == panel])
+        ax.set_title(title, fontsize=9)
+        if ylim is not None:
+            ax.set_ylim(*ylim)
+    axes[0, 0].set_ylabel("Fraction", fontsize=9)
+    axes[1, 0].set_ylabel("Median", fontsize=9)
+    for ax in axes[:, -1]:
+        ax.tick_params(axis="y", labelleft=False, labelright=True)
+    finish_binned_figure(fig, axes, filename, ylabel="")
 
 
 def run_descriptive_properties(data, output_dir: str | None = None) -> dict:

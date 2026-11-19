@@ -1,0 +1,17 @@
+sample,kind,galaxies,quartets,hosts,HMCGs
+Control4C,any,185,58,58,56
+Control4C,N_ne_4,147,43,43,41
+Control4C,flagged,14,5,5,5
+Control4C,N_eq_4,38,15,15,15
+Control4B,any,166,67,67,65
+Control4B,N_ne_4,129,46,46,44
+Control4B,flagged,11,5,5,5
+Control4B,N_eq_4,37,21,21,21
+RG4,any,4,2,2,2
+RG4,N_ne_4,3,1,1,1
+RG4,flagged,0,0,0,0
+RG4,N_eq_4,1,1,1,1
+all_controls,any,221,127,67,65
+all_controls,N_ne_4,173,90,46,44
+all_controls,flagged,17,10,5,5
+all_controls,N_eq_4,48,37,21,21

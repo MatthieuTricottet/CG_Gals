@@ -1,0 +1,3 @@
+sample,n,hosts,within_other_90,within_other_full,both_central_90,hosts_both_central_90,from_kpc,to_kpc,n_100_150,n_150_200,n_200_250
+CG4,62,60,52,62,48,46,95.24601753,215.8601063,22,24,5
+Control4C,703,703,217,249,187,187,95.24601753,215.8601063,73,79,91

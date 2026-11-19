@@ -177,7 +177,7 @@
   {We test whether the galaxies of compact groups of four members (\CG) differ from those of regular groups of four members (\RG), from the four brightest members of regular groups (\CB), and from the projected cores formed by the brightest group galaxy and its three nearest projected companions (\CC).}
   {For <<CG4_Groups_nonsplit_N>> non-split \CG{} systems we combine Galaxy Zoo~1 morphologies, stellar masses, specific star-formation rates, emission-line diagnostics, spectral indices, and seeing-corrected half-light radii. Each control is compared separately with covariate-adjusted models, galaxy- and group-level matching, and comparisons within shared host groups.}
   {The clearest difference is morphological. At fixed stellar mass, redshift, rank, and group properties, \CG{} galaxies are more often in the Galaxy Zoo~1 E class, especially their satellites, whose odds ratios are \(<< ab_sat_cb.get('cg4_odds_ratio')|fmt(2) >>\), \(<< ab_sat_cc.get('cg4_odds_ratio')|fmt(2) >>\), and \(<< ab_sat_rg.get('cg4_odds_ratio')|fmt(2) >>\) against \CB{}, \CC{}, and \RG{}. Matched quartets show the same ordering: the excess of early-type-like satellites is significant against \CB{} and \RG{}, and has the same sign but is not significant against \CC{} (\(\Delta = << pc4c.get('delta_smooth_satellite_fraction')|fmt(2) >>\), \(p = << pc4c.get('p_permutation')|fmt(3) >>\)). Within shared hosts, the \CG{} association is substantially attenuated after accounting for host-centric radius, although its interval permits a non-negligible residual association. Morphology accounts for part of the satellite-quenching contrast; simultaneous adjustment leaves a residual association against \CB{} but not clearly against \CC{} or \RG{}. Other star-formation, colour, AGN-like, magnitude-gap, and size diagnostics show no comparably robust offsets.}
-  {In this population, compact groups of four galaxies host a population shifted towards early-type-like satellite morphologies. The quenching evidence that remains at fixed morphology is control-dependent and does not establish a compact-group-specific causal mechanism.}
+  {The satellites of compact groups of four galaxies are more likely to be early-type compared to those in our control group samples. The quenching evidence that remains at fixed morphology is control-dependent and does not establish a compact-group-specific causal mechanism.}
 
    \keywords{galaxies: groups: general -- galaxies: evolution -- galaxies: interactions -- galaxies: star formation -- galaxies: elliptical and lenticular, cD -- methods: statistical}
 
@@ -185,7 +185,11 @@
 
 <% macro p_from_fmt(fmt, label='p') -%><% set text = (fmt|string)|replace('$', '')|trim -%>\(<< label >><% if text.startswith('<') %><< text >><% else %> = << text >><% endif %>\)<%- endmacro %>
 <% macro pval_text(x, nd=3) -%><% if x is none -%>\(p\) unavailable<% elif x < 0.0001 -%>\(p<10^{-4}\)<% elif x < 0.001 -%>\(p = << gu.latex_number(x, precision=2, math_mode=False) >>\)<% elif x < 0.01 -%>\(p = << x|fmt(3) >>\)<% else -%>\(p = << x|fmt(nd) >>\)<% endif -%><% endmacro %>
-<% macro pshort(x) -%><% if x is none -%>---<% elif x < 0.0001 -%>\(<10^{-4}\)<% elif x < 0.001 -%>\(<< gu.latex_number(x, precision=2, math_mode=False) >>\)<% else -%>\(<< x|fmt(3) >>\)<% endif -%><% endmacro %>
+<% macro pshort(x, label='') -%>
+<% if x is none -%>---<% else -%>
+\(<< label >><% if x < 0.0001 %><10^{-4}<% else %><% if label %> = <% endif %><< gu.latex_number(x, precision=2, math_mode=False) if x < 0.001 else x|fmt(3) >><% endif %>\)
+<%- endif -%>
+<% endmacro %>
 <% macro or_ci(m, nd=2) -%>\(<< m.get('cg4_odds_ratio')|fmt(nd) >>\) (95\% CI \([<< m.get('cg4_ci95')[0]|fmt(nd) >>, << m.get('cg4_ci95')[1]|fmt(nd) >>]\))<%- endmacro %>
 <% macro qlabel_short(q) -%><% if q.key == 'sSFR' -%>\(\log_{10}\mathrm{sSFR}\)<% elif q.key == 'M_r' -%>\(M_r\)<% else -%>\(\log M_\star\)<% endif -%><% endmacro %>
 
@@ -220,7 +224,7 @@ The three control samples are built from Lim--Tempel groups satisfying the same 
     \tabcolsep=4pt
     \begin{tabular}{lrrr}
         \hline\hline
-        Sample & Groups & Galaxies & \(\langle R_{ij}\rangle\) (kpc) \\
+        Sample & \multicolumn{1}{c}{Groups} & \multicolumn{1}{c}{Galaxies} & \multicolumn{1}{c}{\(\langle R_{ij}\rangle\) (kpc)} \\
         \hline
 <% for tex, s, ng, nga in [('\\CG', 'CG4', CG4_Groups_nonsplit_N, CG4_Gals_nonsplit_N), ('\\CB', 'Control4B', Control4B_Groups_N, Control4B_Gals_N), ('\\CC', 'Control4C', Control4C_Groups_N, Control4C_Gals_N), ('\\RG', 'RG4', RG4_Groups_N, RG4_Gals_N)] %>
         << tex >>{} & << ng >> & << nga >> & <% if csum.get(s) %><< csum[s]['median_R_pair_med_kpc']|fmt(0) >> (<< csum[s]['q25_R_pair_med_kpc']|fmt(0) >>--<< csum[s]['q75_R_pair_med_kpc']|fmt(0) >>)<% else %>---<% endif %> \\
@@ -265,7 +269,7 @@ The independence unit is the \emph{physical} Lim group: standard errors are clus
     \label{tab:sSFR_status}
     \begin{tabular}{lrrr}
         \hline\hline
-            Sample & Quenched & Star-forming & No sSFR \\
+            Sample & \multicolumn{1}{c}{Quenched} & \multicolumn{1}{c}{Star-forming} & \multicolumn{1}{c}{No sSFR} \\
             \hline
 <% for tex, s in [('\\CG', 'CG4'), ('\\CB', 'Control4B'), ('\\CC', 'Control4C'), ('\\RG', 'RG4')] %>
 <% set all_M = r[s ~ '_BGG_NNosSFR'] + r[s ~ '_Sat_NNosSFR'] %>
@@ -289,15 +293,15 @@ The independence unit is the \emph{physical} Lim group: standard errors are clus
     \centering
     \caption{Morphology-class counts}
     \label{tab:morphologies}
-    \begin{tabular}{lrrrr}
+    \begin{tabular}{lrrr@{\ }rr}
         \hline\hline
-            \textbf{Sample} & \textbf{GZ1 E} & \textbf{GZ1 S} & \textbf{Unc.} & \textbf{No GZ} \\
+            \textbf{Sample} & \multicolumn{1}{c}{\textbf{GZ1 E}} & \multicolumn{1}{c}{\textbf{GZ1 S}} & \multicolumn{2}{c}{\textbf{Unc.}} & \multicolumn{1}{c}{\textbf{No GZ}} \\
             \hline
-            \CG &  <<CG4_Gals_N_Elliptical>>  (<<CG4_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<CG4_Gals_N_Spiral>>  (<<CG4_Gals_fraction_Spiral_pc|fmt(0)>>\%)&  <<CG4_Gals_N_Uncertain>>  (<<CG4_Gals_fraction_Uncertain_pc|fmt(0)>>\%) & <<CG4_Gals_N_NoGZ>> (<<CG4_Gals_fraction_NoGZ_pc|fmt(0)>>\%) \\
-            \CB &  <<Control4B_Gals_N_Elliptical>>  (<<Control4B_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<Control4B_Gals_N_Spiral>>  (<<Control4B_Gals_fraction_Spiral_pc|fmt(0)>>\%) &  <<Control4B_Gals_N_Uncertain>>  (<<Control4B_Gals_fraction_Uncertain_pc|fmt(0)>>\%) & <<Control4B_Gals_N_NoGZ>> (<<Control4B_Gals_fraction_NoGZ_pc|fmt(0)>>\%) \\
-            \CC &  <<Control4C_Gals_N_Elliptical>>  (<<Control4C_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<Control4C_Gals_N_Spiral>>  (<<Control4C_Gals_fraction_Spiral_pc|fmt(0)>>\%) &  <<Control4C_Gals_N_Uncertain>>  (<<Control4C_Gals_fraction_Uncertain_pc|fmt(0)>>\%) & <<Control4C_Gals_N_NoGZ>> (<<Control4C_Gals_fraction_NoGZ_pc|fmt(0)>>\%) \\
-            \RG &  <<RG4_Gals_N_Elliptical>>  (<<RG4_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<RG4_Gals_N_Spiral>>  (<<RG4_Gals_fraction_Spiral_pc|fmt(0)>>\%) &  <<RG4_Gals_N_Uncertain>>  (<<RG4_Gals_fraction_Uncertain_pc|fmt(0)>>\%)& <<RG4_Gals_N_NoGZ>> (<<RG4_Gals_fraction_NoGZ_pc|fmt(0)>>\%)\\
-            \emph{SDSS ref.} &  \emph{<<SDSS_N_Elliptical>> (<<SDSS_fraction_Elliptical_pc|fmt(0)>>\%)} &  \emph{<<SDSS_N_Spiral>>  (<<SDSS_fraction_Spiral_pc|fmt(0)>>\%)} &  \emph{<<SDSS_N_Uncertain>>  (<<SDSS_fraction_Uncertain_pc|fmt(0)>>\%)} & \emph{<<SDSS_N_NoGZ>> (<<SDSS_fraction_NoGZ_pc|fmt(0)>>\%)}\\
+            \CG &  <<CG4_Gals_N_Elliptical>>  (<<CG4_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<CG4_Gals_N_Spiral>>  (<<CG4_Gals_fraction_Spiral_pc|fmt(0)>>\%)&  <<CG4_Gals_N_Uncertain>> & (<<CG4_Gals_fraction_Uncertain_pc|fmt(0)>>\%) & <<CG4_Gals_N_NoGZ>> (<<CG4_Gals_fraction_NoGZ_pc|fmt(0)>>\%) \\
+            \CB &  <<Control4B_Gals_N_Elliptical>>  (<<Control4B_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<Control4B_Gals_N_Spiral>>  (<<Control4B_Gals_fraction_Spiral_pc|fmt(0)>>\%) &  <<Control4B_Gals_N_Uncertain>> & (<<Control4B_Gals_fraction_Uncertain_pc|fmt(0)>>\%) & <<Control4B_Gals_N_NoGZ>> (<<Control4B_Gals_fraction_NoGZ_pc|fmt(0)>>\%) \\
+            \CC &  <<Control4C_Gals_N_Elliptical>>  (<<Control4C_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<Control4C_Gals_N_Spiral>>  (<<Control4C_Gals_fraction_Spiral_pc|fmt(0)>>\%) &  <<Control4C_Gals_N_Uncertain>> & (<<Control4C_Gals_fraction_Uncertain_pc|fmt(0)>>\%) & <<Control4C_Gals_N_NoGZ>> (<<Control4C_Gals_fraction_NoGZ_pc|fmt(0)>>\%) \\
+            \RG &  <<RG4_Gals_N_Elliptical>>  (<<RG4_Gals_fraction_Elliptical_pc|fmt(0)>>\%) &  <<RG4_Gals_N_Spiral>>  (<<RG4_Gals_fraction_Spiral_pc|fmt(0)>>\%) &  <<RG4_Gals_N_Uncertain>> & (<<RG4_Gals_fraction_Uncertain_pc|fmt(0)>>\%)& <<RG4_Gals_N_NoGZ>> (<<RG4_Gals_fraction_NoGZ_pc|fmt(0)>>\%)\\
+            \emph{SDSS ref.} &  \emph{<<SDSS_N_Elliptical>> (<<SDSS_fraction_Elliptical_pc|fmt(0)>>\%)} &  \emph{<<SDSS_N_Spiral>>  (<<SDSS_fraction_Spiral_pc|fmt(0)>>\%)} &  \emph{<<SDSS_N_Uncertain>>} & \emph{(<<SDSS_fraction_Uncertain_pc|fmt(0)>>\%)} & \emph{<<SDSS_N_NoGZ>> (<<SDSS_fraction_NoGZ_pc|fmt(0)>>\%)}\\
         \hline
     \end{tabular}
     \tablefoot{Percentages use each sample's final row count. Inferential E/S comparisons condition on the usable E/S subset. ``No GZ'' denotes missing vote fractions and is distinct from finite-vote uncertain classifications. The SDSS reference is for orientation only.}
@@ -309,7 +313,8 @@ The mass-binned view separates BGGs from satellites and shows that the E-class e
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{<< mass_trends.get('figure') >>}
-    \caption{Morphology and quenched fractions versus stellar mass. Rows show BGG E/S fractions, satellite E/S fractions, and quenched BGG/satellite fractions. All six panels use edges \(<< mass_trends.get('mass_bins', [])|join(', ') >>\); points are placed at the median mass in each bin. Binomial uncertainties are drawn with G.~Mamon's \texttt{binomialerrorplot}; empty/full bins use its one-sided Wilson limits. Bins with fewer than five galaxies or three physical groups are omitted.}
+    \caption{Morphology and quenched fractions versus stellar mass. Rows show BGG E/S fractions, satellite E/S fractions, and quenched BGG/satellite fractions. All six panels use edges \(<< mass_trends.get('mass_bins', [])|join(', ') >>\); points are placed at the median mass in each bin. The
+    uncertainties are binomial. Bins with fewer than five galaxies or three physical groups are omitted.}
     \label{fig:mass_trends}
 \end{figure*}
 <% endif %>
@@ -333,16 +338,16 @@ In the pooled model over the deduplicated control catalogues (Appendix~\ref{app:
     \label{tab:adjusted_models}
     \small
     \tabcolsep=3pt
-    \begin{tabular}{llllrr}
+    \begin{tabular}{lllr@{\ }rrr}
     \hline\hline
-    Outcome & Population & Control & \(N\) (hosts) & \CG{} odds ratio (95\% CI) & \(p\) \\
+    Outcome & \multicolumn{1}{c}{Population} & \multicolumn{1}{c}{Control} & \multicolumn{2}{c}{\(N\) (hosts)} & \multicolumn{1}{c}{\CG{} odds ratio (95\% CI)} & \multicolumn{1}{c}{\(p\)} \\
     \hline
 <% for outcome_key, outcome_label in [('elliptical', 'E versus S'), ('quenched', 'Quenched versus star-forming')] %>
 <% for pop_key, pop_label in [('all', 'All galaxies'), ('satellites', 'Satellites')] %>
 <% for ctrl_key, ctrl_label in [('Control4B', '\\CB{}'), ('Control4C', '\\CC{}'), ('RG4', '\\RG{}')] %>
 <% set model = pcx.get('contrasts', {}).get(ctrl_key, {}).get(outcome_key ~ '_' ~ pop_key, {}) %>
 <% if model.get('status') == 'ok' %>
-    << outcome_label if loop.index == 1 else '' >> & << pop_label if loop.index == 1 else '' >> & << ctrl_label >> & << model.get('n') >> (<< model.get('n_clusters') >>) & \(<< model.get('cg4_odds_ratio')|fmt(2) >>\;[<< model.get('cg4_ci95')[0]|fmt(2) >>,<< model.get('cg4_ci95')[1]|fmt(2) >>]\) & << pshort(model.get('cg4_p')) >> \\
+    << outcome_label if loop.index == 1 else '' >> & << pop_label if loop.index == 1 else '' >> & << ctrl_label >> & << model.get('n') >> & (<< model.get('n_clusters') >>) & \(<< model.get('cg4_odds_ratio')|fmt(2) >>\;[<< model.get('cg4_ci95')[0]|fmt(2) >>,<< model.get('cg4_ci95')[1]|fmt(2) >>]\) & << pshort(model.get('cg4_p')) >> \\
 <% endif %>
 <% endfor %>
     \addlinespace[2pt]
@@ -352,7 +357,7 @@ In the pooled model over the deduplicated control catalogues (Appendix~\ref{app:
 <% for ctrl_key, ctrl_label in [('Control4B', '\\CB{}'), ('Control4C', '\\CC{}'), ('RG4', '\\RG{}')] %>
 <% set model = pcx.get('contrasts', {}).get(ctrl_key, {}).get('quenched_satellites_morphology_adjusted', {}) %>
 <% if model.get('status') == 'ok' %>
-    << 'Quenched versus star-forming' if loop.index == 1 else '' >> & << 'Satellites; + GZ1 E/S' if loop.index == 1 else '' >> & << ctrl_label >> & << model.get('n') >> (<< model.get('n_clusters') >>) & \(<< model.get('cg4_odds_ratio')|fmt(2) >>\;[<< model.get('cg4_ci95')[0]|fmt(2) >>,<< model.get('cg4_ci95')[1]|fmt(2) >>]\) & << pshort(model.get('cg4_p')) >> \\
+    << 'Quenched versus star-forming' if loop.index == 1 else '' >> & << 'Satellites; + GZ1 E/S' if loop.index == 1 else '' >> & << ctrl_label >> & << model.get('n') >> & (<< model.get('n_clusters') >>) & \(<< model.get('cg4_odds_ratio')|fmt(2) >>\;[<< model.get('cg4_ci95')[0]|fmt(2) >>,<< model.get('cg4_ci95')[1]|fmt(2) >>]\) & << pshort(model.get('cg4_p')) >> \\
 <% endif %>
 <% endfor %>
     \hline
@@ -371,7 +376,7 @@ Whole compact groups contain more E-class satellites than matched ordinary group
 \tabcolsep=3pt
 \begin{tabular}{lrrrr}
 \hline\hline
-Control & Pairs & \(\Delta\) & 95\% CI & \(p_{\rm perm}\) \\
+Control & \multicolumn{1}{c}{Pairs} & \multicolumn{1}{c}{\(\Delta\)} & \multicolumn{1}{c}{95\% CI} & \multicolumn{1}{c}{\(p_{\rm perm}\)} \\
 \hline
 <% for ctrl_label in ['Control4B', 'Control4C', 'RG4'] %>
 <% set pc = m_pc.get(ctrl_label, {}) %>
@@ -432,7 +437,7 @@ The early-type-like excess is concentrated among the compact groups that live in
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{fig_cg4_classes.pdf}
-    \caption{Mass-binned satellite E-class fractions. Panels use the common broad mass bins shown above each axis; points and bars give class fractions and descriptive Wilson 95\% intervals, with classified-galaxy and contributing-group counts.}
+    \caption{Mass-binned satellite E-class fractions. Panels use the common broad mass bins shown above each axis. Points show E-class fractions and bars show one binomial standard error on either side. Labels give the numbers of classified galaxies and contributing groups.}
     \label{fig:cg4_classes}
 \end{figure}
 
@@ -499,7 +504,7 @@ The morphology excess does not depend on the vote threshold, on the classifier, 
 \tabcolsep=2pt
 \begin{tabular}{@{}p{0.43\columnwidth}p{0.55\columnwidth}@{}}
 \hline\hline
-Test & Result \\
+Test & \multicolumn{1}{>{\centering\arraybackslash}p{0.55\columnwidth}@{}}{Result} \\
 \hline
 <% if crowd.get('status') == 'ok' %>
 <% set crowd_c4c_list = crowd_rows|selectattr('sample', 'equalto', 'Control4C')|list %>
@@ -508,19 +513,19 @@ Test & Result \\
 <% set crowd_c4c_ell_list = crowd_tests|selectattr('control', 'equalto', 'Control4C')|selectattr('outcome', 'equalto', 'elliptical')|list %>
 <% set crowd_c4c_ell = crowd_c4c_ell_list|first if crowd_c4c_ell_list|length > 0 else {} %>
 <% set crowd_model_ell = crowd.get('adjusted_models_with_close_flag', {}).get('elliptical', {}) %>
-\makecell[l]{55-arcsec neighbour\\exclusion} & \makecell[l]{all-row E: << crowd_cg.get('elliptical_fraction_after_excluding_close')|pct(1) >>\% / << crowd_c4c.get('elliptical_fraction_after_excluding_close')|pct(1) >>\%\\(\CG / \CC); E/S Fisher\\<< pval_text(crowd_c4c_ell.get('p_value')) >>} \\[2pt]
+\makecell[l]{55-arcsec neighbour\\exclusion} & \makecell[l]{all-row E: << crowd_cg.get('elliptical_fraction_after_excluding_close')|pct(1) >>\% / << crowd_c4c.get('elliptical_fraction_after_excluding_close')|pct(1) >>\%\\(\CG / \CC); E/S Fisher\\<< pval_text(crowd_c4c_ell.get('p_value')) >>} \\[4pt]
 <% if crowd_model_ell.get('status') == 'ok' %>
-\makecell[l]{Add close-neighbour\\flag to model} & \makecell[l]{\CG{} OR \(<< crowd_model_ell.get('cg4_odds_ratio')|fmt(2) >>\) \([<< crowd_model_ell.get('cg4_ci95')[0]|fmt(2) >>, << crowd_model_ell.get('cg4_ci95')[1]|fmt(2) >>]\);\\<< pval_text(crowd_model_ell.get('cg4_p')) >>} \\[2pt]
+\makecell[l]{Add close-neighbour\\flag to model} & \makecell[l]{\CG{} OR \(<< crowd_model_ell.get('cg4_odds_ratio')|fmt(2) >>\) \([<< crowd_model_ell.get('cg4_ci95')[0]|fmt(2) >>, << crowd_model_ell.get('cg4_ci95')[1]|fmt(2) >>]\);\\<< pval_text(crowd_model_ell.get('cg4_p')) >>} \\[4pt]
 <% endif %>
 <% endif %>
 <% if t10_early.get('same_direction') %>
-DS18 \(T\mathrm{Type}\leq0\) & \makecell[l]{OR << t10_cb.get('model', {}).get('cg4_odds_ratio')|fmt(2) >> / << t10_cc.get('model', {}).get('cg4_odds_ratio')|fmt(2) >> / << t10_rg.get('model', {}).get('cg4_odds_ratio')|fmt(2) >>\\(\CB{} / \CC{} / \RG{});\\all \(p\leq<< t10_cc.get('model', {}).get('cg4_p')|fmt(3) >>\)} \\[2pt]
+DS18 \(T\mathrm{Type}\leq0\) & \makecell[l]{OR << t10_cb.get('model', {}).get('cg4_odds_ratio')|fmt(2) >> / << t10_cc.get('model', {}).get('cg4_odds_ratio')|fmt(2) >> / << t10_rg.get('model', {}).get('cg4_odds_ratio')|fmt(2) >>\\(\CB{} / \CC{} / \RG{});\\all \(p\leq<< t10_cc.get('model', {}).get('cg4_p')|fmt(3) >>\)} \\[4pt]
 <% endif %>
 <% if sweep.get('status') == 'ok' %>
-Threshold sweep 0.4--0.8 & OR \(<< sweep.get('or_range')[0]|fmt(2) >>\)--\(<< sweep.get('or_range')[1]|fmt(2) >>\) \\[2pt]
-Continuous \(p_E\) offset & \makecell[l]{\(<< sweep.get('continuous', {}).get('cg4_coefficient')|fmt(3) >>\) \([<< sweep.get('continuous', {}).get('cg4_ci95')[0]|fmt(3) >>, << sweep.get('continuous', {}).get('cg4_ci95')[1]|fmt(3) >>]\);\\<< pval_text(sweep.get('continuous', {}).get('cg4_p')) >>} \\[2pt]
+Threshold sweep 0.4--0.8 & OR \(<< sweep.get('or_range')[0]|fmt(2) >>\)--\(<< sweep.get('or_range')[1]|fmt(2) >>\) \\[4pt]
+Continuous \(p_E\) offset & \makecell[l]{\(<< sweep.get('continuous', {}).get('cg4_coefficient')|fmt(3) >>\) \([<< sweep.get('continuous', {}).get('cg4_ci95')[0]|fmt(3) >>, << sweep.get('continuous', {}).get('cg4_ci95')[1]|fmt(3) >>]\);\\<< pval_text(sweep.get('continuous', {}).get('cg4_p')) >>} \\[4pt]
 <% if sersic.get('cg4_odds_ratio') %>
-S\'ersic \(n_g > 2.5\) & OR \(<< sersic.get('cg4_odds_ratio')|fmt(2) >>\); << pval_text(sersic.get('cg4_p')) >> \\[2pt]
+S\'ersic \(n_g > 2.5\) & OR \(<< sersic.get('cg4_odds_ratio')|fmt(2) >>\); << pval_text(sersic.get('cg4_p')) >> \\[4pt]
 <% endif %>
 <% endif %>
 <% if t3.get('no_sigma_v') %>
@@ -629,7 +634,7 @@ Galaxies with a measured sSFR are divided into quenched and star-forming classes
 \begin{figure*}
     \centering
      \includegraphics[width=\textwidth]{sSFR_classification.pdf}
-     \caption{Galaxy Zoo morphology in sSFR--stellar-mass space for the SDSS non-AGN reference. Panels show the E, S, and uncertain classes. Solid class-specific contours enclose 20, 40, 60, 80, and 95\% of the density after display-only Gaussian smoothing with \(\sigma=1.25\) histogram bins; grey dotted contours show the smoothed full reference distribution, and the dashed curve is the unchanged adopted GMM boundary.}
+     \caption{Galaxy Zoo morphology in sSFR--stellar-mass space for the SDSS non-AGN reference. Panels show the E, S, and uncertain classes. Solid contours (red for E, blue for S, and grey for uncertain) enclose 20, 40, 60, 80, and 95\% of the density after display-only Gaussian smoothing with \(\sigma=1.25\) histogram bins; grey dotted contours show the smoothed full reference distribution, and the dashed curve is the unchanged adopted GMM boundary.}
      \label{fig:sSFR_classification}
 \end{figure*}
 
@@ -645,8 +650,8 @@ Because the missing-sSFR class could in principle hide differential quenching, T
 \tabcolsep=3pt
 \begin{tabular}{llrrrrr}
 \hline\hline
-Scope & Control & \multicolumn{2}{c}{Missing (\%)} & \(\Delta f_Q^{\rm obs}\) & min & max \\
- & & \CG{} & ctrl & & & \\
+Scope & \multicolumn{1}{c}{Control} & \multicolumn{2}{c}{Missing (\%)} & \multicolumn{1}{c}{\(\Delta f_Q^{\rm obs}\)} & \multicolumn{1}{c}{min} & \multicolumn{1}{c}{max} \\
+ & & \multicolumn{1}{c}{\CG{}} & \multicolumn{1}{c}{ctrl} & & & \\
 \hline
 <% for scope in ['all', 'satellites'] %>
 <% for ctl in ['Control4B', 'Control4C', 'RG4'] %>
@@ -667,11 +672,11 @@ Table~\ref{tab:quenched_by_morphology} gives descriptive quenched fractions at f
 \centering
 \caption{Conditional quenched fractions}
 \label{tab:quenched_by_morphology}
-\tabcolsep=2pt
+\tabcolsep=4pt
 \renewcommand{\arraystretch}{1.35}
 \begin{tabular}{lcccc}
 \hline\hline
- & \CG & \CB & \CC & \RG \\
+ & \multicolumn{1}{c}{\CG} & \multicolumn{1}{c}{\CB} & \multicolumn{1}{c}{\CC} & \multicolumn{1}{c}{\RG} \\
 \hline
 GZ1 E & \(\qEcgCell\) & \(\qEcbCell\) & \(\qEccCell\) & \(\qErgCell\) \\
 Spiral & \(\qSpcgCell\) & \(\qSpcbCell\) & \(\qSpccCell\) & \(\qSprgCell\) \\
@@ -684,10 +689,9 @@ Spiral & \(\qSpcgCell\) & \(\qSpcbCell\) & \(\qSpccCell\) & \(\qSprgCell\) \\
 \centering
 \caption{Quenched-fraction decomposition on a common morphology-available population}
 \label{tab:quenching_decomposition}
-\tabcolsep=4pt
 \begin{tabular}{lrrrr}
 \hline\hline
-Control & \(N_{\CG}/N_{\rm control}\) & Total \(\Delta f_{\rm Q}\) (95\% CI) & Morphology mix (95\% CI) & Conditional term (95\% CI) \\
+Control & \multicolumn{1}{c}{\(N_{\CG}/N_{\rm control}\)} & \multicolumn{1}{c}{Total \(\Delta f_{\rm Q}\) (95\% CI)} & \multicolumn{1}{c}{Morphology mix (95\% CI)} & \multicolumn{1}{c}{Conditional term (95\% CI)} \\
 \hline
 \CB{} & \(\nDecCGCB/\nDecCB\) & \(\rawCB\;[\rawCBlo,\rawCBhi]\) & \(\mixCB\;[\mixCBlo,\mixCBhi]\) & \(\condCB\;[\condCBlo,\condCBhi]\) \\
 \CC{} & \(\nDecCGCC/\nDecCC\) & \(\rawCC\;[\rawCClo,\rawCChi]\) & \(\mixCC\;[\mixCClo,\mixCChi]\) & \(\condCC\;[\condCClo,\condCChi]\) \\
@@ -709,15 +713,17 @@ The compact-group exclusion of Sect.~\ref{sec:samples} is not a technicality: fo
     \centering
     \caption{Compact-group overlap with would-be \CC{} quartets}
     \label{tab:cg_core_overlap}
-    \begin{tabular}{lccc}
+    \tabcolsep=4pt
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lrrr@{}}
         \hline\hline
-        \textbf{\CG{} class} & \textbf{\CG{} groups} & \textbf{Lim groups} & \textbf{Galaxies} \\
+        \textbf{\CG{} class} & \multicolumn{1}{c}{\makecell{\textbf{\CG{}}\\\textbf{groups}}} & \multicolumn{1}{c}{\makecell{\textbf{Lim}\\\textbf{groups}}} & \multicolumn{1}{c@{}}{\textbf{Galaxies}} \\
         \hline
 <% for class_name, row in overlap.get('by_class', {}).items() %>
-        << lu.display_label(class_name) >> & << row.get('n_cg4_groups') >> / << row.get('n_cg4_groups_total') >> & << row.get('n_lim_groups') >> & << row.get('n_galaxies') >> \\
+        << lu.display_label(class_name) >> & \makebox[1.1em][r]{<< row.get('n_cg4_groups') >>}\,/\,\makebox[1.1em][r]{<< row.get('n_cg4_groups_total') >>} & << row.get('n_lim_groups') >> & << row.get('n_galaxies') >> \\
 <% endfor %>
         \hline
-    \end{tabular}
+    \end{tabular*}
     \tablefoot{``\CG{} groups'' counts compact groups with at least one member inside a parent-group quartet, over the total number of compact groups of that class (split groups included, as in the exclusion).}
 \end{table}
 <% endif %>
@@ -867,7 +873,7 @@ We test whether the GZ1 E/S morphology mix is associated with three group-level 
 \tabcolsep=2pt
 \begin{tabular}{lccc}
 \hline\hline
-\makecell{Zheng--Shen\\class} & \makecell{All \CG{}\\E/S} & \makecell{\CG{} BGG\\E/S} & \makecell{\CG{} sat.\\E/S} \\
+\makecell[l]{Zheng--Shen\\class} & \multicolumn{1}{c}{\makecell{All \CG{}\\E/S}} & \multicolumn{1}{c}{\makecell{\CG{} BGG\\E/S}} & \multicolumn{1}{c}{\makecell{\CG{} sat.\\E/S}} \\
 \hline
 <% set cg_all_class = md.get('class_association', {}).get('CG4', {}).get('all', {}).get('contingency_table', []) %>
 <% set cg_bgg_class = md.get('class_association', {}).get('CG4', {}).get('bgg', {}).get('contingency_table', []) %>
@@ -888,7 +894,7 @@ We test whether the GZ1 E/S morphology mix is associated with three group-level 
 \tabcolsep=2pt
 \begin{tabular}{lcccc}
 \hline\hline
-Class & Groups & \(f_{\rm E}\) (all) & \(f_{\rm E}\) (sat.) & \(\log M_{200c}\) \\
+Class & \multicolumn{1}{c}{Groups} & \multicolumn{1}{c}{\(f_{\rm E}\) (all)} & \multicolumn{1}{c}{\(f_{\rm E}\) (sat.)} & \multicolumn{1}{c}{\(\log M_{200c}\)} \\
 \hline
 Isolated & \nGrIso & \(\feAllIso\) & \(\feSatIso\) & \lMIso \\
 Embedded & \nGrEmb & \(\feAllEmb\) & \(\feSatEmb\) & \lMEmb \\
@@ -905,7 +911,7 @@ Predominant & \nGrPre & \(\feAllPre\) & \(\feSatPre\) & \lMPre \\
 \tabcolsep=2pt
 \begin{tabular}{lllc}
 \hline\hline
-Subset & Sample & Test & Result \\
+Subset & \multicolumn{1}{c}{Sample} & \multicolumn{1}{c}{Test} & \multicolumn{1}{c}{Result} \\
 \hline
 <% for subset in ['all', 'bgg', 'satellites'] %>
 <% for sample in ['CG4', 'RG4'] %>
@@ -955,11 +961,11 @@ As an exploratory complement to the class comparison, Table~\ref{tab:battery} fi
 \tabcolsep=6pt
 \begin{tabular}{@{}lllll@{}}
 \hline\hline
-Descriptor & \CG{} & \CB{} & \CC{} & \RG{} \\
+Descriptor & \multicolumn{1}{c}{\CG{}} & \multicolumn{1}{c}{\CB{}} & \multicolumn{1}{c}{\CC{}} & \multicolumn{1}{c@{}}{\RG{}} \\
 \hline
 <% for key, spec in battery.get('descriptors', {}).items() %>
 <% if key != 'f_L_BGG_above_cg4_median' %>
-\(<< spec.label >>\) <% for s in ['CG4', 'Control4B', 'Control4C', 'RG4'] %><% set row = brows|selectattr('sample', 'equalto', s)|selectattr('descriptor', 'equalto', key)|list|first %>& <% if row and row.status == 'ok' %>\makecell[l]{<< row.odds_ratio|fmt(2) >> [<< row.ci95_low|fmt(2) >>, << row.ci95_high|fmt(2) >>]\\\(p_{\rm BH}\)=<< pshort(row.p_bh_battery) >>}<% else %>---<% endif %> <% endfor %>\\
+\(<< spec.label >>\) <% for s in ['CG4', 'Control4B', 'Control4C', 'RG4'] %><% set row = brows|selectattr('sample', 'equalto', s)|selectattr('descriptor', 'equalto', key)|list|first %>& <% if row and row.status == 'ok' %>\makecell[l]{<< row.odds_ratio|fmt(2) >> [<< row.ci95_low|fmt(2) >>, << row.ci95_high|fmt(2) >>]\\<< pshort(row.p_bh_battery, 'p_{\\rm BH}') >>}<% else %>---<% endif %> <% endfor %>\\
 \addlinespace[4pt]
 <% endif %>
 <% endfor %>

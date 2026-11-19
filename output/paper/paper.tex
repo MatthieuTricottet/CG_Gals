@@ -177,7 +177,7 @@
   {We test whether the galaxies of compact groups of four members (\CG) differ from those of regular groups of four members (\RG), from the four brightest members of regular groups (\CB), and from the projected cores formed by the brightest group galaxy and its three nearest projected companions (\CC).}
   {For 62 non-split \CG{} systems we combine Galaxy Zoo~1 morphologies, stellar masses, specific star-formation rates, emission-line diagnostics, spectral indices, and seeing-corrected half-light radii. Each control is compared separately with covariate-adjusted models, galaxy- and group-level matching, and comparisons within shared host groups.}
   {The clearest difference is morphological. At fixed stellar mass, redshift, rank, and group properties, \CG{} galaxies are more often in the Galaxy Zoo~1 E class, especially their satellites, whose odds ratios are \(2.63\), \(1.93\), and \(3.03\) against \CB{}, \CC{}, and \RG{}. Matched quartets show the same ordering: the excess of early-type-like satellites is significant against \CB{} and \RG{}, and has the same sign but is not significant against \CC{} (\(\Delta = 0.11\), \(p = 0.083\)). Within shared hosts, the \CG{} association is substantially attenuated after accounting for host-centric radius, although its interval permits a non-negligible residual association. Morphology accounts for part of the satellite-quenching contrast; simultaneous adjustment leaves a residual association against \CB{} but not clearly against \CC{} or \RG{}. Other star-formation, colour, AGN-like, magnitude-gap, and size diagnostics show no comparably robust offsets.}
-  {In this population, compact groups of four galaxies host a population shifted towards early-type-like satellite morphologies. The quenching evidence that remains at fixed morphology is control-dependent and does not establish a compact-group-specific causal mechanism.}
+  {The satellites of compact groups of four galaxies are more likely to be early-type compared to those in our control group samples. The quenching evidence that remains at fixed morphology is control-dependent and does not establish a compact-group-specific causal mechanism.}
 
    \keywords{galaxies: groups: general -- galaxies: evolution -- galaxies: interactions -- galaxies: star formation -- galaxies: elliptical and lenticular, cD -- methods: statistical}
 
@@ -220,7 +220,7 @@ The three control samples are built from Lim--Tempel groups satisfying the same 
     \tabcolsep=4pt
     \begin{tabular}{lrrr}
         \hline\hline
-        Sample & Groups & Galaxies & \(\langle R_{ij}\rangle\) (kpc) \\
+        Sample & \multicolumn{1}{c}{Groups} & \multicolumn{1}{c}{Galaxies} & \multicolumn{1}{c}{\(\langle R_{ij}\rangle\) (kpc)} \\
         \hline
 
         \CG{} & 62 & 248 & 143 (114--177) \\
@@ -271,7 +271,7 @@ The independence unit is the \emph{physical} Lim group: standard errors are clus
     \label{tab:sSFR_status}
     \begin{tabular}{lrrr}
         \hline\hline
-            Sample & Quenched & Star-forming & No sSFR \\
+            Sample & \multicolumn{1}{c}{Quenched} & \multicolumn{1}{c}{Star-forming} & \multicolumn{1}{c}{No sSFR} \\
             \hline
 
 
@@ -325,15 +325,15 @@ The independence unit is the \emph{physical} Lim group: standard errors are clus
     \centering
     \caption{Morphology-class counts}
     \label{tab:morphologies}
-    \begin{tabular}{lrrrr}
+    \begin{tabular}{lrrr@{\ }rr}
         \hline\hline
-            \textbf{Sample} & \textbf{GZ1 E} & \textbf{GZ1 S} & \textbf{Unc.} & \textbf{No GZ} \\
+            \textbf{Sample} & \multicolumn{1}{c}{\textbf{GZ1 E}} & \multicolumn{1}{c}{\textbf{GZ1 S}} & \multicolumn{2}{c}{\textbf{Unc.}} & \multicolumn{1}{c}{\textbf{No GZ}} \\
             \hline
-            \CG &  124  (50\%) &  86  (35\%)&  7  (3\%) & 31 (12\%) \\
-            \CB &  1106  (40\%) &  1266  (45\%) &  116  (4\%) & 304 (11\%) \\
-            \CC &  1118  (40\%) &  1229  (44\%) &  144  (5\%) & 321 (11\%) \\
-            \RG &  60  (27\%) &  129  (58\%) &  15  (7\%)& 20 (9\%)\\
-            \emph{SDSS ref.} &  \emph{10091 (19\%)} &  \emph{34715  (66\%)} &  \emph{7725  (15\%)} & \emph{0 (0\%)}\\
+            \CG &  124  (50\%) &  86  (35\%)&  7 & (3\%) & 31 (12\%) \\
+            \CB &  1106  (40\%) &  1266  (45\%) &  116 & (4\%) & 304 (11\%) \\
+            \CC &  1118  (40\%) &  1229  (44\%) &  144 & (5\%) & 321 (11\%) \\
+            \RG &  60  (27\%) &  129  (58\%) &  15 & (7\%)& 20 (9\%)\\
+            \emph{SDSS ref.} &  \emph{10091 (19\%)} &  \emph{34715  (66\%)} &  \emph{7725} & \emph{(15\%)} & \emph{0 (0\%)}\\
         \hline
     \end{tabular}
     \tablefoot{Percentages use each sample's final row count. Inferential E/S comparisons condition on the usable E/S subset. ``No GZ'' denotes missing vote fractions and is distinct from finite-vote uncertain classifications. The SDSS reference is for orientation only.}
@@ -345,7 +345,8 @@ The mass-binned view separates BGGs from satellites and shows that the E-class e
 \begin{figure*}
     \centering
     \includegraphics[width=\textwidth]{fig_mass_trends.pdf}
-    \caption{Morphology and quenched fractions versus stellar mass. Rows show BGG E/S fractions, satellite E/S fractions, and quenched BGG/satellite fractions. All six panels use edges \(7.0, 10.0, 10.5, 11.0, 12.5\); points are placed at the median mass in each bin. Binomial uncertainties are drawn with G.~Mamon's \texttt{binomialerrorplot}; empty/full bins use its one-sided Wilson limits. Bins with fewer than five galaxies or three physical groups are omitted.}
+    \caption{Morphology and quenched fractions versus stellar mass. Rows show BGG E/S fractions, satellite E/S fractions, and quenched BGG/satellite fractions. All six panels use edges \(7.0, 10.0, 10.5, 11.0, 12.5\); points are placed at the median mass in each bin. The
+    uncertainties are binomial. Bins with fewer than five galaxies or three physical groups are omitted.}
     \label{fig:mass_trends}
 \end{figure*}
 
@@ -369,44 +370,26 @@ In the pooled model over the deduplicated control catalogues (Appendix~\ref{app:
     \label{tab:adjusted_models}
     \small
     \tabcolsep=3pt
-    \begin{tabular}{llllrr}
+    \begin{tabular}{lllr@{\ }rrr}
     \hline\hline
-    Outcome & Population & Control & \(N\) (hosts) & \CG{} odds ratio (95\% CI) & \(p\) \\
+    Outcome & \multicolumn{1}{c}{Population} & \multicolumn{1}{c}{Control} & \multicolumn{2}{c}{\(N\) (hosts)} & \multicolumn{1}{c}{\CG{} odds ratio (95\% CI)} & \multicolumn{1}{c}{\(p\)} \\
     \hline
 
 
 
 
 
-    E versus S & All galaxies & \CB{} & 2582 (738) & \(2.14\;[1.58,2.90]\) & \(<10^{-4}\) \\
+    E versus S & All galaxies & \CB{} & 2582 & (738) & \(2.14\;[1.58,2.90]\) & \(<10^{-4}\) \\
 
 
 
 
-     &  & \CC{} & 2557 (740) & \(1.67\;[1.25,2.24]\) & \(5.9\times 10^{-4}\) \\
+     &  & \CC{} & 2557 & (740) & \(1.67\;[1.25,2.24]\) & \(5.9\times 10^{-4}\) \\
 
 
 
 
-     &  & \RG{} & 399 (113) & \(2.81\;[1.79,4.38]\) & \(<10^{-4}\) \\
-
-
-    \addlinespace[2pt]
-
-
-
-
-    E versus S & Satellites & \CB{} & 1929 (735) & \(2.63\;[1.88,3.68]\) & \(<10^{-4}\) \\
-
-
-
-
-     &  & \CC{} & 1901 (734) & \(1.93\;[1.40,2.66]\) & \(<10^{-4}\) \\
-
-
-
-
-     &  & \RG{} & 299 (113) & \(3.03\;[1.72,5.34]\) & \(1.3\times 10^{-4}\) \\
+     &  & \RG{} & 399 & (113) & \(2.81\;[1.79,4.38]\) & \(<10^{-4}\) \\
 
 
     \addlinespace[2pt]
@@ -414,19 +397,37 @@ In the pooled model over the deduplicated control catalogues (Appendix~\ref{app:
 
 
 
-
-
-    Quenched versus star-forming & All galaxies & \CB{} & 2842 (755) & \(1.80\;[1.26,2.58]\) & \(0.001\) \\
-
-
-
-
-     &  & \CC{} & 2851 (758) & \(1.25\;[0.91,1.71]\) & \(0.173\) \\
+    E versus S & Satellites & \CB{} & 1929 & (735) & \(2.63\;[1.88,3.68]\) & \(<10^{-4}\) \\
 
 
 
 
-     &  & \RG{} & 449 (115) & \(1.40\;[0.80,2.47]\) & \(0.238\) \\
+     &  & \CC{} & 1901 & (734) & \(1.93\;[1.40,2.66]\) & \(<10^{-4}\) \\
+
+
+
+
+     &  & \RG{} & 299 & (113) & \(3.03\;[1.72,5.34]\) & \(1.3\times 10^{-4}\) \\
+
+
+    \addlinespace[2pt]
+
+
+
+
+
+
+    Quenched versus star-forming & All galaxies & \CB{} & 2842 & (755) & \(1.80\;[1.26,2.58]\) & \(0.001\) \\
+
+
+
+
+     &  & \CC{} & 2851 & (758) & \(1.25\;[0.91,1.71]\) & \(0.173\) \\
+
+
+
+
+     &  & \RG{} & 449 & (115) & \(1.40\;[0.80,2.47]\) & \(0.238\) \\
 
 
     \addlinespace[2pt]
@@ -434,37 +435,37 @@ In the pooled model over the deduplicated control catalogues (Appendix~\ref{app:
 
 
 
-    Quenched versus star-forming & Satellites & \CB{} & 2146 (755) & \(2.16\;[1.51,3.09]\) & \(<10^{-4}\) \\
+    Quenched versus star-forming & Satellites & \CB{} & 2146 & (755) & \(2.16\;[1.51,3.09]\) & \(<10^{-4}\) \\
 
 
 
 
-     &  & \CC{} & 2151 (757) & \(1.38\;[1.00,1.90]\) & \(0.052\) \\
+     &  & \CC{} & 2151 & (757) & \(1.38\;[1.00,1.90]\) & \(0.052\) \\
 
 
 
 
-     &  & \RG{} & 340 (115) & \(1.85\;[0.99,3.46]\) & \(0.052\) \\
-
-
-    \addlinespace[2pt]
+     &  & \RG{} & 340 & (115) & \(1.85\;[0.99,3.46]\) & \(0.052\) \\
 
 
     \addlinespace[2pt]
 
 
-
-    Quenched versus star-forming & Satellites; + GZ1 E/S & \CB{} & 1914 (732) & \(1.85\;[1.13,3.02]\) & \(0.015\) \\
-
+    \addlinespace[2pt]
 
 
 
-     &  & \CC{} & 1890 (732) & \(1.29\;[0.83,2.01]\) & \(0.259\) \\
+    Quenched versus star-forming & Satellites; + GZ1 E/S & \CB{} & 1914 & (732) & \(1.85\;[1.13,3.02]\) & \(0.015\) \\
 
 
 
 
-     &  & \RG{} & 296 (112) & \(1.39\;[0.65,2.97]\) & \(0.393\) \\
+     &  & \CC{} & 1890 & (732) & \(1.29\;[0.83,2.01]\) & \(0.259\) \\
+
+
+
+
+     &  & \RG{} & 296 & (112) & \(1.39\;[0.65,2.97]\) & \(0.393\) \\
 
 
     \hline
@@ -483,7 +484,7 @@ Whole compact groups contain more E-class satellites than matched ordinary group
 \tabcolsep=3pt
 \begin{tabular}{lrrrr}
 \hline\hline
-Control & Pairs & \(\Delta\) & 95\% CI & \(p_{\rm perm}\) \\
+Control & \multicolumn{1}{c}{Pairs} & \multicolumn{1}{c}{\(\Delta\)} & \multicolumn{1}{c}{95\% CI} & \multicolumn{1}{c}{\(p_{\rm perm}\)} \\
 \hline
 
 
@@ -552,7 +553,7 @@ The early-type-like excess is concentrated among the compact groups that live in
 \begin{figure}
     \centering
     \includegraphics[width=\columnwidth]{fig_cg4_classes.pdf}
-    \caption{Mass-binned satellite E-class fractions. Panels use the common broad mass bins shown above each axis; points and bars give class fractions and descriptive Wilson 95\% intervals, with classified-galaxy and contributing-group counts.}
+    \caption{Mass-binned satellite E-class fractions. Panels use the common broad mass bins shown above each axis. Points show E-class fractions and bars show one binomial standard error on either side. Labels give the numbers of classified galaxies and contributing groups.}
     \label{fig:cg4_classes}
 \end{figure}
 
@@ -619,7 +620,7 @@ The morphology excess does not depend on the vote threshold, on the classifier, 
 \tabcolsep=2pt
 \begin{tabular}{@{}p{0.43\columnwidth}p{0.55\columnwidth}@{}}
 \hline\hline
-Test & Result \\
+Test & \multicolumn{1}{>{\centering\arraybackslash}p{0.55\columnwidth}@{}}{Result} \\
 \hline
 
 
@@ -628,19 +629,19 @@ Test & Result \\
 
 
 
-\makecell[l]{55-arcsec neighbour\\exclusion} & \makecell[l]{all-row E: 52.5\% / 40.1\%\\(\CG / \CC); E/S Fisher\\\(p = 0.002\)} \\[2pt]
+\makecell[l]{55-arcsec neighbour\\exclusion} & \makecell[l]{all-row E: 52.5\% / 40.1\%\\(\CG / \CC); E/S Fisher\\\(p = 0.002\)} \\[4pt]
 
-\makecell[l]{Add close-neighbour\\flag to model} & \makecell[l]{\CG{} OR \(1.76\) \([1.30, 2.39]\);\\\(p = 2.6\times 10^{-4}\)} \\[2pt]
-
-
-
-DS18 \(T\mathrm{Type}\leq0\) & \makecell[l]{OR 2.11 / 1.49 / 2.22\\(\CB{} / \CC{} / \RG{});\\all \(p\leq0.017\)} \\[2pt]
+\makecell[l]{Add close-neighbour\\flag to model} & \makecell[l]{\CG{} OR \(1.76\) \([1.30, 2.39]\);\\\(p = 2.6\times 10^{-4}\)} \\[4pt]
 
 
-Threshold sweep 0.4--0.8 & OR \(1.73\)--\(2.19\) \\[2pt]
-Continuous \(p_E\) offset & \makecell[l]{\(0.089\) \([0.047, 0.131]\);\\\(p<10^{-4}\)} \\[2pt]
 
-S\'ersic \(n_g > 2.5\) & OR \(1.60\); \(p = 0.002\) \\[2pt]
+DS18 \(T\mathrm{Type}\leq0\) & \makecell[l]{OR 2.11 / 1.49 / 2.22\\(\CB{} / \CC{} / \RG{});\\all \(p\leq0.017\)} \\[4pt]
+
+
+Threshold sweep 0.4--0.8 & OR \(1.73\)--\(2.19\) \\[4pt]
+Continuous \(p_E\) offset & \makecell[l]{\(0.089\) \([0.047, 0.131]\);\\\(p<10^{-4}\)} \\[4pt]
+
+S\'ersic \(n_g > 2.5\) & OR \(1.60\); \(p = 0.002\) \\[4pt]
 
 
 
@@ -749,7 +750,7 @@ Galaxies with a measured sSFR are divided into quenched and star-forming classes
 \begin{figure*}
     \centering
      \includegraphics[width=\textwidth]{sSFR_classification.pdf}
-     \caption{Galaxy Zoo morphology in sSFR--stellar-mass space for the SDSS non-AGN reference. Panels show the E, S, and uncertain classes. Solid class-specific contours enclose 20, 40, 60, 80, and 95\% of the density after display-only Gaussian smoothing with \(\sigma=1.25\) histogram bins; grey dotted contours show the smoothed full reference distribution, and the dashed curve is the unchanged adopted GMM boundary.}
+     \caption{Galaxy Zoo morphology in sSFR--stellar-mass space for the SDSS non-AGN reference. Panels show the E, S, and uncertain classes. Solid contours (red for E, blue for S, and grey for uncertain) enclose 20, 40, 60, 80, and 95\% of the density after display-only Gaussian smoothing with \(\sigma=1.25\) histogram bins; grey dotted contours show the smoothed full reference distribution, and the dashed curve is the unchanged adopted GMM boundary.}
      \label{fig:sSFR_classification}
 \end{figure*}
 
@@ -765,8 +766,8 @@ Because the missing-sSFR class could in principle hide differential quenching, T
 \tabcolsep=3pt
 \begin{tabular}{llrrrrr}
 \hline\hline
-Scope & Control & \multicolumn{2}{c}{Missing (\%)} & \(\Delta f_Q^{\rm obs}\) & min & max \\
- & & \CG{} & ctrl & & & \\
+Scope & \multicolumn{1}{c}{Control} & \multicolumn{2}{c}{Missing (\%)} & \multicolumn{1}{c}{\(\Delta f_Q^{\rm obs}\)} & \multicolumn{1}{c}{min} & \multicolumn{1}{c}{max} \\
+ & & \multicolumn{1}{c}{\CG{}} & \multicolumn{1}{c}{ctrl} & & & \\
 \hline
 
 
@@ -804,11 +805,11 @@ Table~\ref{tab:quenched_by_morphology} gives descriptive quenched fractions at f
 \centering
 \caption{Conditional quenched fractions}
 \label{tab:quenched_by_morphology}
-\tabcolsep=2pt
+\tabcolsep=4pt
 \renewcommand{\arraystretch}{1.35}
 \begin{tabular}{lcccc}
 \hline\hline
- & \CG & \CB & \CC & \RG \\
+ & \multicolumn{1}{c}{\CG} & \multicolumn{1}{c}{\CB} & \multicolumn{1}{c}{\CC} & \multicolumn{1}{c}{\RG} \\
 \hline
 GZ1 E & \(\qEcgCell\) & \(\qEcbCell\) & \(\qEccCell\) & \(\qErgCell\) \\
 Spiral & \(\qSpcgCell\) & \(\qSpcbCell\) & \(\qSpccCell\) & \(\qSprgCell\) \\
@@ -821,10 +822,9 @@ Spiral & \(\qSpcgCell\) & \(\qSpcbCell\) & \(\qSpccCell\) & \(\qSprgCell\) \\
 \centering
 \caption{Quenched-fraction decomposition on a common morphology-available population}
 \label{tab:quenching_decomposition}
-\tabcolsep=4pt
 \begin{tabular}{lrrrr}
 \hline\hline
-Control & \(N_{\CG}/N_{\rm control}\) & Total \(\Delta f_{\rm Q}\) (95\% CI) & Morphology mix (95\% CI) & Conditional term (95\% CI) \\
+Control & \multicolumn{1}{c}{\(N_{\CG}/N_{\rm control}\)} & \multicolumn{1}{c}{Total \(\Delta f_{\rm Q}\) (95\% CI)} & \multicolumn{1}{c}{Morphology mix (95\% CI)} & \multicolumn{1}{c}{Conditional term (95\% CI)} \\
 \hline
 \CB{} & \(\nDecCGCB/\nDecCB\) & \(\rawCB\;[\rawCBlo,\rawCBhi]\) & \(\mixCB\;[\mixCBlo,\mixCBhi]\) & \(\condCB\;[\condCBlo,\condCBhi]\) \\
 \CC{} & \(\nDecCGCC/\nDecCC\) & \(\rawCC\;[\rawCClo,\rawCChi]\) & \(\mixCC\;[\mixCClo,\mixCChi]\) & \(\condCC\;[\condCClo,\condCChi]\) \\
@@ -846,21 +846,23 @@ The compact-group exclusion of Sect.~\ref{sec:samples} is not a technicality: fo
     \centering
     \caption{Compact-group overlap with would-be \CC{} quartets}
     \label{tab:cg_core_overlap}
-    \begin{tabular}{lccc}
+    \tabcolsep=4pt
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lrrr@{}}
         \hline\hline
-        \textbf{\CG{} class} & \textbf{\CG{} groups} & \textbf{Lim groups} & \textbf{Galaxies} \\
+        \textbf{\CG{} class} & \multicolumn{1}{c}{\makecell{\textbf{\CG{}}\\\textbf{groups}}} & \multicolumn{1}{c}{\makecell{\textbf{Lim}\\\textbf{groups}}} & \multicolumn{1}{c@{}}{\textbf{Galaxies}} \\
         \hline
 
-        Embedded & 14 / 19 & 14 & 52 \\
+        Embedded & \makebox[1.1em][r]{14}\,/\,\makebox[1.1em][r]{19} & 14 & 52 \\
 
-        Isolated & 6 / 6 & 6 & 24 \\
+        Isolated & \makebox[1.1em][r]{6}\,/\,\makebox[1.1em][r]{6} & 6 & 24 \\
 
-        Predominant & 37 / 37 & 37 & 145 \\
+        Predominant & \makebox[1.1em][r]{37}\,/\,\makebox[1.1em][r]{37} & 37 & 145 \\
 
-        Split & 4 / 16 & 4 & 12 \\
+        Split & \makebox[1.1em][r]{4}\,/\,\makebox[1.1em][r]{16} & 4 & 12 \\
 
         \hline
-    \end{tabular}
+    \end{tabular*}
     \tablefoot{``\CG{} groups'' counts compact groups with at least one member inside a parent-group quartet, over the total number of compact groups of that class (split groups included, as in the exclusion).}
 \end{table}
 
@@ -1011,7 +1013,7 @@ We test whether the GZ1 E/S morphology mix is associated with three group-level 
 \tabcolsep=2pt
 \begin{tabular}{lccc}
 \hline\hline
-\makecell{Zheng--Shen\\class} & \makecell{All \CG{}\\E/S} & \makecell{\CG{} BGG\\E/S} & \makecell{\CG{} sat.\\E/S} \\
+\makecell[l]{Zheng--Shen\\class} & \multicolumn{1}{c}{\makecell{All \CG{}\\E/S}} & \multicolumn{1}{c}{\makecell{\CG{} BGG\\E/S}} & \multicolumn{1}{c}{\makecell{\CG{} sat.\\E/S}} \\
 \hline
 
 
@@ -1044,7 +1046,7 @@ Embedded & 41/22 & 11/5 & 30/17 \\
 \tabcolsep=2pt
 \begin{tabular}{lcccc}
 \hline\hline
-Class & Groups & \(f_{\rm E}\) (all) & \(f_{\rm E}\) (sat.) & \(\log M_{200c}\) \\
+Class & \multicolumn{1}{c}{Groups} & \multicolumn{1}{c}{\(f_{\rm E}\) (all)} & \multicolumn{1}{c}{\(f_{\rm E}\) (sat.)} & \multicolumn{1}{c}{\(\log M_{200c}\)} \\
 \hline
 Isolated & \nGrIso & \(\feAllIso\) & \(\feSatIso\) & \lMIso \\
 Embedded & \nGrEmb & \(\feAllEmb\) & \(\feSatEmb\) & \lMEmb \\
@@ -1061,7 +1063,7 @@ Predominant & \nGrPre & \(\feAllPre\) & \(\feSatPre\) & \lMPre \\
 \tabcolsep=2pt
 \begin{tabular}{lllc}
 \hline\hline
-Subset & Sample & Test & Result \\
+Subset & \multicolumn{1}{c}{Sample} & \multicolumn{1}{c}{Test} & \multicolumn{1}{c}{Result} \\
 \hline
 
 
@@ -1165,26 +1167,26 @@ As an exploratory complement to the class comparison, Table~\ref{tab:battery} fi
 \tabcolsep=6pt
 \begin{tabular}{@{}lllll@{}}
 \hline\hline
-Descriptor & \CG{} & \CB{} & \CC{} & \RG{} \\
+Descriptor & \multicolumn{1}{c}{\CG{}} & \multicolumn{1}{c}{\CB{}} & \multicolumn{1}{c}{\CC{}} & \multicolumn{1}{c@{}}{\RG{}} \\
 \hline
 
 
-\(\log\langle R_{ij}\rangle\) & \makecell[l]{0.65 [0.50, 0.84]\\\(p_{\rm BH}\)=\(0.005\)} & \makecell[l]{0.80 [0.72, 0.89]\\\(p_{\rm BH}\)=\(1.2\times 10^{-4}\)} & \makecell[l]{0.70 [0.63, 0.78]\\\(p_{\rm BH}\)=\(<10^{-4}\)} & \makecell[l]{0.92 [0.64, 1.34]\\\(p_{\rm BH}\)=\(0.757\)} \\
+\(\log\langle R_{ij}\rangle\) & \makecell[l]{0.65 [0.50, 0.84]\\\(p_{\rm BH} = 0.005\)} & \makecell[l]{0.80 [0.72, 0.89]\\\(p_{\rm BH} = 1.2\times 10^{-4}\)} & \makecell[l]{0.70 [0.63, 0.78]\\\(p_{\rm BH}<10^{-4}\)} & \makecell[l]{0.92 [0.64, 1.34]\\\(p_{\rm BH} = 0.757\)} \\
 \addlinespace[4pt]
 
 
 
-\(\sigma_v\) & \makecell[l]{0.90 [0.65, 1.25]\\\(p_{\rm BH}\)=\(0.736\)} & \makecell[l]{1.03 [0.93, 1.15]\\\(p_{\rm BH}\)=\(0.736\)} & \makecell[l]{1.21 [1.09, 1.35]\\\(p_{\rm BH}\)=\(0.002\)} & \makecell[l]{0.90 [0.61, 1.32]\\\(p_{\rm BH}\)=\(0.736\)} \\
+\(\sigma_v\) & \makecell[l]{0.90 [0.65, 1.25]\\\(p_{\rm BH} = 0.736\)} & \makecell[l]{1.03 [0.93, 1.15]\\\(p_{\rm BH} = 0.736\)} & \makecell[l]{1.21 [1.09, 1.35]\\\(p_{\rm BH} = 0.002\)} & \makecell[l]{0.90 [0.61, 1.32]\\\(p_{\rm BH} = 0.736\)} \\
 \addlinespace[4pt]
 
 
 
-\(f_{L,\rm BGG}\) & \makecell[l]{1.19 [0.88, 1.59]\\\(p_{\rm BH}\)=\(0.591\)} & \makecell[l]{1.02 [0.90, 1.16]\\\(p_{\rm BH}\)=\(0.784\)} & \makecell[l]{1.06 [0.95, 1.19]\\\(p_{\rm BH}\)=\(0.591\)} & \makecell[l]{1.19 [0.79, 1.81]\\\(p_{\rm BH}\)=\(0.736\)} \\
+\(f_{L,\rm BGG}\) & \makecell[l]{1.19 [0.88, 1.59]\\\(p_{\rm BH} = 0.591\)} & \makecell[l]{1.02 [0.90, 1.16]\\\(p_{\rm BH} = 0.784\)} & \makecell[l]{1.06 [0.95, 1.19]\\\(p_{\rm BH} = 0.591\)} & \makecell[l]{1.19 [0.79, 1.81]\\\(p_{\rm BH} = 0.736\)} \\
 \addlinespace[4pt]
 
 
 
-\(\log t_{\rm cross}\) & \makecell[l]{0.88 [0.66, 1.17]\\\(p_{\rm BH}\)=\(0.736\)} & \makecell[l]{0.87 [0.78, 0.97]\\\(p_{\rm BH}\)=\(0.030\)} & \makecell[l]{0.73 [0.65, 0.81]\\\(p_{\rm BH}\)=\(<10^{-4}\)} & \makecell[l]{0.99 [0.69, 1.43]\\\(p_{\rm BH}\)=\(0.978\)} \\
+\(\log t_{\rm cross}\) & \makecell[l]{0.88 [0.66, 1.17]\\\(p_{\rm BH} = 0.736\)} & \makecell[l]{0.87 [0.78, 0.97]\\\(p_{\rm BH} = 0.030\)} & \makecell[l]{0.73 [0.65, 0.81]\\\(p_{\rm BH}<10^{-4}\)} & \makecell[l]{0.99 [0.69, 1.43]\\\(p_{\rm BH} = 0.978\)} \\
 \addlinespace[4pt]
 
 

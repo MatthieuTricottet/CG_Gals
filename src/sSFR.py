@@ -623,14 +623,14 @@ def plot_classification(
     y_centres = 0.5 * (y_edges[:-1] + y_edges[1:])
 
     panels = [
-        (co.Morphologies[0], "E class"),
-        (co.Morphologies[1], "S class"),
-        (co.Morphologies[2], "Uncertain"),
+        (co.Morphologies[0], "E class", "Reds", "#982F37"),
+        (co.Morphologies[1], "S class", "Blues", "#285B8C"),
+        (co.Morphologies[2], "Uncertain", "Greys", "0.18"),
     ]
     fig, axes = plt.subplots(1, 3, figsize=fig_size, sharex=True, sharey=True)
     x_vals = np.linspace(x_range[0], x_range[1], 500)
     y_vals = f_interp(x_vals)
-    for ax, (morphology, title) in zip(axes.flat, panels):
+    for ax, (morphology, title, palette, contour_color) in zip(axes.flat, panels):
         ax.contour(
             x_centres,
             y_centres,
@@ -663,7 +663,7 @@ def plot_classification(
                 y_centres,
                 morph_density,
                 levels=filled_levels,
-                colors=("0.94", "0.88", "0.81", "0.73", "0.64"),
+                colors=plt.get_cmap(palette)(np.linspace(0.14, 0.45, 5)),
                 antialiased=True,
                 zorder=2,
             )
@@ -672,7 +672,7 @@ def plot_classification(
                 y_centres,
                 morph_density,
                 levels=morph_levels,
-                colors="0.18",
+                colors=contour_color,
                 linestyles="-",
                 linewidths=0.65,
                 zorder=3,
@@ -690,6 +690,7 @@ def plot_classification(
         )
         ax.set_title(
             f"{title} (N={n_morph:,})",
+            color=contour_color,
             fontsize=8.5,
             pad=2.0,
         )

@@ -1,0 +1,17 @@
+spec,term,beta,se,low,high,p,formula,warning,n,quartets,hosts,cg_n,cg_quartets,cg_hosts,control_n,control_quartets,control_hosts
+all,Intercept,-5.154277962,9.126800744,-23.13965155,12.83109562,0.5728150926,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+all,cg,0.1004368941,0.2385812046,-0.3697138427,0.5705876309,0.6741764413,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+all,xc,-1.964763335,1.07247262,-4.078189636,0.148662966,0.06828014683,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+all,cg:xc,-1.410464548,1.999161151,-5.350033426,2.529104329,0.4812146417,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+all,m,0.9601856502,0.2195952528,0.5274488381,1.392922462,1.881075377e-05,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+all,z_numeric,-13.92825413,13.15694515,-39.85547446,11.9989662,0.2909114166,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+all,log_group_luminosity,0.5022277052,0.8389949237,-1.151104888,2.155560298,0.5500402427,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+all,velocity_dispersion,-0.000144299999,0.0007042879239,-0.001532177502,0.001243577504,0.8378458465,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,575,226,225,122,45,44,453,181,181
+purged,Intercept,-2.758036282,9.630050214,-21.75046033,16.23438776,0.7748766275,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,501,197,196,122,45,44,379,152,152
+purged,cg,0.09270121024,0.2492996255,-0.3989685212,0.5843709417,0.7104108431,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,501,197,196,122,45,44,379,152,152
+purged,xc,-1.517762798,1.199898571,-3.884207621,0.8486820246,0.2074134152,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,501,197,196,122,45,44,379,152,152
+purged,cg:xc,-1.792177084,2.087412546,-5.908980563,2.324626396,0.3916352686,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,501,197,196,122,45,44,379,152,152
+purged,m,1.14396577,0.2333523064,0.6837474056,1.604184134,1.98895734e-06,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,501,197,196,122,45,44,379,152,152
+purged,z_numeric,-12.77978322,15.0432765,-42.44819408,16.88862765,0.3966256908,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,501,197,196,122,45,44,379,152,152
+purged,log_group_luminosity,0.2799224194,0.8855712868,-1.46660486,2.026449699,0.7522703988,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,501,197,196,122,45,44,379,152,152
+purged,velocity_dispersion,3.708063563e-05,0.0007480418377,-0.001438210507,0.001512371778,0.9605155751,elliptical ~ cg * xc + m + z_numeric + log_group_luminosity + velocity_dispersion,,501,197,196,122,45,44,379,152,152

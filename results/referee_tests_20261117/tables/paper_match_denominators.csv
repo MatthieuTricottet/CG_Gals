@@ -1,0 +1,5 @@
+population,stage,n_pairs,candidate_edges,complete_cg,complete_controls,cg_with_candidate,controls_with_candidate,cg_quartets,control_quartets,cg_hosts,control_hosts,unique_hosts,caliper,estimate,low,high,blocks,effective_blocks
+all,matched,234,24092,234,3413,234,3249,62,212,60,204,263,0.1037522321,,,,,
+all,both_E_S,180,24092,234,3413,234,3249,60,166,58,161,218,0.1037522321,0.1388888889,0.04968723845,0.2394408366,33,14.28571429
+satellites,matched,177,19467,177,2759,177,2628,62,164,60,158,217,0.1037522321,,,,,
+satellites,both_E_S,130,19467,177,2759,177,2628,58,123,57,118,174,0.1037522321,0.1923076923,0.07873573388,0.3305084746,33,15.17055655

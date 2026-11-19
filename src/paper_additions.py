@@ -522,7 +522,7 @@ def control_satellite_fe(sample: dict) -> dict:
 
 
 def plot_cg4_classes(zheng: dict, controls: dict, path: str) -> str:
-    """Satellite E-class fractions by Zheng--Shen class in two mass bins."""
+    """Satellite E-class fractions with binomial standard errors."""
 
     import matplotlib.pyplot as plt
     from utils import labels_utils as lu
@@ -536,17 +536,21 @@ def plot_cg4_classes(zheng: dict, controls: dict, path: str) -> str:
     for bin_index, (ax, title) in enumerate(zip(axes, bin_titles)):
         for i, cname in enumerate(order):
             e = zheng["mass_binned_satellites"][cname][bin_index]
-            ax.errorbar(i, e["p"],
-                        yerr=[[e["p"] - e["wilson_lo"]], [e["wilson_hi"] - e["p"]]],
-                        fmt="o", color="black", ms=6, capsize=3, lw=1.2)
+            n = e["n_classified"]
+            if n == 0:
+                continue
+            fraction = e["n_E"] / n
+            error = np.sqrt(fraction * (1 - fraction) / n)
+            ax.errorbar(i, fraction, yerr=error,
+                        fmt="o", color="black", ms=8, capsize=3, lw=1.2)
             ax.annotate(f"$N={e['n_classified']}$\n$N_{{\\rm gr}}={e['n_groups']}$",
-                        (i, e["wilson_hi"]), textcoords="offset points", xytext=(0, 5),
+                        (i, fraction + error), textcoords="offset points", xytext=(0, 5),
                         ha="center", va="bottom", fontsize=12)
         ax.set_xticks(x, order)
         ax.set_xlim(-0.55, len(order) - 0.45)
         ax.set_ylim(0, 1.16)
         ax.set_title(title, fontsize=16)
-        ax.set_xlabel("Zheng--Shen class", fontsize=16)
+        ax.set_xlabel("Zheng–Shen class", fontsize=16)
         ax.tick_params(labelsize=14, direction="in", top=True, right=True)
         plt.setp(ax.get_xticklabels(), rotation=20, ha="right", rotation_mode="anchor")
         for spine in ax.spines.values():

@@ -1,0 +1,5 @@
+stage,n,quartets,hosts,cg_n,cg_quartets,cg_hosts,control_n,control_quartets,control_hosts,es_cg_n,es_cg_quartets,es_cg_hosts,es_control_n,es_control_quartets,es_control_hosts
+full,2295,765,760,186,62,60,2109,703,703,157,59,58,1744,679,679
+common_compactness,705,235,233,144,48,46,561,187,187,122,45,44,453,181,181
+quartet_joint_support,453,151,150,123,41,40,330,110,110,110,39,39,281,107,107
+satellite_joint_E_S_support,494,200,199,122,45,44,372,155,155,122,45,44,372,155,155

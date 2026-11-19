@@ -43,7 +43,7 @@ CI_QUANTILES = (0.16, 0.84)
 
 
 SAMPLE_STYLES = {
-    "CG4": {"colour": "#000000", "linestyle": "-", "marker": "o"},
+    "CG4": {"colour": "#C32749", "linestyle": "-", "marker": "o"},
     "Control4B": {"colour": "#0072B2", "linestyle": "--", "marker": "s"},
     "Control4C": {"colour": "#D55E00", "linestyle": "-.", "marker": "^"},
     "RG4": {"colour": "#009E73", "linestyle": ":", "marker": "D"},
@@ -245,7 +245,8 @@ def draw_binned_series(
             marker=style["marker"],
             markersize=4.3,
             markerfacecolor=style["colour"] if filled else "white",
-            markeredgewidth=1.0,
+            markeredgecolor="black",
+            markeredgewidth=0.7,
             capsize=2.0 if with_errors else 0.0,
             alpha=1.0 if filled else 0.8,
             label=SAMPLE_LABELS[sample_name] if label else None,
@@ -308,7 +309,7 @@ def plot_mass_trends(trends: pd.DataFrame, filename: str) -> None:
             binomialerrorplot(
                 current["mass_location"].to_numpy(dtype=float) + offsets[sample_name],
                 N, n, color=style["colour"], marker=style["marker"],
-                markersize=4.7, mec=style["colour"], ecolor=style["colour"],
+                markersize=4.7, mec="black", mew=0.7, ecolor=style["colour"],
                 capsize=2, ax=ax, label=SAMPLE_LABELS[sample_name], zorder=3,
             )
         ax.set_title(title, fontsize=10)
