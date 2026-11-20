@@ -76,8 +76,10 @@ COMPACTNESS_REFERENCE = {
 
 
 def _load_processed_sample() -> dict[str, pd.DataFrame]:
+    from gz1_recovery import apply_to_sample
+
     with open(DATA / "processed_sample.pkl", "rb") as handle:
-        return pickle.load(handle)
+        return apply_to_sample(pickle.load(handle))
 
 
 def _load_catalogues() -> dict[str, pd.DataFrame]:

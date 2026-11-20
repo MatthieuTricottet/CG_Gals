@@ -59,12 +59,13 @@ JSON_PATH = os.path.join(co.OUTPUT_PATH, "paper_additions.json")
 MACROS_PATH = os.path.join(co.REPORT_PATH, "additions_macros.tex")
 
 PUBLISHED_COUNTS = {
-    "CG4": dict(groups=62, gals=248, E=124, Sp=86, U=7, NoGZ=31, Q=146, SF=84, N=18),
-    "Control4B": dict(groups=698, gals=2792, E=1106, Sp=1266, U=116, NoGZ=304,
+    # GZ1 counts after the DR7 archival recovery (src/gz1_recovery.py).
+    "CG4": dict(groups=62, gals=248, E=130, Sp=96, U=8, NoGZ=14, Q=146, SF=84, N=18),
+    "Control4B": dict(groups=698, gals=2792, E=1161, Sp=1325, U=120, NoGZ=186,
                       Q=1593, SF=1019, N=180),
-    "Control4C": dict(groups=703, gals=2812, E=1118, Sp=1229, U=144, NoGZ=321,
+    "Control4C": dict(groups=703, gals=2812, E=1168, Sp=1289, U=150, NoGZ=205,
                       Q=1560, SF=1061, N=191),
-    "RG4": dict(groups=56, gals=224, E=60, Sp=129, U=15, NoGZ=20, Q=101, SF=118, N=5),
+    "RG4": dict(groups=56, gals=224, E=66, Sp=135, U=16, NoGZ=7, Q=101, SF=118, N=5),
 }
 
 REGRESSION_CHECKS: list[dict] = []
@@ -88,8 +89,10 @@ def check(name, computed, reference, tol, note=""):
 # --------------------------------------------------------------------------
 
 def load_samples() -> dict:
+    import gz1_recovery
+
     with open(co.DATA_PATH + co.PROCESS_SAMPLES, "rb") as fh:
-        return pickle.load(fh)
+        return gz1_recovery.apply_to_sample(pickle.load(fh))
 
 
 def canonical_gate(sample: dict) -> dict:
@@ -269,10 +272,11 @@ def quenched_block(sample: dict, n_boot: int = 4000) -> dict:
         block["per_sample"][name] = per
         counts[name] = per
 
-    refs_e = {"CG4": (0.908, 0.02), "Control4B": (0.903, 0.02),
-              "Control4C": (0.887, 0.02), "RG4": (0.850, 0.02)}
-    refs_s = {"CG4": (0.326, 0.02), "Control4B": (0.357, 0.02),
-              "Control4C": (0.328, 0.02), "RG4": (0.295, 0.02)}
+    # References after the GZ1 DR7 archival recovery (src/gz1_recovery.py).
+    refs_e = {"CG4": (0.905, 0.02), "Control4B": (0.903, 0.02),
+              "Control4C": (0.889, 0.02), "RG4": (0.833, 0.02)}
+    refs_s = {"CG4": (0.292, 0.02), "Control4B": (0.361, 0.02),
+              "Control4C": (0.332, 0.02), "RG4": (0.296, 0.02)}
     for name in SAMPLES:
         check(f"PQE_{name}", counts[name]["Elliptical"]["p"], *refs_e[name])
         check(f"PQSp_{name}", counts[name]["Spiral"]["p"], *refs_s[name])
@@ -451,8 +455,8 @@ def zheng_shen_block(sample: dict) -> dict:
         block["mass_binned_satellites"][display[cname]] = mass_rows
 
     iso = block["per_class"]["Isolated"]
-    check("fE_isolated_all", iso["fE_all"]["p"], 7 / 18, 1e-9)
-    check("fE_isolated_sat", iso["fE_sat"]["p"], 4 / 14, 1e-9)
+    check("fE_isolated_all", iso["fE_all"]["p"], 8 / 22, 1e-9)
+    check("fE_isolated_sat", iso["fE_sat"]["p"], 5 / 17, 1e-9)
     check("lM200_isolated", iso["median_host_lM200"], 12.86, 0.02)
     # Reference values after the 2026-09-17 label repair (gary-r2 D3): the
     # inherited export had Embedded/Predominant swapped relative to Zheng &
@@ -780,7 +784,7 @@ def tidal_block(sample: dict, results: dict) -> tuple[dict, pd.DataFrame]:
     block["host_inclusive"] = host_inclusive_block(sample, work)
     refit_or = block["host_inclusive"]["refit_elliptical_with_host_T"][
         "cg4_odds_ratio"]
-    check("hostT_refit_or", refit_or, 1.33, 0.02)
+    check("hostT_refit_or", refit_or, 1.24, 0.02)
     return block, work
 
 

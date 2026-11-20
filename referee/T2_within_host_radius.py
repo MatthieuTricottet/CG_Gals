@@ -34,6 +34,8 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from gz1_recovery import apply_to_sample as apply_gz1_recovery  # noqa: E402
+
 from host_controlled import (  # noqa: E402
     _fit_conditional_logit,
     _fit_fe_glm,
@@ -53,9 +55,47 @@ ESTIMATORS = {
 }
 
 
+def radial_support(members: pd.DataFrame) -> dict:
+    """Hosts where member and non-member satellites overlap in BGG radius.
+
+    Satellites are eligible host members (M_r - M_r,BGG <= 3, host BGG
+    excluded) with an E/S class, stellar mass, parent rank and Lim BGG-centric
+    radius.  A host offers radial support when the radius ranges of its
+    compact-group and other eligible satellites overlap.
+    """
+
+    from sample_construction import DMAG_MAX
+
+    eligible = (members["M_r"] - members["M_BGG"]).le(DMAG_MAX)
+    satellite = members["rank_parent"].ne(1)
+    complete = members[
+        ["elliptical", "logMstar", "rank_parent", "dist_host_kpc"]
+    ].notna().all(axis=1)
+    hosts = []
+    for host, part in members[eligible & satellite & complete].groupby(
+        "host_lim_group"
+    ):
+        cg = part.loc[part["is_CG_member"].eq(1), "dist_host_kpc"]
+        other = part.loc[part["is_CG_member"].eq(0), "dist_host_kpc"]
+        if len(cg) and len(other) and max(cg.min(), other.min()) <= min(
+            cg.max(), other.max()
+        ):
+            hosts.append(int(host))
+    return {
+        "definition": (
+            "eligible non-BGG host members with E/S class, stellar mass, rank "
+            "and Lim BGG-centric radius; overlapping member/non-member ranges"
+        ),
+        "n_hosts": int(members["host_lim_group"].nunique()),
+        "n_hosts_with_overlap": len(hosts),
+        "hosts_with_overlap": hosts,
+    }
+
+
 def main() -> None:
     with open(ROOT / "data" / "processed_sample.pkl", "rb") as handle:
         sample = pickle.load(handle)
+    sample = apply_gz1_recovery(sample)  # DR7 archival GZ1 votes
     members = build_host_frame(sample)
 
     values = {
@@ -106,6 +146,8 @@ def main() -> None:
             checks[f"{outcome}/{est_name}"] = bool(same)
     values["with_radius_matches_published"] = checks
     assert all(checks.values()), f"published cross-check failed: {checks}"
+
+    values["radial_support"] = radial_support(members)
 
     (OUT / "values").mkdir(exist_ok=True)
     with open(OUT / "values" / "T2.json", "w") as handle:

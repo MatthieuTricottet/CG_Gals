@@ -43,7 +43,7 @@ except ModuleNotFoundError:  # pragma: no cover
 
 SAMPLES = ["CG4", "Control4B", "Control4C", "RG4"]
 DESCRIPTORS = {
-    "log_R_pair_med": {"label": r"\log\langle R_{ij}\rangle", "continuous": True},
+    "log_R_pair_med": {"label": r"\log\tilde{R}_{ij}", "continuous": True},
     "sigma_v": {"label": r"\sigma_v", "continuous": True},
     "f_L_BGG": {"label": r"f_{L,\rm BGG}", "continuous": True},
     "log_t_cross": {"label": r"\log t_{\rm cross}", "continuous": True},

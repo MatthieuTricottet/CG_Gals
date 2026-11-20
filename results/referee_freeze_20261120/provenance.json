@@ -1,0 +1,27 @@
+{
+  "git_source": "d7682518a6e7bb8eb0c5e56187499e3b4e049909",
+  "software": {
+    "numpy": "2.2.2",
+    "pandas": "2.2.3",
+    "scipy": "1.15.1",
+    "statsmodels": "0.14.6",
+    "astropy": "7.0.1",
+    "matplotlib": "3.10.0",
+    "scikit-learn": "1.6.1"
+  },
+  "inputs_sha256": {
+    "data/processed_sample.pkl": "0908e8c631354eea03cbb95fd16cf069e92f2c6ca65bd191e6fa2dd4c6c98611",
+    "data/sdss_size_columns.csv": "0d4115f79238010b85f7b053672c8810193ba131ca1275972277239538db5fea",
+    "data/simard2011_subset.csv": "ecf1cfdcc16f4669aa72d2c73186eadf5de20dd63bc2a8c4a7533c8b41b9f437",
+    "data/galspecindx_dr12.csv": "e43710a551d95277c74fd583be94087c0dce780bd8fd115d2a4d376659f0e0c9",
+    "data/galspecline_dr16.csv": "74593bc62bd3f8823ced1bbe30d99625111404ec68839e0194cf4c9ae1454a10",
+    "data/PC_Groups.csv": "83572db898150918959352a64e845578f1eed8af909bcd7e8a9b8f758127d1da",
+    "data/CG4_Groups.csv": "093220ca3e9ec8f9b9f24112ba2981f9a30d5de00ad706c16cee927df86c6e69",
+    "data/SDSS(L) group.dat": "4a92191d89a3e33ff2ff6159447476d7a415a9a8d924a183e8159b2c2e6a0f32",
+    "output/results_build.json": "8a62f3c9026516b66937df3bee96ef79eb5e8722d5a297e9ea1a0879d1f42b8e",
+    "results/referee_tests_20261117/inputs/gz1_paper1_crossmatch.csv": "2d1cbb7cfe9620c6841dad3630197923f169d58303b184fef63ea71cf6e46993",
+    "results/referee_tests_20261117/tables/hmcg_control_members.csv": "f947f2d51ae350d51c94787c620f14e5253ae2500d18545ec046777874efafc7",
+    "results/referee_tests_20261117/tables/hmcg_isolation_quartets.csv": "a4b9a4a0d3c202a4f14630688e5cb7b2a20f3d2686f1b05d6325a5aa613fa249",
+    "results/referee_tests_20261117/tables/compact_morphology_bins.csv": "914763355eeaf6359f7000c1afc99d860150c086a9725f5bae4c1691b9577ab2"
+  }
+}

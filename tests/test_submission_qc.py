@@ -83,7 +83,8 @@ def test_host_bgg_alignment_uses_objids_and_preserves_satellite_status():
     assert alignment["n_different"] == 6
     assert alignment["n_no_reliable_mapping"] == 0
     assert alignment["n_ambiguous_or_duplicate"] == 0
-    assert alignment["by_class"]["Predom"]["CG4 BGG differs from Lim-host BGG"] == 6
+    # Zheng-Shen labels as repaired on 2026-09-17: misaligned systems are embedded.
+    assert alignment["by_class"]["Embedded"]["CG4 BGG differs from Lim-host BGG"] == 6
     assert alignment["n_isolated_trivial_equal"] == 6
 
     per_group = pd.read_csv(ROOT / "output/referee/host_bgg_alignment_per_group.csv")
@@ -94,7 +95,7 @@ def test_host_bgg_alignment_uses_objids_and_preserves_satellite_status():
             == per_group.loc[equal, "lim_host_bgg_objid"].astype("int64")).all()
     assert (per_group.loc[different, "cg4_bgg_objid"].astype("int64")
             != per_group.loc[different, "lim_host_bgg_objid"].astype("int64")).all()
-    assert set(per_group.loc[different, "zheng_shen_class"]) == {"Predom"}
+    assert set(per_group.loc[different, "zheng_shen_class"]) == {"Embedded"}
     assert per_group.loc[per_group["zheng_shen_class"].eq("Isolated"),
                          "isolated_equality_trivial"].all()
 
@@ -124,14 +125,15 @@ def test_aligned_morphology_sensitivities_are_labelled_and_separate():
     for _, row in rows.iterrows():
         assert row["n_cg4_systems_retained"] == 56
         assert row["n_cg4_satellite_galaxies_raw"] == 56 * 3
-        assert row["n_cg4_complete"] == 143
+        # 154 after the GZ1 DR7 recovery (143 with DR16 votes only)
+        assert row["n_cg4_complete"] == 154
         assert row["delta_beta_aligned_minus_primary"] == pytest.approx(
             np.log(row["aligned_odds_ratio"]) - np.log(row["primary_odds_ratio"])
         )
         assert row["aligned_odds_ratio"] > 1
 
     c4c_e = rows.query("control == 'Control4C' and model == 'elliptical_satellites'").iloc[0]
-    assert c4c_e["aligned_odds_ratio"] == pytest.approx(1.98, abs=0.005)
+    assert c4c_e["aligned_odds_ratio"] == pytest.approx(1.94, abs=0.005)
 
     results = _json("output/results.json")["extended_specialness"]
     assert "host_bgg_sensitivity" not in results
@@ -163,14 +165,14 @@ def test_kitagawa_isolated_and_leave_one_outputs():
     quench = additions["quenched_by_morphology"]
     pqe = {sample: quench["per_sample"][sample]["Elliptical"]["p"] for sample in SAMPLES}
     assert pqe == pytest.approx(
-        {"CG4": 0.9083333333, "Control4B": 0.9031078611,
-         "Control4C": 0.8871841155, "RG4": 0.85}
+        {"CG4": 0.9047619048, "Control4B": 0.9025239339,
+         "Control4C": 0.8886010363, "RG4": 0.8333333333}
     )
     assert "chi2_homogeneity_PQE" not in quench
     expected_cond = {
-        "Control4B": (-0.0167079492, -0.0733090621, 0.0390652460),
-        "Control4C": (0.0020159043, -0.0558745473, 0.0564390651),
-        "RG4": (0.0496868466, -0.0347005200, 0.1359933876),
+        "Control4B": (-0.0330008551, -0.0875353765, 0.0211937243),
+        "Control4C": (-0.0146933661, -0.0680778489, 0.0388977685),
+        "RG4": (0.0381946631, -0.0444178617, 0.1230717724),
     }
     for control, (cond, lo, hi) in expected_cond.items():
         item = quench["kitagawa"][control]
@@ -183,30 +185,31 @@ def test_kitagawa_isolated_and_leave_one_outputs():
         assert item["seed"] == 42
         assert item["blocked_by"].startswith("physical Lim host")
         assert item["denominators"] == {
-            "CG4": 213,
-            control: {"Control4B": 2470, "Control4C": 2476, "RG4": 204}[control],
+            "CG4": 230,
+            control: {"Control4B": 2588, "Control4C": 2592, "RG4": 217}[control],
         }
 
     zheng = additions["zheng_shen"]
     assert zheng["per_class"]["Isolated"]["n_groups"] == 6
-    assert zheng["per_class"]["Isolated"]["fE_all"]["p"] == pytest.approx(0.389, abs=0.001)
-    assert zheng["per_class"]["Isolated"]["fE_sat"]["p"] == pytest.approx(0.286, abs=0.001)
+    assert zheng["per_class"]["Isolated"]["fE_all"]["p"] == pytest.approx(0.364, abs=0.001)
+    assert zheng["per_class"]["Isolated"]["fE_sat"]["p"] == pytest.approx(0.294, abs=0.001)
     # labels follow Zheng & Shen (2021) since the 2026-09-17 repair (gary-r2 D3):
-    # the 19 embedded CGs (rich hosts) have f_E,sat = 0.638, the 37 predominant 0.562
+    # the 19 embedded CGs (rich hosts) have f_E,sat = 0.608, the 37 predominant 0.559
+    # (GZ1 labels after the DR7 archival recovery)
     assert zheng["per_class"]["Embedded"]["n_groups"] == 19
     assert zheng["per_class"]["Predominant"]["n_groups"] == 37
-    assert zheng["per_class"]["Embedded"]["fE_sat"]["p"] == pytest.approx(0.638, abs=0.001)
-    assert zheng["per_class"]["Predominant"]["fE_sat"]["p"] == pytest.approx(0.562, abs=0.001)
+    assert zheng["per_class"]["Embedded"]["fE_sat"]["p"] == pytest.approx(0.608, abs=0.001)
+    assert zheng["per_class"]["Predominant"]["fE_sat"]["p"] == pytest.approx(0.559, abs=0.001)
     assert zheng["isolated_satellite_classification_support"][
         "n_isolated_groups_with_classified_satellites"
-    ] == 5
+    ] == 6
     assert zheng["permutations"]["isolated_vs_rest_of_CG4"]["n_perm"] == 20000
-    assert zheng["permutations"]["isolated_vs_rest_of_CG4"]["p"] == pytest.approx(0.0227988601)
+    assert zheng["permutations"]["isolated_vs_rest_of_CG4"]["p"] == pytest.approx(0.0260486976)
     assert zheng["permutations"]["isolated_vs_RG4"]["p"] == 1.0
-    assert zheng["permutations"]["isolated_vs_Control4C"]["p"] == pytest.approx(0.4007799610)
+    assert zheng["permutations"]["isolated_vs_Control4C"]["p"] == pytest.approx(0.3872306385)
     loo = zheng["leave_one_isolated_group_out"]
-    assert loo["isolated_vs_rest_of_CG4"]["n_omissions"] == 5
-    assert loo["isolated_vs_RG4"]["n_omissions"] == 5
+    assert loo["isolated_vs_rest_of_CG4"]["n_omissions"] == 6
+    assert loo["isolated_vs_RG4"]["n_omissions"] == 6
     assert len(loo["isolated_vs_rest_of_CG4"]["effect_diff_range"]) == 2
     assert len(loo["isolated_vs_RG4"]["p_range"]) == 2
 
@@ -223,9 +226,9 @@ def test_host_inclusive_tidal_and_integrity_checks():
     assert host["per_sample"]["RG4"]["max_delta_dex"] == 0
     assert host["per_sample"]["RG4"]["median_extra_members"] == 0
     assert host["n_duplicate_lim_member_rows_dropped"] == 12
-    assert tidal["published_inputs"]["residual_or"] == pytest.approx(1.3931206639)
+    assert tidal["published_inputs"]["residual_or"] == pytest.approx(1.2974962966)
     assert host["refit_elliptical_with_host_T"]["cg4_odds_ratio"] == pytest.approx(
-        1.3287910685
+        1.2407920135
     )
     assert "not used to support" in tidal["host_halo_tide_diagnostic"]["note"]
 

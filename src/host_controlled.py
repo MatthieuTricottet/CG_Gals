@@ -125,6 +125,16 @@ def build_host_frame(sample) -> pd.DataFrame:
     sdss = sample.get("SDSS_withAGN")
     if sdss is not None and "p_E" in sdss:
         votes = sdss[["objid", "p_E", "p_S"]].drop_duplicates("objid")
+        # Group-sample galaxies absent from the SDSS table may carry votes
+        # recovered through the DR7 archive (src/gz1_recovery.py).
+        try:
+            from gz1_recovery import recovered_votes
+        except ModuleNotFoundError:  # pragma: no cover
+            from .gz1_recovery import recovered_votes
+        extra = recovered_votes(sample)
+        extra = extra[~extra["objid"].isin(votes["objid"])]
+        if len(extra):
+            votes = pd.concat([votes, extra], ignore_index=True)
         members = members.merge(votes, on="objid", how="left")
         p_e = pd.to_numeric(members["p_E"], errors="coerce")
         p_s = pd.to_numeric(members["p_S"], errors="coerce")

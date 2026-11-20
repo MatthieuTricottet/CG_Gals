@@ -26,8 +26,10 @@ CONTROLS = ["Control4B", "Control4C", "RG4"]
 
 
 def load_sample() -> dict:
+    import gz1_recovery
+
     with open(PKL, "rb") as fh:
-        return pickle.load(fh)
+        return gz1_recovery.apply_to_sample(pickle.load(fh))
 
 
 def load_results() -> dict:

@@ -16,10 +16,12 @@ from scipy.interpolate import interp1d
 
 try:
     import config as co
+    import freeze_values
     from utils import labels_utils as lu
     from utils import graphics_utils as gu
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
+    from . import freeze_values
     from .utils import labels_utils as lu
     from .utils import graphics_utils as gu
 
@@ -332,6 +334,9 @@ def _build_render_context(build_data, results_data):
     # additions_macros.tex remain the primary route, this exposes the same
     # JSON (figure names, provenance) to guarded template blocks.
     ctx["additions"] = _load_json(os.path.join(co.OUTPUT_PATH, "paper_additions.json"))
+    # Compactness and spectral checks cited from the 20 November 2026 freeze
+    # (results/referee_freeze_20261120), read from its CSV tables.
+    ctx["freeze"] = freeze_values.load()
     _validate_render_context(ctx)
     return ctx, render_data
 
@@ -371,6 +376,7 @@ def generate_report():
     )
     env.filters["fmt"] = _format_number
     env.filters["pct"] = _format_percent
+    env.filters["fmth"] = _format_half_up
     try:
         template = env.get_template(co.TEMPLATE_FILE)
         rendered_tex = template.render(ctx)
@@ -402,6 +408,8 @@ def generate_report():
         return
 
     basename, _ = os.path.splitext(tex_file)
+    os.makedirs(co.FIGURES_PATH, exist_ok=True)
+    freeze_values.copy_figures(co.FIGURES_PATH)
 
     # 5) Helper to run commands without immediate exception
     def run_proc(cmd, *, cwd=None, description=None):
@@ -572,6 +580,24 @@ def _format_number(value, digits=2):
     if abs(number) < 0.5 * 10 ** (-digits):
         number = 0.0
     return f"{number:.{digits}f}"
+
+
+def _format_half_up(value, digits=1):
+    """Format a finite value rounding halves away from zero (e.g. 11.25 -> 11.3)."""
+
+    from decimal import ROUND_HALF_UP, Decimal
+
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return "n/a"
+    if not np.isfinite(number):
+        return "n/a"
+    quantum = Decimal(1).scaleb(-int(digits))
+    rounded = Decimal(repr(number)).quantize(quantum, rounding=ROUND_HALF_UP)
+    if rounded == 0:
+        rounded = abs(rounded)
+    return f"{rounded:.{int(digits)}f}"
 
 
 def _format_percent(value, digits=1):

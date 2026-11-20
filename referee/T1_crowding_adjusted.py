@@ -32,6 +32,8 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from gz1_recovery import apply_to_sample as apply_gz1_recovery  # noqa: E402
+
 from extended_data import ensure_galaxy_frame  # noqa: E402
 from morphology_robustness import (  # noqa: E402
     CROWDING_THRESHOLD_ARCSEC,
@@ -47,6 +49,7 @@ FIELDS = ["cg4_odds_ratio", "cg4_ci95", "cg4_p", "n", "n_clusters"]
 def main() -> None:
     with open(ROOT / "data" / "processed_sample.pkl", "rb") as handle:
         data = pickle.load(handle)
+    data = apply_gz1_recovery(data)  # DR7 archival GZ1 votes
     frame = ensure_galaxy_frame(data)
     frame["nearest_angular_separation_arcsec"] = _nearest_angular(frame)
     close = (

@@ -98,6 +98,9 @@ def _load_inputs() -> tuple[dict, pd.DataFrame, pd.DataFrame]:
     _require_inputs()
     with SAMPLE_PATH.open("rb") as stream:
         sample = pickle.load(stream)
+    from gz1_recovery import apply_to_sample
+
+    sample = apply_to_sample(sample)
 
     bridge = pd.read_csv(
         BRIDGE_PATH,

@@ -49,6 +49,8 @@ from astropy.cosmology import FlatLambdaCDM
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from gz1_recovery import apply_to_sample as apply_gz1_recovery  # noqa: E402
+
 from extended_data import dedup_control_pool, ensure_galaxy_frame  # noqa: E402
 from extended_stats import fit_logistic_model  # noqa: E402
 
@@ -126,6 +128,7 @@ def main() -> None:
 
     with open(ROOT / "data" / "processed_sample.pkl", "rb") as handle:
         data = pickle.load(handle)
+    data = apply_gz1_recovery(data)  # DR7 archival GZ1 votes
     frame = ensure_galaxy_frame(data)
     mass_col = next((c for c in ("lMass_200", "group_lMass_200")
                      if c in frame.columns), None)

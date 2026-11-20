@@ -1,3 +1,36 @@
+# Referee-freeze revision (2026-11-20) — GZ1 recovery and comparable compactness
+
+Starting point: commit b3d2910 (manuscript of 6 November, d768251, plus the
+17 November referee package). Revised numbers come from the frozen tables in
+`results/referee_freeze_20261120/` (left untouched) or are recomputed by the
+existing pipeline on the frozen GZ1 labels.
+
+* **GZ1 DR7 recovery** (`src/gz1_recovery.py`): votes missing from the DR16
+  `zooSpec` join are taken from the archived GZ1 catalogue through the DR7
+  bridge (unshared identifier, position within 1.5 arcsec). Applied at load
+  time by `main.load_data`, `paper_additions`, the referee scripts and the
+  gary-r2 diagnostics; the pickle keeps the DR16 votes so the freeze stays
+  reproducible. It reproduces the frozen labels for all 6076 rows
+  (`tests/test_gz1_recovery.py`). CG4 E/S/U/missing: 130/96/8/14 (was
+  124/86/7/31). The within-host frame fills the same recovered votes.
+* **Rerun on frozen labels**: full pipeline, `paper_additions`, referee
+  T1/T2/T3/T4/T7/T9/T10 and gary-r2 d3/d4/d5. Table 4 satellite ORs 2.47/1.86/2.80
+  (C4B/C4C/RG4); Table 5 +12.3/+14.9/+25.0 pp, p = 0.0397/0.0186/0.0015. The
+  morphology-adjusted satellite quenching OR against C4B is now 1.56
+  (p = 0.057), so no control keeps a clear residual association. T9 was stale
+  (pre-repair Zheng–Shen labels); its misaligned systems are Embedded.
+* **New T11** (`referee/T11_sample_definition.py`): split-system and Lim 3688
+  sensitivities, previously hard-coded in Appendix H; reproduces the published
+  values on the DR16 labels before applying the recovery.
+* **Comparable compactness** (`src/freeze_values.py` reads the freeze CSVs into
+  the render context as `freeze`; `generate_report` copies the freeze figures):
+  new Sect. 3.1 paragraph and Fig. 3 (mass-standardised; raw version and
+  intermediate-mass spectral variants in the online supplement). Mean (\Rmean)
+  and median (\Rmed) pair separations now have distinct notation.
+* T2 records the number of hosts with member/non-member radial overlap (6).
+* Tests pinned to label-dependent values were updated; `paper_additions`
+  regression references follow the recovered labels.
+
 # Revision round gary-r2 (2026-09-17) — readability review by G. Mamon
 
 Starting point: tag `pre-gary-r2` (= 71011cd). Nothing was tuned to reproduce

@@ -70,6 +70,7 @@ def render_with_size_block(size_block):
     )
     env.filters["fmt"] = gr._format_number
     env.filters["pct"] = gr._format_percent
+    env.filters["fmth"] = gr._format_half_up
     template = env.get_template(co.TEMPLATE_FILE)
     return template.render(ctx)
 

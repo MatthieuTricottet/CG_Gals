@@ -54,6 +54,7 @@ import data_loader as dl
 import generate_report as report
 import sSFR
 import morphologies as morph
+import gz1_recovery
 import analysis as anl
 import exploration_dom
 import exploration_coulours
@@ -149,6 +150,13 @@ def load_data():
         sample = morph.add_morphology_fractions_to_groups(sample)
         if "SDSS_withAGN" in sample:
             dl.plot_bpt(sample["SDSS_withAGN"], name="BPT_diagram")
+
+    # GZ1 votes missing from the DR16 join are recovered through the DR7
+    # archive (rule frozen in results/referee_freeze_20261120). The cached
+    # pickle keeps the DR16 votes, so the recovery is applied at load time.
+    sample = gz1_recovery.apply_to_sample(sample)
+    sample = morph.add_morphology_fractions_to_groups(sample)
+    report.append_json("gz1_dr7_recovery", gz1_recovery.summary(sample))
 
     return sample
 
