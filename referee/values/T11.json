@@ -1,0 +1,309 @@
+{
+ "note": "Appendix H quotes two sensitivities of the per-control E-versus-S models:",
+ "scenarios": {
+  "split_restored": {
+   "original": {
+    "Control4B": {
+     "elliptical_all": {
+      "status": "ok",
+      "odds_ratio": 1.9663221727739988,
+      "ci95": [
+       1.4638982677793817,
+       2.641182773586937
+      ],
+      "p": 7.073676983083123e-06,
+      "n": 2633,
+      "n_clusters": 750
+     },
+     "elliptical_satellites": {
+      "status": "ok",
+      "odds_ratio": 2.5653259056941096,
+      "ci95": [
+       1.878696674512991,
+       3.5029055470762733
+      ],
+      "p": 3.076145515955557e-09,
+      "n": 1966,
+      "n_clusters": 747
+     }
+    },
+    "Control4C": {
+     "elliptical_all": {
+      "status": "ok",
+      "odds_ratio": 1.4854465637709509,
+      "ci95": [
+       1.1230896659800507,
+       1.9647153389960232
+      ],
+      "p": 0.005543924530904309,
+      "n": 2608,
+      "n_clusters": 751
+     },
+     "elliptical_satellites": {
+      "status": "ok",
+      "odds_ratio": 1.843195234606709,
+      "ci95": [
+       1.3816924175822607,
+       2.4588458542905873
+      ],
+      "p": 3.1997982085818124e-05,
+      "n": 1938,
+      "n_clusters": 745
+     }
+    },
+    "RG4": {
+     "elliptical_all": {
+      "status": "ok",
+      "odds_ratio": 2.6233846656217152,
+      "ci95": [
+       1.6949006944760292,
+       4.060501672014917
+      ],
+      "p": 1.5098837053125635e-05,
+      "n": 450,
+      "n_clusters": 126
+     },
+     "elliptical_satellites": {
+      "status": "ok",
+      "odds_ratio": 2.9589811901827896,
+      "ci95": [
+       1.7461938451152308,
+       5.014088045464266
+      ],
+      "p": 5.541408902950451e-05,
+      "n": 336,
+      "n_clusters": 126
+     }
+    },
+    "n_cg4_galaxies": 312
+   },
+   "recovered": {
+    "Control4B": {
+     "elliptical_all": {
+      "status": "ok",
+      "odds_ratio": 1.8515710053246481,
+      "ci95": [
+       1.3941465946804577,
+       2.4590779770506903
+      ],
+      "p": 2.0891536125749952e-05,
+      "n": 2763,
+      "n_clusters": 768
+     },
+     "elliptical_satellites": {
+      "status": "ok",
+      "odds_ratio": 2.416637896995194,
+      "ci95": [
+       1.7958793666468797,
+       3.2519660471947986
+      ],
+      "p": 5.701217088499172e-09,
+      "n": 2073,
+      "n_clusters": 768
+     }
+    },
+    "Control4C": {
+     "elliptical_all": {
+      "status": "ok",
+      "odds_ratio": 1.43811402905377,
+      "ci95": [
+       1.0986860114559809,
+       1.8824049264270888
+      ],
+      "p": 0.008165675087763865,
+      "n": 2734,
+      "n_clusters": 767
+     },
+     "elliptical_satellites": {
+      "status": "ok",
+      "odds_ratio": 1.7834037611860418,
+      "ci95": [
+       1.3523680738646628,
+       2.3518219905351074
+      ],
+      "p": 4.1604556338697296e-05,
+      "n": 2040,
+      "n_clusters": 765
+     }
+    },
+    "RG4": {
+     "elliptical_all": {
+      "status": "ok",
+      "odds_ratio": 2.3777414910816668,
+      "ci95": [
+       1.5804435046841836,
+       3.5772582706403195
+      ],
+      "p": 3.2343412545342355e-05,
+      "n": 478,
+      "n_clusters": 129
+     },
+     "elliptical_satellites": {
+      "status": "ok",
+      "odds_ratio": 2.753670075920263,
+      "ci95": [
+       1.687449631281225,
+       4.493585317424506
+      ],
+      "p": 5.034682153498658e-05,
+      "n": 359,
+      "n_clusters": 129
+     }
+    },
+    "n_cg4_galaxies": 312
+   },
+   "reproduces_published_original": {
+    "Control4B": [
+     true,
+     true
+    ],
+    "Control4C": [
+     true,
+     true
+    ],
+    "RG4": [
+     true,
+     true
+    ]
+   },
+   "published_original": {
+    "Control4B": [
+     1.97,
+     2.57
+    ],
+    "Control4C": [
+     1.49,
+     1.84
+    ],
+    "RG4": [
+     2.62,
+     2.96
+    ]
+   }
+  },
+  "lim3688_retained": {
+   "original": {
+    "Control4B": {
+     "elliptical_all": {
+      "status": "ok",
+      "odds_ratio": 2.181518408576579,
+      "ci95": [
+       1.6102873815538703,
+       2.9553871075895795
+      ],
+      "p": 4.766620744085073e-07,
+      "n": 2585,
+      "n_clusters": 739
+     },
+     "elliptical_satellites": {
+      "status": "ok",
+      "odds_ratio": 2.6476917864301006,
+      "ci95": [
+       1.8967769495065168,
+       3.6958862230760845
+      ],
+      "p": 1.0542047495877082e-08,
+      "n": 1931,
+      "n_clusters": 736
+     }
+    },
+    "Control4C": {
+     "elliptical_all": {
+      "status": "ok",
+      "odds_ratio": 1.680801970745175,
+      "ci95": [
+       1.2608256734652874,
+       2.2406707955877003
+      ],
+      "p": 0.00040019278658323584,
+      "n": 2560,
+      "n_clusters": 741
+     },
+     "elliptical_satellites": {
+      "status": "ok",
+      "odds_ratio": 1.9394032554489917,
+      "ci95": [
+       1.413601397335075,
+       2.6607818825992466
+      ],
+      "p": 4.038857350393541e-05,
+      "n": 1903,
+      "n_clusters": 735
+     }
+    },
+    "n_cg4_galaxies": 248
+   },
+   "recovered": {
+    "Control4B": {
+     "elliptical_all": {
+      "status": "ok",
+      "odds_ratio": 2.0268041571114126,
+      "ci95": [
+       1.5109180078849134,
+       2.7188338942592085
+      ],
+      "p": 2.43173059938096e-06,
+      "n": 2715,
+      "n_clusters": 757
+     },
+     "elliptical_satellites": {
+      "status": "ok",
+      "odds_ratio": 2.479550492885633,
+      "ci95": [
+       1.804230085509653,
+       3.407642238175332
+      ],
+      "p": 2.1702764020842073e-08,
+      "n": 2038,
+      "n_clusters": 757
+     }
+    },
+    "Control4C": {
+     "elliptical_all": {
+      "status": "ok",
+      "odds_ratio": 1.6004574531378932,
+      "ci95": [
+       1.2112135277940737,
+       2.1147914884749563
+      ],
+      "p": 0.000940600308876418,
+      "n": 2686,
+      "n_clusters": 758
+     },
+     "elliptical_satellites": {
+      "status": "ok",
+      "odds_ratio": 1.8593531123838745,
+      "ci95": [
+       1.372784228536955,
+       2.5183812027153794
+      ],
+      "p": 6.153659316295777e-05,
+      "n": 2005,
+      "n_clusters": 756
+     }
+    },
+    "n_cg4_galaxies": 248
+   },
+   "reproduces_published_original": {
+    "Control4B": [
+     true,
+     true
+    ],
+    "Control4C": [
+     true,
+     true
+    ]
+   },
+   "published_original": {
+    "Control4B": [
+     2.18,
+     2.65
+    ],
+    "Control4C": [
+     1.68,
+     1.94
+    ]
+   }
+  }
+ }
+}

@@ -5,45 +5,45 @@
    "with_radius": {
     "conditional_logit": {
      "status": "ok",
-     "n": 791,
-     "odds_ratio": 1.4682395707223481,
+     "n": 803,
+     "odds_ratio": 1.4598339127857773,
      "ci95": [
-      0.9188760270404845,
-      2.346048186694032
+      0.9150420852603733,
+      2.3289803684964157
      ],
-     "p": 0.10824075280729994
+     "p": 0.11241638897227385
     },
     "fe_glm": {
      "status": "ok",
-     "n": 791,
-     "odds_ratio": 1.574331152941849,
+     "n": 803,
+     "odds_ratio": 1.5568815486362368,
      "ci95": [
-      1.0179600928320518,
-      2.434789533082541
+      1.0025087578196645,
+      2.4178144455871027
      ],
-     "p": 0.04135245607739346
+     "p": 0.04871008107889789
     }
    },
    "without_radius": {
     "conditional_logit": {
      "status": "ok",
-     "n": 791,
-     "odds_ratio": 1.9015411473805761,
+     "n": 803,
+     "odds_ratio": 1.891711857380337,
      "ci95": [
-      1.2273270498426385,
-      2.946124861865502
+      1.2227097221117003,
+      2.926756601863713
      ],
-     "p": 0.004015505679796536
+     "p": 0.004196731229440661
     },
     "fe_glm": {
      "status": "ok",
-     "n": 791,
-     "odds_ratio": 2.058082260798121,
+     "n": 803,
+     "odds_ratio": 2.0393773533566066,
      "ci95": [
-      1.3596348662822777,
-      3.1153236043393124
+      1.3437738252365379,
+      3.095059534034085
      ],
-     "p": 0.0006438610149975282
+     "p": 0.0008132856511489251
     }
    }
   },
@@ -99,5 +99,18 @@
   "elliptical/fe_glm": true,
   "quenched/conditional_logit": true,
   "quenched/fe_glm": true
+ },
+ "radial_support": {
+  "definition": "eligible non-BGG host members with E/S class, stellar mass, rank and Lim BGG-centric radius; overlapping member/non-member ranges",
+  "n_hosts": 54,
+  "n_hosts_with_overlap": 6,
+  "hosts_with_overlap": [
+   36,
+   51,
+   348,
+   442,
+   721,
+   1289
+  ]
  }
 }

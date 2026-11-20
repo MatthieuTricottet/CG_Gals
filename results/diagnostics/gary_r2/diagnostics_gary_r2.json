@@ -436,9 +436,9 @@
   "implemented": "inherited 'Class' column of data/CG4_Groups.csv (Paper I export); used verbatim by paper_additions.zheng_shen_block, morphology_dominance, host_controlled, identity",
   "class_crosstab_stored_vs_rederived": {
    "Embedded": {
-    "Embedded": 0,
+    "Embedded": 19,
     "Isolated": 0,
-    "Predominant": 37,
+    "Predominant": 0,
     "Split": 0
    },
    "Isolated": {
@@ -448,9 +448,9 @@
     "Split": 0
    },
    "Predominant": {
-    "Embedded": 19,
+    "Embedded": 0,
     "Isolated": 0,
-    "Predominant": 0,
+    "Predominant": 37,
     "Split": 0
    },
    "Split": {
@@ -463,16 +463,16 @@
   "per_class_stored_labels": [
    {
     "class_stored": "Embedded",
-    "n_groups": 37,
-    "median_host_logM200c": 13.134806937099691,
-    "q16_host_logM200c": 12.870097190697242,
-    "q84_host_logM200c": 13.427489379671101,
-    "median_host_richness": 8.0,
-    "min_host_richness": 5.0,
-    "max_host_richness": 24.0,
-    "median_fL_cg_over_host": 0.8315278556235871,
-    "min_fL": 0.5149770839880735,
-    "max_fL": 0.9816392799469428
+    "n_groups": 19,
+    "median_host_logM200c": 13.825752463831812,
+    "q16_host_logM200c": 13.543484880731999,
+    "q84_host_logM200c": 14.069929612479168,
+    "median_host_richness": 26.0,
+    "min_host_richness": 13.0,
+    "max_host_richness": 93.0,
+    "median_fL_cg_over_host": 0.30844076625421263,
+    "min_fL": 0.0638612190860448,
+    "max_fL": 0.4780105787862962
    },
    {
     "class_stored": "Isolated",
@@ -489,27 +489,27 @@
    },
    {
     "class_stored": "Predominant",
-    "n_groups": 19,
-    "median_host_logM200c": 13.825752463831812,
-    "q16_host_logM200c": 13.543484880731999,
-    "q84_host_logM200c": 14.069929612479168,
-    "median_host_richness": 26.0,
-    "min_host_richness": 13.0,
-    "max_host_richness": 93.0,
-    "median_fL_cg_over_host": 0.30844076625421263,
-    "min_fL": 0.0638612190860448,
-    "max_fL": 0.4780105787862962
+    "n_groups": 37,
+    "median_host_logM200c": 13.134806937099691,
+    "q16_host_logM200c": 12.870097190697242,
+    "q84_host_logM200c": 13.427489379671101,
+    "median_host_richness": 8.0,
+    "min_host_richness": 5.0,
+    "max_host_richness": 24.0,
+    "median_fL_cg_over_host": 0.8315278556235871,
+    "min_fL": 0.5149770839880735,
+    "max_fL": 0.9816392799469428
    }
   ],
-  "predominant_hosts_more_massive_than_embedded_with_stored_labels": true,
-  "n_nonsplit_groups_with_swapped_label": 56,
-  "verdict": "CONFIRMED numerically for the stored labels: median host log M200c is 13.83 for the 19 groups labelled 'Predom' and 13.13 for the 37 labelled 'Embedded' (Table E.2), BUT this CONTRADICTS the definitions: every group labelled 'Embedded' contributes >= 0.51 (median 0.83) of its host r-band luminosity (host richness 5--24), i.e. it DOMINATES the host and is 'Predominant' under Zheng & Shen (2021) Eq. 1 and under Paper I Sect. 3.3, whereas every group labelled 'Predom' contributes <= 0.48 (median 0.31; host richness 13--93) and is 'Embedded'. The two labels are swapped in data/CG4_Groups.csv for all 56/56 non-isolated non-split groups (the 0.5 luminosity-fraction boundary is reproduced exactly: no group is ambiguous). With the correct labels, Embedded hosts (rich groups/clusters) are the massive ones, as the definitions imply. Paper I's Sect. 4.3 prose already carried the inconsistency ('Embedded CG4s ... contributing over half the luminosity of the host').",
+  "predominant_hosts_more_massive_than_embedded_with_stored_labels": false,
+  "n_nonsplit_groups_with_swapped_label": 0,
+  "verdict": "CONFIRMED numerically for the stored labels: median host log M200c is 13.13 for the 19 groups labelled 'Predom' and 13.83 for the 37 labelled 'Embedded' (Table E.2), BUT this CONTRADICTS the definitions: every group labelled 'Embedded' contributes >= 0.06 (median 0.31) of its host r-band luminosity (host richness 13--93), i.e. it DOMINATES the host and is 'Predominant' under Zheng & Shen (2021) Eq. 1 and under Paper I Sect. 3.3, whereas every group labelled 'Predom' contributes <= 0.98 (median 0.83; host richness 5--24) and is 'Embedded'. The two labels are swapped in data/CG4_Groups.csv for all 0/56 non-isolated non-split groups (the 0.5 luminosity-fraction boundary is reproduced exactly: no group is ambiguous). With the correct labels, Embedded hosts (rich groups/clusters) are the massive ones, as the definitions imply. Paper I's Sect. 4.3 prose already carried the inconsistency ('Embedded CG4s ... contributing over half the luminosity of the host').",
   "n_isolated_groups": 6,
   "satellite_logistic_models": {
    "class_stored": {
     "class_plus_logMstar": {
      "status": "ok",
-     "n": 157,
+     "n": 170,
      "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar",
      "predictors_used": [
       "is_Embedded",
@@ -520,55 +520,55 @@
       "logMstar"
      ],
      "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 195.63964795344293,
-     "bic": 207.86463117483618,
+     "n_clusters": 62,
+     "aic": 214.14343136092776,
+     "bic": 226.6866251091288,
      "terms": {
       "const": {
-       "coefficient": -1.1013732729745498,
-       "standard_error": 0.30533911145668136,
-       "odds_ratio": 0.3324142745684346,
+       "coefficient": -0.9462762380842632,
+       "standard_error": 0.28103959201386824,
+       "odds_ratio": 0.38818383963364167,
        "ci95": [
-        0.1827151430039603,
-        0.6047624084144113
+        0.2237773450766902,
+        0.673377786750823
        ],
-       "p": 0.00030969866019625245
+       "p": 0.0007597506894103956
       },
       "is_Embedded": {
-       "coefficient": 1.4916180840961801,
-       "standard_error": 0.39775243782907244,
-       "odds_ratio": 4.44428092442358,
+       "coefficient": 1.301154474870312,
+       "standard_error": 0.40224505508191316,
+       "odds_ratio": 3.6735352245967223,
        "ci95": [
-        2.038140008047016,
-        9.691008889090845
+        1.6699081984846547,
+        8.081199348921515
        ],
-       "p": 0.0001767522491072057
+       "p": 0.0012175746294618049
       },
       "is_Predominant": {
-       "coefficient": 1.5441081571817012,
-       "standard_error": 0.43995607499287903,
-       "odds_ratio": 4.683792557007852,
+       "coefficient": 1.267386978221715,
+       "standard_error": 0.36282443804799214,
+       "odds_ratio": 3.551560123021307,
        "ci95": [
-        1.97745387486869,
-        11.094019939422815
+        1.7441444465901437,
+        7.231957956289149
        ],
-       "p": 0.0004486343129006147
+       "p": 0.0004774233667524919
       },
       "logMstar": {
-       "coefficient": 0.8540811924365836,
-       "standard_error": 0.1969198410177389,
-       "odds_ratio": 2.3492149122294506,
+       "coefficient": 0.8183948960571785,
+       "standard_error": 0.18393122468452386,
+       "odds_ratio": 2.2668583725377274,
        "ci95": [
-        1.5969976475689687,
-        3.455741285682068
+        1.5807451029809492,
+        3.2507751385432084
        ],
-       "p": 1.4430777678225598e-05
+       "p": 8.608587409491606e-06
       }
      }
     },
     "class_plus_logMstar_plus_logM200c": {
      "status": "ok",
-     "n": 157,
+     "n": 170,
      "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_M200c",
      "predictors_used": [
       "is_Embedded",
@@ -581,65 +581,65 @@
       "log_M200c"
      ],
      "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 197.16240998577268,
-     "bic": 212.4436390125142,
+     "n_clusters": 62,
+     "aic": 215.88778689026543,
+     "bic": 231.56677907551673,
      "terms": {
       "const": {
-       "coefficient": -1.2723243499482537,
-       "standard_error": 0.3873073251472699,
-       "odds_ratio": 0.28017962883625,
+       "coefficient": -1.0679484345363404,
+       "standard_error": 0.34923123320565047,
+       "odds_ratio": 0.34371294418852727,
        "ci95": [
-        0.1311474838436883,
-        0.5985675219540006
+        0.1733523459536544,
+        0.6814940250899744
        ],
-       "p": 0.0010196388154068141
+       "p": 0.0022282101666208313
       },
       "is_Embedded": {
-       "coefficient": 1.6074352507659924,
-       "standard_error": 0.4858221515811474,
-       "odds_ratio": 4.989996711603883,
+       "coefficient": 1.5412483188872481,
+       "standard_error": 0.582997833043562,
+       "odds_ratio": 4.670416803053063,
        "ci95": [
-        1.925607169577605,
-        12.931021225517958
+        1.4897280150455297,
+        14.642131244053791
        ],
-       "p": 0.0009373331474168577
+       "p": 0.00820148819823582
       },
       "is_Predominant": {
-       "coefficient": 1.871307577009512,
-       "standard_error": 0.6238629977031973,
-       "odds_ratio": 6.496785895614846,
+       "coefficient": 1.3473066425246367,
+       "standard_error": 0.4335446367112608,
+       "odds_ratio": 3.8470500834744907,
        "ci95": [
-        1.9127817004486685,
-        22.066410904892862
+        1.644727585328835,
+        8.998325605271662
        ],
-       "p": 0.002703797062605487
+       "p": 0.001885788266478178
       },
       "logMstar": {
-       "coefficient": 0.9014668007561966,
-       "standard_error": 0.22545880204182914,
-       "odds_ratio": 2.463213506078023,
+       "coefficient": 0.8462250839320157,
+       "standard_error": 0.20485231772406912,
+       "odds_ratio": 2.3308315304487763,
        "ci95": [
-        1.5834019555025343,
-        3.831889151987015
+        1.560056313556059,
+        3.482422766490066
        ],
-       "p": 6.37812822861291e-05
+       "p": 3.6134080762390614e-05
       },
       "log_M200c": {
-       "coefficient": -0.1726794415937586,
-       "standard_error": 0.20440614584148473,
-       "odds_ratio": 0.8414072917991656,
+       "coefficient": -0.12279593104751511,
+       "standard_error": 0.19583432470723983,
+       "odds_ratio": 0.8844441317336114,
        "ci95": [
-        0.5636577005430171,
-        1.2560215712670386
+        0.6025261847411368,
+        1.2982695888878188
        ],
-       "p": 0.39823035645647165
+       "p": 0.5306330955107075
       }
      }
     },
     "logMstar_plus_logM200c_no_class": {
      "status": "ok",
-     "n": 157,
+     "n": 170,
      "formula": "elliptical ~ logMstar + log_M200c",
      "predictors_used": [
       "logMstar",
@@ -650,45 +650,45 @@
       "log_M200c"
      ],
      "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 199.36912153712046,
-     "bic": 208.5378589531654,
+     "n_clusters": 62,
+     "aic": 216.97749843352378,
+     "bic": 226.38489374467457,
      "terms": {
       "const": {
-       "coefficient": 0.2739409601541521,
-       "standard_error": 0.1712497626653379,
-       "odds_ratio": 1.3151371544517227,
+       "coefficient": 0.21016512039538976,
+       "standard_error": 0.1585130323807905,
+       "odds_ratio": 1.2338817821846715,
        "ci95": [
-        0.940162630952819,
-        1.8396665407414725
+        0.9043718052513935,
+        1.6834494878840378
        ],
-       "p": 0.1096745941513046
+       "p": 0.1848880991334938
       },
       "logMstar": {
-       "coefficient": 0.8033727710121368,
-       "standard_error": 0.20773757360754863,
-       "odds_ratio": 2.2330598410799527,
+       "coefficient": 0.785630504967144,
+       "standard_error": 0.19033115068261983,
+       "odds_ratio": 2.1937897000718567,
        "ci95": [
-        1.4861882319647994,
-        3.3552656026966377
+        1.5107229400412763,
+        3.1857021036629476
        ],
-       "p": 0.00011007035674480844
+       "p": 3.664045665392864e-05
       },
       "log_M200c": {
-       "coefficient": 0.059974337918960716,
-       "standard_error": 0.17815405370255893,
-       "odds_ratio": 1.0618092979594809,
+       "coefficient": 0.07477275081843457,
+       "standard_error": 0.16222052890630476,
+       "odds_ratio": 1.0776392304235618,
        "ci95": [
-        0.7488615260178667,
-        1.505537333755756
+        0.7841353420294743,
+        1.481002384030071
        ],
-       "p": 0.7363859404086716
+       "p": 0.644846870632743
       }
      }
     },
     "class_plus_logMstar_plus_logNhost": {
      "status": "ok",
-     "n": 157,
+     "n": 170,
      "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_N_host",
      "predictors_used": [
       "is_Embedded",
@@ -701,65 +701,65 @@
       "log_N_host"
      ],
      "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 197.29136024678309,
-     "bic": 212.5725892735246,
+     "n_clusters": 62,
+     "aic": 216.04272706920136,
+     "bic": 231.72171925445267,
      "terms": {
       "const": {
-       "coefficient": -1.3757117022173158,
-       "standard_error": 0.5402371138314764,
-       "odds_ratio": 0.2526597133227605,
+       "coefficient": -1.0856397274558602,
+       "standard_error": 0.49621716226558105,
+       "odds_ratio": 0.33768568997350873,
        "ci95": [
-        0.08763656245993168,
-        0.7284280549630915
+        0.12768263678183595,
+        0.8930863904989994
        ],
-       "p": 0.010881042809772
+       "p": 0.028681850692391406
       },
       "is_Embedded": {
-       "coefficient": 1.692068907168141,
-       "standard_error": 0.5512562484251183,
-       "odds_ratio": 5.430704714322608,
+       "coefficient": 1.5565717902590543,
+       "standard_error": 0.8644731715720261,
+       "odds_ratio": 4.742534940175075,
        "ci95": [
-        1.8434273220169832,
-        15.99876129746008
+        0.871303866943987,
+        25.813770042899744
        ],
-       "p": 0.002144332239711655
+       "p": 0.07176569419366803
       },
       "is_Predominant": {
-       "coefficient": 2.047206563300292,
-       "standard_error": 0.9420289876795545,
-       "odds_ratio": 7.746232245662688,
+       "coefficient": 1.3704838523078944,
+       "standard_error": 0.5061846536973054,
+       "odds_ratio": 3.9372552847196447,
        "ci95": [
-        1.2224581089297466,
-        49.084801814826676
+        1.459917842000224,
+        10.618391481409397
        ],
-       "p": 0.029766132912986853
+       "p": 0.006779654854802067
       },
       "logMstar": {
-       "coefficient": 0.8778771267469562,
-       "standard_error": 0.2135311769335723,
-       "odds_ratio": 2.4057871005418536,
+       "coefficient": 0.8316502656477078,
+       "standard_error": 0.19755555521655,
+       "odds_ratio": 2.2971064499044234,
        "ci95": [
-        1.5830663757612768,
-        3.6560763728875822
+        1.5596298110269629,
+        3.383301604576267
        ],
-       "p": 3.935461656132474e-05
+       "p": 2.55706303727862e-05
       },
       "log_N_host": {
-       "coefficient": -0.19634912570533397,
-       "standard_error": 0.2998717134049699,
-       "odds_ratio": 0.8217252991681571,
+       "coefficient": -0.10053462655399618,
+       "standard_error": 0.2824905820225822,
+       "odds_ratio": 0.904353797215014,
        "ci95": [
-        0.4565363822107027,
-        1.479033202180502
+        0.5198546668537917,
+        1.5732392968345426
        ],
-       "p": 0.5126112877418914
+       "p": 0.721925454796472
       }
      }
     },
     "predominant_vs_embedded_only_plus_logMstar": {
      "status": "ok",
-     "n": 143,
+     "n": 153,
      "formula": "elliptical ~ is_Predominant + logMstar",
      "predictors_used": [
       "is_Predominant",
@@ -769,45 +769,45 @@
       "logMstar"
      ],
      "covariance": "cluster",
-     "n_clusters": 54,
-     "aic": 175.38483314663554,
-     "bic": 184.27336703741526,
+     "n_clusters": 56,
+     "aic": 188.88261470487802,
+     "bic": 197.97392846905532,
      "terms": {
       "const": {
-       "coefficient": 0.40001922223607805,
-       "standard_error": 0.2373810257380806,
-       "odds_ratio": 1.4918533741234077,
+       "coefficient": 0.3581635941317526,
+       "standard_error": 0.2916341640774213,
+       "odds_ratio": 1.4306996554039304,
        "ci95": [
-        0.9368434946428748,
-        2.3756652019362168
+        0.8078096223539234,
+        2.53389096555738
        ],
-       "p": 0.09196240849069452
+       "p": 0.21939955026177949
       },
       "is_Predominant": {
-       "coefficient": 0.030434684562529846,
-       "standard_error": 0.38427808946368824,
-       "odds_ratio": 1.0309025539984595,
+       "coefficient": -0.014286603634820705,
+       "standard_error": 0.3635766631538004,
+       "odds_ratio": 0.985814965618356,
        "ci95": [
-        0.48542206428830886,
-        2.1893526356258435
+        0.48341307212352025,
+        2.0103534688627556
        ],
-       "p": 0.9368738346232215
+       "p": 0.9686555029069674
       },
       "logMstar": {
-       "coefficient": 0.9365905453246701,
-       "standard_error": 0.22213558133996097,
-       "odds_ratio": 2.5512681399182364,
+       "coefficient": 0.9243194213049786,
+       "standard_error": 0.20925866108937138,
+       "odds_ratio": 2.520152514464774,
        "ci95": [
-        1.6507220631430344,
-        3.9431042130548293
+        1.672266650843969,
+        3.7979401747668526
        ],
-       "p": 2.4834188135059895e-05
+       "p": 1.0002734872072801e-05
       }
      }
     },
     "predominant_vs_embedded_only_plus_logMstar_logM200c": {
      "status": "ok",
-     "n": 143,
+     "n": 153,
      "formula": "elliptical ~ is_Predominant + logMstar + log_M200c",
      "predictors_used": [
       "is_Predominant",
@@ -819,49 +819,49 @@
       "log_M200c"
      ],
      "covariance": "cluster",
-     "n_clusters": 54,
-     "aic": 176.64891066224772,
-     "bic": 188.50028918328735,
+     "n_clusters": 56,
+     "aic": 190.44571599996823,
+     "bic": 202.56746768553796,
      "terms": {
       "const": {
-       "coefficient": 0.31179411401482016,
-       "standard_error": 0.1989100011953803,
-       "odds_ratio": 1.3658734498776026,
+       "coefficient": 0.4987668163404643,
+       "standard_error": 0.35447605654750675,
+       "odds_ratio": 1.6466893476945983,
        "ci95": [
-        0.9249067804010653,
-        2.017079256648506
+        0.8220175877425067,
+        3.298695609734635
        ],
-       "p": 0.11699471102270356
+       "p": 0.15941149144268274
       },
       "is_Predominant": {
-       "coefficient": 0.29638841093801244,
-       "standard_error": 0.38674376669427696,
-       "odds_ratio": 1.344992465175368,
+       "coefficient": -0.22748557388454382,
+       "standard_error": 0.3840998225618017,
+       "odds_ratio": 0.7965339123047915,
        "ci95": [
-        0.6302646660162741,
-        2.8702302840689518
+        0.37519574873650285,
+        1.6910273519574397
        ],
-       "p": 0.4434568079011699
+       "p": 0.5536789145970463
       },
       "logMstar": {
-       "coefficient": 1.0028889956272875,
-       "standard_error": 0.25880133214571066,
-       "odds_ratio": 2.726146287499163,
+       "coefficient": 0.9649733567317671,
+       "standard_error": 0.23567673283832302,
+       "odds_ratio": 2.624717724484602,
        "ci95": [
-        1.6415611429283323,
-        4.527320601405057
+        1.653766557308083,
+        4.165728894915751
        ],
-       "p": 0.00010656747134715708
+       "p": 4.231193537926341e-05
       },
       "log_M200c": {
-       "coefficient": -0.2192863023420808,
-       "standard_error": 0.2176254894563249,
-       "odds_ratio": 0.8030917581848844,
+       "coefficient": -0.16355219511273955,
+       "standard_error": 0.20745861384843048,
+       "odds_ratio": 0.8491221778171185,
        "ci95": [
-        0.5242301760737725,
-        1.230292343899194
+        0.5654329226085353,
+        1.2751441312165337
        ],
-       "p": 0.3136313921373821
+       "p": 0.430485816282539
       }
      }
     }
@@ -869,7 +869,7 @@
    "class_rederived_ZS21": {
     "class_plus_logMstar": {
      "status": "ok",
-     "n": 157,
+     "n": 170,
      "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar",
      "predictors_used": [
       "is_Embedded",
@@ -880,55 +880,55 @@
       "logMstar"
      ],
      "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 195.63964795344293,
-     "bic": 207.86463117483618,
+     "n_clusters": 62,
+     "aic": 214.14343136092776,
+     "bic": 226.6866251091288,
      "terms": {
       "const": {
-       "coefficient": -1.1013732729745498,
-       "standard_error": 0.305339111456681,
-       "odds_ratio": 0.3324142745684346,
+       "coefficient": -0.9462762380842632,
+       "standard_error": 0.28103959201386824,
+       "odds_ratio": 0.38818383963364167,
        "ci95": [
-        0.18271514300396038,
-        0.6047624084144109
+        0.2237773450766902,
+        0.673377786750823
        ],
-       "p": 0.00030969866019624724
+       "p": 0.0007597506894103956
       },
       "is_Embedded": {
-       "coefficient": 1.5441081571817017,
-       "standard_error": 0.43995607499287953,
-       "odds_ratio": 4.683792557007854,
+       "coefficient": 1.301154474870312,
+       "standard_error": 0.40224505508191316,
+       "odds_ratio": 3.6735352245967223,
        "ci95": [
-        1.977453874868689,
-        11.094019939422829
+        1.6699081984846547,
+        8.081199348921515
        ],
-       "p": 0.0004486343129006199
+       "p": 0.0012175746294618049
       },
       "is_Predominant": {
-       "coefficient": 1.4916180840961801,
-       "standard_error": 0.3977524378290735,
-       "odds_ratio": 4.44428092442358,
+       "coefficient": 1.267386978221715,
+       "standard_error": 0.36282443804799214,
+       "odds_ratio": 3.551560123021307,
        "ci95": [
-        2.0381400080470113,
-        9.691008889090863
+        1.7441444465901437,
+        7.231957956289149
        ],
-       "p": 0.00017675224910721277
+       "p": 0.0004774233667524919
       },
       "logMstar": {
-       "coefficient": 0.8540811924365843,
-       "standard_error": 0.196919841017739,
-       "odds_ratio": 2.3492149122294523,
+       "coefficient": 0.8183948960571785,
+       "standard_error": 0.18393122468452386,
+       "odds_ratio": 2.2668583725377274,
        "ci95": [
-        1.5969976475689693,
-        3.455741285682071
+        1.5807451029809492,
+        3.2507751385432084
        ],
-       "p": 1.443077767822549e-05
+       "p": 8.608587409491606e-06
       }
      }
     },
     "class_plus_logMstar_plus_logM200c": {
      "status": "ok",
-     "n": 157,
+     "n": 170,
      "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_M200c",
      "predictors_used": [
       "is_Embedded",
@@ -941,65 +941,65 @@
       "log_M200c"
      ],
      "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 197.16240998577268,
-     "bic": 212.4436390125142,
+     "n_clusters": 62,
+     "aic": 215.88778689026543,
+     "bic": 231.56677907551673,
      "terms": {
       "const": {
-       "coefficient": -1.2723243499482555,
-       "standard_error": 0.3873073251472705,
-       "odds_ratio": 0.28017962883624953,
+       "coefficient": -1.0679484345363404,
+       "standard_error": 0.34923123320565047,
+       "odds_ratio": 0.34371294418852727,
        "ci95": [
-        0.13114748384368788,
-        0.5985675219540003
+        0.1733523459536544,
+        0.6814940250899744
        ],
-       "p": 0.0010196388154068141
+       "p": 0.0022282101666208313
       },
       "is_Embedded": {
-       "coefficient": 1.8713075770095158,
-       "standard_error": 0.6238629977031998,
-       "odds_ratio": 6.496785895614871,
+       "coefficient": 1.5412483188872481,
+       "standard_error": 0.582997833043562,
+       "odds_ratio": 4.670416803053063,
        "ci95": [
-        1.9127817004486665,
-        22.06641090489305
+        1.4897280150455297,
+        14.642131244053791
        ],
-       "p": 0.0027037970626055453
+       "p": 0.00820148819823582
       },
       "is_Predominant": {
-       "coefficient": 1.607435250765992,
-       "standard_error": 0.4858221515811486,
-       "odds_ratio": 4.989996711603881,
+       "coefficient": 1.3473066425246367,
+       "standard_error": 0.4335446367112608,
+       "odds_ratio": 3.8470500834744907,
        "ci95": [
-        1.9256071695775994,
-        12.931021225517986
+        1.644727585328835,
+        8.998325605271662
        ],
-       "p": 0.0009373331474168863
+       "p": 0.001885788266478178
       },
       "logMstar": {
-       "coefficient": 0.9014668007561965,
-       "standard_error": 0.22545880204182914,
-       "odds_ratio": 2.463213506078023,
+       "coefficient": 0.8462250839320157,
+       "standard_error": 0.20485231772406912,
+       "odds_ratio": 2.3308315304487763,
        "ci95": [
-        1.5834019555025343,
-        3.831889151987015
+        1.560056313556059,
+        3.482422766490066
        ],
-       "p": 6.378128228612928e-05
+       "p": 3.6134080762390614e-05
       },
       "log_M200c": {
-       "coefficient": -0.17267944159375967,
-       "standard_error": 0.204406145841485,
-       "odds_ratio": 0.8414072917991646,
+       "coefficient": -0.12279593104751511,
+       "standard_error": 0.19583432470723983,
+       "odds_ratio": 0.8844441317336114,
        "ci95": [
-        0.5636577005430162,
-        1.2560215712670377
+        0.6025261847411368,
+        1.2982695888878188
        ],
-       "p": 0.3982303564564694
+       "p": 0.5306330955107075
       }
      }
     },
     "logMstar_plus_logM200c_no_class": {
      "status": "ok",
-     "n": 157,
+     "n": 170,
      "formula": "elliptical ~ logMstar + log_M200c",
      "predictors_used": [
       "logMstar",
@@ -1010,45 +1010,45 @@
       "log_M200c"
      ],
      "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 199.36912153712046,
-     "bic": 208.5378589531654,
+     "n_clusters": 62,
+     "aic": 216.97749843352378,
+     "bic": 226.38489374467457,
      "terms": {
       "const": {
-       "coefficient": 0.2739409601541521,
-       "standard_error": 0.1712497626653379,
-       "odds_ratio": 1.3151371544517227,
+       "coefficient": 0.21016512039538976,
+       "standard_error": 0.1585130323807905,
+       "odds_ratio": 1.2338817821846715,
        "ci95": [
-        0.940162630952819,
-        1.8396665407414725
+        0.9043718052513935,
+        1.6834494878840378
        ],
-       "p": 0.1096745941513046
+       "p": 0.1848880991334938
       },
       "logMstar": {
-       "coefficient": 0.8033727710121368,
-       "standard_error": 0.20773757360754863,
-       "odds_ratio": 2.2330598410799527,
+       "coefficient": 0.785630504967144,
+       "standard_error": 0.19033115068261983,
+       "odds_ratio": 2.1937897000718567,
        "ci95": [
-        1.4861882319647994,
-        3.3552656026966377
+        1.5107229400412763,
+        3.1857021036629476
        ],
-       "p": 0.00011007035674480844
+       "p": 3.664045665392864e-05
       },
       "log_M200c": {
-       "coefficient": 0.059974337918960716,
-       "standard_error": 0.17815405370255893,
-       "odds_ratio": 1.0618092979594809,
+       "coefficient": 0.07477275081843457,
+       "standard_error": 0.16222052890630476,
+       "odds_ratio": 1.0776392304235618,
        "ci95": [
-        0.7488615260178667,
-        1.505537333755756
+        0.7841353420294743,
+        1.481002384030071
        ],
-       "p": 0.7363859404086716
+       "p": 0.644846870632743
       }
      }
     },
     "class_plus_logMstar_plus_logNhost": {
      "status": "ok",
-     "n": 157,
+     "n": 170,
      "formula": "elliptical ~ is_Embedded + is_Predominant + logMstar + log_N_host",
      "predictors_used": [
       "is_Embedded",
@@ -1061,65 +1061,65 @@
       "log_N_host"
      ],
      "covariance": "cluster",
-     "n_clusters": 59,
-     "aic": 197.29136024678309,
-     "bic": 212.5725892735246,
+     "n_clusters": 62,
+     "aic": 216.04272706920136,
+     "bic": 231.72171925445267,
      "terms": {
       "const": {
-       "coefficient": -1.3757117022173162,
-       "standard_error": 0.5402371138314718,
-       "odds_ratio": 0.2526597133227604,
+       "coefficient": -1.0856397274558602,
+       "standard_error": 0.49621716226558105,
+       "odds_ratio": 0.33768568997350873,
        "ci95": [
-        0.08763656245993245,
-        0.7284280549630844
+        0.12768263678183595,
+        0.8930863904989994
        ],
-       "p": 0.010881042809771292
+       "p": 0.028681850692391406
       },
       "is_Embedded": {
-       "coefficient": 2.0472065633002914,
-       "standard_error": 0.9420289876795499,
-       "odds_ratio": 7.746232245662685,
+       "coefficient": 1.5565717902590543,
+       "standard_error": 0.8644731715720261,
+       "odds_ratio": 4.742534940175075,
        "ci95": [
-        1.2224581089297568,
-        49.084801814826235
+        0.871303866943987,
+        25.813770042899744
        ],
-       "p": 0.029766132912986097
+       "p": 0.07176569419366803
       },
       "is_Predominant": {
-       "coefficient": 1.6920689071681418,
-       "standard_error": 0.5512562484251134,
-       "odds_ratio": 5.430704714322612,
+       "coefficient": 1.3704838523078944,
+       "standard_error": 0.5061846536973054,
+       "odds_ratio": 3.9372552847196447,
        "ci95": [
-        1.8434273220170025,
-        15.998761297459945
+        1.459917842000224,
+        10.618391481409397
        ],
-       "p": 0.002144332239711448
+       "p": 0.006779654854802067
       },
       "logMstar": {
-       "coefficient": 0.8778771267469554,
-       "standard_error": 0.21353117693357218,
-       "odds_ratio": 2.405787100541852,
+       "coefficient": 0.8316502656477078,
+       "standard_error": 0.19755555521655,
+       "odds_ratio": 2.2971064499044234,
        "ci95": [
-        1.5830663757612762,
-        3.6560763728875783
+        1.5596298110269629,
+        3.383301604576267
        ],
-       "p": 3.9354616561325036e-05
+       "p": 2.55706303727862e-05
       },
       "log_N_host": {
-       "coefficient": -0.1963491257053343,
-       "standard_error": 0.29987171340496926,
-       "odds_ratio": 0.8217252991681568,
+       "coefficient": -0.10053462655399618,
+       "standard_error": 0.2824905820225822,
+       "odds_ratio": 0.904353797215014,
        "ci95": [
-        0.4565363822107031,
-        1.4790332021804997
+        0.5198546668537917,
+        1.5732392968345426
        ],
-       "p": 0.5126112877418898
+       "p": 0.721925454796472
       }
      }
     },
     "predominant_vs_embedded_only_plus_logMstar": {
      "status": "ok",
-     "n": 143,
+     "n": 153,
      "formula": "elliptical ~ is_Predominant + logMstar",
      "predictors_used": [
       "is_Predominant",
@@ -1129,45 +1129,45 @@
       "logMstar"
      ],
      "covariance": "cluster",
-     "n_clusters": 54,
-     "aic": 175.38483314663554,
-     "bic": 184.27336703741526,
+     "n_clusters": 56,
+     "aic": 188.88261470487802,
+     "bic": 197.97392846905532,
      "terms": {
       "const": {
-       "coefficient": 0.4304539067986074,
-       "standard_error": 0.30987908332533287,
-       "odds_ratio": 1.5379554535750395,
+       "coefficient": 0.3581635941317526,
+       "standard_error": 0.2916341640774213,
+       "odds_ratio": 1.4306996554039304,
        "ci95": [
-        0.8378652959745263,
-        2.82301580999378
+        0.8078096223539234,
+        2.53389096555738
        ],
-       "p": 0.16480148805662254
+       "p": 0.21939955026177949
       },
       "is_Predominant": {
-       "coefficient": -0.030434684562528846,
-       "standard_error": 0.3842780894636887,
-       "odds_ratio": 0.9700237875261829,
+       "coefficient": -0.014286603634820705,
+       "standard_error": 0.3635766631538004,
+       "odds_ratio": 0.985814965618356,
        "ci95": [
-        0.4567560217242675,
-        2.060062929908492
+        0.48341307212352025,
+        2.0103534688627556
        ],
-       "p": 0.9368738346232236
+       "p": 0.9686555029069674
       },
       "logMstar": {
-       "coefficient": 0.9365905453246697,
-       "standard_error": 0.22213558133996092,
-       "odds_ratio": 2.5512681399182355,
+       "coefficient": 0.9243194213049786,
+       "standard_error": 0.20925866108937138,
+       "odds_ratio": 2.520152514464774,
        "ci95": [
-        1.650722063143034,
-        3.9431042130548266
+        1.672266650843969,
+        3.7979401747668526
        ],
-       "p": 2.483418813506003e-05
+       "p": 1.0002734872072801e-05
       }
      }
     },
     "predominant_vs_embedded_only_plus_logMstar_logM200c": {
      "status": "ok",
-     "n": 143,
+     "n": 153,
      "formula": "elliptical ~ is_Predominant + logMstar + log_M200c",
      "predictors_used": [
       "is_Predominant",
@@ -1179,49 +1179,49 @@
       "log_M200c"
      ],
      "covariance": "cluster",
-     "n_clusters": 54,
-     "aic": 176.64891066224774,
-     "bic": 188.50028918328738,
+     "n_clusters": 56,
+     "aic": 190.44571599996823,
+     "bic": 202.56746768553796,
      "terms": {
       "const": {
-       "coefficient": 0.6081825249528316,
-       "standard_error": 0.3655405038480211,
-       "odds_ratio": 1.8370894984684594,
+       "coefficient": 0.4987668163404643,
+       "standard_error": 0.35447605654750675,
+       "odds_ratio": 1.6466893476945983,
        "ci95": [
-        0.8973909255014894,
-        3.760788893087034
+        0.8220175877425067,
+        3.298695609734635
        ],
-       "p": 0.0961544632050659
+       "p": 0.15941149144268274
       },
       "is_Predominant": {
-       "coefficient": -0.29638841093801166,
-       "standard_error": 0.386743766694278,
-       "odds_ratio": 0.7434985889453403,
+       "coefficient": -0.22748557388454382,
+       "standard_error": 0.3840998225618017,
+       "odds_ratio": 0.7965339123047915,
        "ci95": [
-        0.3484041003784404,
-        1.5866350343272804
+        0.37519574873650285,
+        1.6910273519574397
        ],
-       "p": 0.44345680790117237
+       "p": 0.5536789145970463
       },
       "logMstar": {
-       "coefficient": 1.0028889956272877,
-       "standard_error": 0.25880133214571094,
-       "odds_ratio": 2.7261462874991635,
+       "coefficient": 0.9649733567317671,
+       "standard_error": 0.23567673283832302,
+       "odds_ratio": 2.624717724484602,
        "ci95": [
-        1.6415611429283319,
-        4.5273206014050595
+        1.653766557308083,
+        4.165728894915751
        ],
-       "p": 0.0001065674713471585
+       "p": 4.231193537926341e-05
       },
       "log_M200c": {
-       "coefficient": -0.21928630234208085,
-       "standard_error": 0.21762548945632534,
-       "odds_ratio": 0.8030917581848843,
+       "coefficient": -0.16355219511273955,
+       "standard_error": 0.20745861384843048,
+       "odds_ratio": 0.8491221778171185,
        "ci95": [
-        0.5242301760737721,
-        1.230292343899195
+        0.5654329226085353,
+        1.2751441312165337
        ],
-       "p": 0.3136313921373829
+       "p": 0.430485816282539
       }
      }
     }
@@ -1230,24 +1230,24 @@
   "satellite_counts_by_stored_class": [
    {
     "class_stored": "Embedded",
-    "n_sat": 96,
-    "n_E": 54.0,
-    "n_groups": 36,
-    "fE": 0.5625
+    "n_sat": 51,
+    "n_E": 31.0,
+    "n_groups": 19,
+    "fE": 0.6078431372549019
    },
    {
     "class_stored": "Isolated",
-    "n_sat": 14,
-    "n_E": 4.0,
-    "n_groups": 5,
-    "fE": 0.2857142857142857
+    "n_sat": 17,
+    "n_E": 5.0,
+    "n_groups": 6,
+    "fE": 0.29411764705882354
    },
    {
     "class_stored": "Predominant",
-    "n_sat": 47,
-    "n_E": 30.0,
-    "n_groups": 18,
-    "fE": 0.6382978723404256
+    "n_sat": 102,
+    "n_E": 57.0,
+    "n_groups": 37,
+    "fE": 0.5588235294117647
    }
   ],
   "satellite_fE_by_class_file": "d3_satellite_fE_by_class.csv",
@@ -1261,44 +1261,44 @@
     "n": 730,
     "fractions": {
      "E": {
-      "n": 511,
-      "fraction": 0.7,
-      "wilson_lo": 0.6657809503979888,
-      "wilson_hi": 0.7321251592803237
+      "n": 532,
+      "fraction": 0.7287671232876712,
+      "wilson_lo": 0.695380161426413,
+      "wilson_hi": 0.7597590188220678
      },
      "S": {
-      "n": 137,
-      "fraction": 0.18767123287671234,
-      "wilson_lo": 0.1610093526742428,
-      "wilson_hi": 0.217603023992502
+      "n": 148,
+      "fraction": 0.20273972602739726,
+      "wilson_lo": 0.1751660365619982,
+      "wilson_hi": 0.2334255675462633
      },
      "U": {
-      "n": 45,
-      "fraction": 0.06164383561643835,
-      "wilson_lo": 0.04638680502049609,
-      "wilson_hi": 0.08149021486265448
+      "n": 47,
+      "fraction": 0.06438356164383562,
+      "wilson_lo": 0.0487605147474715,
+      "wilson_hi": 0.08456727376140938
      },
      "X": {
-      "n": 37,
-      "fraction": 0.050684931506849315,
-      "wilson_lo": 0.0369930952465274,
-      "wilson_hi": 0.06908085013370194
+      "n": 3,
+      "fraction": 0.00410958904109589,
+      "wilson_lo": 0.001398594460706548,
+      "wilson_hi": 0.012012284282107537
      }
     },
     "inclination": {
      "0-0.1": {
       "n": 410,
       "E": {
-       "n": 315,
-       "fraction": 0.7682926829268293,
-       "wilson_lo": 0.7250757044612951,
-       "wilson_hi": 0.8065288395274207
+       "n": 331,
+       "fraction": 0.8073170731707318,
+       "wilson_lo": 0.7663582664278393,
+       "wilson_hi": 0.8425705748683262
       },
       "S": {
-       "n": 55,
-       "fraction": 0.13414634146341464,
-       "wilson_lo": 0.10453177282870385,
-       "wilson_hi": 0.17055293991395648
+       "n": 57,
+       "fraction": 0.13902439024390245,
+       "wilson_lo": 0.10887431741945437,
+       "wilson_hi": 0.1758759324866372
       },
       "U": {
        "n": 20,
@@ -1307,25 +1307,25 @@
        "wilson_hi": 0.07414098531598802
       },
       "X": {
-       "n": 20,
-       "fraction": 0.04878048780487805,
-       "wilson_lo": 0.03179682706662636,
-       "wilson_hi": 0.07414098531598802
+       "n": 2,
+       "fraction": 0.004878048780487805,
+       "wilson_lo": 0.0013387578067556357,
+       "wilson_hi": 0.017609220104977973
       }
      },
      "0.1-0.3": {
       "n": 70,
       "E": {
-       "n": 60,
-       "fraction": 0.8571428571428571,
-       "wilson_lo": 0.7566158011633325,
-       "wilson_hi": 0.920510582829334
+       "n": 61,
+       "fraction": 0.8714285714285714,
+       "wilson_lo": 0.7733524405057483,
+       "wilson_hi": 0.9308589988466248
       },
       "S": {
-       "n": 6,
-       "fraction": 0.08571428571428572,
-       "wilson_lo": 0.039876669645112064,
-       "wilson_hi": 0.1746567249233948
+       "n": 7,
+       "fraction": 0.1,
+       "wilson_lo": 0.04928930144253951,
+       "wilson_hi": 0.192329148485674
       },
       "U": {
        "n": 1,
@@ -1334,19 +1334,19 @@
        "wilson_hi": 0.07658187131208327
       },
       "X": {
-       "n": 3,
-       "fraction": 0.04285714285714286,
-       "wilson_lo": 0.014681541004111405,
-       "wilson_hi": 0.11859668748527552
+       "n": 1,
+       "fraction": 0.014285714285714285,
+       "wilson_lo": 0.002526246457890312,
+       "wilson_hi": 0.07658187131208327
       }
      },
      "0.3-0.5": {
       "n": 54,
       "E": {
-       "n": 43,
-       "fraction": 0.7962962962962963,
-       "wilson_lo": 0.6709769331166456,
-       "wilson_hi": 0.8822594591257861
+       "n": 45,
+       "fraction": 0.8333333333333334,
+       "wilson_lo": 0.7126348577027084,
+       "wilson_hi": 0.9097560835700274
       },
       "S": {
        "n": 5,
@@ -1361,10 +1361,10 @@
        "wilson_hi": 0.1755411583859995
       },
       "X": {
-       "n": 2,
-       "fraction": 0.037037037037037035,
-       "wilson_lo": 0.01021636794844559,
-       "wilson_hi": 0.12535176917275476
+       "n": 0,
+       "fraction": 0.0,
+       "wilson_lo": 0.0,
+       "wilson_hi": 0.0664135880908964
       }
      },
      "0.5-0.7": {
@@ -1382,104 +1382,104 @@
        "wilson_hi": 0.3613378255809984
       },
       "U": {
-       "n": 5,
-       "fraction": 0.09615384615384616,
-       "wilson_lo": 0.04177435105257249,
-       "wilson_hi": 0.20609630120131633
+       "n": 6,
+       "fraction": 0.11538461538461539,
+       "wilson_lo": 0.05396969203087296,
+       "wilson_hi": 0.22971664344902112
       },
       "X": {
-       "n": 1,
-       "fraction": 0.019230769230769232,
-       "wilson_lo": 0.0034028080709451597,
-       "wilson_hi": 0.10120511127892247
+       "n": 0,
+       "fraction": 0.0,
+       "wilson_lo": 0.0,
+       "wilson_hi": 0.06879223612386234
       }
      },
      "0.7-1": {
       "n": 144,
       "E": {
-       "n": 59,
-       "fraction": 0.4097222222222222,
-       "wilson_lo": 0.3327606967189344,
-       "wilson_hi": 0.49137523776522496
+       "n": 61,
+       "fraction": 0.4236111111111111,
+       "wilson_lo": 0.34592020670525975,
+       "wilson_hi": 0.5052717378582599
       },
       "S": {
-       "n": 59,
-       "fraction": 0.4097222222222222,
-       "wilson_lo": 0.3327606967189344,
-       "wilson_hi": 0.49137523776522496
+       "n": 67,
+       "fraction": 0.4652777777777778,
+       "wilson_lo": 0.3857722978124188,
+       "wilson_hi": 0.5465876769891811
       },
       "U": {
-       "n": 15,
-       "fraction": 0.10416666666666667,
-       "wilson_lo": 0.06414804449479507,
-       "wilson_hi": 0.16475566824344234
+       "n": 16,
+       "fraction": 0.1111111111111111,
+       "wilson_lo": 0.0695593871009681,
+       "wilson_hi": 0.17287233067694935
       },
       "X": {
-       "n": 11,
-       "fraction": 0.0763888888888889,
-       "wilson_lo": 0.04318732966175298,
-       "wilson_hi": 0.13160436291776428
+       "n": 0,
+       "fraction": 0.0,
+       "wilson_lo": 0.0,
+       "wilson_hi": 0.025983637143036746
       }
      }
     },
     "P_edge_on_median_by_class": {
-     "E": 0.0305904,
-     "S": 0.529894,
-     "U": 0.404584,
-     "X": 0.0604656
+     "E": 0.0289895,
+     "S": 0.615907,
+     "U": 0.476136,
+     "X": 0.0566758
     },
-    "P_edge_on_E_vs_S_mannwhitney_p": 1.1352376115884796e-05,
+    "P_edge_on_E_vs_S_mannwhitney_p": 4.340322533844013e-07,
     "fE_face_on_lt0p1": {
      "n": 410,
-     "fE": 0.7682926829268293
+     "fE": 0.8073170731707318
     },
     "fE_inclined_ge0p5": {
      "n": 196,
-     "fE": 0.4744897959183674
+     "fE": 0.4846938775510204
     }
    },
    "P_S0>=0.8": {
     "n": 429,
     "fractions": {
      "E": {
-      "n": 270,
-      "fraction": 0.6293706293706294,
-      "wilson_lo": 0.5827084631700251,
-      "wilson_hi": 0.673736472355391
+      "n": 281,
+      "fraction": 0.655011655011655,
+      "wilson_lo": 0.6088320916898783,
+      "wilson_hi": 0.6984397679937285
      },
      "S": {
-      "n": 105,
-      "fraction": 0.24475524475524477,
-      "wilson_lo": 0.20645364836141133,
-      "wilson_hi": 0.2875874247911459
+      "n": 114,
+      "fraction": 0.26573426573426573,
+      "wilson_lo": 0.22614797943492934,
+      "wilson_hi": 0.3094787589379657
      },
      "U": {
-      "n": 33,
-      "fraction": 0.07692307692307693,
-      "wilson_lo": 0.05529531216264534,
-      "wilson_hi": 0.10606043922720977
+      "n": 34,
+      "fraction": 0.07925407925407925,
+      "wilson_lo": 0.05726706544492828,
+      "wilson_hi": 0.10870931541385324
      },
      "X": {
-      "n": 21,
-      "fraction": 0.04895104895104895,
-      "wilson_lo": 0.03223701256359725,
-      "wilson_hi": 0.07367118519914084
+      "n": 0,
+      "fraction": 0.0,
+      "wilson_lo": 0.0,
+      "wilson_hi": 0.008874978915283301
      }
     },
     "inclination": {
      "0-0.1": {
       "n": 230,
       "E": {
-       "n": 172,
-       "fraction": 0.7478260869565218,
-       "wilson_lo": 0.6879469017707861,
-       "wilson_hi": 0.7995628861638392
+       "n": 180,
+       "fraction": 0.782608695652174,
+       "wilson_lo": 0.7248961254624373,
+       "wilson_hi": 0.8310360888489776
       },
       "S": {
-       "n": 36,
-       "fraction": 0.1565217391304348,
-       "wilson_lo": 0.11525311169700259,
-       "wilson_hi": 0.20907542783220107
+       "n": 37,
+       "fraction": 0.1608695652173913,
+       "wilson_lo": 0.11902115258103926,
+       "wilson_hi": 0.213860190245263
       },
       "U": {
        "n": 13,
@@ -1488,25 +1488,25 @@
        "wilson_hi": 0.09428836636757057
       },
       "X": {
-       "n": 9,
-       "fraction": 0.0391304347826087,
-       "wilson_lo": 0.020720932217296636,
-       "wilson_hi": 0.07268191829024236
+       "n": 0,
+       "fraction": 0.0,
+       "wilson_lo": 0.0,
+       "wilson_hi": 0.016427620833650777
       }
      },
      "0.1-0.3": {
       "n": 30,
       "E": {
-       "n": 23,
-       "fraction": 0.7666666666666667,
-       "wilson_lo": 0.5907167384187784,
-       "wilson_hi": 0.8820761185551049
+       "n": 24,
+       "fraction": 0.8,
+       "wilson_lo": 0.6269430358685175,
+       "wilson_hi": 0.9049489282271013
       },
       "S": {
-       "n": 5,
-       "fraction": 0.16666666666666666,
-       "wilson_lo": 0.0733654237184855,
-       "wilson_hi": 0.3356435050641603
+       "n": 6,
+       "fraction": 0.2,
+       "wilson_lo": 0.0950510717728987,
+       "wilson_hi": 0.3730569641314825
       },
       "U": {
        "n": 0,
@@ -1515,19 +1515,19 @@
        "wilson_hi": 0.11351339317396876
       },
       "X": {
-       "n": 2,
-       "fraction": 0.06666666666666667,
-       "wilson_lo": 0.018477023791270378,
-       "wilson_hi": 0.2132345836261692
+       "n": 0,
+       "fraction": 0.0,
+       "wilson_lo": 0.0,
+       "wilson_hi": 0.11351339317396876
       }
      },
      "0.3-0.5": {
       "n": 28,
       "E": {
-       "n": 21,
-       "fraction": 0.75,
-       "wilson_lo": 0.5664432968100104,
-       "wilson_hi": 0.8732350508070668
+       "n": 23,
+       "fraction": 0.8214285714285714,
+       "wilson_lo": 0.6440857521065705,
+       "wilson_hi": 0.9212149805439572
       },
       "S": {
        "n": 2,
@@ -1542,10 +1542,10 @@
        "wilson_hi": 0.27195851548672156
       },
       "X": {
-       "n": 2,
-       "fraction": 0.07142857142857142,
-       "wilson_lo": 0.019812064115305755,
-       "wilson_hi": 0.22645362568399052
+       "n": 0,
+       "fraction": 0.0,
+       "wilson_lo": 1.3877787807814457e-17,
+       "wilson_hi": 0.12064330476584563
       }
      },
      "0.5-0.7": {
@@ -1563,16 +1563,16 @@
        "wilson_hi": 0.46592329330749926
       },
       "U": {
-       "n": 3,
-       "fraction": 0.0967741935483871,
-       "wilson_lo": 0.03346464416319736,
-       "wilson_hi": 0.24899938443392836
+       "n": 4,
+       "fraction": 0.12903225806451613,
+       "wilson_lo": 0.051342843746291486,
+       "wilson_hi": 0.28852406256306423
       },
       "X": {
-       "n": 1,
-       "fraction": 0.03225806451612903,
-       "wilson_lo": 0.005717221525416816,
-       "wilson_hi": 0.16194105164724906
+       "n": 0,
+       "fraction": 0.0,
+       "wilson_lo": 0.0,
+       "wilson_hi": 0.11025539546043596
       }
      },
      "0.7-1": {
@@ -1584,10 +1584,10 @@
        "wilson_hi": 0.4194911242705093
       },
       "S": {
-       "n": 53,
-       "fraction": 0.4818181818181818,
-       "wilson_lo": 0.39064279126942547,
-       "wilson_hi": 0.5742206245595985
+       "n": 60,
+       "fraction": 0.5454545454545454,
+       "wilson_lo": 0.4524405818800455,
+       "wilson_hi": 0.6354008785473941
       },
       "U": {
        "n": 14,
@@ -1596,23 +1596,22 @@
        "wilson_hi": 0.20235021060652508
       },
       "X": {
-       "n": 7,
-       "fraction": 0.06363636363636363,
-       "wilson_lo": 0.031164518014477616,
-       "wilson_hi": 0.125557461882102
+       "n": 0,
+       "fraction": 0.0,
+       "wilson_lo": 0.0,
+       "wilson_hi": 0.033743935298164184
       }
      }
     },
     "P_edge_on_median_by_class": {
-     "E": 0.0195753,
-     "S": 0.719496,
-     "U": 0.546769,
-     "X": 0.287513
+     "E": 0.0189655,
+     "S": 0.7714535,
+     "U": 0.5976105
     },
-    "P_edge_on_E_vs_S_mannwhitney_p": 3.5968612178556686e-07,
+    "P_edge_on_E_vs_S_mannwhitney_p": 1.068906957098764e-08,
     "fE_face_on_lt0p1": {
      "n": 230,
-     "fE": 0.7478260869565218
+     "fE": 0.782608695652174
     },
     "fE_inclined_ge0p5": {
      "n": 141,
@@ -1623,27 +1622,27 @@
   "reference": {
    "early_P_S0<0.2": {
     "n": 174,
-    "E": 0.896551724137931,
+    "E": 0.9540229885057471,
     "S": 0.005747126436781609,
     "U": 0.028735632183908046,
-    "X": 0.06896551724137931
+    "X": 0.011494252873563218
    },
    "late_TType>0": {
     "n": 1290,
-    "E": 0.05736434108527132,
-    "S": 0.8542635658914729,
-    "U": 0.04108527131782946,
-    "X": 0.047286821705426356
+    "E": 0.059689922480620154,
+    "S": 0.8953488372093024,
+    "U": 0.04263565891472868,
+    "X": 0.002325581395348837
    }
   },
   "gz1_E_content_pooled": {
-   "n_E_matched": 942,
-   "fraction_TType_le0": 0.921443736730361,
-   "fraction_TType_gt0": 0.07855626326963906,
-   "fraction_early_and_P_S0_gt0.5": 0.5424628450106157,
-   "fraction_early_and_P_S0_ge0.8": 0.28662420382165604,
-   "fraction_early_and_P_S0_lt0.2": 0.16560509554140126,
-   "median_TType": -2.167195
+   "n_E_matched": 990,
+   "fraction_TType_le0": 0.9222222222222223,
+   "fraction_TType_gt0": 0.07777777777777778,
+   "fraction_early_and_P_S0_gt0.5": 0.5373737373737374,
+   "fraction_early_and_P_S0_ge0.8": 0.28383838383838383,
+   "fraction_early_and_P_S0_lt0.2": 0.16767676767676767,
+   "median_TType": -2.1688099999999997
   },
   "environment_split": "NOT computed (reserved for blind Paper III analysis)"
  },
@@ -1656,41 +1655,41 @@
      "log_group_luminosity",
      "velocity_dispersion"
     ],
-    "n_pairs": 54,
-    "delta": 0.16049382716049382,
-    "caliper_logit": 0.1440184394852452,
-    "mean_fraction_cg4": 0.5462962962962963,
-    "mean_fraction_control": 0.38580246913580246,
+    "n_pairs": 57,
+    "delta": 0.12280701754385964,
+    "caliper_logit": 0.146341378683356,
+    "mean_fraction_cg4": 0.5321637426900585,
+    "mean_fraction_control": 0.40935672514619886,
     "smd": {
      "z_group": {
-      "before": 0.1422816662621913,
-      "after": -0.08359104780734963,
-      "median_cg4": 0.036163902625,
-      "median_control": 0.03823649775
+      "before": 0.17015838394100855,
+      "after": -0.1656602639928607,
+      "median_cg4": 0.03649317775,
+      "median_control": 0.036713616
      },
      "logMstar_bgg": {
-      "before": 0.11484770056933048,
-      "after": 0.13334270760147698,
-      "median_cg4": 11.11993,
-      "median_control": 11.077639999999999
+      "before": 0.10250637942882589,
+      "after": 0.19554481641148966,
+      "median_cg4": 11.11865,
+      "median_control": 11.05568
      },
      "log_group_luminosity": {
-      "before": -0.41223393053972807,
-      "after": 0.134928336737118,
-      "median_cg4": 10.983360939761315,
-      "median_control": 10.986726380927646
+      "before": -0.4348481718855656,
+      "after": 0.20978985041006049,
+      "median_cg4": 10.982142948168072,
+      "median_control": 10.968940684511367
      },
      "velocity_dispersion": {
-      "before": 0.19617051277993816,
-      "after": 0.17146781551430662,
-      "median_cg4": 160.40352377067745,
-      "median_control": 146.20698168202875
+      "before": 0.18497474950424378,
+      "after": 0.2896885767883825,
+      "median_cg4": 157.75382835927795,
+      "median_control": 130.26930163243975
      },
      "mean_sat_logMstar": {
-      "before": -0.6181699676547215,
-      "after": 0.005460219242747405,
-      "median_cg4": 10.208630666666666,
-      "median_control": 10.251899333333334
+      "before": -0.616729210011159,
+      "after": -0.10048363541021979,
+      "median_cg4": 10.203336666666667,
+      "median_control": 10.233878666666667
      }
     }
    },
@@ -1700,58 +1699,58 @@
      "logMstar_bgg",
      "log_group_luminosity"
     ],
-    "n_pairs": 54,
-    "delta": 0.2839506172839506,
-    "caliper_logit": 0.1345485391543384,
-    "mean_fraction_cg4": 0.5462962962962964,
-    "mean_fraction_control": 0.2623456790123456,
+    "n_pairs": 57,
+    "delta": 0.21637426900584794,
+    "caliper_logit": 0.1379563437357626,
+    "mean_fraction_cg4": 0.5321637426900585,
+    "mean_fraction_control": 0.3157894736842105,
     "smd": {
      "z_group": {
-      "before": 0.1422816662621913,
-      "after": 0.24595730883919262,
-      "median_cg4": 0.036163902625,
-      "median_control": 0.0340888835
+      "before": 0.17015838394100855,
+      "after": 0.003249755735397215,
+      "median_cg4": 0.03649317775,
+      "median_control": 0.0355337665
      },
      "logMstar_bgg": {
-      "before": 0.11484770056933048,
-      "after": 0.033023212989211966,
-      "median_cg4": 11.11993,
-      "median_control": 11.11108
+      "before": 0.10250637942882589,
+      "after": 0.2749751131428745,
+      "median_cg4": 11.11865,
+      "median_control": 11.05469
      },
      "log_group_luminosity": {
-      "before": -0.41223393053972807,
-      "after": 0.06429084904551237,
-      "median_cg4": 10.983360939761315,
-      "median_control": 10.961569443362327
+      "before": -0.4348481718855656,
+      "after": 0.18953380420485927,
+      "median_cg4": 10.982142948168072,
+      "median_control": 11.000483219262927
      },
      "velocity_dispersion": {
-      "before": 0.19617051277993816,
-      "after": 0.268895401595065,
-      "median_cg4": 160.40352377067745,
-      "median_control": 128.66849108966503
+      "before": 0.18497474950424378,
+      "after": 0.4905239486702586,
+      "median_cg4": 157.75382835927795,
+      "median_control": 123.02683962934096
      },
      "mean_sat_logMstar": {
-      "before": -0.6181699676547215,
-      "after": 0.015517878880153638,
-      "median_cg4": 10.208630666666666,
-      "median_control": 10.248653166666667
+      "before": -0.616729210011159,
+      "after": -0.04923729531594952,
+      "median_cg4": 10.203336666666667,
+      "median_control": 10.21777
      }
     }
    },
-   "n_shared_control_groups": 7,
-   "fraction_shared_control_groups_of_with": 0.12962962962962962,
-   "fraction_shared_control_groups_of_without": 0.12962962962962962,
-   "n_shared_cg4_groups": 54,
-   "n_identical_pairs": 0,
+   "n_shared_control_groups": 9,
+   "fraction_shared_control_groups_of_with": 0.15789473684210525,
+   "fraction_shared_control_groups_of_without": 0.15789473684210525,
+   "n_shared_cg4_groups": 57,
+   "n_identical_pairs": 1,
    "sigma_v_imbalance_without": {
-    "smd_after": 0.268895401595065,
+    "smd_after": 0.4905239486702586,
     "direction": "CG4 have HIGHER sigma_v than controls",
-    "median_cg4_kms": 160.40352377067745,
-    "median_control_kms": 128.66849108966503
+    "median_cg4_kms": 157.75382835927795,
+    "median_control_kms": 123.02683962934096
    },
-   "delta_change": 0.12345679012345678,
-   "mean_fraction_control_change": -0.12345679012345684,
-   "mean_fraction_cg4_change": 1.1102230246251565e-16
+   "delta_change": 0.0935672514619883,
+   "mean_fraction_control_change": -0.09356725146198835,
+   "mean_fraction_cg4_change": 0.0
   },
   "Control4C": {
    "with_sigma_v": {
@@ -1761,41 +1760,41 @@
      "log_group_luminosity",
      "velocity_dispersion"
     ],
-    "n_pairs": 54,
-    "delta": 0.11419753086419754,
-    "caliper_logit": 0.038981056285715514,
-    "mean_fraction_cg4": 0.5462962962962963,
-    "mean_fraction_control": 0.43209876543209874,
+    "n_pairs": 57,
+    "delta": 0.14912280701754382,
+    "caliper_logit": 0.04209055298376735,
+    "mean_fraction_cg4": 0.5321637426900584,
+    "mean_fraction_control": 0.3830409356725147,
     "smd": {
      "z_group": {
-      "before": 0.15144413497186435,
-      "after": -0.07654862956096087,
-      "median_cg4": 0.036163902625,
-      "median_control": 0.03656611037499995
+      "before": 0.17227005446279203,
+      "after": -0.01700204374343154,
+      "median_cg4": 0.03649317775,
+      "median_control": 0.035953412
      },
      "logMstar_bgg": {
-      "before": 0.11695569128951569,
-      "after": 0.060981282116882765,
-      "median_cg4": 11.11993,
-      "median_control": 11.110365
+      "before": 0.10114671846512893,
+      "after": 0.2153861019720217,
+      "median_cg4": 11.11865,
+      "median_control": 11.07254
      },
      "log_group_luminosity": {
-      "before": 0.02298126066488966,
-      "after": -0.06674792349755237,
-      "median_cg4": 10.983360939761315,
-      "median_control": 11.030400965361618
+      "before": -0.0058795281934535155,
+      "after": 0.2689701257082043,
+      "median_cg4": 10.982142948168072,
+      "median_control": 10.951285239654453
      },
      "velocity_dispersion": {
-      "before": 0.02861499468979612,
-      "after": -0.010408740322963458,
-      "median_cg4": 160.40352377067745,
-      "median_control": 151.2200943523215
+      "before": 0.0016765815042191444,
+      "after": 0.12960477061276707,
+      "median_cg4": 157.75382835927795,
+      "median_control": 132.19551339249708
      },
      "mean_sat_logMstar": {
-      "before": 0.055107707379132606,
-      "after": 0.0865597253055219,
-      "median_cg4": 10.208630666666666,
-      "median_control": 10.203117666666667
+      "before": 0.04959408854694505,
+      "after": 0.3278988523687138,
+      "median_cg4": 10.203336666666667,
+      "median_control": 10.128783666666667
      }
     }
    },
@@ -1805,58 +1804,58 @@
      "logMstar_bgg",
      "log_group_luminosity"
     ],
-    "n_pairs": 54,
-    "delta": 0.10185185185185185,
-    "caliper_logit": 0.038976422251197566,
-    "mean_fraction_cg4": 0.5462962962962963,
-    "mean_fraction_control": 0.4444444444444444,
+    "n_pairs": 57,
+    "delta": 0.14035087719298245,
+    "caliper_logit": 0.04202659181067311,
+    "mean_fraction_cg4": 0.5321637426900585,
+    "mean_fraction_control": 0.391812865497076,
     "smd": {
      "z_group": {
-      "before": 0.15144413497186435,
-      "after": 0.05827915589431408,
-      "median_cg4": 0.036163902625,
-      "median_control": 0.0356919675
+      "before": 0.17227005446279203,
+      "after": 0.0249006997266445,
+      "median_cg4": 0.03649317775,
+      "median_control": 0.03572534075
      },
      "logMstar_bgg": {
-      "before": 0.11695569128951569,
-      "after": -0.10526159408309337,
-      "median_cg4": 11.11993,
-      "median_control": 11.121
+      "before": 0.10114671846512893,
+      "after": 0.02512510031021603,
+      "median_cg4": 11.11865,
+      "median_control": 11.10824
      },
      "log_group_luminosity": {
-      "before": 0.02298126066488966,
-      "after": -0.053408488041622106,
-      "median_cg4": 10.983360939761315,
-      "median_control": 11.027548180754955
+      "before": -0.0058795281934535155,
+      "after": 0.08673272860109484,
+      "median_cg4": 10.982142948168072,
+      "median_control": 11.011914533865907
      },
      "velocity_dispersion": {
-      "before": 0.02861499468979612,
-      "after": -0.10904249307427216,
-      "median_cg4": 160.40352377067745,
-      "median_control": 143.04038805903036
+      "before": 0.0016765815042191444,
+      "after": -0.058569877012944145,
+      "median_cg4": 157.75382835927795,
+      "median_control": 163.09540100628195
      },
      "mean_sat_logMstar": {
-      "before": 0.055107707379132606,
-      "after": -0.05072495470672657,
-      "median_cg4": 10.208630666666666,
-      "median_control": 10.26141
+      "before": 0.04959408854694505,
+      "after": 0.2761628907411322,
+      "median_cg4": 10.203336666666667,
+      "median_control": 10.150341
      }
     }
    },
-   "n_shared_control_groups": 10,
-   "fraction_shared_control_groups_of_with": 0.18518518518518517,
-   "fraction_shared_control_groups_of_without": 0.18518518518518517,
-   "n_shared_cg4_groups": 54,
-   "n_identical_pairs": 5,
+   "n_shared_control_groups": 6,
+   "fraction_shared_control_groups_of_with": 0.10526315789473684,
+   "fraction_shared_control_groups_of_without": 0.10526315789473684,
+   "n_shared_cg4_groups": 57,
+   "n_identical_pairs": 3,
    "sigma_v_imbalance_without": {
-    "smd_after": -0.10904249307427216,
+    "smd_after": -0.058569877012944145,
     "direction": "controls have HIGHER sigma_v than CG4",
-    "median_cg4_kms": 160.40352377067745,
-    "median_control_kms": 143.04038805903036
+    "median_cg4_kms": 157.75382835927795,
+    "median_control_kms": 163.09540100628195
    },
-   "delta_change": -0.012345679012345692,
-   "mean_fraction_control_change": 0.012345679012345678,
-   "mean_fraction_cg4_change": 0.0
+   "delta_change": -0.008771929824561375,
+   "mean_fraction_control_change": 0.00877192982456132,
+   "mean_fraction_cg4_change": 1.1102230246251565e-16
   },
   "RG4": {
    "with_sigma_v": {
@@ -1866,41 +1865,41 @@
      "log_group_luminosity",
      "velocity_dispersion"
     ],
-    "n_pairs": 28,
-    "delta": 0.19642857142857137,
-    "caliper_logit": 0.27967516528853303,
-    "mean_fraction_cg4": 0.47619047619047616,
-    "mean_fraction_control": 0.27976190476190477,
+    "n_pairs": 30,
+    "delta": 0.24999999999999997,
+    "caliper_logit": 0.27643853423611486,
+    "mean_fraction_cg4": 0.5333333333333333,
+    "mean_fraction_control": 0.2833333333333333,
     "smd": {
      "z_group": {
-      "before": -0.5002199761697065,
-      "after": 0.0696569110544369,
+      "before": -0.48114743662143217,
+      "after": -0.10428511646526713,
       "median_cg4": 0.03734792599999995,
-      "median_control": 0.037927597874999996
+      "median_control": 0.036897176500000003
      },
      "logMstar_bgg": {
-      "before": 0.7256554032095724,
-      "after": 0.009376801276291407,
-      "median_cg4": 11.064015,
-      "median_control": 11.042295
+      "before": 0.7292436934736588,
+      "after": -0.07965937553860439,
+      "median_cg4": 11.049515,
+      "median_control": 11.028839999999999
      },
      "log_group_luminosity": {
-      "before": 0.6713058745090491,
-      "after": -0.24698597889552448,
-      "median_cg4": 10.944248150260385,
-      "median_control": 10.988717094492198
+      "before": 0.6659736550564985,
+      "after": -0.23094424100329225,
+      "median_cg4": 10.929068020039118,
+      "median_control": 10.974868335325638
      },
      "velocity_dispersion": {
-      "before": 0.7147166807070063,
-      "after": 0.19896867503284102,
-      "median_cg4": 129.85948401605955,
-      "median_control": 106.82123704847253
+      "before": 0.707205003437099,
+      "after": 0.07723877250590093,
+      "median_cg4": 119.37103427594782,
+      "median_control": 107.80344407974718
      },
      "mean_sat_logMstar": {
-      "before": 0.5373374609984787,
-      "after": -0.060132587158384855,
-      "median_cg4": 10.120871000000001,
-      "median_control": 10.192689166666666
+      "before": 0.5469450437502331,
+      "after": -0.09599540513319066,
+      "median_cg4": 10.124355333333334,
+      "median_control": 10.201569166666665
      }
     }
    },
@@ -1910,60 +1909,60 @@
      "logMstar_bgg",
      "log_group_luminosity"
     ],
-    "n_pairs": 31,
-    "delta": 0.25268817204301075,
-    "caliper_logit": 0.2567907109275059,
-    "mean_fraction_cg4": 0.49462365591397855,
-    "mean_fraction_control": 0.24193548387096772,
+    "n_pairs": 33,
+    "delta": 0.22222222222222224,
+    "caliper_logit": 0.25114580829199956,
+    "mean_fraction_cg4": 0.5,
+    "mean_fraction_control": 0.27777777777777773,
     "smd": {
      "z_group": {
-      "before": -0.5002199761697065,
-      "after": -0.020456295877994735,
-      "median_cg4": 0.037650195,
-      "median_control": 0.03928745525
+      "before": -0.48114743662143217,
+      "after": -0.15853434359779686,
+      "median_cg4": 0.0370456569999999,
+      "median_control": 0.03932169875
      },
      "logMstar_bgg": {
-      "before": 0.7256554032095724,
-      "after": 0.07738719142083413,
-      "median_cg4": 11.07583,
-      "median_control": 11.02857
+      "before": 0.7292436934736588,
+      "after": 0.048460993424422484,
+      "median_cg4": 11.04974,
+      "median_control": 10.98999
      },
      "log_group_luminosity": {
-      "before": 0.6713058745090491,
-      "after": -0.07617177050263384,
-      "median_cg4": 10.944278126219213,
+      "before": 0.6659736550564985,
+      "after": -0.23625147327355486,
+      "median_cg4": 10.913007226845536,
       "median_control": 10.970609357080415
      },
      "velocity_dispersion": {
-      "before": 0.7147166807070063,
-      "after": 0.5209872537930811,
-      "median_cg4": 163.05321918207693,
-      "median_control": 98.46851953911724
+      "before": 0.707205003437099,
+      "after": 0.40272919973532695,
+      "median_cg4": 139.6605782993902,
+      "median_control": 106.51913169001487
      },
      "mean_sat_logMstar": {
-      "before": 0.5373374609984787,
-      "after": 0.17758654592591214,
+      "before": 0.5469450437502331,
+      "after": 0.2228759443270896,
       "median_cg4": 10.163223333333333,
-      "median_control": 10.108587333333334
+      "median_control": 10.152077666666665
      }
     }
    },
    "n_shared_control_groups": 21,
-   "fraction_shared_control_groups_of_with": 0.75,
-   "fraction_shared_control_groups_of_without": 0.6774193548387096,
-   "n_shared_cg4_groups": 22,
-   "n_identical_pairs": 0,
+   "fraction_shared_control_groups_of_with": 0.7,
+   "fraction_shared_control_groups_of_without": 0.6363636363636364,
+   "n_shared_cg4_groups": 25,
+   "n_identical_pairs": 1,
    "sigma_v_imbalance_without": {
-    "smd_after": 0.5209872537930811,
+    "smd_after": 0.40272919973532695,
     "direction": "CG4 have HIGHER sigma_v than controls",
-    "median_cg4_kms": 163.05321918207693,
-    "median_control_kms": 98.46851953911724
+    "median_cg4_kms": 139.6605782993902,
+    "median_control_kms": 106.51913169001487
    },
-   "delta_change": 0.05625960061443938,
-   "mean_fraction_control_change": -0.037826420890937046,
-   "mean_fraction_cg4_change": 0.01843317972350239
+   "delta_change": -0.027777777777777735,
+   "mean_fraction_control_change": -0.005555555555555591,
+   "mean_fraction_cg4_change": -0.033333333333333326
   },
-  "interpretation": "For Control4B the two matched control sets share only 7/54 control groups (13%) and 0 identical pairs; dropping sigma_v changes the matched-control mean elliptical-satellite fraction by -0.123 and the CG4 side by +0.000, so the shift of Delta from 0.160 to 0.284 comes from which control quartets are selected, not from the CG4 side. In the no-sigma_v set the residual sigma_v SMD is +0.27 (CG4 have HIGHER sigma_v than controls; medians 160 vs 129 km/s). Because Control4B quartets embedded in rich hosts carry high gapper sigma_v, matching ON sigma_v pulls in controls from dynamically hotter (richer, more early-type-rich) hosts, which raises the control elliptical fraction and lowers Delta; matching WITHOUT it selects controls from cooler hosts. With four tracers sigma_v is a noisy covariate (Sect. 2.4), so neither Delta is 'the' answer: the pair of values brackets the Control4B contrast, and the ordering Control4C < Control4B, RG4 holds in both. Note that the no-sigma_v Control4B set is NOT better balanced overall: its redshift SMD grows to +0.25 (from -0.08), so the published with-sigma_v match remains the primary one and the no-sigma_v value a labelled sensitivity.",
+  "interpretation": "For Control4B the two matched control sets share only 9/57 control groups (16%) and 1 identical pairs; dropping sigma_v changes the matched-control mean elliptical-satellite fraction by -0.094 and the CG4 side by +0.000, so the shift of Delta from 0.123 to 0.216 comes from which control quartets are selected, not from the CG4 side. In the no-sigma_v set the residual sigma_v SMD is +0.49 (CG4 have HIGHER sigma_v than controls; medians 158 vs 123 km/s). Because Control4B quartets embedded in rich hosts carry high gapper sigma_v, matching ON sigma_v pulls in controls from dynamically hotter (richer, more early-type-rich) hosts, which raises the control elliptical fraction and lowers Delta; matching WITHOUT it selects controls from cooler hosts. With four tracers sigma_v is a noisy covariate (Sect. 2.4), so neither Delta is 'the' answer: the pair of values brackets the Control4B contrast, and the ordering Control4C < Control4B, RG4 holds in both. Note that the no-sigma_v Control4B set is NOT better balanced overall: its redshift SMD grows to +0.00 (from -0.17), so the published with-sigma_v match remains the primary one and the no-sigma_v value a labelled sensitivity.",
   "smd_file": "d5_group_match_smd_with_vs_without_sigma_v.csv"
  },
  "d6_holm_per_control": {

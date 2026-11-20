@@ -23,6 +23,7 @@
 \graphicspath{{<< SUBFIGURES_PATH >>}}
 
 \renewcommand{\thefigure}{S.\arabic{figure}}
+\renewcommand{\thetable}{S.\arabic{table}}
 
 \begin{document}
 <% set es = extended_specialness if extended_specialness else {} %>
@@ -137,6 +138,48 @@ The optical-colour panels above give the corresponding full distributional diagn
   \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control catalogue separately. Every model uses the article's main adjustment set: stellar mass, redshift, rank, group luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii at fixed covariates.}
   \label{fig:supp_size_per_control}
 \end{figure}
+<% endif %>
+
+<% set fz = freeze if freeze else {} %>
+<% set cpt = fz.get('compactness', {}) %>
+<% set fzs = fz.get('spectral', {}) %>
+<% if cpt and fzs %>
+<% macro sgn(x, nd=1) -%><% set s = x|fmth(nd) %><% if s != 'n/a' and not s.startswith('-') and s|float != 0 %>+<% endif %><< s >><%- endmacro %>
+<% macro est(m) -%>\(<< sgn(m['difference']) >>\) \([<< sgn(m['low']) >>, << sgn(m['high']) >>]\)<%- endmacro %>
+\section{Comparison at comparable compactness: raw fractions and spectral variants}
+
+Figure~\ref{fig:supp_compactness_raw} repeats the compactness figure of the article (Sect.~3.1) with raw satellite E-class fractions instead of fractions at fixed stellar mass; the fitted lines and panel (b) are unchanged. Table~\ref{tab:supp_spectral_variants} lists the \CG{}-minus-\CC{} contrasts behind Sect.~3.5 of the article for satellites with \(10 \le \log(M_\star/M_\odot) < 10.5\) in the common range of mean projected pair separation (<< cpt['window_kpc'][0]|fmt(0) >>--<< cpt['window_kpc'][1]|fmt(0) >>~kpc), evaluated at \(\overline{R}_{ij} = << cpt['centre_kpc']|fmt(0) >>\)~kpc. Strong H\(\alpha\) emission is measured in the SDSS fibre; the quenched class uses the total sSFR. The historical row uses the original emission-line join and the other rows the exact stored spectra. The aperture covariate is \(\log_{10}(1.5\,{\rm arcsec}/R_{50,r})\) with the Petrosian half-light radius; the aperture rows and the E/S row share one sample, and the BPT exclusions then remove AGN-like spectra above the Kewley et al. (2001) line or, in addition, composites above the Kauffmann et al. (2003) line. Each selection changes both the estimate and the sample. In the compactness-matched comparison, << fzs['n_singular_fits'] >> adjusted fits restricted to the intermediate-mass samples after the composite exclusion have singular design matrices; these contrasts are not estimable and are not reported.
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{<< fz['figures']['raw'] >>}
+  \caption{As the compactness figure of the article (Sect.~3.1), but the symbols in panel (a) are raw E-class fractions among E/S-classified satellites in 0.2-dex bins of \(\log\overline{R}_{ij}\), with 95\% intervals from a bootstrap of physical hosts. The lines remain logistic fits evaluated at \(\log(M_\star/M_\odot) = 10.35\).}
+  \label{fig:supp_compactness_raw}
+\end{figure*}
+
+\begin{table*}
+  \centering
+  \caption{Intermediate-mass spectral contrasts at comparable compactness}
+  \label{tab:supp_spectral_variants}
+  \tabcolsep=3pt
+  \begin{tabular}{lccc}
+    \toprule
+    Outcome and selection & Common slope & Separate slopes & \(N\) \\
+    \midrule
+<% set row_labels = {'historical': 'H\\(\\alpha\\), historical join', 'exact': 'H\\(\\alpha\\), exact spectra', 'exact_es_common': '\\quad + E/S, common sample', 'exact_aperture': '\\quad + aperture', 'exact_aperture_kewley': '\\quad + aperture, no AGN', 'exact_aperture_kauffmann': '\\quad + aperture, no AGN/comp.', 'quenched': 'Quenched (total sSFR)'} %>
+<% for row in fzs['supplement_rows'] %>
+    << row_labels[row['key']] >> & << est(row['common']) >> & << est(row['separate']) >> & << row['common']['cg_n'] >>/<< row['common']['control_n'] >> \\
+<% endfor %>
+    \midrule
+    & Match & Match + \(\sigma_v\) caliper & Pairs \\
+    \midrule
+<% for row in fzs['matched_rows'] %>
+    << 'H\\(\\alpha\\), exact spectra' if row['key'] == 'strong_exact' else 'Quenched (total sSFR)' >> & << est(row['match']) >> & << est(row['match_sigma']) >> & << row['match']['labelled_pairs'] >>/<< row['match_sigma']['labelled_pairs'] >> \\
+<% endfor %>
+    \bottomrule
+  \end{tabular}
+  \tablefoot{Differences in percentage points with 95\% intervals. Model rows adjust for stellar mass, redshift, group luminosity, and \(\sigma_v\) and are standardised to the local \CG{} satellites; \(N\) gives the \CG{}/\CC{} satellites in the fit. Matched rows are unadjusted paired differences over quartet pairs with outcomes on both sides, with intervals from a bootstrap of connected host components.}
+\end{table*}
 <% endif %>
 
 \end{document}

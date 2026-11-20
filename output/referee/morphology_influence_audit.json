@@ -19,11 +19,11 @@
   {
    "control": "Control4B",
    "full_status": "ok",
-   "full_beta": 0.968101949298694,
-   "full_odds_ratio": 2.6329422557428486,
+   "full_beta": 0.902483291968871,
+   "full_odds_ratio": 2.465718613956264,
    "full_covariance": "cluster",
-   "full_n_clusters": 735,
-   "complete_case_physical_groups": 735,
+   "full_n_clusters": 756,
+   "complete_case_physical_groups": 756,
    "control_duplicate_objids": 0,
    "cg4_objids_on_control_side": 0,
    "clustered_by_physical_group": true
@@ -31,11 +31,11 @@
   {
    "control": "Control4C",
    "full_status": "ok",
-   "full_beta": 0.6585757859823733,
-   "full_odds_ratio": 1.9320387373593795,
+   "full_beta": 0.6188005124556207,
+   "full_odds_ratio": 1.856699617565017,
    "full_covariance": "cluster",
-   "full_n_clusters": 734,
-   "complete_case_physical_groups": 734,
+   "full_n_clusters": 755,
+   "complete_case_physical_groups": 755,
    "control_duplicate_objids": 0,
    "cg4_objids_on_control_side": 0,
    "clustered_by_physical_group": true
@@ -43,11 +43,11 @@
   {
    "control": "RG4",
    "full_status": "ok",
-   "full_beta": 1.1088866010466463,
-   "full_odds_ratio": 3.0309818230595447,
+   "full_beta": 1.028797781718491,
+   "full_odds_ratio": 2.7977003655645043,
    "full_covariance": "cluster",
-   "full_n_clusters": 113,
-   "complete_case_physical_groups": 113,
+   "full_n_clusters": 116,
+   "complete_case_physical_groups": 116,
    "control_duplicate_objids": 0,
    "cg4_objids_on_control_side": 0,
    "clustered_by_physical_group": true

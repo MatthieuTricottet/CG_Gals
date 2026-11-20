@@ -25,39 +25,39 @@
     },
     "matched_gz1_e": {
       "pooled": {
-        "n": 942,
-        "fraction_early": 0.921443736730361,
-        "fraction_s0_like": 0.5424628450106157,
-        "fraction_strong_s0_like": 0.28662420382165604
+        "n": 990,
+        "fraction_early": 0.9222222222222223,
+        "fraction_s0_like": 0.5373737373737374,
+        "fraction_strong_s0_like": 0.28383838383838383
       },
       "CG4": {
-        "n": 86,
-        "fraction_early": 0.9069767441860465,
-        "fraction_s0_like": 0.5465116279069767,
-        "fraction_strong_s0_like": 0.2441860465116279
+        "n": 91,
+        "fraction_early": 0.9010989010989011,
+        "fraction_s0_like": 0.5384615384615384,
+        "fraction_strong_s0_like": 0.25274725274725274
       },
       "deduplicated_controls": {
-        "n": 856,
-        "fraction_early": 0.9228971962616822,
-        "fraction_s0_like": 0.5420560747663551,
-        "fraction_strong_s0_like": 0.2908878504672897
+        "n": 899,
+        "fraction_early": 0.9243604004449388,
+        "fraction_s0_like": 0.5372636262513905,
+        "fraction_strong_s0_like": 0.28698553948832034
       }
     },
     "high_confidence_s0": {
       "definition": "TType <= 0 and P_S0 >= 0.8",
       "n": 429,
-      "fraction_to_E": 0.6293706293706294,
-      "fraction_to_S": 0.24475524475524477,
+      "fraction_to_E": 0.655011655011655,
+      "fraction_to_S": 0.26573426573426573,
       "environment_mapping": {
         "CG4": {
           "n": 37,
-          "fraction_to_E": 0.5675675675675675
+          "fraction_to_E": 0.6216216216216216
         },
         "deduplicated_controls": {
           "n": 392,
-          "fraction_to_E": 0.6352040816326531
+          "fraction_to_E": 0.6581632653061225
         },
-        "fisher_E_vs_not_E_p": 0.4769980949435707
+        "fisher_E_vs_not_E_p": 0.7181410063430334
       }
     }
   },

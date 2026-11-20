@@ -112,14 +112,14 @@
   "n_ambiguous_or_duplicate": 0,
   "by_class": {
    "Embedded": {
-    "CG4 BGG equals Lim-host BGG": 37
+    "CG4 BGG equals Lim-host BGG": 13,
+    "CG4 BGG differs from Lim-host BGG": 6
    },
    "Isolated": {
     "CG4 BGG equals Lim-host BGG": 6
    },
    "Predom": {
-    "CG4 BGG equals Lim-host BGG": 13,
-    "CG4 BGG differs from Lim-host BGG": 6
+    "CG4 BGG equals Lim-host BGG": 37
    }
   },
   "n_isolated_trivial_equal": 6,
@@ -154,24 +154,24 @@
     "outcome": "elliptical",
     "n_cg4_systems_retained": 56,
     "n_cg4_satellite_galaxies_raw": 168,
-    "n_cg4_complete": 143,
-    "n_control_complete": 1772,
-    "n_model_complete": 1915,
-    "n_physical_groups_complete": 731,
-    "primary_n_cg4_complete": 157,
-    "primary_n_control_complete": 1772,
-    "primary_odds_ratio": 2.6329422557428486,
-    "primary_ci95_low": 1.8831238208263272,
-    "primary_ci95_high": 3.6813218787887583,
-    "primary_raw_p": 1.5036813787072624e-08,
-    "aligned_odds_ratio": 2.712920449682239,
-    "aligned_ci95_low": 1.8908354845436341,
-    "aligned_ci95_high": 3.8924260870217657,
-    "aligned_raw_p": 6.012122541686058e-08,
-    "primary_beta": 0.968101949298694,
-    "aligned_beta": 0.9980257113457711,
-    "delta_beta_aligned_minus_primary": 0.02992376204707714,
-    "attenuation_fraction_abs_beta": -0.030909721924177836,
+    "n_cg4_complete": 154,
+    "n_control_complete": 1866,
+    "n_model_complete": 2020,
+    "n_physical_groups_complete": 752,
+    "primary_n_cg4_complete": 170,
+    "primary_n_control_complete": 1866,
+    "primary_odds_ratio": 2.465718613956264,
+    "primary_ci95_low": 1.7923950759664011,
+    "primary_ci95_high": 3.39198001865319,
+    "primary_raw_p": 2.9203794751069625e-08,
+    "aligned_odds_ratio": 2.57577698057951,
+    "aligned_ci95_low": 1.8350297624260654,
+    "aligned_ci95_high": 3.615541932634245,
+    "aligned_raw_p": 4.530621091693556e-08,
+    "primary_beta": 0.902483291968871,
+    "aligned_beta": 0.9461512286322094,
+    "delta_beta_aligned_minus_primary": 0.04366793666333835,
+    "attenuation_fraction_abs_beta": -0.048386421169162835,
     "decision_classification": "Stable"
    },
    {
@@ -180,24 +180,24 @@
     "outcome": "elliptical",
     "n_cg4_systems_retained": 56,
     "n_cg4_satellite_galaxies_raw": 168,
-    "n_cg4_complete": 143,
-    "n_control_complete": 1744,
-    "n_model_complete": 1887,
-    "n_physical_groups_complete": 733,
-    "primary_n_cg4_complete": 157,
-    "primary_n_control_complete": 1744,
-    "primary_odds_ratio": 1.9320387373593795,
-    "primary_ci95_low": 1.4032726121748909,
-    "primary_ci95_high": 2.660048838886629,
-    "primary_raw_p": 5.4226720085294193e-05,
-    "aligned_odds_ratio": 1.979734289409119,
-    "aligned_ci95_low": 1.3980984378132977,
-    "aligned_ci95_high": 2.80334184679607,
-    "aligned_raw_p": 0.00011900647785998729,
-    "primary_beta": 0.6585757859823733,
-    "aligned_beta": 0.6829626384330632,
-    "delta_beta_aligned_minus_primary": 0.024386852450689833,
-    "attenuation_fraction_abs_beta": -0.03702968279392912,
+    "n_cg4_complete": 154,
+    "n_control_complete": 1833,
+    "n_model_complete": 1987,
+    "n_physical_groups_complete": 754,
+    "primary_n_cg4_complete": 170,
+    "primary_n_control_complete": 1833,
+    "primary_odds_ratio": 1.856699617565017,
+    "primary_ci95_low": 1.367091524526363,
+    "primary_ci95_high": 2.52165521328971,
+    "primary_raw_p": 7.432548466353864e-05,
+    "aligned_odds_ratio": 1.9376149408212067,
+    "aligned_ci95_low": 1.3968527329446123,
+    "aligned_ci95_high": 2.6877218838805352,
+    "aligned_raw_p": 7.439702191992867e-05,
+    "primary_beta": 0.6188005124556207,
+    "aligned_beta": 0.6614578047805649,
+    "delta_beta_aligned_minus_primary": 0.042657292324944196,
+    "attenuation_fraction_abs_beta": -0.06893545087036995,
     "decision_classification": "Stable"
    },
    {
@@ -206,24 +206,24 @@
     "outcome": "elliptical",
     "n_cg4_systems_retained": 56,
     "n_cg4_satellite_galaxies_raw": 168,
-    "n_cg4_complete": 143,
-    "n_control_complete": 142,
-    "n_model_complete": 285,
-    "n_physical_groups_complete": 109,
-    "primary_n_cg4_complete": 157,
-    "primary_n_control_complete": 142,
-    "primary_odds_ratio": 3.0309818230595447,
-    "primary_ci95_low": 1.718967402388407,
-    "primary_ci95_high": 5.344400829796283,
-    "primary_raw_p": 0.00012709680487124202,
-    "aligned_odds_ratio": 3.0302660479384773,
-    "aligned_ci95_low": 1.6621077327321807,
-    "aligned_ci95_high": 5.524619217187817,
-    "aligned_raw_p": 0.0002967458059388154,
-    "primary_beta": 1.1088866010466463,
-    "aligned_beta": 1.108650420266837,
-    "delta_beta_aligned_minus_primary": -0.00023618077980924745,
-    "attenuation_fraction_abs_beta": 0.00021298911862252027,
+    "n_cg4_complete": 154,
+    "n_control_complete": 152,
+    "n_model_complete": 306,
+    "n_physical_groups_complete": 112,
+    "primary_n_cg4_complete": 170,
+    "primary_n_control_complete": 152,
+    "primary_odds_ratio": 2.7977003655645043,
+    "primary_ci95_low": 1.6671708940190724,
+    "primary_ci95_high": 4.694856036390364,
+    "primary_raw_p": 9.813360210955392e-05,
+    "aligned_odds_ratio": 2.8537007403268677,
+    "aligned_ci95_low": 1.662057290626041,
+    "aligned_ci95_high": 4.899715528021715,
+    "aligned_raw_p": 0.000143489964681925,
+    "primary_beta": 1.028797781718491,
+    "aligned_beta": 1.0486166573293996,
+    "delta_beta_aligned_minus_primary": 0.01981887561090856,
+    "attenuation_fraction_abs_beta": -0.019264111920812423,
     "decision_classification": "Stable"
    }
   ],
@@ -241,64 +241,69 @@
     "log_group_luminosity",
     "velocity_dispersion"
    ],
-   "n_cg4_groups_available": 49,
-   "n_control_groups_available": 630,
-   "n_matched_groups": 49,
+   "n_cg4_groups_available": 51,
+   "n_control_groups_available": 648,
+   "n_matched_groups": 51,
    "propensity_caliper_logit_sd": 0.2,
-   "delta_smooth_satellite_fraction": 0.09183673469387756,
+   "delta_smooth_satellite_fraction": 0.19607843137254902,
    "ci95": [
-    -0.04081632653061229,
-    0.22789115646258506
+    0.09150326797385616,
+    0.3039215686274509
    ],
-   "p": 0.1846,
-   "p_permutation": 0.1943,
+   "p": 0.0008,
+   "p_permutation": 0.0014,
+   "resampling_unit": "bipartite_connected_component",
+   "n_components": 51,
+   "permutation_unit": "bipartite_connected_component",
    "n_boot": 9999,
    "p_floor": 0.0002,
-   "mean_fraction_cg4": 0.5510204081632653,
-   "mean_fraction_control": 0.45918367346938777,
+   "mean_fraction_cg4": 0.545751633986928,
+   "mean_fraction_control": 0.34967320261437906,
    "n_smooth_sat_distribution_cg4": {
-    "0": 7,
-    "1": 17,
-    "2": 20,
+    "0": 6,
+    "1": 18,
+    "2": 22,
     "3": 5
    },
    "n_smooth_sat_distribution_control": {
-    "0": 13,
-    "1": 19,
-    "2": 14,
-    "3": 3
+    "0": 17,
+    "1": 22,
+    "2": 8,
+    "3": 4
    },
    "matched_control_composition": {
-    "Control4B": 49
+    "Control4B": 51
    },
    "satellite_mass_balance": {
     "status": "ok",
-    "n_pairs": 49,
-    "mean_paired_diff_dex": 0.0011897346938777242,
+    "n_pairs": 51,
+    "mean_paired_diff_dex": -0.014098460784313835,
     "ci95": [
-     -0.11113536598639447,
-     0.10762145442176894
+     -0.1245980153594755,
+     0.09474212173202651
     ],
-    "smd_before": -0.5828043608452799,
-    "smd_after": 0.0037122075529096798
+    "resampling_unit": "bipartite_connected_component",
+    "n_components": 51,
+    "smd_before": -0.5733732909703542,
+    "smd_after": -0.0424290751660362
    },
    "balance": {
     "before": {
-     "z_group": 0.1258226478668747,
-     "logMstar_bgg": 0.14920903266980973,
-     "log_group_luminosity": -0.349842758871606,
-     "velocity_dispersion": 0.17746182243833808,
-     "mean_sat_logMstar": -0.5828043608452799
+     "z_group": 0.12811979433586945,
+     "logMstar_bgg": 0.14974905252892823,
+     "log_group_luminosity": -0.36349575864685396,
+     "velocity_dispersion": 0.14541617276082747,
+     "mean_sat_logMstar": -0.5733732909703542
     },
     "after": {
-     "z_group": -0.08963740881321682,
-     "logMstar_bgg": 0.11415923361331949,
-     "log_group_luminosity": 0.18318126056942124,
-     "velocity_dispersion": 0.31152158113502587,
-     "mean_sat_logMstar": 0.0037122075529096798
+     "z_group": -0.048554407352293376,
+     "logMstar_bgg": 0.08849805830612233,
+     "log_group_luminosity": 0.13245493251074286,
+     "velocity_dispersion": 0.2454372162401792,
+     "mean_sat_logMstar": -0.0424290751660362
     },
-    "max_abs_smd_before": 0.5828043608452799,
-    "max_abs_smd_after": 0.31152158113502587
+    "max_abs_smd_before": 0.5733732909703542,
+    "max_abs_smd_after": 0.2454372162401792
    },
    "satellite_mass_balanced_variant": {
     "status": "ok",
@@ -310,66 +315,73 @@
      "velocity_dispersion",
      "mean_sat_logMstar"
     ],
-    "n_cg4_groups_available": 49,
-    "n_control_groups_available": 630,
-    "n_matched_groups": 49,
+    "n_cg4_groups_available": 51,
+    "n_control_groups_available": 648,
+    "n_matched_groups": 51,
     "propensity_caliper_logit_sd": 0.2,
-    "delta_smooth_satellite_fraction": 0.24149659863945575,
+    "delta_smooth_satellite_fraction": 0.17647058823529413,
     "ci95": [
-     0.12585034013605434,
-     0.35034013605442177
+     0.06209150326797386,
+     0.28758169934640526
     ],
-    "p": 0.0002,
-    "p_permutation": 0.0004,
+    "p": 0.002,
+    "p_permutation": 0.004,
+    "resampling_unit": "bipartite_connected_component",
+    "n_components": 51,
+    "permutation_unit": "bipartite_connected_component",
     "n_boot": 9999,
     "p_floor": 0.0002,
-    "mean_fraction_cg4": 0.5510204081632653,
-    "mean_fraction_control": 0.3095238095238095,
+    "mean_fraction_cg4": 0.545751633986928,
+    "mean_fraction_control": 0.36928104575163395,
     "n_smooth_sat_distribution_cg4": {
-     "0": 7,
-     "1": 17,
-     "2": 20,
+     "0": 6,
+     "1": 18,
+     "2": 22,
      "3": 5
     },
     "n_smooth_sat_distribution_control": {
-     "0": 20,
-     "1": 20,
-     "2": 9
+     "0": 17,
+     "1": 23,
+     "2": 7,
+     "3": 4
     },
     "matched_control_composition": {
-     "Control4B": 49
+     "Control4B": 51
     },
     "satellite_mass_balance": {
      "status": "ok",
-     "n_pairs": 49,
-     "mean_paired_diff_dex": 0.02773887074829925,
+     "n_pairs": 51,
+     "mean_paired_diff_dex": -0.01979746405228758,
      "ci95": [
-      -0.0630721738095238,
-      0.1175703282312923
+      -0.12057713986928062,
+      0.08225661258169982
      ],
-     "smd_before": -0.5828043608452799,
-     "smd_after": 0.09131527928749743
+     "resampling_unit": "bipartite_connected_component",
+     "n_components": 51,
+     "smd_before": -0.5733732909703542,
+     "smd_after": -0.06016848222652807
     },
     "balance": {
      "before": {
-      "z_group": 0.1258226478668747,
-      "logMstar_bgg": 0.14920903266980973,
-      "log_group_luminosity": -0.349842758871606,
-      "velocity_dispersion": 0.17746182243833808,
-      "mean_sat_logMstar": -0.5828043608452799
+      "z_group": 0.12811979433586945,
+      "logMstar_bgg": 0.14974905252892823,
+      "log_group_luminosity": -0.36349575864685396,
+      "velocity_dispersion": 0.14541617276082747,
+      "mean_sat_logMstar": -0.5733732909703542
      },
      "after": {
-      "z_group": -0.15650263788165097,
-      "logMstar_bgg": 0.06772058225116803,
-      "log_group_luminosity": 0.21758334632629478,
-      "velocity_dispersion": 0.27607396806164275,
-      "mean_sat_logMstar": 0.09131527928749743
+      "z_group": -0.22425653501145676,
+      "logMstar_bgg": 0.009760391916075336,
+      "log_group_luminosity": -0.020409486123369187,
+      "velocity_dispersion": -0.01601735030073048,
+      "mean_sat_logMstar": -0.06016848222652807
      },
-     "max_abs_smd_before": 0.5828043608452799,
-     "max_abs_smd_after": 0.27607396806164275
+     "max_abs_smd_before": 0.5733732909703542,
+     "max_abs_smd_after": 0.22425653501145676
     },
     "role": "Sensitivity variant with mean satellite log M* added to the matching covariates; unadjusted p, reported as a diagnostic of the corresponding primary per-control match."
-   }
+   },
+   "p_permutation_holm_across_controls": 0.0042
   },
   "Control4C": {
    "status": "ok",
@@ -380,64 +392,69 @@
     "log_group_luminosity",
     "velocity_dispersion"
    ],
-   "n_cg4_groups_available": 49,
-   "n_control_groups_available": 632,
-   "n_matched_groups": 47,
+   "n_cg4_groups_available": 51,
+   "n_control_groups_available": 650,
+   "n_matched_groups": 50,
    "propensity_caliper_logit_sd": 0.2,
-   "delta_smooth_satellite_fraction": 0.1524822695035461,
+   "delta_smooth_satellite_fraction": 0.16666666666666663,
    "ci95": [
-    0.01773049645390057,
-    0.2872340425531915
+    0.043333333333333335,
+    0.2933333333333333
    ],
-   "p": 0.0274,
-   "p_permutation": 0.0369,
+   "p": 0.0082,
+   "p_permutation": 0.015,
+   "resampling_unit": "bipartite_connected_component",
+   "n_components": 50,
+   "permutation_unit": "bipartite_connected_component",
    "n_boot": 9999,
    "p_floor": 0.0002,
-   "mean_fraction_cg4": 0.5638297872340424,
-   "mean_fraction_control": 0.41134751773049644,
+   "mean_fraction_cg4": 0.55,
+   "mean_fraction_control": 0.38333333333333336,
    "n_smooth_sat_distribution_cg4": {
     "0": 6,
-    "1": 16,
-    "2": 20,
+    "1": 17,
+    "2": 22,
     "3": 5
    },
    "n_smooth_sat_distribution_control": {
-    "0": 14,
-    "1": 19,
-    "2": 12,
-    "3": 2
+    "0": 16,
+    "1": 20,
+    "2": 13,
+    "3": 1
    },
    "matched_control_composition": {
-    "Control4C": 47
+    "Control4C": 50
    },
    "satellite_mass_balance": {
     "status": "ok",
-    "n_pairs": 47,
-    "mean_paired_diff_dex": 0.008453581560283828,
+    "n_pairs": 50,
+    "mean_paired_diff_dex": 0.0678985633333334,
     "ci95": [
-     -0.09924683617021261,
-     0.11882131897163159
+     -0.020870905666666762,
+     0.15402040966666644
     ],
-    "smd_before": 0.09387217192160076,
-    "smd_after": 0.026317426086862435
+    "resampling_unit": "bipartite_connected_component",
+    "n_components": 50,
+    "smd_before": 0.0953437141096689,
+    "smd_after": 0.25325754802595646
    },
    "balance": {
     "before": {
-     "z_group": 0.13479943063065417,
-     "logMstar_bgg": 0.15137897692889055,
-     "log_group_luminosity": 0.09088351807082073,
-     "velocity_dispersion": 0.013866011616369337,
-     "mean_sat_logMstar": 0.09387217192160076
+     "z_group": 0.1301961003360398,
+     "logMstar_bgg": 0.14842643913964046,
+     "log_group_luminosity": 0.07046705470561508,
+     "velocity_dispersion": -0.03134499421806559,
+     "mean_sat_logMstar": 0.0953437141096689
     },
     "after": {
-     "z_group": 0.04683812740284601,
-     "logMstar_bgg": 0.017979980881290422,
-     "log_group_luminosity": -0.14877561464820613,
-     "velocity_dispersion": 0.070106598481548,
-     "mean_sat_logMstar": 0.026317426086862435
+     "z_group": -0.09416615206313683,
+     "logMstar_bgg": 0.016610772363216016,
+     "log_group_luminosity": 0.1886572474487149,
+     "velocity_dispersion": -0.05695154002920225,
+     "mean_sat_logMstar": 0.25325754802595646
     },
-    "max_abs_smd_before": 0.15137897692889055,
-    "max_abs_smd_after": 0.14877561464820613
+    "max_abs_smd_before": 0.14842643913964046,
+    "max_abs_smd_after": 0.25325754802595646
    },
    "satellite_mass_balanced_variant": {
     "status": "ok",
@@ -449,67 +466,73 @@
      "velocity_dispersion",
      "mean_sat_logMstar"
     ],
-    "n_cg4_groups_available": 49,
-    "n_control_groups_available": 632,
-    "n_matched_groups": 49,
+    "n_cg4_groups_available": 51,
+    "n_control_groups_available": 650,
+    "n_matched_groups": 51,
     "propensity_caliper_logit_sd": 0.2,
-    "delta_smooth_satellite_fraction": 0.15306122448979592,
+    "delta_smooth_satellite_fraction": 0.11764705882352941,
     "ci95": [
-     0.017006802721088343,
-     0.282312925170068
+     -0.006535947712418333,
+     0.24509803921568618
     ],
-    "p": 0.028,
-    "p_permutation": 0.0369,
+    "p": 0.0672,
+    "p_permutation": 0.0807,
+    "resampling_unit": "bipartite_connected_component",
+    "n_components": 51,
+    "permutation_unit": "bipartite_connected_component",
     "n_boot": 9999,
     "p_floor": 0.0002,
-    "mean_fraction_cg4": 0.5510204081632653,
-    "mean_fraction_control": 0.3979591836734694,
+    "mean_fraction_cg4": 0.545751633986928,
+    "mean_fraction_control": 0.42810457516339867,
     "n_smooth_sat_distribution_cg4": {
-     "0": 7,
-     "1": 17,
-     "2": 20,
+     "0": 6,
+     "1": 18,
+     "2": 22,
      "3": 5
     },
     "n_smooth_sat_distribution_control": {
-     "0": 16,
-     "1": 18,
-     "2": 14,
-     "3": 1
+     "0": 14,
+     "1": 23,
+     "2": 10,
+     "3": 4
     },
     "matched_control_composition": {
-     "Control4C": 49
+     "Control4C": 51
     },
     "satellite_mass_balance": {
      "status": "ok",
-     "n_pairs": 49,
-     "mean_paired_diff_dex": -0.03825242857142846,
+     "n_pairs": 51,
+     "mean_paired_diff_dex": 0.0392001797385623,
      "ci95": [
-      -0.13600833180272118,
-      0.06662376836734708
+      -0.06224256895424602,
+      0.14179795392156933
      ],
-     "smd_before": 0.09387217192160076,
-     "smd_after": -0.13364220995098
+     "resampling_unit": "bipartite_connected_component",
+     "n_components": 51,
+     "smd_before": 0.0953437141096689,
+     "smd_after": 0.12531200327988207
     },
     "balance": {
      "before": {
-      "z_group": 0.13479943063065417,
-      "logMstar_bgg": 0.15137897692889055,
-      "log_group_luminosity": 0.09088351807082073,
-      "velocity_dispersion": 0.013866011616369337,
-      "mean_sat_logMstar": 0.09387217192160076
+      "z_group": 0.1301961003360398,
+      "logMstar_bgg": 0.14842643913964046,
+      "log_group_luminosity": 0.07046705470561508,
+      "velocity_dispersion": -0.03134499421806559,
+      "mean_sat_logMstar": 0.0953437141096689
      },
      "after": {
-      "z_group": 0.05709172349524249,
-      "logMstar_bgg": -0.034481588569821475,
-      "log_group_luminosity": 0.03505715476285042,
-      "velocity_dispersion": -0.14885965596219103,
-      "mean_sat_logMstar": -0.13364220995098
+      "z_group": -0.12902709572726492,
+      "logMstar_bgg": 0.09722036224224405,
+      "log_group_luminosity": -0.07122012517304137,
+      "velocity_dispersion": 0.23525906911881955,
+      "mean_sat_logMstar": 0.12531200327988207
      },
-     "max_abs_smd_before": 0.15137897692889055,
-     "max_abs_smd_after": 0.14885965596219103
+     "max_abs_smd_before": 0.14842643913964046,
+     "max_abs_smd_after": 0.23525906911881955
     },
     "role": "Sensitivity variant with mean satellite log M* added to the matching covariates; unadjusted p, reported as a diagnostic of the corresponding primary per-control match."
-   }
+   },
+   "p_permutation_holm_across_controls": 0.015
   },
   "RG4": {
    "status": "ok",
@@ -520,63 +543,68 @@
     "log_group_luminosity",
     "velocity_dispersion"
    ],
-   "n_cg4_groups_available": 49,
-   "n_control_groups_available": 52,
-   "n_matched_groups": 25,
+   "n_cg4_groups_available": 51,
+   "n_control_groups_available": 53,
+   "n_matched_groups": 26,
    "propensity_caliper_logit_sd": 0.2,
-   "delta_smooth_satellite_fraction": 0.2533333333333333,
+   "delta_smooth_satellite_fraction": 0.2371794871794872,
    "ci95": [
-    0.07333333333333336,
-    0.42000000000000004
+    0.08974358974358976,
+    0.39102564102564097
    ],
-   "p": 0.0054,
-   "p_permutation": 0.0117,
+   "p": 0.0028,
+   "p_permutation": 0.0057,
+   "resampling_unit": "bipartite_connected_component",
+   "n_components": 26,
+   "permutation_unit": "bipartite_connected_component",
    "n_boot": 9999,
    "p_floor": 0.0002,
-   "mean_fraction_cg4": 0.48666666666666664,
-   "mean_fraction_control": 0.23333333333333328,
+   "mean_fraction_cg4": 0.5256410256410257,
+   "mean_fraction_control": 0.28846153846153844,
    "n_smooth_sat_distribution_cg4": {
-    "0": 4,
-    "1": 12,
-    "2": 7,
-    "3": 2
+    "0": 3,
+    "1": 10,
+    "2": 10,
+    "3": 3
    },
    "n_smooth_sat_distribution_control": {
-    "0": 12,
-    "1": 9,
+    "0": 9,
+    "1": 13,
     "2": 4
    },
    "matched_control_composition": {
-    "RG4": 25
+    "RG4": 26
    },
    "satellite_mass_balance": {
     "status": "ok",
-    "n_pairs": 25,
-    "mean_paired_diff_dex": 0.03374298666666661,
+    "n_pairs": 26,
+    "mean_paired_diff_dex": 0.04414361538461517,
     "ci95": [
-     -0.10924779666666685,
-     0.1705852606666665
+     -0.11078906923076905,
+     0.19860206217948553
     ],
-    "smd_before": 0.575741226793585,
-    "smd_after": 0.12221141422978371
+    "resampling_unit": "bipartite_connected_component",
+    "n_components": 26,
+    "smd_before": 0.5907900237764928,
+    "smd_after": 0.16560233833553317
    },
    "balance": {
     "before": {
-     "z_group": -0.5035232640695886,
-     "logMstar_bgg": 0.7528308941570258,
-     "log_group_luminosity": 0.7467305339035273,
-     "velocity_dispersion": 0.6851535188553833,
-     "mean_sat_logMstar": 0.575741226793585
+     "z_group": -0.5182520458263579,
+     "logMstar_bgg": 0.7682123910427849,
+     "log_group_luminosity": 0.7485878545201148,
+     "velocity_dispersion": 0.655832525455591,
+     "mean_sat_logMstar": 0.5907900237764928
     },
     "after": {
-     "z_group": -0.1416131600016137,
-     "logMstar_bgg": -0.295541408362688,
-     "log_group_luminosity": -0.17979980574348606,
-     "velocity_dispersion": 0.1341722246394812,
-     "mean_sat_logMstar": 0.12221141422978371
+     "z_group": -0.048169083220415125,
+     "logMstar_bgg": -0.06479098705702084,
+     "log_group_luminosity": -0.12721565415726935,
+     "velocity_dispersion": 0.12660724785518748,
+     "mean_sat_logMstar": 0.16560233833553317
     },
-    "max_abs_smd_before": 0.7528308941570258,
-    "max_abs_smd_after": 0.295541408362688
+    "max_abs_smd_before": 0.7682123910427849,
+    "max_abs_smd_after": 0.16560233833553317
    },
    "satellite_mass_balanced_variant": {
     "status": "ok",
@@ -588,66 +616,72 @@
      "velocity_dispersion",
      "mean_sat_logMstar"
     ],
-    "n_cg4_groups_available": 49,
-    "n_control_groups_available": 52,
-    "n_matched_groups": 25,
+    "n_cg4_groups_available": 51,
+    "n_control_groups_available": 53,
+    "n_matched_groups": 26,
     "propensity_caliper_logit_sd": 0.2,
-    "delta_smooth_satellite_fraction": 0.21333333333333332,
+    "delta_smooth_satellite_fraction": 0.20512820512820512,
     "ci95": [
-     0.05333333333333329,
-     0.3799999999999999
+     0.03205128205128205,
+     0.3717948717948717
     ],
-    "p": 0.0132,
-    "p_permutation": 0.0273,
+    "p": 0.0198,
+    "p_permutation": 0.0319,
+    "resampling_unit": "bipartite_connected_component",
+    "n_components": 26,
+    "permutation_unit": "bipartite_connected_component",
     "n_boot": 9999,
     "p_floor": 0.0002,
-    "mean_fraction_cg4": 0.4799999999999999,
-    "mean_fraction_control": 0.2666666666666666,
+    "mean_fraction_cg4": 0.5128205128205129,
+    "mean_fraction_control": 0.30769230769230765,
     "n_smooth_sat_distribution_cg4": {
-     "0": 4,
-     "1": 10,
-     "2": 9,
+     "0": 3,
+     "1": 9,
+     "2": 12,
      "3": 2
     },
     "n_smooth_sat_distribution_control": {
-     "0": 10,
-     "1": 11,
-     "2": 4
+     "0": 9,
+     "1": 12,
+     "2": 5
     },
     "matched_control_composition": {
-     "RG4": 25
+     "RG4": 26
     },
     "satellite_mass_balance": {
      "status": "ok",
-     "n_pairs": 25,
-     "mean_paired_diff_dex": -0.044955506666666596,
+     "n_pairs": 26,
+     "mean_paired_diff_dex": -0.03794494871794873,
      "ci95": [
-      -0.18338773399999989,
-      0.0898260280000004
+      -0.15882555512820629,
+      0.08581924166666603
      ],
-     "smd_before": 0.575741226793585,
-     "smd_after": -0.19896264387297652
+     "resampling_unit": "bipartite_connected_component",
+     "n_components": 26,
+     "smd_before": 0.5907900237764928,
+     "smd_after": -0.16122457671266968
     },
     "balance": {
      "before": {
-      "z_group": -0.5035232640695886,
-      "logMstar_bgg": 0.7528308941570258,
-      "log_group_luminosity": 0.7467305339035273,
-      "velocity_dispersion": 0.6851535188553833,
-      "mean_sat_logMstar": 0.575741226793585
+      "z_group": -0.5182520458263579,
+      "logMstar_bgg": 0.7682123910427849,
+      "log_group_luminosity": 0.7485878545201148,
+      "velocity_dispersion": 0.655832525455591,
+      "mean_sat_logMstar": 0.5907900237764928
      },
      "after": {
-      "z_group": 0.0927634358667157,
-      "logMstar_bgg": -0.026246308558710983,
-      "log_group_luminosity": 0.050712297469607856,
-      "velocity_dispersion": 0.18261629004729166,
-      "mean_sat_logMstar": -0.19896264387297652
+      "z_group": 0.0745240540253835,
+      "logMstar_bgg": -0.044594002127894224,
+      "log_group_luminosity": 0.114977123234153,
+      "velocity_dispersion": 0.1577780845342615,
+      "mean_sat_logMstar": -0.16122457671266968
      },
-     "max_abs_smd_before": 0.7528308941570258,
-     "max_abs_smd_after": 0.19896264387297652
+     "max_abs_smd_before": 0.7682123910427849,
+     "max_abs_smd_after": 0.16122457671266968
     },
     "role": "Sensitivity variant with mean satellite log M* added to the matching covariates; unadjusted p, reported as a diagnostic of the corresponding primary per-control match."
-   }
+   },
+   "p_permutation_holm_across_controls": 0.0114
   }
  },
  "influence_checks": {
@@ -671,11 +705,11 @@
    {
     "control": "Control4B",
     "full_status": "ok",
-    "full_beta": 0.968101949298694,
-    "full_odds_ratio": 2.6329422557428486,
+    "full_beta": 0.902483291968871,
+    "full_odds_ratio": 2.465718613956264,
     "full_covariance": "cluster",
-    "full_n_clusters": 735,
-    "complete_case_physical_groups": 735,
+    "full_n_clusters": 756,
+    "complete_case_physical_groups": 756,
     "control_duplicate_objids": 0,
     "cg4_objids_on_control_side": 0,
     "clustered_by_physical_group": true
@@ -683,11 +717,11 @@
    {
     "control": "Control4C",
     "full_status": "ok",
-    "full_beta": 0.6585757859823733,
-    "full_odds_ratio": 1.9320387373593795,
+    "full_beta": 0.6188005124556207,
+    "full_odds_ratio": 1.856699617565017,
     "full_covariance": "cluster",
-    "full_n_clusters": 734,
-    "complete_case_physical_groups": 734,
+    "full_n_clusters": 755,
+    "complete_case_physical_groups": 755,
     "control_duplicate_objids": 0,
     "cg4_objids_on_control_side": 0,
     "clustered_by_physical_group": true
@@ -695,11 +729,11 @@
    {
     "control": "RG4",
     "full_status": "ok",
-    "full_beta": 1.1088866010466463,
-    "full_odds_ratio": 3.0309818230595447,
+    "full_beta": 1.028797781718491,
+    "full_odds_ratio": 2.7977003655645043,
     "full_covariance": "cluster",
-    "full_n_clusters": 113,
-    "complete_case_physical_groups": 113,
+    "full_n_clusters": 116,
+    "complete_case_physical_groups": 116,
     "control_duplicate_objids": 0,
     "cg4_objids_on_control_side": 0,
     "clustered_by_physical_group": true

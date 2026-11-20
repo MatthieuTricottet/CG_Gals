@@ -23,6 +23,7 @@
 \graphicspath{{figures/}}
 
 \renewcommand{\thefigure}{S.\arabic{figure}}
+\renewcommand{\thetable}{S.\arabic{table}}
 
 \begin{document}
 
@@ -137,6 +138,62 @@ The optical-colour panels above give the corresponding full distributional diagn
   \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control catalogue separately. Every model uses the article's main adjustment set: stellar mass, redshift, rank, group luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii at fixed covariates.}
   \label{fig:supp_size_per_control}
 \end{figure}
+
+
+
+
+
+
+
+
+\section{Comparison at comparable compactness: raw fractions and spectral variants}
+
+Figure~\ref{fig:supp_compactness_raw} repeats the compactness figure of the article (Sect.~3.1) with raw satellite E-class fractions instead of fractions at fixed stellar mass; the fitted lines and panel (b) are unchanged. Table~\ref{tab:supp_spectral_variants} lists the \CG{}-minus-\CC{} contrasts behind Sect.~3.5 of the article for satellites with \(10 \le \log(M_\star/M_\odot) < 10.5\) in the common range of mean projected pair separation (95--216~kpc), evaluated at \(\overline{R}_{ij} = 175\)~kpc. Strong H\(\alpha\) emission is measured in the SDSS fibre; the quenched class uses the total sSFR. The historical row uses the original emission-line join and the other rows the exact stored spectra. The aperture covariate is \(\log_{10}(1.5\,{\rm arcsec}/R_{50,r})\) with the Petrosian half-light radius; the aperture rows and the E/S row share one sample, and the BPT exclusions then remove AGN-like spectra above the Kewley et al. (2001) line or, in addition, composites above the Kauffmann et al. (2003) line. Each selection changes both the estimate and the sample. In the compactness-matched comparison, 16 adjusted fits restricted to the intermediate-mass samples after the composite exclusion have singular design matrices; these contrasts are not estimable and are not reported.
+
+\begin{figure*}
+  \centering
+  \includegraphics[width=\textwidth]{fig_centerpiece_compactness_raw.pdf}
+  \caption{As the compactness figure of the article (Sect.~3.1), but the symbols in panel (a) are raw E-class fractions among E/S-classified satellites in 0.2-dex bins of \(\log\overline{R}_{ij}\), with 95\% intervals from a bootstrap of physical hosts. The lines remain logistic fits evaluated at \(\log(M_\star/M_\odot) = 10.35\).}
+  \label{fig:supp_compactness_raw}
+\end{figure*}
+
+\begin{table*}
+  \centering
+  \caption{Intermediate-mass spectral contrasts at comparable compactness}
+  \label{tab:supp_spectral_variants}
+  \tabcolsep=3pt
+  \begin{tabular}{lccc}
+    \toprule
+    Outcome and selection & Common slope & Separate slopes & \(N\) \\
+    \midrule
+
+
+    H\(\alpha\), historical join & \(-15.5\) \([-31.1, +0.1]\) & \(-20.8\) \([-38.5, -3.2]\) & 58/184 \\
+
+    H\(\alpha\), exact spectra & \(-16.0\) \([-30.6, -1.5]\) & \(-23.3\) \([-39.2, -7.4]\) & 62/196 \\
+
+    \quad + E/S, common sample & \(-15.4\) \([-28.3, -2.5]\) & \(-17.0\) \([-33.5, -0.5]\) & 55/172 \\
+
+    \quad + aperture & \(-18.2\) \([-31.4, -5.0]\) & \(-18.4\) \([-34.2, -2.5]\) & 55/172 \\
+
+    \quad + aperture, no AGN & \(-14.4\) \([-30.6, +1.7]\) & \(-9.5\) \([-27.5, +8.4]\) & 36/134 \\
+
+    \quad + aperture, no AGN/comp. & \(-9.5\) \([-26.5, +7.4]\) & \(-0.8\) \([-17.5, +15.9]\) & 29/94 \\
+
+    Quenched (total sSFR) & \(+3.9\) \([-11.8, +19.6]\) & \(+18.2\) \([+1.4, +35.1]\) & 59/196 \\
+
+    \midrule
+    & Match & Match + \(\sigma_v\) caliper & Pairs \\
+    \midrule
+
+    H\(\alpha\), exact spectra & \(-28.2\) \([-50.0, -6.4]\) & \(-21.3\) \([-43.1, +1.1]\) & 26/29 \\
+
+    Quenched (total sSFR) & \(+24.0\) \([+2.0, +46.0]\) & \(+10.1\) \([-12.5, +33.3]\) & 25/28 \\
+
+    \bottomrule
+  \end{tabular}
+  \tablefoot{Differences in percentage points with 95\% intervals. Model rows adjust for stellar mass, redshift, group luminosity, and \(\sigma_v\) and are standardised to the local \CG{} satellites; \(N\) gives the \CG{}/\CC{} satellites in the fit. Matched rows are unadjusted paired differences over quartet pairs with outcomes on both sides, with intervals from a bootstrap of connected host components.}
+\end{table*}
 
 
 \end{document}
