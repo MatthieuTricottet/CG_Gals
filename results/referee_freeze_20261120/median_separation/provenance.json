@@ -1,0 +1,18 @@
+{
+  "git_source": "d7682518a6e7bb8eb0c5e56187499e3b4e049909",
+  "software": {
+    "numpy": "2.2.2",
+    "pandas": "2.2.3",
+    "scipy": "1.15.1",
+    "statsmodels": "0.14.6",
+    "astropy": "7.0.1",
+    "matplotlib": "3.10.0",
+    "scikit-learn": "1.6.1"
+  },
+  "compactness": "Median of six separations at mean member redshift (Paper I Planck 2015 parameters)",
+  "window_kpc": [
+    94.18988340068036,
+    219.35794486692518
+  ],
+  "centre_kpc": 150.0
+}

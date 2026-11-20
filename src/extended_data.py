@@ -202,7 +202,7 @@ def build_galaxy_frame(samples: dict[str, pd.DataFrame]) -> pd.DataFrame:
         ).isin(retained_objids)
     else:
         frame["colour_analysis_retained"] = False
-    # MPA-JHU galSpecIndx D_n4000 / HdeltaA by stored DR12 specobjid (descriptive use only)
+    # MPA-JHU galSpecIndx D_n4000 by stored DR12 specobjid (descriptive use only)
     try:
         try:
             from spectral_indices import attach_spectral_indices

@@ -1,0 +1,20 @@
+{
+  "before": {
+    "abstract_words_aa": 299,
+    "main_words_texcount": 5507,
+    "appendix_A_first_page": 13,
+    "pdf_last_page": 19,
+    "main_pages": 12,
+    "appendix_pages": 7,
+    "supplement_pages": 8
+  },
+  "after": {
+    "abstract_words_aa": 264,
+    "main_words_texcount": 4517,
+    "appendix_A_first_page": 12,
+    "pdf_last_page": 18,
+    "main_pages": 11,
+    "appendix_pages": 7,
+    "supplement_pages": 7
+  }
+}

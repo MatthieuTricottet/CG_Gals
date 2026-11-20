@@ -1,0 +1,5 @@
+sample,labelset,difference,low,high,n,quartets,hosts,upper_n,upper_quartets,upper_hosts,lower_n,lower_quartets,lower_hosts
+Control4B,frozen,-3.385203807,-12.92272493,6.152317314,1864,695,695,104,38,38,315,119,119
+Control4B,original,-3.155169539,-12.87916423,6.568825157,1770,676,676,102,38,38,306,116,116
+Control4C,frozen,20.94407548,5.822119383,36.06603159,1833,698,698,10,4,4,114,41,41
+Control4C,original,27.8604498,2.257336003,53.46356359,1744,679,679,9,4,4,112,41,41

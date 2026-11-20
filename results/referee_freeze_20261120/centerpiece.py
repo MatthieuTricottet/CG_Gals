@@ -5,7 +5,8 @@ import numpy as np
 import pandas as pd
 
 from freeze import FROZEN, MASS_REF, fit, save, sizes
-from run import HERE, OUTPUT
+from run import FIGURES, OUTPUT
+from utils.labels_utils import sample_tex_label
 
 COLOURS = {"CG4": "#9d3500", "Control4C": "#006a9f", "RG4": "#00734f"}
 MARKERS = {"CG4": "o", "Control4C": "s", "RG4": "^"}
@@ -103,7 +104,7 @@ def draw(frame, q, window, bins, contrasts):
         dist.text(0.02, 0.88, "(a)", transform=dist.transAxes, fontweight="bold")
         for arm in COLOURS:
             xs, y = trends[arm]
-            ax.plot(xs, y, color=COLOURS[arm], lw=1.2, label=arm)
+            ax.plot(xs, y, color=COLOURS[arm], lw=1.2, label=sample_tex_label(arm))
             b = bins[bins["sample"].eq(arm) & bins.labelset.eq(FROZEN)]
             key = "raw" if raw else "adjusted"
             b = b[b[key].notna() & b.hosts.ge(3)]
@@ -118,7 +119,7 @@ def draw(frame, q, window, bins, contrasts):
                 b.sampled_x, b[key], c=COLOURS[arm], marker=MARKERS[arm], s=13, zorder=4
             )
         ax.set(
-            xlabel=r"$\log_{10}(\overline{R}_{ij}/{\rm kpc})$",
+            xlabel=r"$\log_{10}(\langle R_{ij}\rangle/{\rm kpc})$",
             ylabel=(
                 "Raw satellite E fraction"
                 if raw
@@ -134,8 +135,8 @@ def draw(frame, q, window, bins, contrasts):
             curve.radius, curve.low, curve.high, color=COLOURS["CG4"], alpha=0.15, lw=0
         )
         delta.set(
-            xlabel="Mean projected pair separation (kpc)",
-            ylabel="CG4 − Control4C E fraction (pp)",
+            xlabel=r"Median projected pair separation $\langle R_{ij}\rangle$ (kpc)",
+            ylabel=f"{sample_tex_label('CG4')} − {sample_tex_label('Control4C')} E fraction (pp)",
             xlim=(92, 276),
             xticks=[100, 125, 150, 175, 200],
         )
@@ -146,7 +147,7 @@ def draw(frame, q, window, bins, contrasts):
                 (229, 247, 265),
                 marks,
                 ("o", "s", "D"),
-                ("Full sample", "Compactness match", r"Match + $\sigma_v$ caliper"),
+                ("Full sample", "Compactness match", r"Match + $\sigma_v$ tolerance"),
             )
         ):
             delta.vlines(x, row.low, row.high, colors="#252b31", lw=1)
@@ -170,5 +171,5 @@ def draw(frame, q, window, bins, contrasts):
             )
         fname = "fig_centerpiece_compactness" + ("_raw" if raw else "")
         for suffix in ("pdf", "png"):
-            fig.savefig(HERE / "figures" / f"{fname}.{suffix}", dpi=300)
+            fig.savefig(FIGURES / f"{fname}.{suffix}", dpi=300)
         plt.close(fig)

@@ -2,6 +2,7 @@
 
 \usepackage{graphicx}
 \usepackage{float}
+\usepackage{placeins}
 \usepackage[varg]{txfonts}
 \usepackage[breaklinks=true]{hyperref}
 \usepackage{booktabs}
@@ -48,11 +49,15 @@
 \date{}
 \maketitle
 
-This supplement contains the distributional and pooled-model diagnostics moved out of the article for editorial economy. It uses the same samples, definitions, and fitted quantities as the article; no additional scientific claims are introduced here.
 
+
+
+This supplement gives the sequence-residual, colour, pooled-model, size, and spectral diagnostics supporting the article. Samples and classifications follow the article. We denote the median of a quartet's six projected pair separations by \(\langle R_{ij}\rangle\), calculated with the Planck 2015 angular-diameter distance at the mean member redshift, as in the article. The spectral models at comparable compactness are evaluated at \(\langle R_{ij}\rangle = 150\,\mathrm{kpc}\).
+
+\FloatBarrier
 \section{Star-forming and quenched sequence residuals}
 
-Star-forming \CG{} galaxies do not sit off the star-forming main sequence (SFMS). Relative to an order-2 polynomial SFMS fitted to the star-forming galaxies of the SDSS reference sample, the median residual of \CG{} star-forming galaxies exceeds that of the controls by \(0.056\), \(0.058\), and \(0.046\) dex for \CB{}, \CC{}, and \RG{} (68\% group-bootstrap intervals \([0.03, 0.10]\), \([0.04, 0.10]\), and \([-0.04, 0.10]\); sign-crossing \(p = 0.06\), \(p = 0.03\), and \(p = 0.59\); Fig.~\ref{fig:supp_sfms_residuals}a). The mean paired difference over the 39 individually matched pairs in which both members are star-forming is instead \(-0.15\) dex (\([-0.31, 0.01]\); \(p = 0.06\)).
+No robust shift of star-forming \CG{} galaxies from the star-forming main sequence (SFMS) is established. Relative to an order-2 polynomial SFMS fitted to the star-forming galaxies of the SDSS reference sample, the median residual of \CG{} star-forming galaxies exceeds that of the controls by \(0.056\), \(0.058\), and \(0.046\) dex for \CB{}, \CC{}, and \RG{} (68\% group-bootstrap intervals \([0.03, 0.10]\), \([0.04, 0.10]\), and \([-0.04, 0.10]\); sign-crossing \(p = 0.06\), \(p = 0.03\), and \(p = 0.59\); Fig.~\ref{fig:supp_sfms_residuals}a). The mean paired difference over the 39 individually matched pairs in which both members are star-forming is instead \(-0.15\) dex (\([-0.31, 0.01]\); \(p = 0.06\)).
 
 The two signs are not in conflict: they are different statistics of different subsets. On the same 39 pairs, the median paired difference is \(-0.08\) dex (Wilcoxon \(p = 0.26\)). Both reflect the mass dependence of the residuals about the field-fitted relation: control star-forming galaxies above \(\log(M_\star/M_\odot) = 10.3\) lie \(\simeq 0.2\) dex below it while the 23 massive star-forming \CG{} galaxies do not, which raises the raw medians, whereas the matched star-forming controls are less massive than their \CG{} partners. We therefore treat SFMS residuals as a secondary diagnostic.
 
@@ -67,6 +72,7 @@ Quenched \CG{} galaxies lie slightly below the quenched sequence of the referenc
   \label{fig:supp_sfms_residuals}
 \end{figure*}
 
+\FloatBarrier
 \section{Optical-colour diagnostics}
 
 The retained colour-analysis matches include 110 of 248 galaxies in CG$_4$, 931 of 2792 galaxies in Control$_{4B}$, 1153 of 2812 galaxies in Control$_{4C}$, 102 of 224 galaxies in RG$_4$. The colour analysis requires successful matched-photometry retention and the covariates used below; the fractions retained are 44.4\% in CG4, 33.3\% in Control4B, 41.0\% in Control4C, 45.5\% in RG4. The subset is not representative of the full catalogues: matched galaxies are systematically less massive, more actively star-forming, and more frequently satellites than unmatched galaxies (Fig.~\ref{fig:supp_colour_selection}).
@@ -88,19 +94,9 @@ The raw colour--mass fits do not show a single common relation for every sample:
   \label{fig:supp_colour_coefficients}
 \end{figure*}
 
-\begin{figure*}
-  \centering
-  \includegraphics[width=\textwidth]{colour_mass_relations.pdf}
-  \caption{Colour--stellar-mass relations in the four catalogues. These raw relations motivate the control-specific adjusted comparisons rather than a single pooled interpretation.}
-  \label{fig:supp_colour_mass}
-\end{figure*}
 
-\begin{figure*}
-  \centering
-  \includegraphics[width=\textwidth]{satellite_colour_mass_environment.pdf}
-  \caption{Satellite colour--mass relations split by environment. The offsets and slopes depend on the comparison catalogue.}
-  \label{fig:supp_satellite_colour}
-\end{figure*}
+
+
 
 \begin{figure*}
   \centering
@@ -109,18 +105,11 @@ The raw colour--mass fits do not show a single common relation for every sample:
   \label{fig:supp_colour_radius}
 \end{figure*}
 
+\FloatBarrier
 \section{Pooled adjusted models}
 
-For a compact summary across the heterogeneous control definitions, the article also fits binomial models to a pooled catalogue. Because the control catalogues overlap heavily, the control side is first deduplicated by SDSS object identifier and standard errors are clustered by physical Lim group. The common adjustment set contains stellar mass, redshift, satellite/BGG rank, group luminosity, and velocity dispersion. The figure below visualises the coefficients tabulated in Appendix G of the article. The pooled model is a summary, not a replacement for the separate-control contrasts: it reinforces the satellite E-class morphology shift, whereas the quenched estimate changes across controls and is not reproduced by the matched comparison.
+For a compact summary across the heterogeneous control definitions, the article also fits binomial models to a pooled catalogue. Because the control catalogues overlap heavily, the control side is first deduplicated by SDSS object identifier and standard errors are clustered by physical Lim group. The common adjustment set contains stellar mass, redshift, satellite/BGG rank, group luminosity, and velocity dispersion. Figure~\ref{fig:supp_pooled_models} visualises the coefficients tabulated in Appendix G of the article. The pooled model is a summary, not a replacement for the separate-control contrasts: it reinforces the satellite E-class morphology shift, whereas the quenched estimate changes across controls and is not reproduced by the matched comparison.
 
-\section{Additional environmental diagnostics}
-
-The distance-to-BGG, magnitude-gap, and luminosity-dominance screens are retained here because they are useful provenance checks but do not add a control-independent signal to the article. Satellite sSFR shows no consistent monotonic dependence on projected BGG distance across the four samples. Binary dominance splits and further subdivision by BGG morphology produce small, heterogeneous subsets; their occasional low p-values do not survive as a coherent compact-group effect. Likewise, magnitude-gap differences are sensitive to the control definition. These diagnostics support the article's choice to retain the continuous group-scale screen and projected phase-space result as the more interpretable summaries.
-
-The optical-colour panels above give the corresponding full distributional diagnostics: matched-photometry retention is selective, and fitted offsets depend on the control definition and split sample.
-
-% Flush Figs. S.1--S.6 first, so that Fig. S.7 (Sect. 3), the Sect. 5 heading and Fig. S.8 share the last page.
-\clearpage
 \begin{figure}[ht]
   \centering
   \includegraphics[width=\columnwidth]{fig_specialness_logistic_coefficients.pdf}
@@ -128,9 +117,20 @@ The optical-colour panels above give the corresponding full distributional diagn
   \label{fig:supp_pooled_models}
 \end{figure}
 
+\FloatBarrier
+\section{Additional environmental diagnostics}
 
-\newpage
+The distance-to-BGG, magnitude-gap, and luminosity-dominance diagnostics are retained here as provenance checks; they do not add a control-independent signal to the article. Satellite sSFR shows no consistent monotonic dependence on projected BGG distance across the four samples. Binary dominance splits and further subdivision by BGG morphology produce small, heterogeneous subsets; their occasional low p-values do not survive as a coherent compact-group effect. Likewise, magnitude-gap differences are sensitive to the control definition. These checks support the article's choice to retain the continuous group-scale descriptors and the projected phase-space result as the more interpretable summaries.
+
+Figures~\ref{fig:supp_colour_selection}, \ref{fig:supp_colour_coefficients}, and \ref{fig:supp_colour_radius} show the colour-selection, coefficient, and radial diagnostics: matched-photometry retention is selective, and fitted offsets depend on the control definition and split sample.
+
+
+
+
+\FloatBarrier
 \section{Size-model comparison by control}
+
+Figure~\ref{fig:supp_size_per_control} compares the fitted size contrasts across control definitions.
 
 \begin{figure}[!htbp]
   \centering
@@ -143,17 +143,15 @@ The optical-colour panels above give the corresponding full distributional diagn
 
 
 
+\FloatBarrier
+\section{Morphology and spectral contrasts at similar pair separation}
 
-
-
-\section{Comparison at comparable compactness: raw fractions and spectral variants}
-
-Figure~\ref{fig:supp_compactness_raw} repeats the compactness figure of the article (Sect.~3.1) with raw satellite E-class fractions instead of fractions at fixed stellar mass; the fitted lines and panel (b) are unchanged. Table~\ref{tab:supp_spectral_variants} lists the \CG{}-minus-\CC{} contrasts behind Sect.~3.5 of the article for satellites with \(10 \le \log(M_\star/M_\odot) < 10.5\) in the common range of mean projected pair separation (95--216~kpc), evaluated at \(\overline{R}_{ij} = 175\)~kpc. Strong H\(\alpha\) emission is measured in the SDSS fibre; the quenched class uses the total sSFR. The historical row uses the original emission-line join and the other rows the exact stored spectra. The aperture covariate is \(\log_{10}(1.5\,{\rm arcsec}/R_{50,r})\) with the Petrosian half-light radius; the aperture rows and the E/S row share one sample, and the BPT exclusions then remove AGN-like spectra above the Kewley et al. (2001) line or, in addition, composites above the Kauffmann et al. (2003) line. Each selection changes both the estimate and the sample. In the compactness-matched comparison, 16 adjusted fits restricted to the intermediate-mass samples after the composite exclusion have singular design matrices; these contrasts are not estimable and are not reported.
+Figure~\ref{fig:supp_compactness_raw} repeats the compactness figure of the article (Sect.~3.1) with raw satellite E-class fractions instead of fractions at fixed stellar mass; the fitted lines and panel (b) are unchanged. Table~\ref{tab:supp_spectral_variants} lists the \CG{}-minus-\CC{} contrasts behind Sect.~3.5 of the article for satellites with \(10 \le \log(M_\star/M_\odot) < 10.5\) in the common range of median projected pair separation (94--219~kpc). The model contrasts are evaluated at \(\langle R_{ij}\rangle = 150\,\mathrm{kpc}\), and the matched contrasts use pairs of quartets within the shared range. Strong H\(\alpha\) emission is measured in the SDSS fibre; the quenched class uses the total sSFR. The historical H\(\alpha\) row uses the original emission-line join. For the other H\(\alpha\) rows, the line measurements are matched by the stored SDSS spectrum identifier. The aperture covariate is \(\log_{10}(1.5\,{\rm arcsec}/R_{50,r})\) with the Petrosian half-light radius; the aperture rows and the E/S row share one sample, and the BPT exclusions then remove AGN-like spectra above the Kewley et al. (2001) line or, in addition, composites above the Kauffmann et al. (2003) line. Each selection changes both the estimate and the sample. In the compactness-matched comparison, 36 adjusted fits to the intermediate-mass samples after the composite exclusion are singular or fail to converge. The table reports only estimable contrasts.
 
 \begin{figure*}
   \centering
   \includegraphics[width=\textwidth]{fig_centerpiece_compactness_raw.pdf}
-  \caption{As the compactness figure of the article (Sect.~3.1), but the symbols in panel (a) are raw E-class fractions among E/S-classified satellites in 0.2-dex bins of \(\log\overline{R}_{ij}\), with 95\% intervals from a bootstrap of physical hosts. The lines remain logistic fits evaluated at \(\log(M_\star/M_\odot) = 10.35\).}
+  \caption{As the compactness figure of the article (Sect.~3.1), but the symbols in panel (a) are raw E-class fractions among E/S-classified satellites in 0.2-dex bins of \(\log\langle R_{ij}\rangle\), with 95\% intervals from a bootstrap of physical hosts. The lines in panel (a) are logistic fits evaluated at \(\log(M_\star/M_\odot) = 10.35\). Panel (b) shows the model contrast as a function of separation within the shared range (94--219~kpc) alongside the full-sample and matched contrasts.}
   \label{fig:supp_compactness_raw}
 \end{figure*}
 
@@ -168,31 +166,31 @@ Figure~\ref{fig:supp_compactness_raw} repeats the compactness figure of the arti
     \midrule
 
 
-    H\(\alpha\), historical join & \(-15.5\) \([-31.1, +0.1]\) & \(-20.8\) \([-38.5, -3.2]\) & 58/184 \\
+    H\(\alpha\), historical join & \(-13.3\) \([-27.6, +0.9]\) & \(-13.0\) \([-27.5, +1.5]\) & 57/199 \\
 
-    H\(\alpha\), exact spectra & \(-16.0\) \([-30.6, -1.5]\) & \(-23.3\) \([-39.2, -7.4]\) & 62/196 \\
+    H\(\alpha\), exact spectra & \(-14.7\) \([-28.3, -1.2]\) & \(-14.2\) \([-28.0, -0.5]\) & 61/214 \\
 
-    \quad + E/S, common sample & \(-15.4\) \([-28.3, -2.5]\) & \(-17.0\) \([-33.5, -0.5]\) & 55/172 \\
+    \quad + E/S, common sample & \(-14.3\) \([-26.1, -2.4]\) & \(-14.2\) \([-26.2, -2.2]\) & 54/187 \\
 
-    \quad + aperture & \(-18.2\) \([-31.4, -5.0]\) & \(-18.4\) \([-34.2, -2.5]\) & 55/172 \\
+    \quad + aperture & \(-16.0\) \([-28.0, -4.0]\) & \(-16.0\) \([-28.3, -3.8]\) & 54/187 \\
 
-    \quad + aperture, no AGN & \(-14.4\) \([-30.6, +1.7]\) & \(-9.5\) \([-27.5, +8.4]\) & 36/134 \\
+    \quad + aperture, no AGN & \(-12.6\) \([-27.9, +2.6]\) & \(-12.7\) \([-28.0, +2.6]\) & 36/146 \\
 
-    \quad + aperture, no AGN/comp. & \(-9.5\) \([-26.5, +7.4]\) & \(-0.8\) \([-17.5, +15.9]\) & 29/94 \\
+    \quad + aperture, no AGN/comp. & \(-9.5\) \([-26.1, +7.1]\) & \(-8.6\) \([-24.5, +7.3]\) & 29/97 \\
 
-    Quenched (total sSFR) & \(+3.9\) \([-11.8, +19.6]\) & \(+18.2\) \([+1.4, +35.1]\) & 59/196 \\
+    Quenched (total sSFR) & \(+3.9\) \([-10.6, +18.4]\) & \(+2.6\) \([-11.9, +17.0]\) & 58/211 \\
 
     \midrule
-    & Match & Match + \(\sigma_v\) caliper & Pairs \\
+    & Match & Match + \(\sigma_v\) tolerance & Pairs \\
     \midrule
 
-    H\(\alpha\), exact spectra & \(-28.2\) \([-50.0, -6.4]\) & \(-21.3\) \([-43.1, +1.1]\) & 26/29 \\
+    H\(\alpha\), exact spectra & \(-25.3\) \([-47.3, -2.7]\) & \(-28.2\) \([-48.7, -7.7]\) & 25/26 \\
 
-    Quenched (total sSFR) & \(+24.0\) \([+2.0, +46.0]\) & \(+10.1\) \([-12.5, +33.3]\) & 25/28 \\
+    Quenched (total sSFR) & \(+16.7\) \([-8.3, +39.6]\) & \(+13.5\) \([-9.6, +35.9]\) & 24/26 \\
 
     \bottomrule
   \end{tabular}
-  \tablefoot{Differences in percentage points with 95\% intervals. Model rows adjust for stellar mass, redshift, group luminosity, and \(\sigma_v\) and are standardised to the local \CG{} satellites; \(N\) gives the \CG{}/\CC{} satellites in the fit. Matched rows are unadjusted paired differences over quartet pairs with outcomes on both sides, with intervals from a bootstrap of connected host components.}
+  \tablefoot{Differences in percentage points with 95\% intervals. Model rows adjust for stellar mass, redshift, group luminosity, and \(\sigma_v\) and evaluate the contrast at \(\langle R_{ij}\rangle = 150\,\mathrm{kpc}\) over the covariate distribution of nearby \CG{} satellites. \(N\) gives the \CG{}/\CC{} satellites in the fit. Matched rows are unadjusted paired differences over quartet pairs with outcomes on both sides, with intervals from a bootstrap of connected host components.}
 \end{table*}
 
 

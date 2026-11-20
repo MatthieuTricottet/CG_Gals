@@ -5,7 +5,6 @@ import warnings
 import numpy as np
 import pandas as pd
 from astropy.coordinates import Angle, angular_separation
-from astropy.cosmology import Planck15
 from scipy.optimize import linear_sum_assignment
 from scipy.special import expit
 from patsy import build_design_matrices
@@ -37,7 +36,7 @@ CONTROLS = ("Control4C", "Control4B", "RG4")
 ORIGINAL = "original"
 FROZEN = "frozen"
 MASS_REF = 10.35
-CENTRE = 175.0
+CENTRE = 150.0
 
 
 def save(name, rows):
@@ -57,7 +56,7 @@ def arm_sizes(df):
     }
 
 
-def restore_labels(frame):
+def restore_labels(frame, *, write_audit=True):
     archive = pd.read_csv(
         PRIOR / "inputs/gz1_paper1_crossmatch.csv", dtype={"OBJID": "Int64"}
     )
@@ -108,6 +107,8 @@ def restore_labels(frame):
     f["physical_host_id"] = f.physical_group
     f["mass_valid"] = f.logMstar.between(*LGM_VALID_RANGE)
     f["ssfr_valid"] = f.quenched.notna()
+    if not write_audit:
+        return f
     rows = []
     for name, arm in f.groupby("sample", sort=False):
         for scope, p in [("all", arm), ("satellites", arm[arm.is_satellite.eq(1)])]:
@@ -179,11 +180,18 @@ def restore_labels(frame):
 
 
 def build(frame):
-    frame = restore_labels(frame)
+    frame = restore_labels(frame, write_audit=False)
     frame["m"] = frame.logMstar - 10.25
     frame["cg"] = frame.is_CG4.astype(float)
     q, _ = geometry(frame)
-    q = q.rename(columns={"R_mean": "mean_Rij", "R_median": "med_Rij"})
+    # The Table 1 calculation uses the Paper I Planck 2015 parameters
+    # and the arithmetic mean of the member redshifts.
+    q = q.rename(columns={"table1_R_median": "med_Rij"})
+    q["x"] = np.log10(q.med_Rij)
+    q = q.drop(columns=[
+        "R_mean", "R_median", "xmed", "DA_kpc", "DL_kpc",
+        "R12_kpc", "R13_kpc", "R14_kpc", "R23_kpc", "R24_kpc", "R34_kpc",
+    ])
     q["physical_host_id"] = q.physical_group
     # Parent environment comes from the host table, including for off-centre CG4.
     pc = pd.read_csv(
@@ -206,68 +214,34 @@ def build(frame):
     cols = ["physical_host_id", "host_mass", "N_Lim", "N_Lim_Tempel", "host_richness"]
     q = q.merge(host[cols], on="physical_host_id", validate="m:1", how="left")
     assert q.host_mass.notna().all(), q[q.host_mass.isna()].group_uid.tolist()
-    # Table 1 uses the mean member redshift. The compactness diagnostics use
-    # the archived mean separation at the median member redshift.
-    q["mean_member_z"] = q.group_uid.map(frame.groupby("group_uid").z.mean())
-    q["DA_at_mean_z_kpc"] = Planck15.angular_diameter_distance(
-        q.mean_member_z.to_numpy()
-    ).to_value("kpc")
-    q["med_Rij"] *= q.DA_at_mean_z_kpc / q.DA_kpc
-    q["xmed"] = np.log10(q.med_Rij)
-    q = q.drop(columns=["table1_R_median", "DL_kpc"])
     q["class"] = q.Group.map(
         pd.read_csv(ROOT / "data/CG4_Groups.csv").set_index("Group").Class
     ).where(q["sample"].eq("CG4"))
-    window = (
-        q.loc[q["sample"].eq("Control4C"), "mean_Rij"].quantile(0.05),
-        q.loc[q["sample"].eq("CG4"), "mean_Rij"].quantile(0.95),
-    )
-    q["window"] = q.mean_Rij.between(*window)
-    assert q[q.window].groupby("sample").size().loc[["CG4", "Control4C"]].tolist() == [
-        48,
-        187,
-    ]
+    window = common_window(q, ["CG4", "Control4C"])
+    assert window[0] < CENTRE < window[1]
+    q["window"] = q.med_Rij.between(*window)
     save("02_quartet_geometry", q)
     frame = frame.merge(
-        q[["group_uid", "mean_Rij", "med_Rij", "x", "window", *cols[1:]]],
+        q[["group_uid", "med_Rij", "x", "window", *cols[1:]]],
         on="group_uid",
         validate="m:1",
     )
-    frame["xc"] = np.log10(frame.mean_Rij / CENTRE)
+    frame["xc"] = np.log10(frame.med_Rij / CENTRE)
     assert frame.groupby("sample").size().to_dict() == {
         "CG4": 248,
         "Control4B": 2792,
         "Control4C": 2812,
         "RG4": 224,
     }
-    freeze_columns = [
-        "sample",
-        "group_uid",
-        "physical_host_id",
-        "objid",
-        "specobjid",
-        "dr7objid",
-        "rank",
-        "original_label",
-        "frozen_label",
-        "archive_label",
-        "sep_arcsec",
-        "bridge_collision",
-        "mass_valid",
-        "ssfr_valid",
-        "logMstar",
-        "z_numeric",
-        "quenched",
-        "mean_Rij",
-        "med_Rij",
-        "host_mass",
-        "N_Lim",
-        "N_Lim_Tempel",
-        "velocity_dispersion",
-        "log_group_luminosity",
-    ]
-    save("01_frozen_galaxy_labels", frame[freeze_columns])
     return frame, q, window, host
+
+
+def common_window(quartets, samples):
+    central = (
+        quartets.loc[quartets["sample"].isin(samples)]
+        .groupby("sample").med_Rij.quantile([0.05, 0.95]).unstack()
+    )
+    return float(central[0.05].max()), float(central[0.95].min())
 
 
 def local_target(used, radius, environment=()):
@@ -550,8 +524,6 @@ def historical_quartet_match(frame, control):
 def baseline(frame, q, window):
     rows = []
     matches = compact_pairs(q)
-    purge = pd.read_csv(PRIOR / "tables/hmcg_control_members.csv")
-    purged = set(purge.loc[purge.multiplicity.ne(4) | purge.flag.ne(0), "group_uid"])
     # Keep the default ranks, covariate availability rule, and outcome definition.
     for labelset, label, binary in [
         (ORIGINAL, "original_label", "original_E"),
@@ -694,6 +666,21 @@ def baseline(frame, q, window):
             rows.append(outcome)
             if labelset == FROZEN:
                 save(f"02_table5_pairs_{control}", pairs)
+    _, compactness = compactness_models(frame, q, window, matches)
+    table = save("02_frozen_primary_and_compactness", [*rows, *compactness])
+    return matches, table
+
+
+def compactness_models(frame, q, window, matches=None):
+    """Refit just the morphology comparisons that feed the compactness figures."""
+    rows = []
+    if matches is None:
+        matches = compact_pairs(q)
+    purge = pd.read_csv(PRIOR / "tables/hmcg_control_members.csv")
+    purged = set(purge.loc[purge.multiplicity.ne(4) | purge.flag.ne(0), "group_uid"])
+    satellites = frame[frame.is_satellite.eq(1)]
+    for labelset, binary in [(ORIGINAL, "original_E"), (FROZEN, "elliptical")]:
+        sat = satellites.assign(elliptical=satellites[binary])
         for name, pairs in matches.items():
             rows.append(
                 pair_outcome(
@@ -718,13 +705,13 @@ def baseline(frame, q, window):
                 (
                     "common_slope",
                     panel[panel.window],
-                    (150, 175, 200),
+                    (CENTRE, 175.0, 200.0),
                     "cg + xc + " + BASE,
                 ),
                 (
                     "interaction",
                     panel[panel.window],
-                    (150, 175, 200),
+                    (CENTRE, 175.0, 200.0),
                     "cg * xc + " + BASE,
                 ),
             ]:
@@ -765,5 +752,4 @@ def baseline(frame, q, window):
                                 )
                             )
                     save("02_compactness_interaction_curve", curve)
-    table = save("02_frozen_primary_and_compactness", rows)
-    return matches, table
+    return matches, rows

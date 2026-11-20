@@ -6,7 +6,7 @@ from scipy.stats import rankdata, ranksums
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 
 from agn_environment import _classify
-from compactness import COMPACT_BINS
+from compactness import COMPACT_BINS, COSMO, _angular_matrix, select_control4c_quartets
 from freeze import (
     BASE,
     CENTRE,
@@ -15,6 +15,7 @@ from freeze import (
     MASS_REF,
     arm_sizes,
     bootstrap,
+    common_window,
     fit,
     model_rows,
     pair_outcome,
@@ -268,11 +269,29 @@ def discordance(frame):
 
 def describe_hosts(q, hosts, window):
     selection = pd.read_csv(PRIOR / "tables/hmcg_isolation_quartets.csv")
-    selection = selection[selection.in_overlap].copy()
     selection["group_uid"] = np.where(
         selection["sample"].eq("CG4"), "CG4:", "Control4C:"
     ) + selection.group.astype(str)
     lookup = q.set_index("group_uid")
+    selection["med_Rij"] = selection.group_uid.map(lookup.med_Rij)
+    # The rejected candidates are absent from the final galaxy frame.
+    # Reconstruct their four members using the original Control4C selection.
+    excluded = selection.loc[selection.stage.eq("Excluded by CG4 overlap"), "group"]
+    parent = pd.read_csv(ROOT / "data/PC_Gals.csv")
+    cores = select_control4c_quartets(parent[parent.Group.isin(excluded)])
+    excluded_separations = {}
+    for gid, members in cores.groupby("Group"):
+        angles = _angular_matrix(members.RA.to_numpy(), members.Dec.to_numpy())
+        distance = COSMO.angular_diameter_distance(members.z.mean()).to_value("kpc")
+        excluded_separations[gid] = np.median(angles[np.triu_indices(4, 1)] * distance)
+    rejected = selection.stage.eq("Excluded by CG4 overlap")
+    selection.loc[rejected, "med_Rij"] = selection.loc[rejected, "group"].map(
+        excluded_separations
+    )
+    assert selection.loc[selection.stage.ne("Excluded Lim 3688"), "med_Rij"].notna().all()
+    selection = selection.loc[selection.med_Rij.between(*window)].drop(
+        columns=["in_overlap", "R_mean"]
+    )
     is_cg = selection["sample"].eq("CG4")
     selection["physical_group"] = "Lim:" + selection.group.astype(str)
     selection.loc[is_cg, "physical_group"] = selection.loc[is_cg, "group_uid"].map(
@@ -291,13 +310,6 @@ def describe_hosts(q, hosts, window):
     retained = selection[selection.stage.eq("Retained Control4C")]
     passed = retained[retained.passes_isolation_proxy]
     failed = retained[~retained.passes_isolation_proxy]
-    assert [len(g) for g in [all_cg, overlap, retained, passed, failed]] == [
-        48,
-        40,
-        187,
-        21,
-        166,
-    ]
     assert set(all_cg.group_uid) == set(
         q.loc[q.window & q["sample"].eq("CG4"), "group_uid"]
     )
@@ -424,12 +436,10 @@ def environment_models(frame, q, window, hosts):
                                     **arm_sizes(obs),
                                 )
                             )
-    qrg = q[q["sample"].isin(["RG4", "Control4C"])]
-    central = qrg.groupby("sample").mean_Rij.quantile([0.05, 0.95]).unstack()
-    overlap = (central[0.05].max(), central[0.95].min())
+    overlap = common_window(q, ["RG4", "Control4C"])
     midpoint = np.sqrt(overlap[0] * overlap[1])
     rg = frame[
-        frame["sample"].isin(["RG4", "Control4C"]) & frame.mean_Rij.between(*overlap)
+        frame["sample"].isin(["RG4", "Control4C"]) & frame.med_Rij.between(*overlap)
     ].copy()
     rg["cg"] = rg["sample"].eq("RG4").astype(float)
     rg_hosts = set(rg.loc[rg.cg.eq(1), "physical_group"])
@@ -473,7 +483,6 @@ def probability(result, used, target):
 
 
 def compactness_bins(sat, q):
-    previous = pd.read_csv(PRIOR / "tables/compact_morphology_bins.csv")
     rows = []
     for arm, sample in sat.groupby("sample"):
         quartet = q[q["sample"].eq(arm)]
@@ -482,9 +491,6 @@ def compactness_bins(sat, q):
         ):
             core = quartet[quartet.x.gt(low) & quartet.x.le(high)]
             p = sample[sample.group_uid.isin(core.group_uid)]
-            old = previous[
-                (previous["sample"] == arm) & np.isclose(previous.bin_left, low)
-            ]
             for labelset, binary in [(FROZEN, "elliptical"), (ORIGINAL, "original_E")]:
                 labelled = p.dropna(subset=[binary])
                 est, lo, hi = bootstrap(labelled, binary)
@@ -498,7 +504,6 @@ def compactness_bins(sat, q):
                     stage_n=len(p),
                     stage_quartets=len(core),
                     stage_hosts=core.physical_group.nunique(),
-                    old_figure_raw=old.estimate.iloc[0] if len(old) else np.nan,
                     raw=est,
                     raw_low=lo,
                     raw_high=hi,
@@ -508,10 +513,6 @@ def compactness_bins(sat, q):
                     median_N_Lim=core.N_Lim.median(),
                     median_host_mass=core.host_mass.median(),
                 )
-                if labelset == ORIGINAL and len(old):
-                    np.testing.assert_allclose(
-                        est, old.estimate.iloc[0], atol=1e-8, equal_nan=True
-                    )
                 rows.append(info)
     tbin = pd.DataFrame(rows)
     rises = []
@@ -597,5 +598,4 @@ def analyse(frame, q, window, host_table, matches):
     panel = sat[sat["sample"].isin(["CG4", "Control4C"])]
     star_formation(panel[panel.window], matches)
     environment_models(sat, q, window, host_table)
-    discordance(panel)
     return compactness_bins(sat, q)

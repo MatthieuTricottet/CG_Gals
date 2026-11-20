@@ -1,4 +1,4 @@
-"""Recently quenched diagnostics, with a limited H-alpha fallback."""
+"""SDSS fibre H-alpha emission diagnostics."""
 
 from __future__ import annotations
 
@@ -14,17 +14,13 @@ import pandas as pd
 from scipy import stats
 
 try:
-    import config as co
     from extended_data import ensure_galaxy_frame
     from extended_stats import fit_logistic_model, safe_json
 except ModuleNotFoundError:  # pragma: no cover
-    from . import config as co
     from .extended_data import ensure_galaxy_frame
     from .extended_stats import fit_logistic_model, safe_json
 
 
-DN4000_ALIASES = ["Dn4000", "dn4000", "d4000"]
-HDELTA_ALIASES = ["HdeltaA", "H_delta_A", "h_delta_A", "lick_hd_a"]
 HALPHA_ALIASES = ["h_alpha_eqw", "H_alpha_eqw", "halpha_eqw"]
 
 
@@ -95,59 +91,12 @@ def _morphology_adjusted_models(frame, halpha):
 
 
 def run_recent_quenching_analysis(data, output_dir: str | None = None):
-    """Classify post-starburst candidates only when Dn4000 and H-delta exist."""
+    """Compare strong H-alpha emission across the group samples."""
 
     frame = ensure_galaxy_frame(data)
-    dn4000 = _find(frame, DN4000_ALIASES)
-    hdelta = _find(frame, HDELTA_ALIASES)
     halpha = _find(frame, HALPHA_ALIASES)
-    if halpha is None and (dn4000 is None or hdelta is None):
-        return {
-            "status": "skipped",
-            "reason": "missing_spectral_age_diagnostics",
-            "missing_columns": ["Dn4000/d4000", "H_delta_A", "h_alpha_eqw"],
-        }
-
-    # The Dn4000/HdeltaA columns are now attached to the frame (Appendix A
-    # provenance, Fig. F.2), but a post-starburst classification is deferred
-    # to Paper III as a scope choice: it only runs when the config flag is set.
-    if dn4000 and hdelta and halpha and getattr(co, "POST_STARBURST_CLASSIFICATION", False):
-        work = frame[["sample", dn4000, hdelta, halpha]].copy()
-        for column in [dn4000, hdelta, halpha]:
-            work[column] = np.asarray(work[column], dtype=float)
-        work["classification"] = "unclassified"
-        work.loc[(work[halpha] > -3) & (work[hdelta] >= 4), "classification"] = (
-            "recently_quenched"
-        )
-        work.loc[(work[halpha] <= -3), "classification"] = "starforming"
-        work.loc[
-            (work[dn4000] >= 1.6) & (work[halpha] > -3) & (work[hdelta] < 4),
-            "classification",
-        ] = "old_quenched"
-        fractions = {}
-        for sample_name, part in work.groupby("sample", observed=True):
-            denominator = int(part["classification"].ne("unclassified").sum())
-            fractions[sample_name] = {
-                category: (
-                    float((part["classification"] == category).sum() / denominator)
-                    if denominator
-                    else None
-                )
-                for category in ["old_quenched", "recently_quenched", "starforming"]
-            }
-        return safe_json(
-            {
-                "status": "ok",
-                "columns_used": [dn4000, hdelta, halpha],
-                "classification_thresholds": {
-                    "weak_halpha_emission": r"\mathrm{H}\alpha\,\mathrm{EW} > -3\,\text{\AA}",
-                    "strong_hdelta_absorption": f"{hdelta} >= 4 Angstrom",
-                    "old_continuum": f"{dn4000} >= 1.6",
-                },
-                "fractions_by_sample": fractions,
-                "comparisons": {},
-            }
-        )
+    if halpha is None:
+        return {"status": "skipped", "reason": "missing_halpha_equivalent_width"}
 
     values = (
         frame[["sample", halpha]].replace([np.inf, -np.inf], np.nan).dropna().copy()
@@ -190,13 +139,7 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
         }
 
     result = {
-        "status": "limited",
-        "reason": (
-            "post_starburst_classification_deferred_by_scope"
-            if (dn4000 and hdelta)
-            else "Dn4000_and_Hdelta_unavailable"
-        ),
-        "age_sensitive_indices_available": bool(dn4000 and hdelta),
+        "status": "ok",
         "columns_used": [halpha],
         "classification_thresholds": {
             "strong_halpha_emission": r"\mathrm{H}\alpha\,\mathrm{EW} \leq -3\,\text{\AA}",
@@ -205,7 +148,6 @@ def run_recent_quenching_analysis(data, output_dir: str | None = None):
         "fractions_by_sample": fractions,
         "comparisons": comparisons,
         "morphology_adjusted_models": _morphology_adjusted_models(frame, halpha),
-        "recent_quenching_classification_available": False,
         "any_low_p_comparison": any(
             value.get("fisher_p", 1) < 0.05 for value in comparisons.values()
         ),

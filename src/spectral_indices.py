@@ -1,13 +1,7 @@
-"""MPA-JHU ``galSpecIndx`` age-sensitive indices for the group samples.
+"""Attach the MPA-JHU D_n4000 measurement by stored DR12 spectrum ID.
 
-``D_n4000`` (``d4000_n``) and ``H\\delta_A`` (``lick_hd_a``) with their errors
-are retrieved from SDSS DR12 by the stored DR12 ``specobjid`` of every group
-galaxy -- the same identifiers audited in Appendix A -- and cached in
-``data/galspecindx_dr12.csv``.  Sentinel values (``-9999``, non-positive
-errors) are treated as missing.  The columns are attached to the shared
-galaxy frame by :func:`attach_spectral_indices`; they are used descriptively
-only (Fig. F.2 availability row and the mass-binned property figure).  No
-post-starburst classification is performed here.
+The value and its uncertainty come from DR12 ``galSpecIndx``. The local
+cache also supports older files with additional columns.
 """
 
 from __future__ import annotations
@@ -25,7 +19,7 @@ except ModuleNotFoundError:  # pragma: no cover
 CACHE_PATH = co.DATA_PATH + "galspecindx_dr12.csv"
 DATA_RELEASE = 12
 CHUNK_SIZE = 150  # keeps the SkyServer GET URL under its length limit
-INDEX_COLUMNS = ["d4000_n", "d4000_n_err", "lick_hd_a", "lick_hd_a_err"]
+INDEX_COLUMNS = ["d4000_n", "d4000_n_err"]
 SENTINEL = -9999.0
 
 
@@ -41,7 +35,7 @@ def fetch_spectral_indices(specobjids, cache_path: str = CACHE_PATH) -> pd.DataF
     ids = _clean_ids(specobjids)
     cached = pd.DataFrame(columns=["specobjid", *INDEX_COLUMNS])
     if os.path.exists(cache_path):
-        cached = pd.read_csv(cache_path)
+        cached = pd.read_csv(cache_path, usecols=["specobjid", *INDEX_COLUMNS])
         cached["specobjid"] = cached["specobjid"].astype("int64")
     missing = np.setdiff1d(ids, cached["specobjid"].to_numpy(dtype="int64"))
     if missing.size == 0:
@@ -55,8 +49,7 @@ def fetch_spectral_indices(specobjids, cache_path: str = CACHE_PATH) -> pd.DataF
         chunk = missing[start : start + CHUNK_SIZE]
         sql_ids = ",".join(str(int(value)) for value in chunk)
         query = (
-            "SELECT specObjID AS specobjid, d4000_n, d4000_n_err, lick_hd_a, "
-            "lick_hd_a_err FROM galSpecIndx "
+            "SELECT specObjID AS specobjid, d4000_n, d4000_n_err FROM galSpecIndx "
             f"WHERE specObjID IN ({sql_ids})"
         )
         try:
@@ -81,7 +74,7 @@ def fetch_spectral_indices(specobjids, cache_path: str = CACHE_PATH) -> pd.DataF
 
 
 def attach_spectral_indices(frame: pd.DataFrame, cache_path: str = CACHE_PATH) -> pd.DataFrame:
-    """Join ``Dn4000`` and ``HdeltaA`` (plus errors) onto ``frame`` by ``specobjid``.
+    """Join ``Dn4000`` and its error onto ``frame`` by ``specobjid``.
 
     Rows without a stored spectrum identifier, without a ``galSpecIndx`` row
     (e.g. BOSS spectra outside the MPA-JHU coverage), or carrying sentinel
@@ -91,25 +84,17 @@ def attach_spectral_indices(frame: pd.DataFrame, cache_path: str = CACHE_PATH) -
     if "specobjid" not in frame:
         return frame
     indices = fetch_spectral_indices(frame["specobjid"], cache_path=cache_path)
-    work = indices.copy()
+    work = indices[["specobjid", *INDEX_COLUMNS]].copy()
     for column in INDEX_COLUMNS:
         work[column] = pd.to_numeric(work[column], errors="coerce")
-    for value_col, err_col in (("d4000_n", "d4000_n_err"), ("lick_hd_a", "lick_hd_a_err")):
-        bad = (
-            work[value_col].le(SENTINEL)
-            | work[err_col].le(0)
-            | ~np.isfinite(work[value_col])
-            | ~np.isfinite(work[err_col])
-        )
-        work.loc[bad, [value_col, err_col]] = np.nan
-    work = work.rename(
-        columns={
-            "d4000_n": "Dn4000",
-            "d4000_n_err": "Dn4000_err",
-            "lick_hd_a": "HdeltaA",
-            "lick_hd_a_err": "HdeltaA_err",
-        }
+    bad = (
+        work["d4000_n"].le(SENTINEL)
+        | work["d4000_n_err"].le(0)
+        | ~np.isfinite(work["d4000_n"])
+        | ~np.isfinite(work["d4000_n_err"])
     )
+    work.loc[bad, INDEX_COLUMNS] = np.nan
+    work = work.rename(columns={"d4000_n": "Dn4000", "d4000_n_err": "Dn4000_err"})
     out = frame.copy()
     out["_specobjid_key"] = pd.to_numeric(out["specobjid"], errors="coerce")
     merged = out.merge(

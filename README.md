@@ -83,8 +83,8 @@ external catalogues fetched on first run and cached under `data/`:
   from VizieR `J/ApJS/196/11`, with a CDS FTP fallback into
   `data/simard2011_raw/` (gitignored).
 
-- **MPA-JHU spectral indices** (`data/galspecindx_dr12.csv`): `d4000_n` and
-  `lick_hd_a` with errors from DR12 `galSpecIndx`, keyed by the stored DR12
+- **MPA-JHU 4000-Å break** (`data/galspecindx_dr12.csv`): `d4000_n` and
+  its uncertainty from DR12 `galSpecIndx`, keyed by the stored DR12
   `specObjID` (`src/spectral_indices.py`); descriptive use only.
 
 All fetches are idempotent: once the caches cover the sample's identifiers,

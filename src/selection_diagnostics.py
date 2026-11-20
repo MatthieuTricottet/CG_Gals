@@ -43,7 +43,7 @@ AVAILABILITY = {
     "petrosian_size": ["size_ok_petro"],
     "colours": ["u_minus_r", "u_minus_g", "g_minus_r", "r_minus_i"],
     "spectral_lines": ["h_alpha_eqw", "h_beta_eqw", "oiii_5007_eqw", "nii_6584_eqw"],
-    "spectral_indices": ["Dn4000", "HdeltaA"],
+    "spectral_indices": ["Dn4000"],
     "velocity_data": ["V_norm"],
     "group_scale_quantities": [
         "R_scale",
@@ -61,7 +61,7 @@ AVAILABILITY_LABELS = {
     "petrosian_size": "Petrosian size",
     "colours": "SDSS colour columns",
     "spectral_lines": "BPT lines",
-    "spectral_indices": r"$D_n4000$, H$\delta_A$",
+    "spectral_indices": r"$D_n4000$",
     "velocity_data": "velocity data",
     "group_scale_quantities": "group-scale covariates",
 }
@@ -80,10 +80,9 @@ AVAILABILITY_NOTES = {
         "separately from the colour module."
     ),
     "spectral_indices": (
-        "The D_n4000/HdeltaA row counts galaxies whose stored DR12 spectrum has a "
-        "galSpecIndx entry with finite, non-sentinel values and positive errors for "
-        "both indices; BOSS spectra outside the MPA-JHU coverage are missing here as "
-        "they are for the sSFR class."
+        "The D_n4000 row counts galaxies whose stored DR12 spectrum has a "
+        "finite, non-sentinel galSpecIndx measurement with a finite positive error. "
+        "BOSS spectra outside the MPA-JHU coverage are unavailable here."
     ),
     "simard_size": (
         "The Simard-size column counts galaxies that pass the DR7 bridge, redshift, "

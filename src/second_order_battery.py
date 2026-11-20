@@ -28,22 +28,23 @@ import os
 
 import numpy as np
 import pandas as pd
-from astropy.cosmology import Planck15
 
 try:
     import config as co
     from exploration_dom import DOMINATION_QUANTITIES, compute_distribution_tests
     from extended_stats import benjamini_hochberg, fit_logistic_model, safe_json
+    from sample_construction import COSMO
     from tidal_indices import _angular_matrix
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from .exploration_dom import DOMINATION_QUANTITIES, compute_distribution_tests
     from .extended_stats import benjamini_hochberg, fit_logistic_model, safe_json
+    from .sample_construction import COSMO
     from .tidal_indices import _angular_matrix
 
 SAMPLES = ["CG4", "Control4B", "Control4C", "RG4"]
 DESCRIPTORS = {
-    "log_R_pair_med": {"label": r"\log\tilde{R}_{ij}", "continuous": True},
+    "log_R_pair_med": {"label": r"\log\langle R_{ij}\rangle", "continuous": True},
     "sigma_v": {"label": r"\sigma_v", "continuous": True},
     "f_L_BGG": {"label": r"f_{L,\rm BGG}", "continuous": True},
     "log_t_cross": {"label": r"\log t_{\rm cross}", "continuous": True},
@@ -52,7 +53,7 @@ DESCRIPTORS = {
 
 
 def group_median_separations(gals: pd.DataFrame) -> pd.Series:
-    """Median of the pairwise projected physical separations (kpc) per quartet."""
+    """Median projected pair separation (kpc) at the mean member redshift."""
 
     out = {}
     for gid, part in gals.groupby("Group"):
@@ -62,7 +63,7 @@ def group_median_separations(gals: pd.DataFrame) -> pd.Series:
         if len(part) < 2 or np.isnan(ra).any() or np.isnan(zs).any():
             continue
         ang = _angular_matrix(ra, dec)
-        d_a = Planck15.angular_diameter_distance(float(np.median(zs))).to_value("kpc")
+        d_a = COSMO.angular_diameter_distance(float(np.mean(zs))).to_value("kpc")
         iu = np.triu_indices(len(part), k=1)
         out[gid] = float(np.median(ang[iu] * d_a))
     return pd.Series(out, name="R_pair_med_kpc")

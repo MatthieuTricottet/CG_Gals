@@ -1,14 +1,12 @@
-"""Values cited from the referee freeze of 20 November 2026.
+"""Read the numerical results and figure names cited by the manuscript.
 
-The compactness comparison, the spectral checks at comparable compactness
-and the host-environment check are computed by
-``results/referee_freeze_20261120/run.py`` and stored as CSV tables.  This
-module reads those tables, without recomputing anything, and returns the
-numbers that the manuscript cites.  The freeze directory is left untouched.
+The 20 November referee freeze supplies the full-sample results. Its
+median-separation rerun supplies the comparisons that depend on compactness.
 """
 
 from __future__ import annotations
 
+import json
 import shutil
 from pathlib import Path
 
@@ -19,11 +17,12 @@ import config as co
 
 FREEZE = Path(co.BASE_PATH) / "results" / "referee_freeze_20261120"
 TABLES = FREEZE / "tables"
+MEDIAN = FREEZE / "median_separation"
+MEDIAN_TABLES = MEDIAN / "tables"
 FIGURES = {
     "main": "fig_centerpiece_compactness.pdf",
     "raw": "fig_centerpiece_compactness_raw.pdf",
 }
-CENTRE_KPC = 175.0
 LABELSET = "frozen"
 
 
@@ -59,20 +58,17 @@ def _one(frame: pd.DataFrame, **conditions) -> pd.Series:
     return selected.iloc[0]
 
 
-def _compactness(primary: pd.DataFrame, geometry: pd.DataFrame) -> dict:
-    frozen = primary[primary["labelset"].eq(LABELSET)]
+def _compactness(estimates: pd.DataFrame, geometry: pd.DataFrame, metadata: dict) -> dict:
+    frozen = estimates[estimates["labelset"].eq(LABELSET)]
     comp = frozen[frozen["analysis"].eq("compactness")]
     model = comp[comp["purity"].eq("all") & comp["row"].eq("contrast")]
     cg = geometry[geometry["sample"].eq("CG4")]
     control = geometry[geometry["sample"].eq("Control4C")]
-    window = [
-        float(control["mean_Rij"].quantile(0.05)),
-        float(cg["mean_Rij"].quantile(0.95)),
-    ]
+    centre = metadata["centre_kpc"]
     inside = geometry[geometry["window"]]
     out = {
-        "centre_kpc": CENTRE_KPC,
-        "window_kpc": window,
+        "centre_kpc": centre,
+        "window_kpc": metadata["window_kpc"],
         "window_quartets": {
             "CG4": int(inside["sample"].eq("CG4").sum()),
             "Control4C": int(inside["sample"].eq("Control4C").sum()),
@@ -83,22 +79,48 @@ def _compactness(primary: pd.DataFrame, geometry: pd.DataFrame) -> dict:
                 inside.loc[inside["sample"].eq("Control4C"), "physical_host_id"].nunique()
             ),
         },
-        "median_mean_Rij_kpc": {
-            "CG4": float(cg["mean_Rij"].median()),
-            "Control4C": float(control["mean_Rij"].median()),
+        "median_Rij_kpc": {
+            "CG4": float(cg["med_Rij"].median()),
+            "Control4C": float(control["med_Rij"].median()),
         },
         "full": _estimate(_one(model, design="full", radius=None)),
-        "common_slope": _estimate(_one(model, design="common_slope", radius=CENTRE_KPC)),
-        "separate_slopes": _estimate(_one(model, design="interaction", radius=CENTRE_KPC)),
+        "common_slope": _estimate(_one(model, design="common_slope", radius=centre)),
+        "separate_slopes": _estimate(_one(model, design="interaction", radius=centre)),
         "matched": _estimate(_one(comp, design="compact_match", row="paired")),
         "matched_sigma": _estimate(_one(comp, design="compact_match_sigma", row="paired")),
     }
     purge = comp[comp["purity"].eq("HMCG_purged") & comp["row"].eq("contrast")]
     out["hmcg_purged"] = {
         "full": _estimate(_one(purge, design="full", radius=None)),
-        "separate_slopes": _estimate(_one(purge, design="interaction", radius=CENTRE_KPC)),
+        "separate_slopes": _estimate(_one(purge, design="interaction", radius=centre)),
     }
     return out
+
+
+def _primary_morphology(primary: pd.DataFrame) -> dict:
+    """Read the frozen Table 4 intervals, without refitting their models."""
+    rows = primary[
+        primary["analysis"].eq("Table 4")
+        & primary["labelset"].eq(LABELSET)
+        & primary["row"].eq("coefficient")
+        & primary["term"].eq("cg")
+        & primary["sigma"].eq(True)
+    ]
+    return {
+        control: {
+            scope: {
+                "status": "ok",
+                "n": int(row["n"]),
+                "n_clusters": int(row["hosts"]),
+                "cg4_odds_ratio": float(row["OR"]),
+                "cg4_ci95": [float(row["OR_low"]), float(row["OR_high"])],
+                "cg4_p": float(row["p"]),
+            }
+            for scope in ("all", "satellites")
+            for row in [_one(rows, control=control, scope=scope)]
+        }
+        for control in ("Control4B", "Control4C", "RG4")
+    }
 
 
 def _table5(primary: pd.DataFrame) -> dict:
@@ -192,8 +214,7 @@ def _spectral(table: pd.DataFrame) -> dict:
             "quenched_common": pick(mid, "quenched", "baseline", "none", "common"),
             "quenched_separate": pick(mid, "quenched", "baseline", "none", "interaction"),
         },
-        "n_singular_fits": int(len(failures)),
-        "singular_designs": sorted(failures["design"].unique().tolist()),
+        "n_unestimable_fits": int(len(failures)),
     }
 
 
@@ -229,13 +250,16 @@ def load() -> dict:
     if not TABLES.is_dir():
         return {}
     primary = pd.read_csv(TABLES / "02_frozen_primary_and_compactness.csv", low_memory=False)
-    geometry = pd.read_csv(TABLES / "02_quartet_geometry.csv", low_memory=False)
-    spectral = pd.read_csv(TABLES / "03_compactness_ha_quenching.csv", low_memory=False)
-    hosts = pd.read_csv(TABLES / "04_host_environment_window_check.csv", low_memory=False)
-    outer = pd.read_csv(TABLES / "06_outer_bin_contrasts.csv")
+    estimates = pd.read_csv(MEDIAN_TABLES / "02_compactness_models.csv", low_memory=False)
+    metadata = json.loads((MEDIAN / "provenance.json").read_text())
+    geometry = pd.read_csv(MEDIAN_TABLES / "02_quartet_geometry.csv", low_memory=False)
+    spectral = pd.read_csv(MEDIAN_TABLES / "03_compactness_ha_quenching.csv", low_memory=False)
+    hosts = pd.read_csv(MEDIAN_TABLES / "04_host_environment_window_check.csv", low_memory=False)
+    outer = pd.read_csv(MEDIAN_TABLES / "06_outer_bin_contrasts.csv")
     return {
         "source": str(FREEZE.relative_to(Path(co.BASE_PATH))),
-        "compactness": _compactness(primary, geometry),
+        "compactness": _compactness(estimates, geometry, metadata),
+        "primary_morphology": _primary_morphology(primary),
         "table5": _table5(primary),
         "galaxy_match": _galaxy_match(primary),
         "spectral": _spectral(spectral),
@@ -250,7 +274,7 @@ def copy_figures(destination: str) -> list[str]:
 
     copied = []
     for name in FIGURES.values():
-        source = FREEZE / "figures" / name
+        source = MEDIAN / "figures" / name
         if source.exists():
             shutil.copy2(source, Path(destination) / name)
             copied.append(name)

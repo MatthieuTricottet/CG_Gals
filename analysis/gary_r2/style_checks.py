@@ -69,7 +69,9 @@ def main() -> int:
 
     # one-sentence paragraphs in the body (main text, outside floats/equations)
     main = src[src.index("\\maketitle"):src.index("\\begin{appendix}")]
-    main = main[: main.index("\\section*{Data availability}")]
+    main = main.split("\\begin{acknowledgements}", 1)[0]
+    if "\\section*{Data availability}" in main:
+        main = main[: main.index("\\section*{Data availability}")]
     main = re.sub(r"\\begin\{(figure\*?|table\*?|equation|itemize)\}.*?\\end\{\1\}", "", main, flags=re.S)
     main = re.sub(r"\\\[.*?\\\]", " ", main, flags=re.S)
     paragraphs = [p.strip() for p in re.split(r"\n\s*\n", main)]

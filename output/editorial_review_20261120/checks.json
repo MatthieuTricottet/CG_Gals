@@ -1,0 +1,326 @@
+[
+  {
+    "check": "CG4: published E/S/U/missing counts = frozen labels [130, 96, 8, 14]",
+    "passed": true
+  },
+  {
+    "check": "CG4: published Q/SF/missing counts = frozen cohort [146, 84, 18]",
+    "passed": true
+  },
+  {
+    "check": "CG4: quartet/galaxy denominators",
+    "passed": true
+  },
+  {
+    "check": "Control4B: published E/S/U/missing counts = frozen labels [1161, 1325, 120, 186]",
+    "passed": true
+  },
+  {
+    "check": "Control4B: published Q/SF/missing counts = frozen cohort [1593, 1019, 180]",
+    "passed": true
+  },
+  {
+    "check": "Control4B: quartet/galaxy denominators",
+    "passed": true
+  },
+  {
+    "check": "Control4C: published E/S/U/missing counts = frozen labels [1168, 1289, 150, 205]",
+    "passed": true
+  },
+  {
+    "check": "Control4C: published Q/SF/missing counts = frozen cohort [1560, 1061, 191]",
+    "passed": true
+  },
+  {
+    "check": "Control4C: quartet/galaxy denominators",
+    "passed": true
+  },
+  {
+    "check": "RG4: published E/S/U/missing counts = frozen labels [66, 135, 16, 7]",
+    "passed": true
+  },
+  {
+    "check": "RG4: published Q/SF/missing counts = frozen cohort [101, 118, 5]",
+    "passed": true
+  },
+  {
+    "check": "RG4: quartet/galaxy denominators",
+    "passed": true
+  },
+  {
+    "check": "Table 4: Control4B/all frozen OR and CI",
+    "passed": true
+  },
+  {
+    "check": "Table 4: Control4B/satellites frozen OR and CI",
+    "passed": true
+  },
+  {
+    "check": "Table 4: Control4C/all frozen OR and CI",
+    "passed": true
+  },
+  {
+    "check": "Table 4: Control4C/satellites frozen OR and CI",
+    "passed": true
+  },
+  {
+    "check": "Table 4: RG4/all frozen OR and CI",
+    "passed": true
+  },
+  {
+    "check": "Table 4: RG4/satellites frozen OR and CI",
+    "passed": true
+  },
+  {
+    "check": "Table 5: frozen pooled bootstrap interval",
+    "passed": true
+  },
+  {
+    "check": "Table 5: frozen pooled permutation p",
+    "passed": true
+  },
+  {
+    "check": "Data availability removed as requested",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: +14.4",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: +3.4",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: -7.7",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: +14.4",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: -0.4",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: -12.0",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: +11.3",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: 40 pairs",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: +3.9",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: -11.8",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: +19.6",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: +18.2",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: +1.4",
+    "passed": true
+  },
+  {
+    "check": "printed frozen result: +35.1",
+    "passed": true
+  },
+  {
+    "check": "local 175-kpc contrast and common window identified",
+    "passed": true
+  },
+  {
+    "check": "median and arithmetic-mean notation",
+    "passed": true
+  },
+  {
+    "check": "no obsolete separation symbol",
+    "passed": true
+  },
+  {
+    "check": "paper: no unresolved template tokens",
+    "passed": true
+  },
+  {
+    "check": "paper: references resolve",
+    "passed": true
+  },
+  {
+    "check": "paper: clean final LaTeX log",
+    "passed": true
+  },
+  {
+    "check": "paper: no unresolved markers in PDF",
+    "passed": true
+  },
+  {
+    "check": "supplement: no unresolved template tokens",
+    "passed": true
+  },
+  {
+    "check": "supplement: references resolve",
+    "passed": true
+  },
+  {
+    "check": "supplement: clean final LaTeX log",
+    "passed": true
+  },
+  {
+    "check": "supplement: no unresolved markers in PDF",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: output/paper/additions_macros.tex",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: output/results.json",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: output/results_build.json",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/SUMMARY_FREEZE.md",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/centerpiece.py",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/diagnostics.py",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/figures/fig_centerpiece_compactness.pdf",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/figures/fig_centerpiece_compactness.png",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/figures/fig_centerpiece_compactness_raw.pdf",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/figures/fig_centerpiece_compactness_raw.png",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/freeze.py",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/provenance.json",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/run.py",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/01_frozen_galaxy_labels.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/01_gz1_recovered_and_discrepant_rows.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/01_gz1_recovery_audit.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/02_compact_matched_pair_ids.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/02_compactness_interaction_curve.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/02_frozen_primary_and_compactness.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/02_galaxy_matched_pair_ids.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/02_quartet_geometry.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/02_table5_pairs_Control4B.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/02_table5_pairs_Control4C.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/02_table5_pairs_RG4.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/02_table5_pairs_pooled.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/03_compactness_ha_quenching.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/04_host_environment_quartets.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/04_host_environment_window_check.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/05_ha_ssfr_discordance_audit.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/05_ha_ssfr_discordance_rows.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/06_compactness_bins_audit.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/06_figure_trend_coefficients.csv",
+    "passed": true
+  },
+  {
+    "check": "unchanged frozen/numeric input: results/referee_freeze_20261120/tables/06_outer_bin_contrasts.csv",
+    "passed": true
+  },
+  {
+    "check": "abstract within A&A limit",
+    "passed": true
+  },
+  {
+    "check": "article within separate A&A page caps",
+    "passed": true
+  }
+]

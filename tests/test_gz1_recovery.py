@@ -90,18 +90,19 @@ def test_freeze_values_cited_in_manuscript():
     values = freeze_values.load()
     compact = values["compactness"]
     assert compact["full"]["difference"] == pytest.approx(14.408, abs=1e-3)
-    assert compact["separate_slopes"]["difference"] == pytest.approx(3.364, abs=1e-3)
-    assert compact["matched"]["difference"] == pytest.approx(-0.417, abs=1e-3)
+    assert compact["separate_slopes"]["difference"] == pytest.approx(3.975590172)
+    assert compact["matched"]["difference"] == pytest.approx(7.916666667)
     assert compact["matched"]["labelled_pairs"] == 40
-    assert compact["window_quartets"] == {"CG4": 48, "Control4C": 187}
-    assert [round(x) for x in compact["window_kpc"]] == [95, 216]
+    assert compact["centre_kpc"] == 150
+    assert compact["window_quartets"] == {"CG4": 47, "Control4C": 204}
+    assert [round(x) for x in compact["window_kpc"]] == [94, 219]
     mid = values["spectral"]["intermediate_mass"]
-    assert mid["exact_common"]["difference"] == pytest.approx(-16.007, abs=1e-3)
-    assert mid["exact_aperture_kauffmann"]["difference"] == pytest.approx(-9.523, abs=1e-3)
+    assert mid["exact_common"]["difference"] == pytest.approx(-14.74126697)
+    assert mid["exact_aperture_kauffmann"]["difference"] == pytest.approx(-9.513719462)
     assert (mid["exact_aperture_kauffmann"]["cg_n"],
-            mid["exact_aperture_kauffmann"]["control_n"]) == (29, 94)
-    assert values["spectral"]["n_singular_fits"] == 16
+            mid["exact_aperture_kauffmann"]["control_n"]) == (29, 97)
+    assert values["spectral"]["n_unestimable_fits"] == 36
     assert values["galaxy_match"]["all"] == {
         "matched_pairs": 234, "decisive_pairs": 207, "decisive_pairs_original": 180
     }
-    assert values["outer_bin"]["n"] == 13 and values["outer_bin"]["hosts"] == 5
+    assert values["outer_bin"]["n"] == 10 and values["outer_bin"]["hosts"] == 4
