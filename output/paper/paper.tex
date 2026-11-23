@@ -971,43 +971,43 @@ Control & \multicolumn{1}{c}{\(N_{\CG}/N_{\rm control}\)} & \multicolumn{1}{c}{T
 
 \paragraph{Spectral contrasts at comparable compactness.} Table~\ref{tab:spectral_variants} lists the \CG{}-minus-\CC{} contrasts behind Sect.~\ref{sec:other_properties} for satellites with \(10 \le \log(M_\star/\msun) < 10.5\) in the common range of \(\Rmed\) (94--219~kpc). The historical H\(\alpha\) row uses the \texttt{objid} join, the other H\(\alpha\) rows the stored spectrum identifier (Appendix~\ref{app:sdss_query}). The aperture covariate is \(\log_{10}(1.5''/R_{50,r})\); the aperture rows and the E/S row share one sample, and the BPT exclusions remove AGN-like spectra above the \citet{Kewley+01} line or, in addition, composites above the \citet{Kauffmann+03a} line. In the compactness-matched comparison, 36 adjusted fits to the intermediate-mass samples after the composite exclusion are singular or fail to converge; the table reports only estimable contrasts.
 
-\begin{table*}
+\begin{table}
   \centering
   \caption{Intermediate-mass spectral contrasts at comparable compactness}
   \label{tab:spectral_variants}
-  \tabcolsep=6pt
-  \begin{tabular}{@{}lccc@{}}
+  \tabcolsep=2pt
+  \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.38\columnwidth}ccc@{}}
     \hline\hline
-    Outcome and selection & Common slope & Separate slopes & \(N\) \\
+    Outcome and selection & \makecell{Common\\slope} & \makecell{Separate\\slopes} & \(N\) \\
     \hline
 
 
-    H\(\alpha\), \texttt{objid} join & \(-13.3\) \([-27.6, +0.9]\) & \(-13.0\) \([-27.5, +1.5]\) & 57/199 \\
+    H\(\alpha\), \texttt{objid} join & \makecell{\(-13.3\)\\\([-27.6, +0.9]\)} & \makecell{\(-13.0\)\\\([-27.5, +1.5]\)} & 57/199 \\
 
-    H\(\alpha\), stored spectra & \(-14.7\) \([-28.3, -1.2]\) & \(-14.2\) \([-28.0, -0.5]\) & 61/214 \\
+    H\(\alpha\), stored spectra & \makecell{\(-14.7\)\\\([-28.3, -1.2]\)} & \makecell{\(-14.2\)\\\([-28.0, -0.5]\)} & 61/214 \\
 
-    \quad + E/S, common sample & \(-14.3\) \([-26.1, -2.4]\) & \(-14.2\) \([-26.2, -2.2]\) & 54/187 \\
+    + E/S, common sample & \makecell{\(-14.3\)\\\([-26.1, -2.4]\)} & \makecell{\(-14.2\)\\\([-26.2, -2.2]\)} & 54/187 \\
 
-    \quad + aperture & \(-16.0\) \([-28.0, -4.0]\) & \(-16.0\) \([-28.3, -3.8]\) & 54/187 \\
+    + aperture & \makecell{\(-16.0\)\\\([-28.0, -4.0]\)} & \makecell{\(-16.0\)\\\([-28.3, -3.8]\)} & 54/187 \\
 
-    \quad + aperture, no AGN & \(-12.6\) \([-27.9, +2.6]\) & \(-12.7\) \([-28.0, +2.6]\) & 36/146 \\
+    + aperture, no AGN & \makecell{\(-12.6\)\\\([-27.9, +2.6]\)} & \makecell{\(-12.7\)\\\([-28.0, +2.6]\)} & 36/146 \\
 
-    \quad + aperture, no AGN/comp. & \(-9.5\) \([-26.1, +7.1]\) & \(-8.6\) \([-24.5, +7.3]\) & 29/97 \\
+    + aperture, no AGN/comp. & \makecell{\(-9.5\)\\\([-26.1, +7.1]\)} & \makecell{\(-8.6\)\\\([-24.5, +7.3]\)} & 29/97 \\
 
-    Quenched (total sSFR) & \(+3.9\) \([-10.6, +18.4]\) & \(+2.6\) \([-11.9, +17.0]\) & 58/211 \\
+    Quenched (total sSFR) & \makecell{\(+3.9\)\\\([-10.6, +18.4]\)} & \makecell{\(+2.6\)\\\([-11.9, +17.0]\)} & 58/211 \\
 
     \hline
-    & Match & + \(\sigma_v\) tolerance & Pairs \\
+    & Match & \makecell{+\(\sigma_v\)\\tolerance} & Pairs \\
     \hline
 
-    H\(\alpha\), stored spectra & \(-25.3\) \([-47.3, -2.7]\) & \(-28.2\) \([-48.7, -7.7]\) & 25/26 \\
+    H\(\alpha\), stored spectra & \makecell{\(-25.3\)\\\([-47.3, -2.7]\)} & \makecell{\(-28.2\)\\\([-48.7, -7.7]\)} & 25/26 \\
 
-    Quenched (total sSFR) & \(+16.7\) \([-8.3, +39.6]\) & \(+13.5\) \([-9.6, +35.9]\) & 24/26 \\
+    Quenched (total sSFR) & \makecell{\(+16.7\)\\\([-8.3, +39.6]\)} & \makecell{\(+13.5\)\\\([-9.6, +35.9]\)} & 24/26 \\
 
     \hline
   \end{tabular}
   \tablefoot{Differences in percentage points with 95\% intervals. Model rows adjust for stellar mass, redshift, quartet luminosity, and \(\sigma_v\) and evaluate the contrast at \(\Rmed = 150\)~kpc over the covariate distribution of nearby \CG{} satellites; \(N\) gives the \CG{}/\CC{} satellites in the fit. Matched rows are unadjusted paired differences over quartet pairs with outcomes on both sides, with intervals from a bootstrap of connected host components.}
-\end{table*}
+\end{table}
 
 
 \FloatBarrier
@@ -1103,6 +1103,52 @@ In the 14-test gap-correlation screen over all 1519 \CG{} and control quartets (
 
 \fi
 
+
+
+
+
+\begin{table*}[!t]
+\centering
+\caption{Continuous group-scale diagnostics}
+\label{tab:battery}
+\tabcolsep=6pt
+\begin{tabular}{@{}lllll@{}}
+\hline\hline
+Descriptor & \multicolumn{1}{c}{\CG{}} & \multicolumn{1}{c}{\CB{}} & \multicolumn{1}{c}{\CC{}} & \multicolumn{1}{c@{}}{\RG{}} \\
+\hline
+
+
+\(\log\Rmed\) & \makecell[l]{0.72 [0.57, 0.92]\\\(p_{\rm BH} = 0.027\)} & \makecell[l]{0.80 [0.73, 0.88]\\\(p_{\rm BH}<10^{-4}\)} & \makecell[l]{0.70 [0.64, 0.78]\\\(p_{\rm BH}<10^{-4}\)} & \makecell[l]{0.86 [0.60, 1.23]\\\(p_{\rm BH} = 0.664\)} \\
+\addlinespace[4pt]
+\(\log\Rmed\), per dex & 0.15 [0.04, 0.61] & 0.36 [0.23, 0.57] & 0.26 [0.18, 0.38] & 0.35 [0.03, 4.15] \\
+\addlinespace[4pt]
+
+
+
+
+\(\sigma_v\) & \makecell[l]{0.94 [0.69, 1.28]\\\(p_{\rm BH} = 0.739\)} & \makecell[l]{1.04 [0.94, 1.15]\\\(p_{\rm BH} = 0.667\)} & \makecell[l]{1.22 [1.10, 1.35]\\\(p_{\rm BH} = 8\times 10^{-4}\)} & \makecell[l]{0.95 [0.73, 1.22]\\\(p_{\rm BH} = 0.739\)} \\
+\addlinespace[4pt]
+
+
+
+
+\(f_{L,\rm BGG}\) & \makecell[l]{1.26 [0.97, 1.64]\\\(p_{\rm BH} = 0.213\)} & \makecell[l]{1.03 [0.91, 1.17]\\\(p_{\rm BH} = 0.739\)} & \makecell[l]{1.06 [0.95, 1.18]\\\(p_{\rm BH} = 0.595\)} & \makecell[l]{1.14 [0.78, 1.66]\\\(p_{\rm BH} = 0.667\)} \\
+\addlinespace[4pt]
+
+
+
+
+\(\log t_{\rm cross}\) & \makecell[l]{0.87 [0.67, 1.15]\\\(p_{\rm BH} = 0.595\)} & \makecell[l]{0.86 [0.78, 0.96]\\\(p_{\rm BH} = 0.018\)} & \makecell[l]{0.73 [0.66, 0.81]\\\(p_{\rm BH}<10^{-4}\)} & \makecell[l]{0.95 [0.68, 1.31]\\\(p_{\rm BH} = 0.739\)} \\
+\addlinespace[4pt]
+
+
+
+
+
+\hline
+\end{tabular}
+\tablefoot{Odds ratios and 95\% intervals for satellite GZ1 E-class membership, per within-sample standard deviation of each descriptor (and per dex of \(\log_{10}(\Rmed/{\rm kpc})\) in the second row), adjusted for stellar mass. \(p_{\rm BH}\) uses Benjamini--Hochberg adjustment across 20 tests, including the binary dominance test in each sample. Sample sizes (satellites, physical hosts) are \((170, 60)\) for \CG{}, \((1866, 696)\) for \CB{}, \((1833, 698)\) for \CC{}, and \((152, 56)\) for \RG{}. The \CG{} satellites span 62 quartets.}
+\end{table*}
 
 
 \subsection{Projected phase space}\label{app:phase_space}
@@ -1345,54 +1391,31 @@ The matched-photometry colour sample is not representative of the full catalogue
 
 \subsection{Continuous group-scale descriptors}\label{app:battery}
 
-
 As an exploratory complement to the class comparison, Table~\ref{tab:battery} fits satellite E-versus-S classification against four continuous group-scale descriptors: \(\log\Rmed\), \(\sigma_v\), \(f_{L,\rm BGG}\), and \(\log t_{\rm cross}\), adjusting for stellar mass and clustering by physical Lim host. Descriptors are standardised within sample; for \(\log\Rmed\), the table also gives odds ratios per dex, which compare the slopes directly. Within \CG{}, only compactness is associated with the satellite mix: smaller \(\Rmed\) corresponds to more E-class satellites (OR \(0.72\), 95\% CI \([0.57, 0.92]\), \(p_{\rm BH}=0.027\)); the other descriptors are weak. Per dex, the \CG{} and \CC{} slopes are compatible (\(p \approx 0.46\), treating the two fits as independent).
 
-\begin{table*}
-\centering
-\caption{Continuous group-scale diagnostics}
-\label{tab:battery}
-\tabcolsep=6pt
-\begin{tabular}{@{}lllll@{}}
-\hline\hline
-Descriptor & \multicolumn{1}{c}{\CG{}} & \multicolumn{1}{c}{\CB{}} & \multicolumn{1}{c}{\CC{}} & \multicolumn{1}{c@{}}{\RG{}} \\
-\hline
 
-
-\(\log\Rmed\) & \makecell[l]{0.72 [0.57, 0.92]\\\(p_{\rm BH} = 0.027\)} & \makecell[l]{0.80 [0.73, 0.88]\\\(p_{\rm BH}<10^{-4}\)} & \makecell[l]{0.70 [0.64, 0.78]\\\(p_{\rm BH}<10^{-4}\)} & \makecell[l]{0.86 [0.60, 1.23]\\\(p_{\rm BH} = 0.664\)} \\
-\addlinespace[4pt]
-\(\log\Rmed\), per dex & 0.15 [0.04, 0.61] & 0.36 [0.23, 0.57] & 0.26 [0.18, 0.38] & 0.35 [0.03, 4.15] \\
-\addlinespace[4pt]
-
-
-
-
-\(\sigma_v\) & \makecell[l]{0.94 [0.69, 1.28]\\\(p_{\rm BH} = 0.739\)} & \makecell[l]{1.04 [0.94, 1.15]\\\(p_{\rm BH} = 0.667\)} & \makecell[l]{1.22 [1.10, 1.35]\\\(p_{\rm BH} = 8\times 10^{-4}\)} & \makecell[l]{0.95 [0.73, 1.22]\\\(p_{\rm BH} = 0.739\)} \\
-\addlinespace[4pt]
-
-
-
-
-\(f_{L,\rm BGG}\) & \makecell[l]{1.26 [0.97, 1.64]\\\(p_{\rm BH} = 0.213\)} & \makecell[l]{1.03 [0.91, 1.17]\\\(p_{\rm BH} = 0.739\)} & \makecell[l]{1.06 [0.95, 1.18]\\\(p_{\rm BH} = 0.595\)} & \makecell[l]{1.14 [0.78, 1.66]\\\(p_{\rm BH} = 0.667\)} \\
-\addlinespace[4pt]
-
-
-
-
-\(\log t_{\rm cross}\) & \makecell[l]{0.87 [0.67, 1.15]\\\(p_{\rm BH} = 0.595\)} & \makecell[l]{0.86 [0.78, 0.96]\\\(p_{\rm BH} = 0.018\)} & \makecell[l]{0.73 [0.66, 0.81]\\\(p_{\rm BH}<10^{-4}\)} & \makecell[l]{0.95 [0.68, 1.31]\\\(p_{\rm BH} = 0.739\)} \\
-\addlinespace[4pt]
-
-
-
-
-
-\hline
-\end{tabular}
-\tablefoot{Odds ratios and 95\% intervals for satellite GZ1 E-class membership, per within-sample standard deviation of each descriptor (and per dex of \(\log_{10}(\Rmed/{\rm kpc})\) in the second row), adjusted for stellar mass. \(p_{\rm BH}\) uses Benjamini--Hochberg adjustment across 20 tests, including the binary dominance test in each sample. Sample sizes (satellites, physical hosts) are \((170, 60)\) for \CG{}, \((1866, 696)\) for \CB{}, \((1833, 698)\) for \CC{}, and \((152, 56)\) for \RG{}. The \CG{} satellites span 62 quartets.}
-\end{table*}
 
 
 \section{Pooled models, matching details, and selection diagnostics}\label{app:pooled_models}
+
+
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{fig_matched_control_balance.pdf}
+    \caption{Covariate balance for the galaxy-level one-to-one match of 234 \CG{} galaxies against the deduplicated control pool within exact quartet-rank strata (Sect.~\ref{sec:morphology}, Appendix~\ref{app:matching_details}). Open and filled circles show the absolute standardised mean difference between \CG{} and the controls before and after matching, connected by horizontal segments. The vertical dotted line at 0.1 is a conventional balance guide.}
+    \label{fig:matched_control_balance}
+\end{figure}
+
+
+
+
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=0.85\textwidth]{fig_data_availability_by_sample.pdf}
+    \caption{Measurement availability. Cells give percentages of the final per-sample galaxy count, rounded to the nearest integer. The colour column requires measurements in all four derived SDSS colours before the stricter match to the SDSS non-AGN photometry used for the colour diagnostics deposited on Zenodo. The \(D_n4000\) column requires finite non-sentinel values and finite positive errors. The Simard column includes all size-quality cuts.}
+    \label{fig:data_availability}
+\end{figure*}
+
 
 \subsection{Pooled adjusted models}\label{app:pooled_adjusted}
 
@@ -1419,27 +1442,10 @@ The 234 matched controls occupy 204 physical Lim groups, and 26 control hosts li
 
 
 
-\begin{figure}
-    \centering
-    \includegraphics[width=\columnwidth]{fig_matched_control_balance.pdf}
-    \caption{Covariate balance for the galaxy-level one-to-one match of 234 \CG{} galaxies against the deduplicated control pool within exact quartet-rank strata (Sect.~\ref{sec:morphology}, Appendix~\ref{app:matching_details}). Open and filled circles show the absolute standardised mean difference between \CG{} and the controls before and after matching, connected by horizontal segments. The vertical dotted line at 0.1 is a conventional balance guide.}
-    \label{fig:matched_control_balance}
-\end{figure}
-
-
 
 \subsection{Selection diagnostics}\label{app:selection}
 
-
 The fractions with complete measurements for the major derived quantities are shown in Fig.~\ref{fig:data_availability}, including the Simard and Petrosian size availability used in Sect.~\ref{sec:other_properties} and the availability of \(D_n4000\). The median nearest-neighbour angular separation is 100.9 arcsec in \CG{} and 255.9 arcsec in the controls; the fractions below the 55-arcsec SDSS fibre-collision scale are 19.4\% and 7.7\%. No availability difference between \CG{} and the pooled controls is both larger than 10 percentage points and significant after Holm adjustment (\(p<0.05\)).
-
-
-\begin{figure*}
-    \centering
-    \includegraphics[width=0.85\textwidth]{fig_data_availability_by_sample.pdf}
-    \caption{Measurement availability. Cells give percentages of the final per-sample galaxy count, rounded to the nearest integer. The colour column requires measurements in all four derived SDSS colours before the stricter match to the SDSS non-AGN photometry used for the colour diagnostics deposited on Zenodo. The \(D_n4000\) column requires finite non-sentinel values and finite positive errors. The Simard column includes all size-quality cuts.}
-    \label{fig:data_availability}
-\end{figure*}
 
 
 
@@ -1452,7 +1458,11 @@ The group-scale covariates are radius scale, velocity dispersion, quartet lumino
 In the sensitivity fit that retains all catalogue rows, restricting the pairwise tidal index of Sect.~\ref{sec:tidal_index} to quartet co-members is innocuous: recomputing \(T_i\) with all spectroscopic Lim members of the identified host group included (positions from the group catalogue; stellar masses from MPA--JHU where available, so the host-inclusive index is itself a lower bound) shifts \(\log T_i\) by a median of \dTall~dex (sample medians \(\le \dTmaxSamp\)~dex, and identically zero for \RG{}, whose groups have exactly four members), with rank correlation \(\rhoTT\) between the two definitions, and refitting the with-index E-class model on the host-inclusive index moves the attenuated \CG{} coefficient only from \ORresid{} to \ORresidAll{}. \(T_i\) is thus the local, galaxy-scale tidal density traced by catalogued galaxies; any smooth host-halo contribution is probed separately through the host-mass sensitivity fit above and the within-host analysis of Sect.~\ref{sec:morphology}. The colour-selection mass diagnostics are deposited on Zenodo.
 
 
+\raggedbottom
 \section{Robustness details}\label{app:robustness_details}
+\begingroup
+% Keep the consecutive run-in headings compact in this appendix.
+\patchcmd{\paragraph}{-16dd}{-12dd}{}{}
 
 
 \paragraph{Sample-definition sensitivities.} Restoring the 16 Zheng--Shen split systems while retaining the published model definitions leaves the morphology result qualitatively unchanged: the adjusted all-galaxy E-class odds ratios against \CB{}, \CC{}, and \RG{} are 1.85 (95\% CI \([1.39, 2.46]\)), 1.44 (\([1.10, 1.88]\)), and 2.38 (\([1.58, 3.58]\)), and the corresponding satellite odds ratios are 2.42 (\([1.80, 3.25]\)), 1.78 (\([1.35, 2.35]\)), and 2.75 (\([1.69, 4.49]\)). Retaining the anomalous Lim 3688 quartets likewise leaves the coefficients essentially unchanged: the all-galaxy and satellite odds ratios are 2.03 and 2.48 against \CB{}, and 1.60 and 1.86 against \CC{}.
@@ -1487,6 +1497,7 @@ In the sensitivity fit that retains all catalogue rows, restricting the pairwise
 
 
 \FloatBarrier
+\endgroup
 
 
 \section{Extended size diagnostics}\label{app:size_details}
@@ -1504,13 +1515,15 @@ In the sensitivity fit that retains all catalogue rows, restricting the pairwise
 
 Figure~\ref{fig:data_availability} shows the availability of the size measurements. Figure~\ref{fig:size_per_control} compares the adjusted size coefficients against the deduplicated pooled controls and each control separately.
 
-\begin{figure}
+\begin{figure}[!htb]
   \centering
   \includegraphics[width=0.88\columnwidth]{size_forest_per_control.pdf}
   \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control. Every model adjusts for stellar mass, redshift, BGG/satellite status, quartet luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii.}
   \label{fig:size_per_control}
 \end{figure}
- The concentration index \(C = R_{90,r}/R_{50,r}\) provides a model-independent structural proxy: the adjusted satellite coefficient is \(0.068\) (\(p = 0.124\)), and the matched concentration difference is \(-0.008\) (\(p = 0.904\)), offering no evidence for a fixed-mass concentration shift.
+
+
+The concentration index \(C = R_{90,r}/R_{50,r}\) provides a model-independent structural proxy: the adjusted satellite coefficient is \(0.068\) (\(p = 0.124\)), and the matched concentration difference is \(-0.008\) (\(p = 0.904\)), offering no evidence for a fixed-mass concentration shift.
 
 
 The crowding checks mirror Appendix~\ref{app:robustness_details}: excluding galaxies with a projected neighbour within 55 arcsec leaves a satellite coefficient of \(-0.013\) dex (\(p = 0.463\)), and adding the close-neighbour flag as a covariate gives \(-0.011\) dex (\(p = 0.479\)).

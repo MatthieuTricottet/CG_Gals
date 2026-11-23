@@ -828,24 +828,24 @@ Control & \multicolumn{1}{c}{\(N_{\CG}/N_{\rm control}\)} & \multicolumn{1}{c}{T
 
 <% set fzx = freeze if freeze else {} %><% set cptx = fzx.get('compactness', {}) %><% set fzsx = fzx.get('spectral', {}) %>
 <% if cptx and fzsx %>
-<% macro est(m) -%>\(<< sgn(m['difference']) >>\) \([<< sgn(m['low']) >>, << sgn(m['high']) >>]\)<%- endmacro %>
+<% macro est(m) -%>\makecell{\(<< sgn(m['difference']) >>\)\\\([<< sgn(m['low']) >>, << sgn(m['high']) >>]\)}<%- endmacro %>
 \paragraph{Spectral contrasts at comparable compactness.} Table~\ref{tab:spectral_variants} lists the \CG{}-minus-\CC{} contrasts behind Sect.~\ref{sec:other_properties} for satellites with \(10 \le \log(M_\star/\msun) < 10.5\) in the common range of \(\Rmed\) (<< cptx['window_kpc'][0]|fmt(0) >>--<< cptx['window_kpc'][1]|fmt(0) >>~kpc). The historical H\(\alpha\) row uses the \texttt{objid} join, the other H\(\alpha\) rows the stored spectrum identifier (Appendix~\ref{app:sdss_query}). The aperture covariate is \(\log_{10}(1.5''/R_{50,r})\); the aperture rows and the E/S row share one sample, and the BPT exclusions remove AGN-like spectra above the \citet{Kewley+01} line or, in addition, composites above the \citet{Kauffmann+03a} line. In the compactness-matched comparison, << fzsx['n_unestimable_fits'] >> adjusted fits to the intermediate-mass samples after the composite exclusion are singular or fail to converge; the table reports only estimable contrasts.
 
-\begin{table*}
+\begin{table}
   \centering
   \caption{Intermediate-mass spectral contrasts at comparable compactness}
   \label{tab:spectral_variants}
-  \tabcolsep=6pt
-  \begin{tabular}{@{}lccc@{}}
+  \tabcolsep=2pt
+  \begin{tabular}{@{}>{\raggedright\arraybackslash}p{0.38\columnwidth}ccc@{}}
     \hline\hline
-    Outcome and selection & Common slope & Separate slopes & \(N\) \\
+    Outcome and selection & \makecell{Common\\slope} & \makecell{Separate\\slopes} & \(N\) \\
     \hline
-<% set row_labels = {'historical': 'H\\(\\alpha\\), \\texttt{objid} join', 'exact': 'H\\(\\alpha\\), stored spectra', 'exact_es_common': '\\quad + E/S, common sample', 'exact_aperture': '\\quad + aperture', 'exact_aperture_kewley': '\\quad + aperture, no AGN', 'exact_aperture_kauffmann': '\\quad + aperture, no AGN/comp.', 'quenched': 'Quenched (total sSFR)'} %>
+<% set row_labels = {'historical': 'H\\(\\alpha\\), \\texttt{objid} join', 'exact': 'H\\(\\alpha\\), stored spectra', 'exact_es_common': '+ E/S, common sample', 'exact_aperture': '+ aperture', 'exact_aperture_kewley': '+ aperture, no AGN', 'exact_aperture_kauffmann': '+ aperture, no AGN/comp.', 'quenched': 'Quenched (total sSFR)'} %>
 <% for row in fzsx['supplement_rows'] %>
     << row_labels[row['key']] >> & << est(row['common']) >> & << est(row['separate']) >> & << row['common']['cg_n'] >>/<< row['common']['control_n'] >> \\
 <% endfor %>
     \hline
-    & Match & + \(\sigma_v\) tolerance & Pairs \\
+    & Match & \makecell{+\(\sigma_v\)\\tolerance} & Pairs \\
     \hline
 <% for row in fzsx['matched_rows'] %>
     << 'H\\(\\alpha\\), stored spectra' if row['key'] == 'strong_exact' else 'Quenched (total sSFR)' >> & << est(row['match']) >> & << est(row['match_sigma']) >> & << row['match']['labelled_pairs'] >>/<< row['match_sigma']['labelled_pairs'] >> \\
@@ -853,7 +853,7 @@ Control & \multicolumn{1}{c}{\(N_{\CG}/N_{\rm control}\)} & \multicolumn{1}{c}{T
     \hline
   \end{tabular}
   \tablefoot{Differences in percentage points with 95\% intervals. Model rows adjust for stellar mass, redshift, quartet luminosity, and \(\sigma_v\) and evaluate the contrast at \(\Rmed = << cptx['centre_kpc']|fmt(0) >>\)~kpc over the covariate distribution of nearby \CG{} satellites; \(N\) gives the \CG{}/\CC{} satellites in the fit. Matched rows are unadjusted paired differences over quartet pairs with outcomes on both sides, with intervals from a bootstrap of connected host components.}
-\end{table*}
+\end{table}
 <% endif %>
 
 \FloatBarrier
@@ -952,6 +952,32 @@ In the 14-test gap-correlation screen over all << fossil.get('n_groups') >> \CG{
 
 <% set phase = phase_space_segregation if phase_space_segregation else es.get('phase_space_segregation', es.get('phase_space', {})) %>
 <% if phase.get('status') == 'ok' %>
+<% if battery.get('status') == 'ok' %>
+<% set brows = battery.get('rows', []) %>
+\begin{table*}[!t]
+\centering
+\caption{Continuous group-scale diagnostics}
+\label{tab:battery}
+\tabcolsep=6pt
+\begin{tabular}{@{}lllll@{}}
+\hline\hline
+Descriptor & \multicolumn{1}{c}{\CG{}} & \multicolumn{1}{c}{\CB{}} & \multicolumn{1}{c}{\CC{}} & \multicolumn{1}{c@{}}{\RG{}} \\
+\hline
+<% for key, spec in battery.get('descriptors', {}).items() %>
+<% if key != 'f_L_BGG_above_cg4_median' %>
+\(<< '\\log\\Rmed' if key == 'log_R_pair_med' else spec.label >>\) <% for s in ['CG4', 'Control4B', 'Control4C', 'RG4'] %><% set row = brows|selectattr('sample', 'equalto', s)|selectattr('descriptor', 'equalto', key)|list|first %>& <% if row and row.status == 'ok' %>\makecell[l]{<< row.odds_ratio|fmt(2) >> [<< row.ci95_low|fmt(2) >>, << row.ci95_high|fmt(2) >>]\\<< pshort(row.p_bh_battery, 'p_{\\rm BH}') >>}<% else %>---<% endif %> <% endfor %>\\
+\addlinespace[4pt]
+<% if key == 'log_R_pair_med' and subm.get('battery_per_dex', {}).get('CG4') %>\(\log\Rmed\), per dex <% for s in ['CG4', 'Control4B', 'Control4C', 'RG4'] %><% set bd = subm['battery_per_dex'][s] %>& << bd['odds_ratio']|fmt(2) >> [<< bd['ci95'][0]|fmt(2) >>, << bd['ci95'][1]|fmt(2) >>] <% endfor %>\\
+\addlinespace[4pt]
+<% endif %>
+<% endif %>
+<% endfor %>
+\hline
+\end{tabular}
+\tablefoot{Odds ratios and 95\% intervals for satellite GZ1 E-class membership, per within-sample standard deviation of each descriptor (and per dex of \(\log_{10}(\Rmed/{\rm kpc})\) in the second row), adjusted for stellar mass. \(p_{\rm BH}\) uses Benjamini--Hochberg adjustment across << battery['n_tests_battery'] >> tests, including the binary dominance test in each sample. Sample sizes (satellites, physical hosts) are <% for sample, label in [('CG4', '\\CG{}'), ('Control4B', '\\CB{}'), ('Control4C', '\\CC{}'), ('RG4', '\\RG{}')] %><% set fit = brows|selectattr('sample', 'equalto', sample)|selectattr('descriptor', 'equalto', 'log_R_pair_med')|first %><% if not loop.first %>, <% if loop.last %>and <% endif %><% endif %>\((<< fit.n >>, << fit.n_groups >>)\) for << label >><% endfor %>. The \CG{} satellites span << CG4_Groups_nonsplit_N >> quartets.}
+\end{table*}
+<% endif %>
+
 \subsection{Projected phase space}\label{app:phase_space}
 <% set pst = phase.get('text_summary', {}) %>
 We ask whether the \CG{}--\RG{} satellite contrasts vary with projected position relative to the BGG, using << pst.get('cg_satellite_n') >> \CG{} and << pst.get('rg_satellite_n') >> \RG{} satellites ranked by projected BGG-centric distance and, when available, \(|\Delta v_{\rm BGG}|/\sigma_v\); such coordinates are statistical proxies for infall state, not orbital reconstructions \citep{Mahajan+11,Oman&Hudson16,Wetzel+13}.
@@ -1119,34 +1145,31 @@ The matched-photometry colour sample is not representative of the full catalogue
 <% if battery.get('status') == 'ok' %>
 \subsection{Continuous group-scale descriptors}\label{app:battery}
 
-<% set brows = battery.get('rows', []) %>
 As an exploratory complement to the class comparison, Table~\ref{tab:battery} fits satellite E-versus-S classification against four continuous group-scale descriptors: \(\log\Rmed\), \(\sigma_v\), \(f_{L,\rm BGG}\), and \(\log t_{\rm cross}\), adjusting for stellar mass and clustering by physical Lim host. Descriptors are standardised within sample; for \(\log\Rmed\), the table also gives odds ratios per dex, which compare the slopes directly. <% set b_cg = brows|selectattr('sample', 'equalto', 'CG4')|list %><% set b_sep = b_cg|selectattr('descriptor', 'equalto', 'log_R_pair_med')|list|first %><% if b_sep and b_sep.status == 'ok' %>Within \CG{}, only compactness is associated with the satellite mix: smaller \(\Rmed\) corresponds to more E-class satellites (OR \(<< b_sep.odds_ratio|fmt(2) >>\), 95\% CI \([<< b_sep.ci95_low|fmt(2) >>, << b_sep.ci95_high|fmt(2) >>]\), \(p_{\rm BH}=<< b_sep.p_bh_battery|fmt(3) >>\)); the other descriptors are weak.<% endif %><% set bpd = subm.get('battery_per_dex', {}) %><% if bpd.get('cg4_vs_control4c_slope') %> Per dex, the \CG{} and \CC{} slopes are compatible (\(p \approx << bpd['cg4_vs_control4c_slope']['p']|fmt(2) >>\), treating the two fits as independent).<% endif %>
 
-\begin{table*}
-\centering
-\caption{Continuous group-scale diagnostics}
-\label{tab:battery}
-\tabcolsep=6pt
-\begin{tabular}{@{}lllll@{}}
-\hline\hline
-Descriptor & \multicolumn{1}{c}{\CG{}} & \multicolumn{1}{c}{\CB{}} & \multicolumn{1}{c}{\CC{}} & \multicolumn{1}{c@{}}{\RG{}} \\
-\hline
-<% for key, spec in battery.get('descriptors', {}).items() %>
-<% if key != 'f_L_BGG_above_cg4_median' %>
-\(<< '\\log\\Rmed' if key == 'log_R_pair_med' else spec.label >>\) <% for s in ['CG4', 'Control4B', 'Control4C', 'RG4'] %><% set row = brows|selectattr('sample', 'equalto', s)|selectattr('descriptor', 'equalto', key)|list|first %>& <% if row and row.status == 'ok' %>\makecell[l]{<< row.odds_ratio|fmt(2) >> [<< row.ci95_low|fmt(2) >>, << row.ci95_high|fmt(2) >>]\\<< pshort(row.p_bh_battery, 'p_{\\rm BH}') >>}<% else %>---<% endif %> <% endfor %>\\
-\addlinespace[4pt]
-<% if key == 'log_R_pair_med' and subm.get('battery_per_dex', {}).get('CG4') %>\(\log\Rmed\), per dex <% for s in ['CG4', 'Control4B', 'Control4C', 'RG4'] %><% set bd = subm['battery_per_dex'][s] %>& << bd['odds_ratio']|fmt(2) >> [<< bd['ci95'][0]|fmt(2) >>, << bd['ci95'][1]|fmt(2) >>] <% endfor %>\\
-\addlinespace[4pt]
-<% endif %>
-<% endif %>
-<% endfor %>
-\hline
-\end{tabular}
-\tablefoot{Odds ratios and 95\% intervals for satellite GZ1 E-class membership, per within-sample standard deviation of each descriptor (and per dex of \(\log_{10}(\Rmed/{\rm kpc})\) in the second row), adjusted for stellar mass. \(p_{\rm BH}\) uses Benjamini--Hochberg adjustment across << battery['n_tests_battery'] >> tests, including the binary dominance test in each sample. Sample sizes (satellites, physical hosts) are <% for sample, label in [('CG4', '\\CG{}'), ('Control4B', '\\CB{}'), ('Control4C', '\\CC{}'), ('RG4', '\\RG{}')] %><% set fit = brows|selectattr('sample', 'equalto', sample)|selectattr('descriptor', 'equalto', 'log_R_pair_med')|first %><% if not loop.first %>, <% if loop.last %>and <% endif %><% endif %>\((<< fit.n >>, << fit.n_groups >>)\) for << label >><% endfor %>. The \CG{} satellites span << CG4_Groups_nonsplit_N >> quartets.}
-\end{table*}
+
 <% endif %>
 
 \section{Pooled models, matching details, and selection diagnostics}\label{app:pooled_models}
+
+<% if matched.get('status') == 'ok' and matched.get('balance_figure') %>
+\begin{figure}
+    \centering
+    \includegraphics[width=\columnwidth]{<< matched.get('balance_figure') >>}
+    \caption{Covariate balance for the galaxy-level one-to-one match of << matched.get('n_cg4_matched') >> \CG{} galaxies against the deduplicated control pool within exact quartet-rank strata (Sect.~\ref{sec:morphology}, Appendix~\ref{app:matching_details}). Open and filled circles show the absolute standardised mean difference between \CG{} and the controls before and after matching, connected by horizontal segments. The vertical dotted line at 0.1 is a conventional balance guide.}
+    \label{fig:matched_control_balance}
+\end{figure}
+<% endif %>
+
+<% set selection = es.get('selection_diagnostics', {}) %>
+<% if selection.get('status') == 'ok' and selection.get('availability_figure') %>
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=0.85\textwidth]{<< selection.get('availability_figure') >>}
+    \caption{Measurement availability. Cells give percentages of the final per-sample galaxy count, rounded to the nearest integer. The colour column requires measurements in all four derived SDSS colours before the stricter match to the SDSS non-AGN photometry used for the colour diagnostics deposited on Zenodo. The \(D_n4000\) column requires finite non-sentinel values and finite positive errors. The Simard column includes all size-quality cuts.}
+    \label{fig:data_availability}
+\end{figure*}
+<% endif %>
 
 \subsection{Pooled adjusted models}\label{app:pooled_adjusted}
 <% set sm = es.get('specialness_models', {}) -%>
@@ -1173,29 +1196,12 @@ The galaxy-level control pool of Sect.~\ref{sec:morphology} is deduplicated by S
 The << host_audit.get('n_matched_controls') >> matched controls occupy << host_audit.get('n_unique_physical_lim_groups') >> physical Lim groups, and << host_audit.get('n_control_lim_groups_linking_multiple_treated_groups') >> control hosts link more than one \CG{} group. Resampling the << host_sensitivity.get('n_components') >> connected components of the graph linking matched \CG{} groups to their control hosts instead, <% if hs_ell.get('status') == 'ok' and hs_quenched.get('status') == 'ok' %>the E-class fraction difference remains \(<< sgn(100 * hs_ell.get('delta_cg4_minus_control')) >>\) points (95\% interval \([<< sgn(100 * hs_ell.get('ci95')[0]) >>, << sgn(100 * hs_ell.get('ci95')[1]) >>]\); << pval_text(hs_ell.get('p')) >>), and the quenched-fraction difference is \(<< sgn(100 * hs_quenched.get('delta_cg4_minus_control')) >>\) points (\([<< sgn(100 * hs_quenched.get('ci95')[0]) >>, << sgn(100 * hs_quenched.get('ci95')[1]) >>]\); << pval_text(hs_quenched.get('p')) >>).<% endif %><% if size_hs.get('mean_delta') is not none and petro_hs.get('mean_delta') is not none and conc_hs.get('mean_delta') is not none %> The analogous matched-size sensitivities are \(<< size_hs.get('mean_delta')|fmt(3) >>\) dex for the Simard radius (<< pval_text(size_hs.get('p')) >>), \(<< petro_hs.get('mean_delta')|fmt(3) >>\) dex for the Petrosian radius (<< pval_text(petro_hs.get('p')) >>), and \(<< conc_hs.get('mean_delta')|fmt(3) >>\) for the concentration (<< pval_text(conc_hs.get('p')) >>).<% endif %>
 <% endif %>
 
-<% if matched.get('balance_figure') %>
-\begin{figure}
-    \centering
-    \includegraphics[width=\columnwidth]{<< matched.get('balance_figure') >>}
-    \caption{Covariate balance for the galaxy-level one-to-one match of << matched.get('n_cg4_matched') >> \CG{} galaxies against the deduplicated control pool within exact quartet-rank strata (Sect.~\ref{sec:morphology}, Appendix~\ref{app:matching_details}). Open and filled circles show the absolute standardised mean difference between \CG{} and the controls before and after matching, connected by horizontal segments. The vertical dotted line at 0.1 is a conventional balance guide.}
-    \label{fig:matched_control_balance}
-\end{figure}
-<% endif %>
 <% endif %>
 
 \subsection{Selection diagnostics}\label{app:selection}
-<% set selection = es.get('selection_diagnostics', {}) %>
 <% if selection.get('status') == 'ok' %>
 The fractions with complete measurements for the major derived quantities are shown in Fig.~\ref{fig:data_availability}, including the Simard and Petrosian size availability used in Sect.~\ref{sec:other_properties} and the availability of \(D_n4000\). <% set angular = selection.get('nearest_angular_separation', {}) %><% if angular.get('status') == 'ok' %>The median nearest-neighbour angular separation is << angular.get('median_cg4')|fmt(1) >> arcsec in \CG{} and << angular.get('median_control')|fmt(1) >> arcsec in the controls; the fractions below the 55-arcsec SDSS fibre-collision scale are << angular.get('cg4_fraction_below_threshold')|pct(1) >>\% and << angular.get('control_fraction_below_threshold')|pct(1) >>\%. <% endif %><% if selection.get('strong_selection_bias') %>At least one availability difference between \CG{} and the pooled controls is both larger than 10 percentage points and significant after Holm adjustment (\(p<0.05\)), so the affected results are treated as exploratory.<% else %>No availability difference between \CG{} and the pooled controls is both larger than 10 percentage points and significant after Holm adjustment (\(p<0.05\)).<% endif %>
 
-<% if selection.get('availability_figure') %>
-\begin{figure*}
-    \centering
-    \includegraphics[width=0.85\textwidth]{<< selection.get('availability_figure') >>}
-    \caption{Measurement availability. Cells give percentages of the final per-sample galaxy count, rounded to the nearest integer. The colour column requires measurements in all four derived SDSS colours before the stricter match to the SDSS non-AGN photometry used for the colour diagnostics deposited on Zenodo. The \(D_n4000\) column requires finite non-sentinel values and finite positive errors. The Simard column includes all size-quality cuts.}
-    \label{fig:data_availability}
-\end{figure*}
-<% endif %>
 
 <% set avail = selection.get('availability_by_sample', {}) %>
 <% set group_audit = selection.get('group_scale_column_audit', {}) %>
@@ -1209,7 +1215,11 @@ The automated availability row for group-scale quantities should be interpreted 
 In the sensitivity fit that retains all catalogue rows, restricting the pairwise tidal index of Sect.~\ref{sec:tidal_index} to quartet co-members is innocuous: recomputing \(T_i\) with all spectroscopic Lim members of the identified host group included (positions from the group catalogue; stellar masses from MPA--JHU where available, so the host-inclusive index is itself a lower bound) shifts \(\log T_i\) by a median of \dTall~dex (sample medians \(\le \dTmaxSamp\)~dex, and identically zero for \RG{}, whose groups have exactly four members), with rank correlation \(\rhoTT\) between the two definitions, and refitting the with-index E-class model on the host-inclusive index moves the attenuated \CG{} coefficient only from \ORresid{} to \ORresidAll{}. \(T_i\) is thus the local, galaxy-scale tidal density traced by catalogued galaxies; any smooth host-halo contribution is probed separately through the host-mass sensitivity fit above and the within-host analysis of Sect.~\ref{sec:morphology}. The colour-selection mass diagnostics are deposited on Zenodo.
 <% endif %>
 
+\raggedbottom
 \section{Robustness details}\label{app:robustness_details}
+\begingroup
+% Keep the consecutive run-in headings compact in this appendix.
+\patchcmd{\paragraph}{-16dd}{-12dd}{}{}
 
 <% set t11 = referee.get('T11', {}).get('scenarios', {}) %><% set t11s = t11.get('split_restored', {}).get('recovered', {}) %><% set t11l = t11.get('lim3688_retained', {}).get('recovered', {}) %><% if t11s and t11l %><% macro t11ci(m) -%><< m['odds_ratio']|fmt(2) >> (\([<< m['ci95'][0]|fmt(2) >>, << m['ci95'][1]|fmt(2) >>]\))<%- endmacro %>
 \paragraph{Sample-definition sensitivities.} Restoring the 16 Zheng--Shen split systems while retaining the published model definitions leaves the morphology result qualitatively unchanged: the adjusted all-galaxy E-class odds ratios against \CB{}, \CC{}, and \RG{} are << t11s['Control4B']['elliptical_all']['odds_ratio']|fmt(2) >> (95\% CI \([<< t11s['Control4B']['elliptical_all']['ci95'][0]|fmt(2) >>, << t11s['Control4B']['elliptical_all']['ci95'][1]|fmt(2) >>]\)), << t11ci(t11s['Control4C']['elliptical_all']) >>, and << t11ci(t11s['RG4']['elliptical_all']) >>, and the corresponding satellite odds ratios are << t11ci(t11s['Control4B']['elliptical_satellites']) >>, << t11ci(t11s['Control4C']['elliptical_satellites']) >>, and << t11ci(t11s['RG4']['elliptical_satellites']) >>. Retaining the anomalous Lim 3688 quartets likewise leaves the coefficients essentially unchanged: the all-galaxy and satellite odds ratios are << t11l['Control4B']['elliptical_all']['odds_ratio']|fmt(2) >> and << t11l['Control4B']['elliptical_satellites']['odds_ratio']|fmt(2) >> against \CB{}, and << t11l['Control4C']['elliptical_all']['odds_ratio']|fmt(2) >> and << t11l['Control4C']['elliptical_satellites']['odds_ratio']|fmt(2) >> against \CC{}.<% endif %>
@@ -1244,6 +1254,7 @@ In the sensitivity fit that retains all catalogue rows, restricting the pairwise
 <% endif %>
 
 \FloatBarrier
+\endgroup
 
 <% if sz.get('status') == 'ok' %>
 \section{Extended size diagnostics}\label{app:size_details}
@@ -1261,13 +1272,15 @@ In the sensitivity fit that retains all catalogue rows, restricting the pairwise
 
 Figure~\ref{fig:data_availability} shows the availability of the size measurements.<% if sz.get('per_control', {}).get('figure') %> Figure~\ref{fig:size_per_control} compares the adjusted size coefficients against the deduplicated pooled controls and each control separately.
 
-\begin{figure}
+\begin{figure}[!htb]
   \centering
   \includegraphics[width=0.88\columnwidth]{<< sz.get('per_control', {}).get('figure') >>}
   \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control. Every model adjusts for stellar mass, redshift, BGG/satellite status, quartet luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii.}
   \label{fig:size_per_control}
 \end{figure}
-<% endif %> <% if size_conc_sat.get('status') == 'ok' %>The concentration index \(C = R_{90,r}/R_{50,r}\) provides a model-independent structural proxy: the adjusted satellite coefficient is \(<< size_conc_sat.get('cg4_delta')|fmt(3) >>\) (<< pval_text(size_conc_sat.get('p')) >>)<% if size_m_conc.get('status') == 'ok' %>, and the matched concentration difference is \(<< size_m_conc.get('mean_delta')|fmt(3) >>\) (<< pval_text(size_m_conc.get('p')) >>)<% endif %>, offering no evidence for a fixed-mass concentration shift.<% endif %>
+<% endif %>
+
+<% if size_conc_sat.get('status') == 'ok' %>The concentration index \(C = R_{90,r}/R_{50,r}\) provides a model-independent structural proxy: the adjusted satellite coefficient is \(<< size_conc_sat.get('cg4_delta')|fmt(3) >>\) (<< pval_text(size_conc_sat.get('p')) >>)<% if size_m_conc.get('status') == 'ok' %>, and the matched concentration difference is \(<< size_m_conc.get('mean_delta')|fmt(3) >>\) (<< pval_text(size_m_conc.get('p')) >>)<% endif %>, offering no evidence for a fixed-mass concentration shift.<% endif %>
 
 <% if size_crowd_excl.get('status') == 'ok' and size_crowd_flag.get('status') == 'ok' %>
 The crowding checks mirror Appendix~\ref{app:robustness_details}: excluding galaxies with a projected neighbour within << size_crowd.get('threshold_arcsec')|fmt(0) >> arcsec leaves a satellite coefficient of \(<< size_crowd_excl.get('cg4_delta_dex')|fmt(3) >>\) dex (<< pval_text(size_crowd_excl.get('p')) >>), and adding the close-neighbour flag as a covariate gives \(<< size_crowd_flag.get('cg4_delta_dex')|fmt(3) >>\) dex (<< pval_text(size_crowd_flag.get('p')) >>).
