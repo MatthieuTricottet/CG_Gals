@@ -54,7 +54,7 @@ AVAILABILITY = {
 }
 
 AVAILABILITY_LABELS = {
-    "morphology": "secure GZ class",
+    "morphology": "usable GZ1 E/S",
     "sSFR": "sSFR class",
     "stellar_mass": "stellar mass",
     "simard_size": "Simard size",
@@ -69,7 +69,7 @@ AVAILABILITY_LABELS = {
 AVAILABILITY_NOTES = {
     "denominator": "Each fraction uses the final per-sample galaxy count as its denominator.",
     "morphology": (
-        "The secure GZ class row counts galaxies classified as elliptical or "
+        "The usable GZ1 E/S column counts galaxies classified as elliptical or "
         "spiral; finite-vote uncertain Galaxy Zoo morphologies remain in the "
         "morphology table, while rows without Galaxy Zoo vote fractions are "
         "counted separately in the sample-size audit."

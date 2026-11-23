@@ -50,10 +50,12 @@ try:
     import config as co
     import sample_construction as sc
     from extended_stats import safe_json
+    from utils.sample_styles import SAMPLE_STYLES
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from . import sample_construction as sc
     from .extended_stats import safe_json
+    from .utils.sample_styles import SAMPLE_STYLES
 
 MIN_HOST_MEMBERS = 8
 MAG_WINDOW = sc.DMAG_MAX
@@ -73,13 +75,15 @@ CENTRED_TRIANGLE = Path(
     np.array([[0.0, 2.0 / 3.0], [-1.0 / np.sqrt(3), -1.0 / 3.0],
               [1.0 / np.sqrt(3), -1.0 / 3.0], [0.0, 2.0 / 3.0]])
 )
-COLOURS = {"C4B": "#0072B2", "C4C": "#D55E00", "CG4": "black"}
-MARKERS = {"C4B": "s", "C4C": CENTRED_TRIANGLE, "CG4": "o"}
+COLOURS = {"C4B": SAMPLE_STYLES["Control4B"]["colour"],
+           "C4C": SAMPLE_STYLES["Control4C"]["colour"], "CG4": "black"}
+MARKERS = {"C4B": SAMPLE_STYLES["Control4B"]["marker"],
+           "C4C": CENTRED_TRIANGLE, "CG4": SAMPLE_STYLES["CG4"]["marker"]}
 LEGEND_LABELS = {
     "host": r"host member (area $\propto L_r$)",
     "CG4": r"CG$_4$ member",
-    "C4B": r"Control$_{4B}$ quartet: 4 brightest",
-    "C4C": r"Control$_{4C}$ quartet: BGG + 3 nearest",
+    "C4B": r"Control$_{\mathrm{4B}}$ quartet: 4 brightest",
+    "C4C": r"Control$_{\mathrm{4C}}$ quartet: BGG + 3 nearest",
 }
 
 
@@ -217,7 +221,7 @@ def _panel_data(sample: dict, pc_gals: pd.DataFrame, cg4_group: int, lim_host: i
 
 
 def _status_text(key: str, n_cg4: int, retained: bool) -> str:
-    label = r"Control$_{4B}$" if key == "C4B" else r"Control$_{4C}$"
+    label = r"Control$_{\mathrm{4B}}$" if key == "C4B" else r"Control$_{\mathrm{4C}}$"
     if retained:
         return f"{label}: retained"
     if n_cg4 == 4:
@@ -433,7 +437,8 @@ def run_schematic_figure(sample: dict, output_dir: str | None = None) -> dict:
             zoom.xaxis.set_major_locator(MaxNLocator(3))
             zoom.yaxis.set_major_locator(MaxNLocator(3))
             zoom.tick_params(labelsize=FONT["zoom_ticks"], length=2.5, pad=2)
-            zoom.set_title(rf"({k}) zoom: CG$_4$ {meta['cg4_group']}", fontsize=FONT["zoom_title"], pad=3)
+            zoom.set_title(rf"({ {'a': 'c', 'b': 'd'}[k] }) zoom of ({k}): CG$_4$ {meta['cg4_group']}",
+                           fontsize=FONT["zoom_title"], pad=3)
             for spine in zoom.spines.values():
                 spine.set_edgecolor("0.35")
             status = "\n".join(target["quartet_status"][key] for key in ("C4B", "C4C"))

@@ -526,13 +526,15 @@ def control_satellite_fe(sample: dict) -> dict:
 
 
 def plot_cg4_classes(zheng: dict, controls: dict, path: str) -> str:
-    """Satellite E-class fractions with binomial standard errors."""
+    """Satellite E-class fractions with aggregate 95% Wilson intervals."""
 
     import matplotlib.pyplot as plt
-    from utils import labels_utils as lu
+    from utils.sample_styles import MARKER_EDGE, SAMPLE_STYLES
 
-    order = ["Isolated", "Embedded", "Predominant"]
-    del controls, lu
+    order = ["Isolated", "Predominant", "Embedded"]
+    style = SAMPLE_STYLES["CG4"]
+    colour = style["colour"]
+    del controls
     fig, axes = plt.subplots(1, 2, figsize=(7.1, 3.9), sharey=True)
     x = np.arange(len(order))
     bin_titles = (r"(a) $7.0\leq\log M_\star<10.5$",
@@ -544,22 +546,29 @@ def plot_cg4_classes(zheng: dict, controls: dict, path: str) -> str:
             if n == 0:
                 continue
             fraction = e["n_E"] / n
-            error = np.sqrt(fraction * (1 - fraction) / n)
-            ax.errorbar(i, fraction, yerr=error,
-                        fmt="o", color="black", ms=8, capsize=3, lw=1.2)
+            # The bin summaries already use the same Wilson bounds as the class totals.
+            lo = np.clip(e["wilson_lo"], 0.0, fraction)
+            hi = np.clip(e["wilson_hi"], fraction, 1.0)
+            ax.errorbar(
+                i, fraction, yerr=[[fraction - lo], [hi - fraction]],
+                fmt=style["marker"], color=colour, ecolor=colour,
+                markeredgecolor=MARKER_EDGE, markeredgewidth=0.55,
+                ms=8, capsize=3, lw=1.2,
+            )
             ax.annotate(f"$N={e['n_classified']}$\n$N_{{\\rm gr}}={e['n_groups']}$",
-                        (i, fraction + error), textcoords="offset points", xytext=(0, 5),
+                        (i, hi), textcoords="offset points", xytext=(0, 5),
                         ha="center", va="bottom", fontsize=12)
         ax.set_xticks(x, order)
         ax.set_xlim(-0.55, len(order) - 0.45)
-        ax.set_ylim(0, 1.16)
+        ax.set_ylim(0, 1.25)
+        ax.set_yticks(np.linspace(0, 1, 6))
         ax.set_title(title, fontsize=16)
         ax.set_xlabel("Zheng–Shen class", fontsize=16)
         ax.tick_params(labelsize=14, direction="in", top=True, right=True)
         plt.setp(ax.get_xticklabels(), rotation=20, ha="right", rotation_mode="anchor")
         for spine in ax.spines.values():
             spine.set_visible(True)
-    axes[0].set_ylabel(r"satellite $f_{\rm E}=N_{\rm E}/(N_{\rm E}+N_{\rm S})$", fontsize=16)
+    axes[0].set_ylabel(r"Satellite $f_{\rm E}=N_{\rm E}/(N_{\rm E}+N_{\rm S})$", fontsize=16)
     axes[1].tick_params(axis="y", labelright=True)
     fig.tight_layout()
     fig.savefig(path, format="pdf", bbox_inches="tight")
@@ -834,6 +843,16 @@ def build_macros(sep, quench, zheng, tidal) -> dict:
         m[f"cond{sh}"] = _fmt(kit["conditional_term"], 3, sign=True)
         m[f"cond{sh}lo"] = _fmt(kit["conditional_ci95"][0], 3, sign=True)
         m[f"cond{sh}hi"] = _fmt(kit["conditional_ci95"][1], 3, sign=True)
+        # Percentage-point versions for the decomposition table and text.
+        for key, value in [
+            ("raw", kit["raw_delta_fQ"]), ("rawlo", kit["raw_ci95"][0]),
+            ("rawhi", kit["raw_ci95"][1]), ("mix", kit["mix_term"]),
+            ("mixlo", kit["mix_ci95"][0]), ("mixhi", kit["mix_ci95"][1]),
+            ("cond", kit["conditional_term"]), ("condlo", kit["conditional_ci95"][0]),
+            ("condhi", kit["conditional_ci95"][1]),
+            ("allRaw", kit["all_ssfr_classified_reconciliation"]["delta_fQ"]),
+        ]:
+            m[f"{key}{sh}Pp"] = _fmt(100 * value, 1, sign=True)
         m[f"nDecCG{sh}"] = str(kit["denominators"]["CG4"])
         m[f"nDec{sh}"] = str(kit["denominators"][ctrl])
         m[f"nHostShared{sh}"] = str(kit["physical_hosts"]["shared"])

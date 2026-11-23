@@ -337,6 +337,8 @@ def _build_render_context(build_data, results_data):
     # Compactness and spectral checks cited from the 20 November 2026 freeze
     # (results/referee_freeze_20261120), read from its CSV tables.
     ctx["freeze"] = freeze_values.load()
+    # Checks added for the A&A submission (src/submission_checks.py).
+    ctx["subm"] = _load_json(os.path.join(co.OUTPUT_PATH, "submission_checks.json"))
     _validate_render_context(ctx)
     return ctx, render_data
 

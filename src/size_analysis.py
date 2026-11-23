@@ -39,6 +39,7 @@ try:
     from morphology_robustness import CROWDING_THRESHOLD_ARCSEC, _nearest_angular
     from size_data import Z_MATCH_TOLERANCE, attach_size_columns
     from tidal_indices import _derive as _derive_tidal_indices
+    from utils.sample_styles import LINE_COLOURS, MARKER_EDGE, SAMPLE_STYLES
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from .extended_data import dedup_control_pool, ensure_galaxy_frame
@@ -53,6 +54,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from .morphology_robustness import CROWDING_THRESHOLD_ARCSEC, _nearest_angular
     from .size_data import Z_MATCH_TOLERANCE, attach_size_columns
     from .tidal_indices import _derive as _derive_tidal_indices
+    from .utils.sample_styles import LINE_COLOURS, MARKER_EDGE, SAMPLE_STYLES
 
 
 SEED = 20260612
@@ -60,12 +62,7 @@ N_BOOT = 9999
 REFERENCE_LOGMSTAR = 10.3
 SAMPLES = ["CG4", "Control4B", "Control4C", "RG4"]
 CONTROL_SAMPLES = ["Control4B", "Control4C", "RG4"]
-PALETTE = {
-    "CG4": "#2864A6",
-    "Control4B": "#D17A22",
-    "Control4C": "#25876E",
-    "RG4": "#A74752",
-}
+PALETTE = {name: style["colour"] for name, style in SAMPLE_STYLES.items()}
 PRIMARY_OUTCOME = "log_Rchl_r_kpc"
 PETRO_OUTCOME = "log_petroR50_kpc"
 CONCENTRATION_OUTCOME = "concentration_r90_r50"
@@ -449,26 +446,23 @@ def _plot_forest(comparisons: dict, path: str) -> str | None:
         "Control4C": r"Control$_{4C}$",
         "RG4": r"RG$_4$",
     }
-    rows = [
-        (labels.get(k, k), v) for k, v in comparisons.items() if v.get("status") == "ok"
-    ]
+    rows = [(key, fit) for key, fit in comparisons.items() if fit.get("status") == "ok"]
     if not rows:
         return None
     fig, ax = plt.subplots(figsize=(7.2, 0.6 * len(rows) + 1.6))
     y = np.arange(len(rows))
-    values = np.array([row[1]["cg4_delta_dex"] for row in rows])
-    lows = np.array([row[1]["ci_low"] for row in rows])
-    highs = np.array([row[1]["ci_high"] for row in rows])
-    ax.errorbar(
-        values,
-        y,
-        xerr=[values - lows, highs - values],
-        fmt="o",
-        capsize=3,
-        color="#2864A6",
-    )
+    for index, (key, fit) in enumerate(rows):
+        value = fit["cg4_delta_dex"]
+        style = SAMPLE_STYLES.get(key, {"marker": "o", "colour": "#555555"})
+        ax.errorbar(
+            value, index,
+            xerr=[[value - fit["ci_low"]], [fit["ci_high"] - value]],
+            fmt=style["marker"], capsize=3,
+            color=LINE_COLOURS.get(key, style["colour"]),
+            markerfacecolor=style["colour"], markeredgecolor=MARKER_EDGE, markeredgewidth=0.5,
+        )
     ax.axvline(0, color="0.45", linestyle=":", linewidth=1)
-    ax.set_yticks(y, [row[0] for row in rows])
+    ax.set_yticks(y, [labels.get(key, key) for key, _ in rows])
     ax.invert_yaxis()
     ax.set_xlabel(r"CG$_4$ size offset $\Delta$ (dex, 95% CI)")
     ax.tick_params(direction="in", top=True, right=True, labelsize=10)

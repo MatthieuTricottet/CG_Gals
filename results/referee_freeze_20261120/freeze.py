@@ -35,8 +35,18 @@ from run import OUTPUT, PRIOR, ROOT
 CONTROLS = ("Control4C", "Control4B", "RG4")
 ORIGINAL = "original"
 FROZEN = "frozen"
-MASS_REF = 10.35
 CENTRE = 150.0
+# The fixed-mass curves and bins of the compactness figure are evaluated at
+# the median stellar mass of the E/S-classified CG4 and Control4C satellites
+# with valid masses, rounded to 0.01 dex. The 20 November mean-separation
+# freeze used the hand-set value 10.35, kept here only to redraw that record.
+MASS_REF_SAMPLES = ("CG4", "Control4C")
+LEGACY_MASS_REF = 10.35
+
+
+def reference_mass(frame):
+    sat = frame[frame.is_satellite.eq(1) & frame["sample"].isin(MASS_REF_SAMPLES)]
+    return round(float(sat.dropna(subset=["elliptical", "m"]).logMstar.median()), 2)
 
 
 def save(name, rows):
@@ -261,7 +271,10 @@ def local_target(used, radius, environment=()):
     return left.assign(xc=xc), right
 
 
-def model_rows(frame, outcome, rhs, meta, radii=(), environment=(), min_local=3):
+def model_rows(
+    frame, outcome, rhs, meta, radii=(), environment=(), min_local=3, *,
+    local_within_window=False,
+):
     """Keep fitting denominators separate from the target denominators."""
     formula = f"{outcome} ~ {rhs}"
     model_df = frame
@@ -325,11 +338,12 @@ def model_rows(frame, outcome, rhs, meta, radii=(), environment=(), min_local=3)
         )
         for term, beta in result.params.items()
     ]
+    local_used = used[used.window] if local_within_window else used
     for r in radii or (None,):
         if r is None:
             ref, reference_control = used[used.cg.eq(1)], used[used.cg.eq(0)]
         else:
-            ref, reference_control = local_target(used, r, environment)
+            ref, reference_control = local_target(local_used, r, environment)
         rcounts = {
             f"ref_{k}": v
             for k, v in arm_sizes(pd.concat([ref, reference_control])).items()
@@ -701,7 +715,8 @@ def compactness_models(frame, q, window, matches=None):
             ("HMCG_purged", p[~p.group_uid.isin(purged)]),
         ]:
             for design, r, radii, formula in [
-                ("full", panel, (), "cg + " + BASE),
+                ("full", panel, (None, CENTRE), "cg + " + BASE),
+                ("window_no_separation", panel[panel.window], (CENTRE,), "cg + " + BASE),
                 (
                     "common_slope",
                     panel[panel.window],
@@ -724,7 +739,8 @@ def compactness_models(frame, q, window, matches=None):
                     purity=purity,
                 )
                 estimates, model, used = model_rows(
-                    r, "elliptical", formula, meta, radii
+                    r, "elliptical", formula, meta, radii,
+                    local_within_window=design == "full",
                 )
                 rows.extend(estimates)
                 if labelset == FROZEN and purity == "all" and design == "interaction":

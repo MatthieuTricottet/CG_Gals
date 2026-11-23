@@ -20,15 +20,17 @@ try:
     import sSFR
     from utils import labels_utils as lu
     from utils.gmamon_binomial import binomialerrorplot
+    from extended_data import _cg4_host_lim_map
+    from utils.sample_styles import LINE_COLOURS, MARKER_EDGE, PLOT_ORDER, SAMPLES, SAMPLE_STYLES
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from . import generate_report as report
     from . import sSFR
     from .utils import labels_utils as lu
     from .utils.gmamon_binomial import binomialerrorplot
+    from .extended_data import _cg4_host_lim_map
+    from .utils.sample_styles import LINE_COLOURS, MARKER_EDGE, PLOT_ORDER, SAMPLES, SAMPLE_STYLES
 
-
-SAMPLES = ("CG4", "Control4B", "Control4C", "RG4")
 
 # Fixed before examining any between-sample differences.  The 0.5-dex
 # interior bins are retained, while the sparsely populated mass tails are
@@ -42,13 +44,10 @@ N_BOOT = 2000
 CI_QUANTILES = (0.16, 0.84)
 
 
-SAMPLE_STYLES = {
-    "CG4": {"colour": "#C32749", "linestyle": "-", "marker": "o"},
-    "Control4B": {"colour": "#0072B2", "linestyle": "--", "marker": "s"},
-    "Control4C": {"colour": "#D55E00", "linestyle": "-.", "marker": "^"},
-    "RG4": {"colour": "#009E73", "linestyle": ":", "marker": "D"},
-}
-SAMPLE_LABELS = {name: lu.sample_tex_label(name) for name in SAMPLES}
+SAMPLE_LABELS = {name: lu.sample_tex_label(name) for name in PLOT_ORDER}
+# Cosmetic horizontal offsets (dex) around the common bin location, one
+# fixed slot per sample in PLOT_ORDER: -0.03, -0.01, +0.01, +0.03.
+OFFSET_STEP_DEX = 0.02
 
 
 def _seed(*parts: object) -> int:
@@ -182,6 +181,15 @@ def compute_mass_trends(sample: dict[str, pd.DataFrame]) -> pd.DataFrame:
     )
     for sample_name in SAMPLES:
         frame = sample[sample_name + co.GASUFF].copy()
+        if sample_name == "CG4":
+            # Block the bootstrap on the physical host, as in Fig. 5, so that
+            # compact groups sharing a Lim host form a single block.
+            hosts = frame["Group"].map(_cg4_host_lim_map())
+            frame["Group"] = np.where(
+                hosts.notna(),
+                "Lim:" + hosts.astype("Int64").astype(str),
+                "HMCG:" + frame["Group"].astype(str),
+            )
         frame["is_quenched"] = np.where(
             frame["sSFR_status"].isin(co.sSFR_status),
             (frame["sSFR_status"] == co.sSFR_status[0]).astype(float),
@@ -209,6 +217,76 @@ def compute_mass_trends(sample: dict[str, pd.DataFrame]) -> pd.DataFrame:
     return pd.DataFrame.from_records(rows)
 
 
+def mass_figure(nrows: int, height: float, *, sharey):
+    """Use the same stellar-mass views and column geometry for Figs. 2 and 5."""
+
+    fig, axes = plt.subplots(nrows, 2, figsize=(7.1, height), sharex="col", sharey=sharey)
+    fig.subplots_adjust(left=0.115, right=0.935, bottom=0.46 / height, top=1 - 0.54 / height,
+                        wspace=0.22, hspace=0.42 if nrows == 2 else 0.36)
+    for ax, ticks, limits in zip(
+        axes[-1],
+        ([10.7, 10.9, 11.1, 11.3], [9.5, 10.0, 10.5, 11.0]),
+        ((10.70, 11.30), (9.50, 11.30)),
+    ):
+        ax.set_xticks(ticks)
+        ax.set_xlim(limits)
+    return fig, axes
+
+
+def separated_mass_positions(ax, subset: pd.DataFrame) -> pd.Series:
+    """Separate colliding points within each mass bin in display space."""
+
+    left, right = ax.get_xlim()
+    axis_width_pt = ax.get_position().width * ax.figure.get_figwidth() * 72
+    spacing = 8 * (right - left) / axis_width_pt
+    positions = subset["mass_location"].copy()
+    for _, bin_rows in subset.groupby(["bin_left", "bin_right"], sort=False):
+        ordered = bin_rows["mass_location"].sort_values(kind="stable")
+        steps = spacing * np.arange(len(ordered))
+        # With the minimum spacing removed, colliding points have decreasing
+        # coordinates. Pool adjacent violations, preserving each cluster centre.
+        blocks = []
+        for index, coordinate in enumerate(ordered.to_numpy() - steps):
+            blocks.append((index, index + 1, coordinate))
+            while len(blocks) >= 2 and blocks[-2][2] > blocks[-1][2]:
+                middle, stop, high = blocks.pop()
+                start, _, low = blocks.pop()
+                centre = (low * (middle - start) + high * (stop - middle)) / (stop - start)
+                blocks.append((start, stop, centre))
+        for start, stop, centre in blocks:
+            if stop - start > 1:
+                positions.loc[ordered.index[start:stop]] = centre + steps[start:stop]
+    return positions
+
+
+def ordered_offset_positions(subset: pd.DataFrame, step: float = OFFSET_STEP_DEX) -> pd.Series:
+    """Place each sample at a fixed offset around the common location of its bin.
+
+    The common location is the median of the per-sample median masses in the
+    bin; samples keep the same slot in every bin and figure (PLOT_ORDER), so
+    the offsets carry no information.
+    """
+
+    positions = pd.Series(np.nan, index=subset.index, dtype=float)
+    slots = {name: (index - (len(PLOT_ORDER) - 1) / 2) * step for index, name in enumerate(PLOT_ORDER)}
+    for _, bin_rows in subset.groupby(["bin_left", "bin_right"], sort=False):
+        centre = float(np.median(bin_rows["mass_location"].to_numpy(dtype=float)))
+        positions.loc[bin_rows.index] = centre + bin_rows["sample"].map(slots).to_numpy(dtype=float)
+    return positions
+
+
+def ensure_sample_legend(ax):
+    """Include every sample even if the first panel omits one of them."""
+
+    _, present = ax.get_legend_handles_labels()
+    for sample in PLOT_ORDER:
+        if SAMPLE_LABELS[sample] not in present:
+            style = SAMPLE_STYLES[sample]
+            ax.plot([], [], linestyle="none", marker=style["marker"],
+                    markerfacecolor=style["colour"], markeredgecolor=MARKER_EDGE,
+                    markeredgewidth=0.7, markersize=4.7, label=SAMPLE_LABELS[sample])
+
+
 def draw_binned_series(
     ax,
     subset: pd.DataFrame,
@@ -217,10 +295,13 @@ def draw_binned_series(
     with_errors: bool = True,
     label: bool = True,
     x_offset: float = 0.0,
+    positions: pd.Series | None = None,
 ) -> None:
     """Draw one panel of per-sample binned estimates (shared Fig. 2 style)."""
 
-    for sample_name in SAMPLES:
+    if positions is None:
+        positions = subset["mass_location"]
+    for sample_name in PLOT_ORDER:
         current = subset.loc[subset["sample"] == sample_name].sort_values(
             "mass_location"
         )
@@ -237,7 +318,7 @@ def draw_binned_series(
                 ]
             )
         ax.errorbar(
-            current["mass_location"] + x_offset,
+            positions.loc[current.index] + x_offset,
             estimate,
             yerr=errors,
             color=style["colour"],
@@ -245,7 +326,9 @@ def draw_binned_series(
             marker=style["marker"],
             markersize=4.3,
             markerfacecolor=style["colour"] if filled else "white",
-            markeredgecolor="black",
+            markeredgecolor=MARKER_EDGE,
+            ecolor=LINE_COLOURS[sample_name],
+            zorder=4 if sample_name == "CG4" else 3,
             markeredgewidth=0.7,
             capsize=2.0 if with_errors else 0.0,
             alpha=1.0 if filled else 0.8,
@@ -266,56 +349,40 @@ def finish_binned_figure(fig, axes, filename: str, ylabel: str = "Fraction") -> 
         for ax in axes[:, 0]:
             ax.set_ylabel(ylabel, fontsize=10)
     handles, labels = axes.flat[0].get_legend_handles_labels()
+    by_label = dict(zip(labels, handles))
     fig.legend(
-        handles,
-        labels,
+        [by_label[name] for name in SAMPLE_LABELS.values() if name in by_label],
+        [name for name in SAMPLE_LABELS.values() if name in by_label],
         loc="upper center",
         ncol=4,
         frameon=False,
         fontsize=9,
-        bbox_to_anchor=(0.5, 1.01),
+        bbox_to_anchor=(0.5, 0.995),
     )
-    fig.tight_layout(rect=(0, 0, 1, 0.955), h_pad=1.0, w_pad=1.0)
     fig.savefig(filename, format="pdf", bbox_inches="tight")
     plt.close(fig)
 
 
 def plot_mass_trends(trends: pd.DataFrame, filename: str) -> None:
-    """Plot the six binomial fractions with Gary Mamon's plotting routine."""
+    """Plot E-class and quenched fractions with group-blocked bootstrap intervals."""
 
-    panel_order = (
-        "elliptical_bggs", "spiral_bggs",
-        "elliptical_satellites", "spiral_satellites",
-        "quenched_bggs", "quenched_satellites",
+    panels = (
+        ("elliptical_bggs", "(a) BGGs: E class"),
+        ("elliptical_satellites", "(b) Satellites: E class"),
+        ("quenched_bggs", "(c) BGGs: quenched"),
+        ("quenched_satellites", "(d) Satellites: quenched"),
     )
-    titles = (
-        r"(a) BGGs: E class", r"(b) BGGs: S class",
-        r"(c) Satellites: E class", r"(d) Satellites: S class",
-        r"(e) BGGs: quenched", r"(f) Satellites: quenched",
-    )
-    fig, axes = plt.subplots(3, 2, figsize=(7.1, 7.2), sharex=True, sharey=True)
+    fig, axes = mass_figure(2, 4.65, sharey=True)
     displayed = trends.loc[trends["displayed"]]
-    offsets = dict(zip(SAMPLES, (-0.045, -0.015, 0.015, 0.045)))
-    for ax, panel, title in zip(axes.flat, panel_order, titles):
-        for sample_name in SAMPLES:
-            current = displayed.loc[
-                (displayed["panel"] == panel) & (displayed["sample"] == sample_name)
-            ].sort_values("mass_location")
-            if current.empty:
-                continue
-            style = SAMPLE_STYLES[sample_name]
-            N = current["n_galaxies"].to_numpy(dtype=int)
-            n = np.rint(current["estimate"].to_numpy(dtype=float) * N).astype(int)
-            binomialerrorplot(
-                current["mass_location"].to_numpy(dtype=float) + offsets[sample_name],
-                N, n, color=style["colour"], marker=style["marker"],
-                markersize=4.7, mec="black", mew=0.7, ecolor=style["colour"],
-                capsize=2, ax=ax, label=SAMPLE_LABELS[sample_name], zorder=3,
-            )
+    for ax, (panel, title) in zip(axes.flat, panels):
+        subset = displayed.loc[displayed["panel"].eq(panel)]
+        # Same placement and group-blocked 16th--84th percentile bars as Fig. 5.
+        draw_binned_series(ax, subset, positions=ordered_offset_positions(subset))
         ax.set_title(title, fontsize=10)
         ax.set_ylim(-0.03, 1.03)
     for ax in axes[:, -1]:
         ax.tick_params(axis="y", labelright=True)
+    ensure_sample_legend(axes[0, 0])
     finish_binned_figure(fig, axes, filename)
 
 
@@ -474,8 +541,8 @@ def run(sample: dict[str, pd.DataFrame]) -> dict:
         "quenched_mass_bins": MASS_BINS.tolist(),
         "minimum_galaxies_displayed": MIN_GALAXIES_TO_PLOT,
         "minimum_groups_displayed": MIN_GROUPS_TO_PLOT,
-        "plot_uncertainties": "Gary Mamon binomialerrorplot (upstream commit 88fea77)",
-        "x_coordinate": "median stellar mass of contributing galaxies",
+        "plot_uncertainties": "16th--84th percentiles of a physical-group-blocked bootstrap (as in Fig. 5)",
+        "x_coordinate": "median of the per-sample median masses of the bin, with fixed cosmetic offsets",
         "connecting_lines": False,
         "counts_file": os.path.basename(trends_path),
         "sfms_residual_summary_file": os.path.basename(residuals_path),

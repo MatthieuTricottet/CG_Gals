@@ -20,6 +20,7 @@ try:
     import generate_report as report
     from utils import graphics_utils as gu
     from utils import labels_utils as lu
+    from utils.sample_styles import LINE_COLOURS, MARKER_EDGE, SAMPLE_STYLES
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from . import exploration_colour_robustness as colour_robustness
@@ -27,6 +28,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from . import generate_report as report
     from .utils import graphics_utils as gu
     from .utils import labels_utils as lu
+    from .utils.sample_styles import LINE_COLOURS, MARKER_EDGE, SAMPLE_STYLES
 
 
 COLOUR_SPECS = [
@@ -45,11 +47,8 @@ CATALOGUE_ORDER = ["CG4", "Control4B", "Control4C", "RG4", "SDSS"]
 CONTROL_LABELS = ["Control4B", "Control4C", "RG4"]
 PALETTE = {
     "SDSS": "0.65",
-    "CG4": "#2864A6",
-    "Control4B": "#D17A22",
-    "Control4C": "#25876E",
-    "RG4": "#A74752",
-    "Compact": "#2864A6",
+    **{name: style["colour"] for name, style in SAMPLE_STYLES.items()},
+    "Compact": SAMPLE_STYLES["CG4"]["colour"],
     "Ordinary": "#555555",
     "Dominated": "#A74752",
     "Non-dominated": "#555555",
@@ -1118,7 +1117,7 @@ def plot_colour_robustness_coefficients(
     offsets = {"mass+redshift": -0.12, "full": 0.12}
     styles = {
         "mass+redshift": ("Mass + redshift", "o", PALETTE["Ordinary"]),
-        "full": ("+ morphology + sSFR", "s", PALETTE["CG4"]),
+        "full": ("+ morphology + sSFR", "s", "#222222"),
     }
     y_base = np.arange(len(colours))
     for model_name, (label, marker, colour_value) in styles.items():
@@ -1140,7 +1139,10 @@ def plot_colour_robustness_coefficients(
         )
     axes[0].set_yticks(y_base, labels)
     axes[0].set_title("Pooled ordinary satellites")
-    axes[0].legend(frameon=False, fontsize=7)
+    axes[0].legend(
+        loc="upper left", frameon=False, fontsize=7,
+        handlelength=1.25, handletextpad=0.5, borderpad=0.25,
+    )
 
     control_offsets = {"Control4B": -0.18, "Control4C": 0.0, "RG4": 0.18}
     for comparison in CONTROL_LABELS:
@@ -1156,8 +1158,11 @@ def plot_colour_robustness_coefficients(
             x,
             y_base + control_offsets[comparison],
             xerr=np.vstack([x - low, high - x]),
-            fmt="o",
-            color=PALETTE[comparison],
+            fmt=SAMPLE_STYLES[comparison]["marker"],
+            color=LINE_COLOURS[comparison],
+            markerfacecolor=SAMPLE_STYLES[comparison]["colour"],
+            markeredgecolor=MARKER_EDGE,
+            markeredgewidth=0.5,
             capsize=2.5,
             markersize=4,
             linewidth=1.0,
@@ -1240,6 +1245,7 @@ def plot_colour_residual_distance(
                     binned[distance],
                     binned[residual],
                     color=colour_value,
+                    linestyle=SAMPLE_STYLES.get(label, {}).get("linestyle", "-"),
                     linewidth=1.4,
                 )
 

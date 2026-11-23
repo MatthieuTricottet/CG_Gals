@@ -32,12 +32,14 @@ import pandas as pd
 try:
     import config as co
     from exploration_dom import DOMINATION_QUANTITIES, compute_distribution_tests
+    from extended_data import _cg4_host_lim_map
     from extended_stats import benjamini_hochberg, fit_logistic_model, safe_json
     from sample_construction import COSMO
     from tidal_indices import _angular_matrix
 except ModuleNotFoundError:  # pragma: no cover
     from . import config as co
     from .exploration_dom import DOMINATION_QUANTITIES, compute_distribution_tests
+    from .extended_data import _cg4_host_lim_map
     from .extended_stats import benjamini_hochberg, fit_logistic_model, safe_json
     from .sample_construction import COSMO
     from .tidal_indices import _angular_matrix
@@ -75,7 +77,15 @@ def _satellite_frame(sample: dict, name: str, fl_median_cg4: float) -> pd.DataFr
     sat = gals.loc[(gals["rank_M"] > 1) & gals["morphology"].isin(["Elliptical", "Spiral"])].copy()
     sat["elliptical"] = (sat["morphology"] == "Elliptical").astype(float)
     sat["logMstar"] = pd.to_numeric(sat["lgm"], errors="coerce")
-    sat["physical_group"] = name + ":" + sat["Group"].astype(str)
+    if name == "CG4":
+        hosts = sat["Group"].map(_cg4_host_lim_map())
+        sat["physical_group"] = np.where(
+            hosts.notna(),
+            "Lim:" + hosts.astype("Int64").astype(str),
+            "HMCG:" + sat["Group"].astype(str),
+        )
+    else:
+        sat["physical_group"] = "Lim:" + sat["Group"].astype(str)
     seps = group_median_separations(gals)
     sat["log_R_pair_med"] = np.log10(sat["Group"].map(seps))
     sat["sigma_v"] = pd.to_numeric(sat["Group"].map(groups["Vdisp"]), errors="coerce")
@@ -146,7 +156,7 @@ def run_second_order_battery(sample: dict, output_dir: str | None = None) -> dic
     result = {
         "status": "ok",
         "model": "elliptical ~ descriptor + logMstar, satellites with usable E/S GZ1 class, "
-                 "binomial GLM, cluster-robust SE by group; continuous descriptors standardised",
+                 "binomial GLM, cluster-robust SE by physical Lim host; continuous descriptors standardised",
         "cg4_median_f_L_BGG": fl_median_cg4,
         "descriptors": DESCRIPTORS,
         "rows": table.to_dict(orient="records"),

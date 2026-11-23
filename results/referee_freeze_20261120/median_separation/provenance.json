@@ -14,5 +14,7 @@
     94.18988340068036,
     219.35794486692518
   ],
-  "centre_kpc": 150.0
+  "centre_kpc": 150.0,
+  "mass_ref": 10.2,
+  "mass_ref_definition": "Median log stellar mass of E/S-classified CG4 and Control4C satellites, rounded to 0.01 dex"
 }

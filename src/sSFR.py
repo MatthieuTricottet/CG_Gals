@@ -50,6 +50,7 @@ try:
     from utils import stats_utils as su
     from utils import graphics_utils as gu
     from utils import labels_utils as lu
+    from utils.sample_styles import LINE_COLOURS, MARKER_EDGE, SAMPLE_STYLES
     from utils import pandas_utils as pu
 except ModuleNotFoundError:  # pragma: no cover
     from .utils import astro_utils as au
@@ -57,6 +58,7 @@ except ModuleNotFoundError:  # pragma: no cover
     from .utils import stats_utils as su
     from .utils import graphics_utils as gu
     from .utils import labels_utils as lu
+    from .utils.sample_styles import LINE_COLOURS, MARKER_EDGE, SAMPLE_STYLES
     from .utils import pandas_utils as pu
 
 #* --------------------------------------------------------------------------------
@@ -694,14 +696,16 @@ def plot_classification(
             fontsize=8.5,
             pad=2.0,
         )
-        ax.set_xlim(x_range)
         ax.set_ylim(y_range)
         ax.tick_params(axis="both", labelsize=tick_labelsize, length=2.2,
                        pad=1.5, direction="in", top=True, right=True)
         for spine in ax.spines.values():
             spine.set_visible(True)
 
-    axes[0].set_ylabel(lu.formatted_label("sSFR"), fontsize=label_fontsize, labelpad=3)
+    # Keep the histogram grid and boundary sampling on the full data range.
+    axes[0].set_xticks([8, 9, 10, 11])
+    axes[0].set_xlim(7.35, 11.6)
+    axes[0].set_ylabel(r"$\log(\mathrm{sSFR}/\mathrm{yr}^{-1})$", fontsize=label_fontsize, labelpad=3)
     axes[1].set_xlabel(lu.formatted_label("lgm"), fontsize=label_fontsize, labelpad=3)
     axes[-1].tick_params(axis="y", labelright=True)
 
@@ -2226,15 +2230,10 @@ def plot_residual_ecdf_panels(
 
     if suffix is None:
         suffix = co.GASUFF
-    styles = {
-        "CG4_Gals": ("#000000", "-", "o"),
-        "Control4B_Gals": ("#0072B2", "--", "s"),
-        "Control4C_Gals": ("#D55E00", "-.", "^"),
-        "RG4_Gals": ("#009E73", ":", "D"),
-    }
     fig, axes = plt.subplots(1, len(panels), figsize=figsize, sharey=True)
     axes = np.atleast_1d(axes)
     for ax, (res_col, title) in zip(axes, panels):
+        handles = []
         for index, (key, df) in enumerate(sample.items()):
             if not str(key).endswith(suffix) or res_col not in df.columns:
                 continue
@@ -2243,12 +2242,22 @@ def plot_residual_ecdf_panels(
             if residuals.size == 0:
                 continue
             ecdf = np.arange(1, residuals.size + 1, dtype=float) / residuals.size
-            colour, linestyle, marker = styles.get(str(key), (f"C{index}", "-", "o"))
-            ax.step(residuals, ecdf, where="post", color=colour, linestyle=linestyle,
-                    linewidth=1.5, label=lu.sample_tex_label(str(key)))
-            ax.plot(float(np.median(residuals)), 0.5, marker=marker, markersize=6.0,
-                    markerfacecolor=colour, markeredgecolor="white", markeredgewidth=0.8,
-                    linestyle="none", zorder=5)
+            name = str(key)[:-len(suffix)]
+            style = SAMPLE_STYLES.get(name, {"colour": f"C{index}", "linestyle": "-", "marker": "o"})
+            line_colour = LINE_COLOURS.get(name, style["colour"])
+            ax.step(residuals, ecdf, where="post", color=line_colour,
+                    linestyle=style["linestyle"], linewidth=1.5)
+            handles.append(mlines.Line2D(
+                [], [], color=line_colour, linestyle=style["linestyle"], linewidth=1.5,
+                marker=style["marker"], markersize=4.5, markerfacecolor=style["colour"],
+                markeredgecolor=MARKER_EDGE, markeredgewidth=0.55,
+                label=lu.sample_tex_label(str(key)),
+            ))
+            ax.plot(float(np.median(residuals)), 0.5, marker=style["marker"], markersize=6.0,
+                    markerfacecolor=style["colour"], markeredgecolor=MARKER_EDGE, markeredgewidth=0.55,
+                    linestyle="none", zorder=6 if name == "CG4" else 5)
+        if ax is axes[0]:
+            ax.legend(handles=handles, fontsize=legendsize, frameon=False, loc="upper left")
         ax.axvline(0, color="0.45", linewidth=1.0, zorder=0)
         ax.set_xlabel(xlabel, fontsize=labelsize)
         ax.set_title(title, fontsize=labelsize - 1)
@@ -2256,7 +2265,6 @@ def plot_residual_ecdf_panels(
         ax.tick_params(axis="both", which="major", labelsize=ticksize,
                        direction="in", top=True, right=True)
     axes[0].set_ylabel(ylabel, fontsize=labelsize)
-    axes[0].legend(fontsize=legendsize, frameon=False, loc="upper left")
     fig.tight_layout()
     if figname is not None:
         fig.savefig(co.FIGURES_PATH + figname + ".pdf", format="pdf", bbox_inches="tight")

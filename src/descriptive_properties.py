@@ -31,12 +31,14 @@ try:
     from agn_environment import _classify as classify_bpt
     from descriptive_trends import (
         MORPHOLOGY_MASS_BINS,
-        SAMPLE_LABELS,
-        SAMPLE_STYLES,
         SAMPLES,
         _mass_bin_rows,
         draw_binned_series,
+        ensure_sample_legend,
         finish_binned_figure,
+        mass_figure,
+        ordered_offset_positions,
+        separated_mass_positions,
     )
     from extended_data import ensure_galaxy_frame
     from extended_stats import safe_json
@@ -45,12 +47,14 @@ except ModuleNotFoundError:  # pragma: no cover
     from .agn_environment import _classify as classify_bpt
     from .descriptive_trends import (
         MORPHOLOGY_MASS_BINS,
-        SAMPLE_LABELS,
-        SAMPLE_STYLES,
         SAMPLES,
         _mass_bin_rows,
         draw_binned_series,
+        ensure_sample_legend,
         finish_binned_figure,
+        mass_figure,
+        ordered_offset_positions,
+        separated_mass_positions,
     )
     from .extended_data import ensure_galaxy_frame
     from .extended_stats import safe_json
@@ -125,39 +129,23 @@ def plot_property_trends(trends: pd.DataFrame, filename: str) -> None:
             _plot_pooled_property_trends(trends, filename)
             return
 
-        fig, axes = plt.subplots(
-            len(FIGURE_ROWS), len(FIGURE_SCOPES), figsize=(7.1, 8.0),
-            sharex=True, sharey="row",
-        )
+        fig, axes = mass_figure(len(FIGURE_ROWS), 6.9, sharey="row")
         displayed = trends.loc[trends["displayed"]]
         letters = iter("abcdefgh")
         for row, (panel, title, ylabel, ylim) in enumerate(FIGURE_ROWS):
             for col, (scope, scope_label) in enumerate(FIGURE_SCOPES):
                 ax = axes[row, col]
-                draw_binned_series(
-                    ax,
-                    displayed.loc[
-                        (displayed["panel"] == panel) & (displayed["scope"] == scope)
-                    ],
-                )
+                subset = displayed.loc[
+                    displayed["panel"].eq(panel) & displayed["scope"].eq(scope)
+                ]
+                draw_binned_series(ax, subset, positions=ordered_offset_positions(subset))
                 ax.set_title(f"({next(letters)}) {scope_label}: {title}", fontsize=9)
                 if ylim is not None:
                     ax.set_ylim(*ylim)
             axes[row, 0].set_ylabel(ylabel, fontsize=9)
         for ax in axes[:, -1]:
             ax.tick_params(axis="y", labelright=True)
-        # the shared legend is read from panel (a); add an empty entry for any
-        # sample that has no displayed point there
-        _, present = axes[0, 0].get_legend_handles_labels()
-        for sample_name in SAMPLES:
-            if SAMPLE_LABELS[sample_name] not in present:
-                style = SAMPLE_STYLES[sample_name]
-                axes[0, 0].plot(
-                    [], [], color=style["colour"], linestyle="none",
-                    marker=style["marker"], markersize=4.3,
-                    markeredgecolor="black", markeredgewidth=0.7,
-                    label=SAMPLE_LABELS[sample_name],
-                )
+        ensure_sample_legend(axes[0, 0])
         finish_binned_figure(fig, axes, filename, ylabel="")
 
 
@@ -179,6 +167,8 @@ def _plot_pooled_property_trends(trends: pd.DataFrame, filename: str) -> None:
     axes[1, 0].set_ylabel("Median", fontsize=9)
     for ax in axes[:, -1]:
         ax.tick_params(axis="y", labelleft=False, labelright=True)
+    fig.tight_layout(rect=(0, 0, 1, 0.93), h_pad=1.0, w_pad=1.0)
+    ensure_sample_legend(axes[0, 0])
     finish_binned_figure(fig, axes, filename, ylabel="")
 
 

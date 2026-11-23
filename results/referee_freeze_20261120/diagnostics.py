@@ -12,7 +12,6 @@ from freeze import (
     CENTRE,
     FROZEN,
     ORIGINAL,
-    MASS_REF,
     arm_sizes,
     bootstrap,
     common_window,
@@ -482,7 +481,7 @@ def probability(result, used, target):
     return prob, max(0, prob - half), min(1, prob + half)
 
 
-def compactness_bins(sat, q):
+def compactness_bins(sat, q, mass_ref):
     rows = []
     for arm, sample in sat.groupby("sample"):
         quartet = q[q["sample"].eq(arm)]
@@ -549,13 +548,13 @@ def compactness_bins(sat, q):
                 used.group_uid.nunique(),
                 used.physical_group.nunique(),
             ]
-            if model_bin.physical_group.nunique() < 3 or not lo <= MASS_REF <= hi:
+            if model_bin.physical_group.nunique() < 3 or not lo <= mass_ref <= hi:
                 tbin.loc[idx, "standardization_status"] = (
                     "insufficient within-bin support"
                 )
                 continue
             pred = pd.DataFrame(
-                {"bin": [float(entry.bin_index)], "m": [MASS_REF - 10.25]}
+                {"bin": [float(entry.bin_index)], "m": [mass_ref - 10.25]}
             )
             tbin.loc[idx, ["adjusted", "adjusted_low", "adjusted_high"]] = probability(
                 mod, used, pred
@@ -567,7 +566,7 @@ def compactness_bins(sat, q):
             ref = pd.DataFrame(
                 {
                     "bin": [float(lower.bin_index), float(upper.bin_index)],
-                    "m": MASS_REF - 10.25,
+                    "m": mass_ref - 10.25,
                 }
             )
             a, ga = predicted(mod, ref.iloc[:1])
@@ -593,9 +592,9 @@ def compactness_bins(sat, q):
     return save("06_compactness_bins_audit", tbin)
 
 
-def analyse(frame, q, window, host_table, matches):
+def analyse(frame, q, window, host_table, matches, mass_ref):
     sat = spectral_frame(frame[frame.is_satellite.eq(1)])
     panel = sat[sat["sample"].isin(["CG4", "Control4C"])]
     star_formation(panel[panel.window], matches)
     environment_models(sat, q, window, host_table)
-    return compactness_bins(sat, q)
+    return compactness_bins(sat, q, mass_ref)

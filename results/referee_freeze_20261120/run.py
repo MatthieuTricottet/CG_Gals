@@ -47,7 +47,7 @@ def main():
         from extended_data import build_galaxy_frame
         from size_data import attach_size_columns
         from astroquery.sdss import SDSS
-        from freeze import CENTRE, build, compactness_models, save
+        from freeze import CENTRE, build, compactness_models, reference_mass, save
         from diagnostics import analyse
         from centerpiece import draw
 
@@ -68,8 +68,14 @@ def main():
         frame, quartets, window, host_table = build(frame)
         matches, rows = compactness_models(frame, quartets, window)
         contrasts = save("02_compactness_models", rows)
-        bins = analyse(frame, quartets, window, host_table, matches)
-        draw(frame, quartets, window, bins, contrasts)
+        mass_ref = reference_mass(frame)
+        bins = analyse(frame, quartets, window, host_table, matches, mass_ref)
+        draw(frame, quartets, window, bins, contrasts, mass_ref)
+        # Paired host bootstraps, support below the common range, and the
+        # other checks cited in the submitted manuscript.
+        from submission import run_checks
+
+        run_checks(frame, quartets, window, matches)
 
         provenance = {
             "git_source": subprocess.check_output(
@@ -90,6 +96,8 @@ def main():
             "compactness": "Median of six separations at mean member redshift (Paper I Planck 2015 parameters)",
             "window_kpc": list(window),
             "centre_kpc": CENTRE,
+            "mass_ref": mass_ref,
+            "mass_ref_definition": "Median log stellar mass of E/S-classified CG4 and Control4C satellites, rounded to 0.01 dex",
         }
         (MEDIAN / "provenance.json").write_text(json.dumps(provenance, indent=2) + "\n")
 

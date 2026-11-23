@@ -35,7 +35,7 @@ def _estimate(row: pd.Series) -> dict:
     for key in (
         "n", "quartets", "hosts", "cg_n", "control_n", "cg_quartets",
         "control_quartets", "cg_hosts", "control_hosts", "matched_pairs",
-        "labelled_pairs", "components", "permutation_p",
+        "labelled_pairs", "components", "permutation_p", "ref_cg_n",
     ):
         if key in row and pd.notna(row[key]):
             value = float(row[key])
@@ -69,6 +69,7 @@ def _compactness(estimates: pd.DataFrame, geometry: pd.DataFrame, metadata: dict
     out = {
         "centre_kpc": centre,
         "window_kpc": metadata["window_kpc"],
+        "mass_ref": metadata["mass_ref"],
         "window_quartets": {
             "CG4": int(inside["sample"].eq("CG4").sum()),
             "Control4C": int(inside["sample"].eq("Control4C").sum()),
@@ -84,6 +85,8 @@ def _compactness(estimates: pd.DataFrame, geometry: pd.DataFrame, metadata: dict
             "Control4C": float(control["med_Rij"].median()),
         },
         "full": _estimate(_one(model, design="full", radius=None)),
+        "full_local": _estimate(_one(model, design="full", radius=centre)),
+        "window_no_separation": _estimate(_one(model, design="window_no_separation", radius=centre)),
         "common_slope": _estimate(_one(model, design="common_slope", radius=centre)),
         "separate_slopes": _estimate(_one(model, design="interaction", radius=centre)),
         "matched": _estimate(_one(comp, design="compact_match", row="paired")),
@@ -125,7 +128,13 @@ def _primary_morphology(primary: pd.DataFrame) -> dict:
 
 def _table5(primary: pd.DataFrame) -> dict:
     rows = primary[primary["analysis"].eq("Table 5") & primary["labelset"].eq(LABELSET)]
-    return {row["control"]: _estimate(row) for _, row in rows.iterrows()}
+    comparisons = {row["control"]: _estimate(row) for _, row in rows.iterrows()}
+    pooled_pairs = pd.read_csv(
+        TABLES / "02_table5_pairs_pooled.csv", usecols=["control_quartet"]
+    )
+    control_samples = pooled_pairs["control_quartet"].str.split(":", n=1).str[0]
+    comparisons["pooled"]["control_counts"] = control_samples.value_counts().to_dict()
+    return comparisons
 
 
 def _galaxy_match(primary: pd.DataFrame) -> dict:
@@ -244,6 +253,35 @@ def _outer_bin(table: pd.DataFrame) -> dict:
     }
 
 
+def _inner_bins(bins: pd.DataFrame, upper: float = 2.0) -> dict:
+    """Plotted Fig. 3a bins below log10(Rmed/kpc) = ``upper`` for CG4 and Control4C."""
+
+    rows = bins[
+        bins["labelset"].eq(LABELSET)
+        & bins["sample"].isin(["CG4", "Control4C"])
+        & bins["bin_right"].le(upper + 1e-9)
+        & bins["hosts"].ge(3)
+        & bins["raw"].notna()
+    ]
+    out = {}
+    for _, row in rows.iterrows():
+        out.setdefault(row["sample"], []).append({
+            "bin_left": float(row["bin_left"]), "bin_right": float(row["bin_right"]),
+            "n": int(row["n"]), "hosts": int(row["hosts"]),
+            "raw": float(row["raw"]), "raw_low": float(row["raw_low"]), "raw_high": float(row["raw_high"]),
+            "adjusted": float(row["adjusted"]), "adjusted_low": float(row["adjusted_low"]),
+            "adjusted_high": float(row["adjusted_high"]),
+        })
+    return out
+
+
+def _submission() -> dict:
+    """Paired bootstraps and other checks written by the freeze submission module."""
+
+    path = MEDIAN_TABLES / "07_submission_checks.json"
+    return json.loads(path.read_text()) if path.exists() else {}
+
+
 def load() -> dict:
     """Return the freeze values cited by the manuscript, or ``{}`` if absent."""
 
@@ -265,6 +303,8 @@ def load() -> dict:
         "spectral": _spectral(spectral),
         "hosts": _hosts(hosts),
         "outer_bin": _outer_bin(outer),
+        "submission": _submission(),
+        "inner_bins": _inner_bins(pd.read_csv(MEDIAN_TABLES / "06_compactness_bins_audit.csv")),
         "figures": dict(FIGURES),
     }
 

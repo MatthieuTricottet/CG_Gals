@@ -1,0 +1,604 @@
+{
+ "below_window": {
+  "adjusted": {
+   "high": 3.6540537771759487,
+   "hosts": 46,
+   "low": 0.6729986695871252,
+   "n": 113,
+   "odds_ratio": 1.5681751594255096,
+   "p": 0.2897827501604192
+  },
+  "percentiles_kpc": {
+   "CG4": {
+    "p05": 55.152812730119926,
+    "p95": 219.35794486692518
+   },
+   "Control4C": {
+    "p05": 94.18988340068036,
+    "p95": 660.3009883684688
+   }
+  },
+  "raw_difference": {
+   "draws": 4999,
+   "estimate": 1.3253012048192736,
+   "high": 18.747795547762305,
+   "low": -15.612953315128859,
+   "p_cross": 0.8884
+  },
+  "samples": {
+   "CG4": {
+    "E": 21,
+    "S": 9,
+    "classes": {
+     "Embedded": 4,
+     "Predom": 7
+    },
+    "es_satellites": 30,
+    "fE": 0.7,
+    "hosts": 11,
+    "quartets": 11,
+    "satellites": 33
+   },
+   "Control4B": {
+    "E": 6,
+    "S": 3,
+    "es_satellites": 9,
+    "fE": 0.6666666666666666,
+    "hosts": 4,
+    "quartets": 4,
+    "satellites": 12
+   },
+   "Control4C": {
+    "E": 57,
+    "S": 26,
+    "es_satellites": 83,
+    "fE": 0.6867469879518072,
+    "hosts": 36,
+    "quartets": 36,
+    "satellites": 108
+   },
+   "RG4": {
+    "E": 0,
+    "S": 0,
+    "es_satellites": 0,
+    "fE": null,
+    "hosts": 0,
+    "quartets": 0,
+    "satellites": 0
+   }
+  }
+ },
+ "compact_match": {
+  "calipers": {
+   "bgg_abs": 0.55,
+   "quartet_z": 0.005,
+   "sat_mass": 0.25,
+   "velocity_dispersion": 120.0,
+   "x": 0.08
+  },
+  "designs": {
+   "compact_match": {
+    "cg4_in_window": 47,
+    "cg4_with_candidate": 40,
+    "cg4_with_three_satellite_masses": 41,
+    "control4c_eligible": 169,
+    "median_candidates": 10.5,
+    "pairs": 40
+   },
+   "compact_match_sigma": {
+    "cg4_in_window": 47,
+    "cg4_with_candidate": 40,
+    "cg4_with_three_satellite_masses": 41,
+    "control4c_eligible": 169,
+    "median_candidates": 7.0,
+    "pairs": 40
+   }
+  },
+  "identical_pairs": 17,
+  "same_cg4_quartets": true,
+  "shared_control_quartets": 25
+ },
+ "halpha": {
+  "baseline": {
+   "differences": {
+    "full-common_slope": {
+     "draws": 4999,
+     "estimate": -4.462859964685684,
+     "high": 1.5131178675354178,
+     "low": -10.258749735706527,
+     "p_cross": 0.1408
+    },
+    "full-separate_slopes": {
+     "draws": 4999,
+     "estimate": -4.026684293382957,
+     "high": 2.3514212687858396,
+     "low": -9.985097781745372,
+     "p_cross": 0.2124
+    }
+   },
+   "estimates": {
+    "common_slope": {
+     "draws": 4999,
+     "estimate": -6.0146465643500235,
+     "high": 3.1998023540344662,
+     "low": -14.64741344619863,
+     "p_cross": 0.18
+    },
+    "full": {
+     "draws": 4999,
+     "estimate": -10.477506529035708,
+     "high": -3.421043779296717,
+     "low": -17.24753431502322,
+     "p_cross": 0.0052
+    },
+    "separate_slopes": {
+     "draws": 4999,
+     "estimate": -6.45082223565275,
+     "high": 3.0728342244805185,
+     "low": -15.459868966540128,
+     "p_cross": 0.1592
+    }
+   },
+   "reference_cg_satellites": 89,
+   "sizes": {
+    "common_slope": {
+     "failures": 0,
+     "hosts": 248,
+     "n": 707
+    },
+    "full": {
+     "failures": 0,
+     "hosts": 759,
+     "n": 2171
+    },
+    "separate_slopes": {
+     "failures": 0,
+     "hosts": 248,
+     "n": 707
+    }
+   }
+  },
+  "morphology": {
+   "differences": {
+    "full-common_slope": {
+     "draws": 4999,
+     "estimate": 0.495285467710306,
+     "high": 5.459479562184177,
+     "low": -4.0703514479341845,
+     "p_cross": 0.8624
+    },
+    "full-separate_slopes": {
+     "draws": 4999,
+     "estimate": 0.7206360821182711,
+     "high": 5.728050456614813,
+     "low": -4.194456216693717,
+     "p_cross": 0.8148
+    }
+   },
+   "estimates": {
+    "common_slope": {
+     "draws": 4999,
+     "estimate": -4.81837569390359,
+     "high": 2.8136248696258894,
+     "low": -12.022211693223662,
+     "p_cross": 0.216
+    },
+    "full": {
+     "draws": 4999,
+     "estimate": -4.323090226193284,
+     "high": 2.0948732492929296,
+     "low": -10.18339220668057,
+     "p_cross": 0.1768
+    },
+    "separate_slopes": {
+     "draws": 4999,
+     "estimate": -5.043726308311555,
+     "high": 3.029298941775582,
+     "low": -12.451391429776287,
+     "p_cross": 0.22
+    }
+   },
+   "reference_cg_satellites": 85,
+   "sizes": {
+    "common_slope": {
+     "failures": 0,
+     "hosts": 247,
+     "n": 650
+    },
+    "full": {
+     "failures": 0,
+     "hosts": 755,
+     "n": 2003
+    },
+    "separate_slopes": {
+     "failures": 0,
+     "hosts": 247,
+     "n": 650
+    }
+   }
+  },
+  "morphology_aperture": {
+   "differences": {
+    "full-common_slope": {
+     "draws": 4999,
+     "estimate": 2.5063547414046425,
+     "high": 7.772535081353202,
+     "low": -2.2441941903685256,
+     "p_cross": 0.3336
+    },
+    "full-separate_slopes": {
+     "draws": 4998,
+     "estimate": 2.5908433256022665,
+     "high": 7.917505524061664,
+     "low": -2.430242890968914,
+     "p_cross": 0.33566713342668536
+    }
+   },
+   "estimates": {
+    "common_slope": {
+     "draws": 4999,
+     "estimate": -7.544068913912502,
+     "high": -0.2952891501243775,
+     "low": -14.490247613528002,
+     "p_cross": 0.04
+    },
+    "full": {
+     "draws": 4999,
+     "estimate": -5.03771417250786,
+     "high": 1.1646242430265847,
+     "low": -10.594955038771124,
+     "p_cross": 0.0992
+    },
+    "separate_slopes": {
+     "draws": 4998,
+     "estimate": -7.628557498110126,
+     "high": -0.10301984845627363,
+     "low": -14.69378205270725,
+     "p_cross": 0.046409281856371276
+    }
+   },
+   "reference_cg_satellites": 85,
+   "sizes": {
+    "common_slope": {
+     "failures": 0,
+     "hosts": 247,
+     "n": 650
+    },
+    "full": {
+     "failures": 0,
+     "hosts": 755,
+     "n": 2003
+    },
+    "separate_slopes": {
+     "failures": 1,
+     "hosts": 247,
+     "n": 650
+    }
+   }
+  }
+ },
+ "magnitude_span": {
+  "compactness": {
+   "full": {
+    "difference": 14.405066345037355,
+    "high": 21.780391864282745,
+    "low": 7.029740825791963
+   },
+   "separate_slopes": {
+    "difference": 3.5954190366315144,
+    "high": 13.318818297092076,
+    "low": -6.127980223829047
+   },
+   "window_no_separation": {
+    "difference": 4.945222927568399,
+    "high": 14.701414647989832,
+    "low": -4.810968792853035
+   }
+  },
+  "groups": [
+   173,
+   229,
+   354
+  ],
+  "table4": {
+   "Control4B|all": {
+    "high": 2.7111647288561165,
+    "low": 1.4681192405957249,
+    "n": 2700,
+    "odds_ratio": 1.99507220492346,
+    "p": 1.1275531728529003e-05
+   },
+   "Control4B|satellites": {
+    "high": 3.4427999913657885,
+    "low": 1.7715579566584454,
+    "n": 2027,
+    "odds_ratio": 2.469639592711392,
+    "p": 1.216849375667357e-07
+   },
+   "Control4C|all": {
+    "high": 2.1329390871600404,
+    "low": 1.1853762669581485,
+    "n": 2671,
+    "odds_ratio": 1.5900740148769459,
+    "p": 0.0020090249718315305
+   },
+   "Control4C|satellites": {
+    "high": 2.5568728591912575,
+    "low": 1.3510193214087232,
+    "n": 1994,
+    "odds_ratio": 1.8585974914308245,
+    "p": 0.00014747528241768044
+   },
+   "RG4|all": {
+    "high": 3.8946826009573186,
+    "low": 1.6448999585256496,
+    "n": 415,
+    "odds_ratio": 2.5310794631511,
+    "p": 4.122363672899404e-05
+   },
+   "RG4|satellites": {
+    "high": 4.9296019937485145,
+    "low": 1.685177417797675,
+    "n": 313,
+    "odds_ratio": 2.8822307261208966,
+    "p": 0.00015970788309548815
+   }
+  }
+ },
+ "paired": {
+  "differences": {
+   "full-cg4_restricted": {
+    "draws": 4999,
+    "estimate": 1.7196317005174482,
+    "high": 5.2818496750584325,
+    "low": -1.4427616674553125,
+    "p_cross": 0.3132
+   },
+   "full-common_slope": {
+    "draws": 4999,
+    "estimate": 10.524211723496038,
+    "high": 16.367633343991244,
+    "low": 5.004744987301112,
+    "p_cross": 0.0004
+   },
+   "full-control_restricted": {
+    "draws": 4999,
+    "estimate": 7.208611211395648,
+    "high": 11.41099520778886,
+    "low": 3.1812474639987567,
+    "p_cross": 0.0008
+   },
+   "full-separate_slopes": {
+    "draws": 4999,
+    "estimate": 10.386843097845059,
+    "high": 16.395436585891225,
+    "low": 4.401508795612022,
+    "p_cross": 0.0008
+   },
+   "full-window_no_separation": {
+    "draws": 4999,
+    "estimate": 9.597895463131785,
+    "high": 15.222356560004707,
+    "low": 4.190058004965715,
+    "p_cross": 0.0008
+   },
+   "separate_slopes_host_luminosity-separate_slopes": {
+    "draws": 4999,
+    "estimate": 0.40426156331998797,
+    "high": 3.2124565730307775,
+    "low": -1.6573334460423816,
+    "p_cross": 0.6792
+   },
+   "separate_slopes_richness-separate_slopes": {
+    "draws": 4999,
+    "estimate": 1.0522875033419457,
+    "high": 3.750471957791764,
+    "low": -0.7611207513636584,
+    "p_cross": 0.268
+   },
+   "window_no_separation-separate_slopes": {
+    "draws": 4999,
+    "estimate": 0.7889476347132742,
+    "high": 3.314595649531498,
+    "low": -2.6050128184500942,
+    "p_cross": 0.5136
+   },
+   "window_no_separation_host_luminosity-window_no_separation": {
+    "draws": 4999,
+    "estimate": 0.2554344616001645,
+    "high": 3.148186002872939,
+    "low": -2.196100585420838,
+    "p_cross": 0.8148
+   },
+   "window_no_separation_richness-window_no_separation": {
+    "draws": 4999,
+    "estimate": 1.0280985753076815,
+    "high": 3.871903049260012,
+    "low": -1.183612818514915,
+    "p_cross": 0.3596
+   }
+  },
+  "draws": 4999,
+  "estimates": {
+   "cg4_restricted|local": {
+    "draws": 4999,
+    "estimate": 12.642801569133786,
+    "high": 20.76614229092915,
+    "low": 4.349829637854416,
+    "p_cross": 0.0036
+   },
+   "common_slope|local": {
+    "draws": 4999,
+    "estimate": 3.838221546155197,
+    "high": 12.926315805048718,
+    "low": -5.599839080082456,
+    "p_cross": 0.4256
+   },
+   "control_restricted|local": {
+    "draws": 4999,
+    "estimate": 7.153822058255586,
+    "high": 15.143605953109367,
+    "low": -1.0261619213203974,
+    "p_cross": 0.0856
+   },
+   "full|all": {
+    "draws": 4999,
+    "estimate": 14.408300594427208,
+    "high": 21.340378947635458,
+    "low": 7.345500141942866,
+    "p_cross": 0.0004
+   },
+   "full|local": {
+    "draws": 4999,
+    "estimate": 14.362433269651234,
+    "high": 21.303570571821513,
+    "low": 7.30901046665925,
+    "p_cross": 0.0004
+   },
+   "separate_slopes_host_luminosity|local": {
+    "draws": 4999,
+    "estimate": 4.379851735126164,
+    "high": 14.25304932130628,
+    "low": -5.2255393487592725,
+    "p_cross": 0.3576
+   },
+   "separate_slopes_richness|local": {
+    "draws": 4999,
+    "estimate": 5.027877675148122,
+    "high": 14.906828961917947,
+    "low": -4.503597258705521,
+    "p_cross": 0.2976
+   },
+   "separate_slopes|local": {
+    "draws": 4999,
+    "estimate": 3.975590171806176,
+    "high": 13.479383667010596,
+    "low": -5.53340910725657,
+    "p_cross": 0.406
+   },
+   "window_no_separation_host_luminosity|local": {
+    "draws": 4999,
+    "estimate": 5.019972268119615,
+    "high": 14.67597591475953,
+    "low": -4.379753779657522,
+    "p_cross": 0.3056
+   },
+   "window_no_separation_richness|local": {
+    "draws": 4999,
+    "estimate": 5.792636381827132,
+    "high": 15.472004690095826,
+    "low": -3.6248353560117654,
+    "p_cross": 0.2344
+   },
+   "window_no_separation|local": {
+    "draws": 4999,
+    "estimate": 4.76453780651945,
+    "high": 13.92819136888213,
+    "low": -4.613176303333271,
+    "p_cross": 0.3168
+   }
+  },
+  "host_terms": {
+   "host_luminosity|no_separation": {
+    "difference": 5.019972268119627,
+    "high": 14.645881340395956,
+    "low": -4.6059368041567,
+    "term_or_high": 11.628172077401919,
+    "term_or_low": 1.6052534489731354,
+    "term_or_per_dex": 4.320435548935146,
+    "term_p": 0.0039308245532072615
+   },
+   "host_luminosity|separate_slopes": {
+    "difference": 4.379851735126161,
+    "high": 13.968690166126857,
+    "low": -5.208986695874536,
+    "term_or_high": 9.5972853344825,
+    "term_or_low": 1.3445197761316519,
+    "term_or_per_dex": 3.5921776027070265,
+    "term_p": 0.01097326337778457
+   },
+   "median_N_Lim": {
+    "CG4": 9.0,
+    "Control4C": 11.0
+   },
+   "richness|no_separation": {
+    "difference": 5.792636381827132,
+    "high": 15.363817961369037,
+    "low": -3.778545197714772,
+    "term_or_high": 5.775888098622001,
+    "term_or_low": 1.498625533368618,
+    "term_or_per_dex": 2.9420899684535224,
+    "term_p": 0.0018294609359223544
+   },
+   "richness|separate_slopes": {
+    "difference": 5.027877675148113,
+    "high": 14.58747692240116,
+    "low": -4.531721572104937,
+    "term_or_high": 4.977480717522388,
+    "term_or_low": 1.2662712842217647,
+    "term_or_per_dex": 2.5105459367169813,
+    "term_p": 0.008594626898908709
+   }
+  },
+  "hosts_resampled": 760,
+  "reference": {
+   "all_cg_satellites": 170,
+   "local_cg_satellites": 85,
+   "local_hosts": 31,
+   "local_quartets": 31
+  },
+  "seed": 20261117,
+  "sizes": {
+   "cg4_restricted": {
+    "failures": 0,
+    "hosts": 741,
+    "n": 1963
+   },
+   "common_slope": {
+    "failures": 0,
+    "hosts": 247,
+    "n": 650
+   },
+   "control_restricted": {
+    "failures": 0,
+    "hosts": 261,
+    "n": 690
+   },
+   "full": {
+    "failures": 0,
+    "hosts": 755,
+    "n": 2003
+   },
+   "separate_slopes": {
+    "failures": 0,
+    "hosts": 247,
+    "n": 650
+   },
+   "separate_slopes_host_luminosity": {
+    "failures": 0,
+    "hosts": 247,
+    "n": 650
+   },
+   "separate_slopes_richness": {
+    "failures": 0,
+    "hosts": 247,
+    "n": 650
+   },
+   "window_no_separation": {
+    "failures": 0,
+    "hosts": 247,
+    "n": 650
+   },
+   "window_no_separation_host_luminosity": {
+    "failures": 0,
+    "hosts": 247,
+    "n": 650
+   },
+   "window_no_separation_richness": {
+    "failures": 0,
+    "hosts": 247,
+    "n": 650
+   }
+  }
+ }
+}

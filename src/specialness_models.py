@@ -15,9 +15,11 @@ import numpy as np
 try:
     from extended_data import dedup_control_pool, ensure_galaxy_frame
     from extended_stats import fit_logistic_model, safe_json
+    from utils.sample_styles import MARKER_EDGE, SAMPLE_STYLES
 except ModuleNotFoundError:  # pragma: no cover
     from .extended_data import dedup_control_pool, ensure_galaxy_frame
     from .extended_stats import fit_logistic_model, safe_json
+    from .utils.sample_styles import MARKER_EDGE, SAMPLE_STYLES
 
 
 MODEL_SPECS = {
@@ -71,14 +73,16 @@ def _plot(results, path):
     odds = np.array([row[1]["cg4_odds_ratio"] for row in rows])
     low = np.array([row[1]["cg4_ci95"][0] for row in rows])
     high = np.array([row[1]["cg4_ci95"][1] for row in rows])
-    colours = ["#2864A6" for _ in rows]
-    for index, colour in enumerate(colours):
+    style = SAMPLE_STYLES["CG4"]
+    for index in range(len(rows)):
         ax.errorbar(
             odds[index],
             y[index],
             xerr=[[odds[index] - low[index]], [high[index] - odds[index]]],
-            fmt="o",
-            color=colour,
+            fmt=style["marker"],
+            color=style["colour"],
+            markeredgecolor=MARKER_EDGE,
+            markeredgewidth=0.5,
             capsize=3,
         )
     ax.axvline(1, color="0.45", linestyle=":", linewidth=1)

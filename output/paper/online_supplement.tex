@@ -14,7 +14,7 @@
   colorlinks=true,
   linkcolor=blue,
   urlcolor=cyan,
-  pdftitle={Are galaxies in compact groups special? Online supplementary material}
+  pdftitle={Are galaxies in compact groups special? Companion figures (Zenodo deposit)}
 }
 
 \newcommand{\CB}{Control\textsubscript{4B}}
@@ -44,7 +44,7 @@
 
 
 
-\title{Are galaxies in compact groups special?\\Online supplementary material}
+\title{Are galaxies in compact groups special?\\Companion figures deposited on Zenodo}
 \author{Matthieu Tricottet \and Gary A. Mamon}
 \date{}
 \maketitle
@@ -52,7 +52,7 @@
 
 
 
-This supplement gives the sequence-residual, colour, pooled-model, size, and spectral diagnostics supporting the article. Samples and classifications follow the article. We denote the median of a quartet's six projected pair separations by \(\langle R_{ij}\rangle\), calculated with the Planck 2015 angular-diameter distance at the mean member redshift, as in the article. The spectral models at comparable compactness are evaluated at \(\langle R_{ij}\rangle = 150\,\mathrm{kpc}\).
+This companion document, deposited on Zenodo with the derived tables, gives the sequence-residual, colour, pooled-model, and raw-fraction compactness diagnostics cited in the article; the size comparison by control and the spectral contrasts at comparable compactness are in Appendices I and B of the article. Samples and classifications follow the article. We denote the median of a quartet's six projected pair separations by \(\langle R_{ij}\rangle\), calculated with the Planck 2015 angular-diameter distance at the mean member redshift, as in the article.
 
 \FloatBarrier
 \section{Star-forming and quenched sequence residuals}
@@ -90,7 +90,7 @@ The raw colour--mass fits do not show a single common relation for every sample:
 \begin{figure*}
   \centering
   \includegraphics[width=\textwidth]{colour_robustness_coefficients.pdf}
-  \caption{Robustness of the satellite colour coefficients. Left: pooled ordinary-group comparison before and after controlling for GZ1 E/S morphology and sSFR class. Right: mass- and redshift-adjusted comparisons against each control catalogue separately. Points show the \CG{} minus ordinary-group coefficient and bars show 95\% confidence intervals; negative values indicate bluer \CG{} satellites.}
+  \caption{Robustness of the satellite colour coefficients. Left: pooled ordinary-group comparison before and after controlling for GZ1 E/S morphology and sSFR class. Right: mass- and redshift-adjusted comparisons against \CB{} (blue squares), \CC{} (amber triangles), and \RG{} (teal diamonds). Points show the \CG{} minus ordinary-group coefficient and bars show 95\% confidence intervals; negative values indicate bluer \CG{} satellites.}
   \label{fig:supp_colour_coefficients}
 \end{figure*}
 
@@ -127,71 +127,23 @@ Figures~\ref{fig:supp_colour_selection}, \ref{fig:supp_colour_coefficients}, and
 
 
 
-\FloatBarrier
-\section{Size-model comparison by control}
-
-Figure~\ref{fig:supp_size_per_control} compares the fitted size contrasts across control definitions.
-
-\begin{figure}[!htbp]
-  \centering
-  \includegraphics[width=\columnwidth]{size_forest_per_control.pdf}
-  \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control catalogue separately. Every model uses the article's main adjustment set: stellar mass, redshift, rank, group luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii at fixed covariates.}
-  \label{fig:supp_size_per_control}
-\end{figure}
-
 
 
 
 
 \FloatBarrier
-\section{Morphology and spectral contrasts at similar pair separation}
+\section{Raw-fraction compactness figure}
 
-Figure~\ref{fig:supp_compactness_raw} repeats the compactness figure of the article (Sect.~3.1) with raw satellite E-class fractions instead of fractions at fixed stellar mass; the fitted lines and panel (b) are unchanged. Table~\ref{tab:supp_spectral_variants} lists the \CG{}-minus-\CC{} contrasts behind Sect.~3.5 of the article for satellites with \(10 \le \log(M_\star/M_\odot) < 10.5\) in the common range of median projected pair separation (94--219~kpc). The model contrasts are evaluated at \(\langle R_{ij}\rangle = 150\,\mathrm{kpc}\), and the matched contrasts use pairs of quartets within the shared range. Strong H\(\alpha\) emission is measured in the SDSS fibre; the quenched class uses the total sSFR. The historical H\(\alpha\) row uses the original emission-line join. For the other H\(\alpha\) rows, the line measurements are matched by the stored SDSS spectrum identifier. The aperture covariate is \(\log_{10}(1.5\,{\rm arcsec}/R_{50,r})\) with the Petrosian half-light radius; the aperture rows and the E/S row share one sample, and the BPT exclusions then remove AGN-like spectra above the Kewley et al. (2001) line or, in addition, composites above the Kauffmann et al. (2003) line. Each selection changes both the estimate and the sample. In the compactness-matched comparison, 36 adjusted fits to the intermediate-mass samples after the composite exclusion are singular or fail to converge. The table reports only estimable contrasts.
+Figure~\ref{fig:supp_compactness_raw} repeats the compactness figure of the article (Fig.~3, Sect.~3.1) with raw satellite E-class fractions in panel (a). The fixed-mass curves and panel (b) are unchanged.
 
 \begin{figure*}
   \centering
   \includegraphics[width=\textwidth]{fig_centerpiece_compactness_raw.pdf}
-  \caption{As the compactness figure of the article (Sect.~3.1), but the symbols in panel (a) are raw E-class fractions among E/S-classified satellites in 0.2-dex bins of \(\log\langle R_{ij}\rangle\), with 95\% intervals from a bootstrap of physical hosts. The lines in panel (a) are logistic fits evaluated at \(\log(M_\star/M_\odot) = 10.35\). Panel (b) shows the model contrast as a function of separation within the shared range (94--219~kpc) alongside the full-sample and matched contrasts.}
+  \caption{Raw-fraction variant of Fig.~3 of the article. \textit{(a)} The upper histograms show the fraction of \CG{} and \CC{} quartets per 0.1-dex bin, with dotted lines at their medians (143 and 293~kpc). Below, points give raw E-class fractions among E/S satellites in 0.2-dex bins, with 95\% physical-host bootstrap intervals. Bins with fewer than three hosts are omitted. The curves are logistic fits at \(\log_{10}(M_\star/M_\odot)=10.20\). \textit{(b)} The separate-slope model averages predictions over locally comparable \CG{} satellites. The circle and bar show the estimate at 150~kpc and its pointwise 95\% interval. The ribbon and summary contrasts are as in the article.}
   \label{fig:supp_compactness_raw}
 \end{figure*}
 
-\begin{table*}
-  \centering
-  \caption{Intermediate-mass spectral contrasts at comparable compactness}
-  \label{tab:supp_spectral_variants}
-  \tabcolsep=3pt
-  \begin{tabular}{lccc}
-    \toprule
-    Outcome and selection & Common slope & Separate slopes & \(N\) \\
-    \midrule
 
-
-    H\(\alpha\), historical join & \(-13.3\) \([-27.6, +0.9]\) & \(-13.0\) \([-27.5, +1.5]\) & 57/199 \\
-
-    H\(\alpha\), exact spectra & \(-14.7\) \([-28.3, -1.2]\) & \(-14.2\) \([-28.0, -0.5]\) & 61/214 \\
-
-    \quad + E/S, common sample & \(-14.3\) \([-26.1, -2.4]\) & \(-14.2\) \([-26.2, -2.2]\) & 54/187 \\
-
-    \quad + aperture & \(-16.0\) \([-28.0, -4.0]\) & \(-16.0\) \([-28.3, -3.8]\) & 54/187 \\
-
-    \quad + aperture, no AGN & \(-12.6\) \([-27.9, +2.6]\) & \(-12.7\) \([-28.0, +2.6]\) & 36/146 \\
-
-    \quad + aperture, no AGN/comp. & \(-9.5\) \([-26.1, +7.1]\) & \(-8.6\) \([-24.5, +7.3]\) & 29/97 \\
-
-    Quenched (total sSFR) & \(+3.9\) \([-10.6, +18.4]\) & \(+2.6\) \([-11.9, +17.0]\) & 58/211 \\
-
-    \midrule
-    & Match & Match + \(\sigma_v\) tolerance & Pairs \\
-    \midrule
-
-    H\(\alpha\), exact spectra & \(-25.3\) \([-47.3, -2.7]\) & \(-28.2\) \([-48.7, -7.7]\) & 25/26 \\
-
-    Quenched (total sSFR) & \(+16.7\) \([-8.3, +39.6]\) & \(+13.5\) \([-9.6, +35.9]\) & 24/26 \\
-
-    \bottomrule
-  \end{tabular}
-  \tablefoot{Differences in percentage points with 95\% intervals. Model rows adjust for stellar mass, redshift, group luminosity, and \(\sigma_v\) and evaluate the contrast at \(\langle R_{ij}\rangle = 150\,\mathrm{kpc}\) over the covariate distribution of nearby \CG{} satellites. \(N\) gives the \CG{}/\CC{} satellites in the fit. Matched rows are unadjusted paired differences over quartet pairs with outcomes on both sides, with intervals from a bootstrap of connected host components.}
-\end{table*}
 
 
 \end{document}

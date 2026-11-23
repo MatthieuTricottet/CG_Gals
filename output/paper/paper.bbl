@@ -1,16 +1,52 @@
-\begin{thebibliography}{46}
+\begin{thebibliography}{69}
 \expandafter\ifx\csname natexlab\endcsname\relax\def\natexlab#1{#1}\fi
+
+\bibitem[{{Abazajian} {et~al.}(2009){Abazajian}, {Adelman-McCarthy},
+  {Ag{\"u}eros}, {Allam}, {Allende Prieto}, {An}, {Anderson}, {Anderson},
+  {Annis}, {Bahcall}, \& et~al.}]{Abazajian+09}
+{Abazajian}, K.~N., {Adelman-McCarthy}, J.~K., {Ag{\"u}eros}, M.~A., {et~al.}
+  2009, \apjs, 182, 543
 
 \bibitem[{{Ahumada} {et~al.}(2020){Ahumada}, {Allende Prieto}, {Almeida},
   {et~al.}}]{Ahumada+20}
 {Ahumada}, R., {Allende Prieto}, C., {Almeida}, A., {et~al.} 2020, \apjs, 249,
   3
 
+\bibitem[{{Alam} {et~al.}(2015){Alam}, {Albareti}, {Allende Prieto},
+  {et~al.}}]{Alam+15}
+{Alam}, S., {Albareti}, F.~D., {Allende Prieto}, C., {et~al.} 2015, \apjs, 219,
+  12
+
+\bibitem[{{Astropy Collaboration} {et~al.}(2022){Astropy Collaboration},
+  {Price-Whelan}, {Lim}, {et~al.}}]{Astropy2022}
+{Astropy Collaboration}, {Price-Whelan}, A.~M., {Lim}, P.~L., {et~al.} 2022,
+  \apj, 935, 167
+
+\bibitem[{{Astropy Collaboration} {et~al.}(2018){Astropy Collaboration},
+  {Price-Whelan}, {Sip{\H{o}}cz}, {et~al.}}]{Astropy2018}
+{Astropy Collaboration}, {Price-Whelan}, A.~M., {Sip{\H{o}}cz}, B.~M., {et~al.}
+  2018, \aj, 156, 123
+
+\bibitem[{{Astropy Collaboration} {et~al.}(2013){Astropy Collaboration},
+  {Robitaille}, {Tollerud}, {et~al.}}]{Astropy2013}
+{Astropy Collaboration}, {Robitaille}, T.~P., {Tollerud}, E.~J., {et~al.} 2013,
+  \aap, 558, A33
+
+\bibitem[{{Austin}(2011)}]{Austin2011}
+{Austin}, P.~C. 2011, Pharm. Stat., 10, 150
+
+\bibitem[{{Baldwin} {et~al.}(1981){Baldwin}, {Phillips}, \&
+  {Terlevich}}]{BPT81}
+{Baldwin}, J.~A., {Phillips}, M.~M., \& {Terlevich}, R. 1981, \pasp, 93, 5
+
 \bibitem[{{Bamford} {et~al.}(2009){Bamford}, {Nichol}, {Baldry}, {Land},
   {Lintott}, {Schawinski}, {Slosar}, {Szalay}, {Thomas}, {Torki}, {Andreescu},
   {Edmondson}, {Miller}, {Murray}, {Raddick}, \& {Vandenberg}}]{Bamford+09}
 {Bamford}, S.~P., {Nichol}, R.~C., {Baldry}, I.~K., {et~al.} 2009, \mnras, 393,
   1324
+
+\bibitem[{{Benjamini} \& {Hochberg}(1995)}]{BenjaminiHochberg1995}
+{Benjamini}, Y. \& {Hochberg}, Y. 1995, J. R. Stat. Soc. B, 57, 289
 
 \bibitem[{{Bitsakis} {et~al.}(2011){Bitsakis}, {Charmandaris}, {da Cunha},
   {Diaz-Santos}, {Le Floc'h}, \& {Magdis}}]{Bitsakis+11}
@@ -51,10 +87,20 @@ Dom{\'i}nguez~S{\'a}nchez, H., Huertas-Company, M., Bernardi, M., Tuccillo, D.,
 \bibitem[{{Dressler}(1980)}]{Dressler80}
 {Dressler}, A. 1980, \apj, 236, 351
 
+\bibitem[{{Ginsburg} {et~al.}(2019){Ginsburg}, {Sip{\H o}cz}, {Brasseur},
+  {et~al.}}]{Ginsburg2019}
+{Ginsburg}, A., {Sip{\H o}cz}, B.~M., {Brasseur}, C.~E., {et~al.} 2019, \aj,
+  157, 98
+
 \bibitem[{{Graham} {et~al.}(2005){Graham}, {Driver}, {Petrosian}, {Conselice},
   {Bershady}, {Crawford}, \& {Goto}}]{Graham2005}
 {Graham}, A.~W., {Driver}, S.~P., {Petrosian}, V., {et~al.} 2005, \aj, 130,
   1535
+
+\bibitem[{{Harris} {et~al.}(2020){Harris}, {Millman}, {van der Walt},
+  {et~al.}}]{Harris2020}
+{Harris}, C.~R., {Millman}, K.~J., {van der Walt}, S.~J., {et~al.} 2020,
+  Nature, 585, 357
 
 \bibitem[{{Hickson}(1982)}]{Hickson82}
 {Hickson}, P. 1982, \apj, 255, 382
@@ -66,6 +112,12 @@ Dom{\'i}nguez~S{\'a}nchez, H., Huertas-Company, M., Bernardi, M., Tuccillo, D.,
   {Palumbo}}]{Hickson+92}
 {Hickson}, P., {Mendes de Oliveira}, C., {Huchra}, J.~P., \& {Palumbo}, G.~G.
   1992, \apj, 399, 353
+
+\bibitem[{{Holm}(1979)}]{Holm1979}
+{Holm}, S. 1979, Scand. J. Stat., 6, 65
+
+\bibitem[{{Hunter}(2007)}]{Hunter2007}
+{Hunter}, J.~D. 2007, Computing in Science and Engineering, 9, 90
 
 \bibitem[{{Johnson} {et~al.}(2007){Johnson}, {Hibbard}, {Gallagher},
   {Charlton}, {Hornschemeier}, {Jarrett}, \& {Reines}}]{Johnson+07}
@@ -90,6 +142,9 @@ Dom{\'i}nguez~S{\'a}nchez, H., Huertas-Company, M., Bernardi, M., Tuccillo, D.,
   \& {Trevena}}]{Kewley+01}
 {Kewley}, L.~J., {Dopita}, M.~A., {Sutherland}, R.~S., {Heisler}, C.~A., \&
   {Trevena}, J. 2001, \apj, 556, 121
+
+\bibitem[{{Kitagawa}(1955)}]{Kitagawa1955}
+{Kitagawa}, E.~M. 1955, J. Am. Stat. Assoc., 50, 1168
 
 \bibitem[{{Lim} {et~al.}(2017){Lim}, {Mo}, {Lu}, {Wang}, \& {Yang}}]{Lim+17}
 {Lim}, S.~H., {Mo}, H.~J., {Lu}, Y., {Wang}, H., \& {Yang}, X. 2017, \mnras,
@@ -120,8 +175,17 @@ Dom{\'i}nguez~S{\'a}nchez, H., Huertas-Company, M., Bernardi, M., Tuccillo, D.,
   {Muriel}}]{Martinez+13}
 {Mart{\'\i}nez}, H.~J., {Coenda}, V., \& {Muriel}, H. 2013, \aap, 557, A61
 
+\bibitem[{{McKinney}(2010)}]{McKinney2010}
+{McKinney}, W. 2010, in Proceedings of the 9th Python in Science Conference,
+  56--61
+
 \bibitem[{McLachlan \& Peel(2000)}]{McLachlanPeel2000}
 McLachlan, G. \& Peel, D. 2000, Finite Mixture Models (New York: Wiley)
+
+\bibitem[{{Mendel} {et~al.}(2011){Mendel}, {Ellison}, {Simard}, {Patton}, \&
+  {McConnachie}}]{Mendel+11}
+{Mendel}, J.~T., {Ellison}, S.~L., {Simard}, L., {Patton}, D.~R., \&
+  {McConnachie}, A.~W. 2011, \mnras, 418, 1409
 
 \bibitem[{{Mendes de Oliveira} \& {Hickson}(1994)}]{MendesdeOliveira&Hickson94}
 {Mendes de Oliveira}, C. \& {Hickson}, P. 1994, \apj, 427, 684
@@ -152,8 +216,17 @@ Montaguth, G.~P., O'Mill, A.~L., Mendes~de Oliveira, C., {et~al.}
 Montaguth, G.~P., Torres-Flores, S., Monachesi, A., {et~al.} 2023, \mnras, 524,
   5340
 
+\bibitem[{{Ochsenbein} {et~al.}(2000){Ochsenbein}, {Bauer}, \&
+  {Marcout}}]{Ochsenbein+00}
+{Ochsenbein}, F., {Bauer}, P., \& {Marcout}, J. 2000, \aaps, 143, 23
+
 \bibitem[{{Oman} \& {Hudson}(2016)}]{Oman&Hudson16}
 {Oman}, K.~A. \& {Hudson}, M.~J. 2016, \mnras, 463, 3083
+
+\bibitem[{Pedregosa {et~al.}(2011)Pedregosa, Varoquaux, Gramfort,
+  {et~al.}}]{Pedregosa2011}
+Pedregosa, F., Varoquaux, G., Gramfort, A., {et~al.} 2011, J. Mach. Learn.
+  Res., 12, 2825
 
 \bibitem[{{Planck Collaboration} {et~al.}(2016){Planck Collaboration}, {Ade},
   {Aghanim}, {Arnaud}, {Ashdown}, {Aumont}, {Baccigalupi}, {Banday},
@@ -203,16 +276,27 @@ Montaguth, G.~P., Torres-Flores, S., Monachesi, A., {et~al.} 2023, \mnras, 524,
 {Planck Collaboration}, {Ade}, P.~A.~R., {Aghanim}, N., {et~al.} 2016, \aap,
   594, A13
 
+\bibitem[{{Rosenbaum} \& {Rubin}(1983)}]{RosenbaumRubin1983}
+{Rosenbaum}, P.~R. \& {Rubin}, D.~B. 1983, Biometrika, 70, 41
+
 \bibitem[{{Salim} {et~al.}(2007){Salim}, {Rich}, {Charlot}, {Brinchmann},
   {Johnson}, {Schiminovich}, {Seibert}, {Mallery}, {Heckman}, {Forster},
   {Friedman}, {Martin}, {Morrissey}, {Neff}, {Small}, {Wyder}, {Bianchi},
   {Donas}, {Lee}, {Madore}, {Milliard}, {Szalay}, {Welsh}, \& {Yi}}]{Salim+07}
 {Salim}, S., {Rich}, R.~M., {Charlot}, S., {et~al.} 2007, \apjs, 173, 267
 
+\bibitem[{{Seabold} \& {Perktold}(2010)}]{Seabold2010}
+{Seabold}, S. \& {Perktold}, J. 2010, in Proceedings of the 9th Python in
+  Science Conference, 92--96
+
 \bibitem[{{Simard} {et~al.}(2011){Simard}, {Mendel}, {Patton}, {Ellison}, \&
   {McConnachie}}]{Simard2011}
 {Simard}, L., {Mendel}, J.~T., {Patton}, D.~R., {Ellison}, S.~L., \&
   {McConnachie}, A.~W. 2011, \apjs, 196, 11
+
+\bibitem[{{Simard} {et~al.}(2002){Simard}, {Willmer}, {Vogt},
+  {et~al.}}]{Simard+02}
+{Simard}, L., {Willmer}, C.~N.~A., {Vogt}, N.~P., {et~al.} 2002, \apjs, 142, 1
 
 \bibitem[{{Stoughton} {et~al.}(2002){Stoughton}, {Lupton}, {Bernardi},
   {Blanton}, {Burles}, {Castander}, {Connolly}, {Eisenstein}, {Frieman},
@@ -272,6 +356,11 @@ Montaguth, G.~P., Torres-Flores, S., Monachesi, A., {et~al.} 2023, \mnras, 524,
 {Verdes-Montenegro}, L., {Yun}, M.~S., {Williams}, B.~A., {et~al.} 2001, \aap,
   377, 812
 
+\bibitem[{{Virtanen} {et~al.}(2020){Virtanen}, {Gommers}, {Oliphant},
+  {et~al.}}]{Virtanen2020}
+{Virtanen}, P., {Gommers}, R., {Oliphant}, T.~E., {et~al.} 2020, Nature
+  Methods, 17, 261
+
 \bibitem[{{Wainer} \& {Thissen}(1976)}]{Wainer&Thissen76}
 {Wainer}, H. \& {Thissen}, D. 1976, Psychometrika, 41, 9
 
@@ -279,6 +368,15 @@ Montaguth, G.~P., Torres-Flores, S., Monachesi, A., {et~al.} 2023, \mnras, 524,
   Bosch}}]{Wetzel+13}
 {Wetzel}, A.~R., {Tinker}, J.~L., {Conroy}, C., \& {van den Bosch}, F.~C. 2013,
   \mnras, 432, 336
+
+\bibitem[{{Yang} {et~al.}(2007){Yang}, {Mo}, {Van den Bosch}, {Pasquali}, {Li},
+  \& {Barden}}]{Yang+07}
+{Yang}, X., {Mo}, H.~J., {Van den Bosch}, F.~C., {et~al.} 2007, \apj, 671, 153
+
+\bibitem[{{York} {et~al.}(2000){York}, {Adelman}, {Anderson},
+  {et~al.}}]{York+00}
+{York}, D.~G., {Adelman}, J., {Anderson}, Jr., J.~E., {et~al.} 2000, \aj, 120,
+  1579
 
 \bibitem[{{Zepf} \& {Whitmore}(1993)}]{ZepfWhitmore93}
 {Zepf}, S.~E. \& {Whitmore}, B.~C. 1993, \apj, 418, 72

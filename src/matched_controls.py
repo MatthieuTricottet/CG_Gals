@@ -362,19 +362,28 @@ def _plot_balance(before, after, path):
         return None
     variables = list(before)
     y = np.arange(len(variables))
+    before_abs = np.abs([before[v] for v in variables])
+    after_abs = np.abs([after[v] for v in variables])
     fig, ax = plt.subplots(figsize=(7.2, 0.62 * len(variables) + 1.8))
-    ax.scatter([abs(before[v]) for v in variables], y, s=76, label="Before", color="#A74752")
-    ax.scatter([abs(after[v]) for v in variables], y, s=76, label="After", color="#25876E")
+    ax.hlines(y, before_abs, after_abs, colors="#BBBBBB", linewidth=1, zorder=2)
+    ax.scatter(
+        before_abs, y, s=76, marker="o", label="Before matching",
+        facecolors="#FFFFFF", edgecolors="#666666", linewidths=1.5, zorder=3,
+    )
+    ax.scatter(
+        after_abs, y, s=76, marker="o", label="After matching",
+        color="#222222", zorder=4,
+    )
     ax.axvline(0.1, color="0.35", linestyle=":", linewidth=1.2,
                label="0.1 balance guide")
     ax.set_yticks(y, [COVARIATE_LABELS.get(v, v) for v in variables], fontsize=18)
     ax.invert_yaxis()
-    ax.set_xlabel("Absolute standardized mean difference", fontsize=18)
+    ax.set_xlabel("Absolute standardised mean difference", fontsize=18)
     ax.tick_params(axis="x", labelsize=16, direction="in", top=True)
     ax.tick_params(axis="y", direction="in", right=True)
     for spine in ax.spines.values():
         spine.set_visible(True)
-    ax.legend(frameon=False, fontsize=16)
+    ax.legend(loc="upper right", frameon=False, fontsize=16)
     fig.tight_layout()
     fig.savefig(path, bbox_inches="tight")
     plt.close(fig)
