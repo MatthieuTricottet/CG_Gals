@@ -10,6 +10,12 @@
 %   diagnostics_gary_r2.json; grep "% BUDGET:" for page toggles.
 % =====================================================================
 \documentclass{aa}
+\usepackage{etoolbox}
+
+% Let the appendices continue after the references in the current column.
+\patchcmd{\appendix}{\par\clearpage}{\par}{}{%
+  \PackageError{paper}{Could not adjust the A\string&A appendix page break}{}%
+}
 %
 \usepackage{graphicx}
 \usepackage[varg]{txfonts}
@@ -671,6 +677,15 @@ Within \CG{}, the satellite E-class fraction is lower in isolated systems than i
 Including local projected density attenuates the \CG{} coefficient, but the amount is not well determined. For each of the 6076 catalogue rows we compute \(T_i = \sum_j M_{\star,j}/R_{ij}^3\) over selected quartet co-members (\(R_{ij}\) in kpc; unmeasured companion masses contribute zero, making \(T_i\) a lower bound). For the main pooled fit, controls are deduplicated by objid as in Appendix~\ref{app:pooled_models}, retaining the quartet assignment in the priority order \RG{}, \CB{}, \CC{}. The E-class model adjusts for stellar mass and satellite status, with physical-group clustering. In this main model, the index lowers the \CG{} odds ratio from 1.75 (95\% CI \([1.33, 2.30]\); \(p<10^{-4}\)) to 1.19 (\([0.89, 1.60]\); \(p = 0.24\)) on the same 3416 galaxies. Retaining all catalogue rows instead (a sensitivity variant) gives an attenuation from 1.83 to 1.30 (\(p = 0.083\)), with an index odds ratio of 1.43 per \(\sdlogT\)-dex standard deviation (\(p<10^{-4}\)); this check weights multiply selected controls more heavily. In this sample, the \(\log T_i\) distributions have an overlap coefficient of 0.54 and their medians differ by 1.1 dex. Restricting the fit to their overlapping range gives an odds ratio of 1.14 (\(p = 0.38\)). Because \(T_i\) depends on the same projected configuration used to select compact groups, adjustment for the index also accounts for some of that selection. The attenuation alone leaves the physical role of local density in the morphological difference unresolved. The index traces projected neighbours, not tidal history; the host-inclusive check is given in Appendix~\ref{app:selection}.
 
 
+
+\begin{figure*}[!t]
+    \centering
+    \includegraphics[width=0.90\textwidth]{fig_property_trends.pdf}
+    \caption{Other galaxy properties versus stellar mass: (a,b) strong-\(\mathrm{H}\alpha\) fraction (\(\mathrm{EW}(\mathrm{H}\alpha)\leq -3\,\text{\AA}\), with emission negative); (c,d) AGN-like fraction among BPT-classified galaxies; (e,f) median \(D_n4000\); (g,h) median seeing-corrected effective radius \(\log_{10}(R_{e,r}/{\rm kpc})\). The left and right columns show BGGs and satellites on the same respective stellar-mass scales as in Fig.~\ref{fig:mass_trends}. Points use the same bins, omission criteria, sample order, and purely visual offsets as in Fig.~\ref{fig:mass_trends}. Bars give the 16th--84th percentile intervals from a bootstrap blocked by physical group. These comparisons are descriptive.}
+    \label{fig:property_trends}
+\end{figure*}
+
+
 \subsection{Other galaxy properties}\label{sec:other_properties}
 
 
@@ -682,15 +697,6 @@ None of the other galaxy properties shows an offset as robust as the morphology 
 These equivalent widths sample the 3-arcsec SDSS fibre, whereas the quenched class uses the total sSFR. For satellites against \CC{} with the stored-spectrum join, the E/S class absorbs about half of the deficit in the full samples, from \(-10.5\) to \(-4.3\) points, whereas restricting to the common range and fitting a common separation slope at 150~kpc brings no further reduction (\(-4.8\) points; paired difference \(+0.5\) points (\([-4.1, +5.5]\))); with the aperture term as well, the common-slope contrast is \(-7.5\) points (\([-14.5, -0.3]\)). Without morphology, the common-slope contrast is \(-6.0\) points (95\% CI \([-14.9, +2.8]\)) for all satellites and \(-14.7\) points (\([-28.3, -1.2]\)) in the mass bin \(10 \le \log(M_\star/\msun) < 10.5\) (61 \CG{} and 214 \CC{} satellites), a bin examined post hoc because the \CG{} E-class fraction and \(D_n4000\) peak there relative to the controls. After adjustment for E/S morphology and aperture and exclusion of AGN and composites on the Baldwin--Phillips--Terlevich (BPT) diagram \citep{BPT81}, the contrast in this bin is \(-9.5\) points (\([-26.1, +7.1]\)) on a smaller sample (29/97 satellites). In the same bin, the total-sSFR quenched-fraction contrast is \(+3.9\) points (\([-10.6, +18.4]\)) with a common slope and \(+2.6\) points (\([-11.9, +17.0]\)) with separate slopes (58/211 satellites); both intervals include zero. Table~\ref{tab:spectral_variants} gives the full spectral comparisons.
 
 Among BPT-classified galaxies, the AGN-like fraction (above the \citealt{Kewley+01} line; composites lie between the \citealt{Kauffmann+03a} and \citealt{Kewley+01} lines) is 38\% in \CG{}, against 40\%, 35\%, and 30\% in \CB{}, \CC{}, and \RG{}. Adjusted for stellar mass, satellite status, BGG distance, and dominance, the \CG{} odds ratio is 1.17 (\(p = 0.364\)) in a model pooling all control rows, 1.17 on the deduplicated pool, and 1.15, 1.17, and 0.96 against each control; this diagnostic does not measure all nuclear activity. In Fig.~\ref{fig:property_trends}d, the \CG{} satellite fraction exceeds all three controls only in the 10.0--10.5 bin (40\% against 22\%, 24\%, and 27\% in \CB{}, \CC{}, and \RG{}) and is lower or similar elsewhere. The \(D_n4000\) index follows stellar mass in every sample; the \CG{} medians sit above the controls only in the \(10.0\)--\(10.5\) bin (\(D_n4000 = 1.77\) against 1.59, 1.68, and 1.56), where the \CG{} E-class fraction also peaks relative to the controls, and coincide with them elsewhere.
-
-
-\begin{figure*}[!t]
-    \centering
-    \includegraphics[width=\textwidth]{fig_property_trends.pdf}
-    \caption{Other galaxy properties versus stellar mass: (a,b) strong-\(\mathrm{H}\alpha\) fraction (\(\mathrm{EW}(\mathrm{H}\alpha)\leq -3\,\text{\AA}\), with emission negative); (c,d) AGN-like fraction among BPT-classified galaxies; (e,f) median \(D_n4000\); (g,h) median seeing-corrected effective radius \(\log_{10}(R_{e,r}/{\rm kpc})\). The left and right columns show BGGs and satellites on the same respective stellar-mass scales as in Fig.~\ref{fig:mass_trends}. Points use the same bins, omission criteria, sample order, and purely visual offsets as in Fig.~\ref{fig:mass_trends}. Bars give the 16th--84th percentile intervals from a bootstrap blocked by physical group. These comparisons are descriptive.}
-    \label{fig:property_trends}
-\end{figure*}
-
 
 
 
@@ -817,24 +823,27 @@ We have compared 62 low-redshift, luminous, non-split compact groups of four gal
 \end{enumerate}
 These results answer the question posed in the Introduction. Paper~I found that, once the selection is accounted for, the group-scale properties of compact groups resemble those of ordinary groups and of their cores; their satellite populations behave alike. Compact groups are special mainly in the way dense group cores are special: their satellites are more often early-type than those of ordinary groups as a whole, but most of that difference is shared by ordinary-group cores of similar compactness. A compact-group-specific residual of up to 13 points at fixed separation, or an excess confined to the densest systems, cannot be excluded with the present samples.
 
-\section*{Data availability}
-The galaxy-level table of the four samples (SDSS \texttt{objid}, sample, quartet and Lim host identifiers, BGG or satellite status, GZ1 and sSFR classes, stellar mass, and quartet median pair separation), the quartet table (Zheng--Shen class, \(\Rmed\), and host richness and halo mass), and the matched-pair lists (the quartet matches of Table~\ref{tab:group_match_per_control}, the separation-constrained matches, and the galaxy-level match) are available in electronic form at the CDS via anonymous ftp to \url{cdsarc.cds.unistra.fr} (130.79.128.5) or via \url{https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/}. The companion figures (sequence residuals, optical colours, pooled models, and the raw-fraction version of Fig.~\ref{fig:compactness}) and the derived tables used in this paper are deposited on Zenodo (\zenodoDOI).
+% \section*{Data availability}
+% The galaxy-level table of the four samples (SDSS \texttt{objid}, sample, quartet and Lim host identifiers, BGG or satellite status, GZ1 and sSFR classes, stellar mass, and quartet median pair separation), the quartet table (Zheng--Shen class, \(\Rmed\), and host richness and halo mass), and the matched-pair lists (the quartet matches of Table~\ref{tab:group_match_per_control}, the separation-constrained matches, and the galaxy-level match) are available in electronic form at the CDS via anonymous ftp to \url{cdsarc.cds.unistra.fr} (130.79.128.5) or via \url{https://cdsarc.cds.unistra.fr/viz-bin/cat/J/A+A/}. The companion figures (sequence residuals, optical colours, pooled models, and the raw-fraction version of Fig.~\ref{fig:compactness}) and the derived tables used in this paper are deposited on Zenodo (\zenodoDOI).
 
 \begin{acknowledgements}
 We thank Eugenia \diazg{} for her contributions to this work. This publication uses Galaxy Zoo classifications; we thank the volunteers who made them possible. We used the MPA-JHU catalogues and the \citet{Simard2011} catalogue, obtained with the VizieR catalogue access tool, CDS, Strasbourg, France (DOI: 10.26093/cds/vizier; \citealt{Ochsenbein+00}).
 
-Funding for the SDSS and SDSS-II has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, the U.S. Department of Energy, the National Aeronautics and Space Administration, the Japanese Monbukagakusho, the Max Planck Society, and the Higher Education Funding Council for England. The SDSS Web Site is \url{http://www.sdss.org/}. The SDSS is managed by the Astrophysical Research Consortium for the Participating Institutions. The Participating Institutions are the American Museum of Natural History, Astrophysical Institute Potsdam, University of Basel, University of Cambridge, Case Western Reserve University, University of Chicago, Drexel University, Fermilab, the Institute for Advanced Study, the Japan Participation Group, Johns Hopkins University, the Joint Institute for Nuclear Astrophysics, the Kavli Institute for Particle Astrophysics and Cosmology, the Korean Scientist Group, the Chinese Academy of Sciences (LAMOST), Los Alamos National Laboratory, the Max-Planck-Institute for Astronomy (MPIA), the Max-Planck-Institute for Astrophysics (MPA), New Mexico State University, Ohio State University, University of Pittsburgh, University of Portsmouth, Princeton University, the United States Naval Observatory, and the University of Washington.
+% Funding for the SDSS and SDSS-II has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, the U.S. Department of Energy, the National Aeronautics and Space Administration, the Japanese Monbukagakusho, the Max Planck Society, and the Higher Education Funding Council for England. The SDSS Web Site is \url{http://www.sdss.org/}. The SDSS is managed by the Astrophysical Research Consortium for the Participating Institutions. The Participating Institutions are the American Museum of Natural History, Astrophysical Institute Potsdam, University of Basel, University of Cambridge, Case Western Reserve University, University of Chicago, Drexel University, Fermilab, the Institute for Advanced Study, the Japan Participation Group, Johns Hopkins University, the Joint Institute for Nuclear Astrophysics, the Kavli Institute for Particle Astrophysics and Cosmology, the Korean Scientist Group, the Chinese Academy of Sciences (LAMOST), Los Alamos National Laboratory, the Max-Planck-Institute for Astronomy (MPIA), the Max-Planck-Institute for Astrophysics (MPA), New Mexico State University, Ohio State University, University of Pittsburgh, University of Portsmouth, Princeton University, the United States Naval Observatory, and the University of Washington.
 
-Funding for SDSS-III has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, and the U.S. Department of Energy Office of Science. The SDSS-III web site is \url{http://www.sdss3.org/}. SDSS-III is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS-III Collaboration including the University of Arizona, the Brazilian Participation Group, Brookhaven National Laboratory, Carnegie Mellon University, University of Florida, the French Participation Group, the German Participation Group, Harvard University, the Instituto de Astrofisica de Canarias, the Michigan State/Notre Dame/JINA Participation Group, Johns Hopkins University, Lawrence Berkeley National Laboratory, Max Planck Institute for Astrophysics, Max Planck Institute for Extraterrestrial Physics, New Mexico State University, New York University, Ohio State University, Pennsylvania State University, University of Portsmouth, Princeton University, the Spanish Participation Group, University of Tokyo, University of Utah, Vanderbilt University, University of Virginia, University of Washington, and Yale University.
+% Funding for SDSS-III has been provided by the Alfred P. Sloan Foundation, the Participating Institutions, the National Science Foundation, and the U.S. Department of Energy Office of Science. The SDSS-III web site is \url{http://www.sdss3.org/}. SDSS-III is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS-III Collaboration including the University of Arizona, the Brazilian Participation Group, Brookhaven National Laboratory, Carnegie Mellon University, University of Florida, the French Participation Group, the German Participation Group, Harvard University, the Instituto de Astrofisica de Canarias, the Michigan State/Notre Dame/JINA Participation Group, Johns Hopkins University, Lawrence Berkeley National Laboratory, Max Planck Institute for Astrophysics, Max Planck Institute for Extraterrestrial Physics, New Mexico State University, New York University, Ohio State University, Pennsylvania State University, University of Portsmouth, Princeton University, the Spanish Participation Group, University of Tokyo, University of Utah, Vanderbilt University, University of Virginia, University of Washington, and Yale University.
 
-Funding for the Sloan Digital Sky Survey IV has been provided by the Alfred P. Sloan Foundation, the U.S. Department of Energy Office of Science, and the Participating Institutions. SDSS-IV acknowledges support and resources from the Center for High Performance Computing at the University of Utah. The SDSS website is \url{www.sdss4.org}. SDSS-IV is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS Collaboration including the Brazilian Participation Group, the Carnegie Institution for Science, Carnegie Mellon University, Center for Astrophysics \textbar{} Harvard \& Smithsonian, the Chilean Participation Group, the French Participation Group, Instituto de Astrof\'isica de Canarias, The Johns Hopkins University, Kavli Institute for the Physics and Mathematics of the Universe (IPMU) / University of Tokyo, the Korean Participation Group, Lawrence Berkeley National Laboratory, Leibniz Institut f\"ur Astrophysik Potsdam (AIP), Max-Planck-Institut f\"ur Astronomie (MPIA Heidelberg), Max-Planck-Institut f\"ur Astrophysik (MPA Garching), Max-Planck-Institut f\"ur Extraterrestrische Physik (MPE), National Astronomical Observatories of China, New Mexico State University, New York University, University of Notre Dame, Observat\'ario Nacional / MCTI, The Ohio State University, Pennsylvania State University, Shanghai Astronomical Observatory, United Kingdom Participation Group, Universidad Nacional Aut\'onoma de M\'exico, University of Arizona, University of Colorado Boulder, University of Oxford, University of Portsmouth, University of Utah, University of Virginia, University of Washington, University of Wisconsin, Vanderbilt University, and Yale University.
+% Funding for the Sloan Digital Sky Survey IV has been provided by the Alfred P. Sloan Foundation, the U.S. Department of Energy Office of Science, and the Participating Institutions. SDSS-IV acknowledges support and resources from the Center for High Performance Computing at the University of Utah. The SDSS website is \url{www.sdss4.org}. SDSS-IV is managed by the Astrophysical Research Consortium for the Participating Institutions of the SDSS Collaboration including the Brazilian Participation Group, the Carnegie Institution for Science, Carnegie Mellon University, Center for Astrophysics \textbar{} Harvard \& Smithsonian, the Chilean Participation Group, the French Participation Group, Instituto de Astrof\'isica de Canarias, The Johns Hopkins University, Kavli Institute for the Physics and Mathematics of the Universe (IPMU) / University of Tokyo, the Korean Participation Group, Lawrence Berkeley National Laboratory, Leibniz Institut f\"ur Astrophysik Potsdam (AIP), Max-Planck-Institut f\"ur Astronomie (MPIA Heidelberg), Max-Planck-Institut f\"ur Astrophysik (MPA Garching), Max-Planck-Institut f\"ur Extraterrestrische Physik (MPE), National Astronomical Observatories of China, New Mexico State University, New York University, University of Notre Dame, Observat\'ario Nacional / MCTI, The Ohio State University, Pennsylvania State University, Shanghai Astronomical Observatory, United Kingdom Participation Group, Universidad Nacional Aut\'onoma de M\'exico, University of Arizona, University of Colorado Boulder, University of Oxford, University of Portsmouth, University of Utah, University of Virginia, University of Washington, University of Wisconsin, Vanderbilt University, and Yale University.
 
-This research made use of Astropy \citep{Astropy2013,Astropy2018,Astropy2022}, NumPy \citep{Harris2020}, SciPy \citep{Virtanen2020}, pandas \citep{McKinney2010}, statsmodels \citep{Seabold2010}, scikit-learn \citep{Pedregosa2011}, Matplotlib \citep{Hunter2007}, and astroquery \citep{Ginsburg2019}.
+% This research made use of Astropy \citep{Astropy2013,Astropy2018,Astropy2022}, NumPy \citep{Harris2020}, SciPy \citep{Virtanen2020}, pandas \citep{McKinney2010}, statsmodels \citep{Seabold2010}, scikit-learn \citep{Pedregosa2011}, Matplotlib \citep{Hunter2007}, and astroquery \citep{Ginsburg2019}.
 \end{acknowledgements}
 
 \bibliographystyle{aa}
 \bibliography{paper}
-\clearpage
+
+% Keep the float spacing compact through the appendices.
+\setlength{\textfloatsep}{12pt plus 2pt minus 3pt}
+\setlength{\dbltextfloatsep}{12pt plus 2pt minus 3pt}
 \begin{appendix}
 
 \section{SDSS data query}\label{app:sdss_query}
@@ -847,8 +856,6 @@ For the SDSS reference sample, we extract \texttt{sfr\_tot\_p50}, \texttt{specsf
 
 We audited all 6076 final sample rows against \texttt{SpecObjAll} in DR12, retaining the stored \texttt{specObjID} even when the same photometric \texttt{objid} has several spectra (looking these DR12 identifiers up in DR16 fails for reprocessed BOSS observations, whose identifier encodes the reduction version). Of the 394 rows without a valid sSFR, 332 are BOSS-instrument spectra (\texttt{survey} = \texttt{boss}, \texttt{run2d} = \texttt{v5\_7\_0}) without any \texttt{galSpecExtra} or \texttt{galSpecInfo} row, because the MPA-JHU tables cover the legacy \texttt{run2d} = 26 reductions only; 60 are legacy spectra with a \texttt{galSpecExtra} row, a valid stellar mass, \texttt{reliable} = 1, and \texttt{zWarning} = 0, whose \texttt{sfr\_tot\_p50} is the \(-9999\) sentinel; and 2 (both in \CB{}) have no stored spectrum identifier. Per sample the BOSS/sentinel counts are 14/4 in \CG{}, 149/29 in \CB{}, 164/27 in \CC{}, and 5/0 in \RG{}. The missing rows are not low-signal-to-noise spectra: their median \texttt{snMedian\_r} is 45 against 39 for the classified rows (rank-sum \(p<10^{-4}\) over unique spectra), and the same holds within each sample. The missing class is therefore a coverage gap of the MPA-JHU value-added catalogues plus a small number of failed SFR fits, whose relation to the underlying star-formation distribution is not established; its extreme-assignment bounds are given in Appendix~\ref{app:ssfr_method}.
 
-
-\FloatBarrier
 
 \section{sSFR classification details}\label{app:ssfr_method}
 
@@ -1421,7 +1428,6 @@ The 234 matched controls occupy 204 physical Lim groups, and 26 control hosts li
 
 
 
-\FloatBarrier
 \subsection{Selection diagnostics}\label{app:selection}
 
 
@@ -1430,7 +1436,7 @@ The fractions with complete measurements for the major derived quantities are sh
 
 \begin{figure*}
     \centering
-    \includegraphics[width=\textwidth]{fig_data_availability_by_sample.pdf}
+    \includegraphics[width=0.85\textwidth]{fig_data_availability_by_sample.pdf}
     \caption{Measurement availability. Cells give percentages of the final per-sample galaxy count, rounded to the nearest integer. The colour column requires measurements in all four derived SDSS colours before the stricter match to the SDSS non-AGN photometry used for the colour diagnostics deposited on Zenodo. The \(D_n4000\) column requires finite non-sentinel values and finite positive errors. The Simard column includes all size-quality cuts.}
     \label{fig:data_availability}
 \end{figure*}
@@ -1445,8 +1451,6 @@ The group-scale covariates are radius scale, velocity dispersion, quartet lumino
 
 In the sensitivity fit that retains all catalogue rows, restricting the pairwise tidal index of Sect.~\ref{sec:tidal_index} to quartet co-members is innocuous: recomputing \(T_i\) with all spectroscopic Lim members of the identified host group included (positions from the group catalogue; stellar masses from MPA--JHU where available, so the host-inclusive index is itself a lower bound) shifts \(\log T_i\) by a median of \dTall~dex (sample medians \(\le \dTmaxSamp\)~dex, and identically zero for \RG{}, whose groups have exactly four members), with rank correlation \(\rhoTT\) between the two definitions, and refitting the with-index E-class model on the host-inclusive index moves the attenuated \CG{} coefficient only from \ORresid{} to \ORresidAll{}. \(T_i\) is thus the local, galaxy-scale tidal density traced by catalogued galaxies; any smooth host-halo contribution is probed separately through the host-mass sensitivity fit above and the within-host analysis of Sect.~\ref{sec:morphology}. The colour-selection mass diagnostics are deposited on Zenodo.
 
-
-\FloatBarrier
 
 \section{Robustness details}\label{app:robustness_details}
 
@@ -1502,7 +1506,7 @@ Figure~\ref{fig:data_availability} shows the availability of the size measuremen
 
 \begin{figure}
   \centering
-  \includegraphics[width=\columnwidth]{size_forest_per_control.pdf}
+  \includegraphics[width=0.88\columnwidth]{size_forest_per_control.pdf}
   \caption{Group-adjusted \CG{} size coefficients against the deduplicated pooled controls and each control. Every model adjusts for stellar mass, redshift, BGG/satellite status, quartet luminosity, and velocity dispersion, with physical-group-clustered uncertainties. Bars are 95\% confidence intervals; negative values denote smaller \CG{} effective radii.}
   \label{fig:size_per_control}
 \end{figure}
@@ -1534,8 +1538,6 @@ Within morphology classes, the satellite-only fits give \(0.031\) dex for GZ1 E-
 
 
 
-\FloatBarrier
 \end{appendix}
-\clearpage
 
 \end{document}
